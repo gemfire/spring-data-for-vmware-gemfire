@@ -1,2 +1,9 @@
-rootProject.name = 'spring-data-gemfire'
+// Copyright (c) VMware, Inc. 2022. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+pluginManagement {
+  includeBuild('build-tools/publishing')
+}
+
+include 'spring-data-vmware-gemfire'
 
