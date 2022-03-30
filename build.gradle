@@ -1,0 +1,46 @@
+// Copyright (c) VMware, Inc. 2022. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.google.api-client:google-api-client:1.28.0'
+  }
+}
+
+plugins {
+  id 'java-library'
+}
+
+allprojects {
+
+  compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+  }
+
+  repositories {
+    mavenCentral()
+    maven {
+      url = uri('gcs://gemfire-build-resources/maven/gemfire')
+    }
+
+    maven {
+      url = uri('https://maven.apachegeode-ci.info/snapshots')
+    }
+
+    maven {
+      credentials {
+        username "$gemfireRepoUsername"
+        password "$gemfireRepoPassword"
+      }
+      url = uri("https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire")
+    }
+
+    maven {
+      url = uri('https://repo.maven.apache.org/maven2/')
+    }
+  }
+}
