@@ -115,7 +115,7 @@ jobs:
     - get: google-sdg-builder
       trigger: true
     - get: utilities-alpine-tools-docker-image
-      passed: [utilities-build-alpine-tools-docker-image]
+      passed: [build-utiltiies-alpine-tools-docker-image]
     - get: linux-base-family
       trigger: true
   - task: build-image
