@@ -56,13 +56,13 @@ SDG_BRANCH=$(yq -r .repositories.springDataGemfire.branch \
 . ${SCRIPT_DIR}/../../scripts/utilities.sh
 SANITIZED_SDG_FORK=$(sanitizeName ${SDG_FORK})
 SANITIZED_SDG_BRANCH=$(getSanitizedBranch ${SDG_BRANCH})
-PIPELINE_PREFIX="${SANITIZED_SDG_FORK}-${SANITIZED_SDG_BRANCH}-"
-PIPELINE_NAME="${SANITIZED_SDG_FORK}-${SANITIZED_SDG_BRANCH}-main"
+PIPELINE_PREFIX="sdg-${SANITIZED_SDG_BRANCH}-"
+PIPELINE_NAME="sdg-${SANITIZED_SDG_BRANCH}-main"
 CONCOURSE_URL="https://${CONCOURSE_HOST}"
 CONCOURSE_TEAM="${CONCOURSE_TEAM:-main}"
 
 pushd ${SCRIPT_DIR} 2>&1 > /dev/null
-  python3 ${SCRIPT_DIR}/../scripts/render.py ${SCRIPT_DIR}/jinja.template.yml \
+  python3 ${SCRIPT_DIR}/../../scripts/render.py ${SCRIPT_DIR}/jinja.template.yml \
     --variable-file ${SCRIPT_DIR}/../shared/jinja.variables.yml \
     --environment ${SCRIPT_DIR}/../shared \
     --output ${SCRIPT_DIR}/generated-pipeline.yml || exit 1

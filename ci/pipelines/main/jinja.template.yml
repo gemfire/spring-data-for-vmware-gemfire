@@ -4,12 +4,14 @@ resource_types:
   type: docker-image
   source:
     repository: concourse/registry-image-resource
-resources:
-- name: bash-alpine-docker-image
-  icon: docker
-  type: docker-image
+- name: gci
+  type: registry-image
   source:
-    repository: bash
+    registry_mirror:
+      host: mirror.gcr.io
+    repository: smgoller/gci-resource
+
+resources:
 - name: google-cloud-sdk-image
   type: registry-image
   source:
@@ -17,6 +19,24 @@ resources:
       host: mirror.gcr.io
     repository: google/cloud-sdk
     tag: alpine
+
+- name: linux-base-family
+  type: gci
+  check_every: 24h
+  source:
+    key: ((concourse-gcp-key))
+    family_project: ubuntu-os-cloud
+    family: ((linux-base-family))
+
+- name: google-sdg-builder
+  type: git
+  source:
+    branch: main
+    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    private_key: ((gemfire-ci-private-key))
+    paths:
+    - ci/scripts/build_image.sh
+    - ci/images/google-sdg-builder
 
 - name: hashicorp-packer-image
   type: registry-image
@@ -33,7 +53,7 @@ resources:
       host: mirror.gcr.io
     repository: concourse/oci-build-task
 
-- name: utilities-alpine-tools-inputs
+- name: utilities-alpine-tools-dockerfile
   icon: github
   type: git
   source:
@@ -44,13 +64,13 @@ resources:
     paths:
     - ci/images/utilities-alpine-tools
 
-- name: utilities-alpine-tools-image
+- name: utilities-alpine-tools-docker-image
   icon: docker
-  type: docker-image
+  type: registry-image
   source:
     username: "_json_key"
     password: ((concourse-gcp-key))
-    repository: gcr.io/((gcp-project))/((pipeline-prefix))/utilities-alpine-tools
+    repository: gcr.io/((gcp-project))/((pipeline-prefix))utilities-alpine-tools
     tag: latest
 jobs:
 # alpine-tools
@@ -75,7 +95,7 @@ jobs:
     config:
       platform: linux
       params:
-        CONTEXT: alpine-tools-dockerfile/ci/images/utilties-alpine-tools
+        CONTEXT: utilities-alpine-tools-dockerfile/ci/images/utilities-alpine-tools
       inputs:
       - name: utilities-alpine-tools-dockerfile
       outputs:
@@ -87,3 +107,37 @@ jobs:
   # push using `registry-image` resource
   - put: utilities-alpine-tools-docker-image
     params: {image: image/image.tar}
+
+- name: build-google-sdg-builder
+  serial: true
+  plan:
+  - in_parallel:
+    - get: google-sdg-builder
+      trigger: true
+    - get: utilities-alpine-tools-docker-image
+      passed: [utilities-build-alpine-tools-docker-image]
+    - get: linux-base-family
+      trigger: true
+  - task: build-image
+    timeout: 1h
+    image: utilities-alpine-tools-docker-image
+    config:
+      inputs:
+      - name: google-sdg-builder
+      - name: linux-base-family
+        path: base-family
+      outputs:
+      - name: results
+      platform: linux
+      params:
+        PIPELINE_PREFIX: ((pipeline-prefix))
+        GCP_PROJECT: ((gcp-project))
+        GCP_NETWORK: ((gcp-network))
+        GCP_SUBNETWORK: ((gcp-subnet))
+        INTERNAL: "true"
+        CONCOURSE_GCP_KEY: "((concourse-gcp-key))"
+        JAVA_BUILD_VERSION: 17
+      run:
+        path: google-sdg-builder/ci/scripts/build_image.sh
+        args:
+        - google-sdg-builder/ci/images/google-sdg-builder/packer.json
