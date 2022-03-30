@@ -1,0 +1,32 @@
+plugins {
+    id 'java-library'
+    id 'base'
+    id 'eclipse'
+    id 'maven-publish'
+}
+
+group 'com.vmware.gemfire'
+version "${version}"
+
+repositories {
+    mavenCentral()
+}
+
+// The published bom will constrain versions within geode of any subproject with this property set.
+project.ext.set('constrainVersionInBom', true)
+
+publishing {
+    publications {
+        mavenRepo(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.data:spring-data-geode:2.6.3'
+}
+
+test {
+    useJUnitPlatform()
+}
