@@ -1,0 +1,89 @@
+---
+resource_types:
+- name: registry-image
+  type: docker-image
+  source:
+    repository: concourse/registry-image-resource
+resources:
+- name: bash-alpine-docker-image
+  icon: docker
+  type: docker-image
+  source:
+    repository: bash
+- name: google-cloud-sdk-image
+  type: registry-image
+  source:
+    registry_mirror:
+      host: mirror.gcr.io
+    repository: google/cloud-sdk
+    tag: alpine
+
+- name: hashicorp-packer-image
+  type: registry-image
+  source:
+    registry_mirror:
+      host: mirror.gcr.io
+    repository: hashicorp/packer
+    tag: 1.4.5
+
+- name: oci-build-task-image
+  type: registry-image
+  source:
+    registry_mirror:
+      host: mirror.gcr.io
+    repository: concourse/oci-build-task
+
+- name: utilities-alpine-tools-inputs
+  icon: github
+  type: git
+  source:
+    depth: 1
+    branch: {{ repositories.springDataGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    private_key: ((gemfire-ci-private-key))
+    paths:
+    - ci/images/utilities-alpine-tools
+
+- name: utilities-alpine-tools-image
+  icon: docker
+  type: docker-image
+  source:
+    username: "_json_key"
+    password: ((concourse-gcp-key))
+    repository: gcr.io/((gcp-project))/((pipeline-prefix))/utilities-alpine-tools
+    tag: latest
+jobs:
+# alpine-tools
+- name: build-utiltiies-alpine-tools-docker-image
+  plan:
+  # fetch repository source (containing Dockerfile)
+  - in_parallel:
+    - get: utilities-alpine-tools-dockerfile
+      trigger: true
+    - get: google-cloud-sdk-image
+      trigger: true
+    - get: hashicorp-packer-image
+      trigger: true
+    - get: oci-build-task-image
+  # build using `oci-build` task
+  #
+  # note: this task config could be pushed into `my-image-src` and loaded using
+  # `file:` instead
+  - task: build
+    image: oci-build-task-image
+    privileged: true
+    config:
+      platform: linux
+      params:
+        CONTEXT: alpine-tools-dockerfile/ci/images/utilties-alpine-tools
+      inputs:
+      - name: utilities-alpine-tools-dockerfile
+      outputs:
+      - name: image
+      caches:
+      - path: cache
+      run:
+        path: build
+  # push using `registry-image` resource
+  - put: utilities-alpine-tools-docker-image
+    params: {image: image/image.tar}

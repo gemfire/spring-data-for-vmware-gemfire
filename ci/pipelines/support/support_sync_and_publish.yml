@@ -1,0 +1,311 @@
+---
+# fly -t concourse.gemfire-ci.info sp \
+#  -p sync-geode-develop-gemfire-develop \
+#  -c pipelines/support/support_sync_and_publish.yml \
+#  --var=geode-branch=release/1.10.0 \
+#  --var=support-branch=support/9.9 \
+#  --var=sanitized-geode-branch=release-1-10-0 \
+#  --var=sanitized-geode-support-branch=support-9-9 \
+#  --var=geode-support-uri=git@github.com:gemfire/geode-support.git
+
+groups:
+- name: complete
+  jobs:
+    - sync-((sanitized-geode-branch))-to-((sanitized-geode-support-branch))
+    - build-publish-image
+    - publish-artifacts
+    - update-passing-tokens
+
+- name: images
+  jobs:
+    - build-publish-image
+
+- name: semver-management
+  jobs:
+  {%- for semverPiece in ['major', 'minor', 'patch'] %}
+  - bump-{{ semverPiece }}
+  {%- endfor %}
+
+resources:
+- name: geode-((sanitized-geode-branch))
+  icon: github-circle
+  type: git
+  source:
+    branch: ((geode-branch))
+    uri: https://github.com/apache/geode.git
+
+- name: geode-support-((sanitized-geode-support-branch))
+  icon: github-circle
+  type: git
+  source:
+    branch: ((support-branch))
+    uri: git@github.com:{{repositories.geodeSupport.fork}}/{{repositories.geodeSupport.repo}}
+    private_key: ((gemfire-ci-private-key))
+
+- name: geode-passing-tokens
+  type: json-gcs-resource
+  source:
+    bucket: ((geode-artifact-bucket))
+    json_key: ((concourse-gcp-key))
+    versioned_file: semvers/apache-((sanitized-geode-branch))-((geode-branch))/passing-build-tokens.json
+
+- name: geode-support-build-version
+  type: semver
+  source:
+    bucket: {{ storage.artifactBucket }}
+    driver: gcs
+    initial_version: {{ metadata.initial_version }}
+    json_key: ((concourse-gcp-key))
+    key:  semvers/{{ repositories.geodeSupport.fork|lower }}-((sanitized-geode-support-branch))-{{ repositories.geodeSupport.branch }}/version
+
+- name: geode-support-passing-tokens
+  type: json-gcs-resource
+  source:
+    bucket: {{ storage.artifactBucket }}
+    json_key: ((concourse-gcp-key))
+    regexp: semvers/{{ repositories.geodeSupport.fork|lower }}-((sanitized-geode-support-branch))-{{ repositories.geodeSupport.branch }}/passing-build-tokens.json
+
+- name: alpine-tools-image
+  icon: docker
+  type: registry-image
+  source:
+    password: ((docker-password))
+    repository: gcr.io/((gcp-project))/gemfire-develop-alpine-tools
+    tag: latest
+    username: ((docker-username))
+
+- name: alpine
+  icon: docker
+  type: docker-image
+  source:
+    repository: alpine
+
+# This is the image used by Geode to build and test.
+- name: geode-build-test-image
+  icon: docker
+  type: docker-image
+  source:
+    username: "_json_key"
+    password: ((concourse-gcp-key))
+    repository: gcr.io/((gcp-project))/{{ repositories.geodeSupport.fork|lower }}-((sanitized-gemfire-branch))-test-container
+
+- name: build-publish-image
+  icon: docker
+  type: docker-image
+  source:
+    username: "_json_key"
+    password: ((concourse-gcp-key))
+    repository: gcr.io/((gcp-project))/{{ repositories.geodeSupport.fork|lower }}/build-publish-image
+    tag: {{ repositories.geodeSupport.repo|lower }}-((sanitized-geode-support-branch))
+
+resource_types:
+- name: gcs-resource
+  type: registry-image
+  source:
+    repository: frodenas/gcs-resource
+
+- name: json-gcs-resource
+  type: docker-image
+  source:
+    username: ((docker-username))
+    password: ((docker-password))
+    repository: gcr.io/((gcp-project))/{{ repositories.geodeSupport.fork|lower }}-((sanitized-gemfire-branch))-gcs-resource-with-json-content
+    tag: latest
+
+- name: file-url
+  type: docker-image
+  source:
+    repository: pivotalservices/concourse-curl-resource
+    tag: latest
+
+jobs:
+{% for semverPiece in ['major', 'minor', 'patch'] -%}
+- name: bump-{{ semverPiece }}
+  serial: true
+  plan:
+  - get: geode-support-build-version
+    params: { bump: {{ semverPiece }} }
+  - put: geode-support-build-version
+    params:
+      file: geode-support-build-version/number
+{% endfor %}
+
+- name: build-publish-image
+  serial: true
+  public: false
+  plan:
+  - in_parallel:
+    - get: alpine
+    - get: geode-build-test-image
+      trigger: true
+      params:
+        save: true
+  - task: extend-geode-build-image
+    image: alpine
+    config:
+      platform: linux
+      inputs:
+      - name: geode-build-test-image
+      outputs:
+      - name: extend-geode-image
+      run:
+        path: sh
+        args:
+          - -exc
+          - |-
+            mkdir -p extend-geode-image
+            cd extend-geode-image
+            echo "FROM gcr.io/((gcp-project))/{{ repositories.geodeSupport.fork|lower }}-((sanitized-gemfire-branch))-test-container" > Dockerfile
+            echo "RUN apt update \\" >> Dockerfile
+            echo "  && apt install --no-install-recommends -y jq \\" >> Dockerfile
+            echo "  && apt-get clean && rm -rf /var/lib/apt/lists/*" >> Dockerfile
+  - put: build-publish-image
+    params:
+      load_base: geode-build-test-image
+      build: extend-geode-image
+
+- name: sync-((sanitized-geode-branch))-to-((sanitized-geode-support-branch))
+  plan:
+  - get: geode-((sanitized-geode-branch))
+    trigger: true
+  - put: geode-support-((sanitized-geode-support-branch))
+    params:
+      repository: geode-((sanitized-geode-branch))
+
+- name: publish-artifacts
+  public: true
+  plan:
+  - in_parallel:
+    - get: geode-passing-tokens
+      trigger: true
+    - get: geode-support-((sanitized-geode-support-branch))
+    - get: geode-support-build-version
+      params:
+        pre: build
+    - get: alpine-tools-image
+    - get: build-publish-image
+      passed: [build-publish-image]
+  - in_parallel:
+    - put: geode-support-build-version
+      params:
+        file: geode-support-build-version/version
+    - task: set-sha-from-upstream-passing-tokens
+      image: alpine-tools-image
+      config:
+        platform: linux
+        inputs:
+        - name:  geode-support-((sanitized-geode-support-branch))
+        - name:  geode-support-build-version
+        - name:  geode-passing-tokens
+        outputs:
+        - name: geode-support-((sanitized-geode-support-branch))-validated
+        run:
+          path: bash
+          args:
+          - -ecx
+          - |-
+            apk add --no-cache jq git
+
+            GEODE_SHA=$(jq -r .ref geode-passing-tokens/*.json)
+
+            git clone geode-support-((sanitized-geode-support-branch)) geode-support-((sanitized-geode-support-branch))-validated
+            pushd geode-support-((sanitized-geode-support-branch))-validated
+              git checkout ((support-branch))
+              git reset --hard ${GEODE_SHA}
+            popd
+  - task: publish
+    image: build-publish-image
+    config:
+      platform: linux
+      inputs:
+      - name: geode-support-((sanitized-geode-support-branch))-validated
+        path: geode
+      - name: geode-support-build-version
+      params:
+        ARTIFACT_BUCKET: {{ storage.artifactBucket }}
+        JAVA_BUILD_VERSION: "8"
+        MAINTENANCE_VERSION: ((support-branch))
+        MAVEN_SNAPSHOT_BUCKET: gcs://{{ storage.bucket }}/{{ storage.mavenPrefix }}/gemfire
+        SERVICE_ACCOUNT: ((concourse-gcp-account))
+      run:
+        path: bash
+        args:
+          - -ecx
+          - |-
+            BASE_DIR=$(pwd)
+
+            SCRIPTDIR=${BASE_DIR}/geode/ci/scripts
+            source ${SCRIPTDIR}/shared_utilities.sh
+
+            ROOT_DIR=$(pwd)
+
+            GEODE_BUILD_VERSION_FILE=${ROOT_DIR}/geode-support-build-version/number
+            GEODE_RESULTS_VERSION_FILE=${ROOT_DIR}/results/number
+            GEODE_BUILD_DIR=/tmp/geode-build
+
+            CONCOURSE_VERSION=$(cat ${GEODE_BUILD_VERSION_FILE})
+            echo "Concourse VERSION is ${CONCOURSE_VERSION}"
+            # Rebuild version, zero-padded
+            FULL_PRODUCT_VERSION=$(get-full-version ${CONCOURSE_VERSION})
+            BUILD_ID=$(get-geode-build-id-padded ${CONCOURSE_VERSION} 2> /dev/null)
+
+            DEFAULT_GRADLE_TASK_OPTIONS="--parallel --console=plain --no-daemon"
+            export JAVA_HOME=/usr/lib/jvm/java-${JAVA_BUILD_VERSION}-openjdk-amd64
+
+            pushd ${ROOT_DIR}/geode
+            ./gradlew \
+                ${DEFAULT_GRADLE_TASK_OPTIONS} \
+                -PproductName="VMware Tanzu GemFire" \
+                -PproductOrg="VMware, Inc." \
+                -Pgroup="io.pivotal.gemfire" \
+                -PexcludeTest="**/AssemblyContentsIntegrationTest*,**/GeodeDependencyJarIntegrationTest*,**/GradleBuildWithGeodeCoreAcceptanceTest*" \
+                -x checkPom -x rat \
+                -Pversion=${FULL_PRODUCT_VERSION} \
+                -PbuildId=${BUILD_ID} \
+                -PmavenRepository=${MAVEN_SNAPSHOT_BUCKET} \
+                publish
+            popd
+
+- name: update-passing-tokens
+  public: true
+  serial: true
+  plan:
+  - in_parallel:
+    - get: geode-passing-tokens
+      passed:
+      - publish-artifacts
+      trigger: true
+    - get: geode-support-build-version
+      passed:
+      - publish-artifacts
+      trigger: true
+    - get: alpine-tools-image
+  - task: couple-sha-and-build-id
+    image: alpine-tools-image
+    config:
+      platform: linux
+      inputs:
+      - name: geode-passing-tokens
+      - name: geode-support-build-version
+      outputs:
+      - name: geode-support-passing-tokens
+      run:
+        path: bash
+        args:
+        - -ecx
+        - |-
+          GEODE_SHA=$(jq -r .ref geode-passing-tokens/*.json)
+
+          GEODE_SEMVER=$(cat geode-support-build-version/number)
+
+          cat > geode-support-passing-tokens/passing-build-tokens.json <<JSON
+          {
+            "ref": "${GEODE_SHA}",
+            "semver": "${GEODE_SEMVER}"
+          }
+          JSON
+          echo "${GEODE_SHA}" > geode-support-passing-tokens/sha
+  - in_parallel:
+    - put: geode-support-passing-tokens
+      params:
+        file: geode-support-passing-tokens/passing-build-tokens.json

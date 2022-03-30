@@ -1,0 +1,20 @@
+repositories:
+  springDataGemfire:
+    branch: main
+    fork: gemfire
+    repo: spring-data-gemfire
+  gemfireAssembly:
+    branch: support/9.10
+    fork: gemfire
+    repo: gemfire-assembly
+  gemfireTest:
+    branch: support/9.10
+    fork: gemfire
+    repo: gemfire
+  geodeSupport:
+    branch: support/9.10
+    fork: gemfire
+    repo: geode-support
+storage:
+  artifactBucket: gemfire-test-artifacts
+  bucket: gemfire-build-resources
