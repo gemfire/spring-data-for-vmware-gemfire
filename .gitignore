@@ -1,3 +1,6 @@
+# Copyright (c) VMware, Inc. 2022. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
 ### Java template
 # Compiled class file
 *.class
@@ -96,3 +99,13 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+.idea/*
+
+generated-pipeline.yml
+
+**/build/*
+#build/*
+.gradle/*
+
+
+**/*test-read-only/*
