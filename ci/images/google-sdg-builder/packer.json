@@ -36,14 +36,6 @@
       ],
       "execute_command": "sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/setup.sh"
-    },
-    {
-      "type": "shell",
-      "environment_vars": [
-        "JAVA_BUILD_VERSION={{user `java_build_version`}}"
-      ],
-      "execute_command": "sudo -u geode -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/cache_dependencies.sh"
     }
   ]
 }
