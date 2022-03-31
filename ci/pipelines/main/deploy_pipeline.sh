@@ -81,6 +81,7 @@ pushd ${SCRIPT_DIR} 2>&1 > /dev/null
     --var gcp-project=${GCP_PROJECT} \
     --var concourse-team=${CONCOURSE_TEAM} \
     --var linux-base-family=ubuntu-minimal-2004-lts \
+    --var semver-prerelease-token=${SEMVER_PRERELEASE_TOKEN} \
     --var concourse-url=${CONCOURSE_URL}
 
 popd 2>&1 > /dev/null

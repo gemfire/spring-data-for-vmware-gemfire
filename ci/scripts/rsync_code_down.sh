@@ -12,9 +12,6 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-. ${SCRIPTDIR}/shared_utilities.sh
-is_source_from_pr_testable "geode" "$(get_geode_pr_exclusion_dirs)" || exit 0
-
 SSHKEY_FILE="instance-data/sshkey"
 
 test -e ${SSHKEY_FILE}
@@ -22,7 +19,7 @@ SSH_OPTIONS="-i ${SSHKEY_FILE} -o ConnectTimeout=5 -o ConnectionAttempts=60 -o S
 
 INSTANCE_IP_ADDRESS="$(cat instance-data/instance-ip-address)"
 
-OUTPUT_DIR=${BASE_DIR}/geode-results
+OUTPUT_DIR=${BASE_DIR}/spring-data-gemfire-results
 
 case $ARTIFACT_SLUG in
   windows*)
@@ -44,8 +41,8 @@ EXEC_COMMAND="bash -c 'export JAVA_HOME=${JAVA_BUILD_PATH} \
 
 time ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "${EXEC_COMMAND}"
 
-time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - geode .gradle | tar -C "${OUTPUT_DIR}" -zxf -
+time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-gemfire .gradle | tar -C "${OUTPUT_DIR}" -zxf -
 
-mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/geode/.gradle_logs"
+mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/spring-data-gemfire/.gradle_logs"
 
 set +x

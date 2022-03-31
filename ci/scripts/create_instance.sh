@@ -16,13 +16,13 @@ source ${BASE_DIR}/concourse-metadata-resource/concourse_metadata
 
 SSHKEY_FILE="instance-data/sshkey"
 
-if [[ -z "${GEODE_FORK}" ]]; then
-  echo "GEODE_FORK environment variable must be set for this script to work."
+if [[ -z "${SDG_FORK}" ]]; then
+  echo "SDG_FORK environment variable must be set for this script to work."
   exit 1
 fi
 
-if [[ -z "${GEODE_BRANCH}" ]]; then
-  echo "GEODE_BRANCH environment variable must be set for this script to work."
+if [[ -z "${SDG_BRANCH}" ]]; then
+  echo "SDG_BRANCH environment variable must be set for this script to work."
   exit 1
 fi
 
@@ -46,32 +46,14 @@ if [[ -z "${GCP_ZONE}" ]]; then
   exit 1
 fi
 
-. ${SCRIPTDIR}/shared_utilities.sh
-is_source_from_pr_testable "geode" "$(get_geode_pr_exclusion_dirs)" || exit 0
-
-if [[ -d geode ]]; then
-  pushd geode
-
-    GEODE_SHA=$(git rev-parse --verify HEAD)
-  popd
-else
-  GEODE_SHA="unknown"
-fi
-
 . ${SCRIPTDIR}/../pipelines/shared/utilities.sh
-SANITIZED_GEODE_BRANCH=$(getSanitizedBranch ${GEODE_BRANCH})
-SANITIZED_GEODE_FORK=$(getSanitizedFork ${GEODE_FORK})
+SANITIZED_SDG_BRANCH=$(getSanitizedBranch ${SDG_BRANCH})
+SANITIZED_SDG_FORK=$(getSanitizedFork ${SDG_FORK})
 
 SANITIZED_BUILD_PIPELINE_NAME=$(sanitizeName ${BUILD_PIPELINE_NAME})
 SANITIZED_BUILD_JOB_NAME=$(sanitizeName ${BUILD_JOB_NAME})
 SANITIZED_BUILD_NAME=$(sanitizeName ${BUILD_NAME})
-IMAGE_FAMILY_PREFIX="${SANITIZED_GEODE_FORK}-${SANITIZED_GEODE_BRANCH}-"
-WINDOWS_PREFIX=""
-
-
-if [[ "${SANITIZED_BUILD_JOB_NAME}" =~ [Ww]indows ]]; then
-  WINDOWS_PREFIX="windows-"
-fi
+IMAGE_FAMILY_PREFIX="${SANITIZED_SDG_FORK}-${SANITIZED_SDG_BRANCH}-"
 
 INSTANCE_NAME_STRING="${BUILD_PIPELINE_NAME}-${BUILD_JOB_NAME}-build${JAVA_BUILD_VERSION}-test${JAVA_TEST_VERSION}-job#${BUILD_NAME}"
 
@@ -114,7 +96,7 @@ echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 RAM_MEGABYTES=$( expr ${RAM} \* 1024 )
 
 TTL=$(($(date +%s) + 60 * 60 * 12))
-LABELS="instance_type=heavy-lifter,time-to-live=${TTL},job-name=${SANITIZED_BUILD_JOB_NAME},pipeline-name=${SANITIZED_BUILD_PIPELINE_NAME},build-name=${SANITIZED_BUILD_NAME},sha=${GEODE_SHA}"
+LABELS="instance_type=heavy-lifter,time-to-live=${TTL},job-name=${SANITIZED_BUILD_JOB_NAME},pipeline-name=${SANITIZED_BUILD_PIPELINE_NAME},build-name=${SANITIZED_BUILD_NAME}"
 echo "Applying the following labels to the instance: ${LABELS}"
 
 set +e
@@ -154,7 +136,7 @@ echo "${INSTANCE_ID}" > "instance-data/instance-id"
 if [[ -z "${WINDOWS_PREFIX}" ]]; then
   SSH_TIME=$(($(date +%s) + 60))
   echo -n "Attempting to SSH to instance."
-  while ! gcloud compute ssh geode@${INSTANCE_NAME} --zone=${ZONE} --internal-ip --ssh-key-file=${SSHKEY_FILE} --quiet -- true; do
+  while ! gcloud compute ssh sdg@${INSTANCE_NAME} --zone=${ZONE} --internal-ip --ssh-key-file=${SSHKEY_FILE} --quiet -- true; do
     if [[ $(date +%s) > ${SSH_TIME} ]]; then
       echo "error: ssh attempt timeout exceeded. Quitting"
       exit 1

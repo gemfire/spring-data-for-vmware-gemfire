@@ -28,6 +28,13 @@ resources:
     family_project: ubuntu-os-cloud
     family: ((linux-base-family))
 
+- name: linux-sdg-builder-image-family
+  type: gci
+  source:
+    key: ((concourse-gcp-key))
+    family_project: ((gcp-project))
+    family: ((pipeline-prefix))-linux-sdg-builder
+
 - name: google-sdg-builder
   type: git
   source:
@@ -72,6 +79,35 @@ resources:
     password: ((concourse-gcp-key))
     repository: gcr.io/((gcp-project))/((pipeline-prefix))utilities-alpine-tools
     tag: latest
+
+- name: spring-data-gemfire-build-version
+  type: semver
+  source:
+    bucket: ((artifact-bucket))
+    driver: gcs
+    initial_version: 0.0.0
+    json_key: ((concourse-gcp-key))
+    key: semvers/((pipeline-prefix)){{ repositories.springDataGemfire.branch }}/number
+
+- name: spring-data-gemfire
+  icon: github
+  type: git
+  source:
+    branch: {{ repositories.springDataGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    private_key: ((gemfire-ci-private-key))
+    exclude_paths:
+    - ci/*
+- name: spring-data-gemfire-ci
+  icon: github
+  type: git
+  source:
+    branch: {{ repositories.springDataGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    private_key: ((gemfire-ci-private-key))
+    paths:
+    - ci/*
+
 jobs:
 # alpine-tools
 - name: build-utiltiies-alpine-tools-docker-image
@@ -141,3 +177,162 @@ jobs:
         path: google-sdg-builder/ci/scripts/build_image.sh
         args:
         - google-sdg-builder/ci/images/google-sdg-builder/packer.json
+
+- name: build-spring-data-gemfire
+  max_in_flight: 1
+  plan:
+  - in_parallel:
+    - get: spring-data-gemfire-ci
+    - get: utilities-alpine-tools-image
+    - get: spring-data-gemfire
+      trigger: true
+    - get: spring-data-gemfire-build-version
+      params:
+        pre: ((semver-prerelease-token))
+    - get: linux-sdg-builder-image-family
+  - do:
+    - put: concourse-metadata-resource
+    - task: initial-output
+      image: utilities-alpine-tools-image
+      config:
+        platform: linux
+        outputs:
+        - name: attempts-log
+        run:
+          path: touch
+          args: ['attempts-log/attempts']
+    - task: create_instance
+      image: utilities-alpine-tools-image
+      config:
+        platform: linux
+        params:
+          {{ common_instance_params(build_test) | indent(10) }}
+          SDG_BRANCH: {{ repositories.springDataGemfire.branch }}
+          SDG_FORK: {{ repositories.springDataGemfire.fork }}
+          JAVA_BUILD_VERSION: 17
+          IMAGE_FAMILY_NAME: ((pipeline-prefix))linux-sdg-builder
+        run:
+          path: spring-data-gemfire-ci/ci/scripts/create_instance.sh
+        inputs:
+        - name: attempts-log
+          path: old
+        - name: concourse-metadata-resource
+        - name: spring-data-gemfire
+        - name: spring-data-gemfire-ci
+        - name: linux-sdg-builder-image-family
+          path: builder-image
+        outputs:
+        - name: attempts-log
+          path: new
+        - name: instance-data
+      timeout: 20m
+      attempts: 5
+      on_failure:
+        task: delete_instance
+        image: utilities-alpine-tools-image
+        config:
+          platform: linux
+          run:
+            path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+          inputs:
+          - name: spring-data-gemfire-ci
+          - name: instance-data
+        timeout: 1h
+  - in_parallel:
+    - put: spring-data-gemfire-build-version
+      params:
+        file:spring-data-gemfire-build-version/number
+    - task: rsync_code_up
+      image: utilities-alpine-tools-image
+      config:
+        platform: linux
+        run:
+          path: =-ci/ci/scripts/rsync_code_up.sh
+        inputs:
+        - name: spring-data-gemfire-ci
+        - name: spring-data-gemfire
+        - name: instance-data
+    timeout: 15m
+    attempts: 5
+    on_failure:
+      task: delete_instance
+      image: alpine-tools-image
+      config:
+        platform: linux
+        run:
+          path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+        inputs:
+        - name: spring-data-gemfire-ci
+        - name: instance-data
+      timeout: 1h
+  - task: build
+    image: alpine-tools-image
+    config:
+      platform: linux
+      params:
+        JAVA_BUILD_VERSION: {{ java_build_version.version }}
+        GRADLE_TASK: {{ build_test.GRADLE_TASK }}
+        {{ common_test_params(build_test) | indent(8) }}
+      run:
+        path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
+      inputs:
+      - name: spring-data-gemfire-ci
+      - name: spring-data-gemfire
+      - name: instance-data
+      - name: spring-data-gemfire-build-version
+      outputs:
+      - name: built-spring-data-gemfire
+      - name: results
+    timeout: {{build_test.EXECUTE_TEST_TIMEOUT}}
+    ensure:
+      do:
+      - task: rsync_code_down
+        image: alpine-tools-image
+        config:
+          platform: linux
+          params:
+            JAVA_BUILD_VERSION: {{ java_build_version.version }}
+          run:
+            path: spring-data-gemfire-ci/ci/scripts/rsync_code_down.sh
+          inputs:
+          - name: spring-data-gemfire-ci
+          - name: spring-data-gemfire
+          - name: instance-data
+          outputs:
+          - name: spring-data-gemfire-results
+        timeout: 20m
+        attempts: 5
+      ensure:
+        do:
+        - in_parallel:
+          - task: archive_results
+            image: alpine-tools-image
+            config:
+              platform: linux
+              params:
+                ARTIFACT_SLUG: {{build_test.ARTIFACT_SLUG}}-{{java_build_version.name}}
+                GRADLE_TASK: {{build_test.GRADLE_TASK}}
+                MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch))
+                ARTIFACT_BUCKET: ((artifact-bucket))
+                SERVICE_ACCOUNT: ((concourse-gcp-account))
+                TAR_GEODE_BUILD_ARTIFACTS: true
+              run:
+                path: spring-data-gemfire-ci/ci/scripts/archive_results.sh
+              inputs:
+              - name: spring-data-gemfire
+              - name: concourse-metadata-resource
+              - name: spring-data-gemfire-ci
+              - name: spring-data-gemfire-build-version
+              - name: spring-data-gemfire-results
+            timeout: 1h
+          - task: delete_instance
+            image: alpine-tools-image
+            config:
+              platform: linux
+              run:
+                path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+              inputs:
+              - name: spring-data-gemfire
+              - name: spring-data-gemfire-ci
+              - name: instance-data
+            timeout: 1h
