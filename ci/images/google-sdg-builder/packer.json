@@ -14,8 +14,8 @@
       "source_image": "{{ user `base_image`}}",
       "ssh_username": "packer",
       "zone": "us-central1-f",
-      "image_family": "{{user `pipeline_prefix`}}linux-geode-builder",
-      "image_name": "{{user `hashed_pipeline_prefix`}}gb-{{timestamp}}",
+      "image_family": "{{user `pipeline_prefix`}}linux-sdg-builder",
+      "image_name": "{{user `hashed_pipeline_prefix`}}sdgb-{{timestamp}}",
       "disk_size": "100",
       "tags": ["packer"],
       "labels": {
