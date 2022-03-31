@@ -44,6 +44,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
 cp -R /etc/alternatives /etc/keep-alternatives
 apt-get install -y --no-install-recommends \
+    bellsoft-java17 \
     bellsoft-java11 \
     bellsoft-java8
 rm -rf /etc/alternatives
