@@ -10,6 +10,13 @@ resource_types:
     registry_mirror:
       host: mirror.gcr.io
     repository: smgoller/gci-resource
+- name: concourse-metadata-resource
+  type: docker-image
+  source:
+    password: ((docker-password))
+    repository: gcr.io/((gcp-project))/((pipeline-prefix))concourse-metadata-resource
+    tag: latest
+    username: ((docker-username))
 
 resources:
 - name: google-cloud-sdk-image
@@ -80,6 +87,23 @@ resources:
     repository: gcr.io/((gcp-project))/((pipeline-prefix))utilities-alpine-tools
     tag: latest
 
+- name: concourse-metadata-resource-dockerfile
+  icon: github
+  type: git
+  source:
+    branch: {{ repositories.springDataGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    private_key: ((gemfire-ci-private-key))
+    paths:
+    - ci/resource-types/concourse-metadata-resource/*
+
+- name: concourse-metadata-resource-docker-image
+  type: registry-image
+  source:
+    username: ((docker-username))
+    password: ((docker-password))
+    repository: gcr.io/((gcp-project))/((pipeline-prefix))concourse-metadata-resource
+
 - name: spring-data-gemfire-build-version
   type: semver
   source:
@@ -110,7 +134,7 @@ resources:
 
 jobs:
 # alpine-tools
-- name: build-utiltiies-alpine-tools-docker-image
+- name: build-utilities-alpine-tools-docker-image
   plan:
   # fetch repository source (containing Dockerfile)
   - in_parallel:
@@ -143,6 +167,42 @@ jobs:
   # push using `registry-image` resource
   - put: utilities-alpine-tools-docker-image
     params: {image: image/image.tar}
+
+# concourse-metadata-resource
+- name: build-concourse-metadata-resource-docker-image
+  plan:
+  # fetch repository source (containing Dockerfile)
+  - in_parallel:
+    - get: concourse-metadata-resource-dockerfile
+      trigger: true
+    - get: google-cloud-sdk-image
+      trigger: true
+    - get: hashicorp-packer-image
+      trigger: true
+    - get: oci-build-task-image
+  # build using `oci-build` task
+  #
+  # note: this task config could be pushed into `my-image-src` and loaded using
+  # `file:` instead
+  - task: build
+    image: oci-build-task-image
+    privileged: true
+    config:
+      platform: linux
+      params:
+        CONTEXT: concourse-metadata-resource-dockerfile/ci/images/concourse-metadata-resource
+      inputs:
+      - name: concourse-metadata-resource-dockerfile
+      outputs:
+      - name: image
+      caches:
+      - path: cache
+      run:
+        path: build
+  # push using `registry-image` resource
+  - put: concourse-metadata-resource-docker-image
+    params: {image: image/image.tar}
+
 
 - name: build-google-sdg-builder
   serial: true
@@ -183,7 +243,7 @@ jobs:
   plan:
   - in_parallel:
     - get: spring-data-gemfire-ci
-    - get: utilities-alpine-tools-image
+    - get: utilities-alpine-tools-docker-image
     - get: spring-data-gemfire
       trigger: true
     - get: spring-data-gemfire-build-version
@@ -206,7 +266,13 @@ jobs:
       config:
         platform: linux
         params:
-          {{ common_instance_params(build_test) | indent(10) }}
+          GCP_PROJECT: ((gcp-project))
+          GCP_NETWORK: ((gcp-network))
+          GCP_SUBNETWORK: ((gcp-subnet))
+          GCP_ZONE: ((gcp-zone))
+          CPUS: '8'
+          RAM: '16'
+          DISK: '200GB'
           SDG_BRANCH: {{ repositories.springDataGemfire.branch }}
           SDG_FORK: {{ repositories.springDataGemfire.fork }}
           JAVA_BUILD_VERSION: 17
@@ -241,7 +307,7 @@ jobs:
   - in_parallel:
     - put: spring-data-gemfire-build-version
       params:
-        file:spring-data-gemfire-build-version/number
+        file: spring-data-gemfire-build-version/number
     - task: rsync_code_up
       image: utilities-alpine-tools-image
       config:
@@ -271,8 +337,9 @@ jobs:
       platform: linux
       params:
         JAVA_BUILD_VERSION: {{ java_build_version.version }}
-        GRADLE_TASK: {{ build_test.GRADLE_TASK }}
-        {{ common_test_params(build_test) | indent(8) }}
+        GRADLE_TASK: build
+        MAINTENANCE_VERSION: ((sdg-build-branch ))
+        SERVICE_ACCOUNT: ((concourse-gcp-account))
       run:
         path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
       inputs:
@@ -283,7 +350,7 @@ jobs:
       outputs:
       - name: built-spring-data-gemfire
       - name: results
-    timeout: {{build_test.EXECUTE_TEST_TIMEOUT}}
+    timeout: 30m
     ensure:
       do:
       - task: rsync_code_down
@@ -310,8 +377,8 @@ jobs:
             config:
               platform: linux
               params:
-                ARTIFACT_SLUG: {{build_test.ARTIFACT_SLUG}}-{{java_build_version.name}}
-                GRADLE_TASK: {{build_test.GRADLE_TASK}}
+                ARTIFACT_SLUG: build-{{java_build_version.name}}
+                GRADLE_TASK: build
                 MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch))
                 ARTIFACT_BUCKET: ((artifact-bucket))
                 SERVICE_ACCOUNT: ((concourse-gcp-account))
