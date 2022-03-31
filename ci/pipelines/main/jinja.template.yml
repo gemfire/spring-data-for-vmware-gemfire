@@ -136,7 +136,7 @@ jobs:
         GCP_SUBNETWORK: ((gcp-subnet))
         INTERNAL: "true"
         CONCOURSE_GCP_KEY: "((concourse-gcp-key))"
-        JAVA_BUILD_VERSION: 17
+        JAVA_BUILD_VERSION: 8
       run:
         path: google-sdg-builder/ci/scripts/build_image.sh
         args:
