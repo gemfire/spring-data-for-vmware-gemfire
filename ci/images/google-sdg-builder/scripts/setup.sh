@@ -25,8 +25,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates \
     cgroupfs-mount \
     containerd.io \
-    docker-ce="5:19.03.14~3-0~ubuntu-xenial" \
-    docker-ce-cli="5:19.03.14~3-0~ubuntu-xenial" \
+    docker-ce="5:20.10.14~3-0~ubuntu-focal" \
+    docker-ce-cli="5:20.10.14~3-0~ubuntu-focal" \
     git \
     google-chrome-stable \
     htop \
