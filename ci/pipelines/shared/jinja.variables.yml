@@ -1,6 +1,6 @@
 repositories:
   springDataGemfire:
-    branch: main
+    branch: develop
     fork: gemfire
     repo: spring-data-gemfire
   gemfireAssembly:
