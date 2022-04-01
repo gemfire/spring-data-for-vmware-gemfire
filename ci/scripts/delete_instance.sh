@@ -19,5 +19,5 @@ echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 
 # Ensure no existing instance with this name in any zone
 for KILL_ZONE in $(echo ${PERMITTED_ZONES[*]}); do
-  gcloud compute instances delete ${INSTANCE_NAME} --zone=${KILL_ZONE} --quiet &>/dev/null || true
+echo "gcloud compute instances delete ${INSTANCE_NAME} --zone=${KILL_ZONE} --quiet &>/dev/null || true"
 done
