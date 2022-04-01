@@ -30,6 +30,7 @@ SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 
 source ${BASE_DIR}/concourse-metadata-resource/concourse_metadata
+source ${SCRIPTDIR}/shared_utilities.sh
 
 BUILDROOT=$(pwd)
 DEST_DIR=${BUILDROOT}/spring-data-gemfire-results

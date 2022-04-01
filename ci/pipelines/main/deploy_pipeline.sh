@@ -61,6 +61,9 @@ PIPELINE_NAME="sdg-${SANITIZED_SDG_BRANCH}-main"
 CONCOURSE_URL="https://${CONCOURSE_HOST}"
 CONCOURSE_TEAM="${CONCOURSE_TEAM:-main}"
 
+echo "FORK is ${SANITIZED_SDG_FORK}"
+echo "BRANCH is ${SANITIZED_SDG_BRANCH}"
+
 pushd ${SCRIPT_DIR} 2>&1 > /dev/null
   python3 ${SCRIPT_DIR}/../../scripts/render.py ${SCRIPT_DIR}/jinja.template.yml \
     --variable-file ${SCRIPT_DIR}/../shared/jinja.variables.yml \
@@ -77,7 +80,7 @@ pushd ${SCRIPT_DIR} 2>&1 > /dev/null
   fly -t ${TARGET} set-pipeline \
     --pipeline ${PIPELINE_NAME} \
     --config ${SCRIPT_DIR}/generated-pipeline.yml \
-    --var spring-data-gemfire-build-branch=${SANIITIZED_SDG_BRANCH} \
+    --var spring-data-gemfire-build-branch=${SANITIZED_SDG_BRANCH} \
     --var pipeline-prefix=${PIPELINE_PREFIX} \
     --var gcp-project=${GCP_PROJECT} \
     --var concourse-team=${CONCOURSE_TEAM} \
