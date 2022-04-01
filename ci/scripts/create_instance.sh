@@ -99,6 +99,9 @@ TTL=$(($(date +%s) + 60 * 60 * 12))
 LABELS="instance_type=heavy-lifter,time-to-live=${TTL},job-name=${SANITIZED_BUILD_JOB_NAME},pipeline-name=${SANITIZED_BUILD_PIPELINE_NAME},build-name=${SANITIZED_BUILD_NAME}"
 echo "Applying the following labels to the instance: ${LABELS}"
 
+ssh-keygen -N "" -C "" -f ${SSHKEY_FILE}
+
+SSHKEY=$( cat ${SSHKEY_FILE}.pub )
 set +e
 INSTANCE_INFORMATION=$(gcloud compute --project=${GCP_PROJECT} instances create ${INSTANCE_NAME} \
   --zone=${ZONE} \
@@ -112,6 +115,7 @@ INSTANCE_INFORMATION=$(gcloud compute --project=${GCP_PROJECT} instances create 
   --labels="${LABELS}" \
   --tags="heavy-lifter" \
   --scopes="default,storage-rw" \
+  --metadata=ssh-keys="geode: ${SSHKEY}" \
  `[[ ${USE_SCRATCH_SSD} == "true" ]] && echo "--local-ssd interface=scsi"` \
   --format=json)
 
