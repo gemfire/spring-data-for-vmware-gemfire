@@ -83,6 +83,7 @@ pushd ${SCRIPT_DIR} 2>&1 > /dev/null
     --var concourse-team=${CONCOURSE_TEAM} \
     --var linux-base-family=ubuntu-minimal-2004-lts \
     --var semver-prerelease-token=${SEMVER_PRERELEASE_TOKEN} \
+    --var artifact-bucket=${ARTIFACT_BUCKET} \
     --var concourse-url=${CONCOURSE_URL}
 
 popd 2>&1 > /dev/null

@@ -44,7 +44,7 @@ resources:
   source:
     key: ((concourse-gcp-key))
     family_project: ((gcp-project))
-    family: ((pipeline-prefix))-linux-sdg-builder
+    family: ((pipeline-prefix))linux-sdg-builder
 
 - name: google-sdg-builder
   type: git
@@ -107,6 +107,7 @@ resources:
     username: ((docker-username))
     password: ((docker-password))
     repository: gcr.io/((gcp-project))/((pipeline-prefix))concourse-metadata-resource
+    tag: latest
 
 - name: spring-data-gemfire-build-version
   type: semver
@@ -194,7 +195,7 @@ jobs:
     config:
       platform: linux
       params:
-        CONTEXT: concourse-metadata-resource-dockerfile/ci/resource_types/concourse-metadata-resource
+        CONTEXT: concourse-metadata-resource-dockerfile/ci/resource-types/concourse-metadata-resource
       inputs:
       - name: concourse-metadata-resource-dockerfile
       outputs:
@@ -257,7 +258,7 @@ jobs:
   - do:
     - put: concourse-metadata-resource
     - task: initial-output
-      image: utilities-alpine-tools-image
+      image: utilities-alpine-tools-docker-image
       config:
         platform: linux
         outputs:
@@ -266,7 +267,7 @@ jobs:
           path: touch
           args: ['attempts-log/attempts']
     - task: create_instance
-      image: utilities-alpine-tools-image
+      image: utilities-alpine-tools-docker-image
       config:
         platform: linux
         params:
@@ -299,7 +300,7 @@ jobs:
       attempts: 5
       on_failure:
         task: delete_instance
-        image: utilities-alpine-tools-image
+        image: utilities-alpine-tools-docker-image
         config:
           platform: linux
           run:
@@ -313,7 +314,7 @@ jobs:
       params:
         file: spring-data-gemfire-build-version/number
     - task: rsync_code_up
-      image: utilities-alpine-tools-image
+      image: utilities-alpine-tools-docker-image
       config:
         platform: linux
         run:

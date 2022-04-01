@@ -46,7 +46,7 @@ if [[ -z "${GCP_ZONE}" ]]; then
   exit 1
 fi
 
-. ${SCRIPTDIR}/../pipelines/shared/utilities.sh
+. ${SCRIPTDIR}/utilities.sh
 SANITIZED_SDG_BRANCH=$(getSanitizedBranch ${SDG_BRANCH})
 SANITIZED_SDG_FORK=$(getSanitizedFork ${SDG_FORK})
 
