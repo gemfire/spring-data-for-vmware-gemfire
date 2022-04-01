@@ -33,7 +33,7 @@ case $ARTIFACT_SLUG in
 esac
 
 EXEC_COMMAND="bash -c 'export JAVA_HOME=${JAVA_BUILD_PATH} \
-  ${del} cd geode \
+  ${del} cd spring-data-gemfire \
   ${del} ./gradlew --no-daemon combineReports \
   ${del} ./gradlew --stop \
   ${del} cd .. \

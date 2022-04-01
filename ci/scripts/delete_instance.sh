@@ -12,8 +12,6 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-. ${SCRIPTDIR}/shared_utilities.sh
-
 INSTANCE_NAME="$(cat instance-data/instance-name)"
 PERMITTED_ZONES=($(gcloud compute zones list --filter="name~'us-central.*'" --format=json | jq -r .[].name))
 
