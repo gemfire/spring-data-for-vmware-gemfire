@@ -194,7 +194,7 @@ jobs:
     config:
       platform: linux
       params:
-        CONTEXT: concourse-metadata-resource-dockerfile/ci/images/concourse-metadata-resource
+        CONTEXT: concourse-metadata-resource-dockerfile/ci/resource_types/concourse-metadata-resource
       inputs:
       - name: concourse-metadata-resource-dockerfile
       outputs:
