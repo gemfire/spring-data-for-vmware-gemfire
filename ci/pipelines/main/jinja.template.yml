@@ -19,6 +19,10 @@ resource_types:
     username: ((docker-username))
 
 resources:
+- name: concourse-metadata-resource
+  type: concourse-metadata-resource
+  source: {}
+
 - name: google-cloud-sdk-image
   type: registry-image
   source:
@@ -211,7 +215,7 @@ jobs:
     - get: google-sdg-builder
       trigger: true
     - get: utilities-alpine-tools-docker-image
-      passed: [build-utiltiies-alpine-tools-docker-image]
+      passed: [build-utilities-alpine-tools-docker-image]
     - get: linux-base-family
       trigger: true
   - task: build-image
