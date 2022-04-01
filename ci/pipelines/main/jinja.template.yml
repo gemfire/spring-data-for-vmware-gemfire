@@ -354,7 +354,7 @@ jobs:
       params:
         JAVA_BUILD_VERSION: {{ java_build_version.version }}
         GRADLE_TASK: build
-        MAINTENANCE_VERSION: ((sdg-build-branch ))
+        MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch ))
         SERVICE_ACCOUNT: ((concourse-gcp-account))
       run:
         path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
@@ -398,7 +398,7 @@ jobs:
                 MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch))
                 ARTIFACT_BUCKET: ((artifact-bucket))
                 SERVICE_ACCOUNT: ((concourse-gcp-account))
-                TAR_GEODE_BUILD_ARTIFACTS: true
+                TAR_SPRING_DATA_GEMFIRE_BUILD_ARTIFACTS: true
               run:
                 path: spring-data-gemfire-ci/ci/scripts/archive_results.sh
               inputs:
