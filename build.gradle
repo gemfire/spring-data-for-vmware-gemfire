@@ -1,32 +1,55 @@
 plugins {
-    id 'java-library'
-    id 'base'
-    id 'eclipse'
-    id 'maven-publish'
+  id 'java-library'
+  id 'base'
+  id 'eclipse'
+  id 'maven-publish'
 }
 
 group 'com.vmware.gemfire'
 version "${version}"
 
 repositories {
-    mavenCentral()
+  mavenCentral()
+  maven {
+    name 'Tanzu GemFire Release Repository'
+    url 'https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire'
+    credentials {
+      username "$mavenUser"
+      password "$mavenPassword"
+    }
+  }
 }
 
 // The published bom will constrain versions within geode of any subproject with this property set.
 project.ext.set('constrainVersionInBom', true)
 
 publishing {
-    publications {
-        mavenRepo(MavenPublication) {
-            from components.java
-        }
+  publications {
+    mavenRepo(MavenPublication) {
+      from components.java
     }
+  }
 }
 
 dependencies {
-    implementation 'org.springframework.data:spring-data-geode:2.6.3'
+  implementation("org.springframework.data:spring-data-geode:"+springDataVersion){
+    exclude group: 'org.apache.geode', module: 'geode-core'
+    exclude group: 'org.apache.geode', module: 'geode-cq'
+    exclude group: 'org.apache.geode', module: 'geode-wan'
+    exclude group: 'org.apache.geode', module: 'geode-gfsh'
+    exclude group: 'org.apache.geode', module: 'geode-lucene'
+  }
+  implementation("io.pivotal.gemfire:geode-core:"+gemfireVersion){
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-jcl'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-jul'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+  }
+  implementation "io.pivotal.gemfire:geode-cq:"+gemfireVersion
+  implementation "io.pivotal.gemfire:geode-wan:"+gemfireVersion
+  implementation "io.pivotal.gemfire:geode-lucene:"+gemfireVersion
+  implementation "io.pivotal.gemfire:geode-gfsh:"+gemfireVersion
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
