@@ -20,6 +20,7 @@ ROOT_DIR=$(pwd)
 BUILD_DATE=$(date +%s)
 
 DEFAULT_GRADLE_TASK_OPTIONS="--console=plain --no-daemon"
+GRADLE_GLOBAL_ARGS="${GRADLE_GLOBAL_ARGS:-}"
 
 SSHKEY_FILE="instance-data/sshkey"
 SSH_OPTIONS="-i ${SSHKEY_FILE} -o ConnectionAttempts=60 -o StrictHostKeyChecking=no"
@@ -30,6 +31,7 @@ SET_JAVA_HOME="export JAVA_HOME=/usr/lib/jvm/bellsoft-java${JAVA_BUILD_VERSION}-
 
 GRADLE_COMMAND="./gradlew \
     ${DEFAULT_GRADLE_TASK_OPTIONS} \
+    ${GRADLE_GLOBAL_ARGS} \
     clean build"
 
 echo "${GRADLE_COMMAND}"

@@ -356,6 +356,9 @@ jobs:
         GRADLE_TASK: build
         MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch ))
         SERVICE_ACCOUNT: ((concourse-gcp-account))
+        MAVEN_USERNAME: ((pivotal-repo-username))
+        MAVEN_PASSWORD: ((pivotal-repo-password))
+        GRADLE_GLOBAL_ARGS: "-PmavenUser=((pivotal-repo-username)) -PmavenPassword=((pivotal-repo-password))"
       run:
         path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
       inputs:

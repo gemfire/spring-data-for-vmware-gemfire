@@ -12,7 +12,7 @@ repositories {
   mavenCentral()
   maven {
     name 'Tanzu GemFire Release Repository'
-    url 'https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire'
+    url 'https://repo.pivotal.io/gemfire-release-local'
     credentials {
       username "$mavenUser"
       password "$mavenPassword"
