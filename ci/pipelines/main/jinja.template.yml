@@ -49,12 +49,12 @@ resources:
 - name: google-sdg-builder
   type: git
   source:
-    branch: main
+    branch: {{repositories.springDataGemfire.branch}}
     uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/scripts/build_image.sh
-    - ci/images/google-sdg-builder/*
+    - ci/images/google-sdg-builder
 
 - name: hashicorp-packer-image
   type: registry-image
