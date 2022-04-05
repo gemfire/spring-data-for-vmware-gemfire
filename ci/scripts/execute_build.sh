@@ -28,6 +28,10 @@ SSH_OPTIONS="-i ${SSHKEY_FILE} -o ConnectionAttempts=60 -o StrictHostKeyChecking
 INSTANCE_IP_ADDRESS="$(cat instance-data/instance-ip-address)"
 
 SET_JAVA_HOME="export JAVA_HOME=/usr/lib/jvm/bellsoft-java${JAVA_BUILD_VERSION}-amd64"
+cat <<EOF > ${HOME}/.ssh/config
+SendEnv ORG_GRADLE_PROJECT_mavenUser
+SendEnv ORG_GRADLE_PROJECT_mavenPassword
+EOF
 
 GRADLE_COMMAND="./gradlew \
     ${DEFAULT_GRADLE_TASK_OPTIONS} \

@@ -54,7 +54,7 @@ resources:
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/scripts/build_image.sh
-    - ci/images/google-sdg-builder
+    - ci/images/google-sdg-builder/*
 
 - name: hashicorp-packer-image
   type: registry-image
@@ -358,7 +358,8 @@ jobs:
         SERVICE_ACCOUNT: ((concourse-gcp-account))
         MAVEN_USERNAME: ((pivotal-repo-username))
         MAVEN_PASSWORD: ((pivotal-repo-password))
-        GRADLE_GLOBAL_ARGS: "-PmavenUser=((pivotal-repo-username)) -PmavenPassword=((pivotal-repo-password))"
+        ORG_GRADLE_PROJECT_mavenPassword: ((pivotal-repo-password))
+        ORG_GRADLE_PROJECT_mavenUser: ((pivotal-repo-username))
       run:
         path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
       inputs:
