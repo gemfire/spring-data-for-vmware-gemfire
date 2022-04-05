@@ -86,7 +86,7 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 echo "kernel.pid_max=983040" > /etc/sysctl.d/99-geode.conf
 mkdir -p /home/${LOCAL_USER}/.ssh
-cat <<EOF | tee -a /home/${LOCAL_USER}/.ssh/config
+cat <<EOF | tee -a /etc/ssh/sshd_config
 acceptEnv ORG_GRADLE_PROJECT_mavenUser
 acceptEnv ORG_GRADLE_PROJECT_mavenPassword
 EOF
