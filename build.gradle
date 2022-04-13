@@ -32,23 +32,74 @@ publishing {
 }
 
 dependencies {
-  implementation("org.springframework.data:spring-data-geode:"+springDataVersion){
+  implementation("org.springframework.data:spring-data-geode:" + springDataVersion) {
     exclude group: 'org.apache.geode', module: 'geode-core'
     exclude group: 'org.apache.geode', module: 'geode-cq'
     exclude group: 'org.apache.geode', module: 'geode-wan'
     exclude group: 'org.apache.geode', module: 'geode-gfsh'
     exclude group: 'org.apache.geode', module: 'geode-lucene'
   }
-  implementation("io.pivotal.gemfire:geode-core:"+gemfireVersion){
+  implementation("io.pivotal.gemfire:geode-core:" + gemfireVersion) {
     exclude group: 'org.apache.logging.log4j', module: 'log4j-jcl'
     exclude group: 'org.apache.logging.log4j', module: 'log4j-jul'
     exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
   }
-  implementation "io.pivotal.gemfire:geode-cq:"+gemfireVersion
-  implementation "io.pivotal.gemfire:geode-wan:"+gemfireVersion
-  implementation "io.pivotal.gemfire:geode-lucene:"+gemfireVersion
-  implementation "io.pivotal.gemfire:geode-gfsh:"+gemfireVersion
+  implementation "io.pivotal.gemfire:geode-cq:" + gemfireVersion
+  implementation "io.pivotal.gemfire:geode-wan:" + gemfireVersion
+  implementation "io.pivotal.gemfire:geode-lucene:" + gemfireVersion
+  implementation "io.pivotal.gemfire:geode-gfsh:" + gemfireVersion
+
+  //testImplementation(group: 'org.springframework.data', name: 'spring-data-geode', version:'2.5.11-SNAPSHOT',classifier:'test-jar')
 }
+
+task cloneUnderlyingSDG(type: Exec) {
+  dependsOn("clean")
+  outputs.dir(project.buildDir.toPath().resolve('tmp').resolve('sdg'))
+  commandLine 'git', 'clone', 'https://github.com/spring-projects/spring-data-geode.git', "${buildDir}/tmp/sdg"
+}
+
+task changeSDGBranch(type: Exec) {
+  dependsOn("cloneUnderlyingSDG")
+  inputs.dir(project.buildDir.toPath().resolve('tmp').resolve('sdg'))
+  workingDir "${buildDir}/tmp/sdg"
+  commandLine 'git', 'checkout', springDataBranch
+}
+
+task mavenCompileSDG(type: Exec) {
+  dependsOn("enableTestJarPublishSDG")
+  inputs.file(project.buildDir.toPath().resolve('tmp').resolve('sdg').resolve('spring-data-geode').resolve('pom2.xml'))
+  workingDir "${buildDir}/tmp/sdg"
+  commandLine './mvnw', 'clean','jar:test-jar','install','-Dmaven.test.skip=true', '--file', "${project.buildDir.toPath().resolve('tmp').resolve('sdg').resolve('spring-data-geode').resolve('pom2.xml')}"
+}
+
+task enableTestJarPublishSDG {
+  dependsOn("changeSDGBranch")
+  inputs.file(project.buildDir.toPath().resolve('tmp').resolve('sdg').resolve('spring-data-geode').resolve('pom.xml'))
+  outputs.file(project.buildDir.toPath().resolve('tmp').resolve('sdg').resolve('spring-data-geode').resolve('pom2.xml'))
+  doLast {
+    def xmlFile = new File("${buildDir}/tmp/sdg/spring-data-geode/pom.xml")
+    def pom = new XmlSlurper(false, false).parse((File) xmlFile)
+
+    def pluginText = '''<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-jar-plugin</artifactId>
+               <version>3.2.2</version>
+
+               <executions>
+                   <execution>
+                       <goals>
+                           <goal>test-jar</goal>
+                       </goals>
+                   </execution>
+               </executions>
+           </plugin>'''
+    pom.build.plugins.appendNode(new XmlSlurper(false, false).parseText(pluginText))
+
+    FileWriter fileWriter = new FileWriter("${buildDir}/tmp/sdg/spring-data-geode/pom2.xml")
+    groovy.xml.XmlUtil.serialize(pom,fileWriter)
+  }
+}
+
 
 test {
   useJUnitPlatform()
