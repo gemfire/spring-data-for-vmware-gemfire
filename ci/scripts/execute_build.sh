@@ -37,7 +37,7 @@ EOF
 GRADLE_COMMAND="./gradlew \
     ${DEFAULT_GRADLE_TASK_OPTIONS} \
     ${GRADLE_GLOBAL_ARGS} \
-    clean build"
+    clean build mavenCompileSDG"
 
 echo "${GRADLE_COMMAND}"
 ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-gemfire && ${SET_JAVA_HOME} && ${GRADLE_COMMAND}"
