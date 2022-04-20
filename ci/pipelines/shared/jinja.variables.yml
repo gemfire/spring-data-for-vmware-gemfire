@@ -20,4 +20,4 @@ storage:
   bucket: gemfire-build-resources
 java_build_version:
   name: openjdk8
-  version: 17
+  version: 8
