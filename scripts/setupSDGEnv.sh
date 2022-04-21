@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#if anything errors, bail.
+set -e
+
 #Variables
 sdgPath="spring-data-geode"
 branch=""
