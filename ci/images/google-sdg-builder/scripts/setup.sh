@@ -30,6 +30,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     git \
     google-chrome-stable \
     htop \
+    java-common \
     jq \
     less \
     lsof \
@@ -49,6 +50,7 @@ apt-get install -y --no-install-recommends \
     bellsoft-java8
 rm -rf /etc/alternatives
 mv /etc/keep-alternatives /etc/alternatives
+update-java-alternatives -s bellsoft-java8-amd64
 
 pip3 install --upgrade pip
 pip3 install setuptools
