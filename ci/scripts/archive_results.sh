@@ -30,7 +30,7 @@ fi
 
 SANITIZED_GRADLE_TASK=${GRADLE_TASK##*:}
 TMPDIR=${DEST_DIR}/tmp
-SPRING_DATA_GEMFIRE_BUILD=${DEST_DIR}/spring-data-gemfire
+SPRING_DATA_GEMFIRE_BUILD=${DEST_DIR}/spring-data-tanzu-gemfire
 BUILD_TIMESTAMP=$(date +%s)
 
 
