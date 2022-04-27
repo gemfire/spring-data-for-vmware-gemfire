@@ -52,6 +52,7 @@ ModifyPom(){
 }
 
 Build(){
+  java -version
   ./mvnw clean install
   version=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
 }
