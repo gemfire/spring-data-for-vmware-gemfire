@@ -12,7 +12,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-REPODIR=$(cd spring-data-gemfire; git rev-parse --show-toplevel)
+REPODIR=$(cd spring-data-tanzu-gemfire; git rev-parse --show-toplevel)
 
 SSHKEY_FILE="instance-data/sshkey"
 SSH_OPTIONS="-i ${SSHKEY_FILE} -o ConnectionAttempts=60 -o StrictHostKeyChecking=no"

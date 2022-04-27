@@ -52,7 +52,7 @@ ModifyPom(){
 }
 
 Build(){
-  ./mvnw clean install
+  ./mvnw clean install test -Dtest="GemFireDataSourceUsingNonSpringConfiguredGemFireServerIntegrationTests"
   version=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
 }
 

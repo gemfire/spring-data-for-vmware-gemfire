@@ -333,6 +333,7 @@ jobs:
         inputs:
         - name: spring-data-gemfire-ci
         - name: spring-data-gemfire
+          path: spring-data-tanzu-gemfire
         - name: instance-data
     timeout: 15m
     attempts: 5
@@ -365,6 +366,7 @@ jobs:
       inputs:
       - name: spring-data-gemfire-ci
       - name: spring-data-gemfire
+        path: spring-data-tanzu-gemfire
       - name: instance-data
       - name: spring-data-gemfire-build-version
       outputs:
@@ -384,6 +386,7 @@ jobs:
           inputs:
           - name: spring-data-gemfire-ci
           - name: spring-data-gemfire
+            path: spring-data-tanzu-gemfire
           - name: instance-data
           outputs:
           - name: spring-data-gemfire-results

@@ -43,6 +43,6 @@ time ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "${EXEC_COMMAND}"
 
 time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-gemfire .gradle | tar -C "${OUTPUT_DIR}" -zxf -
 
-mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/spring-data-gemfire/.gradle_logs"
+mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/spring-data-tanzu-gemfire/.gradle_logs"
 
 set +x

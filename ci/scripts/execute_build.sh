@@ -39,7 +39,7 @@ GRADLE_COMMAND="./gradlew \
     ${GRADLE_GLOBAL_ARGS} \
     clean build mavenCompileSDG publishToMavenLocal"
 
-SCRIPT_COMMAND="scripts/setupSDGeodeEnv.sh -b 2.5.x"
+SCRIPT_COMMAND="scripts/setupSDGEnv.sh -b 2.5.x"
 echo "${GRADLE_COMMAND}"
 #ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-gemfire && ${SET_JAVA_HOME} && ${GRADLE_COMMAND}"
-ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-gemfire && ${SET_JAVA_HOME} && ${SCRIPT_COMMAND}"
+ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-tanzu-gemfire && ${SET_JAVA_HOME} && ${SCRIPT_COMMAND}"
