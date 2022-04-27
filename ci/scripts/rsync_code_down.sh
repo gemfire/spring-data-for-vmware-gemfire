@@ -33,7 +33,7 @@ case $ARTIFACT_SLUG in
 esac
 
 EXEC_COMMAND="bash -c 'export JAVA_HOME=${JAVA_BUILD_PATH} \
-  ${del} cd spring-data-gemfire \
+  ${del} cd spring-data-tanzu-gemfire \
   ${del} ./gradlew --no-daemon combineReports \
   ${del} ./gradlew --stop \
   ${del} cd .. \
@@ -41,7 +41,7 @@ EXEC_COMMAND="bash -c 'export JAVA_HOME=${JAVA_BUILD_PATH} \
 
 time ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "${EXEC_COMMAND}"
 
-time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-gemfire .gradle | tar -C "${OUTPUT_DIR}" -zxf -
+time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-tanzu-gemfire .gradle | tar -C "${OUTPUT_DIR}" -zxf -
 
 mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/spring-data-tanzu-gemfire/.gradle_logs"
 
