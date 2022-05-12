@@ -1,6 +1,6 @@
 repositories:
   springDataTanzuGemfire:
-    branch: 9.10_2.3
+    branch: develop
     fork: gemfire
     repo: spring-data-tanzu-gemfire
   gemfireAssembly:
