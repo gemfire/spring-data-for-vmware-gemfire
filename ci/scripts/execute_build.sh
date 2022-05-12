@@ -55,5 +55,5 @@ GRADLE_COMMAND="./gradlew \
 
 SCRIPT_COMMAND="scripts/setupSDGeodeEnv.sh -l /home/geode/spring-data-tanzu-gemfire/spring-data-geode -b 2.3.x"
 echo "${GRADLE_COMMAND}"
-#ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-tanzu-gemfire && ${SET_JAVA_HOME} && ${GRADLE_COMMAND}"
-ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-tanzu-gemfire && ${SET_JAVA_HOME} && ${SCRIPT_COMMAND}"
+ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-tanzu-gemfire && ${SET_JAVA_HOME} && ${GRADLE_COMMAND}"
+#ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "set -x  && mkdir -p tmp && cd spring-data-tanzu-gemfire && ${SET_JAVA_HOME} && ${SCRIPT_COMMAND}"
