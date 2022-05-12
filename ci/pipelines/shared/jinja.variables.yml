@@ -1,8 +1,8 @@
 repositories:
-  springDataGemfire:
-    branch: develop
+  springDataTanzuGemfire:
+    branch: 9.10_2.3
     fork: gemfire
-    repo: spring-data-gemfire
+    repo: spring-data-tanzu-gemfire
   gemfireAssembly:
     branch: support/9.10
     fork: gemfire
@@ -21,3 +21,5 @@ storage:
 java_build_version:
   name: openjdk8
   version: 8
+instanceSettings:
+  deleteInstance: true

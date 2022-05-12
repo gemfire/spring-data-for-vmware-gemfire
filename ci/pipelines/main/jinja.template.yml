@@ -49,8 +49,8 @@ resources:
 - name: google-sdg-builder
   type: git
   source:
-    branch: {{repositories.springDataGemfire.branch}}
-    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    branch: {{repositories.springDataTanzuGemfire.branch}}
+    uri: git@github.com:{{ repositories.springDataTanzuGemfire.fork }}/{{ repositories.springDataTanzuGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/scripts/build_image.sh
@@ -76,8 +76,8 @@ resources:
   type: git
   source:
     depth: 1
-    branch: {{ repositories.springDataGemfire.branch }}
-    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    branch: {{ repositories.springDataTanzuGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataTanzuGemfire.fork }}/{{ repositories.springDataTanzuGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/images/utilities-alpine-tools
@@ -95,8 +95,8 @@ resources:
   icon: github
   type: git
   source:
-    branch: {{ repositories.springDataGemfire.branch }}
-    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    branch: {{ repositories.springDataTanzuGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataTanzuGemfire.fork }}/{{ repositories.springDataTanzuGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/resource-types/concourse-metadata-resource/*
@@ -109,30 +109,30 @@ resources:
     repository: gcr.io/((gcp-project))/((pipeline-prefix))concourse-metadata-resource
     tag: latest
 
-- name: spring-data-gemfire-build-version
+- name: spring-data-tanzu-gemfire-build-version
   type: semver
   source:
     bucket: ((artifact-bucket))
     driver: gcs
     initial_version: 0.0.0
     json_key: ((concourse-gcp-key))
-    key: semvers/((pipeline-prefix)){{ repositories.springDataGemfire.branch }}/number
+    key: semvers/((pipeline-prefix)){{ repositories.springDataTanzuGemfire.branch }}/number
 
-- name: spring-data-gemfire
+- name: spring-data-tanzu-gemfire
   icon: github
   type: git
   source:
-    branch: {{ repositories.springDataGemfire.branch }}
-    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    branch: {{ repositories.springDataTanzuGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataTanzuGemfire.fork }}/{{ repositories.springDataTanzuGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     exclude_paths:
     - ci/*
-- name: spring-data-gemfire-ci
+- name: spring-data-tanzu-gemfire-ci
   icon: github
   type: git
   source:
-    branch: {{ repositories.springDataGemfire.branch }}
-    uri: git@github.com:{{ repositories.springDataGemfire.fork }}/{{ repositories.springDataGemfire.repo }}.git
+    branch: {{ repositories.springDataTanzuGemfire.branch }}
+    uri: git@github.com:{{ repositories.springDataTanzuGemfire.fork }}/{{ repositories.springDataTanzuGemfire.repo }}.git
     private_key: ((gemfire-ci-private-key))
     paths:
     - ci/*
@@ -243,26 +243,28 @@ jobs:
         args:
         - google-sdg-builder/ci/images/google-sdg-builder/packer.json
 
-- name: build-spring-data-gemfire
+- name: build-spring-data-tanzu-gemfire
   max_in_flight: 1
   ensure:
     task: delete_instance
     image: utilities-alpine-tools-docker-image
     config:
       platform: linux
+      params:
+        DELETE_INSTANCE: {{ instanceSettings.deleteInstance }}
       run:
-        path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+        path: spring-data-tanzu-gemfire-ci/ci/scripts/delete_instance.sh
       inputs:
-      - name: spring-data-gemfire-ci
+      - name: spring-data-tanzu-gemfire-ci
       - name: instance-data
     timeout: 1h
   plan:
   - in_parallel:
-    - get: spring-data-gemfire-ci
+    - get: spring-data-tanzu-gemfire-ci
     - get: utilities-alpine-tools-docker-image
-    - get: spring-data-gemfire
+    - get: spring-data-tanzu-gemfire
       trigger: true
-    - get: spring-data-gemfire-build-version
+    - get: spring-data-tanzu-gemfire-build-version
       params:
         pre: ((semver-prerelease-token))
     - get: linux-sdg-builder-image-family
@@ -289,18 +291,18 @@ jobs:
           CPUS: '8'
           RAM: '16'
           DISK: '200GB'
-          SDG_BRANCH: {{ repositories.springDataGemfire.branch }}
-          SDG_FORK: {{ repositories.springDataGemfire.fork }}
+          SDG_BRANCH: {{ repositories.springDataTanzuGemfire.branch }}
+          SDG_FORK: {{ repositories.springDataTanzuGemfire.fork }}
           JAVA_BUILD_VERSION: 17
           IMAGE_FAMILY_NAME: ((pipeline-prefix))linux-sdg-builder
         run:
-          path: spring-data-gemfire-ci/ci/scripts/create_instance.sh
+          path: spring-data-tanzu-gemfire-ci/ci/scripts/create_instance.sh
         inputs:
         - name: attempts-log
           path: old
         - name: concourse-metadata-resource
-        - name: spring-data-gemfire
-        - name: spring-data-gemfire-ci
+        - name: spring-data-tanzu-gemfire
+        - name: spring-data-tanzu-gemfire-ci
         - name: linux-sdg-builder-image-family
           path: builder-image
         outputs:
@@ -314,26 +316,27 @@ jobs:
         image: utilities-alpine-tools-docker-image
         config:
           platform: linux
+          params:
+            DELETE_INSTANCE: {{ instanceSettings.deleteInstance }}
           run:
-            path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+            path: spring-data-tanzu-gemfire-ci/ci/scripts/delete_instance.sh
           inputs:
-          - name: spring-data-gemfire-ci
+          - name: spring-data-tanzu-gemfire-ci
           - name: instance-data
         timeout: 1h
   - in_parallel:
-    - put: spring-data-gemfire-build-version
+    - put: spring-data-tanzu-gemfire-build-version
       params:
-        file: spring-data-gemfire-build-version/number
+        file: spring-data-tanzu-gemfire-build-version/number
     - task: rsync_code_up
       image: utilities-alpine-tools-docker-image
       config:
         platform: linux
         run:
-          path: spring-data-gemfire-ci/ci/scripts/rsync_code_up.sh
+          path: spring-data-tanzu-gemfire-ci/ci/scripts/rsync_code_up.sh
         inputs:
-        - name: spring-data-gemfire-ci
-        - name: spring-data-gemfire
-          path: spring-data-tanzu-gemfire
+        - name: spring-data-tanzu-gemfire-ci
+        - name: spring-data-tanzu-gemfire
         - name: instance-data
     timeout: 15m
     attempts: 5
@@ -342,10 +345,12 @@ jobs:
       image: utilities-alpine-tools-docker-image
       config:
         platform: linux
+        params:
+          DELETE_INSTANCE: {{ instanceSettings.deleteInstance }}
         run:
-          path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+          path: spring-data-tanzu-gemfire-ci/ci/scripts/delete_instance.sh
         inputs:
-        - name: spring-data-gemfire-ci
+        - name: spring-data-tanzu-gemfire-ci
         - name: instance-data
       timeout: 1h
   - task: build
@@ -355,22 +360,23 @@ jobs:
       params:
         JAVA_BUILD_VERSION: {{ java_build_version.version }}
         GRADLE_TASK: build
-        MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch ))
+        MAINTENANCE_VERSION: ((spring-data-tanzu-gemfire-build-branch ))
         SERVICE_ACCOUNT: ((concourse-gcp-account))
         MAVEN_USERNAME: ((pivotal-repo-username))
         MAVEN_PASSWORD: ((pivotal-repo-password))
+        COMMERCIAL_REPO_USERNAME: ((commercial-repo-username))
+        COMMERCIAL_REPO_PASSWORD: ((commercial-repo-password))
         ORG_GRADLE_PROJECT_mavenPassword: ((pivotal-repo-password))
         ORG_GRADLE_PROJECT_mavenUser: ((pivotal-repo-username))
       run:
-        path: spring-data-gemfire-ci/ci/scripts/execute_build.sh
+        path: spring-data-tanzu-gemfire-ci/ci/scripts/execute_build.sh
       inputs:
-      - name: spring-data-gemfire-ci
-      - name: spring-data-gemfire
-        path: spring-data-tanzu-gemfire
+      - name: spring-data-tanzu-gemfire-ci
+      - name: spring-data-tanzu-gemfire
       - name: instance-data
-      - name: spring-data-gemfire-build-version
+      - name: spring-data-tanzu-gemfire-build-version
       outputs:
-      - name: built-spring-data-gemfire
+      - name: built-spring-data-tanzu-gemfire
       - name: results
     timeout: 30m
     ensure:
@@ -382,14 +388,13 @@ jobs:
           params:
             JAVA_BUILD_VERSION: {{ java_build_version.version }}
           run:
-            path: spring-data-gemfire-ci/ci/scripts/rsync_code_down.sh
+            path: spring-data-tanzu-gemfire-ci/ci/scripts/rsync_code_down.sh
           inputs:
-          - name: spring-data-gemfire-ci
-          - name: spring-data-gemfire
-            path: spring-data-tanzu-gemfire
+          - name: spring-data-tanzu-gemfire-ci
+          - name: spring-data-tanzu-gemfire
           - name: instance-data
           outputs:
-          - name: spring-data-gemfire-results
+          - name: spring-data-tanzu-gemfire-results
         timeout: 20m
         attempts: 5
       ensure:
@@ -402,27 +407,29 @@ jobs:
               params:
                 ARTIFACT_SLUG: build-{{java_build_version.name}}
                 GRADLE_TASK: build
-                MAINTENANCE_VERSION: ((spring-data-gemfire-build-branch))
+                MAINTENANCE_VERSION: ((spring-data-tanzu-gemfire-build-branch))
                 ARTIFACT_BUCKET: ((artifact-bucket))
                 SERVICE_ACCOUNT: ((concourse-gcp-account))
                 TAR_SPRING_DATA_GEMFIRE_BUILD_ARTIFACTS: true
               run:
-                path: spring-data-gemfire-ci/ci/scripts/archive_results.sh
+                path: spring-data-tanzu-gemfire-ci/ci/scripts/archive_results.sh
               inputs:
-              - name: spring-data-gemfire
+              - name: spring-data-tanzu-gemfire
               - name: concourse-metadata-resource
-              - name: spring-data-gemfire-ci
-              - name: spring-data-gemfire-build-version
-              - name: spring-data-gemfire-results
+              - name: spring-data-tanzu-gemfire-ci
+              - name: spring-data-tanzu-gemfire-build-version
+              - name: spring-data-tanzu-gemfire-results
             timeout: 1h
           - task: delete_instance
             image: utilities-alpine-tools-docker-image
             config:
               platform: linux
+              params:
+                DELETE_INSTANCE: {{ instanceSettings.deleteInstance }}
               run:
-                path: spring-data-gemfire-ci/ci/scripts/delete_instance.sh
+                path: spring-data-tanzu-gemfire-ci/ci/scripts/delete_instance.sh
               inputs:
-              - name: spring-data-gemfire
-              - name: spring-data-gemfire-ci
+              - name: spring-data-tanzu-gemfire
+              - name: spring-data-tanzu-gemfire-ci
               - name: instance-data
             timeout: 1h

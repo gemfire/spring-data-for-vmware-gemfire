@@ -47,19 +47,20 @@ if [ -z "${FLY}" ]; then
   exit 1
 fi
 
-SDG_FORK=$(yq -r .repositories.springDataGemfire.fork \
+SDG_FORK=$(yq -r .repositories.springDataTanzuGemfire.fork \
   ${SCRIPT_DIR}/../shared/jinja.variables.yml)
 
-SDG_BRANCH=$(yq -r .repositories.springDataGemfire.branch \
+SDG_BRANCH=$(yq -r .repositories.springDataTanzuGemfire.branch \
   ${SCRIPT_DIR}/../shared/jinja.variables.yml)
 
 . ${SCRIPT_DIR}/../../scripts/utilities.sh
 SANITIZED_SDG_FORK=$(sanitizeName ${SDG_FORK})
 SANITIZED_SDG_BRANCH=$(getSanitizedBranch ${SDG_BRANCH})
-PIPELINE_PREFIX="sdg-${SANITIZED_SDG_BRANCH}-"
-PIPELINE_NAME="sdg-${SANITIZED_SDG_BRANCH}-main"
+PIPELINE_PREFIX="sdtg-${SANITIZED_SDG_BRANCH}-"
+PIPELINE_NAME="sdtg-${SANITIZED_SDG_BRANCH}-main"
 CONCOURSE_URL="https://${CONCOURSE_HOST}"
 CONCOURSE_TEAM="${CONCOURSE_TEAM:-main}"
+
 
 echo "FORK is ${SANITIZED_SDG_FORK}"
 echo "BRANCH is ${SANITIZED_SDG_BRANCH}"
@@ -80,7 +81,7 @@ pushd ${SCRIPT_DIR} 2>&1 > /dev/null
   fly -t ${TARGET} set-pipeline \
     --pipeline ${PIPELINE_NAME} \
     --config ${SCRIPT_DIR}/generated-pipeline.yml \
-    --var spring-data-gemfire-build-branch=${SANITIZED_SDG_BRANCH} \
+    --var spring-data-tanzu-gemfire-build-branch=${SANITIZED_SDG_BRANCH} \
     --var pipeline-prefix=${PIPELINE_PREFIX} \
     --var gcp-project=${GCP_PROJECT} \
     --var concourse-team=${CONCOURSE_TEAM} \

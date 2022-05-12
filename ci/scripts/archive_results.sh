@@ -16,7 +16,7 @@ source ${BASE_DIR}/concourse-metadata-resource/concourse_metadata
 source ${SCRIPTDIR}/shared_utilities.sh
 
 BUILDROOT=$(pwd)
-DEST_DIR=${BUILDROOT}/spring-data-gemfire-results
+DEST_DIR=${BUILDROOT}/spring-data-tanzu-gemfire-results
 
 if [[ -z "${GRADLE_TASK}" ]]; then
   echo "GRADLE_TASK must be set. exiting..."
@@ -34,7 +34,7 @@ SPRING_DATA_GEMFIRE_BUILD=${DEST_DIR}/spring-data-tanzu-gemfire
 BUILD_TIMESTAMP=$(date +%s)
 
 
-SPRING_DATA_GEMFIRE_BUILD_VERSION_FILE=${BUILDROOT}/spring-data-gemfire-build-version/number
+SPRING_DATA_GEMFIRE_BUILD_VERSION_FILE=${BUILDROOT}/spring-data-tanzu-gemfire-build-version/number
 
 if [ ! -e "${SPRING_DATA_GEMFIRE_BUILD_VERSION_FILE}" ]; then
   echo "${SPRING_DATA_GEMFIRE_BUILD_VERSION_FILE} file does not exist. Concourse is probably not configured correctly."
@@ -79,7 +79,7 @@ ARTIFACTS_DESTINATION="${ARTIFACT_BUCKET}/builds/${BUILD_PIPELINE_NAME}/${FULL_P
 TEST_RESULTS_DESTINATION="${ARTIFACTS_DESTINATION}/test-results/${SANITIZED_GRADLE_TASK}/${BUILD_TIMESTAMP}/"
 TEST_ARTIFACTS_DESTINATION="${ARTIFACTS_DESTINATION}/test-artifacts/${BUILD_TIMESTAMP}/"
 
-BUILD_ARTIFACTS_FILENAME=spring-data-gemfire-build-artifacts-${FULL_PRODUCT_VERSION}.tgz
+BUILD_ARTIFACTS_FILENAME=spring-data-tanzu-gemfire-build-artifacts-${FULL_PRODUCT_VERSION}.tgz
 BUILD_ARTIFACTS_DESTINATION="${ARTIFACTS_DESTINATION}/${BUILD_ARTIFACTS_FILENAME}"
 
 if [ -n "${TAR_SPRING_DATA_GEMFIRE_BUILD_ARTIFACTS}" ] ; then
@@ -99,7 +99,7 @@ pushd ${SPRING_DATA_GEMFIRE_BUILD}/build/reports/combined
   gsutil -q -m cp -r * gs://${TEST_RESULTS_DESTINATION}
 popd
 
-API_CHECK_REPORT=$(ls ${SPRING_DATA_GEMFIRE_BUILD}/spring-data-gemfire-assembly/build/reports/rich-report-japi*.html)
+API_CHECK_REPORT=$(ls ${SPRING_DATA_GEMFIRE_BUILD}/spring-data-tanzu-gemfire-assembly/build/reports/rich-report-japi*.html)
 if [ -n "${API_CHECK_REPORT}" ]; then
   gsutil -q cp ${API_CHECK_REPORT} gs://${TEST_RESULTS_DESTINATION}api_check_report.html
 fi

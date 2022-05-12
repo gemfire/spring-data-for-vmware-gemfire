@@ -17,7 +17,7 @@ find-here-test-reports() {
 
 ## Parsing functions for the Concourse Semver resource.
 ## These functions expect one input in the form of the resource file, e.g., "1.14.0-build.325"
-get-spring-data-gemfire-version() {
+get-spring-data-tanzu-gemfire-version() {
   local CONCOURSE_VERSION=$1
   # Prune all after '-', yielding e.g., "1.14.0"
   local SPRING_DATA_GEMFIRE_PRODUCT_VERSION=${CONCOURSE_VERSION%%-*}
@@ -25,7 +25,7 @@ get-spring-data-gemfire-version() {
   echo ${SPRING_DATA_GEMFIRE_PRODUCT_VERSION}
 }
 
-get-spring-data-gemfire-version-qualifier-slug() {
+get-spring-data-tanzu-gemfire-version-qualifier-slug() {
   local CONCOURSE_VERSION=$1
   # Prune all before '-', yielding e.g., "build.325"
   local CONCOURSE_BUILD_SLUG=${CONCOURSE_VERSION##*-}
@@ -34,16 +34,16 @@ get-spring-data-gemfire-version-qualifier-slug() {
   echo ${QUALIFIER_SLUG}
 }
 
-get-spring-data-gemfire-build-id() {
+get-spring-data-tanzu-gemfire-build-id() {
   local CONCOURSE_VERSION=$1
   # Prune all before the last '.', yielding e.g., "325"
   local BUILD_ID=${CONCOURSE_VERSION##*.}
   echo ${BUILD_ID}
 }
 
-get-spring-data-gemfire-build-id-padded() {
+get-spring-data-tanzu-gemfire-build-id-padded() {
   local CONCOURSE_VERSION=$1
-  local BUILD_ID=$(get-spring-data-gemfire-build-id ${CONCOURSE_VERSION})
+  local BUILD_ID=$(get-spring-data-tanzu-gemfire-build-id ${CONCOURSE_VERSION})
   # Prune all before the last '.', yielding e.g., "325", then zero-pad, e.g., "0325"
   local PADDED_BUILD_ID=$(printf "%04d" ${BUILD_ID})
   (>&2 echo "Build ID is ${PADDED_BUILD_ID}")
@@ -53,9 +53,9 @@ get-spring-data-gemfire-build-id-padded() {
 get-full-version() {
   # Extract each component so that the BuildId can be zero-padded, then reassembled.
   local CONCOURSE_VERSION=$1
-  local SPRING_DATA_GEMFIRE_PRODUCT_VERSION=$(get-spring-data-gemfire-version ${CONCOURSE_VERSION})
-  local QUALIFIER_SLUG=$(get-spring-data-gemfire-version-qualifier-slug ${CONCOURSE_VERSION})
-  local PADDED_BUILD_ID=$(get-spring-data-gemfire-build-id-padded ${CONCOURSE_VERSION})
+  local SPRING_DATA_GEMFIRE_PRODUCT_VERSION=$(get-spring-data-tanzu-gemfire-version ${CONCOURSE_VERSION})
+  local QUALIFIER_SLUG=$(get-spring-data-tanzu-gemfire-version-qualifier-slug ${CONCOURSE_VERSION})
+  local PADDED_BUILD_ID=$(get-spring-data-tanzu-gemfire-build-id-padded ${CONCOURSE_VERSION})
   local FULL_PRODUCT_VERSION="${SPRING_DATA_GEMFIRE_PRODUCT_VERSION}-${QUALIFIER_SLUG}.${PADDED_BUILD_ID}"
   (>&2 echo "Full product VERSION is ${FULL_PRODUCT_VERSION}")
   echo ${FULL_PRODUCT_VERSION}

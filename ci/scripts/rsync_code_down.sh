@@ -19,7 +19,7 @@ SSH_OPTIONS="-i ${SSHKEY_FILE} -o ConnectTimeout=5 -o ConnectionAttempts=60 -o S
 
 INSTANCE_IP_ADDRESS="$(cat instance-data/instance-ip-address)"
 
-OUTPUT_DIR=${BASE_DIR}/spring-data-gemfire-results
+OUTPUT_DIR=${BASE_DIR}/spring-data-tanzu-gemfire-results
 
 case $ARTIFACT_SLUG in
   windows*)
@@ -41,8 +41,6 @@ EXEC_COMMAND="bash -c 'export JAVA_HOME=${JAVA_BUILD_PATH} \
 
 time ssh ${SSH_OPTIONS} geode@${INSTANCE_IP_ADDRESS} "${EXEC_COMMAND}"
 
-time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-tanzu-gemfire .gradle | tar -C "${OUTPUT_DIR}" -zxf -
-
-mv "${OUTPUT_DIR}/.gradle" "${OUTPUT_DIR}/spring-data-tanzu-gemfire/.gradle_logs"
+time ssh ${SSH_OPTIONS} "geode@${INSTANCE_IP_ADDRESS}" tar -czf - spring-data-tanzu-gemfire | tar -C "${OUTPUT_DIR}" -zxf -
 
 set +x

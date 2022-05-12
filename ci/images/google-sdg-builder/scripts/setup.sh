@@ -30,7 +30,6 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     git \
     google-chrome-stable \
     htop \
-    java-common \
     jq \
     less \
     lsof \
@@ -43,15 +42,12 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     unzip \
     vim
 
-cp -R /etc/alternatives /etc/keep-alternatives
 apt-get install -y --no-install-recommends \
     bellsoft-java17 \
     bellsoft-java11 \
-    bellsoft-java8
-rm -rf /etc/alternatives
-mv /etc/keep-alternatives /etc/alternatives
+    bellsoft-java8 \
+    java-common
 update-java-alternatives -s bellsoft-java8-amd64
-
 pip3 install --upgrade pip
 pip3 install setuptools
 pip3 install docker-compose
