@@ -1,6 +1,6 @@
 # Spring Data for VMware GemFire Documentation
 
-*   [Version 2.3](landing-page.html)
+*   [Version 2.7](landing-page.html)
 *   [Preface](preface.html)
 *   [Requirements](introduction/requirements.html)
 *   [New Features](introduction/new-features.html)
