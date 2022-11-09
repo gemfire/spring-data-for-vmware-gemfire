@@ -9,7 +9,7 @@ plugins {
 }
 
 project.ext.set("pomProjectLongName","Spring Data VMware GemFire")
-project.ext.set("pomProjectArtifactName","spring-data-gemfire")
+project.ext.set("pomProjectArtifactName","spring-data-2.6-gemfire-${gemfireBaseVersion}")
 project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
 
 dependencies {
@@ -124,6 +124,14 @@ clean {
     dependsOn("cleanSDGTestClasses")
 }
 
-jar{
-
+repositories {
+  def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
+  if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
+    additionalMavenRepoURLs.split(",").each {
+      project.getRepositories()
+              .maven(mavenRepository -> {
+                mavenRepository.setUrl(uri(it.toString()));
+              });
+    }
+  }
 }
