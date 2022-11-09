@@ -24,23 +24,11 @@ allprojects {
   repositories {
     mavenCentral()
     maven {
-      url = uri('gcs://gemfire-build-resources/maven/gemfire')
-    }
-
-    maven {
-      url = uri('https://maven.apachegeode-ci.info/snapshots')
-    }
-
-    maven {
       credentials {
         username "$gemfireRepoUsername"
         password "$gemfireRepoPassword"
       }
       url = uri("https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire")
-    }
-
-    maven {
-      url = uri('https://repo.maven.apache.org/maven2/')
     }
   }
 }
