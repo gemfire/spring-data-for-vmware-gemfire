@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 plugins {
-    id 'java-library'
-    id "io.freefair.lombok" version "6.5.0.2"
-    id 'gemfire-repo-artifact-publishing'
-    id 'spring-java-jar'
+  id 'java-library'
+  id "io.freefair.lombok" version "6.5.0.2"
+  id 'gemfire-repo-artifact-publishing'
+  id 'spring-java-jar'
 }
 
-project.ext.set("pomProjectLongName","Spring Data VMware GemFire")
-project.ext.set("pomProjectArtifactName","spring-data-gemfire")
-project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
+project.ext.set("pomProjectLongName", "Spring Data VMware GemFire")
+project.ext.set("pomProjectArtifactName", "spring-data-2.7-gemfire-${gemfireBaseVersion}")
+project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
   api("org.springframework.data:spring-data-geode:$springDataGeodeVersion") {
@@ -123,10 +123,21 @@ test {
     includeTestsMatching "*.*Tests"
     includeTestsMatching "*.*Test"
     excludeTestsMatching "GemFirePropertiesUnitTests"
-//    excludeTestsMatching "*Integration*"
   }
 }
 
 clean {
   dependsOn("cleanSDGTestClasses")
+}
+
+repositories {
+  def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
+  if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
+    additionalMavenRepoURLs.split(",").each {
+      project.getRepositories()
+              .maven(mavenRepository -> {
+                mavenRepository.setUrl(uri(it.toString()));
+              });
+    }
+  }
 }
