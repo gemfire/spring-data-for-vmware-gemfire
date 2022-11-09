@@ -18,7 +18,7 @@ publishing {
       afterEvaluate {
         from(components.java)
         groupId 'com.vmware.gemfire'
-        artifactId project.ext.get("pomProjectArtifactName")+"-${gemfireBaseVersion}"
+        artifactId project.ext.get("pomProjectArtifactName")
         pom {
           name = project.ext.has("pomProjectLongName") ? project.ext.get("pomProjectLongName") : ""
           description = project.ext.has("pomProjectDescription") ? project.ext.get("pomProjectDescription") : ""
