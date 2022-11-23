@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd"
+	   default-lazy-init="true">
+
+	<bean id="default-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="name">default-cache</prop>
+				<prop key="log-level">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="cache-with-props" class="org.springframework.data.gemfire.CacheFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="name">cache-with-props</prop>
+				<prop key="log-level">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="cache-with-xml" class="org.springframework.data.gemfire.CacheFactoryBean">
+		<property name="cacheXml" value="classpath:gemfire-cache.xml"/>
+		<property name="properties">
+			<props>
+				<prop key="name">cache-with-xml</prop>
+				<prop key="log-level">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="named-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="name">named-cache</prop>
+				<prop key="log-level">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="pdx-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="name">pdx-cache</prop>
+				<prop key="log-level">error</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.data.gemfire.CacheIntegrationTests$CacheWithXmlFactoryBeanPostProcessor"/>
+
+</beans>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<context:property-placeholder/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">CacheUsingSharedConfigurationIntegrationTest</prop>
+		<prop key="log-level">error</prop>
+		<prop key="locators">localhost[${spring.data.gemfire.locator.port:20668}]</prop>
+	</util:properties>
+
+	<gfe:cache cache-xml-location="/non-cluster-config-cache.xml" properties-ref="gemfireProperties"
+			   use-bean-factory-locator="false" use-cluster-configuration="true"/>
+
+	<gfe:lookup-region id="ClusterConfigRegion"/>
+
+	<gfe:lookup-region id="NativeLocalRegion"/>
+	<gfe:lookup-region id="NativePartitionRegion"/>
+	<gfe:lookup-region id="NativeReplicateRegion"/>
+
+	<gfe:local-region id="LocalRegion"/>
+
+</beans>

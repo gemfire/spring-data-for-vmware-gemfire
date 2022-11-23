@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:gfe-data="http://www.springframework.org/schema/data/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/data/geode https://www.springframework.org/schema/data/geode/spring-data-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="client.properties">
+		<prop key="client.server.host">localhost</prop>
+		<prop key="client.server.port">${CACHE_SERVER_PORT}</prop>
+	</util:properties>
+
+	<context:property-placeholder properties-ref="client.properties"/>
+
+	<gfe-data:datasource min-connections="1" max-connections="1">
+		<gfe-data:server host="${client.server.host}" port="${client.server.port}"/>
+	</gfe-data:datasource>
+
+	<gfe:client-region id="LocalRegion" shortcut="LOCAL"/>
+
+</beans>
