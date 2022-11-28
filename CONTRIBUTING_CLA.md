@@ -1,7 +1,5 @@
 # Contributing to spring-data-for-vmware-gemfire
 
-_NOTE: This is a template document that requires editing before it is ready to use!_
-
 We welcome contributions from the community and first want to thank you for taking the time to contribute!
 
 Please familiarize yourself with the [Code of Conduct](https://github.com/vmware/.github/blob/main/CODE_OF_CONDUCT.md) before contributing.
@@ -10,7 +8,7 @@ Before you start working with spring-data-for-vmware-gemfire, please read and si
 
 ## Ways to contribute
 
-We welcome many different types of contributions and not all of them need a Pull request. Contributions may include:
+We welcome many types of contributions and not all of them need a Pull request. Contributions may include:
 
 * New features and proposals
 * Documentation
@@ -22,11 +20,14 @@ We welcome many different types of contributions and not all of them need a Pull
 
 ## Getting started
 
-_TO BE EDITED: This section explains how to build the project from source, including Development Environment Setup, Build, Run and Test._
+This project provides an integration between [VMware GemFire](https://tanzu.vmware.com/gemfire) and [Spring Data](https://spring.io/projects/spring-data).
 
-_Provide information about how someone can find your project, get set up, build the code, test it, and submit a pull request successfully without having to ask any questions. Also include common errors people run into, or useful scripts they should run._
+This project has a dependency on [VMware GemFire](https://tanzu.vmware.com/gemfire), which has the requirement that one has access to it, in order to build, run, develop, test it.
+Follow the following steps to gain access to the GemFire releases. [Obtaining VMware GemFire from a Maven Repository](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-getting_started-installation-obtain_gemfire_maven.html)
 
-_List any tests that the contributor should run / or testing processes to follow before submitting. Describe any automated and manual checks performed by reviewers._
+This project is dependent on JDK8 and is tested with JDK 1.8.0_352 and uses Gradle.
+
+Once the project is cloned running `./gradlew build` to confirm everything works.
 
 
 ## Contribution Flow
@@ -55,21 +56,22 @@ Before submitting your pull request, we advise you to use the following:
 
 For specifics on what to include in your report, please follow the guidelines in the issue and pull request templates when available.
 
-_TO BE EDITED: Add additional information if needed._
+Bugs and issues are to be reported using GitHub Issues. Typically, issue reports will contain the following:
+* Version of project in which the problem has been found
+* Description of problem and steps to reproduce.
+* Attach logs
 
 
 ## Ask for Help
 
-_TO BE EDITED: Provide information about the channels you use to communicate (i.e. Slack, IRC, Discord, etc)_
-
 The best way to reach us with a question when contributing is to ask on:
 
-* The original GitHub issue
-* The developer mailing list
-* Our Slack channel
+* Creating GitHub issue
+* Responding on original GitHub issue
 
 
 ## Additional Resources
 
-_Optional_
+Understanding [Spring Data](https://spring.io/projects/spring-data) and [Spring Data Commons](https://github.com/spring-projects/spring-data-commons) is required.
+Knowledge of [VMware GemFire](https://tanzu.vmware.com/gemfire) is critical
 
