@@ -103,5 +103,5 @@ fabric.properties
 
 generated-pipeline.yml
 
-build/*
+**/build/*
 .gradle/*
