@@ -150,27 +150,27 @@ public class CacheClusterConfigurationIntegrationTests extends ForkingClientServ
 
 		locatorWorkingDirectory = createDirectory(new File(FileSystemUtils.WORKING_DIRECTORY, locatorName.toLowerCase()));
 
-		System.err.println("UDO -> Classpath: "+System.getProperty("java.class.path"));
-		ZipUtils.unzip(new ClassPathResource("cluster_config.zip"), locatorWorkingDirectory);
-
-		List<String> arguments = new ArrayList<>();
-
-		arguments.add(String.format("-Dgemfire.name=%s", locatorName));
-		arguments.add(String.format("-Dlog4j.geode.log.level=%s", LOG_LEVEL));
-		arguments.add(String.format("-Dlogback.log.level=%s", LOG_LEVEL));
-		arguments.add("-Dspring.data.gemfire.enable-cluster-configuration=true");
-		arguments.add("-Dspring.data.gemfire.load-cluster-configuration=true");
-		arguments.add(String.format("-Dgemfire.log-file=%s", LOG_FILE));
-		arguments.add(String.format("-Dgemfire.log-level=%s", LOG_LEVEL));
-		arguments.add(String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
-
-		locatorProcess = run(locatorWorkingDirectory, LocatorProcess.class, arguments.toArray(new String[0]));
-		locatorProcess.register(input -> locatorProcessOutput.add(input));
-		locatorProcess.registerShutdownHook();
-
-		waitForServerToStart("localhost", locatorPort);
-
-		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(locatorPort));
+		throw new RuntimeException("UDO -> Classpath: "+System.getProperty("java.class.path"));
+//		ZipUtils.unzip(new ClassPathResource("cluster_config.zip"), locatorWorkingDirectory);
+//
+//		List<String> arguments = new ArrayList<>();
+//
+//		arguments.add(String.format("-Dgemfire.name=%s", locatorName));
+//		arguments.add(String.format("-Dlog4j.geode.log.level=%s", LOG_LEVEL));
+//		arguments.add(String.format("-Dlogback.log.level=%s", LOG_LEVEL));
+//		arguments.add("-Dspring.data.gemfire.enable-cluster-configuration=true");
+//		arguments.add("-Dspring.data.gemfire.load-cluster-configuration=true");
+//		arguments.add(String.format("-Dgemfire.log-file=%s", LOG_FILE));
+//		arguments.add(String.format("-Dgemfire.log-level=%s", LOG_LEVEL));
+//		arguments.add(String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
+//
+//		locatorProcess = run(locatorWorkingDirectory, LocatorProcess.class, arguments.toArray(new String[0]));
+//		locatorProcess.register(input -> locatorProcessOutput.add(input));
+//		locatorProcess.registerShutdownHook();
+//
+//		waitForServerToStart("localhost", locatorPort);
+//
+//		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(locatorPort));
 	}
 
 	@AfterClass
