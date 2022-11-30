@@ -150,7 +150,8 @@ public class CacheClusterConfigurationIntegrationTests extends ForkingClientServ
 
 		locatorWorkingDirectory = createDirectory(new File(FileSystemUtils.WORKING_DIRECTORY, locatorName.toLowerCase()));
 
-		ZipUtils.unzip(new ClassPathResource("./cluster_config.zip"), locatorWorkingDirectory);
+		System.err.println("UDO -> Classpath: "+System.getProperty("java.class.path"));
+		ZipUtils.unzip(new ClassPathResource("cluster_config.zip"), locatorWorkingDirectory);
 
 		List<String> arguments = new ArrayList<>();
 
