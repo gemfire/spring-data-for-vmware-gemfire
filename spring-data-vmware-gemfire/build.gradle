@@ -49,7 +49,7 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-  testImplementation('org.springframework.data:spring-data-geode-test:0.3.4-RAJ') {
+  testImplementation('org.springframework.data:spring-data-geode-test:0.2.3-Q') {
     exclude group: 'org.mockito', module: 'mockito-core'
     exclude group: 'org.springframework.data', module: 'spring-data-geode'
   }
