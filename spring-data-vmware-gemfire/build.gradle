@@ -82,36 +82,9 @@ dependencies {
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
-sourceSets {
-  test {
-    java {
-      srcDir file('src/test/java')
-      srcDir file('src/sdg-test-read-only/java')
-    }
-    resources {
-      srcDir file('src/test/resources')
-      srcDir file('src/sdg-test-read-only/resources')
-    }
-  }
-}
-
-task copySDGTestClasses(type: Exec) {
-  outputs.dir("${project.buildDir.toPath().resolve("tmp").resolve("spring-data-geode")}")
-  workingDir project.rootProject.rootDir.toPath().resolve("scripts")
-  commandLine 'chmod', '+x', 'copySDGTestResources.sh'
-  commandLine './copySDGTestResources.sh', '-l', "${project.buildDir.toPath().resolve("tmp").resolve("spring-data-geode")}", "-b", "" + springDataGeodeBranch, "-t", "${project.projectDir.toPath().toAbsolutePath().toString()}"
-}
-
-task cleanSDGTestClasses(type: Exec) {
-  commandLine "rm", "-rf", "${project.rootDir.toPath().toAbsolutePath().toString()}/sdg-test-read-only"
-}
-
 test {
-  dependsOn("copySDGTestClasses")
-
   forkEvery = 1
-//
-  maxParallelForks = 1
+//  maxParallelForks = 1
 
   systemProperty "java.util.logging.config.file", "${project.buildDir}/test-classes/java-util-logging.properties"
   systemProperty "javax.net.ssl.keyStore", "${project.buildDir}/test-classes/trusted.keystore"
@@ -122,18 +95,13 @@ test {
   filter {
     includeTestsMatching "*.*Tests"
     includeTestsMatching "*.*Test"
-    excludeTestsMatching "GemFirePropertiesUnitTests"
   }
-}
-
-clean {
-  dependsOn("cleanSDGTestClasses")
 }
 
 repositories {
   def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
   if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
-    additionalMavenRepoURLs.split(",").each {
+    additionalMavenRepoURLs.split(',').each {
       project.getRepositories()
               .maven(mavenRepository -> {
                 mavenRepository.setUrl(uri(it.toString()));

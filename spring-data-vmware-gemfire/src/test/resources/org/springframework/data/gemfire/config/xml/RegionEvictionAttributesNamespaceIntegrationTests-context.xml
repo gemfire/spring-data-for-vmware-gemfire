@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	   	http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+	   	http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+	   	http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="evictionProperties">
+		<prop key="eviction.action">Overflow_To_Disk</prop>
+		<prop key="eviction.type">heap_percentage</prop>
+	</util:properties>
+
+	<context:property-placeholder properties-ref="evictionProperties"/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">RegionEvictionAttributesNamespaceTest</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:replicated-region id="One">
+		<gfe:eviction threshold="4096" type="ENTRY_COUNT"/>
+	</gfe:replicated-region>
+
+	<gfe:partitioned-region id="Two">
+		<gfe:eviction type="ENTRY_COUNT"/>
+	</gfe:partitioned-region>
+
+	<gfe:replicated-region id="Three">
+		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
+	</gfe:replicated-region>
+
+	<gfe:partitioned-region id="Four">
+		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
+	</gfe:partitioned-region>
+
+	<gfe:replicated-region id="Five">
+		<gfe:eviction threshold="128" type="MEMORY_SIZE"/>
+	</gfe:replicated-region>
+
+	<gfe:partitioned-region id="Six" local-max-memory="512">
+		<gfe:eviction threshold="256" type="MEMORY_SIZE" action="${eviction.action}"/>
+	</gfe:partitioned-region>
+
+</beans>
