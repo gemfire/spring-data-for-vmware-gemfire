@@ -1,5 +1,3 @@
-
-
 package org.springframework.data.gemfire.function.config.four;
 
 import org.springframework.data.gemfire.function.annotation.FunctionId;

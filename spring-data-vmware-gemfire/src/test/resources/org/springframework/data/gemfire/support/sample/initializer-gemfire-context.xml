@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- data source Spring XML configuration file and meta-data, using GemFire -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:gfe="http://www.springframework.org/schema/geode"

@@ -1,6 +1,18 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-
+/*
+ * Copyright 2018-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,24 +67,24 @@ import lombok.ToString;
  * leading to a {@link CommitConflictException}.
  *
  * @author John Blum
- * @see java.util.function.Function
- * @see edu.umd.cs.mtc.MultithreadedTestCase
- * @see edu.umd.cs.mtc.TestFramework
- * @see org.junit.Test
- * @see org.apache.geode.cache.CacheTransactionManager
- * @see org.apache.geode.cache.CommitConflictException
- * @see org.apache.geode.cache.GemFireCache
- * @see org.springframework.context.annotation.Bean
- * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
- * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
- * @see org.springframework.data.gemfire.mapping.annotation.Region
+ * @see Function
+ * @see MultithreadedTestCase
+ * @see TestFramework
+ * @see Test
+ * @see CacheTransactionManager
+ * @see CommitConflictException
+ * @see GemFireCache
+ * @see Bean
+ * @see ClientCacheApplication
+ * @see EnableEntityDefinedRegions
+ * @see Region
  * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
- * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
- * @see org.springframework.stereotype.Service
- * @see org.springframework.test.context.ContextConfiguration
- * @see org.springframework.test.context.junit4.SpringRunner
- * @see org.springframework.transaction.annotation.Transactional
+ * @see IntegrationTestsSupport
+ * @see EnableGemfireCacheTransactions
+ * @see Service
+ * @see ContextConfiguration
+ * @see SpringRunner
+ * @see Transactional
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

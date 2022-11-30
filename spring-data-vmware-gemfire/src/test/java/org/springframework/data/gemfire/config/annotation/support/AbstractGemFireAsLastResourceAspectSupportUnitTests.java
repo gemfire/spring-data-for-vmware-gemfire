@@ -1,6 +1,18 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-
+/*
+ * Copyright 2017-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,16 +56,16 @@ import org.slf4j.Logger;
  * Unit Tests for {@link AbstractGemFireAsLastResourceAspectSupport}.
  *
  * @author John Blum
- * @see javax.naming.Context
- * @see javax.naming.InitialContext
- * @see org.junit.Test
- * @see org.junit.runner.RunWith
- * @see org.mockito.Mock
+ * @see Context
+ * @see InitialContext
+ * @see Test
+ * @see RunWith
+ * @see Mock
  * @see org.mockito.Mockito
- * @see org.mockito.Spy
- * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.GemFireCache
- * @see org.springframework.data.gemfire.config.annotation.support.AbstractGemFireAsLastResourceAspectSupport
+ * @see Spy
+ * @see MockitoJUnitRunner
+ * @see GemFireCache
+ * @see AbstractGemFireAsLastResourceAspectSupport
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

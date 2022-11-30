@@ -1,6 +1,18 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-
+/*
+ * Copyright 2017-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -19,17 +31,17 @@ import org.apache.geode.security.SecurityManager;
 import org.springframework.util.StringUtils;
 
 /**
- * The {@link TestSecurityManager} class is an Apache Geode {@link org.apache.geode.security.SecurityManager}
+ * The {@link TestSecurityManager} class is an Apache Geode {@link SecurityManager}
  * implementation used for testing purposes.
  *
  * @author John Blum
- * @see java.security.Principal
- * @see java.util.Properties
+ * @see Principal
+ * @see Properties
  * @see javax.security.auth.Subject
- * @see org.apache.geode.security.SecurityManager
+ * @see SecurityManager
  * @since 2.0.0
  */
-public final class TestSecurityManager implements org.apache.geode.security.SecurityManager {
+public final class TestSecurityManager implements SecurityManager {
 
 	public static final String SECURITY_USERNAME = "testUser";
 	public static final String SECURITY_PASSWORD = "&t35t9@55w0rd!";
@@ -72,7 +84,7 @@ public final class TestSecurityManager implements org.apache.geode.security.Secu
 	}
 
 	@SuppressWarnings("unused")
-	public static final class TestPrincipal implements java.security.Principal, java.io.Serializable {
+	public static final class TestPrincipal implements Principal, java.io.Serializable {
 
 		private final String name;
 

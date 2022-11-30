@@ -1,5 +1,3 @@
-
-
 <Configuration status="error">
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
