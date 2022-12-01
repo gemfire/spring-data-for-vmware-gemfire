@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Package providing integration of
  * <a href="https://pivotal.io/pivotal-gemfire">GemFire</a>

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * This package provides classes and components for configuring GemFire using Spring Data GemFire's
  * XML namespace support.  See more details here...

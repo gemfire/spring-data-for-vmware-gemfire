@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:gfe="http://www.springframework.org/schema/geode"
 	   xmlns:context="http://www.springframework.org/schema/context"
