@@ -1,16 +1,6 @@
 #
-# // Copyright (c) VMware, Inc. 2022. All rights reserved.
-# // SPDX-License-Identifier: Apache-2.0
-#
-
-#
-# // Copyright (c) VMware, Inc. 2022. All rights reserved.
-# // SPDX-License-Identifier: Apache-2.0
-#
-
-#
-# // Copyright (c) VMware, Inc. 2022. All rights reserved.
-# // SPDX-License-Identifier: Apache-2.0
+# Copyright (c) VMware, Inc. 2022. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
 #
 
 http\://www.springframework.org/schema/geode/spring-geode-2.0.xsd=org/springframework/data/gemfire/config/spring-geode-2.0.xsd
