@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.support;
 
 import java.beans.PropertyEditor;
@@ -47,11 +46,11 @@ import org.springframework.data.gemfire.wan.OrderPolicyConverter;
  * and actual Apache Geode or Spring Data for Apache Geode defined (enumerated) types.
  *
  * @author John Blum
- * @see PropertyEditor
- * @see PropertyEditorSupport
- * @see PropertyEditorRegistrar
- * @see PropertyEditorRegistry
- * @see BeanFactoryPostProcessor
+ * @see java.beans.PropertyEditor
+ * @see java.beans.PropertyEditorSupport
+ * @see org.springframework.beans.PropertyEditorRegistrar
+ * @see org.springframework.beans.PropertyEditorRegistry
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
  * @since 1.6.0
  */
 public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {

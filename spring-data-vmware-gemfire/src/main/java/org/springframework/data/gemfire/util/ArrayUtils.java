@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.lang.reflect.Array;
@@ -18,8 +17,8 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Array
- * @see Arrays
+ * @see java.lang.reflect.Array
+ * @see java.util.Arrays
  */
 public abstract class ArrayUtils {
 
@@ -82,8 +81,8 @@ public abstract class ArrayUtils {
 	 * @param position an integer index (position) at which to insert the element in the array.
 	 * @param element the element to insert into the array.
 	 * @return a new array with the element inserted at position.
-	 * @see System#arraycopy(Object, int, Object, int, int)
-	 * @see Array#newInstance(Class, int)
+	 * @see java.lang.System#arraycopy(Object, int, Object, int, int)
+	 * @see java.lang.reflect.Array#newInstance(Class, int)
 	 */
 	public static @NonNull Object[] insert(@NonNull Object[] originalArray, int position, Object element) {
 
@@ -149,7 +148,7 @@ public abstract class ArrayUtils {
 	 * @param array array of objects on which a null check is performed.
 	 * @param componentType Class type of the array elements.
 	 * @return the given object array if not null, otherwise return an empty object array.
-	 * @see Array#newInstance(Class, int)
+	 * @see java.lang.reflect.Array#newInstance(Class, int)
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T[] nullSafeArray(@Nullable T[] array, @NonNull Class<T> componentType) {
@@ -163,8 +162,8 @@ public abstract class ArrayUtils {
 	 * @param originalArray the array from which to remove the element.
 	 * @param position the integer index (position) indicating the element to remove from the array.
 	 * @return a new array with the element at position in the originalArray removed.
-	 * @see System#arraycopy(Object, int, Object, int, int)
-	 * @see Array#newInstance(Class, int)
+	 * @see java.lang.System#arraycopy(Object, int, Object, int, int)
+	 * @see java.lang.reflect.Array#newInstance(Class, int)
 	 */
 	public static Object[] remove(@NonNull Object[] originalArray, int position) {
 
@@ -191,7 +190,7 @@ public abstract class ArrayUtils {
 	 * @param <T> {@link Comparable} class type of the array elements.
 	 * @param array array of elements to sort.
 	 * @return the sorted array of elements.
-	 * @see Arrays#sort(Object[])
+	 * @see java.util.Arrays#sort(Object[])
 	 */
 	public static @NonNull <T extends Comparable<T>> T[] sort(@NonNull T[] array) {
 
@@ -207,7 +206,7 @@ public abstract class ArrayUtils {
 	 * @param array array to convert to an {@link Iterable}.
 	 * @return an {@link Iterable} object from the given array.
 	 * @throws IllegalArgumentException if the array is {@literal null}.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 */
 	@SuppressWarnings("unchecked")
 	public static @NonNull <T> Iterable<T> toIterable(@NonNull T... array) {

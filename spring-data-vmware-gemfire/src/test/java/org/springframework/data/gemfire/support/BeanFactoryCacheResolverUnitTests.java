@@ -27,14 +27,14 @@ import org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver;
  * Unit Tests for {@link BeanFactoryCacheResolver}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see GemFireCache
- * @see BeanFactory
- * @see BeanFactoryCacheResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.BeanFactoryCacheResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

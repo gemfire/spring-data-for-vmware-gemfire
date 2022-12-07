@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
  * and {@link @LuceneIndex} annotations.
  *
  * @author John Blum
- * @see LuceneIndex
- * @see Index
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
  * @see org.springframework.data.gemfire.IndexFactoryBean
- * @see IndexConfiguration
- * @see IndexConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
  * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 1.9.0
  */

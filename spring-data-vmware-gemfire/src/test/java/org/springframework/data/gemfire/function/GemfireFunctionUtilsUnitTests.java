@@ -21,8 +21,8 @@ import org.springframework.data.gemfire.function.annotation.GemfireFunction;
  * Unit tests for {@link GemfireFunctionUtils}.
  *
  * @author John Blum
- * @see Test
- * @see GemfireFunctionUtils
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.function.GemfireFunctionUtils
  * @since 2.1.0
  */
 @SuppressWarnings("unused")

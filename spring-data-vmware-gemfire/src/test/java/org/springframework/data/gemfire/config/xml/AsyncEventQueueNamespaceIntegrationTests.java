@@ -32,11 +32,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see AsyncEventQueue
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
  * @see org.springframework.data.gemfire.config.AsyncEventQueueParser
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.data.gemfire.wan.AsyncEventQueueFactoryBean
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner

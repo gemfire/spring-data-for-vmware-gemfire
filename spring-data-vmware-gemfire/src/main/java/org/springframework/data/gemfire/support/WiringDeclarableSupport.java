@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Properties;
@@ -27,12 +26,12 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see BeanFactory
- * @see BeanConfigurerSupport
- * @see BeanWiringInfo
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
+ * @see org.springframework.beans.factory.wiring.BeanWiringInfo
  * @see DeclarableSupport
  * @see LazyWiringDeclarableSupport
- * @see Declarable
+ * @see org.apache.geode.cache.Declarable
  */
 @SuppressWarnings("unused")
 public abstract class WiringDeclarableSupport extends DeclarableSupport {
@@ -52,7 +51,7 @@ public abstract class WiringDeclarableSupport extends DeclarableSupport {
 	 * for the auto-wiring function.
 	 * @return a boolean value indicating whether this {@link Declarable} object was successfully configured
 	 * and initialized by the Spring container.
-	 * @see BeanConfigurerSupport
+	 * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
 	 * @see #configureThis(BeanFactory, String)
 	 * @see #locateBeanFactory()
 	 */
@@ -70,7 +69,7 @@ public abstract class WiringDeclarableSupport extends DeclarableSupport {
 	 * used as a template for the auto-wiring function.
 	 * @return a boolean value indicating whether this {@link Declarable} object was successfully configured
 	 * and initialized by the Spring container.
-	 * @see BeanConfigurerSupport
+	 * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
 	 * @see #newBeanConfigurer(BeanFactory, String)
 	 */
 	protected boolean configureThis(@NonNull BeanFactory beanFactory, @Nullable String templateBeanName) {
@@ -88,8 +87,8 @@ public abstract class WiringDeclarableSupport extends DeclarableSupport {
 	 *
 	 * @param beanFactory reference to the Spring {@link BeanFactory}; must not be {@literal null}.
 	 * @return a new {@link BeanConfigurerSupport} configured with the given Spring {@link BeanFactory}.
-	 * @see BeanConfigurerSupport
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #newBeanConfigurer(BeanFactory, String)
 	 */
 	protected @NonNull BeanConfigurerSupport newBeanConfigurer(@NonNull BeanFactory beanFactory) {
@@ -105,8 +104,8 @@ public abstract class WiringDeclarableSupport extends DeclarableSupport {
 	 * @param templateBeanName {@link String} containing the {@literal name} of a Spring bean declared in
 	 * the Spring {@link BeanFactory} used as a template to auto-wire this {@link Declarable} object.
 	 * @return a new {@link BeanConfigurerSupport} configured with the given Spring {@link BeanFactory}.
-	 * @see BeanConfigurerSupport
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected @NonNull BeanConfigurerSupport newBeanConfigurer(@NonNull BeanFactory beanFactory,
 			@Nullable String templateBeanName) {

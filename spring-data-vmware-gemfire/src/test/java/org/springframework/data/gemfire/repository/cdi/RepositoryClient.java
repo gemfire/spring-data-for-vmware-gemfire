@@ -16,8 +16,8 @@ import org.springframework.util.Assert;
  * The RepositoryClient class is a user/consumer of the {@link SamplePersonRepository} bean in a CDI context.
  *
  * @author John Blum
- * @see Inject
- * @see SamplePersonRepository
+ * @see javax.inject.Inject
+ * @see org.springframework.data.gemfire.repository.cdi.SamplePersonRepository
  * @since 1.8.0
  */
 public class RepositoryClient {

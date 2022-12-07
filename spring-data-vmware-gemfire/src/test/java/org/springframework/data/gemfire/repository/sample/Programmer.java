@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
  *
  * @author John J. Blum
  * @see Region
- * @see User
+ * @see org.springframework.data.gemfire.repository.sample.User
  * @since 1.4.0
  */
 @Region("Programmers")

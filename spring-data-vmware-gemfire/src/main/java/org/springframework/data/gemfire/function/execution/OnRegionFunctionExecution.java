@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Set;
@@ -21,11 +20,11 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see Execution
- * @see Function
- * @see FunctionService
- * @see AbstractFunctionExecution
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionService
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionExecution
  */
 class OnRegionFunctionExecution extends AbstractFunctionExecution {
 

@@ -18,9 +18,9 @@ import org.apache.geode.cache.server.ClientSubscriptionConfig;
  * Unit Tests for {@link SubscriptionEvictionPolicy} enum.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see SubscriptionEvictionPolicy
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
  * @since 1.6.0
  */
 public class SubscriptionEvictionPolicyUnitTests {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
@@ -27,7 +26,7 @@ import org.springframework.util.xml.DomUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see AbstractRegionParser
  */
 class ClientRegionParser extends AbstractRegionParser {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function;
 
 import org.apache.geode.cache.execute.Execution;
@@ -16,9 +15,9 @@ import org.apache.geode.cache.execute.FunctionException;
  * This {@link RuntimeException} was inspired by the {@link org.springframework.dao.UncategorizedDataAccessException}.
  *
  * @author John Blum
- * @see Execution
- * @see Function
- * @see FunctionException
+ * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionException
  * @since 2.3.0
  */
 @SuppressWarnings("unused")

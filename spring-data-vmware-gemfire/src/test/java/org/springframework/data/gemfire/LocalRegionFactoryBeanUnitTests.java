@@ -24,13 +24,13 @@ import org.springframework.data.gemfire.test.support.AbstractRegionFactoryBeanTe
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see DataPolicy
- * @see Region
- * @see RegionFactory
- * @see RegionShortcut
- * @see LocalRegionFactoryBean
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.data.gemfire.LocalRegionFactoryBean
  * @since 1.3.x
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

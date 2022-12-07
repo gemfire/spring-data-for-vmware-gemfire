@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -14,9 +13,9 @@ import org.springframework.lang.Nullable;
  * Composition for {@link CacheServerConfigurer}.
  *
  * @author John Blum
- * @see CacheServerConfigurer
- * @see AbstractLazyResolvingComposableConfigurer
- * @see CacheServerFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 2.2.0
  */
 public class LazyResolvingComposableCacheServerConfigurer

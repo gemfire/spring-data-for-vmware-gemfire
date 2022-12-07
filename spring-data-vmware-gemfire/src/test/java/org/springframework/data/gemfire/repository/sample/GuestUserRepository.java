@@ -13,8 +13,8 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * The GuestUserRepository class is a DAO for accessing and persisting GuestUsers.
  *
  * @author John Blum
- * @see GemfireRepository
- * @see GuestUser
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.sample.GuestUser
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

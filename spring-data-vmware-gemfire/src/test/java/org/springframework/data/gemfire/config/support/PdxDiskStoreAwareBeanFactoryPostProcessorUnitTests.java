@@ -35,10 +35,10 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * Unit Tests for {@link PdxDiskStoreAwareBeanFactoryPostProcessor}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see DiskStore
- * @see PdxDiskStoreAwareBeanFactoryPostProcessor
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
  * @since 1.3.3
  */
 public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {

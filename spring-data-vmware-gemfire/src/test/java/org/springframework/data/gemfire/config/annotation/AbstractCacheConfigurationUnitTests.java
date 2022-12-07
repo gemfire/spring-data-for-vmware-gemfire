@@ -33,15 +33,15 @@ import org.springframework.data.gemfire.CacheFactoryBean;
  * Unit Tests for {@link AbstractCacheConfiguration}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see RunWith
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see CacheFactoryBean
- * @see AbstractCacheConfiguration
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

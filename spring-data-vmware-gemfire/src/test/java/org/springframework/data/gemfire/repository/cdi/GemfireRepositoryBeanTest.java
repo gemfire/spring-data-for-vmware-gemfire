@@ -49,11 +49,11 @@ import org.springframework.data.repository.config.CustomRepositoryImplementation
  * Unit Tests for {@link GemfireRepositoryBean}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see GemfireRepositoryBean
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryBean
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

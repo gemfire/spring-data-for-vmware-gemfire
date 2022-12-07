@@ -30,15 +30,15 @@ import org.springframework.util.StringUtils;
  * encapsulating common functionality necessary to execute Lucene queries.
  *
  * @author John Blum
- * @see InitializingBean
- * @see LuceneOperationsSupport
- * @see GemFireCache
- * @see Region
- * @see LuceneIndex
- * @see LuceneQuery
- * @see LuceneQueryFactory
- * @see LuceneService
- * @see LuceneServiceProvider
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.search.lucene.support.LuceneOperationsSupport
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.lucene.LuceneQuery
+ * @see org.apache.geode.cache.lucene.LuceneQueryFactory
+ * @see org.apache.geode.cache.lucene.LuceneService
+ * @see org.apache.geode.cache.lucene.LuceneServiceProvider
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -66,7 +66,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * used to perform Lucene queries (searches).
 	 *
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene queries.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 */
 	public LuceneAccessor(LuceneIndex luceneIndex) {
 		this.luceneIndex = luceneIndex;
@@ -78,7 +78,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 *
 	 * @param indexName {@link String} containing the name of the {@link LuceneIndex} used in Lucene queries.
 	 * @param region {@link Region} on which Lucene queries are executed.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public LuceneAccessor(String indexName, Region<?, ?> region) {
 		this.indexName = indexName;
@@ -112,7 +112,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Creates an instance of the {@link LuceneQueryFactory} to create and execute {@link LuceneQuery Lucene queries}.
 	 *
 	 * @return an instance of the {@link LuceneQueryFactory} to create and execute {@link LuceneQuery Lucene queries}.
-	 * @see LuceneQueryFactory
+	 * @see org.apache.geode.cache.lucene.LuceneQueryFactory
 	 * @see #getLuceneService()
 	 */
 	public LuceneQueryFactory createLuceneQueryFactory() {
@@ -124,7 +124,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 *
 	 * @param resultLimit limit to the number of results returned by the query.
 	 * @return an instance of the {@link LuceneQueryFactory} to create and execute {@link LuceneQuery Lucene queries}.
-	 * @see LuceneQueryFactory
+	 * @see org.apache.geode.cache.lucene.LuceneQueryFactory
 	 * @see #createLuceneQueryFactory(int, int)
 	 */
 	public LuceneQueryFactory createLuceneQueryFactory(int resultLimit) {
@@ -147,8 +147,8 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Resolves a reference to the {@link GemFireCache}.
 	 *
 	 * @return a reference to the single instance of the {@link GemFireCache}.
-	 * @see CacheUtils#resolveGemFireCache()
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.util.CacheUtils#resolveGemFireCache()
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getCache()
 	 */
 	protected GemFireCache resolveCache() {
@@ -159,7 +159,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Resolves the {@link LuceneService} used by this data access object to perform Lucene queries.
 	 *
 	 * @return a reference to the {@link GemFireCache} {@link LuceneService}.
-	 * @see LuceneService
+	 * @see org.apache.geode.cache.lucene.LuceneService
 	 * @see #getLuceneService()
 	 * @see #resolveCache()
 	 * @see #resolveLuceneService(GemFireCache)
@@ -174,8 +174,8 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * @param gemfireCache {@link GemFireCache} used to resolve the {@link LuceneService}.
 	 * @return a reference to the {@link GemFireCache} {@link LuceneService}.
 	 * @throws IllegalArgumentException if {@link GemFireCache} is {@literal null}.
-	 * @see LuceneService
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.lucene.LuceneService
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	protected LuceneService resolveLuceneService(GemFireCache gemfireCache) {
 		Assert.notNull(gemfireCache, "Cache reference was not properly configured");
@@ -188,7 +188,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 *
 	 * @return the name of the resolve {@link LuceneIndex}.
 	 * @throws IllegalStateException if the name of the {@link LuceneIndex} cannot be resolved.
-	 * @see LuceneIndex#getName()
+	 * @see org.apache.geode.cache.lucene.LuceneIndex#getName()
 	 * @see #getIndexName()
 	 * @see #getLuceneIndex()
 	 */
@@ -228,7 +228,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * @param <T> {@link Class} type of the {@link LuceneAccessor}.
 	 * @param gemfireCache {@link GemFireCache} reference.
 	 * @return this {@link LuceneAccessor}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends LuceneAccessor> T setCache(GemFireCache gemfireCache) {
@@ -240,7 +240,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Returns a reference to the {@link GemFireCache}.
 	 *
 	 * @return a reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #resolveCache()
 	 */
 	protected GemFireCache getCache() {
@@ -277,7 +277,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 *
 	 * @param <T> {@link Class} type of the {@link LuceneAccessor}.
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene data access, query operations.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 * @return this {@link LuceneAccessor}.
 	 * @see #setIndexName(String)
 	 */
@@ -291,7 +291,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Returns a reference to the {@link LuceneIndex} used in Lucene queries.
 	 *
 	 * @return a {@link LuceneIndex} used in Lucene data access, query operations.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 * @see #resolveIndexName()
 	 * @see #getIndexName()
 	 */
@@ -305,7 +305,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * @param <T> {@link Class} type of the {@link LuceneAccessor}.
 	 * @param luceneService {@link LuceneService} used to perform Lucene queries.
 	 * @return this {@link LuceneAccessor}.
-	 * @see LuceneService
+	 * @see org.apache.geode.cache.lucene.LuceneService
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends LuceneAccessor> T setLuceneService(LuceneService luceneService) {
@@ -317,7 +317,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Returns a reference to the {@link LuceneService} used to perform Lucene query data access operations.
 	 *
 	 * @return a reference to the {@link LuceneService} used to perform Lucene queries.
-	 * @see LuceneService
+	 * @see org.apache.geode.cache.lucene.LuceneService
 	 */
 	protected LuceneService getLuceneService() {
 		return this.luceneService;
@@ -329,7 +329,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * @param <T> {@link Class} type of the {@link LuceneAccessor}.
 	 * @param region {@link Region} used to specify Lucene queries.
 	 * @return this {@link LuceneAccessor}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #setRegionPath(String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -342,7 +342,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	 * Returns a reference to the {@link Region} used to specify Lucene queries.
 	 *
 	 * @return a {@link Region} used to specify Lucene queries.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #resolveRegionPath()
 	 * @see #getRegionPath()
 	 */

@@ -14,9 +14,9 @@ import org.apache.geode.cache.InterestPolicy;
  * Unit Tests for {@link InterestPolicyType} enum.
  *
  * @author John Blum
- * @see Test
- * @see InterestPolicy
- * @see InterestPolicyType
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.InterestPolicy
+ * @see org.springframework.data.gemfire.InterestPolicyType
  * @since 1.6.0
  */
 public class InterestPolicyTypeUnitTests {

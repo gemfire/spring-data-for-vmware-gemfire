@@ -33,10 +33,10 @@ import lombok.RequiredArgsConstructor;
  * Unit tests for {@link ComposableSchemaObjectCollector}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see ComposableSchemaObjectCollector
+ * @see org.springframework.data.gemfire.config.schema.support.ComposableSchemaObjectCollector
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

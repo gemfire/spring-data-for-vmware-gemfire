@@ -45,15 +45,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * in the &lt;gfe:pool&gt; element <code>locators</code> and <code>servers</code> attributes.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see Pool
- * @see PoolFactory
- * @see PoolFactoryBean
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
  * @see org.springframework.data.gemfire.config.xml.PoolParser
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/SGF-433">SGF-433</a>
  * @since 1.6.0
  */

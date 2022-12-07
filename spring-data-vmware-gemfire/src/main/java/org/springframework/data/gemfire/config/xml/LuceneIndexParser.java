@@ -22,9 +22,9 @@ import org.springframework.util.xml.DomUtils;
  * Spring XML {@link AbstractSingleBeanDefinitionParser parser} for the {@link LuceneIndexFactoryBean} bean definition.
  *
  * @author John Blum
- * @see BeanDefinitionBuilder
- * @see AbstractSingleBeanDefinitionParser
- * @see LuceneIndexFactoryBean
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 1.1.0
  */
 class LuceneIndexParser extends AbstractSingleBeanDefinitionParser {

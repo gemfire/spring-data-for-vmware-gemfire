@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.GemFireCheckedException;
@@ -18,7 +17,7 @@ import org.apache.geode.cache.Region;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Region
+ * @see org.apache.geode.cache.Region
  */
 @FunctionalInterface
 public interface GemfireCallback<T> {
@@ -38,8 +37,8 @@ public interface GemfireCallback<T> {
 	 * @return a result {@link Object}, or {@literal null} if no result.
 	 * @throws GemFireCheckedException for checked {@link Exception Exceptions} occurring in GemFire.
 	 * @throws GemFireException for {@link RuntimeException RuntimeExceptions} occurring in GemFire.
-	 * @see GemfireTemplate
-	 * @see Region
+	 * @see org.springframework.data.gemfire.GemfireTemplate
+	 * @see org.apache.geode.cache.Region
 	 */
 	T doInGemfire(Region<?, ?> region) throws GemFireCheckedException, GemFireException;
 

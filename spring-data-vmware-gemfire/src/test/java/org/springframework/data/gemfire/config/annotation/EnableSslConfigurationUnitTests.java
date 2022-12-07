@@ -27,12 +27,12 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @author Srikanth Manvi
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.GemFireCache
- * @see EnableSsl
- * @see SslConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.EnableSsl
+ * @see org.springframework.data.gemfire.config.annotation.SslConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.1.0
  */
 public class EnableSslConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.wan;
 
 import static java.util.stream.StreamSupport.stream;
@@ -37,16 +36,16 @@ import org.springframework.util.StringUtils;
  * @author David Turanski
  * @author John Blum
  * @author Udo Kohlmeyer
- * @see Cache
- * @see GemFireCache
- * @see GatewayEventFilter
- * @see GatewayEventSubstitutionFilter
- * @see GatewaySender
- * @see GatewaySenderFactory
- * @see GatewayTransportFilter
- * @see FactoryBean
- * @see GatewaySenderConfigurer
- * @see AbstractWANComponentFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.wan.GatewayEventFilter
+ * @see org.apache.geode.cache.wan.GatewayEventSubstitutionFilter
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.apache.geode.cache.wan.GatewaySenderFactory
+ * @see org.apache.geode.cache.wan.GatewayTransportFilter
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySenderConfigurer
+ * @see org.springframework.data.gemfire.wan.AbstractWANComponentFactoryBean
  * @since 1.2.2
  */
 @SuppressWarnings("unused")
@@ -96,7 +95,7 @@ public class GatewaySenderFactoryBean extends AbstractWANComponentFactoryBean<Ga
 	 * the GemFire {@link Cache} used to configured and initialized a GemFire {@link GatewaySender}.
 	 *
 	 * @param cache reference to the GemFire {@link Cache} used to create the GemFire {@link GatewaySender}.
-	 * @see Cache
+	 * @see org.apache.geode.cache.Cache
 	 */
 	public GatewaySenderFactoryBean(GemFireCache cache) {
 		super(cache);

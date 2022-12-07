@@ -33,13 +33,13 @@ import org.apache.geode.cache.wan.GatewaySender;
  * Unit Tests for {@link LookupRegionFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see AttributesMutator
- * @see Cache
- * @see EvictionAttributesMutator
- * @see Region
- * @see LookupRegionFactoryBean
+ * @see org.apache.geode.cache.AttributesMutator
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.EvictionAttributesMutator
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.LookupRegionFactoryBean
  * @since 1.7.0
  */
 @SuppressWarnings("rawtypes")

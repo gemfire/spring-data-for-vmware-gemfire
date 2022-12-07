@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction.event;
 
 import java.util.Properties;
@@ -21,7 +20,7 @@ import org.springframework.util.Assert;
  * Pattern to compose multiple {@link TransactionWriter} objects into a single instance.
  *
  * @author John Blum
- * @see TransactionWriter
+ * @see org.apache.geode.cache.TransactionWriter
  * @since 2.3.0
  */
 public class ComposableTransactionWriter implements TransactionWriter {
@@ -35,7 +34,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	 * @return the first {@link TransactionWriter} if the second {@link TransactionWriter} is {@literal null}, or return
 	 * the second {@link TransactionWriter} if the first {@link TransactionWriter} is {@literal null}, or return
 	 * the composition of both {@link TransactionWriter} one and {@link TransactionWriter} two.
-	 * @see TransactionWriter
+	 * @see org.apache.geode.cache.TransactionWriter
 	 */
 	public static @Nullable TransactionWriter compose(@Nullable TransactionWriter transactionWriterOne,
 			@Nullable TransactionWriter transactionWriterTwo) {
@@ -62,7 +61,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	 * Returns a reference to the first {@link TransactionWriter} in the composition.
 	 *
 	 * @return a reference to the first {@link TransactionWriter} in the composition.
-	 * @see TransactionWriter
+	 * @see org.apache.geode.cache.TransactionWriter
 	 */
 	protected TransactionWriter getTransactionWriterOne() {
 		return this.transactionWriterOne;
@@ -72,7 +71,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	 * Returns a reference to the second {@link TransactionWriter} in the composition.
 	 *
 	 * @return a reference to the second {@link TransactionWriter} in the composition.
-	 * @see TransactionWriter
+	 * @see org.apache.geode.cache.TransactionWriter
 	 */
 	protected TransactionWriter getTransactionWriterTwo() {
 		return this.transactionWriterTwo;

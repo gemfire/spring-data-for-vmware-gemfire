@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.net.InetSocketAddress;
@@ -24,11 +23,11 @@ import org.springframework.util.StringUtils;
  * The {@link ConnectionEndpointList} class is an {@link Iterable} collection of {@link ConnectionEndpoint} objects.
  *
  * @author John Blum
- * @see Iterable
- * @see InetSocketAddress
- * @see AbstractList
- * @see List
- * @see ConnectionEndpoint
+ * @see java.lang.Iterable
+ * @see java.net.InetSocketAddress
+ * @see java.util.AbstractList
+ * @see java.util.List
+ * @see org.springframework.data.gemfire.support.ConnectionEndpoint
  * @since 1.6.3
  */
 @SuppressWarnings("unused")
@@ -44,7 +43,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * used to initialize a new instance of {@link ConnectionEndpointList}.
 	 * @return a {@link ConnectionEndpointList} initialized with the array of
 	 * {@link ConnectionEndpoint ConnectionPoints}.
-	 * @see ConnectionEndpoint
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
 	 */
 	public static ConnectionEndpointList from(ConnectionEndpoint... connectionEndpoints) {
 		return new ConnectionEndpointList(connectionEndpoints);
@@ -58,7 +57,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * used to initialize a new instance of {@link ConnectionEndpointList}.
 	 * @return a {@link ConnectionEndpointList} initialized from the array of
 	 * {@link InetSocketAddress InetSocketAddresses}.
-	 * @see InetSocketAddress
+	 * @see java.net.InetSocketAddress
 	 * @see #from(Iterable)
 	 */
 	public static ConnectionEndpointList from(InetSocketAddress... socketAddresses) {
@@ -73,8 +72,8 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * used to initialize a new instance of {@link ConnectionEndpointList}.
 	 * @return a {@link ConnectionEndpointList} initialized from an {@link Iterable} of
 	 * {@link InetSocketAddress InetSocketAddresses}.
-	 * @see InetSocketAddress
-	 * @see Iterable
+	 * @see java.net.InetSocketAddress
+	 * @see java.lang.Iterable
 	 */
 	public static ConnectionEndpointList from(Iterable<InetSocketAddress> socketAddresses) {
 
@@ -110,7 +109,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * @param defaultPort {@link Integer default port number} to use if port is not specified in a host and port value.
 	 * @param hostsPorts array of {@link String hosts and ports} to parse.
 	 * @return a new {@link ConnectionEndpointList} representing the {@link String hosts and ports} in the array.
-	 * @see ConnectionEndpoint#parse(String, int)
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint#parse(String, int)
 	 * @see #ConnectionEndpointList(Iterable)
 	 */
 	public static ConnectionEndpointList parse(int defaultPort, String... hostsPorts) {
@@ -138,7 +137,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * of {@link ConnectionEndpoint ConnectionEndpoints}.
 	 *
 	 * @param connectionEndpoints array of {@link ConnectionEndpoint ConnectionEndpoints} to add to this list.
-	 * @see ConnectionEndpoint
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
 	 * @see #ConnectionEndpointList(Iterable)
 	 */
 	public ConnectionEndpointList(@NonNull ConnectionEndpoint... connectionEndpoints) {
@@ -151,8 +150,8 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 *
 	 * @param connectionEndpoints {@link Iterable} object containing {@link ConnectionEndpoint ConnectionEndpoints}
 	 * to add to this list.
-	 * @see ConnectionEndpoint
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
+	 * @see java.lang.Iterable
 	 * @see #add(Iterable)
 	 */
 	public ConnectionEndpointList(@NonNull Iterable<ConnectionEndpoint> connectionEndpoints) {
@@ -165,7 +164,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 *
 	 * @param connectionEndpoint {@link ConnectionEndpoint} to add to this list.
 	 * @return a boolean value indicating whether this list was modified by the add operation.
-	 * @see ConnectionEndpoint
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
 	 * @see #add(ConnectionEndpoint...)
 	 */
 	@Override
@@ -178,7 +177,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 *
 	 * @param connectionEndpoints array of {@link ConnectionEndpoint ConnectionEndpoints} to add to this list.
 	 * @return this {@link ConnectionEndpointList}.
-	 * @see ConnectionEndpoint
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
 	 * @see #add(Iterable)
 	 */
 	public final ConnectionEndpointList add(ConnectionEndpoint... connectionEndpoints) {
@@ -192,7 +191,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * @param connectionEndpoints {@link Iterable} collection of {@link ConnectionEndpoint ConnectionEndpoints}
 	 * to add to this list.
 	 * @return this {@link ConnectionEndpointList}.
-	 * @see ConnectionEndpoint
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
 	 * @see #add(ConnectionEndpoint...)
 	 */
 	public final ConnectionEndpointList add(Iterable<ConnectionEndpoint> connectionEndpoints) {
@@ -283,8 +282,8 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * @param index an integer value indicating the index of the {@link ConnectionEndpoint} of interest.
 	 * @return the {@link ConnectionEndpoint} at index in this list.
 	 * @throws IndexOutOfBoundsException if the index is not within the bounds of this list.
-	 * @see ConnectionEndpoint
-	 * @see AbstractList#get(int)
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
+	 * @see java.util.AbstractList#get(int)
 	 */
 	@Override
 	public ConnectionEndpoint get(int index) {
@@ -299,8 +298,8 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * @return the old {@link ConnectionEndpoint} at index in this list or null if no {@link ConnectionEndpoint}
 	 * at index existed.
 	 * @throws IndexOutOfBoundsException if the index is not within the bounds of this list.
-	 * @see ConnectionEndpoint
-	 * @see AbstractList#set(int, Object)
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint
+	 * @see java.util.AbstractList#set(int, Object)
 	 */
 	@Override
 	public ConnectionEndpoint set(int index, ConnectionEndpoint element) {
@@ -349,9 +348,9 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	 * Converts this collection of {@link ConnectionEndpoint}s into a {@link List} of {@link InetSocketAddress}es.
 	 *
 	 * @return a {@link List} of {@link InetSocketAddress}es representing this collection of {@link ConnectionEndpoint}s.
-	 * @see ConnectionEndpoint#toInetSocketAddress()
-	 * @see InetSocketAddress
-	 * @see List
+	 * @see org.springframework.data.gemfire.support.ConnectionEndpoint#toInetSocketAddress()
+	 * @see java.net.InetSocketAddress
+	 * @see java.util.List
 	 */
 	public List<InetSocketAddress> toInetSocketAddresses() {
 

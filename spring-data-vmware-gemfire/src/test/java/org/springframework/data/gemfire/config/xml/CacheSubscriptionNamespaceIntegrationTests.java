@@ -24,14 +24,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Lyndon Adams
  * @author John Blum
- * @see Test
- * @see Region
- * @see SubscriptionAttributes
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.SubscriptionAttributes
  * @see org.springframework.data.gemfire.SubscriptionAttributesFactoryBean
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.0
  */
 @RunWith(SpringRunner.class)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -44,17 +43,17 @@ import org.slf4j.LoggerFactory;
  * is not invoked until after GemFire creates and initializes the GemFire {@link Cache} for use.
  *
  * @author John Blum
- * @see Properties
- * @see Cache
- * @see Declarable
- * @see ApplicationContext
- * @see ApplicationListener
- * @see ConfigurableApplicationContext
- * @see AnnotationConfigApplicationContext
- * @see ApplicationContextEvent
- * @see ApplicationEventMulticaster
- * @see ClassPathXmlApplicationContext
- * @see DefaultResourceLoader
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Declarable
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationListener
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
+ * @see org.springframework.context.event.ApplicationContextEvent
+ * @see org.springframework.context.event.ApplicationEventMulticaster
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.core.io.DefaultResourceLoader
  * @link https://gemfire.docs.pivotal.io/latest/userguide/index.html#basic_config/the_cache/setting_cache_initializer.html
  * @link https://jira.springsource.org/browse/SGF-248
  * @since 1.4.0
@@ -85,7 +84,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * Server-based JVM process.
 	 *
 	 * @return a reference to the Spring ApplicationContext bootstrapped by GemFire.
-	 * @see ConfigurableApplicationContext
+	 * @see org.springframework.context.ConfigurableApplicationContext
 	 */
 	public static synchronized ConfigurableApplicationContext getApplicationContext() {
 
@@ -100,9 +99,9 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * bean definition classes.
 	 *
 	 * @param beanClassLoader the ClassLoader used by the Spring ApplicationContext to load bean definition classes.
-	 * @throws IllegalStateException if the Spring ApplicationContext has already been created
+	 * @throws java.lang.IllegalStateException if the Spring ApplicationContext has already been created
 	 * and initialized.
-	 * @see ClassLoader
+	 * @see java.lang.ClassLoader
 	 */
 	public static void setBeanClassLoader(ClassLoader beanClassLoader) {
 
@@ -138,8 +137,8 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param listener a Spring ApplicationListener requiring notification of any ContextRefreshedEvents after the
 	 * ApplicationContext has already been created, initialized and/or refreshed.
-	 * @see ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
-	 * @see ContextRefreshedEvent
+	 * @see org.springframework.context.ApplicationListener#onApplicationEvent(org.springframework.context.ApplicationEvent)
+	 * @see org.springframework.context.event.ContextRefreshedEvent
 	 */
 	protected static void notifyOnExistingContextRefreshedEvent(ApplicationListener<ContextRefreshedEvent> listener) {
 
@@ -159,11 +158,11 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @param listener the ApplicationListener to register for ContextRefreshedEvents multi-casted by this
 	 * SpringContextBootstrappingInitializer.
 	 * @return the reference to the ApplicationListener for method call chaining purposes.
-	 * @see #notifyOnExistingContextRefreshedEvent(ApplicationListener)
-	 * @see #unregister(ApplicationListener)
-	 * @see ApplicationListener
-	 * @see ContextRefreshedEvent
-	 * @see SimpleApplicationEventMulticaster
+	 * @see #notifyOnExistingContextRefreshedEvent(org.springframework.context.ApplicationListener)
+	 * @see #unregister(org.springframework.context.ApplicationListener)
+	 * @see org.springframework.context.ApplicationListener
+	 * @see org.springframework.context.event.ContextRefreshedEvent
+	 * @see org.springframework.context.event.SimpleApplicationEventMulticaster
 	 * 	#addApplicationListener(org.springframework.context.ApplicationListener)
 	 */
 	public static <T extends ApplicationListener<ContextRefreshedEvent>> T register(T listener) {
@@ -199,10 +198,10 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @param listener the ApplicationListener to unregister from receiving ContextRefreshedEvents by this
 	 * SpringContextBootstrappingInitializer.
 	 * @return the reference to the ApplicationListener for method call chaining purposes.
-	 * @see #register(ApplicationListener)
-	 * @see ApplicationListener
-	 * @see ContextRefreshedEvent
-	 * @see SimpleApplicationEventMulticaster
+	 * @see #register(org.springframework.context.ApplicationListener)
+	 * @see org.springframework.context.ApplicationListener
+	 * @see org.springframework.context.event.ContextRefreshedEvent
+	 * @see org.springframework.context.event.SimpleApplicationEventMulticaster
 	 * 	#removeApplicationListener(org.springframework.context.ApplicationListener)
 	 */
 	public static <T extends ApplicationListener<ContextRefreshedEvent>> T unregister(T listener) {
@@ -265,9 +264,9 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @throws IllegalArgumentException if both the basePackages and configLocation parameter arguments
 	 * are null or empty.
 	 * @see #newApplicationContext(String[])
-	 * @see AnnotationConfigApplicationContext
-	 * @see AnnotationConfigApplicationContext#scan(String...)
-	 * @see ClassPathXmlApplicationContext
+	 * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
+	 * @see org.springframework.context.annotation.AnnotationConfigApplicationContext#scan(String...)
+	 * @see org.springframework.context.support.ClassPathXmlApplicationContext
 	 */
 	protected ConfigurableApplicationContext createApplicationContext(String[] basePackages, String[] configLocations) {
 
@@ -296,10 +295,10 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param applicationContext the ConfigurableApplicationContext to initialize.
 	 * @return the initialized ApplicationContext.
-	 * @see ConfigurableApplicationContext
-	 * @see ConfigurableApplicationContext#addApplicationListener(ApplicationListener)
-	 * @see ConfigurableApplicationContext#registerShutdownHook()
-	 * @throws IllegalArgumentException if the ApplicationContext reference is null!
+	 * @see org.springframework.context.ConfigurableApplicationContext
+	 * @see org.springframework.context.ConfigurableApplicationContext#addApplicationListener(org.springframework.context.ApplicationListener)
+	 * @see org.springframework.context.ConfigurableApplicationContext#registerShutdownHook()
+	 * @throws java.lang.IllegalArgumentException if the ApplicationContext reference is null!
 	 */
 	protected ConfigurableApplicationContext initApplicationContext(ConfigurableApplicationContext applicationContext) {
 
@@ -316,9 +315,9 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param applicationContext the ConfigurableApplicationContext to refresh.
 	 * @return the refreshed ApplicationContext.
-	 * @see ConfigurableApplicationContext
-	 * @see ConfigurableApplicationContext#refresh()
-	 * @throws IllegalArgumentException if the ApplicationContext reference is null!
+	 * @see org.springframework.context.ConfigurableApplicationContext
+	 * @see org.springframework.context.ConfigurableApplicationContext#refresh()
+	 * @throws java.lang.IllegalArgumentException if the ApplicationContext reference is null!
 	 */
 	protected ConfigurableApplicationContext refreshApplicationContext(ConfigurableApplicationContext applicationContext) {
 
@@ -338,7 +337,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @param annotatedClasses a Class array of Spring annotated (@Configuration) classes used to configure
 	 * and initialize the Spring AnnotationConfigApplicationContext.
 	 * @return the given AnnotationConfigApplicationContext.
-	 * @see AnnotationConfigApplicationContext#register(Class[])
+	 * @see org.springframework.context.annotation.AnnotationConfigApplicationContext#register(Class[])
 	 */
 	ConfigurableApplicationContext registerAnnotatedClasses(ConfigurableApplicationContext applicationContext,
 			Class<?>[] annotatedClasses) {
@@ -364,7 +363,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * using the specified base packages.
 	 * @param basePackages an array of Strings indicating the base packages to use in the classpath component scan.
 	 * @return the given AnnotationConfigApplicationContext.
-	 * @see AnnotationConfigApplicationContext#scan(String...)
+	 * @see org.springframework.context.annotation.AnnotationConfigApplicationContext#scan(String...)
 	 */
 	ConfigurableApplicationContext scanBasePackages(ConfigurableApplicationContext applicationContext,
 			String[] basePackages) {
@@ -386,8 +385,8 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param applicationContext the Spring ApplicationContext in which to configure the ClassLoader.
 	 * @return the given Spring ApplicationContext.
-	 * @see DefaultResourceLoader#setClassLoader(ClassLoader)
-	 * @see ClassLoader
+	 * @see org.springframework.core.io.DefaultResourceLoader#setClassLoader(ClassLoader)
+	 * @see java.lang.ClassLoader
 	 */
 	ConfigurableApplicationContext setClassLoader(ConfigurableApplicationContext applicationContext) {
 
@@ -414,12 +413,12 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * Apache Geode/Pivotal GemFire {@literal cache.xml} &lt;initializer&gt; block for the declared
 	 * {@link SpringContextBootstrappingInitializer} Apache Geode/Pivotal GemFire {@link Declarable} object.
 	 * @param cache reference to the peer {@link Cache}.
-	 * @throws ApplicationContextException if the Spring {@link ApplicationContext}
+	 * @throws org.springframework.context.ApplicationContextException if the Spring {@link ApplicationContext}
 	 * could not be successfully constructed, configured and initialized.
 	 * @see #createApplicationContext(String[], String[])
-	 * @see #initApplicationContext(ConfigurableApplicationContext)
-	 * @see #refreshApplicationContext(ConfigurableApplicationContext)
-	 * @see Properties
+	 * @see #initApplicationContext(org.springframework.context.ConfigurableApplicationContext)
+	 * @see #refreshApplicationContext(org.springframework.context.ConfigurableApplicationContext)
+	 * @see java.util.Properties
 	 */
 	public void init(Cache cache, Properties parameters) {
 
@@ -465,7 +464,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param applicationContext the Spring ApplicationContext from which to get the ID.
 	 * @return the ID of the given Spring ApplicationContext or null if the ApplicationContext reference is null.
-	 * @see ApplicationContext#getId()
+	 * @see org.springframework.context.ApplicationContext#getId()
 	 */
 	String nullSafeGetApplicationContextId(ApplicationContext applicationContext) {
 		return applicationContext != null ? applicationContext.getId() : null;
@@ -482,9 +481,9 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param event the ApplicationContextEvent signaling that the Spring ApplicationContext has been created
 	 * and refreshed by GemFire, or closed when the JVM process exits.
-	 * @see ContextClosedEvent
-	 * @see ContextRefreshedEvent
-	 * @see ApplicationEventMulticaster
+	 * @see org.springframework.context.event.ContextClosedEvent
+	 * @see org.springframework.context.event.ContextRefreshedEvent
+	 * @see org.springframework.context.event.ApplicationEventMulticaster
 	 *  #multicastEvent(org.springframework.context.ApplicationEvent)
 	 */
 	@Override

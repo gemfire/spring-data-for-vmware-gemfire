@@ -23,9 +23,9 @@ import org.springframework.beans.factory.FactoryBean;
  * at both the {@link Region} level as well as for entries.
  *
  * @author John Blum
- * @see CustomExpiry
- * @see ExpirationAttributes
- * @see Region
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.Region
  * @since 2.1.0
  */
 @SuppressWarnings("unused")

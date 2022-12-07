@@ -29,13 +29,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration tests for {@link DiskStoreDirectoryBeanPostProcessor}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.DiskStore
- * @see DiskStoreFactoryBean
- * @see DiskStoreDirectoryBeanPostProcessor
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.config.support.DiskStoreDirectoryBeanPostProcessor
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

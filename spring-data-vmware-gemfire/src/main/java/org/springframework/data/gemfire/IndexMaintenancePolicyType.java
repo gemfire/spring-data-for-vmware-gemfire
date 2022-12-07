@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.AttributesFactory;
@@ -12,9 +11,9 @@ import org.apache.geode.cache.RegionFactory;
  * The {@link IndexMaintenancePolicyType} enum is a enumerated type of GemFire Index maintenance update options.
  *
  * @author John Blum
- * @see AttributesFactory#setIndexMaintenanceSynchronous(boolean)
+ * @see org.apache.geode.cache.AttributesFactory#setIndexMaintenanceSynchronous(boolean)
  * @see org.apache.geode.cache.RegionAttributes#getIndexMaintenanceSynchronous()
- * @see RegionFactory#setIndexMaintenanceSynchronous(boolean)
+ * @see org.apache.geode.cache.RegionFactory#setIndexMaintenanceSynchronous(boolean)
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -32,7 +31,7 @@ public enum IndexMaintenancePolicyType {
 	 * @param name the String value indicating the type of Index maintenance (update).
 	 * @return an IndexMaintenanceType enumerated value given a case-insensitive, named String value describing
 	 * the type of Index maintenance, or null if no match was found.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #name()
 	 */
 	public static IndexMaintenancePolicyType valueOfIgnoreCase(String name) {
@@ -51,8 +50,8 @@ public enum IndexMaintenancePolicyType {
 	 * this IndexMaintenancePolicyType.
 	 *
 	 * @param attributesFactory the AttributesFactory instance on which to set the indexMaintenanceProperty.
-	 * @throws NullPointerException if the AttributesFactory reference is null.
-	 * @see #setIndexMaintenance(RegionFactory)
+	 * @throws java.lang.NullPointerException if the AttributesFactory reference is null.
+	 * @see #setIndexMaintenance(org.apache.geode.cache.RegionFactory)
 	 */
 	@SuppressWarnings("deprecation")
 	public void setIndexMaintenance(AttributesFactory<?, ?> attributesFactory) {
@@ -64,8 +63,8 @@ public enum IndexMaintenancePolicyType {
 	 * this IndexMaintenancePolicyType.
 	 *
 	 * @param regionFactory the RegionFactory instance on which to set the indexMaintenanceProperty.
-	 * @throws NullPointerException if the RegionFactory reference is null.
-	 * @see #setIndexMaintenance(AttributesFactory)
+	 * @throws java.lang.NullPointerException if the RegionFactory reference is null.
+	 * @see #setIndexMaintenance(org.apache.geode.cache.AttributesFactory)
 	 */
 	public void setIndexMaintenance(RegionFactory<?, ?> regionFactory) {
 		regionFactory.setIndexMaintenanceSynchronous(equals(SYNCHRONOUS));

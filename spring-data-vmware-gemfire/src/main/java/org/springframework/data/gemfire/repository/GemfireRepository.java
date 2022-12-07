@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -12,7 +11,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see PagingAndSortingRepository
+ * @see org.springframework.data.repository.PagingAndSortingRepository
  */
 public interface GemfireRepository<T, ID> extends PagingAndSortingRepository<T, ID> {
 
@@ -21,7 +20,7 @@ public interface GemfireRepository<T, ID> extends PagingAndSortingRepository<T, 
 	 *
 	 * @param wrapper {@link Wrapper} object wrapping the entity and the identifier of the entity (i.e. key).
 	 * @return the saved entity.
-	 * @see Wrapper
+	 * @see org.springframework.data.gemfire.repository.Wrapper
 	 */
 	T save(Wrapper<T, ID> wrapper);
 

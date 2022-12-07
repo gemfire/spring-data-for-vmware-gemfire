@@ -27,10 +27,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see PropertiesRealm
- * @see AbstractGeodeSecurityIntegrationTests
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.shiro.realm.text.PropertiesRealm
+ * @see org.springframework.data.gemfire.config.annotation.AbstractGeodeSecurityIntegrationTests
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

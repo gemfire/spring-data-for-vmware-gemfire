@@ -17,8 +17,8 @@ import org.springframework.data.gemfire.function.annotation.OnRegion;
  *  * using SDG's {@link Function} implementation annotation support.
  *
  * @author John Blum
- * @see FunctionId
- * @see OnRegion
+ * @see org.springframework.data.gemfire.function.annotation.FunctionId
+ * @see org.springframework.data.gemfire.function.annotation.OnRegion
  * @since 2.6.0
  */
 @OnRegion(region = "Numbers")

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
@@ -26,15 +25,15 @@ import org.springframework.util.StringUtils;
  * {@link Cache} and {@link ClientCache} instances.
  *
  * @author John Blum
- * @see Cache
- * @see CacheFactory
- * @see GemFireCache
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see ClientCache
- * @see ClientCacheFactory
- * @see DistributedSystem
- * @see GemFireCacheImpl
- * @see DistributedSystemUtils
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.internal.cache.GemFireCacheImpl
+ * @see org.springframework.data.gemfire.util.DistributedSystemUtils
  * @since 1.8.0
  */
 @SuppressWarnings("unused")

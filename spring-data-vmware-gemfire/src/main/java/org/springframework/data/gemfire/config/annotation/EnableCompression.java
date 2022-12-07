@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.CompressionConfiguration.SNAPPY_COMPRESSOR_BEAN_NAME;
@@ -25,8 +24,8 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see Import
- * @see CompressionConfiguration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.CompressionConfiguration
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

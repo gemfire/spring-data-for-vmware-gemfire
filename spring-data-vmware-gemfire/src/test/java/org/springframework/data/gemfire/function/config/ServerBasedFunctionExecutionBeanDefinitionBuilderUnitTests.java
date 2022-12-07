@@ -23,9 +23,9 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
  * Unit Tests for {@link ServerBasedFunctionExecutionBeanDefinitionBuilder}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ServerBasedFunctionExecutionBeanDefinitionBuilder
+ * @see org.springframework.data.gemfire.function.config.ServerBasedFunctionExecutionBeanDefinitionBuilder
  * @since 1.7.0
  */
 public class ServerBasedFunctionExecutionBeanDefinitionBuilderUnitTests {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -28,9 +27,9 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @author Srikanth Manvi
  * @see java.lang.annotation.Annotation
- * @see SecurableCommunicationChannels
- * @see Import
- * @see SslConfiguration
+ * @see org.apache.geode.security.SecurableCommunicationChannels
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.SslConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -57,7 +56,7 @@ public @interface EnableSsl {
 	/**
 	 * Configures the Pivotal GemFire/Apache Geode components for which SSL will be enabled.
 	 *
-	 * Defaults to {@link Component#ALL}.
+	 * Defaults to {@link EnableSsl.Component#ALL}.
 	 *
 	 * Use the {@literal spring.data.gemfire.security.ssl.components} property
 	 * in {@literal application.properties}.
@@ -244,7 +243,7 @@ public @interface EnableSsl {
 		 * Returns a {@link String} representation of this enumerated value.
 		 *
 		 * @return a {@link String} describing this enumerated value.
-		 * @see Object#toString()
+		 * @see java.lang.Object#toString()
 		 */
 		@Override
 		public String toString() {

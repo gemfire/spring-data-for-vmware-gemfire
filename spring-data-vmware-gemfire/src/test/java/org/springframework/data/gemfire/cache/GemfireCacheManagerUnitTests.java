@@ -33,9 +33,9 @@ import org.springframework.cache.Cache;
  * Unit Tests for {@link GemfireCacheManager}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
- * @see MockitoJUnitRunner
+ * @see org.junit.Test
+ * @see org.mockito.Mock
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

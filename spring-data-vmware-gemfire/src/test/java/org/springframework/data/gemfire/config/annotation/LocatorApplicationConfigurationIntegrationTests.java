@@ -26,15 +26,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link LocatorApplication} and {@link LocatorApplicationConfiguration}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see LocatorFactoryBean
- * @see LocatorApplication
- * @see LocatorApplicationConfiguration
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplicationConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.3.0
  */
 @RunWith(SpringRunner.class)

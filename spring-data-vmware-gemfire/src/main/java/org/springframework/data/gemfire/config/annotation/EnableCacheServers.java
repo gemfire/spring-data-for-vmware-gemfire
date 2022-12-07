@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Import;
  * to be defined and used in a peer cache application configured with Spring (Data GemFire/Geode).
  *
  * @author John Blum
- * @see CacheServer
- * @see AddCacheServersConfiguration
- * @see CacheServerConfigurer
- * @see EnableCacheServer
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServersConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Import;
 public @interface EnableCacheServers {
 
 	/**
-	 * Enables the definition of multiple GemFire {@link CacheServer CacheServers}.
+	 * Enables the definition of multiple GemFire {@link org.apache.geode.cache.server.CacheServer CacheServers}.
 	 */
 	EnableCacheServer[] servers() default {};
 

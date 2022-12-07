@@ -38,12 +38,12 @@ import org.w3c.dom.NodeList;
  * Unit Tests for {@link PoolParser}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see PoolParser
- * @see Element
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.xml.PoolParser
+ * @see org.w3c.dom.Element
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

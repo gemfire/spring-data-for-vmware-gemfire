@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query.support;
 
 import java.util.Collection;
@@ -27,10 +26,10 @@ import org.springframework.util.Assert;
  * Utility class used to work with {@link Collection}, {@link Page} and {@link Pageable} objects.
  *
  * @author John Blum
- * @see Collection
- * @see Page
- * @see Pageable
- * @see QueryMethod
+ * @see java.util.Collection
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.repository.query.QueryMethod
  * @since 2.4.0
  */
 public abstract class PagingUtils {
@@ -55,7 +54,7 @@ public abstract class PagingUtils {
 	 * @param pageable {@link Pageable} object to evaluate.
 	 * @throws IllegalArgumentException if {@link Pageable} is {@literal null} or page number is less than {@literal 0}
 	 *  or the page size is less than {@literal 1}.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	public static void assertPageable(@NonNull Pageable pageable) {
 
@@ -75,7 +74,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param pageable {@link Pageable page request} to evaluate.
 	 * @return a boolean value indicating whether the given {@link Pageable page request} is for page one.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	public static boolean isPageOne(@NonNull Pageable pageable) {
 		return pageable != null && pageable.getPageNumber() == 0;
@@ -86,7 +85,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param queryMethod {@link QueryMethod} to evaluate for paging.
 	 * @return a boolean value indicating whether the given {@link QueryMethod} represents (models) a paged query.
-	 * @see QueryMethod
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 */
 	public static boolean isPagingPresent(@Nullable QueryMethod queryMethod) {
 
@@ -106,8 +105,8 @@ public abstract class PagingUtils {
 	 * @return a {@link List sub-List} containing the contents for the requested page.
 	 * @see #getQueryResultSetStartIndexForPage(Pageable)
 	 * @see #getQueryResultSetEndIndexForPage(Pageable)
-	 * @see Pageable
-	 * @see List
+	 * @see org.springframework.data.domain.Pageable
+	 * @see java.util.List
 	 */
 	public static @NonNull <T> List<T> 	getPagedList(@NonNull List<T> list, @NonNull Pageable pageable) {
 
@@ -135,8 +134,8 @@ public abstract class PagingUtils {
 	 * count is not equal to the argument count, or the indexed {@link QueryMethod} argument is not an instance of
 	 * {@link Pageable}.
 	 * @throws IllegalStateException if the {@link QueryMethod} does not have a {@link Pageable} parameter.
-	 * @see QueryMethod
-	 * @see Pageable
+	 * @see org.springframework.data.repository.query.QueryMethod
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	public static @NonNull Pageable getPageRequest(@NonNull QueryMethod queryMethod, @NonNull Object... arguments) {
 
@@ -172,7 +171,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param pageable {@link Pageable} object encapsulating the details of the requested {@link Page}.
 	 * @return the start index in the query result set to populate the content of the {@link Page}.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 * @see #getQueryResultSetEndIndexForPage(Pageable)
 	 */
 	public static int getQueryResultSetStartIndexForPage(@Nullable Pageable pageable) {
@@ -185,7 +184,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param pageable {@link Pageable} object encapsulating the details of the requested {@link Page}.
 	 * @return the end index in the query result set to populate the content of the {@link Page}.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 * @see #getQueryResultSetStartIndexForPage(Pageable)
 	 */
 	public static int getQueryResultSetEndIndexForPage(@Nullable Pageable pageable) {
@@ -199,7 +198,7 @@ public abstract class PagingUtils {
 	 * @param pageable {@link Pageable} object encapsulating the details of the requested {@link Page}.
 	 * @return the maximum results that would be returned by a query  given the {@link Pageable} object
 	 * specifying the requested {@link Page}.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 * @see #normalizePageNumber(Pageable)
 	 */
 	public static int getQueryResultSetLimitForPage(@Nullable Pageable pageable) {
@@ -212,7 +211,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param page {@link Page} used to determine the page number to normalize.
 	 * @return the normalized page number from the 0 index based page number.
-	 * @see Page
+	 * @see org.springframework.data.domain.Page
 	 * @see #normalize(int)
 	 */
 	public static int normalizePageNumber(@Nullable Page<?> page) {
@@ -225,7 +224,7 @@ public abstract class PagingUtils {
 	 *
 	 * @param pageable {@link Pageable} used to determine the page number to normalize.
 	 * @return the normalized page number from the 0 index based page number.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 * @see #normalize(int)
 	 */
 	public static int normalizePageNumber(@Nullable Pageable pageable) {
@@ -251,7 +250,7 @@ public abstract class PagingUtils {
 	 * @param iterable {@link Iterable} object to evaluate.
 	 * @return the size (number of elements) contained by the {@link Iterable} object.  If the {@link Iterable} object
 	 * is {@literal null}, then this method will return {@literal 0}.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 */
 	protected static long nullSafeSize(@Nullable Iterable<?> iterable) {
 
@@ -269,10 +268,10 @@ public abstract class PagingUtils {
 	 * must not be {@literal null}.
 	 * @return a {@literal non-null} {@link Page} view from the given {@link List} based on the {@link Pageable} object
 	 * (page request).
-	 * @see Pageable
-	 * @see Page
+	 * @see org.springframework.data.domain.Pageable
+	 * @see org.springframework.data.domain.Page
 	 * @see #getPagedList(List, Pageable)
-	 * @see List
+	 * @see java.util.List
 	 */
 	public static @NonNull <T> Page<T> toPage(@NonNull List<T> list, @NonNull Pageable pageable) {
 

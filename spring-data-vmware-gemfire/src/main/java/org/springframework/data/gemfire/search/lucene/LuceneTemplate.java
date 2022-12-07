@@ -23,16 +23,16 @@ import org.springframework.data.gemfire.search.lucene.support.LuceneAccessorSupp
  * for performing Lucene queries and other Lucene data access operations.
  *
  * @author John Blum
- * @see LuceneAccessor
- * @see LuceneOperations
- * @see LuceneAccessorSupport
- * @see Region
- * @see LuceneIndex
- * @see LuceneQuery
- * @see LuceneQueryFactory
- * @see LuceneQueryProvider
- * @see LuceneResultStruct
- * @see PageableLuceneQueryResults
+ * @see org.springframework.data.gemfire.search.lucene.LuceneAccessor
+ * @see org.springframework.data.gemfire.search.lucene.LuceneOperations
+ * @see org.springframework.data.gemfire.search.lucene.support.LuceneAccessorSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.lucene.LuceneQuery
+ * @see org.apache.geode.cache.lucene.LuceneQueryFactory
+ * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+ * @see org.apache.geode.cache.lucene.LuceneResultStruct
+ * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -48,7 +48,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	 * Constructs an instance of {@link LuceneTemplate} initialized with the given {@link LuceneIndex}.
 	 *
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene queries.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 */
 	public LuceneTemplate(LuceneIndex luceneIndex) {
 		super(luceneIndex);
@@ -60,7 +60,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	 *
 	 * @param indexName {@link String} containing the name of the {@link LuceneIndex}.
 	 * @param region {@link Region} on which the Lucene query is executed.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public LuceneTemplate(String indexName, Region<?, ?> region) {
 		super(indexName, region);

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.expiration;
 
 import java.lang.annotation.Annotation;
@@ -41,17 +40,17 @@ import org.springframework.util.ObjectUtils;
  * with SDG's Expiration-based Annotations.
  *
  * @author John Blum
- * @see Annotation
- * @see BeanFactory
- * @see BeanFactoryAware
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
  * @see ExpirationActionType
  * @see Expiration
  * @see IdleTimeoutExpiration
  * @see TimeToLiveExpiration
- * @see CustomExpiry
- * @see ExpirationAction
- * @see ExpirationAttributes
- * @see Region
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.ExpirationAction
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.Region
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -78,7 +77,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * expiration policy.
 	 *
 	 * @param defaultExpirationAttributes expiration settings used as the default expiration policy.
-	 * @see ExpirationAttributes
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 */
 	public AnnotationBasedExpiration(ExpirationAttributes defaultExpirationAttributes) {
 		this.defaultExpirationAttributes = defaultExpirationAttributes;
@@ -95,7 +94,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * using Idle Timeout expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see IdleTimeoutExpiration
-	 * @see #forIdleTimeout(ExpirationAttributes)
+	 * @see #forIdleTimeout(org.apache.geode.cache.ExpirationAttributes)
 	 */
 	public static <K, V> AnnotationBasedExpiration<K, V> forIdleTimeout() {
 		return forIdleTimeout(null);
@@ -141,7 +140,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * using Time-To-Live expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see TimeToLiveExpiration
-	 * @see #forTimeToLive(ExpirationAttributes)
+	 * @see #forTimeToLive(org.apache.geode.cache.ExpirationAttributes)
 	 */
 	public static <K, V> AnnotationBasedExpiration<K, V> forTimeToLive() {
 		return forTimeToLive(null);
@@ -218,7 +217,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 *
 	 * @param beanFactory the Spring {@link BeanFactory} to which this bean belongs.
 	 * @throws BeansException if the {@link BeanFactory} reference cannot be initialized.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #initEvaluationContext()
 	 */
 	@Override
@@ -232,8 +231,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * is managed.
 	 *
 	 * @return a reference to the Spring {@link BeanFactory}.
-	 * @throws IllegalStateException if the {@link BeanFactory} reference was not properly initialized.
-	 * @see BeanFactory
+	 * @throws java.lang.IllegalStateException if the {@link BeanFactory} reference was not properly initialized.
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected BeanFactory getBeanFactory() {
 		BeanFactory localBeanFactory = BEAN_FACTORY_REFERENCE.get();
@@ -247,7 +246,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 *
 	 * @param defaultExpirationAttributes expiration settings used as the default expiration policy.
 	 * @see #getDefaultExpirationAttributes()
-	 * @see ExpirationAttributes
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 */
 	public void setDefaultExpirationAttributes(ExpirationAttributes defaultExpirationAttributes) {
 		this.defaultExpirationAttributes = defaultExpirationAttributes;
@@ -258,8 +257,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * has been specified.
 	 *
 	 * @return an instance of ExpirationAttributes with expiration settings defining the default expiration policy.
-	 * @see #setDefaultExpirationAttributes(ExpirationAttributes)
-	 * @see ExpirationAttributes
+	 * @see #setDefaultExpirationAttributes(org.apache.geode.cache.ExpirationAttributes)
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 */
 	protected ExpirationAttributes getDefaultExpirationAttributes() {
 		//return (defaultExpirationAttributes != null ? defaultExpirationAttributes : ExpirationAttributes.DEFAULT);
@@ -273,8 +272,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 *
 	 * @param entry the entry used to determine the appropriate expiration policy.
 	 * @return the expiration configuration to be used or {@literal null} if the Region's defaults should be used.
-	 * @see ExpirationAttributes
-	 * @see Region
+	 * @see org.apache.geode.cache.ExpirationAttributes
+	 * @see org.apache.geode.cache.Region
 	 * @see #getExpirationMetaData(Region.Entry)
 	 * @see #newExpirationAttributes(ExpirationMetaData)
 	 */
@@ -289,7 +288,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * @param entry {@link Region} entry used as the source of the expiration policy meta-data.
 	 * @return {@link ExpirationMetaData} extracted from the {@link Region} entry or {@literal null}
 	 * if the expiration policy meta-data could not be determined from the {@link Region} entry.
-	 * @see ExpirationMetaData
+	 * @see AnnotationBasedExpiration.ExpirationMetaData
 	 */
 	protected ExpirationMetaData getExpirationMetaData(Region.Entry<K, V> entry) {
 		return isExpirationConfigured(entry) ? ExpirationMetaData.from(getExpiration(entry)) : null;
@@ -305,8 +304,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * @return custom {@link ExpirationAttributes} configured from the application domain object specific
 	 * expiration policy or the default expiration settings if the application domain object has not been
 	 * annotated with custom expiration meta-data.
-	 * @see ExpirationMetaData
-	 * @see ExpirationAttributes
+	 * @see AnnotationBasedExpiration.ExpirationMetaData
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 * @see #getDefaultExpirationAttributes()
 	 */
 	protected ExpirationAttributes newExpirationAttributes(ExpirationMetaData expirationMetaData) {
@@ -434,7 +433,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * The ExpirationMetaData class encapsulates the settings constituting the expiration policy including
 	 * the expiration timeout and the action performed when expiration occurs.
 	 *
-	 * @see ExpirationAttributes
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 */
 	protected static class ExpirationMetaData {
 

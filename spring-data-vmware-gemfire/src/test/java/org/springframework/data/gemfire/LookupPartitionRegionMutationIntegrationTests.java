@@ -51,10 +51,10 @@ import org.springframework.util.StringUtils;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Test
- * @see LookupRegionFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.LookupRegionFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.7.0
  */

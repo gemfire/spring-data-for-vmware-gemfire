@@ -45,9 +45,9 @@ import org.w3c.dom.NodeList;
  * Unit Tests for {@link GemfireRepositoryConfigurationExtension}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemfireRepositoryConfigurationExtension
+ * @see org.springframework.data.gemfire.repository.config.GemfireRepositoryConfigurationExtension
  * @since 1.6.3
  */
 public class GemfireRepositoryConfigurationExtensionUnitTests {

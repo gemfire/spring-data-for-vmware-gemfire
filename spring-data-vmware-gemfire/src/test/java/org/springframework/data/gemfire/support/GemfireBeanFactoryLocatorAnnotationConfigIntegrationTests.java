@@ -25,14 +25,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests using Java-based configuration for {@link GemfireBeanFactoryLocator}.
  *
  * @author John Blum
- * @see Test
- * @see BeanFactory
- * @see PeerCacheApplication
- * @see GemfireBeanFactoryLocator
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsBeanPostProcessor
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

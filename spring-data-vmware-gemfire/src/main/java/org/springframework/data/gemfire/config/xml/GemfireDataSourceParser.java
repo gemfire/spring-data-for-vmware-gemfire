@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.slf4j.Logger;
@@ -28,15 +27,15 @@ import org.springframework.lang.Nullable;
  *
  * @author David Turanski
  * @author John Blum
- * @see Element
- * @see BeanDefinition
- * @see AbstractBeanDefinition
- * @see BeanDefinitionBuilder
- * @see AbstractBeanDefinitionParser
- * @see ParserContext
- * @see GemfireDataSourcePostProcessor
- * @see ClientCacheParser
- * @see PoolParser
+ * @see org.w3c.dom.Element
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.AbstractBeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.AbstractBeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
+ * @see org.springframework.data.gemfire.config.xml.ClientCacheParser
+ * @see org.springframework.data.gemfire.config.xml.PoolParser
  */
 class GemfireDataSourceParser extends AbstractBeanDefinitionParser {
 

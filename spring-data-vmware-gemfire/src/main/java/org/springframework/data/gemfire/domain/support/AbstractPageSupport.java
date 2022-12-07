@@ -20,8 +20,8 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * @author John Blum
  * @param <T> {@link Class} type of the individual elements on this {@link Slice}.
  * @see org.springframework.core.convert.converter.Converter
- * @see Page
- * @see Slice
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.domain.Slice
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

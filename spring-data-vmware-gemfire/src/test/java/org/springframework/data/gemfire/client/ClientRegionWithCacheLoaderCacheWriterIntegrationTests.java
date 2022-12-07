@@ -34,14 +34,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * to a client, local {@link Region} cache.
  *
  * @author John Blum
- * @see Test
- * @see CacheLoader
- * @see CacheWriter
- * @see Region
- * @see ApplicationContext
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.CacheWriter
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.3
  */
 @RunWith(SpringRunner.class)

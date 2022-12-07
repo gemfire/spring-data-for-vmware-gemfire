@@ -25,13 +25,13 @@ import org.springframework.util.StringUtils;
  * that a {@link LuceneIndex} is created before the {@link Region} on which the {@link LuceneIndex} is defined.
  *
  * @author John Blum
- * @see Region
- * @see LuceneIndex
- * @see BeanDefinition
- * @see BeanFactoryPostProcessor
- * @see ConfigurableListableBeanFactory
- * @see LuceneIndexFactoryBean
- * @see AbstractDependencyStructuringBeanFactoryPostProcessor
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
+ * @see org.springframework.data.gemfire.config.support.AbstractDependencyStructuringBeanFactoryPostProcessor
  * @since 2.1.0
  */
 @SuppressWarnings("unused")

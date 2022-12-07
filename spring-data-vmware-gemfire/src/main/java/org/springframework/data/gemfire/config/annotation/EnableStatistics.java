@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see Import
- * @see StatisticsConfiguration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.StatisticsConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

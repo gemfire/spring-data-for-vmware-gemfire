@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
@@ -28,16 +27,16 @@ import org.springframework.lang.Nullable;
  * or peer {@link Cache} as a bean in the Spring context.
  *
  * @author John Blum
- * @see File
- * @see InputStream
- * @see Properties
- * @see Cache
- * @see GemFireCache
- * @see ClientCache
- * @see BeanFactory
- * @see Resource
- * @see AbstractBasicCacheFactoryBean
- * @see GemfireBeanFactoryLocator
+ * @see java.io.File
+ * @see java.io.InputStream
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.core.io.Resource
+ * @see org.springframework.data.gemfire.AbstractBasicCacheFactoryBean
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.5.0
  */
 @SuppressWarnings("unused")
@@ -56,7 +55,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * in Apache Geode native configuration metadata (e.g. {@literal cache.xml}).
 	 *
 	 * @param beanFactoryLocator reference to the configured {@link GemfireBeanFactoryLocator}.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 */
 	protected void setBeanFactoryLocator(@Nullable GemfireBeanFactoryLocator beanFactoryLocator) {
 		this.beanFactoryLocator = beanFactoryLocator;
@@ -67,7 +66,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * in Apache Geode native configuration metadata (e.g. {@literal cache.xml}).
 	 *
 	 * @return a reference to the configured {@link GemfireBeanFactoryLocator}.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 */
 	public @Nullable GemfireBeanFactoryLocator getBeanFactoryLocator() {
 		return this.beanFactoryLocator;
@@ -78,9 +77,9 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * resolve Spring bean references in Apache Geode native configuration metadata (e.g. {@literal cache.xml}).
 	 *
 	 * @return an {@link Optional} reference to the configured {@link GemfireBeanFactoryLocator}.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 * @see #getBeanFactoryLocator()
-	 * @see Optional
+	 * @see java.util.Optional
 	 */
 	public Optional<GemfireBeanFactoryLocator> getOptionalBeanFactoryLocator() {
 		return Optional.ofNullable(getBeanFactoryLocator());
@@ -90,7 +89,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Sets a reference to an (optional) Apache Geode native {@literal cache.xml} {@link Resource}.
 	 *
 	 * @param cacheXml reference to an (optional) Apache Geode native {@literal cache.xml} {@link Resource}.
-	 * @see Resource
+	 * @see org.springframework.core.io.Resource
 	 */
 	public void setCacheXml(@Nullable Resource cacheXml) {
 		this.cacheXml = cacheXml;
@@ -100,7 +99,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Returns a reference to an (optional) Apache Geode native {@literal cache.xml} {@link Resource}.
 	 *
 	 * @return a reference to an (optional) Apache Geode native {@literal cache.xml} {@link Resource}.
-	 * @see Resource
+	 * @see org.springframework.core.io.Resource
 	 */
 	public @Nullable Resource getCacheXml() {
 		return this.cacheXml;
@@ -110,8 +109,8 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Returns an {@link Optional} reference to an Apache Geode native {@literal cache.xml} {@link Resource}.
 	 *
 	 * @return an {@link Optional} reference to an Apache Geode native {@literal cache.xml} {@link Resource}.
-	 * @see Resource
-	 * @see Optional
+	 * @see org.springframework.core.io.Resource
+	 * @see java.util.Optional
 	 * @see #getCacheXml()
 	 */
 	public Optional<Resource> getOptionalCacheXml() {
@@ -122,7 +121,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Determines whether a {@literal cache.xml} {@link Resource} exists (i.e. is present).
 	 *
 	 * @return boolean value indicating whether a {@literal cache.xml} exists.
-	 * @see Resource#exists()
+	 * @see org.springframework.core.io.Resource#exists()
 	 * @see #getCacheXml()
 	 */
 	@SuppressWarnings("unused")
@@ -136,9 +135,9 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 *
 	 * @return a boolean value indicating whether the optionally configured {@literal cache.xml}
 	 * is resolvable as a {@link File} in the file system.
-	 * @see Resource#isFile()
+	 * @see org.springframework.core.io.Resource#isFile()
 	 * @see #getCacheXml()
-	 * @see File
+	 * @see java.io.File
 	 */
 	protected boolean isCacheXmlResolvableAsAFile() {
 		return getOptionalCacheXml().filter(Resource::isFile).isPresent();
@@ -151,7 +150,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * @return a reference to Apache Geode {@link Properties} used to configure the cache.
 	 * @see #setProperties(Properties)
 	 * @see #getProperties()
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public @Nullable Properties setAndGetProperties(@Nullable Properties properties) {
 		setProperties(properties);
@@ -162,7 +161,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Sets the Apache Geode {@link Properties} used to configure the cache.
 	 *
 	 * @param properties reference to Apache Geode {@link Properties} used to configure the cache.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public void setProperties(@Nullable Properties properties) {
 		this.properties = properties;
@@ -172,7 +171,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Returns a reference to the Apache Geode {@link Properties} used to configure the cache.
 	 *
 	 * @return a reference to Apache Geode {@link Properties}.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public @Nullable Properties getProperties() {
 		return this.properties;
@@ -182,7 +181,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Sets a boolean value used to determine whether to enable the {@link GemfireBeanFactoryLocator}.
 	 *
 	 * @param use boolean value used to determine whether to enable the {@link GemfireBeanFactoryLocator}.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 */
 	public void setUseBeanFactoryLocator(boolean use) {
 		this.useBeanFactoryLocator = use;
@@ -192,7 +191,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Determines whether the {@link GemfireBeanFactoryLocator} has been enabled.
 	 *
 	 * @return a boolean value indicating whether the {@link GemfireBeanFactoryLocator} has been enabled.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 */
 	public boolean isUseBeanFactoryLocator() {
 		return this.useBeanFactoryLocator;
@@ -202,7 +201,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * Initializes the {@link GemfireBeanFactoryLocator} if {@link #isUseBeanFactoryLocator()} returns {@literal true}
 	 * and an existing {@link #getBeanFactoryLocator() GemfireBeanFactoryLocator} is not already present.
 	 *
-	 * @see GemfireBeanFactoryLocator#newBeanFactoryLocator(BeanFactory, String)
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator#newBeanFactoryLocator(BeanFactory, String)
 	 * @see #getOptionalBeanFactoryLocator()
 	 * @see #isUseBeanFactoryLocator()
 	 * @see #getBeanFactory()
@@ -225,7 +224,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * native Apache Geode configuration metadata ({@literal cache.xml}).
 	 *
 	 * @return a boolean value indicating whether to use the {@link GemfireBeanFactoryLocator}.
-	 * @see GemfireBeanFactoryLocator
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
 	 * @see #getOptionalBeanFactoryLocator()
 	 * @see #isUseBeanFactoryLocator()
 	 */
@@ -236,7 +235,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	/**
 	 * Destroys and releases resources used by the {@link GemfireBeanFactoryLocator}, if present.
 	 *
-	 * @see GemfireBeanFactoryLocator#destroy()
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator#destroy()
 	 * @see #getOptionalBeanFactoryLocator()
 	 */
 	@Override
@@ -257,8 +256,8 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * @return the given {@link GemFireCache}.
 	 * @throws RuntimeException if the configured {@literal cache.xml} file could not be loaded
 	 * into the {@link GemFireCache}.
-	 * @see GemFireCache#loadCacheXml(InputStream)
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache#loadCacheXml(InputStream)
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getOptionalCacheXml()
 	 */
 	protected @NonNull <T extends GemFireCache> T loadCacheXml(@NonNull T cache) {
@@ -283,7 +282,7 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link GemFireCache}.
 	 * @see #setAndGetProperties(Properties)
 	 * @see #getProperties()
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	protected @NonNull Properties resolveProperties() {
 

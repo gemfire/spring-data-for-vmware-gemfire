@@ -27,14 +27,14 @@ import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see FixedPartitionAttributes
- * @see PartitionAttributes
- * @see PartitionAttributesFactory
- * @see PartitionResolver
- * @see PartitionListener
- * @see FactoryBean
- * @see InitializingBean
- * @see AbstractFactoryBeanSupport
+ * @see org.apache.geode.cache.FixedPartitionAttributes
+ * @see org.apache.geode.cache.PartitionAttributes
+ * @see org.apache.geode.cache.PartitionAttributesFactory
+ * @see org.apache.geode.cache.PartitionResolver
+ * @see org.apache.geode.cache.partition.PartitionListener
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
 public class PartitionAttributesFactoryBean<K, V> extends AbstractFactoryBeanSupport<PartitionAttributes<K, V>>

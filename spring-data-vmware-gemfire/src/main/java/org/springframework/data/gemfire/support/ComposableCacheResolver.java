@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -27,9 +26,9 @@ import org.springframework.util.Assert;
  * instance reference.
  *
  * @author John Blum
- * @see GemFireCache
- * @see CacheResolver
- * @see AbstractCachingCacheResolver
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingCacheResolver
  * @since 2.3.0
  */
 public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCachingCacheResolver<T> {
@@ -43,7 +42,7 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * @param <T> {@link Class subclass} of {@link GemFireCache}.
 	 * @param cacheResolvers array of {@link CacheResolver CacheResolvers} to compose; may be {@literal null}.
 	 * @return a composition from the array of {@link CacheResolver CacheResolvers}; may be {@literal null}.
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 * @see #compose(Iterable)
 	 */
 	@Nullable
@@ -62,8 +61,8 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * @return a composition from the {@link Iterable} collection of {@link CacheResolver CacheResolvers};
 	 * may be {@literal null}.
 	 * @see #compose(CacheResolver, CacheResolver)
-	 * @see CacheResolver
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.CacheResolver
+	 * @see java.lang.Iterable
 	 */
 	@Nullable
 	public static <T extends GemFireCache> CacheResolver<T> compose(@Nullable Iterable<CacheResolver<T>> cacheResolvers) {
@@ -86,7 +85,7 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * @return the first {@link CacheResolver} if the second {@link CacheResolver} is {@literal null}.
 	 * Return the second {@link CacheResolver} if the first {@link CacheResolver} is {@literal null}.
 	 * Otherwise, return a composition of both {@link CacheResolver} one and two as a {@link ComposableCacheResolver}.
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 * @see #ComposableCacheResolver(CacheResolver, CacheResolver)
 	 */
 	@Nullable
@@ -103,7 +102,7 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * @param cacheResolverOne first {@link CacheResolver} in the composition.
 	 * @param cacheResolverTwo second {@link CacheResolver} in the composition.
 	 * @throws IllegalArgumentException if either {@link CacheResolver} argument is {@literal null}.
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected ComposableCacheResolver(@NonNull CacheResolver<T> cacheResolverOne,
 			@NonNull CacheResolver<T> cacheResolverTwo) {
@@ -119,7 +118,7 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * Returns a reference to the first, non-null, configured {@link CacheResolver} in the composition.
 	 *
 	 * @return a reference to the first {@link CacheResolver} in the composition.
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected @NonNull CacheResolver<T> getCacheResolverOne() {
 		return this.cacheResolverOne;
@@ -129,7 +128,7 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * Returns a reference to the second, non-null, configured {@link CacheResolver} in the composition.
 	 *
 	 * @return a reference to the second {@link CacheResolver} in the composition.
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected @NonNull CacheResolver<T> getCacheResolverTwo() {
 		return this.cacheResolverTwo;
@@ -143,8 +142,8 @@ public class ComposableCacheResolver<T extends GemFireCache> extends AbstractCac
 	 * exhaustively consult all composed {@link CacheResolver CacheResolvers}.
 	 *
 	 * @return the first, single resolved reference to a {@link GemFireCache}.
-	 * @see CacheResolver#resolve()
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.CacheResolver#resolve()
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getCacheResolverOne()
 	 * @see #getCacheResolverTwo()
 	 */

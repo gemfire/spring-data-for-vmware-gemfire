@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.net.InetSocketAddress;
@@ -19,8 +18,8 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @author Jacob Barret
- * @see Cloneable
- * @see Comparable
+ * @see java.lang.Cloneable
+ * @see java.lang.Comparable
  * @since 1.6.3
  */
 @SuppressWarnings("unused")
@@ -65,7 +64,7 @@ public class ConnectionEndpoint implements Cloneable, Comparable<ConnectionEndpo
 	 * @param socketAddress {@link InetSocketAddress} used to construct, configure and initialize
 	 * the {@link ConnectionEndpoint}.
 	 * @return a {@link ConnectionEndpoint} representing the {@link InetSocketAddress}.
-	 * @see InetSocketAddress
+	 * @see java.net.InetSocketAddress
 	 */
 	public static @NonNull ConnectionEndpoint from(@NonNull InetSocketAddress socketAddress) {
 		return new ConnectionEndpoint(socketAddress.getHostString(), socketAddress.getPort());
@@ -187,7 +186,7 @@ public class ConnectionEndpoint implements Cloneable, Comparable<ConnectionEndpo
 	 * Converts this {@link ConnectionEndpoint} into an {@link InetSocketAddress} representation.
 	 *
 	 * @return an {@link InetSocketAddress} representation of this {@link ConnectionEndpoint}.
-	 * @see InetSocketAddress
+	 * @see java.net.InetSocketAddress
 	 * @see #getHost()
 	 * @see #getPort()
 	 */

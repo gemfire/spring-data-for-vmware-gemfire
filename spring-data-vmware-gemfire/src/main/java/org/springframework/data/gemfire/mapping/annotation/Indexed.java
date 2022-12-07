@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.mapping.annotation;
 
 import java.lang.annotation.Documented;
@@ -24,10 +23,10 @@ import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
  * which creates a GemFire/Geode {@link Index} on a GemFire/Geode {@link org.apache.geode.cache.Region}.
  *
  * @author John Blum
- * @see AliasFor
- * @see IndexType
+ * @see org.springframework.core.annotation.AliasFor
+ * @see org.springframework.data.gemfire.IndexType
  * @see org.apache.geode.cache.Region
- * @see Index
+ * @see org.apache.geode.cache.query.Index
  * @since 1.9.0
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

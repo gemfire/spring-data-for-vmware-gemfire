@@ -39,11 +39,11 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
  * Unit Tests for {@link AnnotationBasedExpiration}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see AnnotationBasedExpiration
+ * @see org.springframework.data.gemfire.expiration.AnnotationBasedExpiration
  * @since 1.7.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })

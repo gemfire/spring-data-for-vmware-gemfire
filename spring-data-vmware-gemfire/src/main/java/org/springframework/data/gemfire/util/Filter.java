@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.util.function.Predicate;
@@ -14,8 +13,8 @@ import org.springframework.lang.Nullable;
  *
  * @author John Blum
  * @param <T> {@link Class type} of {@link Object objects} being filtered.
- * @see FunctionalInterface
- * @see Predicate
+ * @see java.lang.FunctionalInterface
+ * @see java.util.function.Predicate
  * @since 1.0.0
  */
 @FunctionalInterface

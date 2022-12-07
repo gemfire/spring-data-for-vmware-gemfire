@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.util.function.Supplier;
@@ -14,9 +13,9 @@ import org.apache.geode.cache.GemFireCache;
  *
  * @author John Blum
  * @param <T> {@link Class subclass} of {@link GemFireCache}.
- * @see Supplier
+ * @see java.util.function.Supplier
  * @see org.apache.geode.cache.Cache
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.client.ClientCache
  * @since 2.3.0
  */

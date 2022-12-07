@@ -37,14 +37,14 @@ import org.springframework.data.gemfire.tests.integration.SpringApplicationConte
  * but have potentially different definitions.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Index
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.query.Index
  * @see org.springframework.context.ConfigurableApplicationContext
- * @see Bean
- * @see Configuration
- * @see Import
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see <a href="https://jira.spring.io/browse/SGF-432">IndexFactoryBean traps IndexExistsException instead of IndexNameConflictException</a>
  * @see <a href="https://jira.spring.io/browse/SGF-637">Improve IndexFactoryBean's resilience and options for handling GemFire IndexExistsExceptions and IndexNameConflictExceptions</a>
  * @since 1.6.3

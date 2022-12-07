@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
@@ -54,22 +53,22 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author Lyndon Adams
  * @author John Blum
- * @see InetSocketAddress
- * @see Properties
- * @see GemFireCache
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see SocketFactory
- * @see DistributedSystem
- * @see PdxSerializer
- * @see FactoryBean
- * @see ApplicationContext
- * @see ApplicationListener
- * @see ApplicationContextEvent
- * @see ContextRefreshedEvent
- * @see CacheFactoryBean
- * @see ClientCacheConfigurer
+ * @see java.net.InetSocketAddress
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationListener
+ * @see org.springframework.context.event.ApplicationContextEvent
+ * @see org.springframework.context.event.ContextRefreshedEvent
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -140,7 +139,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param clientCacheConfigurers array of {@link ClientCacheConfigurer ClientCacheConfigurers}
 	 * applied to this {@link ClientCacheFactoryBean}.
-	 * @see ClientCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
 	 * @see #applyClientCacheConfigurers(Iterable)
 	 */
 	protected void applyClientCacheConfigurers(ClientCacheConfigurer... clientCacheConfigurers) {
@@ -154,8 +153,8 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param clientCacheConfigurers {@link Iterable} of {@link ClientCacheConfigurer ClientCacheConfigurers}
 	 * applied to this {@link ClientCacheFactoryBean}.
-	 * @see ClientCacheConfigurer
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
+	 * @see java.lang.Iterable
 	 */
 	protected void applyClientCacheConfigurers(Iterable<ClientCacheConfigurer> clientCacheConfigurers) {
 		StreamSupport.stream(CollectionUtils.nullSafeIterable(clientCacheConfigurers).spliterator(), false)
@@ -167,9 +166,9 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param <T> parameterized {@link Class} type extension of {@link GemFireCache}.
 	 * @return an existing {@link ClientCache} instance if available.
-	 * @throws CacheClosedException if an existing {@link ClientCache} instance does not exist.
-	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see GemFireCache
+	 * @throws org.apache.geode.cache.CacheClosedException if an existing {@link ClientCache} instance does not exist.
+	 * @see org.apache.geode.cache.client.ClientCacheFactory#getAnyInstance()
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getCache()
 	 */
 	@Override
@@ -184,7 +183,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * Returns {@link ClientCache} {@link Class}.
 	 *
 	 * @return the {@link Class type} of {@link GemFireCache} constructed by this {@link ClientCacheFactoryBean}.
-	 * @see FactoryBean#getObjectType()
+	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
 	 */
 	@Override
 	protected Class<? extends GemFireCache> doGetObjectType() {
@@ -195,7 +194,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * Resolves the Apache Geode {@link Properties} used to configure the {@link ClientCache}.
 	 *
 	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link ClientCache}.
-	 * @see DistributedSystem#getProperties()
+	 * @see org.apache.geode.distributed.DistributedSystem#getProperties()
 	 */
 	@Override
 	protected @NonNull Properties resolveProperties() {
@@ -226,8 +225,8 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * @param gemfireProperties {@link Properties} used by the {@link ClientCacheFactory}
 	 * to configure the {@link ClientCache}.
 	 * @return a new instance of {@link ClientCacheFactory} initialized with the given Apache Geode {@link Properties}.
-	 * @see ClientCacheFactory
-	 * @see Properties
+	 * @see org.apache.geode.cache.client.ClientCacheFactory
+	 * @see java.util.Properties
 	 */
 	@Override
 	protected @NonNull Object createFactory(@NonNull Properties gemfireProperties) {
@@ -239,7 +238,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param factory {@link ClientCacheFactory} used to create the {@link ClientCache}.
 	 * @return the configured {@link ClientCacheFactory}.
-	 * @see ClientCacheFactory
+	 * @see org.apache.geode.cache.client.ClientCacheFactory
 	 * @see #configurePool(ClientCacheFactory)
 	 * @see #configurePdx(PdxConfigurer)
 	 */
@@ -253,8 +252,8 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param clientCacheFactory {@link ClientCacheFactory} to configure with PDX.
 	 * @return the given {@link ClientCacheFactory}.
-	 * @see ClientCacheFactoryToPdxConfigurerAdapter
-	 * @see ClientCacheFactory
+	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean.ClientCacheFactoryToPdxConfigurerAdapter
+	 * @see org.apache.geode.cache.client.ClientCacheFactory
 	 * @see #configurePdx(PdxConfigurer)
 	 */
 	protected @NonNull ClientCacheFactory configurePdx(@NonNull ClientCacheFactory clientCacheFactory) {
@@ -270,8 +269,8 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * instance or a named {@link Pool} instance.
 	 *
 	 * @param clientCacheFactory {@link ClientCacheFactory} used to configure the {@literal DEFAULT} {@link Pool}.
-	 * @see ClientCacheFactory
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.ClientCacheFactory
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	protected @NonNull ClientCacheFactory configurePool(@NonNull ClientCacheFactory clientCacheFactory) {
 
@@ -332,7 +331,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @return the resolved {@link Pool} used to configure the {@link ClientCache}, {@literal DEFAULT} {@link Pool}.
 	 * @see org.apache.geode.cache.client.PoolManager#find(String)
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #getPoolName()
 	 * @see #getPool()
 	 * @see #findPool(String)
@@ -391,9 +390,9 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * @param <T> parameterized {@link Class} type extending {@link GemFireCache}.
 	 * @param factory instance of {@link ClientCacheFactory}.
 	 * @return a new instance of {@link ClientCache} created by the provided factory.
-	 * @see ClientCacheFactory#create()
-	 * @see ClientCache
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.client.ClientCacheFactory#create()
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
@@ -406,7 +405,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * iff the client is non-durable.
 	 *
 	 * @param event {@link ApplicationContextEvent} fired when the {@link ApplicationContext} is refreshed.
-	 * @see ClientCache#readyForEvents()
+	 * @see org.apache.geode.cache.client.ClientCache#readyForEvents()
 	 * @see #isReadyForEvents()
 	 * @see #fetchCache()
 	 */
@@ -428,7 +427,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * Null-safe internal method used to close the {@link ClientCache} and preserve durability.
 	 *
 	 * @param cache {@link GemFireCache} to close.
-	 * @see ClientCache#close(boolean)
+	 * @see org.apache.geode.cache.client.ClientCache#close(boolean)
 	 * @see #isKeepAlive()
 	 */
 	@Override
@@ -458,7 +457,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param clientCacheConfigurers array of {@link ClientCacheConfigurer ClientCacheConfigurers} used to
 	 * apply additional configuration to this {@link ClientCacheFactoryBean}.
-	 * @see ClientCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
 	 * @see #setClientCacheConfigurers(List)
 	 */
 	public void setClientCacheConfigurers(ClientCacheConfigurer... clientCacheConfigurers) {
@@ -471,7 +470,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @param clientCacheConfigurers {@link List} of {@link ClientCacheConfigurer ClientCacheConfigurers} used to
 	 * apply additional configuration to this {@link ClientCacheFactoryBean}.
-	 * @see ClientCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
 	 * @see #setClientCacheConfigurers(ClientCacheConfigurer...)
 	 */
 	public void setClientCacheConfigurers(List<ClientCacheConfigurer> clientCacheConfigurers) {
@@ -483,7 +482,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * configuration to this {@link ClientCacheFactoryBean} on Spring container initialization.
 	 *
 	 * @return the {@literal Composite} {@link ClientCacheConfigurer}.
-	 * @see ClientCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
 	 */
 	public @NonNull ClientCacheConfigurer getCompositeClientCacheConfigurer() {
 		return this.compositeClientCacheConfigurer;
@@ -635,7 +634,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * Sets the {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
 	 *
 	 * @param pool {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	public void setPool(@Nullable Pool pool) {
 		this.pool = pool;
@@ -645,7 +644,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * Gets the {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
 	 *
 	 * @return {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	public @Nullable Pool getPool() {
 		return this.pool;
@@ -679,7 +678,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * The {@link Pool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
 	 *
 	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link Pool}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public void setPoolResolver(@Nullable PoolResolver poolResolver) {
 		this.poolResolver = poolResolver;
@@ -690,8 +689,8 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 *
 	 * @return the configured {@link PoolResolver}.  If no {@link PoolResolver} was configured, then return the default,
 	 * {@link PoolManagerPoolResolver}.
-	 * @see PoolResolver
-	 * @see PoolManagerPoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
+	 * @see org.springframework.data.gemfire.client.support.PoolManagerPoolResolver
 	 */
 	public @NonNull PoolResolver getPoolResolver() {
 
@@ -750,7 +749,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 * then it takes precedence over all other considerations (e.g. durability).
 	 *
 	 * @return a boolean value indicating whether this GemFire cache client is ready for events.
-	 * @see GemfireUtils#isDurable(ClientCache)
+	 * @see org.springframework.data.gemfire.GemfireUtils#isDurable(ClientCache)
 	 * @see #getReadyForEvents()
 	 */
 	public boolean isReadyForEvents() {

@@ -58,12 +58,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * context as meta-data in the IDE.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @link https://jira.springsource.org/browse/SGF-178
  * @since 1.3.3
  */

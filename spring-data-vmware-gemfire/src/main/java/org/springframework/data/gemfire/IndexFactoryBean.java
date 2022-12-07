@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static java.util.stream.StreamSupport.stream;
@@ -44,17 +43,17 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see RegionService
- * @see Index
- * @see IndexStatistics
- * @see QueryService
- * @see FactoryBean
- * @see InitializingBean
- * @see ConfigurableBeanFactory
- * @see IndexWrapper
- * @see IndexConfigurer
- * @see AbstractFactoryBeanSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionService
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.query.IndexStatistics
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.beans.factory.config.ConfigurableBeanFactory
+ * @see org.springframework.data.gemfire.IndexFactoryBean.IndexWrapper
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  * @since 1.0.0
  */
 public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implements InitializingBean {
@@ -501,7 +500,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * to this {@link IndexFactoryBean} on Spring container initialization.
 	 *
 	 * @return the Composite {@link IndexConfigurer}.
-	 * @see IndexConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
 	 */
 	protected IndexConfigurer getCompositeIndexConfigurer() {
 		return this.compositeIndexConfigurer;
@@ -511,7 +510,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * Returns a reference to the {@link Index} created by this {@link IndexFactoryBean}.
 	 *
 	 * @return a reference to the {@link Index} created by this {@link IndexFactoryBean}.
-	 * @see Index
+	 * @see org.apache.geode.cache.query.Index
 	 */
 	public Index getIndex() {
 		return this.index;
@@ -542,7 +541,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * Sets a reference to the {@link RegionService}.
 	 *
 	 * @param cache reference to the {@link RegionService}.
-	 * @see RegionService
+	 * @see org.apache.geode.cache.RegionService
 	 */
 	public void setCache(RegionService cache) {
 		this.cache = cache;
@@ -561,7 +560,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * Sets the {@link QueryService} used to create the {@link Index}.
 	 *
 	 * @param service {@link QueryService} used to create the {@link Index}.
-	 * @see QueryService
+	 * @see org.apache.geode.cache.query.QueryService
 	 */
 	public void setQueryService(QueryService service) {
 		this.queryService = service;
@@ -686,7 +685,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 *
 	 * @param indexConfigurers array of {@link IndexConfigurer IndexConfigurers} used to apply
 	 * additional configuration to this {@link IndexFactoryBean}.
-	 * @see IndexConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
 	 * @see #setIndexConfigurers(List)
 	 */
 	@SuppressWarnings("unused")
@@ -700,7 +699,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 *
 	 * @param indexConfigurers {@link Iterable } of {@link IndexConfigurer IndexConfigurers} used to apply
 	 * additional configuration to this {@link IndexFactoryBean}.
-	 * @see IndexConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
 	 */
 	public void setIndexConfigurers(List<IndexConfigurer> indexConfigurers) {
 		this.indexConfigurers = Optional.ofNullable(indexConfigurers).orElseGet(Collections::emptyList);
@@ -774,7 +773,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * Set the {@link IndexType type} of the {@link Index} as a {@link String}.
 	 *
 	 * @param type {@link String} specifying the {@link IndexType type} of the {@link Index}.
-	 * @see IndexType#valueOf(String)
+	 * @see org.springframework.data.gemfire.IndexType#valueOf(String)
 	 * @see #setType(IndexType)
 	 */
 	public void setType(String type) {
@@ -785,7 +784,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	 * Set the {@link IndexType type} of the {@link Index}.
 	 *
 	 * @param type {@link IndexType} indicating the type of the {@link Index}.
-	 * @see IndexType
+	 * @see org.springframework.data.gemfire.IndexType
 	 */
 	public void setType(IndexType type) {
 		this.indexType = type;

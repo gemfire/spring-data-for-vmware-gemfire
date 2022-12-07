@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.support;
 
 import java.util.ArrayList;
@@ -51,22 +50,22 @@ import org.springframework.util.ObjectUtils;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see GemFireCache
- * @see Region
- * @see FactoryBean
- * @see ApplicationContext
- * @see ApplicationContextAware
- * @see GemfireMappingContext
- * @see GemfirePersistentEntity
- * @see GemfirePersistentProperty
- * @see GemfireRepositoryQuery
- * @see QueryPostProcessor
- * @see MappingContext
- * @see Repository
- * @see RepositoryDefinition
- * @see QueryCreationListener
- * @see RepositoryFactoryBeanSupport
- * @see RepositoryFactorySupport
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationContextAware
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
+ * @see org.springframework.data.gemfire.repository.query.GemfireRepositoryQuery
+ * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor
+ * @see org.springframework.data.mapping.context.MappingContext
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.RepositoryDefinition
+ * @see org.springframework.data.repository.core.support.QueryCreationListener
+ * @see org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport
+ * @see org.springframework.data.repository.core.support.RepositoryFactorySupport
  */
 public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 		extends RepositoryFactoryBeanSupport<T, S, ID> implements ApplicationContextAware {
@@ -86,7 +85,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * @param repositoryInterface {@link Class interface} specifying the application data access operations contract;
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if the {@link Repository} {@link Class interface} is {@literal null}.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	public GemfireRepositoryFactoryBean(Class<? extends T> repositoryInterface) {
 		super(repositoryInterface);
@@ -96,8 +95,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Sets a reference to the Spring {@link ApplicationContext}.
 	 *
 	 * @param applicationContext reference to the Spring {@link ApplicationContext}.
-	 * @see ApplicationContextAware#setApplicationContext(ApplicationContext)
-	 * @see ApplicationContext
+	 * @see org.springframework.context.ApplicationContextAware#setApplicationContext(ApplicationContext)
+	 * @see org.springframework.context.ApplicationContext
 	 */
 	@Override
 	public void setApplicationContext(@Nullable ApplicationContext applicationContext) throws BeansException {
@@ -108,8 +107,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Returns an {@link Optional} reference to the configured Spring {@link ApplicationContext}.
 	 *
 	 * @return an {@link Optional} reference to the configured Spring {@link ApplicationContext}.
-	 * @see ApplicationContext
-	 * @see Optional
+	 * @see org.springframework.context.ApplicationContext
+	 * @see java.util.Optional
 	 */
 	protected Optional<ApplicationContext> getApplicationContext() {
 		return Optional.ofNullable(this.applicationContext);
@@ -119,7 +118,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Set a reference to the Apache Geode {@link GemFireCache}.
 	 *
 	 * @param cache reference to the Apache Geode {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	public void setCache(@Nullable GemFireCache cache) {
 		this.cache = cache;
@@ -129,7 +128,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Returns an {@link Optional} reference to the configured Apache Geode {@link GemFireCache}.
 	 *
 	 * @return an {@link Optional} reference to the configured Apache Geode {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	protected Optional<GemFireCache> getCache() {
 		return Optional.ofNullable(this.cache);
@@ -139,8 +138,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Configures the {@link MappingContext} used to perform application domain object type to data store mappings.
 	 *
 	 * @param mappingContext {@link MappingContext} to configure.
-	 * @see GemfireMappingContext
-	 * @see MappingContext
+	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+	 * @see org.springframework.data.mapping.context.MappingContext
 	 */
 	@Autowired(required = false)
 	public void setGemfireMappingContext(@Nullable MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext) {
@@ -153,8 +152,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * to data store mappings.
 	 *
 	 * @return a reference to the {@link MappingContext}.
-	 * @see GemfireMappingContext
-	 * @see MappingContext
+	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+	 * @see org.springframework.data.mapping.context.MappingContext
 	 * @see #setGemfireMappingContext(MappingContext)
 	 */
 	protected @Nullable MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> getGemfireMappingContext() {
@@ -165,8 +164,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * Returns an {@link Iterable} of {@link Region Regions}defined in the Spring {@link ApplicationContext}.
 	 *
 	 * @return a reference to all {@link Region Regions} defined in the Spring {@link ApplicationContext}.
-	 * @see Region
-	 * @see Iterable
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.Iterable
 	 */
 	protected Iterable<Region<?, ?>> getRegions() {
 
@@ -221,8 +220,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	/**
 	 * Creates a new instance of {@link GemfireRepositoryFactory} used to create an Apache Geode {@link Repository}.
 	 *
-	 * @see RepositoryFactoryBeanSupport#createRepositoryFactory()
-	 * @see RepositoryFactorySupport
+	 * @see org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport#createRepositoryFactory()
+	 * @see org.springframework.data.repository.core.support.RepositoryFactorySupport
 	 */
 	@Override
 	protected RepositoryFactorySupport createRepositoryFactory() {
@@ -243,8 +242,8 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 *
 	 * @return a reference to the resolved {@link MappingContext}.
 	 * @throws IllegalStateException if the {@link MappingContext} cannot be resolved.
-	 * @see GemfireMappingContext
-	 * @see MappingContext
+	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+	 * @see org.springframework.data.mapping.context.MappingContext
 	 */
 	protected MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> resolveGemfireMappingContext() {
 		return SpringExtensions.requireObject(this::getGemfireMappingContext, "GemfireMappingContext must not be null");

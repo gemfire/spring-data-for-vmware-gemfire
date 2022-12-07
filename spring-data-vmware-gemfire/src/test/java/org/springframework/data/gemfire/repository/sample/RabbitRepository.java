@@ -15,8 +15,8 @@ import org.springframework.data.gemfire.repository.Query;
  *
  * @author John Blum
  * @see Region
- * @see GemfireRepository
- * @see Query
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.Query
  * @since 1.4.0
  */
 @Region("Rabbits")

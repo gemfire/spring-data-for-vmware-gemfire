@@ -22,8 +22,8 @@ import org.apache.geode.internal.InternalDataSerializer;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Serializable
- * @see DataSerializer
+ * @see java.io.Serializable
+ * @see org.apache.geode.DataSerializer
  */
 public class EnumSerializer extends DataSerializer implements Serializable {
 

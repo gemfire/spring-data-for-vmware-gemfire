@@ -26,14 +26,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using Spring Java-based configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see Bean
- * @see Configuration
- * @see ClientCacheFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @link https://jira.spring.io/browse/SGF-441
  * @since 1.8.0
  */

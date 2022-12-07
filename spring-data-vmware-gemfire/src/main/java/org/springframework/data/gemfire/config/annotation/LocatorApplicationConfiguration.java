@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -37,19 +36,19 @@ import org.springframework.util.ClassUtils;
  * or Pivotal GemFire {@link Locator}.
  *
  * @author John Blum
- * @see Annotation
- * @see Locator
- * @see BeanFactoryPostProcessor
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see CacheFactoryBean
- * @see LocatorFactoryBean
- * @see ClientCacheFactoryBean
- * @see LocatorConfigurer
- * @see AbstractAnnotationConfigSupport
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.LocatorConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 2.2.0
  */
 @Configuration
@@ -96,7 +95,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 	 * Spring application.
 	 *
 	 * @return the {@link LocatorApplication} annotation {@link Class type}.
-	 * @see LocatorApplication
+	 * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
 	 */
 	@Override
 	protected @NonNull Class<? extends Annotation> getAnnotationType() {
@@ -109,7 +108,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 	 * but not both.
 	 *
 	 * @return a {@link BeanFactoryPostProcessor} used to enforce the Spring, Apache Geode application type.
-	 * @see BeanFactoryPostProcessor
+	 * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
 	 */
 	@Bean
 	@NonNull BeanFactoryPostProcessor locatorApplicationMutexBeanFactoryPostProcessor() {
@@ -152,7 +151,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing metadata from the {@link LocatorApplication}
 	 * annotation annotated on the Spring application {@link Configuration} {@link Class}.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	@Override
 	public void setImportMetadata(@NonNull AnnotationMetadata importMetadata) {

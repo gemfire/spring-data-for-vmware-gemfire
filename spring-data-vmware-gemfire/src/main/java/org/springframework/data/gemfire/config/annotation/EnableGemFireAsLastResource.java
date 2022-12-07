@@ -20,9 +20,9 @@ import org.springframework.context.annotation.Import;
  * CMT/JTA Transaction.
  *
  * @author John Blum
- * @see EnableAspectJAutoProxy
- * @see Import
- * @see GemFireAsLastResourceConfiguration
+ * @see org.springframework.context.annotation.EnableAspectJAutoProxy
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.GemFireAsLastResourceConfiguration
  * @since 2.0.0
  */
 @Target(ElementType.TYPE)

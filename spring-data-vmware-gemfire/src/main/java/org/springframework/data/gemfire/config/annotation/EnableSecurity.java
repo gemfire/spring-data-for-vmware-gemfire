@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -24,14 +23,14 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see AuthInitialize
+ * @see org.apache.geode.security.AuthInitialize
  * @see org.apache.geode.security.SecurityManager
  * @see org.apache.geode.security.PostProcessor
- * @see Import
- * @see ApacheShiroSecurityConfiguration
- * @see AuthenticationBeanConfiguration
- * @see AutoConfiguredAuthenticationConfiguration
- * @see GeodeIntegratedSecurityConfiguration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ApacheShiroSecurityConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AuthenticationBeanConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AutoConfiguredAuthenticationConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GeodeIntegratedSecurityConfiguration
  * @since 1.0.0
  */
 @Target(ElementType.TYPE)

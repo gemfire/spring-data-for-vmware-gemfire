@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
@@ -53,22 +52,22 @@ import org.springframework.util.StringUtils;
  * Eviction policy configuration on cache {@link Region Regions}.
  *
  * @author John Blum
- * @see EvictionAttributes
- * @see Region
- * @see ObjectSizer
- * @see BeanPostProcessor
- * @see ApplicationContext
- * @see ApplicationContextAware
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see PeerRegionFactoryBean
- * @see ResolvableRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see AbstractAnnotationConfigSupport
- * @see EvictionActionType
- * @see EvictionAttributesFactoryBean
- * @see EvictionPolicyType
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.util.ObjectSizer
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationContextAware
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.eviction.EvictionActionType
+ * @see org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean
+ * @see org.springframework.data.gemfire.eviction.EvictionPolicyType
  * @since 1.9.0
  */
 @Configuration
@@ -83,8 +82,8 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 * Returns the {@link Annotation} {@link Class type} that enables and configures Eviction.
 	 *
 	 * @return the {@link Annotation} {@link Class type} to enable and configure Eviction.
-	 * @see Annotation
-	 * @see Class
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	@Override
 	protected @NonNull Class<? extends Annotation> getAnnotationType() {
@@ -96,8 +95,8 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 *
 	 * @param applicationContext Spring {@link ApplicationContext} in use.
 	 * @throws BeansException if an error occurs while storing a reference to the Spring {@link ApplicationContext}.
-	 * @see ApplicationContextAware#setApplicationContext(ApplicationContext)
-	 * @see ApplicationContext
+	 * @see org.springframework.context.ApplicationContextAware#setApplicationContext(ApplicationContext)
+	 * @see org.springframework.context.ApplicationContext
 	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -134,8 +133,8 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 *
 	 * @param bean Spring bean to evaluate.
 	 * @return a boolean value indicating whether the Spring bean is an instance of {@link EvictingRegionFactoryBean}.
-	 * @see EvictingRegionFactoryBean
-	 * @see ClientRegionFactoryBean
+	 * @see org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean
+	 * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
 	 * @see PeerRegionFactoryBean
 	 */
 	protected static boolean isRegionFactoryBean(Object bean) {
@@ -147,7 +146,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 * of a {@link Region}.
 	 *
 	 * @return a reference to the configured {@link EvictionPolicyConfigurer}.
-	 * @see EvictionPolicyConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration.EvictionPolicyConfigurer
 	 */
 	protected EvictionPolicyConfigurer getEvictionPolicyConfigurer() {
 
@@ -182,7 +181,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	/**
 	 * {@link EvictionPolicyConfigurer} configures the Eviction policy of an Apache Geode {@link Region}.
 	 *
-	 * @see FunctionalInterface
+	 * @see java.lang.FunctionalInterface
 	 */
 	@FunctionalInterface
 	protected interface EvictionPolicyConfigurer {
@@ -194,8 +193,8 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param regionBean {@link ClientRegionFactoryBean} or {@link PeerRegionFactoryBean} used to create
 		 * an Apache Geode {@link Region}.
 		 * @return the given {@code regionFactoryBean}.
-		 * @see PeerRegionFactoryBean
-		 * @see ClientRegionFactoryBean
+		 * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+		 * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
 		 */
 		Object configure(Object regionBean);
 
@@ -204,7 +203,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 *
 		 * @param region {@link Region} on which to configure the Eviction policy.
 		 * @return the given {@link Region}.
-		 * @see Region
+		 * @see org.apache.geode.cache.Region
 		 */
 		default Region<?, ?> configure(Region<?, ?> region) {
 			return region;
@@ -216,7 +215,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 * multiple {@link EvictionPolicyConfigurer} objects into a composition using the Composite Software Design Pattern
 	 * making the composition appear as a single {@link EvictionPolicyConfigurer}.
 	 *
-	 * @see EvictionPolicyConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration.EvictionPolicyConfigurer
 	 */
 	protected static class ComposableEvictionPolicyConfigurer implements EvictionPolicyConfigurer {
 
@@ -227,7 +226,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param array array of {@link EvictionPolicyConfigurer} objects to compose.
 		 * @return an {@link EvictionPolicyConfigurer} implementation composed from the array
 		 * of {@link EvictionPolicyConfigurer} objects.
-		 * @see EvictionPolicyConfigurer
+		 * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration.EvictionPolicyConfigurer
 		 * @see #compose(Iterable)
 		 */
 		@SuppressWarnings("unused")
@@ -242,7 +241,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param iterable {@link Iterable} of {@link EvictionPolicyConfigurer} objects to compose.
 		 * @return an {@link EvictionPolicyConfigurer} implementation composed from the {@link Iterable}
 		 * of {@link EvictionPolicyConfigurer} objects.
-		 * @see EvictionPolicyConfigurer
+		 * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration.EvictionPolicyConfigurer
 		 * @see #compose(EvictionPolicyConfigurer, EvictionPolicyConfigurer)
 		 */
 		protected static @Nullable EvictionPolicyConfigurer compose(Iterable<EvictionPolicyConfigurer> iterable) {
@@ -382,7 +381,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 *
 		 * @param evictionAttributes {@link EvictionAttributes} specifying the Eviction policy configuration
 		 * for a {@link Region}.
-		 * @see EvictionAttributes
+		 * @see org.apache.geode.cache.EvictionAttributes
 		 * @see #EvictionPolicyMetaData(EvictionAttributes, String[])
 		 */
 		protected EvictionPolicyMetaData(EvictionAttributes evictionAttributes) {
@@ -396,7 +395,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param evictionAttributes {@link EvictionAttributes} specifying the Eviction policy configuration
 		 * for a {@link Region}.
 		 * @param regionNames names of {@link Region Regions} on which the Eviction policy is applied.
-		 * @see EvictionAttributes
+		 * @see org.apache.geode.cache.EvictionAttributes
 		 */
 		protected EvictionPolicyMetaData(EvictionAttributes evictionAttributes, String[] regionNames) {
 
@@ -426,7 +425,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param region {@link Region} evaluated for Eviction policy configuration.
 		 * @return a boolean value indicating whether the given {@link Region} is accepted for
 		 * Eviction policy configuration.
-		 * @see Region
+		 * @see org.apache.geode.cache.Region
 		 * @see #accepts(Supplier)
 		 */
 		protected boolean accepts(@Nullable Region<?, ?> region) {
@@ -448,7 +447,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 *
 		 * @param regionFactoryBean {@link ResolvableRegionFactoryBean} from which to resolve the {@link Region} name.
 		 * @return the resolved name of the {@link Region} created from the given {@link ResolvableRegionFactoryBean}.
-		 * @see ResolvableRegionFactoryBean#resolveRegionName()
+		 * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean#resolveRegionName()
 		 */
 		protected String resolveRegionName(Object regionFactoryBean) {
 
@@ -464,8 +463,8 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @param regionFactoryBean {@link PeerRegionFactoryBean} or {@link ClientRegionFactoryBean} on which to
 		 * set the {@link EvictionAttributes} encapsulating the Eviction policy for the targeted {@link Region}.
 		 * @return the {@code regionFactoryBean}.
-		 * @see EvictingRegionFactoryBean#setEvictionAttributes(EvictionAttributes)
-		 * @see EvictionAttributes
+		 * @see org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean#setEvictionAttributes(EvictionAttributes)
+		 * @see org.apache.geode.cache.EvictionAttributes
 		 * @see #getEvictionAttributes()
 		 */
 		protected EvictingRegionFactoryBean setEvictionAttributes(EvictingRegionFactoryBean regionFactoryBean) {
@@ -482,7 +481,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * @return an instance of the {@link EvictionAttributes} specifying the {@link Region}
 		 * Eviction policy configuration.
 		 * @throws IllegalStateException if the {@link EvictionAttributes} were not properly initialized.
-		 * @see EvictionAttributes
+		 * @see org.apache.geode.cache.EvictionAttributes
 		 */
 		protected EvictionAttributes getEvictionAttributes() {
 

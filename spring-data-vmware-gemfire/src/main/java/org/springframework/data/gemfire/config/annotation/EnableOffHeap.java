@@ -23,8 +23,8 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see Import
- * @see OffHeapConfiguration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.OffHeapConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

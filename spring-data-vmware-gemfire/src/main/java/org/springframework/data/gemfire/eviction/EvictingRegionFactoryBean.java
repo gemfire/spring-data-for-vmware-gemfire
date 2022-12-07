@@ -15,8 +15,8 @@ import org.springframework.beans.factory.FactoryBean;
  * of supporting Eviction configuration, that is, evicting {@link Region} entries.
  *
  * @author John Blum
- * @see EvictionAttributes
- * @see Region
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.Region
  * @since 2.1.0
  */
 public interface EvictingRegionFactoryBean {

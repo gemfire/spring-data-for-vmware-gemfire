@@ -36,21 +36,21 @@ import org.springframework.test.context.junit4.SpringRunner;
  * in the Spring container has been disabled.
  *
  * @author John Blum
- * @see Test
- * @see Properties
- * @see GemFireCache
- * @see DistributedSystem
- * @see ConfigurableListableBeanFactory
+ * @see org.junit.Test
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @see org.springframework.context.ApplicationContextInitializer
- * @see ConfigurableApplicationContext
- * @see Configuration
- * @see Import
- * @see Profile
- * @see GemFireProperties
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.context.annotation.Profile
+ * @see org.springframework.data.gemfire.GemFireProperties
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://stackoverflow.com/questions/69202828/error-bean-definition-overriding-clientgemfirepropertiesconfigurer">Error - Bean Definition Overriding - ClientGemFirePropertiesConfigurer</a>
  * @since 2.6.0
  */

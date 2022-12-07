@@ -33,13 +33,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link EnableCachingDefinedRegions} and {@link CachingDefinedRegionsConfiguration}.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see CachingDefinedRegionsConfiguration
- * @see EnableCachingDefinedRegions
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

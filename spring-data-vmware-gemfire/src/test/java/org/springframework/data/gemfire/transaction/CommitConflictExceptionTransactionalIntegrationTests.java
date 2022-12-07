@@ -56,24 +56,24 @@ import lombok.ToString;
  * leading to a {@link CommitConflictException}.
  *
  * @author John Blum
- * @see Function
- * @see MultithreadedTestCase
- * @see TestFramework
- * @see Test
- * @see CacheTransactionManager
- * @see CommitConflictException
- * @see GemFireCache
- * @see Bean
- * @see ClientCacheApplication
- * @see EnableEntityDefinedRegions
- * @see Region
+ * @see java.util.function.Function
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.CacheTransactionManager
+ * @see org.apache.geode.cache.CommitConflictException
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
- * @see IntegrationTestsSupport
- * @see EnableGemfireCacheTransactions
- * @see Service
- * @see ContextConfiguration
- * @see SpringRunner
- * @see Transactional
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
+ * @see org.springframework.stereotype.Service
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
+ * @see org.springframework.transaction.annotation.Transactional
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

@@ -33,17 +33,17 @@ import example.app.repo.UserRepository;
  * in the Spring {@link ApplicationContext}.
  *
  * @author John Blum
- * @see Test
- * @see ApplicationContext
- * @see ClientCacheApplication
- * @see EnableGemfireRepositories
- * @see GemfireRepositoryFactoryBean
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see Repository
- * @see RepositoryFactoryInformation
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
+ * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.core.support.RepositoryFactoryInformation
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0
  */
 @RunWith(SpringRunner.class)

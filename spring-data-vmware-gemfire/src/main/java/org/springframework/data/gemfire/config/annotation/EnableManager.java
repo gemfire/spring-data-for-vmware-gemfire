@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -28,9 +27,9 @@ import org.springframework.context.annotation.Import;
  * even when this {@link Annotation} is present, thereby serving as a toggle.
  *
  * @author John Blum
- * @see Annotation
- * @see Import
- * @see ManagerConfiguration
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ManagerConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

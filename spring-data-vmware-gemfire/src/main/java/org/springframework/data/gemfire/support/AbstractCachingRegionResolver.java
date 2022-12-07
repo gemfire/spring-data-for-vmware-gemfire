@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -25,10 +24,10 @@ import org.springframework.util.StringUtils;
  * {@link RegionResolver} implementation capable of caching the results of a Region resolution (lookup) operation.
  *
  * @author John Blum
- * @see Region
- * @see CacheListener
- * @see CacheListenerAdapter
- * @see RegionResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.CacheListener
+ * @see org.apache.geode.cache.util.CacheListenerAdapter
+ * @see org.springframework.data.gemfire.RegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings("rawtypes")
@@ -68,8 +67,8 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param regionName {@link String name} of the {@link Region} to resolve.
 	 * @return the resolved {@link Region} with the given {@link String name}; may be {@literal null}.
-	 * @see Region
-	 * @see String
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.String
 	 * @see #doResolve(String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -108,8 +107,8 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param regionName {@link String name} of the {@link Region} to resolve.
 	 * @return the resolved {@link Region} with the given {@link String name}; may be {@literal null}.
-	 * @see Region
-	 * @see String
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.String
 	 */
 	@Nullable
 	protected abstract <K, V> Region<K, V> doResolve(@Nullable String regionName);
@@ -118,7 +117,7 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	 * Clears the cache entry for the {@link Region} identified by the {@link RegionEvent}.
 	 *
 	 * @param event {@link RegionEvent} object capturing the details of the {@link Region} destroyed event.
-	 * @see RegionEvent
+	 * @see org.apache.geode.cache.RegionEvent
 	 * @see #remove(String)
 	 */
 	@Override
@@ -135,7 +134,7 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	 * Removes the cache entry for the cached {@link Region} with the given {@link String name}.
 	 *
 	 * @param regionName {@link String name} of the {@link Region} to remove from the cache.
-	 * @see ConcurrentHashMap#remove(Object)
+	 * @see java.util.concurrent.ConcurrentHashMap#remove(Object)
 	 */
 	synchronized void remove(@NonNull String regionName) {
 		this.nameToRegionCache.remove(regionName);

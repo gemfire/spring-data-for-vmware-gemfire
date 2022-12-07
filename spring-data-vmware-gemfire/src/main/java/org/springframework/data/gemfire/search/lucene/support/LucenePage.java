@@ -27,12 +27,12 @@ import org.springframework.util.Assert;
  * of {@link PageableLuceneQueryResults} complete with Spring Data projections.
  *
  * @author John Blum
- * @see List
- * @see LuceneResultStruct
- * @see PageableLuceneQueryResults
- * @see Page
- * @see AbstractPageSupport
- * @see ProjectingLuceneAccessor
+ * @see java.util.List
+ * @see org.apache.geode.cache.lucene.LuceneResultStruct
+ * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.gemfire.domain.support.AbstractPageSupport
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
  * @since 1.1.0
  */
 public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
@@ -166,7 +166,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	 * of {@link LuceneResultStruct} objects.
 	 * @param projectionType {@link Class} type to project the {@link LuceneResultStruct} objects as.
 	 * @return a {@link List} of projected values of the given {@link Class projection type}.
-	 * @see LuceneResultStruct
+	 * @see org.apache.geode.cache.lucene.LuceneResultStruct
 	 */
 	protected List<T> materialize(ProjectingLuceneAccessor template, List<LuceneResultStruct<K, V>> pageOfQueryResults,
 			Class<T> projectionType) {
@@ -196,8 +196,8 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	 * Returns the {@link PageableLuceneQueryResults Lucene query results} backing this {@link LucenePage}.
 	 *
 	 * @return a reference to the {@link PageableLuceneQueryResults} backing this {@link LucenePage}.
-	 * @see LucenePage
-	 * @see PageableLuceneQueryResults
+	 * @see org.springframework.data.gemfire.search.lucene.support.LucenePage
+	 * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
 	 */
 	protected PageableLuceneQueryResults<K, V> getQueryResults() {
 		return this.queryResults;
@@ -209,7 +209,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	 *
 	 * @return the {@link ProjectingLuceneAccessor} used by this {@link LucenePage} to perform
 	 * Lucene data access operations and projections.
-	 * @see ProjectingLuceneAccessor
+	 * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
 	 */
 	protected ProjectingLuceneAccessor getTemplate() {
 		return this.template;
@@ -244,7 +244,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	 *
 	 * @return the next {@link LucenePage page} in the collection of {@link Page pages}.
 	 * @throws IllegalStateException if no more {@link Page pages} exist beyond this {@link LucenePage page}.
-	 * @see LucenePage
+	 * @see org.springframework.data.gemfire.search.lucene.support.LucenePage
 	 * @see #getPrevious()
 	 */
 	public LucenePage<T, K, V> getNext() {
@@ -277,7 +277,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	 *
 	 * @return the previous {@link LucenePage page} in the collection of {@link Page pages}
 	 * or {@literal null} if no {@link LucenePage} proceeds this {@link LucenePage page}.
-	 * @see LucenePage
+	 * @see org.springframework.data.gemfire.search.lucene.support.LucenePage
 	 * @see #getNext()
 	 */
 	public LucenePage<T, K, V> getPrevious() {

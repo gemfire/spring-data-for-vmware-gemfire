@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -32,16 +31,16 @@ import org.springframework.util.ObjectUtils;
  * for all {@link Region Regions} defined in the cluster to which the cache client is connected.
  *
  * @author John Blum
- * @see Region
- * @see ClientCache
- * @see ClientRegionShortcut
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see GemfireDataSourcePostProcessor
- * @see AbstractAnnotationConfigSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 2.1.0
  */
 @Configuration
@@ -77,7 +76,7 @@ public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	@Bean
-	@Order(Ordered.HIGHEST_PRECEDENCE + 1000000)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 1_000_000)
 	public GemfireDataSourcePostProcessor gemfireDataSourcePostProcessor() {
 		return new GemfireDataSourcePostProcessor().using(getBeanFactory()).using(resolveClientRegionShortcut());
 	}

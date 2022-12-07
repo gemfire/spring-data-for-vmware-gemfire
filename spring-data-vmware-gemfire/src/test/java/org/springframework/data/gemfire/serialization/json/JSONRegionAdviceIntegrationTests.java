@@ -35,13 +35,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see GemfireOperations
- * @see JSONRegionAdvice
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
- * @see ObjectMapper
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.GemfireOperations
+ * @see org.springframework.data.gemfire.serialization.json.JSONRegionAdvice
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
+ * @see com.fasterxml.jackson.databind.ObjectMapper
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration

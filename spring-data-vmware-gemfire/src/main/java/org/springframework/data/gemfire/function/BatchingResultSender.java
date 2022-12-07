@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function;
 
 import java.lang.reflect.Array;
@@ -41,7 +40,7 @@ class BatchingResultSender {
 	 * @param resultSender {@link ResultSender} used to delegate all send operations.
 	 * @throws IllegalArgumentException if {@link ResultSender} is {@literal null}
 	 * or {@code batchSize} is less than {@literal 0}.
-	 * @see ResultSender
+	 * @see org.apache.geode.cache.execute.ResultSender
 	 */
 	public BatchingResultSender(int batchSize, ResultSender<Object> resultSender) {
 
@@ -66,7 +65,7 @@ class BatchingResultSender {
 	 * Returns a reference to the configured {@link ResultSender} used to send {@link Function} results.
 	 *
 	 * @return a reference to the configured {@link ResultSender} used to send {@link Function} results.
-	 * @see ResultSender
+	 * @see org.apache.geode.cache.execute.ResultSender
 	 */
 	public ResultSender<Object> getResultSender() {
 		return this.resultSender;

@@ -40,18 +40,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link SmartCacheResolverFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see ApplicationContext
- * @see Bean
- * @see Configuration
- * @see Order
- * @see CacheResolver
- * @see SmartCacheResolverFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.core.annotation.Order
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.SmartCacheResolverFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.3.0
  */
 @RunWith(SpringRunner.class)

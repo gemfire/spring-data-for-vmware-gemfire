@@ -12,7 +12,7 @@ import java.text.MessageFormat;
  * with the added convenience of message formatting and optional {@link Throwable causes}.
  *
  * @author John Blum
- * @see RuntimeException
+ * @see java.lang.RuntimeException
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -29,7 +29,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link IllegalArgumentException} with the given {@link String message}.
 	 * @see #newIllegalArgumentException(Throwable, String, Object...)
-	 * @see IllegalArgumentException
+	 * @see java.lang.IllegalArgumentException
 	 */
 	public static IllegalArgumentException newIllegalArgumentException(String message, Object... args) {
 		return newIllegalArgumentException(null, message, args);
@@ -43,7 +43,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param message {@link String} describing the {@link IllegalArgumentException exception}.
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link IllegalArgumentException} with the given {@link Throwable cause} and {@link String message}.
-	 * @see IllegalArgumentException
+	 * @see java.lang.IllegalArgumentException
 	 */
 	public static IllegalArgumentException newIllegalArgumentException(Throwable cause,
 			String message, Object... args) {
@@ -59,7 +59,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link IllegalStateException} with the given {@link String message}.
 	 * @see #newIllegalStateException(Throwable, String, Object...)
-	 * @see IllegalStateException
+	 * @see java.lang.IllegalStateException
 	 */
 	public static IllegalStateException newIllegalStateException(String message, Object... args) {
 		return newIllegalStateException(null, message, args);
@@ -73,7 +73,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param message {@link String} describing the {@link IllegalStateException exception}.
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link IllegalStateException} with the given {@link Throwable cause} and {@link String message}.
-	 * @see IllegalStateException
+	 * @see java.lang.IllegalStateException
 	 */
 	public static IllegalStateException newIllegalStateException(Throwable cause, String message, Object... args) {
 		return new IllegalStateException(format(message, args), cause);
@@ -87,7 +87,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link RuntimeException} with the given {@link String message}.
 	 * @see #newRuntimeException(Throwable, String, Object...)
-	 * @see RuntimeException
+	 * @see java.lang.RuntimeException
 	 */
 	public static RuntimeException newRuntimeException(String message, Object... args) {
 		return newRuntimeException(null, message, args);
@@ -101,7 +101,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param message {@link String} describing the {@link RuntimeException exception}.
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link RuntimeException} with the given {@link Throwable cause} and {@link String message}.
-	 * @see RuntimeException
+	 * @see java.lang.RuntimeException
 	 */
 	public static RuntimeException newRuntimeException(Throwable cause, String message, Object... args) {
 		return new RuntimeException(format(message, args), cause);
@@ -115,7 +115,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}
 	 * @return a new {@link UnsupportedOperationException} with the given {@link String message}.
 	 * @see #newUnsupportedOperationException(Throwable, String, Object...)
-	 * @see UnsupportedOperationException
+	 * @see java.lang.UnsupportedOperationException
 	 */
 	public static UnsupportedOperationException newUnsupportedOperationException(String message, Object... args) {
 		return newUnsupportedOperationException(null, message, args);
@@ -130,7 +130,7 @@ public abstract class RuntimeExceptionFactory {
 	 * @param args {@link Object arguments} used to replace format placeholders in the {@link String message}.
 	 * @return a new {@link UnsupportedOperationException} with the given {@link Throwable cause}
 	 * and {@link String message}.
-	 * @see UnsupportedOperationException
+	 * @see java.lang.UnsupportedOperationException
 	 */
 	public static UnsupportedOperationException newUnsupportedOperationException(Throwable cause,
 			String message, Object... args) {
@@ -144,8 +144,8 @@ public abstract class RuntimeExceptionFactory {
 	 * @param message {@link String} containing the message pattern to format.
 	 * @param args {@link Object arguments} used in the message to replace format placeholders.
 	 * @return the formatted {@link String message}.
-	 * @see String#format(String, Object...)
-	 * @see MessageFormat#format(String, Object...)
+	 * @see java.lang.String#format(String, Object...)
+	 * @see java.text.MessageFormat#format(String, Object...)
 	 */
 	protected static String format(String message, Object... args) {
 		return MessageFormat.format(String.format(message, args), args);

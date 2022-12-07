@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -34,18 +33,18 @@ import org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Annotation
- * @see GatewayReceiver
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
  * @see org.springframework.context.annotation.Bean
- * @see Configuration
- * @see ImportBeanDefinitionRegistrar
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see EnableGatewayReceiver
- * @see AbstractAnnotationConfigSupport
- * @see GatewayReceiverFactoryBean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewayReceiver
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  * @since 2.2.0
  */
 public class GatewayReceiverConfiguration extends AbstractAnnotationConfigSupport

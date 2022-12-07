@@ -28,17 +28,17 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Apache Geode Security Integration Tests testing Apache Geode Locator to Locator (application) authentication.
  *
  * @author John Blum
- * @see Test
- * @see DistributedSystem
- * @see Locator
- * @see Profile
+ * @see org.junit.Test
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.context.annotation.Profile
  * @see org.springframework.data.gemfire.LocatorFactoryBean
- * @see EnableSecurity
- * @see LocatorApplication
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ActiveProfiles
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.config.annotation.EnableSecurity
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ActiveProfiles
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @ActiveProfiles("locator-auth-client")

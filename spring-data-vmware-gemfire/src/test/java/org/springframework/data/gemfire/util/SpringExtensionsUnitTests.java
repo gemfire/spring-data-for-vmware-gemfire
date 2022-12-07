@@ -48,14 +48,14 @@ import org.springframework.data.gemfire.util.SpringExtensions.ValueReturningThro
  * Unit Tests for {@link SpringExtensions}.
  *
  * @author John Blum
- * @see Function
- * @see Supplier
- * @see Test
- * @see Mock
+ * @see java.util.function.Function
+ * @see java.util.function.Supplier
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see BeanFactory
- * @see BeanDefinition
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.BeanDefinition
  * @see SpringExtensions
  * @since 1.9.0
  */

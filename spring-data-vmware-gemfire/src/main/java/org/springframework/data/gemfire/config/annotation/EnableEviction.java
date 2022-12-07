@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -26,14 +25,14 @@ import org.springframework.data.gemfire.eviction.EvictionPolicyType;
  * to enable {@link Region} Eviction.
  *
  * @author John Blum
- * @see EvictionAttributes
- * @see Region
- * @see ObjectSizer
- * @see Import
- * @see EvictionConfiguration
- * @see EvictionActionType
- * @see EvictionPolicyType
- * @see Region
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.util.ObjectSizer
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration
+ * @see org.springframework.data.gemfire.eviction.EvictionActionType
+ * @see org.springframework.data.gemfire.eviction.EvictionPolicyType
+ * @see org.apache.geode.cache.Region
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -68,7 +67,7 @@ public @interface EnableEviction {
 		 *
 		 * Defaults to {@link EvictionActionType#LOCAL_DESTROY}.
 		 *
-		 * @see EvictionActionType
+		 * @see org.springframework.data.gemfire.eviction.EvictionActionType
 		 */
 		EvictionActionType action() default EvictionActionType.LOCAL_DESTROY;
 
@@ -85,7 +84,7 @@ public @interface EnableEviction {
 		 *
 		 * Defaults to empty.
 		 *
-		 * @see ObjectSizer
+		 * @see org.apache.geode.cache.util.ObjectSizer
 		 */
 		String objectSizerName() default "";
 

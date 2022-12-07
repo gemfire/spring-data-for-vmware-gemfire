@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType.IDLE_TIMEOUT;
@@ -28,13 +27,13 @@ import org.springframework.data.gemfire.expiration.TimeToLiveExpiration;
  * cover {@link Region} expiration; {@link Region} expiration must be configure on the {@link Region} definition itself.
  *
  * @author John Blum
- * @see Region
- * @see Import
- * @see ExpirationConfiguration
- * @see Expiration
- * @see ExpirationActionType
- * @see IdleTimeoutExpiration
- * @see TimeToLiveExpiration
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ExpirationConfiguration
+ * @see org.springframework.data.gemfire.expiration.Expiration
+ * @see org.springframework.data.gemfire.expiration.ExpirationActionType
+ * @see org.springframework.data.gemfire.expiration.IdleTimeoutExpiration
+ * @see org.springframework.data.gemfire.expiration.TimeToLiveExpiration
  * @see <a href="https://docs.spring.io/spring-data-gemfire/docs/current/reference/html/#bootstrap:region:expiration:annotation">Annotation-based Data Expiration</a>
  * @see <a href="https://geode.apache.org/docs/guide/113/developing/expiration/chapter_overview.html">Geode Expiration</a>
  * @since 1.9.0
@@ -108,7 +107,7 @@ public @interface EnableExpiration {
 		 *
 		 * Defaults to Idle Timeout (TTI).
 		 *
-		 * @see ExpirationType
+		 * @see org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType
 		 */
 		ExpirationType[] types() default { IDLE_TIMEOUT };
 
@@ -133,7 +132,7 @@ public @interface EnableExpiration {
 		 * @param abbreviation abbreviation used to lookup the appropriate {@link ExpirationType}.
 		 * @return an {@link ExpirationType} matching the abbreviation or {@literal null} if the abbreviation
 		 * does not match an {@link ExpirationType}.
-		 * @see ExpirationType
+		 * @see org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType
 		 * @see #values()
 		 * @see #abbreviation()
 		 */

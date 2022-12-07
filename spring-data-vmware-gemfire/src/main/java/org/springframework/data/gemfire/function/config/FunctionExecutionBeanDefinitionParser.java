@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import org.w3c.dom.Element;
@@ -16,10 +15,10 @@ import org.springframework.beans.factory.xml.ParserContext;
  *
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinition
- * @see BeanDefinitionParser
- * @see ParserContext
- * @see Element
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.xml.BeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.w3c.dom.Element
  */
 public class FunctionExecutionBeanDefinitionParser implements BeanDefinitionParser {
 

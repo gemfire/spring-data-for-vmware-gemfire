@@ -15,9 +15,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
  * of the Spring {@link BeanDefinitionRegistryPostProcessor} interface.
  *
  * @author John Blum
- * @see ConfigurableListableBeanFactory
- * @see BeanDefinitionRegistry
- * @see BeanDefinitionRegistryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
  * @since 2.0.0
  */
 @SuppressWarnings("all")

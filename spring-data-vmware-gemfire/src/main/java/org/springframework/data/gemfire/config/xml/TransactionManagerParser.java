@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see AbstractSingleBeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
  * @see GemfireTransactionManager
  */
 class TransactionManagerParser extends AbstractSingleBeanDefinitionParser {

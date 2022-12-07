@@ -33,16 +33,16 @@ import org.springframework.data.gemfire.GemfireUtils;
  * Unit Tests for {@link DelegatingPoolAdapter}.
  *
  * @author John Blum
- * @see InetSocketAddress
- * @see Test
- * @see Mock
+ * @see java.net.InetSocketAddress
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Pool
- * @see PoolFactory
- * @see SocketFactory
- * @see QueryService
- * @see DelegatingPoolAdapter
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.data.gemfire.client.support.DelegatingPoolAdapter
  * @since 1.8.0
  */
 @RunWith(MockitoJUnitRunner.class)

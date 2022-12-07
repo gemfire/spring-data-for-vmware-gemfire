@@ -27,9 +27,9 @@ import org.springframework.context.annotation.Import;
  * even when this {@link Annotation} is present, thereby serving as a toggle.
  *
  * @author John Blum
- * @see Annotation
- * @see Import
- * @see LocatorConfiguration
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.LocatorConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

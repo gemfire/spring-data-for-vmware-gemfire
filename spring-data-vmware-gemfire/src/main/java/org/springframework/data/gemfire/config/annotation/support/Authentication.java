@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import java.util.Objects;
@@ -16,7 +15,7 @@ import java.util.Objects;
  * @author John Blum
  * @param <PRINCIPAL> {@link Class type} modeling the {@literal principal} object.
  * @param <CREDENTIALS> {@link Class type} modeling the {@literal credentials} object.
- * @see FunctionalInterface
+ * @see java.lang.FunctionalInterface
  * @since 3.0.0
  */
 @FunctionalInterface

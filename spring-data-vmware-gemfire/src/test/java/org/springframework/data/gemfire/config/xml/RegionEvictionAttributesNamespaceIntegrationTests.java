@@ -26,11 +26,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see EvictionAttributes
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.3.4

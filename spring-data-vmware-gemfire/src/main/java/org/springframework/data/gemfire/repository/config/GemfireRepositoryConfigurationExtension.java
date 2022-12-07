@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.config;
 
 import java.lang.annotation.Annotation;
@@ -32,8 +31,8 @@ import org.springframework.lang.NonNull;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see RepositoryConfigurationExtension
- * @see RepositoryConfigurationExtensionSupport
+ * @see org.springframework.data.repository.config.RepositoryConfigurationExtension
+ * @see org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport
  */
 public class GemfireRepositoryConfigurationExtension extends RepositoryConfigurationExtensionSupport {
 
@@ -89,8 +88,8 @@ public class GemfireRepositoryConfigurationExtension extends RepositoryConfigura
 	 * @param builder {@link BeanDefinitionBuilder} used to build the target bean definition.
 	 * @param configurationSource {@link RepositoryConfigurationSource} containing {@link Repository}
 	 * configuration metadata.
-	 * @see BeanDefinitionBuilder
-	 * @see RepositoryConfigurationSource
+	 * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+	 * @see org.springframework.data.repository.config.RepositoryConfigurationSource
 	 */
 	private void addMappingContextPropertyReference(@NonNull BeanDefinitionBuilder builder,
 			@NonNull RepositoryConfigurationSource configurationSource) {
@@ -114,8 +113,8 @@ public class GemfireRepositoryConfigurationExtension extends RepositoryConfigura
 	 * @param registry {@link BeanDefinitionRegistry} containing registered bean definitions.
 	 * @param configurationSource {@link RepositoryConfigurationSource} containing the configuration metadata
 	 * for Apache Geode {@link Repository Repositories}.
-	 * @see RepositoryConfigurationSource
-	 * @see BeanDefinitionRegistry
+	 * @see org.springframework.data.repository.config.RepositoryConfigurationSource
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
 	 * @see #noMappingContextIsConfigured(RepositoryConfigurationSource)
 	 */
 	private void registerMappingContextForRoot(@NonNull BeanDefinitionRegistry registry,

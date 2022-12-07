@@ -13,7 +13,7 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  *
  * @author John Blum
  * @see EvictionPolicyType
- * @see AbstractPropertyEditorConverterSupport
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
  * @since 1.6.0
  */
 public class EvictionPolicyConverter extends AbstractPropertyEditorConverterSupport<EvictionPolicyType> {
@@ -23,7 +23,7 @@ public class EvictionPolicyConverter extends AbstractPropertyEditorConverterSupp
 	 *
 	 * @param source the String value to convert into an EvictionType.
 	 * @return the EvictionType matching the given String.
-	 * @throws IllegalArgumentException if the String value does not represent a valid EvictionType.
+	 * @throws java.lang.IllegalArgumentException if the String value does not represent a valid EvictionType.
 	 * @see EvictionPolicyType#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
 	 */

@@ -14,8 +14,8 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * and Query operations.
  *
  * @author John Blum
- * @see GemfireRepository
- * @see Programmer
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.sample.Programmer
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

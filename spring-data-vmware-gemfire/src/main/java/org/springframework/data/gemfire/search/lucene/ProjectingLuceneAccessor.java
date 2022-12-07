@@ -27,16 +27,16 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
  * necessary to execute Lucene queries and work with application domain object views.
  *
  * @author John Blum
- * @see ClassLoader
- * @see BeanClassLoaderAware
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see ProjectingLuceneOperations
- * @see PdxInstanceMethodInterceptorFactory
- * @see ProjectionFactory
- * @see SpelAwareProxyProjectionFactory
- * @see Region
- * @see LuceneIndex
+ * @see java.lang.ClassLoader
+ * @see org.springframework.beans.factory.BeanClassLoaderAware
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneOperations
+ * @see org.springframework.data.gemfire.search.lucene.support.PdxInstanceMethodInterceptorFactory
+ * @see org.springframework.data.projection.ProjectionFactory
+ * @see org.springframework.data.projection.SpelAwareProxyProjectionFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
  * @see org.apache.geode.cache.lucene.LuceneQuery
  * @see org.apache.geode.cache.lucene.LuceneQueryFactory
  * @see org.apache.geode.cache.lucene.LuceneService
@@ -63,7 +63,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 * used to perform Lucene queries (searches).
 	 *
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene queries.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 */
 	public ProjectingLuceneAccessor(LuceneIndex luceneIndex) {
 		super(luceneIndex);
@@ -75,7 +75,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 *
 	 * @param indexName {@link String} containing the name of the {@link LuceneIndex} used in Lucene queries.
 	 * @param region {@link Region} on which Lucene queries are executed.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public ProjectingLuceneAccessor(String indexName, Region<?, ?> region) {
 		super(indexName, region);
@@ -108,8 +108,8 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 *
 	 * @return a resolved instance of the Spring Data {@link ProjectionFactory} used to create projections
 	 * out of the Lucene query results.
-	 * @see ProjectionFactory
-	 * @see SpelAwareProxyProjectionFactory
+	 * @see org.springframework.data.projection.ProjectionFactory
+	 * @see org.springframework.data.projection.SpelAwareProxyProjectionFactory
 	 * @see #afterPropertiesSet()
 	 */
 	protected ProjectionFactory resolveProjectionFactory() {
@@ -136,8 +136,8 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 *
 	 * @return a reference to the {@link ClassLoader} used by the Spring {@link BeanFactory container}
 	 * to load bean class definitions.
-	 * @see BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
-	 * @see ClassLoader
+	 * @see org.springframework.beans.factory.BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
+	 * @see java.lang.ClassLoader
 	 */
 	protected ClassLoader getBeanClassLoader() {
 		return this.beanClassLoader;
@@ -155,8 +155,8 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 * Returns a reference to the Spring {@link BeanFactory container}.
 	 *
 	 * @return a reference to the Spring {@link BeanFactory container}.
-	 * @see BeanFactoryAware#setBeanFactory(BeanFactory)
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactoryAware#setBeanFactory(BeanFactory)
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected BeanFactory getBeanFactory() {
 		return this.beanFactory;
@@ -171,7 +171,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 * Sets the Spring Data {@link ProjectionFactory} used to create projections out of query results.
 	 *
 	 * @param projectionFactory Spring Data {@link ProjectionFactory} used to created projects out of query results.
-	 * @see ProjectionFactory
+	 * @see org.springframework.data.projection.ProjectionFactory
 	 */
 	public void setProjectionFactory(ProjectionFactory projectionFactory) {
 		this.projectionFactory = projectionFactory;
@@ -181,7 +181,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	 * Returns the Spring Data {@link ProjectionFactory} used to create projections out of query results.
 	 *
 	 * @return the Spring Data {@link ProjectionFactory} used to created projects out of query results.
-	 * @see ProjectionFactory
+	 * @see org.springframework.data.projection.ProjectionFactory
 	 */
 	protected ProjectionFactory getProjectionFactory() {
 		return this.projectionFactory;

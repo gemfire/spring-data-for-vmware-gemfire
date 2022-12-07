@@ -18,10 +18,10 @@ import org.apache.geode.cache.lucene.PageableLuceneQueryResults;
  * using Lucene queries.
  *
  * @author John Blum
- * @see LuceneQueryFactory
- * @see LuceneQueryProvider
- * @see LuceneResultStruct
- * @see PageableLuceneQueryResults
+ * @see org.apache.geode.cache.lucene.LuceneQueryFactory
+ * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+ * @see org.apache.geode.cache.lucene.LuceneResultStruct
+ * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -39,9 +39,9 @@ public interface LuceneOperations {
 	 * @param defaultField {@link String} specifying the default field used in Lucene queries when a field
 	 * is not explicitly defined in the Lucene query clause.
 	 * @return a {@link List} of {@link LuceneResultStruct} containing the query results.
-	 * @see LuceneResultStruct
+	 * @see org.apache.geode.cache.lucene.LuceneResultStruct
 	 * @see #query(String, String, int)
-	 * @see List
+	 * @see java.util.List
 	 */
 	default <K, V> List<LuceneResultStruct<K, V>> query(String query, String defaultField) {
 		return query(query, defaultField, DEFAULT_RESULT_LIMIT);
@@ -57,8 +57,8 @@ public interface LuceneOperations {
 	 * is not explicitly defined in the Lucene query clause.
 	 * @param resultLimit limit on the number of query results to return.
 	 * @return a {@link List} of {@link LuceneResultStruct} containing the query results.
-	 * @see LuceneResultStruct
-	 * @see List
+	 * @see org.apache.geode.cache.lucene.LuceneResultStruct
+	 * @see java.util.List
 	 */
 	<K, V> List<LuceneResultStruct<K, V>> query(String query, String defaultField, int resultLimit);
 
@@ -74,7 +74,7 @@ public interface LuceneOperations {
 	 * @param resultLimit limit on the number of query results to return.
 	 * @param pageSize number of results per page.
 	 * @return a {@link PageableLuceneQueryResults} data structure containing the results of the Lucene query.
-	 * @see PageableLuceneQueryResults
+	 * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
 	 */
 	<K, V> PageableLuceneQueryResults<K, V> query(String query, String defaultField, int resultLimit, int pageSize);
 
@@ -86,10 +86,10 @@ public interface LuceneOperations {
 	 * @param queryProvider {@link LuceneQueryProvider} is a provider implementation supplying the Lucene query
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @return a {@link List} of {@link LuceneResultStruct} containing the query results.
-	 * @see LuceneQueryProvider
-	 * @see LuceneResultStruct
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneResultStruct
 	 * @see #query(LuceneQueryProvider, int)
-	 * @see List
+	 * @see java.util.List
 	 */
 	default <K, V> List<LuceneResultStruct<K, V>> query(LuceneQueryProvider queryProvider) {
 		return query(queryProvider, DEFAULT_RESULT_LIMIT);
@@ -104,9 +104,9 @@ public interface LuceneOperations {
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @param resultLimit limit on the number of query results to return.
 	 * @return a {@link List} of {@link LuceneResultStruct} containing the query results.
-	 * @see LuceneQueryProvider
-	 * @see LuceneResultStruct
-	 * @see List
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneResultStruct
+	 * @see java.util.List
 	 */
 	<K, V> List<LuceneResultStruct<K, V>> query(LuceneQueryProvider queryProvider, int resultLimit);
 
@@ -121,8 +121,8 @@ public interface LuceneOperations {
 	 * @param resultLimit limit on the number of query results to return.
 	 * @param pageSize number of results per page.
 	 * @return a {@link PageableLuceneQueryResults} data structure containing the results of the Lucene query.
-	 * @see LuceneQueryProvider
-	 * @see PageableLuceneQueryResults
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
 	 */
 	<K, V> PageableLuceneQueryResults<K, V> query(LuceneQueryProvider queryProvider, int resultLimit, int pageSize);
 
@@ -138,7 +138,7 @@ public interface LuceneOperations {
 	 * is not explicitly defined in the Lucene query clause.
 	 * @return a {@link Collection} of keys matching the Lucene query clause (predicate).
 	 * @see #queryForKeys(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	default <K> Collection<K> queryForKeys(String query, String defaultField) {
 		return queryForKeys(query, defaultField, DEFAULT_RESULT_LIMIT);
@@ -155,7 +155,7 @@ public interface LuceneOperations {
 	 * @param resultLimit limit on the number of keys returned.
 	 * @return a {@link Collection} of keys matching the Lucene query clause (predicate).
 	 * @see #queryForKeys(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	<K> Collection<K> queryForKeys(String query, String defaultField, int resultLimit);
 
@@ -169,9 +169,9 @@ public interface LuceneOperations {
 	 * @param queryProvider {@link LuceneQueryProvider} is a provider implementation supplying the Lucene query
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @return a {@link Collection} of keys matching the Lucene query clause (predicate).
-	 * @see LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
 	 * @see #queryForKeys(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	default <K> Collection<K> queryForKeys(LuceneQueryProvider queryProvider) {
 		return queryForKeys(queryProvider, DEFAULT_RESULT_LIMIT);
@@ -186,9 +186,9 @@ public interface LuceneOperations {
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @param resultLimit limit on the number of keys returned.
 	 * @return a {@link Collection} of keys matching the Lucene query clause (predicate).
-	 * @see LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
 	 * @see #queryForKeys(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	<K> Collection<K> queryForKeys(LuceneQueryProvider queryProvider, int resultLimit);
 
@@ -204,7 +204,7 @@ public interface LuceneOperations {
 	 * is not explicitly defined in the Lucene query clause.
 	 * @return a {@link Collection} of values matching Lucene query clause (predicate).
 	 * @see #queryForValues(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	default <V> Collection<V> queryForValues(String query, String defaultField) {
 		return queryForValues(query, defaultField, DEFAULT_RESULT_LIMIT);
@@ -221,7 +221,7 @@ public interface LuceneOperations {
 	 * @param resultLimit limit on the number of values returned.
 	 * @return a {@link Collection} of values matching Lucene query clause (predicate).
 	 * @see #queryForValues(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	<V> Collection<V> queryForValues(String query, String defaultField, int resultLimit);
 
@@ -235,9 +235,9 @@ public interface LuceneOperations {
 	 * @param queryProvider {@link LuceneQueryProvider} is a provider implementation supplying the Lucene query
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @return a {@link Collection} of values matching Lucene query clause (predicate).
-	 * @see LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
 	 * @see #queryForValues(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	default <V> Collection<V> queryForValues(LuceneQueryProvider queryProvider) {
 		return queryForValues(queryProvider, DEFAULT_RESULT_LIMIT);
@@ -252,9 +252,9 @@ public interface LuceneOperations {
 	 * to execute as well as de/serialize to distribute across the cluster.
 	 * @param resultLimit limit on the number of values returned.
 	 * @return a {@link Collection} of values matching Lucene query clause (predicate).
-	 * @see LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
 	 * @see #queryForValues(String, String, int)
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	<V> Collection<V> queryForValues(LuceneQueryProvider queryProvider, int resultLimit);
 

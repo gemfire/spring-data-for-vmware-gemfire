@@ -34,14 +34,14 @@ import org.springframework.util.StringUtils;
  * {@link EnableStatistics}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see GemFireCache
- * @see ConfigurableApplicationContext
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see PropertySource
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.0
  */
 @SuppressWarnings("rawtypes")

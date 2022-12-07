@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -15,12 +14,12 @@ import org.springframework.lang.Nullable;
  * Composition for {@link RegionConfigurer}.
  *
  * @author John Blum
- * @see BeanFactory
+ * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.ConfigurableRegionFactoryBean
- * @see PeerRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see RegionConfigurer
- * @see AbstractLazyResolvingComposableConfigurer
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
  * @since 2.2.0
  */
 public class LazyResolvingComposableRegionConfigurer

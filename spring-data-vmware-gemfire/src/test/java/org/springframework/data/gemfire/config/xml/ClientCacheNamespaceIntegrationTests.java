@@ -27,13 +27,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link ClientCacheParser}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.client.ClientCache
- * @see ClientCacheFactoryBean
- * @see ClientCacheParser
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.ClientCacheParser
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.6.3
  */
 @RunWith(SpringRunner.class)

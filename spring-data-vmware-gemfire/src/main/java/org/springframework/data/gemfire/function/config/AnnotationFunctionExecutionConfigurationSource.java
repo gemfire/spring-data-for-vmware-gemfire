@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -48,7 +47,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	 *
 	 * @param metadata {@link AnnotationMetadata} for the {@link EnableGemfireFunctionExecutions} annotation;
 	 * must not be {@literal null}.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	 public AnnotationFunctionExecutionConfigurationSource(AnnotationMetadata metadata) {
 
@@ -139,7 +138,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	 * @param filterAttributes {@link AnnotationAttributes} for the {@literal include} and {@literal exclude} filters.
 	 * @return a {@link List} of {@link TypeFilter TypeFilters} based on the configuration of the {@literal include}
 	 * and {@literal exclude} attributes.
-	 * @see AnnotationAttributes
+	 * @see org.springframework.core.annotation.AnnotationAttributes
 	 */
 	@SuppressWarnings("unchecked")
 	private List<TypeFilter> typeFiltersFor(AnnotationAttributes filterAttributes) {

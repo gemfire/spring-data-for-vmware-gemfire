@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.wan;
 
 import java.util.List;
@@ -28,14 +27,14 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Cache
- * @see Region
- * @see AsyncEvent
- * @see AsyncEventListener
- * @see AsyncEventQueue
- * @see AsyncEventQueueFactory
- * @see FactoryBean
- * @see AbstractWANComponentFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEvent
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.data.gemfire.wan.AbstractWANComponentFactoryBean
  */
 @SuppressWarnings("unused")
 public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<AsyncEventQueue> {
@@ -69,7 +68,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * Constructs an instance of the AsyncEventQueueFactoryBean for creating an GemFire AsyncEventQueue.
 	 *
 	 * @param cache the GemFire Cache reference.
-	 * @see #AsyncEventQueueFactoryBean(Cache, AsyncEventListener)
+	 * @see #AsyncEventQueueFactoryBean(org.apache.geode.cache.Cache, org.apache.geode.cache.asyncqueue.AsyncEventListener)
 	 */
 	public AsyncEventQueueFactoryBean(Cache cache) {
 		this(cache, null);
@@ -154,7 +153,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 *
 	 * @param listener the configured {@link AsyncEventListener}.
 	 * @throws IllegalStateException if the {@link AsyncEventQueue} has already bean created.
-	 * @see AsyncEventListener
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
 	 */
 	public final void setAsyncEventListener(AsyncEventListener listener) {
 
@@ -169,7 +168,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * returned by this {@link FactoryBean}.
 	 *
 	 * @return the configured {@link AsyncEventListener}.
-	 * @see AsyncEventListener
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
 	 * @see #setAsyncEventListener(AsyncEventListener)
 	 */
 	public AsyncEventListener getAsyncEventListener() {
@@ -180,7 +179,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * Configures the {@link AsyncEventQueue} returned by this {@link FactoryBean}.
 	 *
 	 * @param asyncEventQueue overrides the {@link AsyncEventQueue} returned by this {@link FactoryBean}.
-	 * @see AsyncEventQueue
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
 	 */
 	public void setAsyncEventQueue(AsyncEventQueue asyncEventQueue) {
 		this.asyncEventQueue = asyncEventQueue;
@@ -190,7 +189,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * Returns the {@link AsyncEventQueue} created by this {@link FactoryBean}.
 	 *
 	 * @return a reference to the {@link AsyncEventQueue} created by this {@link FactoryBean}.
-	 * @see AsyncEventQueue
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
 	 */
 	public AsyncEventQueue getAsyncEventQueue() {
 		return this.asyncEventQueue;
@@ -200,7 +199,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * Enable or disable {@link AsyncEventQueue} (AEQ) message conflation.
 	 *
 	 * @param batchConflationEnabled {@link Boolean} indicating whether to conflate queued events.
-	 * @see AsyncEventQueueFactory#setBatchConflationEnabled(boolean)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setBatchConflationEnabled(boolean)
 	 */
 	public void setBatchConflationEnabled(Boolean batchConflationEnabled) {
 		this.batchConflationEnabled = batchConflationEnabled;
@@ -215,7 +214,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 *
 	 * @param batchTimeInterval {@link Integer} specifying the maximum number of milliseconds
 	 * that can elapse between sending batches.
-	 * @see AsyncEventQueueFactory#setBatchTimeInterval(int)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setBatchTimeInterval(int)
 	 */
 	public void setBatchTimeInterval(Integer batchTimeInterval) {
 		this.batchTimeInterval = batchTimeInterval;
@@ -229,7 +228,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * Configures the {@link AsyncEventQueue} (AEQ) disk write synchronization policy.
 	 *
 	 * @param diskSynchronous boolean value indicating whether disk writes are synchronous.
-	 * @see AsyncEventQueueFactory#setDiskSynchronous(boolean)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setDiskSynchronous(boolean)
 	 */
 	public void setDiskSynchronous(Boolean diskSynchronous) {
 		this.diskSynchronous = diskSynchronous;
@@ -241,7 +240,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 *
 	 * @param dispatcherThreads {@link Integer} specifying the number of dispatcher threads used
 	 * to process {@link Region} events from the associated queue.
-	 * @see AsyncEventQueueFactory#setDispatcherThreads(int)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setDispatcherThreads(int)
 	 */
 	public void setDispatcherThreads(Integer dispatcherThreads) {
 		this.dispatcherThreads = dispatcherThreads;
@@ -254,7 +253,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * will add all expiration destroy events to the AEQ.
 	 *
 	 * @param forwardExpirationDestroy boolean value indicating whether to forward expiration destroy events.
-	 * @see AsyncEventQueueFactory#setForwardExpirationDestroy(boolean)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setForwardExpirationDestroy(boolean)
 	 * @see org.apache.geode.cache.ExpirationAttributes#getAction()
 	 * @see org.apache.geode.cache.ExpirationAction#DESTROY
 	 */
@@ -282,7 +281,7 @@ public class AsyncEventQueueFactoryBean extends AbstractWANComponentFactoryBean<
 	 * multiple dispatcher threads process Region events from the queue.
 	 *
 	 * @param orderPolicy {@link String} specifying the name of the AEQ order policy.
-	 * @see AsyncEventQueueFactory#setOrderPolicy(GatewaySender.OrderPolicy)
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory#setOrderPolicy(GatewaySender.OrderPolicy)
 	 */
 	public void setOrderPolicy(String orderPolicy) {
 		setOrderPolicy(GatewaySender.OrderPolicy.valueOf(String.valueOf(orderPolicy).toUpperCase()));

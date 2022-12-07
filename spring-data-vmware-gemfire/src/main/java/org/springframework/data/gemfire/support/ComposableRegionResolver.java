@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -22,9 +21,9 @@ import org.springframework.util.Assert;
  * {@link RegionResolver} implementation used to compose a collection of {@link RegionResolver RegionResolvers}.
  *
  * @author John Blum
- * @see Region
- * @see RegionResolver
- * @see AbstractCachingRegionResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.RegionResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
 public class ComposableRegionResolver extends AbstractCachingRegionResolver {
@@ -34,7 +33,7 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 *
 	 * @param regionResolvers array of {@link RegionResolver RegionResolvers} to compose; may be {@literal null}.
 	 * @return a composition from the array of {@link RegionResolver RegionResolvers}; may be {@literal null}.
-	 * @see RegionResolver
+	 * @see org.springframework.data.gemfire.RegionResolver
 	 * @see #compose(Iterable)
 	 */
 	public static RegionResolver compose(@Nullable RegionResolver... regionResolvers) {
@@ -50,8 +49,8 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * @return a composition from the {@link Iterable} collection of {@link RegionResolver RegionResolvers};
 	 * may be {@literal null}.
 	 * @see #compose(RegionResolver, RegionResolver)
-	 * @see RegionResolver
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.RegionResolver
+	 * @see java.lang.Iterable
 	 */
 	public static @Nullable RegionResolver compose(@Nullable Iterable<RegionResolver> regionResolvers) {
 
@@ -74,7 +73,7 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * Returns the second {@link RegionResolver} if the first is {@literal null}.
 	 * Returns {@literal null} if both {@link RegionResolver} arguments are {@literal null}.
 	 * @see #ComposableRegionResolver(RegionResolver, RegionResolver)
-	 * @see RegionResolver
+	 * @see org.springframework.data.gemfire.RegionResolver
 	 */
 	public static @Nullable RegionResolver compose(@Nullable RegionResolver one, @Nullable RegionResolver two) {
 		return one == null ? two : two == null ? one : new ComposableRegionResolver(one, two);
@@ -90,7 +89,7 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * @param regionResolverOne first {@link RegionResolver} in the composition; must not be {@literal null}.
 	 * @param regionResolverTwo second {@link RegionResolver} in the composition; must not be {@literal null}.
 	 * @throws IllegalArgumentException if either {@link RegionResolver} argument is {@literal null}.
-	 * @see RegionResolver
+	 * @see org.springframework.data.gemfire.RegionResolver
 	 */
 	protected ComposableRegionResolver(@NonNull RegionResolver regionResolverOne,
 			@NonNull RegionResolver regionResolverTwo) {
@@ -106,7 +105,7 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * Returns a reference to the first, non-null, configured {@link RegionResolver} in the composition.
 	 *
 	 * @return a reference to the first {@link RegionResolver} in the composition.
-	 * @see RegionResolver
+	 * @see org.springframework.data.gemfire.RegionResolver
 	 */
 	protected @NonNull RegionResolver getRegionResolverOne() {
 		return this.regionResolverOne;
@@ -116,7 +115,7 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * Returns a reference to the second, non-null, configured {@link RegionResolver} in the composition.
 	 *
 	 * @return a reference to the second {@link RegionResolver} in the composition.
-	 * @see RegionResolver
+	 * @see org.springframework.data.gemfire.RegionResolver
 	 */
 	protected @NonNull RegionResolver getRegionResolverTwo() {
 		return this.regionResolverTwo;
@@ -134,9 +133,9 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param regionName {@link String name} of the {@link Region} to resolve.
 	 * @return the first, resolved reference to a cache {@link Region} identified by the given {@link String name}.
-	 * @see RegionResolver#resolve(String)
-	 * @see Region
-	 * @see Function
+	 * @see org.springframework.data.gemfire.RegionResolver#resolve(String)
+	 * @see org.apache.geode.cache.Region
+	 * @see java.util.function.Function
 	 * @see #getRegionResolverOne()
 	 * @see #getRegionResolverTwo()
 	 */

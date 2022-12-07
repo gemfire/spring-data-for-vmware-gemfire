@@ -31,15 +31,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link EnableIndexing}, {@link IndexConfiguration} and the {@link Indexed} annotation.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see Index
- * @see EnableIndexing
- * @see IndexConfiguration
- * @see Indexed
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.data.gemfire.config.annotation.EnableIndexing
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
+ * @see org.springframework.data.gemfire.mapping.annotation.Indexed
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.3
  */
 @RunWith(SpringRunner.class)

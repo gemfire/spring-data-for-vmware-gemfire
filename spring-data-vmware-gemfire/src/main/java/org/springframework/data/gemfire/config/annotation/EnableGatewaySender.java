@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -33,18 +32,18 @@ import org.springframework.data.gemfire.wan.OrderPolicyType;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Annotation
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see GatewayEventFilter
- * @see GatewayEventSubstitutionFilter
- * @see GatewayReceiver
- * @see GatewaySender
- * @see GatewaySender.OrderPolicy
- * @see GatewayTransportFilter
- * @see EnableGatewaySenders
+ * @see java.lang.annotation.Annotation
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.apache.geode.cache.wan.GatewayEventFilter
+ * @see org.apache.geode.cache.wan.GatewayEventSubstitutionFilter
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
+ * @see org.apache.geode.cache.wan.GatewayTransportFilter
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySenders
  * @since 2.2.0
  */
 @Target(ElementType.TYPE)

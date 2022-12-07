@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -18,7 +17,7 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * that enables Apache Geode's Integrated Security framework and services.
  *
  * @author John Blum
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -31,10 +30,10 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 	protected static final String SECURITY_SHIRO_INIT = GemFireProperties.SECURITY_SHIRO_INIT.getName();
 
 	/**
-	 * Returns the {@link EnableSecurity} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableSecurity} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableSecurity} {@link Annotation} {@link Class} type.
-	 * @see EnableSecurity
+	 * @return the {@link EnableSecurity} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableSecurity
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

@@ -40,11 +40,11 @@ import org.springframework.util.Assert;
  * the GemFire/Geode Cluster Configuration Service using this strategy.
  *
  * @author John Blum
- * @see ClientCache
- * @see Function
- * @see ListRegionsOnServerFunction
- * @see AbstractGemfireAdminOperations
- * @see GemfireOnServersFunctionTemplate
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction
+ * @see org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperations
+ * @see org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate
  * @since 2.0.0
  */
 public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations {
@@ -57,7 +57,7 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	 *
 	 * @param clientCache reference to a {@link ClientCache} instance.
 	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
-	 * @see ClientCache
+	 * @see org.apache.geode.cache.client.ClientCache
 	 */
 	public FunctionGemfireAdminTemplate(ClientCache clientCache) {
 
@@ -70,7 +70,7 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	 * Returns a reference to the configured {@link ClientCache} instance.
 	 *
 	 * @return a reference to the configured {@link ClientCache} instance.
-	 * @see ClientCache
+	 * @see org.apache.geode.cache.client.ClientCache
 	 */
 	protected ClientCache getClientCache() {
 		return this.clientCache;
@@ -82,7 +82,7 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	 *
 	 * @return an {@link Iterable} of servers-side {@link Region} names for all {@link Region Regions} defined
 	 * across all servers in the remote GemFire/Geode cluster.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 */
 	@Override
 	public Iterable<String> getAvailableServerRegions() {
@@ -111,8 +111,8 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	 * Returns an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
 	 *
 	 * @return an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
-	 * @see Index#getName()
-	 * @see Iterable
+	 * @see org.apache.geode.cache.query.Index#getName()
+	 * @see java.lang.Iterable
 	 */
 	@Override
 	public Iterable<String> getAvailableServerRegionIndexes() {

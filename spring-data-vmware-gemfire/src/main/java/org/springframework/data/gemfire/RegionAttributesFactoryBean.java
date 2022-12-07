@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.util.Arrays;
@@ -23,10 +22,10 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see AttributesFactory
- * @see RegionAttributes
- * @see FactoryBean
- * @see InitializingBean
+ * @see org.apache.geode.cache.AttributesFactory
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
  */
 @SuppressWarnings({ "unused" })
 // TODO: Refactor RegionAttributesFactoryBean to no longer directly extend AttributesFactory

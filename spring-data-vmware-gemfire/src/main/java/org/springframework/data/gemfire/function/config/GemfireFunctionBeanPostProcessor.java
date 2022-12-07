@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import static java.util.Arrays.stream;
@@ -29,11 +28,11 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Annotation
- * @see Method
- * @see Function
- * @see BeanPostProcessor
- * @see GemfireFunction
+ * @see java.lang.annotation.Annotation
+ * @see java.lang.reflect.Method
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  */
 public class GemfireFunctionBeanPostProcessor implements BeanPostProcessor {
 

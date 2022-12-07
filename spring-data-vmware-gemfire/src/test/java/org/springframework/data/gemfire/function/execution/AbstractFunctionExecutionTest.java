@@ -37,12 +37,12 @@ import org.apache.geode.cache.execute.ResultCollector;
  * of the AbstractFunctionExecution class.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see AbstractFunctionExecution
- * @see Execution
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionExecution
+ * @see org.apache.geode.cache.execute.Execution
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

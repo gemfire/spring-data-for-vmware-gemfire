@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -30,15 +29,15 @@ import org.springframework.util.StringUtils;
  * based on security (auth) configuration metadata supplied in the {@link EnableSecurity} annotation.
  *
  * @author John Blum
- * @see Annotation
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see BeanNameGenerator
- * @see Configuration
- * @see ImportAware
- * @see AbstractAnnotationConfigSupport
- * @see Authentication
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.beans.factory.support.BeanNameGenerator
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.annotation.support.Authentication
  * @since 1.0.0
  */
 @Configuration

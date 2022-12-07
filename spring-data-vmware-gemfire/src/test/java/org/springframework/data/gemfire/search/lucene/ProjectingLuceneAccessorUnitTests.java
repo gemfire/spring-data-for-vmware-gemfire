@@ -31,13 +31,13 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
  * Unit Tests for {@link ProjectingLuceneAccessor}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see ProjectingLuceneAccessor
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
  * @since 2.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

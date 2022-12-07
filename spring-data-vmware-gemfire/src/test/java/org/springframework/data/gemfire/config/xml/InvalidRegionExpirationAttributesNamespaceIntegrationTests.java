@@ -21,12 +21,12 @@ import org.xml.sax.SAXParseException;
  * Integration Tests testing the proper syntax for declaring "custom" expiration attributes on a {@link Region}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.ExpirationAttributes
- * @see Region
- * @see ConfigurableApplicationContext
- * @see GenericXmlApplicationContext
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.GenericXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
  * @since 1.5.0
  */

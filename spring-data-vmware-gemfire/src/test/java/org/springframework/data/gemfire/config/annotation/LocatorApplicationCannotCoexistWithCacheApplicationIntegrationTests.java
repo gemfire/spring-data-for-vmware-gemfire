@@ -24,18 +24,18 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * {@link GemFireCache} and {@link Locator} instances are mutually exclusive.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see ClientCache
- * @see Locator
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.distributed.Locator
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see LocatorApplication
- * @see LocatorApplicationConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplicationConfiguration
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.2.0
  */
 @SuppressWarnings("unused")

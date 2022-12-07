@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.w3c.dom.Element;
@@ -16,12 +15,12 @@ import org.springframework.data.gemfire.RegionAttributesFactoryBean;
  * Bean definition parser for &lt;gfe:*-region-template&gt; SDG XML namespace (XSD) elements.
  *
  * @author John Blum
- * @see BeanDefinitionBuilder
- * @see ParserContext
- * @see PeerRegionFactoryBean
- * @see RegionAttributesFactoryBean
- * @see AbstractRegionParser
- * @see Element
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.RegionAttributesFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.AbstractRegionParser
+ * @see org.w3c.dom.Element
  * @since 1.5.0
  */
 class TemplateRegionParser extends AbstractPeerRegionParser {

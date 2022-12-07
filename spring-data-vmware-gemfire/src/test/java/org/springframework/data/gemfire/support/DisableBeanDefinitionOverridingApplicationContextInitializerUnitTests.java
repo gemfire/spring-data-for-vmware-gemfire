@@ -22,11 +22,11 @@ import org.springframework.context.ConfigurableApplicationContext;
  * Unit Tests for {@link DisableBeanDefinitionOverridingApplicationContextInitializer}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.springframework.context.ApplicationContextInitializer
- * @see ConfigurableApplicationContext
- * @see DisableBeanDefinitionOverridingApplicationContextInitializer
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.data.gemfire.support.DisableBeanDefinitionOverridingApplicationContextInitializer
  * @since 2.6.0
  */
 public class DisableBeanDefinitionOverridingApplicationContextInitializerUnitTests {

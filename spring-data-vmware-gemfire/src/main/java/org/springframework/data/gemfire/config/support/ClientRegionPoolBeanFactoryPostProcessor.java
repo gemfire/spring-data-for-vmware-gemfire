@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.support;
 
 import java.util.Arrays;
@@ -27,11 +26,11 @@ import org.springframework.data.gemfire.util.SpringExtensions;
  * configuration metadata (e.g. XML).
  *
  * @author John Blum
- * @see Region
- * @see Pool
- * @see BeanDefinition
- * @see BeanFactoryPostProcessor
- * @see ConfigurableListableBeanFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @since 1.8.2
  */
 public class ClientRegionPoolBeanFactoryPostProcessor extends AbstractDependencyStructuringBeanFactoryPostProcessor {

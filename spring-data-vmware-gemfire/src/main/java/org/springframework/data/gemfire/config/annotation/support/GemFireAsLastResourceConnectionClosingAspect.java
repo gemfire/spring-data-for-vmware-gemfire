@@ -15,9 +15,9 @@ import org.aspectj.lang.annotation.Aspect;
  * initiated from Spring's Transaction infrastructure.
  *
  * @author John Blum
- * @see Aspect
- * @see After
- * @see AbstractGemFireAsLastResourceAspectSupport
+ * @see org.aspectj.lang.annotation.Aspect
+ * @see org.aspectj.lang.annotation.After
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractGemFireAsLastResourceAspectSupport
  * @since 2.0.0
  */
 @SuppressWarnings("unused")

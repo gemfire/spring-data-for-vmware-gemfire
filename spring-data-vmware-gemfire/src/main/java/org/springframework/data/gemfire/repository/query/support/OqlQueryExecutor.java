@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query.support;
 
 import org.apache.geode.cache.query.SelectResults;
@@ -14,8 +13,8 @@ import org.springframework.lang.NonNull;
  * A Strategy interface for executing Apache Geode OQL queries (e.g. {@literal SELECT} statements).
  *
  * @author John Blum
- * @see SelectResults
- * @see QueryMethod
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.repository.query.QueryMethod
  * @since 2.4.0
  */
 @FunctionalInterface
@@ -32,8 +31,8 @@ public interface OqlQueryExecutor {
 	 * @return the {@link SelectResults OQL query result set}.
 	 * @throws UnsupportedQueryExecutionException if this {@link OqlQueryExecutor} cannot execute (i.e. handle)
 	 * the OQL query.
-	 * @see QueryMethod
-	 * @see SelectResults
+	 * @see org.springframework.data.repository.query.QueryMethod
+	 * @see org.apache.geode.cache.query.SelectResults
 	 */
 	@SuppressWarnings("rawtypes")
 	SelectResults execute(QueryMethod queryMethod, String query, Object... arguments);
@@ -44,7 +43,7 @@ public interface OqlQueryExecutor {
 	 *
 	 * @param query {@link String OQL query} that could not be executed.
 	 * @return a new {@link UnsupportedQueryExecutionException}.
-	 * @see UnsupportedQueryExecutionException
+	 * @see org.springframework.data.gemfire.repository.query.support.UnsupportedQueryExecutionException
 	 */
 	default UnsupportedQueryExecutionException newUnsupportedQueryExecutionException(String query) {
 		return new UnsupportedQueryExecutionException(String.format(NON_EXECUTABLE_QUERY_MESSAGE, query,

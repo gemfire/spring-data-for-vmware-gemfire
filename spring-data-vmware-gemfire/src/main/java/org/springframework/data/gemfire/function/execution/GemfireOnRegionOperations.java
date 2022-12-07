@@ -15,9 +15,9 @@ import org.apache.geode.cache.execute.Function;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see Function
- * @see GemfireFunctionOperations
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.execution.GemfireFunctionOperations
  */
 @SuppressWarnings("unused")
 public interface GemfireOnRegionOperations extends GemfireFunctionOperations {

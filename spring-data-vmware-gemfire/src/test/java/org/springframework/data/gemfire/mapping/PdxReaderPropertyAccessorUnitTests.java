@@ -26,11 +26,11 @@ import org.springframework.expression.TypedValue;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see PdxReaderPropertyAccessor
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.mapping.PdxReaderPropertyAccessor
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PdxReaderPropertyAccessorUnitTests {

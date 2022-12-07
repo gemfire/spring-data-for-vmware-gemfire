@@ -23,11 +23,11 @@ import org.xml.sax.SAXParseException;
  * {@link Region sub-Region} bean definitions.
  *
  * @author John Blum
- * @see Test
- * @see DataPolicy
- * @see Region
- * @see ClassPathXmlApplicationContext
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.4.0
  */
 public class SubRegionWithInvalidDataPolicyTest extends IntegrationTestsSupport {

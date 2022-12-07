@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.admin.remote;
 
 import java.io.IOException;
@@ -50,22 +49,22 @@ import org.springframework.web.client.RestTemplate;
  * is not supported or has not been implemented against the Management REST API interface over HTTP.
  *
  * @author John Blum
- * @see HttpURLConnection
- * @see URI
- * @see ClientCache
- * @see Function
- * @see GemfireAdminOperations
- * @see FunctionGemfireAdminTemplate
- * @see HttpHeaders
- * @see HttpMethod
- * @see HttpStatus
- * @see RequestEntity
- * @see ResponseEntity
- * @see ClientHttpRequestFactory
- * @see ClientHttpRequestInterceptor
- * @see SimpleClientHttpRequestFactory
- * @see RestOperations
- * @see RestTemplate
+ * @see java.net.HttpURLConnection
+ * @see java.net.URI
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.admin.remote.FunctionGemfireAdminTemplate
+ * @see org.springframework.http.HttpHeaders
+ * @see org.springframework.http.HttpMethod
+ * @see org.springframework.http.HttpStatus
+ * @see org.springframework.http.RequestEntity
+ * @see org.springframework.http.ResponseEntity
+ * @see org.springframework.http.client.ClientHttpRequestFactory
+ * @see org.springframework.http.client.ClientHttpRequestInterceptor
+ * @see org.springframework.http.client.SimpleClientHttpRequestFactory
+ * @see org.springframework.web.client.RestOperations
+ * @see org.springframework.web.client.RestTemplate
  * @since 2.0.0
  */
 public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
@@ -98,7 +97,7 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param clientCache reference to the {@link ClientCache}.
 	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
 	 * @see #RestHttpGemfireAdminTemplate(ClientCache, String, String, int, boolean, List)
-	 * @see ClientCache
+	 * @see org.apache.geode.cache.client.ClientCache
 	 */
 	public RestHttpGemfireAdminTemplate(ClientCache clientCache) {
 
@@ -121,8 +120,8 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param clientHttpRequestInterceptors {@link List} of {@link ClientHttpRequestInterceptor} used to intercept
 	 * and decorate the HTTP request and HTTP response.
 	 * @throws IllegalArgumentException if the {@link ClientCache} reference is {@literal null}.
-	 * @see ClientHttpRequestInterceptor
-	 * @see ClientCache
+	 * @see org.springframework.http.client.ClientHttpRequestInterceptor
+	 * @see org.apache.geode.cache.client.ClientCache
 	 */
 	public RestHttpGemfireAdminTemplate(ClientCache clientCache, String scheme, String host, int port,
 			boolean followRedirects, List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors) {
@@ -145,9 +144,9 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param clientHttpRequestInterceptors {@link List} of {@link ClientHttpRequestInterceptor} used to intercept
 	 * and decorate the HTTP request and HTTP response.
 	 * @throws IllegalArgumentException if the {@link ClientCache} reference is {@literal null}.
-	 * @see ClientCache
-	 * @see RestTemplateConfigurer
-	 * @see ClientHttpRequestInterceptor
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.springframework.data.gemfire.config.support.RestTemplateConfigurer
+	 * @see org.springframework.http.client.ClientHttpRequestInterceptor
 	 * @see #newClientHttpRequestFactory(boolean)
 	 * @see #newRestOperations(ClientHttpRequestFactory, List, List)
 	 * @see #resolveManagementRestApiUrl(String, String, int)
@@ -172,7 +171,7 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param followRedirects boolean value indicating whether HTTP redirects (with HTTP Status Code 3xx)
 	 * should be followed.
 	 * @return a new {@link ClientHttpRequestFactory}.
-	 * @see ClientHttpRequestFactory
+	 * @see org.springframework.http.client.ClientHttpRequestFactory
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T extends ClientHttpRequestFactory> T newClientHttpRequestFactory(boolean followRedirects) {
@@ -186,10 +185,10 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param clientHttpRequestInterceptors {@link List} of {@link ClientHttpRequestInterceptor} used to intercept
 	 * and decorate the HTTP request and HTTP response.
 	 * @return a new instance of Spring's {@link RestTemplate}.
-	 * @see ClientHttpRequestInterceptor
-	 * @see SimpleClientHttpRequestFactory
-	 * @see RestOperations
-	 * @see RestTemplate
+	 * @see org.springframework.http.client.ClientHttpRequestInterceptor
+	 * @see org.springframework.http.client.SimpleClientHttpRequestFactory
+	 * @see org.springframework.web.client.RestOperations
+	 * @see org.springframework.web.client.RestTemplate
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T extends RestOperations> T newRestOperations(ClientHttpRequestFactory clientHttpRequestFactory,
@@ -237,7 +236,7 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * Returns a reference to the {@link RestOperations} used to perform REST API calls.
 	 *
 	 * @return a reference to the {@link RestOperations} used to perform REST API calls.
-	 * @see RestOperations
+	 * @see org.springframework.web.client.RestOperations
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T extends RestOperations> T getRestOperations() {

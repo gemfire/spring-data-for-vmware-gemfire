@@ -13,9 +13,9 @@ import org.springframework.data.repository.CrudRepository;
  * to perform basic CRUD and querying data access operations on {@link Person people}.
  *
  * @author John Blum
- * @see Long
- * @see Person
- * @see CrudRepository
+ * @see java.lang.Long
+ * @see org.springframework.data.gemfire.test.model.Person
+ * @see org.springframework.data.repository.CrudRepository
  * @since 2.0.0
  */
 public interface PersonRepository extends CrudRepository<Person, Long> {

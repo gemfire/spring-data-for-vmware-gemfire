@@ -34,11 +34,11 @@ import org.springframework.beans.factory.BeanFactory;
  * Unit Tests for {@link GemfireBeanFactoryLocator}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see GemfireBeanFactoryLocator
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

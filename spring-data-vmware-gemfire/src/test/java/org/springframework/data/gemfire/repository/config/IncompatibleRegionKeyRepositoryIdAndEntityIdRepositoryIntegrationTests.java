@@ -36,16 +36,16 @@ import org.springframework.data.repository.Repository;
  * and {@link PersistentEntity entity} {@link Class ID type}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see Bean
- * @see ClientCacheApplication
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see Repository
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.data.repository.Repository
  * @see <a href="https://github.com/spring-projects/spring-data-gemfire/pull/55">PR-55</a>
  * @since 1.4.0
  */

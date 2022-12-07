@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Properties;
@@ -32,12 +31,12 @@ import org.springframework.lang.Nullable;
  * @author John Blum
  * @param <T> {@link Class type} identifying the {@link Repository Repositories} to match on during registration.
  * @param <QUERY> {@link Class type} of the query to process.
- * @see FunctionalInterface
- * @see Ordered
- * @see Query
- * @see Repository
- * @see NamedQueries
- * @see QueryMethod
+ * @see java.lang.FunctionalInterface
+ * @see org.springframework.core.Ordered
+ * @see org.springframework.data.gemfire.repository.Query
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.core.NamedQueries
+ * @see org.springframework.data.repository.query.QueryMethod
  * @since 2.1.0
  */
 @FunctionalInterface
@@ -54,7 +53,7 @@ public interface QueryPostProcessor<T extends Repository, QUERY> extends Ordered
 	 *
 	 * @return an {@link Integer} value specifying the order of this {@link QueryPostProcessor} relative to
 	 * other {@link QueryPostProcessor QueryPostProcessors} in a sort.
-	 * @see Ordered#getOrder()
+	 * @see org.springframework.core.Ordered#getOrder()
 	 */
 	@Override
 	default int getOrder() {
@@ -71,7 +70,7 @@ public interface QueryPostProcessor<T extends Repository, QUERY> extends Ordered
 	 *
 	 * @param query {@link QUERY query} to process.
 	 * @return a new or modified version of the same {@link QUERY query}.
-	 * @see QueryMethod
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 * @see #postProcess(QueryMethod, Object, Object...)
 	 */
 	default QUERY postProcess(@NonNull QueryMethod queryMethod, QUERY query) {
@@ -89,7 +88,7 @@ public interface QueryPostProcessor<T extends Repository, QUERY> extends Ordered
 	 * @param query {@link QUERY query} to process.
 	 * @param arguments array of {@link Object Objects} containing the arguments to the query parameters.
 	 * @return a new or modified version of the same {@link QUERY query}.
-	 * @see QueryMethod
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 * @see #postProcess(QueryMethod, Object)
 	 */
 	QUERY postProcess(@NonNull QueryMethod queryMethod, QUERY query, Object... arguments);

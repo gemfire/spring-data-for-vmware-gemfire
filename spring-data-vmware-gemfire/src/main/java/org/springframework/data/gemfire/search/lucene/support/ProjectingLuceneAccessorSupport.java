@@ -20,7 +20,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * for extending classes.
  *
  * @author John Blum
- * @see ProjectingLuceneAccessor
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

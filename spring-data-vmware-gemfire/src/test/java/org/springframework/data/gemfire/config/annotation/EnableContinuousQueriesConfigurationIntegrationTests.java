@@ -52,16 +52,16 @@ import lombok.RequiredArgsConstructor;
  * and {@link ContinuousQueryListenerContainer}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see CqEvent
- * @see ContinuousQueryConfiguration
- * @see EnableContinuousQueries
- * @see ContinuousQuery
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.CqEvent
+ * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
+ * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

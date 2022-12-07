@@ -33,10 +33,10 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * Unit tests for {@link ClientRegionPoolBeanFactoryPostProcessor}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @see ClientRegionPoolBeanFactoryPostProcessor
  * @since 1.8.2
  */

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -19,8 +18,8 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Locator-based location services.
  *
  * @author John Blum
- * @see EnableMcast
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.data.gemfire.config.annotation.EnableMcast
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class McastConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -33,10 +32,10 @@ public class McastConfiguration extends EmbeddedServiceConfigurationSupport {
 	public static final String DEFAULT_MCAST_FLOW_CONTROL = "1048576,0.25,5000";
 
 	/**
-	 * Returns the {@link EnableMcast} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableMcast} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableMcast} {@link Annotation} {@link Class} type.
-	 * @see EnableMcast
+	 * @return the {@link EnableMcast} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableMcast
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

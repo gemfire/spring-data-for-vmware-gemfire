@@ -34,13 +34,13 @@ import example.app.repo.UserRepository;
  * Integration Tests testing and asserting the use of the {@literal IN} operator in an OQL query
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see EnableGemfireRepositories
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://github.com/spring-projects/spring-data-geode/issues/483">Fix bug with SDG Repository derived queries using the IN operator with numeric values.</a>
  * @since 2.5.0
  */

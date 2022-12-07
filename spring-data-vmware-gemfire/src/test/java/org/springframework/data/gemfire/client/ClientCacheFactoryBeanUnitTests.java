@@ -50,18 +50,18 @@ import org.springframework.data.gemfire.util.DistributedSystemUtils;
  * Unit Tests for {@link ClientCacheFactoryBean}
  *
  * @author John Blum
- * @see InetSocketAddress
- * @see Properties
- * @see Test
+ * @see java.net.InetSocketAddress
+ * @see java.util.Properties
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see DistributedSystem
- * @see PdxSerializer
- * @see BeanFactory
- * @see ClientCacheFactoryBean
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @since 1.7.0
  */
 public class ClientCacheFactoryBeanUnitTests {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.mapping;
 
 import org.springframework.data.gemfire.mapping.model.GemfireSimpleTypeHolder;
@@ -18,14 +17,14 @@ import org.springframework.data.util.TypeInformation;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see AbstractMappingContext
+ * @see org.springframework.data.mapping.context.AbstractMappingContext
  */
 public class GemfireMappingContext extends AbstractMappingContext<GemfirePersistentEntity<?>, GemfirePersistentProperty> {
 
 	/**
 	 * Constructs a GemfireMappingContext with a GemfireSimpleTypeHolder.
 	 *
-	 * @see GemfireSimpleTypeHolder
+	 * @see org.springframework.data.gemfire.mapping.model.GemfireSimpleTypeHolder
 	 */
 	public GemfireMappingContext() {
 		// Technically, the following call is not Thread-safe (the "this" reference escapes), but then MappingContext
@@ -36,7 +35,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 
 	/**
 	 * @inheritDoc
-	 * @see AbstractMappingContext#createPersistentEntity(TypeInformation)
+	 * @see org.springframework.data.mapping.context.AbstractMappingContext#createPersistentEntity(org.springframework.data.util.TypeInformation)
 	 */
 	@Override
 	protected <T> GemfirePersistentEntity<T> createPersistentEntity(TypeInformation<T> typeInformation) {
@@ -45,7 +44,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 
 	/**
 	 * @inheritDoc
-	 * @see AbstractMappingContext#createPersistentProperty(Property, MutablePersistentEntity, SimpleTypeHolder)
+	 * @see org.springframework.data.mapping.context.AbstractMappingContext#createPersistentProperty(Property, MutablePersistentEntity, SimpleTypeHolder)
 	 */
 	@Override
 	protected GemfirePersistentProperty createPersistentProperty(Property property, GemfirePersistentEntity<?> owner,

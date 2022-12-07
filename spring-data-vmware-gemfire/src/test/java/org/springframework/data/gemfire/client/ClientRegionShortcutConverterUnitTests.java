@@ -14,9 +14,9 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
  * Unit Tests for {@link ClientRegionShortcutConverter}.
  *
  * @author John Blum
- * @see Test
- * @see ClientRegionShortcut
- * @see ClientRegionShortcutConverter
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.data.gemfire.client.ClientRegionShortcutConverter
  * @since 1.3.4
  */
 public class ClientRegionShortcutConverterUnitTests {

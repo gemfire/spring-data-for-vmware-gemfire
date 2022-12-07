@@ -24,9 +24,9 @@ import org.springframework.data.gemfire.repository.sample.PersonRepository;
  * Unit Tests for {@link GemfireRepositoryFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemfireRepositoryFactoryBean
+ * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean
  * @since 1.6.3
  */
 @SuppressWarnings("rawtypes")

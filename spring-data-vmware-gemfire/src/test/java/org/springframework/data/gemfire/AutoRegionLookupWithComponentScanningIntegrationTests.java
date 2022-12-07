@@ -21,11 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for SDG's Auto {@link Region} Lookup behavior with Spring component scanning functionality.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

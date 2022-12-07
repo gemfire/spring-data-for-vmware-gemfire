@@ -23,14 +23,14 @@ import org.springframework.data.gemfire.client.PoolResolver;
  * Unit Tests for {@link ClientCacheDefaultPoolResolver}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see Pool
- * @see CacheResolver
- * @see PoolResolver
- * @see ClientCacheDefaultPoolResolver
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.client.PoolResolver
+ * @see org.springframework.data.gemfire.client.support.ClientCacheDefaultPoolResolver
  * @since 2.3.0
  */
 public class ClientCacheDefaultPoolResolverUnitTests {

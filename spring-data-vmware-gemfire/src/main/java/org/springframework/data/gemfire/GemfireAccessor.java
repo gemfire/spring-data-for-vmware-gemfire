@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.GemFireCheckedException;
@@ -24,8 +23,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Costin Leau
  * @author John Blum
- * @see InitializingBean
- * @see Region
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.Region
  */
 public class GemfireAccessor implements InitializingBean {
 
@@ -40,7 +39,7 @@ public class GemfireAccessor implements InitializingBean {
 	 * @param <K> the Region key class type.
 	 * @param <V> the Region value class type.
 	 * @return the GemFire Cache Region.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	@SuppressWarnings("unchecked")
 	public <K, V> Region<K, V> getRegion() {
@@ -51,7 +50,7 @@ public class GemfireAccessor implements InitializingBean {
 	 * Sets the template GemFire Cache Region.
 	 *
 	 * @param region the GemFire Cache Region used by this template.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public void setRegion(Region<?, ?> region) {
 		this.region = region;

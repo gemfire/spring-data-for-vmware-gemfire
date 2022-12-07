@@ -8,7 +8,7 @@ package org.springframework.data.gemfire.transaction;
 import org.springframework.transaction.TransactionException;
 
 /**
- * Gemfire-specific subclass of {@link TransactionException}, indicating a transaction failure at commit time.
+ * Gemfire-specific subclass of {@link org.springframework.transaction.TransactionException}, indicating a transaction failure at commit time.
  *
  * @author Costin Leau
  */

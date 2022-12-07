@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.support;
 
 import java.util.Collections;
@@ -54,13 +53,13 @@ import org.slf4j.LoggerFactory;
  * @author John Blum
  * @author Jens Schauder
  * @see org.apache.geode.cache.Cache
- * @see CacheTransactionManager
- * @see Region
- * @see GemfireTemplate
- * @see GemfireRepository
- * @see CrudRepository
- * @see PagingAndSortingRepository
- * @see EntityInformation
+ * @see org.apache.geode.cache.CacheTransactionManager
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.repository.CrudRepository
+ * @see org.springframework.data.repository.PagingAndSortingRepository
+ * @see org.springframework.data.repository.core.EntityInformation
  */
 public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> {
 
@@ -80,8 +79,8 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	 * must not be {@literal null}.
 	 * @param entityInformation {@link EntityInformation} that describes the entity; must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link GemfireTemplate} or {@link EntityInformation} is {@literal null}.
-	 * @see GemfireTemplate
-	 * @see EntityInformation
+	 * @see org.springframework.data.gemfire.GemfireTemplate
+	 * @see org.springframework.data.repository.core.EntityInformation
 	 */
 	public SimpleGemfireRepository(@NonNull GemfireTemplate template,
 			@NonNull EntityInformation<T, ID> entityInformation) {
@@ -97,7 +96,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	 * Returns a reference to the {@link EntityInformation} type describing the entity.
 	 *
 	 * @return a reference to the {@link EntityInformation} type describing the entity.
-	 * @see EntityInformation
+	 * @see org.springframework.data.repository.core.EntityInformation
 	 */
 	public @NonNull EntityInformation<T, ID> getEntityInformation() {
 		return this.entityInformation;
@@ -107,7 +106,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	 * Returns a reference to the SLF4J {@link Logger} used to log the operations of this {@link GemfireRepository}.
 	 *
 	 * @return a reference to the SLF4J {@link Logger} used to log the operations of this {@link GemfireRepository}.
-	 * @see Logger
+	 * @see org.slf4j.Logger
 	 */
 	public @NonNull Logger getLogger() {
 		return this.logger;
@@ -117,7 +116,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	 * Gets the {@link Region} to which this {@link GemfireRepository} performs all data access operations.
 	 *
 	 * @return a reference to the {@link Region} on which this {@link GemfireRepository} operates.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #getTemplate()
 	 */
 	public @NonNull Region<ID, T> getRegion() {
@@ -129,7 +128,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	 * CRUD and simple OQL queries data access operations
 	 *
 	 * @return a reference to the {@link GemfireTemplate} used by this {@link GemfireRepository}.
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	public @NonNull GemfireTemplate getTemplate() {
 		return this.template;

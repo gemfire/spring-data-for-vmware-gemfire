@@ -44,9 +44,9 @@ import org.springframework.util.StringUtils;
  * Unit Tests for {@link CustomEditorBeanFactoryPostProcessor}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see CustomEditorBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor
  * @since 1.6.0
  */
 public class CustomEditorBeanFactoryPostProcessorUnitTests {

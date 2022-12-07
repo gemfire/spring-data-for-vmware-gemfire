@@ -15,7 +15,7 @@ import org.springframework.util.ObjectUtils;
  * with Spring Data GemFire ClientRegionShortcutWrapper enumerated values.
  *
  * @author John Blum
- * @see ClientRegionShortcut
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

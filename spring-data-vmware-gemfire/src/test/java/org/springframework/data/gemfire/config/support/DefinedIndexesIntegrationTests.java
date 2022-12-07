@@ -44,15 +44,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link DefinedIndexesApplicationListener}.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see Region
- * @see Index
- * @see QueryService
- * @see IndexFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

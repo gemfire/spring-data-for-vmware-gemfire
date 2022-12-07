@@ -17,8 +17,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * XML namespace attributes.
  *
  * @author John Blum
- * @see Test
- * @see ClassPathXmlApplicationContext
+ * @see org.junit.Test
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @since 1.4.0
  */
 public class InvalidRegionDataPolicyShortcutsTest {

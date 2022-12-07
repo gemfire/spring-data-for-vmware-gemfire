@@ -24,8 +24,8 @@ import org.apache.geode.cache.wan.GatewayTransportFilter;
  * of the GatewayReceiverFactoryBean class.
  *
  * @author John Blum
- * @see GatewayReceiverFactoryBean
- * @see GatewayReceiverFactory
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
+ * @see org.apache.geode.cache.wan.GatewayReceiverFactory
  * @since 1.5.0
  */
 public class GatewayReceiverFactoryBeanTest {

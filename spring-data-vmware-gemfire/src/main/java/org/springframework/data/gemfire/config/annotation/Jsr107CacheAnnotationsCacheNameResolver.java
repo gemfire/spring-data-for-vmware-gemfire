@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
@@ -20,8 +19,8 @@ import javax.cache.annotation.CacheResult;
  * implementation that can resolve JSR-107, JCache API cache annotations from a given {@link Class class type}.
  *
  * @author John Blum
- * @see Annotation
- * @see CachingDefinedRegionsConfiguration.AbstractCacheNameResolver
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration.AbstractCacheNameResolver
  * @since 2.2.0
  */
 class Jsr107CacheAnnotationsCacheNameResolver extends CachingDefinedRegionsConfiguration.AbstractCacheNameResolver {

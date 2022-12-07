@@ -32,7 +32,7 @@ import org.springframework.data.repository.cdi.CdiRepositoryExtensionSupport;
  * The GemfireRepositoryExtension class...
  *
  * @author John Blum
- * @see CdiRepositoryExtensionSupport
+ * @see org.springframework.data.repository.cdi.CdiRepositoryExtensionSupport
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
@@ -55,8 +55,8 @@ public class GemfireRepositoryExtension extends CdiRepositoryExtensionSupport {
 	 *
 	 * @param <X> class type of the bean instance.
 	 * @param processBean annotated type as defined by CDI.
-	 * @see ProcessBean
-	 * @see Observes
+	 * @see javax.enterprise.inject.spi.ProcessBean
+	 * @see javax.enterprise.event.Observes
 	 */
 	@SuppressWarnings("unchecked")
 	<X> void processBean(@Observes ProcessBean<X> processBean) {
@@ -95,9 +95,9 @@ public class GemfireRepositoryExtension extends CdiRepositoryExtensionSupport {
 	 * Repository beans are associated to the appropriate GemfireMappingContexts based on their qualifiers.
 	 *
 	 * @param beanManager the BeanManager instance.
-	 * @see AfterBeanDiscovery
-	 * @see BeanManager
-	 * @see Observes
+	 * @see javax.enterprise.inject.spi.AfterBeanDiscovery
+	 * @see javax.enterprise.inject.spi.BeanManager
+	 * @see javax.enterprise.event.Observes
 	 */
 	void afterBeanDiscovery(@Observes AfterBeanDiscovery afterBeanDiscovery, BeanManager beanManager) {
 

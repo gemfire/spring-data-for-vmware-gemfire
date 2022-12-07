@@ -24,13 +24,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see Cache
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @GemFireUnitTest

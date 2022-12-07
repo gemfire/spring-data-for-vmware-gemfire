@@ -20,20 +20,20 @@ import org.springframework.data.gemfire.tests.integration.SpringApplicationConte
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 
 /**
- * Integration Tests for {@link ClientCache}.
+ * Integration Tests for {@link org.apache.geode.cache.client.ClientCache}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see ClientCache
- * @see ConfigurableApplicationContext
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see Bean
- * @see Configuration
- * @see ClientCacheFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  */
 @SuppressWarnings("unused")
 public class ClientCacheIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

@@ -24,17 +24,17 @@ import org.apache.geode.cache.Region;
 
 /**
  * Unit Tests to test the adaption of the {@link java.util.concurrent.Callable}
- * into Apache Geode's {@link CacheLoader} interface.
+ * into Apache Geode's {@link org.apache.geode.cache.CacheLoader} interface.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @see java.util.concurrent.Callable
- * @see CacheLoader
- * @see LoaderHelper
- * @see Region
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.LoaderHelper
+ * @see org.apache.geode.cache.Region
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

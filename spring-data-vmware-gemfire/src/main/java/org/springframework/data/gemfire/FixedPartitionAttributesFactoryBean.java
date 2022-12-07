@@ -16,9 +16,9 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see FactoryBean
- * @see InitializingBean
- * @see FixedPartitionAttributes
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.FixedPartitionAttributes
  */
 @SuppressWarnings("unused")
 public class FixedPartitionAttributesFactoryBean implements FactoryBean<FixedPartitionAttributes>, InitializingBean {

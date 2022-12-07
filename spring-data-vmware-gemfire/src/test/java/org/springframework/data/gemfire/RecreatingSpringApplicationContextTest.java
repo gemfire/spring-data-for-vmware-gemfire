@@ -19,7 +19,7 @@ import org.springframework.data.gemfire.tests.integration.SpringApplicationConte
  *
  * @author Costin Leau
  * @author John Blum
- * @see ConfigurableApplicationContext
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  */
 public abstract class RecreatingSpringApplicationContextTest extends SpringApplicationContextIntegrationTestsSupport {

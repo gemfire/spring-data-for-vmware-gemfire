@@ -14,8 +14,8 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  * a String into a GemFire InterestResultPolicyConverter.
  *
  * @author John Blum
- * @see AbstractPropertyEditorConverterSupport
- * @see InterestResultPolicy
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
+ * @see org.apache.geode.cache.InterestResultPolicy
  * @since 1.6.0
  */
 public class InterestResultPolicyConverter extends AbstractPropertyEditorConverterSupport<InterestResultPolicy> {
@@ -25,11 +25,11 @@ public class InterestResultPolicyConverter extends AbstractPropertyEditorConvert
 	 *
 	 * @param source the String to convert into an InterestResultPolicy value.
 	 * @return a GemFire InterestResultPolicy value for the given String.
-	 * @throws IllegalArgumentException if the String is not a valid GemFire InterestResultPolicy.
-	 * @see InterestResultPolicyType#getInterestResultPolicy(InterestResultPolicyType)
-	 * @see InterestResultPolicyType#valueOfIgnoreCase(String)
+	 * @throws java.lang.IllegalArgumentException if the String is not a valid GemFire InterestResultPolicy.
+	 * @see org.springframework.data.gemfire.client.InterestResultPolicyType#getInterestResultPolicy(InterestResultPolicyType)
+	 * @see org.springframework.data.gemfire.client.InterestResultPolicyType#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
-	 * @see InterestResultPolicy
+	 * @see org.apache.geode.cache.InterestResultPolicy
 	 */
 	@Override
 	public InterestResultPolicy convert(final String source) {

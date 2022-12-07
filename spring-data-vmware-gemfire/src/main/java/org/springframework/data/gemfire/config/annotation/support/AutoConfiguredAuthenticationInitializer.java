@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import java.util.Optional;
@@ -20,9 +19,9 @@ import org.springframework.lang.Nullable;
  * which auto-configures security, and specifically authentication, for Apache Geode/Pivotal GemFire.
  *
  * @author John Blum
- * @see Properties
- * @see AuthInitialize
- * @see Authentication
+ * @see java.util.Properties
+ * @see org.apache.geode.security.AuthInitialize
+ * @see org.springframework.data.gemfire.config.annotation.support.Authentication
  * @since 2.0.0
  */
 @SuppressWarnings("unused")
@@ -41,7 +40,7 @@ public class AutoConfiguredAuthenticationInitializer extends AbstractAuthInitial
 	 * were configured/requested.
 	 *
 	 * @return a new instance of {@link AutoConfiguredAuthenticationInitializer}.
-	 * @see AutoConfiguredAuthenticationInitializer
+	 * @see org.springframework.data.gemfire.config.annotation.support.AutoConfiguredAuthenticationInitializer
 	 */
 	public static AutoConfiguredAuthenticationInitializer newAuthenticationInitializer() {
 

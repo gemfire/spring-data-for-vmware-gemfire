@@ -19,10 +19,10 @@ import org.springframework.data.gemfire.domain.support.AbstractSliceSupport;
  *
  * @author John Blum
  * @param <T> {@link Class} type of the elements in this {@link Slice}.
- * @see Pageable
- * @see Slice
- * @see Sort
- * @see AbstractSliceSupport
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.domain.Slice
+ * @see org.springframework.data.domain.Sort
+ * @see org.springframework.data.gemfire.domain.support.AbstractSliceSupport
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.beans.PropertyEditor;
@@ -16,9 +15,9 @@ import org.springframework.util.Assert;
  * implementations that also implement the JavaBeans {@link PropertyEditor} interface.
  *
  * @author John Blum
- * @see PropertyEditor
- * @see PropertyEditorSupport
- * @see Converter
+ * @see java.beans.PropertyEditor
+ * @see java.beans.PropertyEditorSupport
+ * @see org.springframework.core.convert.converter.Converter
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -32,7 +31,7 @@ public abstract class AbstractPropertyEditorConverterSupport<T> extends Property
 	 * @param convertedValue converted value of {@link Class type} T.
 	 * @param type {@link Class type} of the converted value.
 	 * @return the converted value.
-	 * @throws IllegalArgumentException if the {@link String} could not be converted into
+	 * @throws java.lang.IllegalArgumentException if the {@link String} could not be converted into
 	 * an instance of {@link Class type} T.
 	 */
 	protected T assertConverted(String source, T convertedValue, Class<T> type) {
@@ -43,11 +42,11 @@ public abstract class AbstractPropertyEditorConverterSupport<T> extends Property
 	}
 
 	/**
-	 * Sets the value of this {@link PropertyEditor} to the given {@link String}
+	 * Sets the value of this {@link java.beans.PropertyEditor} to the given {@link String}
 	 * converted to the appropriate {@link Class type}.
 	 *
 	 * @param text {@link String} to convert.
-	 * @throws IllegalArgumentException if the {@link String} could not be converted into
+	 * @throws java.lang.IllegalArgumentException if the {@link String} could not be converted into
 	 * an instance of {@link Class type} T.
 	 * @see #convert(Object)
 	 * @see #setValue(Object)

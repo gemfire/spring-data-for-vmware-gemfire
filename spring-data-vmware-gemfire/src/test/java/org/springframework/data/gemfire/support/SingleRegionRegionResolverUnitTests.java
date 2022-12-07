@@ -20,11 +20,11 @@ import org.apache.geode.cache.Region;
  * Unit Tests for {@link SingleRegionRegionResolver}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Region
- * @see SingleRegionRegionResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.support.SingleRegionRegionResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

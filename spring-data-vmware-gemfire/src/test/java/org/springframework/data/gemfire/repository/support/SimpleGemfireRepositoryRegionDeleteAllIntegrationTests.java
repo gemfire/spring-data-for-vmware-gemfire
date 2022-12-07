@@ -42,17 +42,17 @@ import example.app.repo.UserRepository;
  * as implemented by the {@link SimpleGemfireRepository} class in an Apache Geode client/server topology.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see CacheServerApplication
- * @see ClientCacheApplication
- * @see EnableGemfireRepositories
- * @see SimpleGemfireRepository
- * @see ForkingClientServerIntegrationTestsSupport
- * @see CrudRepository
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
+ * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.repository.CrudRepository
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @link <a herf="https://github.com/spring-projects/spring-data-geode/issues/512">CrudRepository.deleteAll not working</a>
  * @since 2.6.0
  */

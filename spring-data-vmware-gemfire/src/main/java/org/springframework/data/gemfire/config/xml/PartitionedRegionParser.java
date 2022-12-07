@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
@@ -30,11 +29,11 @@ import org.w3c.dom.Element;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinitionBuilder
- * @see ParserContext
- * @see PartitionedRegionFactoryBean
- * @see AbstractPeerRegionParser
- * @see Element
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.AbstractPeerRegionParser
+ * @see org.w3c.dom.Element
  */
 class PartitionedRegionParser extends AbstractPeerRegionParser {
 

@@ -17,10 +17,10 @@ import org.springframework.lang.Nullable;
  * Spring {@link Converter} to convert a {@link RegionShortcut} into a {@link DataPolicy}.
  *
  * @author John Blum
- * @see DataPolicy
- * @see RegionShortcut
- * @see Converter
- * @see RegionShortcutWrapper
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.core.convert.converter.Converter
+ * @see org.springframework.data.gemfire.RegionShortcutWrapper
  * @since 2.0.2
  */
 public class RegionShortcutToDataPolicyConverter implements Converter<RegionShortcut, DataPolicy> {
@@ -32,8 +32,8 @@ public class RegionShortcutToDataPolicyConverter implements Converter<RegionShor
 	 *
 	 * @param regionShortcut {@link RegionShortcut} to convert.
 	 * @return a corresponding {@link DataPolicy} for the given {@link RegionShortcut}.
-	 * @see RegionShortcut
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.RegionShortcut
+	 * @see org.apache.geode.cache.DataPolicy
 	 */
 	@Nullable @Override
 	public DataPolicy convert(RegionShortcut regionShortcut) {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -49,29 +48,29 @@ import org.springframework.util.StringUtils;
  * or a peer {@link Cache}.
  *
  * @author John Blum
- * @see Cache
- * @see CustomExpiry
- * @see DataPolicy
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see GemFireCache
- * @see Region
- * @see RegionAttributes
- * @see RegionShortcut
- * @see Scope
- * @see ClientCache
- * @see ClientRegionShortcut
- * @see Compressor
- * @see GenericRegionFactoryBean
- * @see LocalRegionFactoryBean
- * @see PartitionedRegionFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.Scope
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.compression.Compressor
+ * @see org.springframework.data.gemfire.GenericRegionFactoryBean
+ * @see org.springframework.data.gemfire.LocalRegionFactoryBean
+ * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
  * @see PeerRegionFactoryBean
- * @see ResolvableRegionFactoryBean
- * @see ReplicatedRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see RegionConfigurer
- * @see EvictingRegionFactoryBean
- * @see ExpiringRegionFactoryBean
+ * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean
+ * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
+ * @see org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean
+ * @see org.springframework.data.gemfire.expiration.ExpiringRegionFactoryBean
  * @since 1.9.0
  */
 @SuppressWarnings("unused")
@@ -138,9 +137,9 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * @param regionName name given to the client {@link Region}.
 	 * @return a new instance of a client {@link Region} with the given {@code regionName}.
 	 * @throws Exception if the client {@link Region} could not be created.
-	 * @see ClientRegionFactoryBean
-	 * @see GemFireCache
-	 * @see Region
+	 * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.Region
 	 * @see #newClientRegionFactoryBean()
 	 */
 	protected Region<K, V> newClientRegion(GemFireCache gemfireCache, String regionName) throws Exception {
@@ -180,7 +179,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * @param <K> {@link Class type} of the created {@link Region Region's} key.
 	 * @param <V> {@link Class type} of the created {@link Region Region's} value.
 	 * @return a new instance of the {@link ClientRegionFactoryBean}.
-	 * @see ClientRegionFactoryBean
+	 * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
 	 */
 	protected <K, V> ClientRegionFactoryBean<K, V> newClientRegionFactoryBean() {
 		return new ClientRegionFactoryBean<>();
@@ -195,9 +194,9 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * @param regionName name given to the server {@link Region}.
 	 * @return a new instance of a server {@link Region} with the given {@code regionName}.
 	 * @throws Exception if the server {@link Region} could not be created.
-	 * @see GenericRegionFactoryBean
-	 * @see GemFireCache
-	 * @see Region
+	 * @see org.springframework.data.gemfire.GenericRegionFactoryBean
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.Region
 	 * @see #newPeerRegionFactoryBean()
 	 */
 	protected Region<K, V> newServerRegion(GemFireCache gemfireCache, String regionName) throws Exception {
@@ -235,9 +234,9 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * the {@link #getServerRegionShortcut()} and {@link #getDataPolicy()}.
 	 *
 	 * @return a new instance of the {@link PeerRegionFactoryBean}.
-	 * @see LocalRegionFactoryBean
-	 * @see PartitionedRegionFactoryBean
-	 * @see ReplicatedRegionFactoryBean
+	 * @see org.springframework.data.gemfire.LocalRegionFactoryBean
+	 * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
+	 * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
 	 * @see PeerRegionFactoryBean
 	 */
 	protected PeerRegionFactoryBean<K, V> newPeerRegionFactoryBean() {
@@ -312,7 +311,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * Configures the {@link Compressor} used to compress the this {@link Region Region's} data.
 	 *
 	 * @param compressor {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @see org.apache.geode.compression.Compressor
 	 */
 	public void setCompressor(Compressor compressor) {
 		this.compressor = compressor;
@@ -322,7 +321,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * Returns the configured {@link Compressor} used to compress the this {@link Region Region's} data.
 	 *
 	 * @return the configured {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @see org.apache.geode.compression.Compressor
 	 */
 	protected Compressor getCompressor() {
 		return this.compressor;
@@ -437,7 +436,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 *
 	 * @param regionConfigurers array of {@link RegionConfigurer RegionConfigurers} used to apply
 	 * additional configuration to this {@link ResolvableRegionFactoryBean}.
-	 * @see RegionConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
 	 * @see #setRegionConfigurers(List)
 	 */
 	public void setRegionConfigurers(RegionConfigurer... regionConfigurers) {
@@ -450,7 +449,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 *
 	 * @param regionConfigurers {@link Iterable} of {@link RegionConfigurer RegionConfigurers} used to apply
 	 * additional configuration to this {@link ResolvableRegionFactoryBean}.
-	 * @see RegionConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
 	 */
 	public void setRegionConfigurers(List<RegionConfigurer> regionConfigurers) {
 		this.regionConfigurers = Optional.ofNullable(regionConfigurers).orElseGet(Collections::emptyList);

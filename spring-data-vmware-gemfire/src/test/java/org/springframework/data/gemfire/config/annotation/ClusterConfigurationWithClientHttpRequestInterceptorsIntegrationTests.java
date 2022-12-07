@@ -43,17 +43,17 @@ import org.springframework.web.client.RestTemplate;
  * all user-defined {@link ClientHttpRequestInterceptor} beans get applied.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see ClusterConfigurationConfiguration
- * @see EnableClusterConfiguration
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ClientHttpRequestInterceptor
- * @see InterceptingClientHttpRequestFactory
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableClusterConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.http.client.ClientHttpRequestInterceptor
+ * @see org.springframework.http.client.InterceptingClientHttpRequestFactory
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

@@ -25,11 +25,11 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see AccessControl
- * @see AuthInitialize
- * @see Authenticator
- * @see Import
- * @see AuthConfiguration
+ * @see org.apache.geode.security.AccessControl
+ * @see org.apache.geode.security.AuthInitialize
+ * @see org.apache.geode.security.Authenticator
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.AuthConfiguration
  * @see <a href="https://geode.apache.org/docs/guide/113/managing/security/authentication_overview.html">Authentication</a>
  * @see <a href="https://geode.apache.org/docs/guide/113/managing/security/authorization_overview.html">Authorization</a>
  * @since 1.9.0

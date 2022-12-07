@@ -33,14 +33,14 @@ import org.springframework.util.Assert;
  * Integration Tests testing the configuration of {@link ExpirationAttributes} settings on {@link Region} entries.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ExpirationAttributes
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

@@ -22,13 +22,13 @@ import org.springframework.data.gemfire.util.SpringExtensions;
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see Cache
- * @see GemFireCache
- * @see Region
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  */
 
 public class MultipleCacheIntegrationTests extends IntegrationTestsSupport {

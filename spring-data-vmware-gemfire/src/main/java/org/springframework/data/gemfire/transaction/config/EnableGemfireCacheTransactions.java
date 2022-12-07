@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction.config;
 
 import java.lang.annotation.Documented;
@@ -20,11 +19,11 @@ import org.springframework.data.gemfire.transaction.event.TransactionApplication
  * in Spring's Transaction Management infrastructure.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Import
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.springframework.context.annotation.Import
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#transaction">Spring Transaction Management</a>
  * @see <a href="https://docs.spring.io/spring-data-gemfire/docs/current/reference/html/#apis:transaction-management">Spring Data GemFire Transaction Management</a>
  * @see <a href="https://geode.apache.org/docs/guide/113/developing/transactions/chapter_overview.html">Geode Transactions</a>

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -28,14 +27,14 @@ import org.springframework.web.client.RestTemplate;
  * in Gfsh are processed by an Apache Geode / Pivotal GemFire Manager.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Region
- * @see ClientCache
- * @see Import
- * @see ClusterConfigurationConfiguration
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
  * @since 2.0.0
  */
 @Target(ElementType.TYPE)

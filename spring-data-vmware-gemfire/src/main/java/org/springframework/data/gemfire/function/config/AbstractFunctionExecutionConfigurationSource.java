@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import java.lang.annotation.Annotation;
@@ -31,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Turanski
  * @author John Blum
- * @see FunctionExecutionConfiguration
+ * @see org.springframework.data.gemfire.function.config.FunctionExecutionConfiguration
  */
 public abstract class AbstractFunctionExecutionConfigurationSource implements FunctionExecutionConfigurationSource {
 

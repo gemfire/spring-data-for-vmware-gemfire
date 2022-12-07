@@ -26,13 +26,13 @@ import org.apache.geode.cache.GemFireCache;
  * Unit Tests for {@link AbstractCachingCacheResolver}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see MultithreadedTestCase
- * @see TestFramework
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
  * @see org.springframework.data.gemfire.CacheResolver
- * @see AbstractCachingCacheResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingCacheResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

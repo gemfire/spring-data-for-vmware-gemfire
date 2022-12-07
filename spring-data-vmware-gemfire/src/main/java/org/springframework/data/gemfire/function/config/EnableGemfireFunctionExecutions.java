@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import java.lang.annotation.Documented;
@@ -62,7 +61,7 @@ public @interface EnableGemfireFunctionExecutions {
 	 * everything in {@link #basePackages()} to everything in the base packages that matches the given filter or filters.
 	 *
 	 * @return an array of Filters indicating which types are eligible for component scanning.
-	 * @see Filter
+	 * @see org.springframework.context.annotation.ComponentScan.Filter
 	 */
 	Filter[] includeFilters() default {};
 
@@ -70,7 +69,7 @@ public @interface EnableGemfireFunctionExecutions {
 	 * Specifies which types are not eligible for component scanning.
 	 *
 	 * @return an array of Filters indicating which types are not eligible for component scanning.
-	 * @see Filter
+	 * @see org.springframework.context.annotation.ComponentScan.Filter
 	 */
 	Filter[] excludeFilters() default {};
 

@@ -28,12 +28,12 @@ import org.springframework.context.ApplicationEventPublisher;
  * Unit Tests for {@link TransactionListenerAdapter}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see ApplicationEventPublisher
- * @see TransactionListenerAdapter
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.context.ApplicationEventPublisher
+ * @see org.springframework.data.gemfire.transaction.event.TransactionListenerAdapter
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -23,12 +23,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using SDG XML configuration.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.springsource.org/browse/SGF-195">SGF-195</a>
  * @since 1.3.3
  */

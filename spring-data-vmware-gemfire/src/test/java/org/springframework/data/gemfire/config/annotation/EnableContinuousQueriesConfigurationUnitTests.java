@@ -63,22 +63,22 @@ import lombok.Data;
  * and {@link ContinuousQueryListenerContainer}.
  *
  * @author John Blum
- * @see Proxy
- * @see Executor
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see ClientCache
- * @see CqEvent
- * @see CqQuery
- * @see QueryService
- * @see ProxyFactory
- * @see ContinuousQueryConfiguration
- * @see EnableContinuousQueries
- * @see ContinuousQuery
+ * @see java.lang.reflect.Proxy
+ * @see java.util.concurrent.Executor
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.CqEvent
+ * @see org.apache.geode.cache.query.CqQuery
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.aop.framework.ProxyFactory
+ * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
+ * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see GemFireMockObjectsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.1
  */
 public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {

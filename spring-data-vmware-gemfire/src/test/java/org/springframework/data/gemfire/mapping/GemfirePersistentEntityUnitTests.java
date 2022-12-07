@@ -23,8 +23,8 @@ import org.springframework.data.util.ClassTypeInformation;
  * @author Oliver Gierke
  * @author John Blum
  * @author Gregory Green
- * @see Test
- * @see GemfirePersistentEntity
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
  */
 public class GemfirePersistentEntityUnitTests {
 

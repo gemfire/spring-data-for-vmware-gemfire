@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.lang.reflect.InvocationHandler;
@@ -53,16 +52,16 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Map
- * @see GemFireCheckedException
- * @see GemFireException
- * @see Region
- * @see ClientCache
- * @see Query
- * @see QueryService
- * @see SelectResults
- * @see GemfireAccessor
- * @see GemfireOperations
+ * @see java.util.Map
+ * @see org.apache.geode.GemFireCheckedException
+ * @see org.apache.geode.GemFireException
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.Query
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.gemfire.GemfireAccessor
+ * @see org.springframework.data.gemfire.GemfireOperations
  */
 @SuppressWarnings("unused")
 public class GemfireTemplate extends GemfireAccessor implements GemfireOperations {
@@ -117,7 +116,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	 *
 	 * @param exposeNativeRegion a boolean value indicating whether the native {@link Region} should be exposed to
 	 * the {@link GemfireCallback}.
-	 * @see GemfireCallback
+	 * @see org.springframework.data.gemfire.GemfireCallback
 	 */
 	public void setExposeNativeRegion(boolean exposeNativeRegion) {
 		this.exposeNativeRegion = exposeNativeRegion;
@@ -389,10 +388,10 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	 *
 	 * @param region {@link Region} used to acquire the {@link QueryService}.
 	 * @return the {@link QueryService} that will perform the {@link Query}.
-	 * @see Region
-	 * @see Region#getRegionService()
+	 * @see org.apache.geode.cache.Region
+	 * @see org.apache.geode.cache.Region#getRegionService()
 	 * @see org.apache.geode.cache.RegionService#getQueryService()
-	 * @see ClientCache#getLocalQueryService()
+	 * @see org.apache.geode.cache.client.ClientCache#getLocalQueryService()
 	 */
 	protected QueryService resolveQueryService(Region<?, ?> region) {
 
@@ -451,7 +450,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	 * @return the result of executing the {@link GemfireCallback}.
 	 * @throws DataAccessException if an Apache Geode error is thrown by a data access operation.
 	 * @throws IllegalArgumentException if {@link GemfireCallback} is {@literal null}.
-	 * @see GemfireCallback
+	 * @see org.springframework.data.gemfire.GemfireCallback
 	 * @see #execute(GemfireCallback, boolean)
 	 */
 	@Override
@@ -470,7 +469,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	 * @return the result of executing the {@link GemfireCallback}.
 	 * @throws DataAccessException if an Apache Geode error is thrown by a data access operation.
 	 * @throws IllegalArgumentException if {@link GemfireCallback} is {@literal null}.
-	 * @see GemfireCallback
+	 * @see org.springframework.data.gemfire.GemfireCallback
 	 */
 	@Override
 	public <T> T execute(@NonNull GemfireCallback<T> action, boolean exposeNativeRegion) throws DataAccessException {
@@ -511,7 +510,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param region {@link Region} for which a proxy will be created.
 	 * @return the Region proxy implementing all interfaces implemented by the passed-in Region object.
-	 * @see Region#close()
+	 * @see org.apache.geode.cache.Region#close()
 	 * @see #execute(GemfireCallback, boolean)
 	 */
 	@SuppressWarnings("unchecked")
@@ -528,8 +527,8 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	/**
 	 * {@link InvocationHandler} that suppresses the {@link Region#close()} call on a target {@link Region}.
 	 *
-	 * @see InvocationHandler
-	 * @see Region#close()
+	 * @see java.lang.reflect.InvocationHandler
+	 * @see org.apache.geode.cache.Region#close()
 	 */
 	private static class RegionCloseSuppressingInvocationHandler implements InvocationHandler {
 
@@ -541,7 +540,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 		 *
 		 * @param target {@link Region} to proxy; must not be {@literal null}.
 		 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-		 * @see Region
+		 * @see org.apache.geode.cache.Region
 		 */
 		public RegionCloseSuppressingInvocationHandler(@NonNull Region<?, ?> target) {
 

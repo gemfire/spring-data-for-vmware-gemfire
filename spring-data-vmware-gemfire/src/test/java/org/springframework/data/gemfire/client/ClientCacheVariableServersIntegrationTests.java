@@ -45,12 +45,12 @@ import org.slf4j.LoggerFactory;
  * in SDG XML Namespace configuration metadata when connecting a client and server.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ServerProcess
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.fork.ServerProcess
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.6.3
  */
 @RunWith(SpringRunner.class)

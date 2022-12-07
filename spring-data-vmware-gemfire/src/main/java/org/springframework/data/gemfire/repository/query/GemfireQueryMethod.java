@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.lang.reflect.Method;
@@ -31,10 +30,10 @@ import org.springframework.util.StringUtils;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Method
- * @see Query
- * @see Repository
- * @see QueryMethod
+ * @see java.lang.reflect.Method
+ * @see org.springframework.data.gemfire.repository.Query
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.query.QueryMethod
  */
 public class GemfireQueryMethod extends QueryMethod {
 
@@ -60,10 +59,10 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * @param mappingContext {@link MappingContext} used to map {@link Object entities} to Apache Geode and back to
 	 * {@link Object entities}; must not be {@literal null}.
 	 * @see #GemfireQueryMethod(Method, RepositoryMetadata, ProjectionFactory, MappingContext, QueryMethodEvaluationContextProvider)
-	 * @see RepositoryMetadata
-	 * @see ProjectionFactory
-	 * @see MappingContext
-	 * @see Method
+	 * @see org.springframework.data.repository.core.RepositoryMetadata
+	 * @see org.springframework.data.projection.ProjectionFactory
+	 * @see org.springframework.data.mapping.context.MappingContext
+	 * @see java.lang.reflect.Method
 	 */
 	public GemfireQueryMethod(@NonNull Method method,
 			@NonNull RepositoryMetadata metadata,
@@ -88,11 +87,11 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * {@link Object entities}; must not be {@literal null}.
 	 * @param evaluationContextProvider {@link QueryMethodEvaluationContextProvider} used to process {@literal SpEL}
 	 * expressions.
-	 * @see QueryMethodEvaluationContextProvider
-	 * @see RepositoryMetadata
-	 * @see ProjectionFactory
-	 * @see MappingContext
-	 * @see Method
+	 * @see org.springframework.data.repository.query.QueryMethodEvaluationContextProvider
+	 * @see org.springframework.data.repository.core.RepositoryMetadata
+	 * @see org.springframework.data.projection.ProjectionFactory
+	 * @see org.springframework.data.mapping.context.MappingContext
+	 * @see java.lang.reflect.Method
 	 */
 	public GemfireQueryMethod(@NonNull Method method,
 			@NonNull RepositoryMetadata metadata,
@@ -113,7 +112,7 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Returns the {@link Method} reference on which this {@link QueryMethod} is based.
 	 *
 	 * @return the {@link Method} reference on which this {@link QueryMethod} is based.
-	 * @see Method
+	 * @see java.lang.reflect.Method
 	 */
 	protected @NonNull Method getMethod() {
 		return this.method;
@@ -123,7 +122,7 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Returns the {@link GemfirePersistentEntity} handled by this {@link QueryMethod}.
 	 *
 	 * @return the {@link GemfirePersistentEntity} handled by this {@link QueryMethod}.
-	 * @see GemfirePersistentEntity
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
 	 */
 	public @NonNull GemfirePersistentEntity<?> getPersistentEntity() {
 		return this.entity;
@@ -133,7 +132,7 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Determines whether this query method specifies an annotated, non-empty query.
 	 *
 	 * @return a boolean value indicating whether the query method specifies an annotated, non-empty query.
-	 * @see StringUtils#hasText(String)
+	 * @see org.springframework.util.StringUtils#hasText(String)
 	 * @see #getAnnotatedQuery()
 	 */
 	public boolean hasAnnotatedQuery() {
@@ -145,8 +144,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 *
 	 * @return the {@link Query} annotated OQL query value or {@literal null} in case it's {@literal null}, empty
 	 * or not present.
-	 * @see Query
-	 * @see Method#getAnnotation(Class)
+	 * @see org.springframework.data.gemfire.repository.Query
+	 * @see java.lang.reflect.Method#getAnnotation(Class)
 	 */
 	public @Nullable String getAnnotatedQuery() {
 
@@ -162,8 +161,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * to apply to the query execution.
 	 *
 	 * @return a boolean value to indicate whether this query method uses a query HINT.
-	 * @see Hint
-	 * @see Method#isAnnotationPresent(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Hint
+	 * @see java.lang.reflect.Method#isAnnotationPresent(Class)
 	 */
 	public boolean hasHint() {
 		return getMethod().isAnnotationPresent(Hint.class);
@@ -173,8 +172,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Gets the query HINTs for this query method.
 	 *
 	 * @return the query HINTs for this query method or an empty array if this query method has no query HINTs.
-	 * @see Hint
-	 * @see Method#getAnnotation(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Hint
+	 * @see java.lang.reflect.Method#getAnnotation(Class)
 	 */
 	public String[] getHints() {
 
@@ -188,8 +187,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * referenced in the query.
 	 *
 	 * @return a boolean value to indicate whether this query method declares an IMPORT statement.
-	 * @see Import
-	 * @see Method#isAnnotationPresent(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Import
+	 * @see java.lang.reflect.Method#isAnnotationPresent(Class)
 	 */
 	public boolean hasImport() {
 		return getMethod().isAnnotationPresent(Import.class);
@@ -199,8 +198,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Gets the IMPORT statement for this query method.
 	 *
 	 * @return the IMPORT statement for this query method or null if this query method does not have an IMPORT statement.
-	 * @see Import
-	 * @see Method#getAnnotation(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Import
+	 * @see java.lang.reflect.Method#getAnnotation(Class)
 	 */
 	public String getImport() {
 
@@ -214,8 +213,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 *
 	 * @return a boolean value indicating whether this query method defines a LIMIT on the result set
 	 * returned by the query.
-	 * @see Limit
-	 * @see Method#isAnnotationPresent(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Limit
+	 * @see java.lang.reflect.Method#isAnnotationPresent(Class)
 	 */
 	public boolean hasLimit() {
 		return getMethod().isAnnotationPresent(Limit.class);
@@ -225,8 +224,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Gets the LIMIT for this query method on the result set returned by the query.
 	 *
 	 * @return the LIMIT for this query method limiting the number of results returned by the query.
-	 * @see Limit
-	 * @see Method#getAnnotation(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Limit
+	 * @see java.lang.reflect.Method#getAnnotation(Class)
 	 */
 	public int getLimit() {
 
@@ -239,8 +238,8 @@ public class GemfireQueryMethod extends QueryMethod {
 	 * Determines whether this query method has TRACE (i.e. logging) enabled.
 	 *
 	 * @return a boolean value to indicate whether this query method has TRACE enabled.
-	 * @see Limit
-	 * @see Method#isAnnotationPresent(Class)
+	 * @see org.springframework.data.gemfire.repository.query.annotation.Limit
+	 * @see java.lang.reflect.Method#isAnnotationPresent(Class)
 	 */
 	public boolean hasTrace() {
 		return getMethod().isAnnotationPresent(Trace.class);

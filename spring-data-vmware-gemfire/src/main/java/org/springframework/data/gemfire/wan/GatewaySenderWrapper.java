@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.wan;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see GatewaySender
+ * @see org.apache.geode.cache.wan.GatewaySender
  */
 public class GatewaySenderWrapper implements GatewaySender {
 
@@ -33,7 +32,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	 *
 	 * @param gatewaySender {@link GatewaySender} to adapt.
 	 * @throws IllegalArgumentException if {@link GatewaySender} is {@literal null}.
-	 * @see GatewaySender
+	 * @see org.apache.geode.cache.wan.GatewaySender
 	 */
 	public GatewaySenderWrapper(GatewaySender gatewaySender) {
 		Assert.notNull(gatewaySender, "GatewaySender must not be null");
@@ -201,7 +200,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	 * @inheritDoc
 	 */
 	@Override
-	public OrderPolicy getOrderPolicy() {
+	public GatewaySender.OrderPolicy getOrderPolicy() {
 		return delegate.getOrderPolicy();
 	}
 

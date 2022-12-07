@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Iterator;
@@ -21,10 +20,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see QueryBuilder
- * @see AbstractQueryCreator
- * @see Part
- * @see PartTree
+ * @see org.springframework.data.gemfire.repository.query.QueryBuilder
+ * @see org.springframework.data.repository.query.parser.AbstractQueryCreator
+ * @see org.springframework.data.repository.query.parser.Part
+ * @see org.springframework.data.repository.query.parser.PartTree
  */
 class GemfireQueryCreator extends AbstractQueryCreator<QueryString, Predicates> {
 
@@ -88,7 +87,7 @@ class GemfireQueryCreator extends AbstractQueryCreator<QueryString, Predicates> 
 	 * in a generated GemFire OQL statement corresponding to all possible arguments passed to
 	 * the query's indexed parameters.
 	 *
-	 * @see Iterator
+	 * @see java.util.Iterator
 	 */
 	private static class IndexProvider implements Iterator<Integer> {
 

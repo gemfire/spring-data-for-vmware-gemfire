@@ -20,9 +20,9 @@ import org.springframework.data.repository.query.parser.PartTree;
  * Unit Tests for {@link QueryBuilder} class.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see QueryBuilder
+ * @see org.springframework.data.gemfire.repository.query.QueryBuilder
  * @since 1.7.0
  */
 public class QueryBuilderUnitTests {

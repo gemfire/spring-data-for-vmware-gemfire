@@ -41,10 +41,10 @@ import org.springframework.transaction.support.TransactionTemplate;
  * in the context of GemFire "Cache" Transactions.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see SimpleGemfireRepository
- * @see ContextConfiguration
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
+ * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.0
  */

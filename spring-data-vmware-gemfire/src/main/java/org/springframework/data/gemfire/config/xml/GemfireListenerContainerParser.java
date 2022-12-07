@@ -25,8 +25,8 @@ import org.springframework.util.xml.DomUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see AbstractSingleBeanDefinitionParser
- * @see ContinuousQueryListenerContainer
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
  */
 class GemfireListenerContainerParser extends AbstractSingleBeanDefinitionParser {
 

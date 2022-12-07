@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -37,22 +36,22 @@ import org.springframework.util.StringUtils;
  * on a {@link GemFireCache} instance.
  *
  * @author John Blum
- * @see GemFireCache
- * @see PdxSerializer
- * @see BeanFactory
- * @see BeanFactoryPostProcessor
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see CacheFactoryBean
- * @see AbstractAnnotationConfigSupport
- * @see PdxDiskStoreAwareBeanFactoryPostProcessor
- * @see GemfireMappingContext
- * @see MappingPdxSerializer
- * @see NoOpBeanFactoryPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.springframework.data.gemfire.support.NoOpBeanFactoryPostProcessor
  * @since 2.1.0
  */
 @SuppressWarnings("unused")
@@ -192,7 +191,7 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	 *
 	 * @param cacheFactoryBean {@link CacheFactoryBean} instance on which to configure PDX.
 	 * with PDX de/serialization capabilities.
-	 * @see CacheFactoryBean
+	 * @see org.springframework.data.gemfire.CacheFactoryBean
 	 * @see <a href="https://geode.apache.org/docs/guide/113/developing/data_serialization/gemfire_pdx_serialization.html">Geode PDX Serialization</a>
 	 */
 	protected void configurePdx(@NonNull CacheFactoryBean cacheFactoryBean) {
@@ -209,8 +208,8 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	 * Resolves the configured {@link ConversionService} from the {@link BeanFactory}.
 	 *
 	 * @return an {@link Optional optionally} configured {@link ConversionService}.
-	 * @see ConversionService
-	 * @see Optional
+	 * @see org.springframework.core.convert.ConversionService
+	 * @see java.util.Optional
 	 * @see #getBeanFactory()
 	 */
 	protected Optional<ConversionService> resolveConversionService() {
@@ -224,8 +223,8 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	 * Returns any configured {@link GemfireMappingContext} registered in the {@link BeanFactory}.
 	 *
 	 * @return an {@link Optional optionally} configured {@link GemfireMappingContext}.
-	 * @see GemfireMappingContext
-	 * @see Optional
+	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+	 * @see java.util.Optional
 	 * @see #getBeanFactory()
 	 */
 	protected Optional<GemfireMappingContext> resolveMappingContext() {
@@ -243,7 +242,7 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	 *
 	 * implementing the {@link PdxSerializer} interface.
 	 * @return the resolved {@link PdxSerializer} from configuration.
-	 * @see PdxSerializer
+	 * @see org.apache.geode.pdx.PdxSerializer
 	 * @see #getBeanFactory()
 	 */
 	protected @NonNull PdxSerializer resolvePdxSerializer() {
@@ -267,7 +266,7 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	 *
 	 * @param <T> {@link Class} type of the {@link PdxSerializer}.
 	 * @return a new instance of {@link PdxSerializer}.
-	 * @see PdxSerializer
+	 * @see org.apache.geode.pdx.PdxSerializer
 	 */
 	@SuppressWarnings("unchecked")
 	protected @NonNull <T extends PdxSerializer> T newPdxSerializer() {

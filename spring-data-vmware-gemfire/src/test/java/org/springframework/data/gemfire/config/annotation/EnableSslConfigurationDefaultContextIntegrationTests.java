@@ -32,16 +32,16 @@ import org.springframework.util.StringUtils;
  *
  * @author Srikanth Manvi
  * @author John Blum
- * @see Properties
- * @see Test
- * @see Cache
- * @see GemFireCache
- * @see ClientCache
- * @see ConfigurableApplicationContext
- * @see PropertySource
- * @see EnableSsl
- * @see SslConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.config.annotation.EnableSsl
+ * @see org.springframework.data.gemfire.config.annotation.SslConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 2.2.0
  */
 @SuppressWarnings("rawtypes")

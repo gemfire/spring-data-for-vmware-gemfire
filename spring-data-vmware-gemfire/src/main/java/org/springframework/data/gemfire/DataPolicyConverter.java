@@ -14,8 +14,8 @@ import org.springframework.core.convert.converter.Converter;
  *
  * @author David Turanski
  * @author John Blum
- * @see Converter
- * @see DataPolicy
+ * @see org.springframework.core.convert.converter.Converter
+ * @see org.apache.geode.cache.DataPolicy
  */
 public class DataPolicyConverter implements Converter<String, DataPolicy> {
 

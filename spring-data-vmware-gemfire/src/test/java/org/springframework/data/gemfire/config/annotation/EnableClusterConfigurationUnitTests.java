@@ -53,18 +53,18 @@ import org.springframework.web.client.RestTemplate;
  * Unit Tests for {@link EnableClusterConfiguration} annotation and the {@link ClusterConfigurationConfiguration} class.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Cache
- * @see ClientCache
- * @see BeanFactory
- * @see Environment
- * @see AnnotationMetadata
- * @see GemfireAdminOperations
- * @see ClusterConfigurationConfiguration
- * @see EnableClusterConfiguration
- * @see RestTemplate
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.core.env.Environment
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableClusterConfiguration
+ * @see org.springframework.web.client.RestTemplate
  * @since 2.0.1
  */
 public class EnableClusterConfigurationUnitTests {

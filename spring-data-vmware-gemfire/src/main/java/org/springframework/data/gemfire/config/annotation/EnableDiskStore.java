@@ -30,17 +30,17 @@ import org.springframework.core.annotation.AliasFor;
 
 /**
  * The {@link EnableDiskStore} annotation marks a Spring {@link Configuration @Configuration} annotated {@link Class}
- * to configure a single GemFire/Geode {@link DiskStore} bean in the Spring application context
+ * to configure a single GemFire/Geode {@link org.apache.geode.cache.DiskStore} bean in the Spring application context
  * in which to persist or overflow data from 1 or more cache {@link org.apache.geode.cache.Region Regions}.
  *
  * @author John Blum
- * @see DiskStore
+ * @see org.apache.geode.cache.DiskStore
  * @see org.apache.geode.cache.Region
- * @see Import
- * @see AliasFor
- * @see DiskStoreConfiguration
- * @see DiskStoreConfigurer
- * @see EnableDiskStores
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.core.annotation.AliasFor
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -107,7 +107,7 @@ public @interface EnableDiskStore {
 	int compactionThreshold() default DEFAULT_COMPACTION_THRESHOLD;
 
 	/**
-	 * File system directory location(s) in which the {@link DiskStore} files are stored.
+	 * File system directory location(s) in which the {@link org.apache.geode.cache.DiskStore} files are stored.
 	 *
 	 * Defaults to current working directory with 2 petabytes of storage capacity maximum size.
 	 *
@@ -205,7 +205,7 @@ public @interface EnableDiskStore {
 	@interface DiskDirectory {
 
 		/**
-		 * File system directory location of the {@link DiskStore} files.
+		 * File system directory location of the {@link org.apache.geode.cache.DiskStore} files.
 		 *
 		 * Defaults to current working directory.
 		 */

@@ -25,11 +25,11 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
  * Unit Tests testing the contract and functionality of the {@link SnapshotApplicationEvent} class.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see SnapshotApplicationEvent
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.snapshot.event.SnapshotApplicationEvent
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

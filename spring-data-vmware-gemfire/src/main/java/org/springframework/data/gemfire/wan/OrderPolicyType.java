@@ -11,7 +11,7 @@ import org.apache.geode.cache.wan.GatewaySender;
  * The OrderPolicyType class is an enumeration of GemFire Gateway Order Policies.
  *
  * @author John Blum
- * @see GatewaySender.OrderPolicy
+ * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -27,7 +27,7 @@ public enum OrderPolicyType {
 	 * enumerated value.
 	 *
 	 * @param orderPolicy the matching GemFire Gateway.OrderPolicy enumerated value.
-	 * @see GatewaySender.OrderPolicy
+	 * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
 	 */
 	OrderPolicyType(final GatewaySender.OrderPolicy orderPolicy) {
 		this.orderPolicy = orderPolicy;
@@ -40,7 +40,7 @@ public enum OrderPolicyType {
 	 * @param orderPolicyType the OrderPolicyType enum from which to extract the GemFire-based
 	 * Gateway.OrderPolicy enumerated value.
 	 * @return the GemFire Gateway.OrderPolicy enumerated value for the given OrderPolicyType.
-	 * @see GatewaySender.OrderPolicy
+	 * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
 	 * @see #getOrderPolicy()
 	 */
 	public static GatewaySender.OrderPolicy getOrderPolicy(final OrderPolicyType orderPolicyType) {
@@ -53,7 +53,7 @@ public enum OrderPolicyType {
 	 * @param orderPolicy the GemFire Gateway.OrderPolicy enumerated value used to match
 	 * the desired OrderPolicyType.
 	 * @return a OrderPolicyType matching the given GemFire Gateway.OrderPolicy enumerated value.
-	 * @see GatewaySender.OrderPolicy
+	 * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
 	 * @see #getOrderPolicy()
 	 */
 	public static OrderPolicyType valueOf(final GatewaySender.OrderPolicy orderPolicy) {
@@ -71,7 +71,7 @@ public enum OrderPolicyType {
 	 *
 	 * @param name a String name used to match the desired OrderPolicyType.
 	 * @return a OrderPolicyType enumerated value for the given name.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #name()
 	 */
 	public static OrderPolicyType valueOfIgnoreCase(final String name) {
@@ -88,7 +88,7 @@ public enum OrderPolicyType {
 	 * Gets the GemFire Gateway.OrderPolicy corresponding to this OrderPolicyType enum.
 	 *
 	 * @return a GemFire Gateway.OrderPolicy for this enum.
-	 * @see GatewaySender.OrderPolicy
+	 * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
 	 */
 	public GatewaySender.OrderPolicy getOrderPolicy() {
 		return orderPolicy;

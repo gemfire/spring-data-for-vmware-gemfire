@@ -27,11 +27,11 @@ import org.springframework.data.domain.Pageable;
  * Unit tests for {@link AbstractSliceSupport}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

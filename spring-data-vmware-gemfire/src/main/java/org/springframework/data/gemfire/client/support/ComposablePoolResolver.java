@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import java.util.Arrays;
@@ -20,8 +19,8 @@ import org.springframework.util.Assert;
  * Composite of {@link PoolResolver PoolResolvers} functioning as a single {@link PoolResolver}.
  *
  * @author John Blum
- * @see Pool
- * @see PoolResolver
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.client.PoolResolver
  * @since 2.3.0
  */
 public class ComposablePoolResolver implements PoolResolver {
@@ -33,7 +32,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 *
 	 * @param poolResolvers array of {@link PoolResolver} objects to compose.
 	 * @return a composition from the array of {@link PoolResolver} objects; may return {@literal null}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 * @see #compose(Iterable)
 	 */
 	public static @Nullable PoolResolver compose(@Nullable PoolResolver... poolResolvers) {
@@ -48,8 +47,8 @@ public class ComposablePoolResolver implements PoolResolver {
 	 *
 	 * @param poolResolvers {@link Iterable} of {@link PoolResolver} objects to compose.
 	 * @return a composition from the {@link Iterable} of {@link PoolResolver} objects; may return {@literal null}.
-	 * @see PoolResolver
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.client.PoolResolver
+	 * @see java.lang.Iterable
 	 * @see #compose(PoolResolver, PoolResolver)
 	 */
 	public static @Nullable PoolResolver compose(@Nullable Iterable<PoolResolver> poolResolvers) {
@@ -72,7 +71,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 * if the second {@link PoolResolver} is {@literal null}.  Returns the second {@link PoolResolver} if the first
 	 * {@link PoolResolver} is {@literal null}.  Returns {@literal null} if both {@link PoolResolver} arguments
 	 * are {@literal null}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 * @see #ComposablePoolResolver(PoolResolver, PoolResolver)
 	 */
 	public static @Nullable PoolResolver compose(@Nullable PoolResolver one, @Nullable PoolResolver two) {
@@ -89,7 +88,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 * @param poolResolverOne first {@link PoolResolver} in the composition order.
 	 * @param poolResolverTwo second {@link PoolResolver} in the composition order.
 	 * @throws IllegalArgumentException if either the first or second {@link PoolResolver} are {@literal null}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	protected ComposablePoolResolver(PoolResolver poolResolverOne, PoolResolver poolResolverTwo) {
 
@@ -104,7 +103,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 * Returns a reference to the first {@link PoolResolver} in the composition.
 	 *
 	 * @return a reference to the first {@link PoolResolver} in the composition.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	protected @NonNull PoolResolver getPoolResolverOne() {
 		return this.poolResolverOne;
@@ -114,7 +113,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 * Returns a reference to the second {@link PoolResolver} in the composition.
 	 *
 	 * @return a reference to the second {@link PoolResolver} in the composition.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	protected @NonNull PoolResolver getPoolResolverTwo() {
 		return this.poolResolverTwo;
@@ -132,7 +131,7 @@ public class ComposablePoolResolver implements PoolResolver {
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
 	 * @return the resolved {@link Pool} or {@literal null} if a {@link Pool} with {@link String name}
 	 * cannot be resolved.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #getPoolResolverOne()
 	 * @see #getPoolResolverTwo()
 	 */

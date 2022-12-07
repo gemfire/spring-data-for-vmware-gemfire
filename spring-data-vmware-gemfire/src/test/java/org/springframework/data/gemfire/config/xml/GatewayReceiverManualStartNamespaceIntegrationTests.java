@@ -27,14 +27,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * This test class tests the manual start configuration of the {@link GatewayReceiver} Component in SDG.
  *
  * @author John Blum
- * @see Test
- * @see GatewayReceiver
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsApplicationContextInitializer
- * @see GatewayReceiverFactoryBean
- * @see ActiveProfiles
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.context.GemFireMockObjectsApplicationContextInitializer
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
+ * @see org.springframework.test.context.ActiveProfiles
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

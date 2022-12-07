@@ -12,8 +12,8 @@ import org.junit.Test;
  * Unit Tests for {@link NetworkUtils}.
  *
  * @author John Blum
- * @see Test
- * @see NetworkUtils
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.util.NetworkUtils
  * @since 2.2.0
  */
 public class NetworkUtilsUnitTests {

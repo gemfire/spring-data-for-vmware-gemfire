@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import java.net.InetSocketAddress;
@@ -24,7 +23,7 @@ import org.springframework.util.Assert;
  * settings were {@literal null}.
  *
  * @author John Blum
- * @see Pool
+ * @see org.apache.geode.cache.client.Pool
  * @since 1.8.0
  */
 @SuppressWarnings("unused")

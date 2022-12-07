@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
@@ -22,11 +21,11 @@ import org.springframework.util.StringUtils;
  * from the Spring {@link BeanFactory}.
  *
  * @author John Blum
- * @see GemFireCache
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see CacheResolver
- * @see AbstractCachingCacheResolver
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingCacheResolver
  * @since 2.3.0
  */
 public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFireCache> implements BeanFactoryAware {
@@ -41,7 +40,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	 *
 	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GemFireCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	public BeanFactoryCacheResolver(BeanFactory beanFactory) {
 		setBeanFactory(beanFactory);
@@ -53,7 +52,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GemFireCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @throws BeansException if configuration of the {@link BeanFactory} fails.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	public final void setBeanFactory(@NonNull BeanFactory beanFactory) throws BeansException {
@@ -68,7 +67,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	 * of the {@link GemFireCache}.
 	 *
 	 * @return a reference to the configured Spring {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected @NonNull BeanFactory getBeanFactory() {
 		return this.beanFactory;
@@ -101,8 +100,8 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	 * the single {@link GemFireCache} instance.
 	 *
 	 * @return a reference to the {@link GemFireCache} bean.
-	 * @see BeanFactory#getBean(Class)
-	 * @see GemFireCache
+	 * @see org.springframework.beans.factory.BeanFactory#getBean(Class)
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getBeanFactory()
 	 */
 	@Override

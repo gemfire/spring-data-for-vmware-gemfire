@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.wan;
 
 import java.util.Collection;
@@ -29,14 +28,14 @@ import org.springframework.util.StringUtils;
  * @author David Turanski
  * @author John Blum
  * @author Udo Kohlmeyer
- * @see Cache
- * @see GatewayReceiver
- * @see GatewayReceiverFactory
- * @see GatewayTransportFilter
- * @see FactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewayReceiverFactory
+ * @see org.apache.geode.cache.wan.GatewayTransportFilter
+ * @see org.springframework.beans.factory.FactoryBean
  * @see org.springframework.context.SmartLifecycle
- * @see GatewayReceiverConfigurer
- * @see AbstractWANComponentFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfigurer
+ * @see org.springframework.data.gemfire.wan.AbstractWANComponentFactoryBean
  * @since 1.2.2
  */
 @SuppressWarnings("unused")
@@ -65,7 +64,7 @@ public class GatewayReceiverFactoryBean extends AbstractWANComponentFactoryBean<
 	 * the GemFire {@link Cache} used to configure and initialize a GemFire {@link GatewayReceiver}.
 	 *
 	 * @param cache reference to the GemFire {@link Cache} used to create the {@link GatewayReceiver}.
-	 * @see Cache
+	 * @see org.apache.geode.cache.Cache
 	 */
 	public GatewayReceiverFactoryBean(Cache cache) {
 		super(cache);

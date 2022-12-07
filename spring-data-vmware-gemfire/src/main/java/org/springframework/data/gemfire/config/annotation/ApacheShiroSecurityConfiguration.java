@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -47,20 +46,20 @@ import org.springframework.util.ObjectUtils;
  * administrative and data access operations.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.internal.security.SecurityService
- * @see DefaultSecurityManager
- * @see Realm
- * @see LifecycleBeanPostProcessor
- * @see BeanFactory
- * @see ListableBeanFactory
- * @see Bean
- * @see Condition
- * @see Conditional
- * @see Configuration
+ * @see org.apache.shiro.mgt.DefaultSecurityManager
+ * @see org.apache.shiro.realm.Realm
+ * @see org.apache.shiro.spring.LifecycleBeanPostProcessor
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.ListableBeanFactory
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Condition
+ * @see org.springframework.context.annotation.Conditional
+ * @see org.springframework.context.annotation.Configuration
  * @see org.springframework.core.type.AnnotationMetadata
- * @see ApacheShiroPresentCondition
- * @see AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.annotation.ApacheShiroSecurityConfiguration.ApacheShiroPresentCondition
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 1.9.0
  */
 @Configuration
@@ -69,10 +68,10 @@ import org.springframework.util.ObjectUtils;
 public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSupport {
 
 	/**
-	 * Returns the {@link EnableSecurity} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableSecurity} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableSecurity} {@link Annotation} {@link Class} type.
-	 * @see EnableSecurity
+	 * @return the {@link EnableSecurity} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableSecurity
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -85,7 +84,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 * @param beanFactory reference to the Spring {@link BeanFactory}.
 	 * @throws IllegalArgumentException if the Spring {@link BeanFactory} is not
 	 * an instance of {@link ListableBeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -102,7 +101,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 *
 	 * @return a reference to the Spring {@link BeanFactory}.
 	 * @throws IllegalStateException if the Spring {@link BeanFactory} was not set.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected ListableBeanFactory getListableBeanFactory() {
 		return (ListableBeanFactory) getBeanFactory();
@@ -131,7 +130,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 *
 	 * @return an instance of the Apache Shiro Spring {@link LifecycleBeanPostProcessor} to handle the lifecycle
 	 * of Apache Shiro security framework components.
-	 * @see LifecycleBeanPostProcessor
+	 * @see org.apache.shiro.spring.LifecycleBeanPostProcessor
 	 */
 	@Bean
 	public BeanPostProcessor shiroLifecycleBeanPostProcessor() {
@@ -182,9 +181,9 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 *
 	 * @return a {@link List} of all Apache Shiro {@link Realm Realms} declared and configured as Spring managed beans
 	 * in the Spring {@link org.springframework.context.ApplicationContext}.
-	 * @see ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
-	 * @see OrderComparator
-	 * @see Realm
+	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeansOfType(Class, boolean, boolean)
+	 * @see org.springframework.core.OrderComparator
+	 * @see org.apache.shiro.realm.Realm
 	 */
 	protected List<Realm> resolveRealms() {
 
@@ -211,7 +210,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 * @param securityManager {@link org.apache.shiro.mgt.SecurityManager} to register.
 	 * @return the given {@link org.apache.shiro.mgt.SecurityManager} reference.
 	 * @throws IllegalArgumentException if {@link org.apache.shiro.mgt.SecurityManager} is {@literal null}.
-	 * @see SecurityUtils#setSecurityManager(org.apache.shiro.mgt.SecurityManager)
+	 * @see org.apache.shiro.SecurityUtils#setSecurityManager(org.apache.shiro.mgt.SecurityManager)
 	 * @see org.apache.shiro.mgt.SecurityManager
 	 */
 	protected org.apache.shiro.mgt.SecurityManager registerSecurityManager(
@@ -229,7 +228,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 * on their application's classpath, which is necessary for configuring Apache Shiro to secure Apache Geode
 	 * in a Spring context.
 	 *
-	 * @see Condition
+	 * @see org.springframework.context.annotation.Condition
 	 */
 	public static class ApacheShiroPresentCondition implements Condition {
 

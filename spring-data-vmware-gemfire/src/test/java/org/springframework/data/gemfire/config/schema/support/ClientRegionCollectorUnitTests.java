@@ -34,10 +34,10 @@ import org.springframework.context.ApplicationContext;
  * Unit tests for {@link ClientRegionCollector}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see ClientRegionCollector
+ * @see org.springframework.data.gemfire.config.schema.support.ClientRegionCollector
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

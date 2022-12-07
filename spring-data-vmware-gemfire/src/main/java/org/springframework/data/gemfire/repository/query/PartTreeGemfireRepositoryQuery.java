@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.ArrayList;
@@ -25,12 +24,12 @@ import org.springframework.util.Assert;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see GemfireTemplate
- * @see GemfireRepositoryQuery
- * @see QueryMethod
- * @see RepositoryQuery
- * @see Part
- * @see PartTree
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.query.GemfireRepositoryQuery
+ * @see org.springframework.data.repository.query.QueryMethod
+ * @see org.springframework.data.repository.query.RepositoryQuery
+ * @see org.springframework.data.repository.query.parser.Part
+ * @see org.springframework.data.repository.query.parser.PartTree
  */
 public class PartTreeGemfireRepositoryQuery extends GemfireRepositoryQuery {
 
@@ -47,8 +46,8 @@ public class PartTreeGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @param template {@link GemfireTemplate} used to execute {@literal QOL queries};
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link GemfireQueryMethod} or {@link GemfireTemplate} are {@literal null}.
-	 * @see GemfireQueryMethod
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.repository.query.GemfireQueryMethod
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	public PartTreeGemfireRepositoryQuery(GemfireQueryMethod queryMethod, GemfireTemplate template) {
 
@@ -64,7 +63,7 @@ public class PartTreeGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * Returns a {@link PartTree} object consisting of the parts of the (OQL) query.
 	 *
 	 * @return a {@link PartTree} object consisting of the parts of the (OQL) query.
-	 * @see PartTree
+	 * @see org.springframework.data.repository.query.parser.PartTree
 	 */
 	protected @NonNull PartTree getPartTree() {
 		return this.tree;
@@ -74,7 +73,7 @@ public class PartTreeGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * Returns a reference to the {@link GemfireTemplate} used to perform all data access and query operations.
 	 *
 	 * @return a reference to the {@link GemfireTemplate} used to perform all data access and query operations.
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	protected @NonNull GemfireTemplate getTemplate() {
 		return this.template;

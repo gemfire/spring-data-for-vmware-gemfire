@@ -25,11 +25,11 @@ import org.springframework.util.StringUtils;
  * define a new Apache Geode /  Pivotal GemFire cache {@link Region}.
  *
  * @author John Blum
- * @see Region
- * @see RegionShortcut
- * @see GemfireAdminOperations
- * @see SchemaObjectDefinition
- * @see SchemaObjectType
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
  * @since 2.0.0
  */
 public class RegionDefinition extends SchemaObjectDefinition {
@@ -45,7 +45,7 @@ public class RegionDefinition extends SchemaObjectDefinition {
 	 * @param region {@link Region} from which the new definition will be defined.
 	 * @return a new instance of {@link RegionDefinition} defined from the given {@link Region}.
 	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #RegionDefinition(Region)
 	 */
 	public static RegionDefinition from(Region<?, ?> region) {
@@ -64,7 +64,7 @@ public class RegionDefinition extends SchemaObjectDefinition {
 	 *
 	 * @param region {@link Region} on which this definition is defined; must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected RegionDefinition(Region<?, ?> region) {
 
@@ -89,7 +89,7 @@ public class RegionDefinition extends SchemaObjectDefinition {
 	 * Returns a reference to the {@link Region} from which this definition is defined.
 	 *
 	 * @return a reference to the {@link Region} from which this definition is defined.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected Region<?, ?> getRegion() {
 		return this.region;

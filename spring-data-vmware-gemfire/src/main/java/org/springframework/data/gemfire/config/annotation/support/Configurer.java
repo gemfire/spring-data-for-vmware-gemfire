@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import org.springframework.core.Ordered;
@@ -14,7 +13,7 @@ import org.springframework.core.Ordered;
  *
  * @author John Blum
  * @param <T> {@link Class} type of the configurable Spring component processed by this {@link Configurer}.
- * @see Ordered
+ * @see org.springframework.core.Ordered
  * @since 2.2.0
  */
 @FunctionalInterface
@@ -36,7 +35,7 @@ public interface Configurer<T> extends Ordered {
 	 * Returns {@literal 0} by default.
 	 *
 	 * @return the {@literal order} in which this {@link Configurer} is applied.
-	 * @see Ordered#getOrder()
+	 * @see org.springframework.core.Ordered#getOrder()
 	 */
 	@Override
 	default int getOrder() {

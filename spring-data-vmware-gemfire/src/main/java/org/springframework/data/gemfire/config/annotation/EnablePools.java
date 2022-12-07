@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -17,14 +16,14 @@ import org.apache.geode.cache.client.Pool;
 import org.springframework.context.annotation.Import;
 
 /**
- * The {@link EnablePools} annotation enables 1 or more GemFire {@link Pool Pools}
+ * The {@link EnablePools} annotation enables 1 or more GemFire {@link org.apache.geode.cache.client.Pool Pools}
  * to be defined and used in a GemFire client cache application configured with Spring (Data GemFire).
  *
  * @author John Blum
- * @see Pool
- * @see AddPoolsConfiguration
- * @see EnablePool
- * @see PoolConfigurer
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnablePool
+ * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

@@ -30,14 +30,14 @@ import org.springframework.web.client.RestTemplate;
  * Unit Tests for {@link RestHttpGemfireAdminTemplate.Builder}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see ClientCache
- * @see RestHttpGemfireAdminTemplate.Builder
- * @see ClientHttpRequestFactory
- * @see ClientHttpRequestInterceptor
- * @see RestTemplate
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate.Builder
+ * @see org.springframework.http.client.ClientHttpRequestFactory
+ * @see org.springframework.http.client.ClientHttpRequestInterceptor
+ * @see org.springframework.web.client.RestTemplate
  * @since 2.2.0
  */
 @RunWith(MockitoJUnitRunner.class)

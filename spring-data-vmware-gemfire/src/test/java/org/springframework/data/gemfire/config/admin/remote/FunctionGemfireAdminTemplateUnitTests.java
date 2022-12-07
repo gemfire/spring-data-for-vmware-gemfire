@@ -46,10 +46,10 @@ import org.springframework.data.gemfire.function.execution.GemfireFunctionOperat
  * Unit tests for {@link FunctionGemfireAdminTemplate}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see FunctionGemfireAdminTemplate
+ * @see org.springframework.data.gemfire.config.admin.remote.FunctionGemfireAdminTemplate
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

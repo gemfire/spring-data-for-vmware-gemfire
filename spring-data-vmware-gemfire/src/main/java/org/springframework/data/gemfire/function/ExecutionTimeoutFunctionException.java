@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function;
 
 import org.apache.geode.cache.execute.FunctionException;
@@ -11,7 +10,7 @@ import org.apache.geode.cache.execute.FunctionException;
  * A {@link FunctionException} indicating a timeout during execution.
  *
  * @author John Blum
- * @see FunctionException
+ * @see org.apache.geode.cache.execute.FunctionException
  * @since 2.3.0
  */
 @SuppressWarnings("unused")

@@ -24,10 +24,10 @@ import org.springframework.data.gemfire.config.xml.GemfireConstants;
  * {@literal defineXxxIndex(..)} methods.
  *
  * @author John Blum
- * @see ApplicationContext
- * @see ApplicationListener
- * @see ContextRefreshedEvent
- * @see QueryService
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationListener
+ * @see org.springframework.context.event.ContextRefreshedEvent
+ * @see org.apache.geode.cache.query.QueryService
  * @since 1.7.0
  */
 public class DefinedIndexesApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -40,8 +40,8 @@ public class DefinedIndexesApplicationListener implements ApplicationListener<Co
 	 * has been refreshed.
 	 *
 	 * @param event {@link ContextRefreshedEvent} fired when the Spring {@link ApplicationContext} gets refreshed.
-	 * @see ContextRefreshedEvent
-	 * @see QueryService#createDefinedIndexes()
+	 * @see org.springframework.context.event.ContextRefreshedEvent
+	 * @see org.apache.geode.cache.query.QueryService#createDefinedIndexes()
 	 * @see #getQueryService(ContextRefreshedEvent)
 	 */
 	@Override

@@ -32,12 +32,12 @@ import org.springframework.util.StringUtils;
  * or defined using GemFire Cluster-based Configuration Service.
  *
  * @author John Blum
- * @see GemFireCache
- * @see Region
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see BeanPostProcessor
- * @see ConfigurableListableBeanFactory
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @since 1.5.0
  */
 public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware {
@@ -50,8 +50,8 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 	 * @param beanFactory configured Spring {@link BeanFactory}.
 	 * @throws IllegalArgumentException if the given {@link BeanFactory} is not an instance of
 	 * {@link ConfigurableListableBeanFactory}.
-	 * @see BeanFactoryAware
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactoryAware
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -69,7 +69,7 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 	 *
 	 * @return a reference to the containing Spring {@link BeanFactory}.
 	 * @throws IllegalStateException if the {@link BeanFactory} was not configured.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected ConfigurableListableBeanFactory getBeanFactory() {
 		return Optional.ofNullable(this.beanFactory)

@@ -32,13 +32,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link AutoConfiguredAuthenticationConfiguration}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see GemfireTemplate
- * @see AutoConfiguredAuthenticationConfiguration
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.config.annotation.AutoConfiguredAuthenticationConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0
  */
 @RunWith(SpringRunner.class)

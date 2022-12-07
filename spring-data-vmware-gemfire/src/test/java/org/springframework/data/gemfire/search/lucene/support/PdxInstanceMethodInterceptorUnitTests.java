@@ -35,12 +35,12 @@ import lombok.RequiredArgsConstructor;
  * Unit Tests for {@link PdxInstanceMethodInterceptor}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see PdxInstanceMethodInterceptor
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.support.PdxInstanceMethodInterceptor
  * @since 1.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

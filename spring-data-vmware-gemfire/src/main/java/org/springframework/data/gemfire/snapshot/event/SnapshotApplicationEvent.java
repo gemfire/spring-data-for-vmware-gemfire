@@ -17,8 +17,8 @@ import org.springframework.util.StringUtils;
  * used to trigger a snapshot to occur.
  *
  * @author John Blum
- * @see ApplicationEvent
- * @see Region
+ * @see org.springframework.context.ApplicationEvent
+ * @see org.apache.geode.cache.Region
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -34,7 +34,7 @@ public abstract class SnapshotApplicationEvent<K, V> extends ApplicationEvent {
 	 *
 	 * @param source the source of the ApplicationEvent.
 	 * @param snapshotMetadata an array of SnapshotMetadata containing details for each import/export.
-	 * @see SnapshotMetadata
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public SnapshotApplicationEvent(Object source, SnapshotMetadata<K, V>... snapshotMetadata) {
 		this(source, null, snapshotMetadata);
@@ -47,7 +47,7 @@ public abstract class SnapshotApplicationEvent<K, V> extends ApplicationEvent {
 	 * @param source the source of the ApplicationEvent.
 	 * @param regionPath absolute pathname of the Region.
 	 * @param snapshotMetadata an array of SnapshotMetadata containing details for each import/export.
-	 * @see SnapshotMetadata
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public SnapshotApplicationEvent(Object source, String regionPath, SnapshotMetadata<K, V>... snapshotMetadata) {
 		super(source);
@@ -59,7 +59,7 @@ public abstract class SnapshotApplicationEvent<K, V> extends ApplicationEvent {
 	 * Gets the absolute pathname of the Region in GemFire for which the snapshot will be taken.
 	 *
 	 * @return a String indicating the absolute pathname of the Region.
-	 * @see Region#getFullPath()
+	 * @see org.apache.geode.cache.Region#getFullPath()
 	 */
 	public String getRegionPath() {
 		return regionPath;
@@ -69,7 +69,7 @@ public abstract class SnapshotApplicationEvent<K, V> extends ApplicationEvent {
 	 * Gets the meta-data used to perform the GemFire Cache Region data snapshots.
 	 *
 	 * @return an array of SnapshotMetadata containing information necessary to perform the data export.
-	 * @see SnapshotMetadata
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public SnapshotMetadata<K, V>[] getSnapshotMetadata() {
 		return snapshotMetadata;
@@ -100,7 +100,7 @@ public abstract class SnapshotApplicationEvent<K, V> extends ApplicationEvent {
 	 *
 	 * @param region the Region being evaluated as the subject of this event.
 	 * @return a boolean value indicating whether this event has been targeted for the specified Region
-	 * @see Region#getFullPath()
+	 * @see org.apache.geode.cache.Region#getFullPath()
 	 * @see #getRegionPath()
 	 * @see #matches(String)
 	 */

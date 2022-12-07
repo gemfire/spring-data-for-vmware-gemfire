@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.util.Collections;
@@ -15,7 +14,7 @@ import org.springframework.util.ClassUtils;
  * the JSR-107, JCache API lib is on the application classpath.
  *
  * @author John Blum
- * @see Jsr107CacheAnnotationsCacheNameResolver
+ * @see org.springframework.data.gemfire.config.annotation.Jsr107CacheAnnotationsCacheNameResolver
  * @since 2.2.0
  */
 class Jsr107CacheAnnotationsCacheNameResolverFactory {

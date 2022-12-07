@@ -22,11 +22,11 @@ import org.springframework.data.gemfire.snapshot.filter.ComposableSnapshotFilter
  * Unit Tests for {@link ComposableSnapshotFilter}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see SnapshotFilter
- * @see ComposableSnapshotFilter
- * @see Operator
+ * @see org.apache.geode.cache.snapshot.SnapshotFilter
+ * @see org.springframework.data.gemfire.snapshot.filter.ComposableSnapshotFilter
+ * @see org.springframework.data.gemfire.snapshot.filter.ComposableSnapshotFilter.Operator
  * @since 1.7.0
  */
 @SuppressWarnings("unchecked")

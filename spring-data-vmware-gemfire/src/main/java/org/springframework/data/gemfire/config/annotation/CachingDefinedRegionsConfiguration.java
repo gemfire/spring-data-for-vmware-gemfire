@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.asList;
@@ -61,33 +60,33 @@ import org.springframework.util.StringUtils;
  * service classes and methods.
  *
  * @author John Blum
- * @see Annotation
- * @see AnnotatedElement
- * @see GemFireCache
- * @see Region
- * @see RegionShortcut
- * @see ClientRegionShortcut
- * @see Pool
+ * @see java.lang.annotation.Annotation
+ * @see java.lang.reflect.AnnotatedElement
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.Pool
  * @see org.springframework.beans.factory.annotation.AnnotatedBeanDefinition
  * @see org.springframework.beans.factory.config.BeanDefinition
- * @see BeanPostProcessor
- * @see ConfigurableBeanFactory
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableBeanFactory
  * @see org.springframework.beans.factory.support.AbstractBeanDefinition
  * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
  * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
  * @see org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
- * @see CacheConfig
- * @see CacheEvict
- * @see CachePut
- * @see Cacheable
- * @see Caching
- * @see Bean
- * @see Configuration
- * @see ImportAware
+ * @see org.springframework.cache.annotation.CacheConfig
+ * @see org.springframework.cache.annotation.CacheEvict
+ * @see org.springframework.cache.annotation.CachePut
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.cache.annotation.Caching
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
  * @see org.springframework.core.annotation.AnnotatedElementUtils
  * @see org.springframework.core.annotation.AnnotationUtils
- * @see EnableCachingDefinedRegions
- * @see AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @see org.springframework.data.gemfire.config.annotation.support.BeanDefinitionRegistryPostProcessorSupport
  * @see CacheTypeAwareRegionFactoryBean
  * @since 2.0.0
@@ -122,9 +121,9 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
 	 * for application service {@link Method Methods} that are annotated with Spring's Cache Abstraction Annotations.
-	 * @see EnableCachingDefinedRegions
-	 * @see Annotation
-	 * @see Class
+	 * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -136,7 +135,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 * beans/components declared and registered in the Spring container (context).
 	 *
 	 * @return the configured {@link CacheNameResolver} to resolve all teh caches used by the Spring application.
-	 * @see CacheNameResolver
+	 * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration.CacheNameResolver
 	 */
 	protected CacheNameResolver getCacheNameResolver() {
 		return this.composableCacheNameResolver;
@@ -148,7 +147,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @param clientRegionShortcut {@link ClientRegionShortcut} specifying the data management policy
 	 * to use when creating a client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	public void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
@@ -160,9 +159,9 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @return an {@link Optional} {@link ClientRegionShortcut} specifying the data management policy to use
 	 * when creating a client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 * @see #setClientRegionShortcut(ClientRegionShortcut)
-	 * @see Optional
+	 * @see java.util.Optional
 	 */
 	protected Optional<ClientRegionShortcut> getClientRegionShortcut() {
 		return Optional.ofNullable(this.clientRegionShortcut);
@@ -174,7 +173,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @return the resolved {@link ClientRegionShortcut} specifying the data management policy to use
 	 * when creating a client {@link Region}; defaults to {@link ClientRegionShortcut#PROXY}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 * @see #getClientRegionShortcut()
 	 */
 	protected ClientRegionShortcut resolveClientRegionShortcut() {
@@ -199,7 +198,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 * @return an {@link Optional} {@link String name} of the dedicated {@link Pool} used by all caching-defined
 	 * client {@link Region Regions}.
 	 * @see #setPoolName(String)
-	 * @see Optional
+	 * @see java.util.Optional
 	 */
 	protected Optional<String> getPoolName() {
 		return Optional.ofNullable(this.poolName).filter(StringUtils::hasText);
@@ -223,7 +222,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @param serverRegionShortcut {@link RegionShortcut} specifying the data management policy to use
 	 * when creating a server (peer) {@link Region}.
-	 * @see RegionShortcut
+	 * @see org.apache.geode.cache.RegionShortcut
 	 */
 	public void setServerRegionShortcut(RegionShortcut serverRegionShortcut) {
 		this.serverRegionShortcut = serverRegionShortcut;
@@ -236,8 +235,8 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 * @return an {@link Optional} {@link RegionShortcut} specifying the data management policy to use
 	 * when creating a server (peer) {@link Region}.
 	 * @see #setServerRegionShortcut(RegionShortcut)
-	 * @see RegionShortcut
-	 * @see Optional
+	 * @see org.apache.geode.cache.RegionShortcut
+	 * @see java.util.Optional
 	 */
 	protected Optional<RegionShortcut> getServerRegionShortcut() {
 		return Optional.ofNullable(this.serverRegionShortcut);
@@ -249,7 +248,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * @return the resolved {@link RegionShortcut} specifying the data management policy to use
 	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#PARTITION}.
-	 * @see RegionShortcut
+	 * @see org.apache.geode.cache.RegionShortcut
 	 * @see #getServerRegionShortcut()
 	 */
 	protected RegionShortcut resolveServerRegionShortcut() {
@@ -351,7 +350,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 * the application to determine whether the application components require caching behavior.
 	 *
 	 * @see Jsr107CacheAnnotationsCacheNameResolver
-	 * @see SpringCacheAnnotationsCacheNameResolver
+	 * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration.SpringCacheAnnotationsCacheNameResolver
 	 */
 	@FunctionalInterface
 	public interface CacheNameResolver {
@@ -364,7 +363,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	 *
 	 * Current implementations support inlude JSR-107, JCache API annotation and Spring's Cache Abstraction annotations.
 	 *
-	 * @see CacheNameResolver
+	 * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration.CacheNameResolver
 	 */
 	public abstract static class AbstractCacheNameResolver extends AbstractAnnotationConfigSupport
 			implements CacheNameResolver {

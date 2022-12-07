@@ -25,7 +25,7 @@ import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
  * @author John Blum
  * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
  * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
- * @see Region
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -40,7 +40,7 @@ public @interface ClientRegion {
 	 * Name, or fully-qualified bean name of the {@link org.apache.geode.cache.Region}
 	 * in which the application persistent entity will be stored (e.g. "Users", or "/Local/Admin/Users").
 	 *
-	 * Defaults to simple name of the application persistent entity defined by {@link Class#getSimpleName()}.
+	 * Defaults to simple name of the application persistent entity defined by {@link java.lang.Class#getSimpleName()}.
 	 *
 	 * @return the name or fully-qualified path of the {@link Region} in which the application persistent entity
 	 * will be stored.
@@ -52,7 +52,7 @@ public @interface ClientRegion {
 	 * Name, or fully-qualified bean name of the {@link org.apache.geode.cache.Region}
 	 * in which the application persistent entity will be stored (e.g. "Users", or "/Local/Admin/Users").
 	 *
-	 * Defaults to simple name of the application persistent entity defined by {@link Class#getSimpleName()}.
+	 * Defaults to simple name of the application persistent entity defined by {@link java.lang.Class#getSimpleName()}.
 	 *
 	 * @return the name or fully-qualified path of the {@link Region} in which the application persistent entity
 	 * will be stored.
@@ -100,7 +100,7 @@ public @interface ClientRegion {
 	 *
 	 * Defaults to {@link ClientRegionShortcut#PROXY}.
 	 *
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	ClientRegionShortcut shortcut() default ClientRegionShortcut.PROXY;
 

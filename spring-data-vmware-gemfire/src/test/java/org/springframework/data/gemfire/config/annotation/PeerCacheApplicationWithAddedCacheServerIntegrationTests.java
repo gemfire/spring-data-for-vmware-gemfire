@@ -29,13 +29,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * added {@link CacheServer CacheServers} using the {@link EnableCacheServer} annotation.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see CacheServer
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.server.CacheServer
  * @see org.apache.geode.distributed.Locator
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

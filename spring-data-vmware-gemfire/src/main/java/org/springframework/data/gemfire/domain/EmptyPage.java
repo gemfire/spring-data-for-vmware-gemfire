@@ -15,7 +15,7 @@ import org.springframework.data.domain.Page;
  * @author John Blum
  * @param <T> {@link Class} type of the elements in this {@link Page}.
  * @see org.springframework.core.convert.converter.Converter
- * @see Page
+ * @see org.springframework.data.domain.Page
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

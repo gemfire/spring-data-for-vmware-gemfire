@@ -18,9 +18,9 @@ import org.apache.geode.cache.RegionFactory;
  * Unit Tests for {@link IndexMaintenancePolicyType} enum.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see IndexMaintenancePolicyType
+ * @see org.springframework.data.gemfire.IndexMaintenancePolicyType
  * @since 1.6.0
  */
 public class IndexMaintenancePolicyTypeTest {

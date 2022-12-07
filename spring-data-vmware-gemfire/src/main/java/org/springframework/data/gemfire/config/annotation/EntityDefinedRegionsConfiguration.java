@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -52,13 +51,14 @@ import org.springframework.data.gemfire.config.annotation.support.GemFireCompone
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
-import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
 import org.springframework.data.gemfire.mapping.annotation.PartitionRegion;
 import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.support.CompositeTypeFilter;
 import org.springframework.data.gemfire.util.SpringExtensions;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
@@ -70,28 +70,29 @@ import org.springframework.util.StringUtils;
  * based on the application persistent entity classes.
  *
  * @author John Blum
- * @see ClassLoader
- * @see Annotation
- * @see Region
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see FixedPartitionAttributesFactoryBean
+ * @see java.lang.ClassLoader
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.FixedPartitionAttributesFactoryBean
  * @see org.springframework.data.gemfire.LocalRegionFactoryBean
- * @see PartitionAttributesFactoryBean
+ * @see org.springframework.data.gemfire.PartitionAttributesFactoryBean
  * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
- * @see RegionAttributesFactoryBean
+ * @see org.springframework.data.gemfire.RegionAttributesFactoryBean
  * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see CacheTypeAwareRegionFactoryBean
- * @see GemFireComponentClassTypeScanner
- * @see GemfireMappingContext
- * @see GemfirePersistentEntity
- * @see ClientRegion
- * @see LocalRegion
- * @see PartitionRegion
- * @see ReplicateRegion
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.GemFireComponentClassTypeScanner
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+ * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
  */
@@ -107,6 +108,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	private GemfireMappingContext mappingContext;
 
 	@Autowired(required = false)
+	@SuppressWarnings("all")
 	private List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
 	/**
@@ -115,9 +117,9 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 *
 	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
 	 * for application persistent entities.
-	 * @see EnableEntityDefinedRegions
-	 * @see Annotation
-	 * @see Class
+	 * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -131,8 +133,8 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * @param importingClassMetadata {@link Class} with the {@link EnableEntityDefinedRegions} annotation.
 	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link Region} bean definitions
 	 * in the Spring context.
-	 * @see BeanDefinitionRegistry
-	 * @see AnnotationMetadata
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -286,8 +288,8 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * @param persistentEntityType {@link Class type} of the application domain object used to lookup
 	 * the {@link GemfirePersistentEntity persistent entity} from the {@link @GemfireMappingContext mapping context}.
 	 * @return the {@link GemfirePersistentEntity persistent entity} for the given application domain object type.
-	 * @see GemfirePersistentEntity
-	 * @see Class
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+	 * @see java.lang.Class
 	 */
 	protected GemfirePersistentEntity<?> getPersistentEntity(Class<?> persistentEntityType) {
 		return resolveMappingContext().getPersistentEntity(persistentEntityType);
@@ -300,9 +302,9 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * If the lookup is unsuccessful, then this method will return a new {@link GemfireMappingContext mapping context}.
 	 *
 	 * @return the resolved {@link GemfireMappingContext mapping context}.
-	 * @see GemfireMappingContext
+	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
 	 */
-	protected GemfireMappingContext resolveMappingContext() {
+	protected @NonNull GemfireMappingContext resolveMappingContext() {
 
 		if (this.mappingContext == null) {
 			this.mappingContext = SpringExtensions.<GemfireMappingContext>safeGetValue(() ->
@@ -319,8 +321,8 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * @param regionMetadata {@link RegionBeanDefinitionMetadata} used to configure the {@link Region} bean definition.
 	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link Region} bean definition
 	 * in the Spring context.
-	 * @see BeanDefinitionRegistry
-	 * @see GemfirePersistentEntity
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
 	 */
 	protected void registerRegionBeanDefinition(RegionBeanDefinitionMetadata regionMetadata,
 			BeanDefinitionRegistry registry) {
@@ -340,7 +342,8 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		return Optional.ofNullable(this.regionConfigurers)
 			.filter(regionConfigurers -> !regionConfigurers.isEmpty())
-			.orElseGet(() -> Collections.singletonList(LazyResolvingComposableRegionConfigurer.create(getBeanFactory())));
+			.orElseGet(() ->
+				Collections.singletonList(LazyResolvingComposableRegionConfigurer.create(getBeanFactory())));
 	}
 
 	protected BeanDefinitionBuilder setRegionAttributes(BeanDefinitionBuilder regionFactoryBeanBuilder,
@@ -551,9 +554,9 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * @param registry {@link BeanDefinitionRegistry} used to register Spring bean definitions.
 	 * @param persistentEntity {@link GemfirePersistentEntity} to process.
 	 * @return the given {@link GemfirePersistentEntity}.
-	 * @see BeanDefinitionRegistry
-	 * @see AnnotationMetadata
-	 * @see GemfirePersistentEntity
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.core.type.AnnotationMetadata
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
 	 */
 	protected GemfirePersistentEntity<?> postProcess(AnnotationMetadata importingClassMetadata,
 			BeanDefinitionRegistry registry, GemfirePersistentEntity<?> persistentEntity) {
@@ -565,7 +568,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	 * The {@link RegionBeanDefinitionMetadata} class encapsulates details for creating a {@link Region}
 	 * from application persistent entities.  The details are captured during a persistent entity component scan.
 	 *
-	 * @see GemfirePersistentEntity
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
 	 */
 	protected static class RegionBeanDefinitionMetadata {
 
@@ -588,7 +591,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		private String poolName;
 
-		protected RegionBeanDefinitionMetadata(GemfirePersistentEntity<?> persistentEntity) {
+		protected RegionBeanDefinitionMetadata(@NonNull GemfirePersistentEntity<?> persistentEntity) {
 			Assert.notNull(persistentEntity, "GemfirePersistentEntity is required");
 			this.persistentEntity = persistentEntity;
 		}
@@ -609,13 +612,14 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			return Optional.ofNullable(this.persistentEntity);
 		}
 
-		protected GemfirePersistentEntity<?> resolvePersistentEntity() {
+		protected @NonNull GemfirePersistentEntity<?> resolvePersistentEntity() {
 			return getPersistentEntity().orElseThrow(() ->
 				newIllegalStateException("GemfirePersistentEntity could not be resolved"));
 		}
 
 		protected Optional<String> getPoolName() {
-			return Optional.ofNullable(this.poolName).filter(StringUtils::hasText);
+			return Optional.ofNullable(this.poolName)
+				.filter(StringUtils::hasText);
 		}
 
 		protected <T extends Annotation> T getRegionAnnotation() {
@@ -623,10 +627,10 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 		}
 
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		protected Class<?> getRegionKeyConstraint() {
+		protected @NonNull Class<?> getRegionKeyConstraint() {
 
 			return Optional.ofNullable(resolvePersistentEntity().getIdProperty())
-				.map(GemfirePersistentProperty::getActualType)
+				.map(idProperty -> idProperty.getActualType())
 				.orElse((Class) Object.class);
 		}
 
@@ -635,7 +639,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 		}
 
 		@SuppressWarnings("all")
-		protected Class<?> getRegionValueConstraint() {
+		protected @NonNull Class<?> getRegionValueConstraint() {
 
 			return Optional.ofNullable(resolvePersistentEntity().getType())
 				.orElse((Class) Object.class);
@@ -649,12 +653,13 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			return getServerRegionShortcut().orElse(defaultServerRegionShortcut);
 		}
 
-		protected RegionBeanDefinitionMetadata is(boolean strict) {
+		protected @NonNull RegionBeanDefinitionMetadata is(boolean strict) {
 			this.strict = strict;
 			return this;
 		}
 
-		protected RegionBeanDefinitionMetadata using(AnnotationAttributes enableEntityDefinedRegionsAttributes) {
+		protected @NonNull RegionBeanDefinitionMetadata using(
+				@Nullable AnnotationAttributes enableEntityDefinedRegionsAttributes) {
 
 			return Optional.ofNullable(enableEntityDefinedRegionsAttributes)
 				.map(it ->
@@ -666,17 +671,17 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 				.orElse(this);
 		}
 
-		protected RegionBeanDefinitionMetadata using(ClientRegionShortcut clientRegionShortcut) {
+		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable ClientRegionShortcut clientRegionShortcut) {
 			this.clientRegionShortcut = clientRegionShortcut;
 			return this;
 		}
 
-		protected RegionBeanDefinitionMetadata using(RegionShortcut serverRegionShortcut) {
+		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable RegionShortcut serverRegionShortcut) {
 			this.serverRegionShortcut = serverRegionShortcut;
 			return this;
 		}
 
-		protected RegionBeanDefinitionMetadata using(String poolName) {
+		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable String poolName) {
 			this.poolName = poolName;
 			return this;
 		}

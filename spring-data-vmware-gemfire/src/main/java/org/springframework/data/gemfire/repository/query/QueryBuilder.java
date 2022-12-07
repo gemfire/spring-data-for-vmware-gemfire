@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import org.apache.geode.cache.Region;
@@ -19,7 +18,7 @@ import org.springframework.util.Assert;
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see QueryString
+ * @see org.springframework.data.gemfire.repository.query.QueryString
  */
 class QueryBuilder {
 
@@ -61,8 +60,8 @@ class QueryBuilder {
 	 *
 	 * @param entity {@link GemfirePersistentEntity} used to determine the {@link Region} to query.
 	 * @param tree {@link PartTree} containing parts of the OQL Query for determining things like uniqueness.
-	 * @see GemfirePersistentEntity
-	 * @see PartTree
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+	 * @see org.springframework.data.repository.query.parser.PartTree
 	 * @see #QueryBuilder(String)
 	 */
 	public QueryBuilder(GemfirePersistentEntity<?> entity, PartTree tree) {
@@ -74,7 +73,7 @@ class QueryBuilder {
 	 *
 	 * @param predicate {@link Predicate} to append to the query.
 	 * @return a {@link QueryString} with the base OQL query and {@link Predicate}.
-	 * @see Predicate
+	 * @see org.springframework.data.gemfire.repository.query.Predicate
 	 * @see #withPredicate(String, Predicate)
 	 */
 	public QueryString create(@Nullable Predicate predicate) {
@@ -88,7 +87,7 @@ class QueryBuilder {
 	 * @param predicate {@link Predicate} to append to the query.
 	 * @return a {@link String} containing the query with the {@link Predicate} appended,
 	 * or just a {@link String} containing the query if the {@link Predicate} is {@literal null}.
-	 * @see Predicate
+	 * @see org.springframework.data.gemfire.repository.query.Predicate
 	 */
 	protected String withPredicate(String query, @Nullable Predicate predicate) {
 

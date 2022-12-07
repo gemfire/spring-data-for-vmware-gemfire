@@ -27,11 +27,11 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * Unit tests for {@link RegionDefiner}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Region
- * @see RegionDefinition
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.schema.definitions.RegionDefinition
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -29,12 +29,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Test
- * @see Instantiator
- * @see WiringInstantiator
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.Instantiator
+ * @see org.springframework.data.gemfire.serialization.WiringInstantiator
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration

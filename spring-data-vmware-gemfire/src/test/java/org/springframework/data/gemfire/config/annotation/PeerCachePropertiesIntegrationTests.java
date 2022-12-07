@@ -29,16 +29,16 @@ import org.springframework.mock.env.MockPropertySource;
  * Integration Tests for {@link PeerCacheApplication}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see Cache
- * @see MutablePropertySources
- * @see PropertySource
- * @see CacheFactoryBean
- * @see PeerCacheApplication
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see MockPropertySource
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.core.env.MutablePropertySources
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.mock.env.MockPropertySource
  * @since 2.0.0
  */
 @SuppressWarnings("unused")

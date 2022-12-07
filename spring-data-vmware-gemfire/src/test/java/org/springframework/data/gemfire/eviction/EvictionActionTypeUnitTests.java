@@ -14,9 +14,9 @@ import org.apache.geode.cache.EvictionAction;
  * Unit Tests for {@link EvictionActionType} enum.
  *
  * @author John Blum
- * @see Test
- * @see EvictionAction
- * @see EvictionActionType
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.EvictionAction
+ * @see org.springframework.data.gemfire.eviction.EvictionActionType
  * @since 1.6.0
  */
 public class EvictionActionTypeUnitTests {

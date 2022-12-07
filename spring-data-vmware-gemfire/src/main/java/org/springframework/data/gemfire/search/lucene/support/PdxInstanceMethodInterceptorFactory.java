@@ -19,10 +19,10 @@ import org.springframework.data.projection.MethodInterceptorFactory;
  * in order to intercept and handle invocations on the {@link PdxInstance} for the proxied projection.
  *
  * @author John Blum
- * @see MethodInterceptor
- * @see PdxInstance
- * @see PdxInstanceMethodInterceptor
- * @see MethodInterceptorFactory
+ * @see org.aopalliance.intercept.MethodInterceptor
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.springframework.data.gemfire.search.lucene.support.PdxInstanceMethodInterceptor
+ * @see org.springframework.data.projection.MethodInterceptorFactory
  * @since 1.0.0
  */
 public enum PdxInstanceMethodInterceptorFactory implements MethodInterceptorFactory {

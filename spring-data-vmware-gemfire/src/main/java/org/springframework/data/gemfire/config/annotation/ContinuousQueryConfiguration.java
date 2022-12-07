@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -43,22 +42,22 @@ import org.springframework.util.StringUtils;
  * Continuous Query (CQ) Pivotal GemFire/Apache Geode capabilities in this cache client application.
  *
  * @author John Blum
- * @see Executor
- * @see GemFireCache
- * @see CqQuery
- * @see QueryService
- * @see BeanPostProcessor
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see AbstractAnnotationConfigSupport
- * @see ContinuousQueryDefinition
+ * @see java.util.concurrent.Executor
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.query.CqQuery
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryDefinition
  * @see org.springframework.data.gemfire.listener.ContinuousQueryListener
- * @see ContinuousQueryListenerContainer
- * @see ContinuousQuery
- * @see ErrorHandler
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
+ * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
+ * @see org.springframework.util.ErrorHandler
  * @since 2.0.0
  */
 @Configuration
@@ -84,10 +83,10 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 	 *
 	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link CqQuery Continuous Queries}
 	 * for application {@link ContinuousQuery} annotated POJO service methods.
-	 * @see EnableContinuousQueries
-	 * @see ContinuousQuery
-	 * @see Annotation
-	 * @see Class
+	 * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
+	 * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

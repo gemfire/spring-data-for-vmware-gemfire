@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -39,22 +38,22 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * enabling Pivotal GemFire/Apache Geode cache {@link Region Regions} to use Off-Heap Memory for data storage.
  *
  * @author John Blum
- * @see Properties
- * @see Region
- * @see BeanFactoryPostProcessor
- * @see ImportBeanDefinitionRegistrar
- * @see EnableOffHeap
- * @see AbstractAnnotationConfigSupport
- * @see EmbeddedServiceConfigurationSupport
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableOffHeap
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class OffHeapConfiguration extends EmbeddedServiceConfigurationSupport {
 
 	/**
-	 * Returns the {@link EnableOffHeap} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableOffHeap} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableOffHeap} {@link Annotation} {@link Class} type.
-	 * @see EnableOffHeap
+	 * @return the {@link EnableOffHeap} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableOffHeap
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

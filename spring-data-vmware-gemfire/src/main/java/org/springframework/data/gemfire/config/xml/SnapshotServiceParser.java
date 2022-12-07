@@ -21,8 +21,8 @@ import org.springframework.util.xml.DomUtils;
  * Bean definition parser for the &lt;gfe-data:snapshot-service&gt; SDG XML namespace (XSD) element.
  *
  * @author John Blum
- * @see AbstractSingleBeanDefinitionParser
- * @see SnapshotServiceFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
  * @since 1.7.0
  */
 class SnapshotServiceParser extends AbstractSingleBeanDefinitionParser {

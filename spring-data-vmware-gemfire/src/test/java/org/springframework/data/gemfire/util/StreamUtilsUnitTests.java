@@ -16,10 +16,10 @@ import org.junit.Test;
  * Unit Tests for {@link StreamUtils}.
  *
  * @author John Blum
- * @see Stream
- * @see Test
+ * @see java.util.stream.Stream
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see StreamUtils
+ * @see org.springframework.data.gemfire.util.StreamUtils
  * @since 2.0.0
  */
 public class StreamUtilsUnitTests {

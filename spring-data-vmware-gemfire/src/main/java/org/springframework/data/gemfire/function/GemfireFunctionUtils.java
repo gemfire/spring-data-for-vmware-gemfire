@@ -39,9 +39,9 @@ import org.springframework.util.StringUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Function
- * @see FunctionService
- * @see GemfireFunction
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionService
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @since 1.2.0
  */
 public abstract class GemfireFunctionUtils {
@@ -55,8 +55,8 @@ public abstract class GemfireFunctionUtils {
 	 *
 	 * @param method {@link Method} to evaluate.
 	 * @return a boolean value indicating whether the {@link Method} on a POJO represents a SDG {@link GemfireFunction}.
-	 * @see GemfireFunction
-	 * @see Method
+	 * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+	 * @see java.lang.reflect.Method
 	 */
 	public static boolean isGemfireFunction(Method method) {
 		return method != null && method.isAnnotationPresent(GemfireFunction.class);
@@ -71,7 +71,7 @@ public abstract class GemfireFunctionUtils {
 	 * @return a boolean indicating whether the given {@link Method} is a POJO, {@link GemfireFunction} annotated
 	 * {@link Method} with the given {@code functionId}.
 	 * @see #getGemfireFunctionId(Method)
-	 * @see Method
+	 * @see java.lang.reflect.Method
 	 */
 	public static boolean isMatchingGemfireFunction(Method method, String functionId) {
 		return getGemfireFunctionId(method).filter(methodFunctionId ->
@@ -108,8 +108,8 @@ public abstract class GemfireFunctionUtils {
 	 * of the GemFire/Geode {@link Function}.
 	 * @return the GemFire/Geode {@link Function#getId() Function ID} of the given {@link Method},
 	 * or an empty {@link Optional} if the {@link Method} is not a GemFire/Geode {@link Function}.
-	 * @see GemfireFunction
-	 * @see Method
+	 * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+	 * @see java.lang.reflect.Method
 	 * @see #isGemfireFunction(Method)
 	 */
 	@SuppressWarnings("all")

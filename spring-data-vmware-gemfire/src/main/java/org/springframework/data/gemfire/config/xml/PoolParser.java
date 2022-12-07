@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
@@ -33,9 +32,9 @@ import org.w3c.dom.Element;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinition
- * @see AbstractSingleBeanDefinitionParser
- * @see PoolFactoryBean
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
  */
 class PoolParser extends AbstractSingleBeanDefinitionParser {
 

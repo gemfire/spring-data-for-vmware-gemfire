@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.io.IOException;
@@ -19,11 +18,11 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * The PropertiesBuilder class is a Builder for {@link Properties}.
+ * The PropertiesBuilder class is a Builder for {@link java.util.Properties}.
  *
  * @author John Blum
- * @see Properties
- * @see FactoryBean
+ * @see java.util.Properties
+ * @see org.springframework.beans.factory.FactoryBean
  * @since 1.9.0
  */
 @SuppressWarnings("unused")
@@ -49,7 +48,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 *
 	 * @param properties {@link Properties} used as the default properties of the constructed {@link PropertiesBuilder}.
 	 * @return an instance of {@link PropertiesBuilder} initialized with the given {@link Properties}.
-	 * @see Properties
+	 * @see java.util.Properties
 	 * @see #PropertiesBuilder(Properties)
 	 */
 	public static PropertiesBuilder from(Properties properties) {
@@ -63,8 +62,8 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * @param in {@link InputStream} source containing properties to use as the defaults for the constructed builder.
 	 * @return a {@link PropertiesBuilder} initialized with properties from the given {@link InputStream}.
 	 * @throws IllegalArgumentException if the {@link InputStream} cannot be read.
-	 * @see InputStream
-	 * @see Properties#load(InputStream)
+	 * @see java.io.InputStream
+	 * @see java.util.Properties#load(InputStream)
 	 */
 	public static PropertiesBuilder from(InputStream in) {
 
@@ -85,8 +84,8 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * @param reader {@link Reader} source containing properties to use as the defaults for the constructed builder.
 	 * @return a {@link PropertiesBuilder} initialized with properties from the given {@link Reader}.
 	 * @throws IllegalArgumentException if the {@link Reader} cannot be read.
-	 * @see Reader
-	 * @see Properties#load(Reader)
+	 * @see java.io.Reader
+	 * @see java.util.Properties#load(Reader)
 	 */
 	public static PropertiesBuilder from(Reader reader) {
 
@@ -108,8 +107,8 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * for the constructed builder.
 	 * @return a {@link PropertiesBuilder} initialized with properties from the given XML {@link InputStream}.
 	 * @throws IllegalArgumentException if the XML {@link InputStream} cannot be read.
-	 * @see InputStream
-	 * @see Properties#loadFromXML(InputStream)
+	 * @see java.io.InputStream
+	 * @see java.util.Properties#loadFromXML(InputStream)
 	 */
 	public static PropertiesBuilder fromXml(InputStream xml) {
 
@@ -137,7 +136,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 *
 	 * @param defaults {@link Properties} used as the defaults.
 	 * @throws NullPointerException if the {@link Properties} reference is {@literal null}.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public PropertiesBuilder(Properties defaults) {
 		this.properties = new Properties();
@@ -177,7 +176,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 *
 	 * @param properties {@link Properties} to add to this builder.
 	 * @return a reference to this {@link PropertiesBuilder}.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public @NonNull PropertiesBuilder add(@Nullable Properties properties) {
 
@@ -194,7 +193,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 *
 	 * @param builder source of the {@link Properties} to add to this builder.
 	 * @return a reference to this {@link PropertiesBuilder}.
-	 * @see PropertiesBuilder
+	 * @see org.springframework.data.gemfire.util.PropertiesBuilder
 	 */
 	public @NonNull PropertiesBuilder add(@Nullable PropertiesBuilder builder) {
 		return builder != null ? add(builder.build()) : this;
@@ -219,7 +218,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * @param name name of the property to set.
 	 * @param values array of object values used as the property's value.
 	 * @return a reference to this {@link PropertiesBuilder}
-	 * @see StringUtils#arrayToCommaDelimitedString(Object[])
+	 * @see org.springframework.util.StringUtils#arrayToCommaDelimitedString(Object[])
 	 * @see #setProperty(String, String)
 	 */
 	public @NonNull PropertiesBuilder setProperty(@NonNull String name, @Nullable Object[] values) {
@@ -235,7 +234,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * @param value the value to set the property to.
 	 * @return a reference to this {@link PropertiesBuilder}.
 	 * @throws IllegalArgumentException if the property name is not specified.
-	 * @see Properties#setProperty(String, String)
+	 * @see java.util.Properties#setProperty(String, String)
 	 */
 	public @NonNull PropertiesBuilder setProperty(@NonNull String name, @NonNull String value) {
 
@@ -296,7 +295,7 @@ public class PropertiesBuilder implements FactoryBean<Properties> {
 	 * Builds the {@link Properties} object from this builder.
 	 *
 	 * @return the {@link Properties} object built by this builder.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	public @NonNull Properties build() {
 		return this.properties;

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -37,14 +36,14 @@ import org.springframework.util.StringUtils;
  * and lazily resolves a cache instance.
  *
  * @author John Blum
- * @see Cache
- * @see GemFireCache
- * @see ClientCache
- * @see BeanFactory
- * @see FactoryBean
- * @see InitializingBean
- * @see CacheResolver
- * @see AbstractFactoryBeanSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  * @since 2.3.0
  */
 @SuppressWarnings({ "rawtypes", "unused" })
@@ -55,7 +54,7 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * Factory method used to construct a new instance of the {@link SmartCacheResolverFactoryBean}.
 	 *
 	 * @return a new instance of {@link SmartCacheResolverFactoryBean}.
-	 * @see SmartCacheResolverFactoryBean
+	 * @see org.springframework.data.gemfire.support.SmartCacheResolverFactoryBean
 	 */
 	public static @NonNull SmartCacheResolverFactoryBean create() {
 		return new SmartCacheResolverFactoryBean();
@@ -74,7 +73,7 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	/**
 	 * Initializes the {@link CacheResolver} [composition] created by this {@link FactoryBean}.
 	 *
-	 * @see CompositionStrategy#use(SmartCacheResolverFactoryBean)
+	 * @see org.springframework.data.gemfire.support.SmartCacheResolverFactoryBean.CompositionStrategy#use(SmartCacheResolverFactoryBean)
 	 * @see #getCompositionStrategy()
 	 */
 	@Override
@@ -92,8 +91,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * Returns a reference to the constructed {@link CacheResolver} instance created by this {@link FactoryBean}.
 	 *
 	 * @return a reference to the constructed {@link CacheResolver} instance created by this {@link FactoryBean}.
-	 * @see CacheResolver
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.CacheResolver
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	CacheResolver<GemFireCache> getCacheResolver() {
 		return this.cacheResolver;
@@ -107,7 +106,7 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * to the {@link CacheResolver} instance that will eventually be created by this {@link FactoryBean}.
 	 *
 	 * @return the {@link CacheResolver} instance constructed and initialized by this {@link FactoryBean}.
-	 * @see FactoryBean#getObject()
+	 * @see org.springframework.beans.factory.FactoryBean#getObject()
 	 * @see CacheResolverProxy
 	 */
 	@NonNull
@@ -119,8 +118,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * Returns the {@link Class type} of the {@link CacheResolver} returned by this {@link FactoryBean}.
 	 *
 	 * @return the {@link Class type} of the {@link CacheResolver} returned by this {@link FactoryBean}.
-	 * @see FactoryBean#getObjectType()
-	 * @see Class
+	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
+	 * @see java.lang.Class
 	 */
 	@Nullable @Override
 	public Class<?> getObjectType() {
@@ -136,8 +135,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * Returns {@literal null} if the {@link BeanFactory} reference is {@literal null} (i.e. not configured).
 	 *
 	 * @return a {@link CacheResolver} capable of resolving a cache instance from the Spring {@link BeanFactory}.
-	 * @see BeanFactoryCacheResolver
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.support.BeanFactoryCacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 * @see #getBeanFactory()
 	 */
 	protected @Nullable CacheResolver newBeanFactoryCacheResolver() {
@@ -158,8 +157,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * the Apache Geode {@link ClientCacheFactory} API.
 	 *
 	 * @return a {@link CacheResolver} resolving a {@link ClientCache} instance.
-	 * @see ClientCacheFactoryCacheResolver
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.client.support.ClientCacheFactoryCacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected @NonNull CacheResolver newClientCacheFactoryCacheResolver() {
 		return new ClientCacheFactoryCacheResolver();
@@ -170,8 +169,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * the Apache Geode {@link CacheFactory} API.
 	 *
 	 * @return a {@link CacheResolver} resolving a {@literal peer} {@link Cache} instance.
-	 * @see CacheFactoryCacheResolver
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.support.CacheFactoryCacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected @NonNull CacheResolver newPeerCacheFactoryCacheResolver() {
 		return new CacheFactoryCacheResolver();
@@ -184,8 +183,8 @@ public class SmartCacheResolverFactoryBean extends AbstractFactoryBeanSupport<Ca
 	 * on this {@link FactoryBean}.
 	 *
 	 * @return a {@link CacheResolver} capable of resolving a single, configured cache instance.
-	 * @see SingleCacheCacheResolver
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.support.SingleCacheCacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 * @see #getCache()
 	 */
 	protected @Nullable CacheResolver newSingleCacheCacheResolver() {

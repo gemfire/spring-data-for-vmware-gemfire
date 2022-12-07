@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import org.springframework.context.SmartLifecycle;
@@ -13,8 +12,8 @@ import org.springframework.context.SmartLifecycle;
  * as a {@link FunctionalInterface}.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see SmartLifecycle
+ * @see java.lang.FunctionalInterface
+ * @see org.springframework.context.SmartLifecycle
  * @since 1.0.0
  */
 @FunctionalInterface

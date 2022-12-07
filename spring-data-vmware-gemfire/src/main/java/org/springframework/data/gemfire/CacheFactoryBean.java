@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
@@ -42,15 +41,15 @@ import org.springframework.util.Assert;
  * @author David Turanski
  * @author John Blum
  * @author Patrick Johnson
- * @see Properties
- * @see Cache
- * @see CacheFactory
- * @see GemFireCache
- * @see PdxSerializer
- * @see SecurityManager
- * @see FactoryBean
- * @see AbstractResolvableCacheFactoryBean
- * @see PeerCacheConfigurer
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.security.SecurityManager
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.data.gemfire.AbstractResolvableCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
  */
 @SuppressWarnings("unused")
 public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
@@ -73,7 +72,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 		nullSafeList(peerCacheConfigurers).forEach(peerCacheConfigurer ->
 			peerCacheConfigurer.configure(beanName, bean));
 
-	private SecurityManager securityManager;
+	private org.apache.geode.security.SecurityManager securityManager;
 
 	/**
 	 * Applies the composite {@link PeerCacheConfigurer PeerCacheConfigurers} to this {@link CacheFactoryBean}
@@ -107,7 +106,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param peerCacheConfigurers array of {@link PeerCacheConfigurer PeerCacheConfigurers}
 	 * applied to this {@link CacheFactoryBean}.
-	 * @see PeerCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
 	 * @see #applyPeerCacheConfigurers(Iterable)
 	 */
 	protected void applyPeerCacheConfigurers(PeerCacheConfigurer... peerCacheConfigurers) {
@@ -120,8 +119,8 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param peerCacheConfigurers {@link Iterable} of {@link PeerCacheConfigurer PeerCacheConfigurers}
 	 * applied to this {@link CacheFactoryBean}.
-	 * @see PeerCacheConfigurer
-	 * @see Iterable
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+	 * @see java.lang.Iterable
 	 */
 	protected void applyPeerCacheConfigurers(Iterable<PeerCacheConfigurer> peerCacheConfigurers) {
 		StreamSupport.stream(CollectionUtils.nullSafeIterable(peerCacheConfigurers).spliterator(), false)
@@ -151,8 +150,8 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param gemfireProperties {@link Properties} used by the {@link CacheFactory} to configure the peer {@link Cache}.
 	 * @return a new instance of {@link CacheFactory} initialized with the given Apache Geode {@link Properties}.
-	 * @see CacheFactory
-	 * @see Properties
+	 * @see org.apache.geode.cache.CacheFactory
+	 * @see java.util.Properties
 	 */
 	@Override
 	protected @NonNull Object createFactory(@NonNull Properties gemfireProperties) {
@@ -166,7 +165,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * @return the configured {@link CacheFactory}.
 	 * @see #configurePdx(CacheFactory)
 	 * @see #configureSecurity(CacheFactory)
-	 * @see CacheFactory
+	 * @see org.apache.geode.cache.CacheFactory
 	 */
 	@Override
 	protected @NonNull Object configureFactory(@NonNull Object factory) {
@@ -178,8 +177,8 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param cacheFactory {@link CacheFactory} to configure with PDX.
 	 * @return the given {@link CacheFactory}.
-	 * @see CacheFactoryToPdxConfigurerAdapter
-	 * @see CacheFactory
+	 * @see org.springframework.data.gemfire.CacheFactoryBean.CacheFactoryToPdxConfigurerAdapter
+	 * @see org.apache.geode.cache.CacheFactory
 	 * @see #configurePdx(PdxConfigurer)
 	 */
 	protected @NonNull CacheFactory configurePdx(@NonNull CacheFactory cacheFactory) {
@@ -191,11 +190,11 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param cacheFactory {@link CacheFactory} used to configure the peer {@link Cache} instance with security.
 	 * @return the given {@link CacheFactory}.
-	 * @see CacheFactory
+	 * @see org.apache.geode.cache.CacheFactory
 	 */
 	protected @NonNull CacheFactory configureSecurity(@NonNull CacheFactory cacheFactory) {
 
-		SecurityManager securityManager = getSecurityManager();
+		org.apache.geode.security.SecurityManager securityManager = getSecurityManager();
 
 		return securityManager != null
 			? cacheFactory.setSecurityManager(securityManager)
@@ -208,8 +207,8 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * @param <T> {@link Class sub-type} of {@link GemFireCache}.
 	 * @param factory instance of {@link CacheFactory}.
 	 * @return a new instance of {@link Cache} created by the provided {@link Object factory}.
-	 * @see CacheFactory#create()
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.CacheFactory#create()
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -226,12 +225,12 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * @param cache {@link GemFireCache} to post process.
 	 * @return the given {@link GemFireCache}.
 	 * @see #loadCacheXml(GemFireCache)
-	 * @see Cache#loadCacheXml(java.io.InputStream)
-	 * @see #configureHeapPercentages(GemFireCache)
+	 * @see org.apache.geode.cache.Cache#loadCacheXml(java.io.InputStream)
+	 * @see #configureHeapPercentages(org.apache.geode.cache.GemFireCache)
 	 * @see #configureOffHeapPercentages(GemFireCache)
 	 * @see #registerJndiDataSources(GemFireCache)
-	 * @see #registerTransactionListeners(GemFireCache)
-	 * @see #registerTransactionWriter(GemFireCache)
+	 * @see #registerTransactionListeners(org.apache.geode.cache.GemFireCache)
+	 * @see #registerTransactionWriter(org.apache.geode.cache.GemFireCache)
 	 */
 	@Override
 	protected @NonNull <T extends GemFireCache> T postProcess(@NonNull T cache) {
@@ -280,7 +279,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * apply additional configuration to this {@link CacheFactoryBean} during Spring container initialization.
 	 *
 	 * @return the {@literal Composite} {@link PeerCacheConfigurer}.
-	 * @see PeerCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
 	 */
 	public @NonNull PeerCacheConfigurer getCompositePeerCacheConfigurer() {
 		return this.compositePeerCacheConfigurer;
@@ -310,7 +309,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * Requires GemFire 7.0 or higher
 	 * @param gatewayConflictResolver defined as Object in the signature for backward
 	 * compatibility with Gemfire 6 compatibility. This must be an instance of
-	 * {@link GatewayConflictResolver}
+	 * {@link org.apache.geode.cache.util.GatewayConflictResolver}
 	 */
 	public void setGatewayConflictResolver(@Nullable GatewayConflictResolver gatewayConflictResolver) {
 		this.gatewayConflictResolver = gatewayConflictResolver;
@@ -394,7 +393,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param peerCacheConfigurers array of {@link PeerCacheConfigurer PeerCacheConfigurers} used to apply
 	 * additional configuration to this {@link CacheFactoryBean}.
-	 * @see PeerCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
 	 * @see #setPeerCacheConfigurers(List)
 	 */
 	public void setPeerCacheConfigurers(PeerCacheConfigurer... peerCacheConfigurers) {
@@ -407,7 +406,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 *
 	 * @param peerCacheConfigurers {@link Iterable} of {@link PeerCacheConfigurer PeerCacheConfigurers} used to apply
 	 * additional configuration to this {@link CacheFactoryBean}.
-	 * @see PeerCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
 	 */
 	public void setPeerCacheConfigurers(List<PeerCacheConfigurer> peerCacheConfigurers) {
 		Optional.ofNullable(peerCacheConfigurers).ifPresent(this.peerCacheConfigurers::addAll);
@@ -430,20 +429,20 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	}
 
 	/**
-	 * Configures the {@link SecurityManager} used to secure this cache.
+	 * Configures the {@link org.apache.geode.security.SecurityManager} used to secure this cache.
 	 *
-	 * @param securityManager {@link SecurityManager} used to secure this cache.
-	 * @see SecurityManager
+	 * @param securityManager {@link org.apache.geode.security.SecurityManager} used to secure this cache.
+	 * @see org.apache.geode.security.SecurityManager
 	 */
 	public void setSecurityManager(@Nullable SecurityManager securityManager) {
 		this.securityManager = securityManager;
 	}
 
 	/**
-	 * Returns the {@link SecurityManager} used to secure this cache.
+	 * Returns the {@link org.apache.geode.security.SecurityManager} used to secure this cache.
 	 *
-	 * @return the {@link SecurityManager} used to secure this cache.
-	 * @see SecurityManager
+	 * @return the {@link org.apache.geode.security.SecurityManager} used to secure this cache.
+	 * @see org.apache.geode.security.SecurityManager
 	 */
 	public @Nullable SecurityManager getSecurityManager() {
 		return this.securityManager;

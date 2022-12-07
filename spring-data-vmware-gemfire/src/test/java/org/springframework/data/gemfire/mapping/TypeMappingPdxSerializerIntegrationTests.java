@@ -34,14 +34,14 @@ import example.app.model.ComplexType;
  * Integration Tests for {@link MappingPdxSerializer} with {@literal complex} and {@literal simple} {@link Class types}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.pdx.PdxSerializer
- * @see PdxWriter
- * @see MappingPdxSerializer
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.pdx.PdxWriter
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.5.0
  */
 @RunWith(SpringRunner.class)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.domain;
 
 import java.util.Arrays;
@@ -23,10 +22,10 @@ import org.springframework.lang.Nullable;
  * for this {@link ListablePage page}.
  *
  * @author John Blum
- * @see Iterator
- * @see List
- * @see Page
- * @see AbstractPageSupport
+ * @see java.util.Iterator
+ * @see java.util.List
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.gemfire.domain.support.AbstractPageSupport
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -39,7 +38,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	 * @param <T> {@link Class} type of the elements in the array.
 	 * @param content array of elements serving as the content for this {@link ListablePage page}.
 	 * @return a new {@link ListablePage} initialized with the given array for content.
-	 * @see Arrays#asList(Object[])
+	 * @see java.util.Arrays#asList(Object[])
 	 * @see #ListablePage(List)
 	 */
 	@SafeVarargs
@@ -69,8 +68,8 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	 * @param content {@link List} of elements serving as the content for this {@link ListablePage page}.
 	 * Guards against {@literal null} by initializing the {@code content} to an empty {@link List}
 	 * if the given {@link List} is {@literal null}.
-	 * @see Collections#emptyList()
-	 * @see List
+	 * @see java.util.Collections#emptyList()
+	 * @see java.util.List
 	 */
 	public ListablePage(@Nullable List<T> content) {
 		this.content = content != null ? content : Collections.emptyList();

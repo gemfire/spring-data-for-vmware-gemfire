@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Set;
@@ -13,8 +12,8 @@ import org.apache.geode.distributed.DistributedMember;
  *
  * @author David Turanski
  * @author John Blum
- * @see DistributedMember
- * @see AbstractFunctionTemplate
+ * @see org.apache.geode.distributed.DistributedMember
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionTemplate
  */
 public class GemfireOnMembersFunctionTemplate extends AbstractFunctionTemplate {
 

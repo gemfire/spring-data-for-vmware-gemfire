@@ -12,7 +12,7 @@ import static org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBe
  * snapshot event.
  *
  * @author John Blum
- * @see SnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.snapshot.event.SnapshotApplicationEvent
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -24,7 +24,7 @@ public class ImportSnapshotApplicationEvent<K, V> extends SnapshotApplicationEve
 	 *
 	 * @param source the source of the ApplicationEvent.
 	 * @param snapshotMetadata an array of SnapshotMetadata containing details for each import.
-	 * @see SnapshotMetadata
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public ImportSnapshotApplicationEvent(Object source, SnapshotMetadata<K, V>... snapshotMetadata) {
 		super(source, snapshotMetadata);
@@ -37,7 +37,7 @@ public class ImportSnapshotApplicationEvent<K, V> extends SnapshotApplicationEve
 	 * @param source the source of the ApplicationEvent.
 	 * @param regionPath absolute pathname of the Region.
 	 * @param snapshotMetadata an array of SnapshotMetadata containing details for each import/export.
-	 * @see SnapshotMetadata
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public ImportSnapshotApplicationEvent(Object source, String regionPath, SnapshotMetadata<K, V>... snapshotMetadata) {
 		super(source, regionPath, snapshotMetadata);

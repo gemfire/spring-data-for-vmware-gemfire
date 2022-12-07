@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -24,12 +23,12 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see DataPolicy
- * @see GemFireCache
- * @see Region
- * @see RegionFactory
- * @see RegionShortcut#LOCAL
- * @see PeerRegionFactoryBean
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.apache.geode.cache.RegionShortcut#LOCAL
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
  */
 public class LocalRegionFactoryBean<K, V> extends PeerRegionFactoryBean<K, V> {
 
@@ -85,9 +84,9 @@ public class LocalRegionFactoryBean<K, V> extends PeerRegionFactoryBean<K, V> {
 	 * @param regionFactory the GemFire RegionFactory used to created the Local Region.
 	 * @param persistent a boolean value indicating whether the Local Region should persist it's data.
 	 * @param dataPolicy requested Data Policy as set by the user in the Spring GemFire configuration meta-data.
-	 * @see DataPolicy
-	 * @see RegionFactory
-	 * @see RegionShortcut
+	 * @see org.apache.geode.cache.DataPolicy
+	 * @see org.apache.geode.cache.RegionFactory
+	 * @see org.apache.geode.cache.RegionShortcut
 	 */
 	@Override
 	protected void resolveDataPolicy(RegionFactory<K, V> regionFactory, Boolean persistent, String dataPolicy) {

@@ -15,9 +15,9 @@ import org.apache.geode.cache.SubscriptionAttributes;
  * Unit Tests for {@link SubscriptionAttributesFactoryBean}.
  *
  * @author John Blum
- * @see Test
- * @see SubscriptionAttributes
- * @see SubscriptionAttributesFactoryBean
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.SubscriptionAttributes
+ * @see org.springframework.data.gemfire.SubscriptionAttributesFactoryBean
  * @since 1.6.0
  */
 public class SubscriptionAttributesFactoryBeanUnitTests {

@@ -34,12 +34,12 @@ import org.apache.geode.cache.RegionEvent;
  * Unit Tests for {@link AbstractCachingRegionResolver}.
  *
  * @author John Blum
- * @see Test
- * @see Mockito
- * @see MultithreadedTestCase
- * @see TestFramework
- * @see Region
- * @see AbstractCachingRegionResolver
+ * @see org.junit.Test
+ * @see org.mockito.Mockito
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

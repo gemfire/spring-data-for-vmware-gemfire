@@ -36,9 +36,9 @@ import org.springframework.util.StringUtils;
  * or Pivotal GemFire requirements/rules.
  *
  * @author John Blum
- * @see BeanFactory
- * @see BeanDefinition
- * @see BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
  * @since 2.1.0
  */
 @SuppressWarnings("unused")

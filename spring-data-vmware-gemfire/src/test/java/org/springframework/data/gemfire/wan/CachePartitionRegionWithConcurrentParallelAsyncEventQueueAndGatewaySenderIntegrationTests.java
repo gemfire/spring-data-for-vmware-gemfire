@@ -29,15 +29,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * and {@link GatewaySender}.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see AsyncEventQueueFactoryBean
- * @see GatewaySenderFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.wan.AsyncEventQueueFactoryBean
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

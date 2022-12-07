@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.springframework.lang.NonNull;
@@ -107,7 +106,7 @@ public enum IndexType {
 	 *
 	 * @param value {@link String} value describing {@link IndexType} to match.
 	 * @return an {@link IndexType} matching the given {@link String}.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 */
 	public static IndexType valueOfIgnoreCase(String value) {
 

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Set;
@@ -19,11 +18,11 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see Execution
- * @see Function
- * @see AbstractFunctionTemplate
- * @see GemfireOnRegionOperations
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionTemplate
+ * @see org.springframework.data.gemfire.function.execution.GemfireOnRegionOperations
  */
 public class GemfireOnRegionFunctionTemplate extends AbstractFunctionTemplate implements GemfireOnRegionOperations {
 
@@ -35,7 +34,7 @@ public class GemfireOnRegionFunctionTemplate extends AbstractFunctionTemplate im
 	 *
 	 * @param region {@link Region} on which the {@link Function} will be executed.
 	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public GemfireOnRegionFunctionTemplate(Region<?, ?> region) {
 

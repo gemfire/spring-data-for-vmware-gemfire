@@ -42,7 +42,7 @@ public interface GemfireFunctionOperations {
 	 * @param function the GemFire Function object.
 	 * @param args an array of Object arguments to the Function call.
 	 * @return the first item in the ResultsCollector.
-	 * @see Function
+	 * @see org.apache.geode.cache.execute.Function
      */
 	<T> T executeAndExtract(Function function, Object... args);
 
@@ -70,7 +70,7 @@ public interface GemfireFunctionOperations {
 	 * @param <T> type parameter specifying the result type of the Function execution.
      * @param callback a callback providing the execution instance.
      * @return the Function execution result.
-	 * @see GemfireFunctionCallback
+	 * @see org.springframework.data.gemfire.function.execution.GemfireFunctionCallback
      */
 	<T> T execute(GemfireFunctionCallback<T> callback);
 

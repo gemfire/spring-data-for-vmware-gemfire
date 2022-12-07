@@ -17,8 +17,8 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.springframework.data.gemfire.repository.sample.User
- * @see UserDao
- * @see Repository
+ * @see org.springframework.data.gemfire.support.sample.UserDao
+ * @see org.springframework.stereotype.Repository
  * @since 1.4.0
  */
 @Repository("userDao")

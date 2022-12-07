@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.listener.adapter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -58,11 +57,11 @@ import org.slf4j.LoggerFactory;
  * @author Costin Leau
  * @author Oliver Gierke
  * @author John Blum
- * @see Method
- * @see Operation
- * @see CqEvent
- * @see CqQuery
- * @see ContinuousQueryListener
+ * @see java.lang.reflect.Method
+ * @see org.apache.geode.cache.Operation
+ * @see org.apache.geode.cache.query.CqEvent
+ * @see org.apache.geode.cache.query.CqQuery
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListener
  * @since 1.1.0
  */
 public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.util.Arrays;
@@ -18,9 +17,9 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * the {@link EnableCacheServers} annotation on a GemFire peer cache application class.
  *
  * @author John Blum
- * @see AddCacheServerConfiguration
- * @see EnableCacheServer
- * @see EnableCacheServers
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
  * @since 1.9.0
  */
 public class AddCacheServersConfiguration extends AddCacheServerConfiguration {

@@ -23,9 +23,9 @@ import org.springframework.data.gemfire.repository.sample.Person;
  *
  * @author John Blum
  * @author Mark Paluch
- * @see Test
- * @see GemfireRepositoryBean
- * @see GemfireRepositoryExtension
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryBean
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryExtension
  * @since 1.8.0
  */
 public class CdiExtensionIntegrationTest {

@@ -22,8 +22,8 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
  * the SnapshotServiceFactoryBean.SnapshotServiceAdpterSupport class.
  *
  * @author John Blum
- * @see Test
- * @see SnapshotServiceAdapterSupport
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapterSupport
  * @since 1.7.0
  */
 @SuppressWarnings("rawtypes")

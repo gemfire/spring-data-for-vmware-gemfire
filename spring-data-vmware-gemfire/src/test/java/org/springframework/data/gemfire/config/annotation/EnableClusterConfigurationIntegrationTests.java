@@ -41,20 +41,20 @@ import org.springframework.test.context.junit4.SpringRunner;
  * and {@link ClusterConfigurationConfiguration} class.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see ClientCache
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see Bean
- * @see Configuration
- * @see Import
- * @see ClientRegionFactoryBean
- * @see GemfireAdminOperations
- * @see ClusterConfigurationConfiguration
- * @see EnableClusterConfiguration
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableClusterConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

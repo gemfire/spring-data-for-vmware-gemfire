@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.cache;
 
 import java.util.concurrent.Callable;
@@ -20,8 +19,8 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author John Blum
  * @author Oliver Gierke
- * @see Cache
- * @see Region
+ * @see org.springframework.cache.Cache
+ * @see org.apache.geode.cache.Region
  */
 @SuppressWarnings("rawtypes")
 public class GemfireCache implements Cache {
@@ -34,8 +33,8 @@ public class GemfireCache implements Cache {
 	 *
 	 * @param region GemFire {@link Region} to wrap.
 	 * @return an instance of {@link GemfireCache} backed by the provided GemFire {@link Region}.
-	 * @see Region
-	 * @see Cache
+	 * @see org.apache.geode.cache.Region
+	 * @see org.springframework.cache.Cache
 	 * @see #GemfireCache(Region)
 	 */
 	public static GemfireCache wrap(Region<?, ?> region) {
@@ -59,7 +58,7 @@ public class GemfireCache implements Cache {
 	 * Returns the GemFire {@link Region} used as the implementation for this Spring {@link Cache}.
 	 *
 	 * @return the GemFire {@link Region} used as the implementation for this Spring {@link Cache}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public Region getNativeCache() {
 		return this.region;
@@ -69,7 +68,7 @@ public class GemfireCache implements Cache {
 	 * Returns the name of this Spring {@link Cache}.
 	 *
 	 * @return the name of this Spring {@link Cache}.
-	 * @see Region#getName()
+	 * @see org.apache.geode.cache.Region#getName()
 	 */
 	public String getName() {
 		return getNativeCache().getName();
@@ -78,7 +77,7 @@ public class GemfireCache implements Cache {
 	/**
 	 * Clears the entire contents of this Spring {@link Cache}.
 	 *
-	 * @see Region#clear()
+	 * @see org.apache.geode.cache.Region#clear()
 	 */
 	public void clear() {
 		getNativeCache().clear();
@@ -88,7 +87,7 @@ public class GemfireCache implements Cache {
 	 * Evicts (destroys) the entry (key/value) mapped to the given key from this Spring {@link Cache}.
 	 *
 	 * @param key key used to identify the cache entry to evict.
-	 * @see Region#destroy(Object)
+	 * @see org.apache.geode.cache.Region#destroy(Object)
 	 */
 	public void evict(Object key) {
 		getNativeCache().remove(key);
@@ -96,12 +95,12 @@ public class GemfireCache implements Cache {
 
 	/**
 	 * Returns the cache value for the given key wrapped in an instance of
-	 * {@link ValueWrapper}.
+	 * {@link org.springframework.cache.Cache.ValueWrapper}.
 	 *
 	 * @param key key identifying the the value to retrieve from the cache.
 	 * @return the value cached with the given key.
-	 * @see ValueWrapper
-	 * @see Region#get(Object)
+	 * @see org.springframework.cache.Cache.ValueWrapper
+	 * @see org.apache.geode.cache.Region#get(Object)
 	 */
 	public ValueWrapper get(Object key) {
 
@@ -118,7 +117,7 @@ public class GemfireCache implements Cache {
 	 * @param type desired {@link Class} type of the value.
 	 * @return the cache value for the given key cast to the specified {@link Class} type.
 	 * @throws IllegalStateException if the value is not null and not an instance of the desired type.
-	 * @see Region#get(Object)
+	 * @see org.apache.geode.cache.Region#get(Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(Object key, Class<T> type) {
@@ -145,7 +144,7 @@ public class GemfireCache implements Cache {
 	 * does not already have value.
 	 * @return the cache value of the given key or a value obtained by calling the {@link Callable} object
 	 * if the value for key is {@literal null}.
-	 * @throws ValueRetrievalException if an error occurs while trying to
+	 * @throws org.springframework.cache.Cache.ValueRetrievalException if an error occurs while trying to
 	 * load a value for given key using the {@link Callable}.
 	 * @see #get(Object, Class)
 	 */
@@ -179,7 +178,7 @@ public class GemfireCache implements Cache {
 	 *
 	 * @param key key used to reference the value in the cache.
 	 * @param value value to store in the cache referenced by the key.
-	 * @see Region#put(Object, Object)
+	 * @see org.apache.geode.cache.Region#put(Object, Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public void put(Object key, Object value) {
@@ -195,8 +194,8 @@ public class GemfireCache implements Cache {
 	 * otherwise this will break the compilation on 4.0.
 	 *
 	 * @return the existing value if the given key is already mapped to a value.
-	 * @see Cache#putIfAbsent(Object, Object)
-	 * @see Region#putIfAbsent(Object, Object)
+	 * @see org.springframework.cache.Cache#putIfAbsent(java.lang.Object, java.lang.Object)
+	 * @see org.apache.geode.cache.Region#putIfAbsent(Object, Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public ValueWrapper putIfAbsent(Object key, Object value) {

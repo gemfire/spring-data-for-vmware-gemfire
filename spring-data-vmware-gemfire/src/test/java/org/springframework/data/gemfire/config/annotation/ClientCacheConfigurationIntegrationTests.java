@@ -21,13 +21,13 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * Integration Tests for {@link ClientCacheConfiguration}.
  *
  * @author John Blum
- * @see ClientCache
- * @see Pool
- * @see Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ClientCacheConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.4.0
  */
 @SuppressWarnings("unused")

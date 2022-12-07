@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
@@ -25,13 +24,13 @@ import org.slf4j.LoggerFactory;
  * Spring Data for Apache Geode (SDG) {@link FactoryBean} implementations.
  *
  * @author John Blum
- * @see Logger
- * @see LoggerFactory
- * @see BeanClassLoaderAware
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see BeanNameAware
- * @see FactoryBean
+ * @see org.slf4j.Logger
+ * @see org.slf4j.LoggerFactory
+ * @see org.springframework.beans.factory.BeanClassLoaderAware
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.beans.factory.BeanNameAware
+ * @see org.springframework.beans.factory.FactoryBean
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -73,9 +72,9 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Sets a reference to the {@link ClassLoader} used by the Spring container to load bean {@link Class classes}.
 	 *
 	 * @param classLoader {@link ClassLoader} used by the Spring container to load bean {@link Class classes}.
-	 * @see BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
-	 * @see ClassLoader
-	 * @see Class
+	 * @see org.springframework.beans.factory.BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
+	 * @see java.lang.ClassLoader
+	 * @see java.lang.Class
 	 */
 	@Override
 	public void setBeanClassLoader(@Nullable ClassLoader classLoader) {
@@ -86,9 +85,9 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Returns a reference to the {@link ClassLoader} used by the Spring container to load bean {@link Class classes}.
 	 *
 	 * @return the {@link ClassLoader} used by the Spring container to load bean {@link Class classes}.
-	 * @see BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
-	 * @see ClassLoader
-	 * @see Class
+	 * @see org.springframework.beans.factory.BeanClassLoaderAware#setBeanClassLoader(ClassLoader)
+	 * @see java.lang.ClassLoader
+	 * @see java.lang.Class
 	 */
 	public @Nullable ClassLoader getBeanClassLoader() {
 		return this.beanClassLoader;
@@ -98,8 +97,8 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Sets a reference to the Spring {@link BeanFactory} in which this {@link FactoryBean} was declared.
 	 *
 	 * @param beanFactory reference to the declaring Spring {@link BeanFactory}.
-	 * @see BeanFactoryAware#setBeanFactory(BeanFactory)
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactoryAware#setBeanFactory(BeanFactory)
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	public void setBeanFactory(@Nullable BeanFactory beanFactory) throws BeansException {
@@ -110,8 +109,8 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Returns a reference to the Spring {@link BeanFactory} in which this {@link FactoryBean} was declared.
 	 *
 	 * @return a reference to the declaring Spring {@link BeanFactory}.
-	 * @see BeanFactoryAware#setBeanFactory(BeanFactory)
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactoryAware#setBeanFactory(BeanFactory)
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	public @Nullable BeanFactory getBeanFactory() {
 		return this.beanFactory;
@@ -121,8 +120,8 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Sets the {@link String bean name} assigned to this {@link FactoryBean} as declared in the Spring container.
 	 *
 	 * @param name {@link String bean name} assigned to this {@link FactoryBean} as declared in the Spring container.
-	 * @see BeanNameAware#setBeanName(String)
-	 * @see String
+	 * @see org.springframework.beans.factory.BeanNameAware#setBeanName(String)
+	 * @see java.lang.String
 	 */
 	@Override
 	public void setBeanName(@Nullable String name) {
@@ -133,8 +132,8 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Returns the {@link String bean name} assigned to this {@link FactoryBean} as declared in the Spring container.
 	 *
 	 * @return the {@link String bean name} assigned to this {@link FactoryBean} as declared in the Spring container.
-	 * @see BeanNameAware#setBeanName(String)
-	 * @see String
+	 * @see org.springframework.beans.factory.BeanNameAware#setBeanName(String)
+	 * @see java.lang.String
 	 */
 	public @Nullable String getBeanName() {
 		return this.beanName;
@@ -158,8 +157,8 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 *
 	 * @return an {@link Optional} reference to the {@link Logger} used by {@literal this} {@link FactoryBean}
 	 * to log {@link String messages}.
-	 * @see Optional
-	 * @see Logger
+	 * @see java.util.Optional
+	 * @see org.slf4j.Logger
 	 * @see #getLogger()
 	 */
 	protected Optional<Logger> getOptionalLogger() {
@@ -170,7 +169,7 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Determines whether {@literal DEBUG} logging is enabled.
 	 *
 	 * @return a boolean value indicating whether {@literal DEBUG} logging is enabled.
-	 * @see Logger#isDebugEnabled()
+	 * @see org.slf4j.Logger#isDebugEnabled()
 	 * @see #getOptionalLogger()
 	 */
 	public boolean isDebugLoggingEnabled() {
@@ -181,7 +180,7 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Determines whether {@literal INFO} logging is enabled.
 	 *
 	 * @return a boolean value indicating whether {@literal INFO} logging is enabled.
-	 * @see Logger#isInfoEnabled()
+	 * @see org.slf4j.Logger#isInfoEnabled()
 	 * @see #getOptionalLogger()
 	 */
 	public boolean isInfoLoggingEnabled() {
@@ -192,7 +191,7 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Determines whether {@literal WARN} logging is enabled.
 	 *
 	 * @return a boolean value indicating whether {@literal WARN} logging is enabled.
-	 * @see Logger#isWarnEnabled()
+	 * @see org.slf4j.Logger#isWarnEnabled()
 	 * @see #getOptionalLogger()
 	 */
 	public boolean isWarnLoggingEnabled() {
@@ -203,7 +202,7 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Determines whether {@literal ERROR} logging is enabled.
 	 *
 	 * @return a boolean value indicating whether {@literal ERROR} logging is enabled.
-	 * @see Logger#isErrorEnabled()
+	 * @see org.slf4j.Logger#isErrorEnabled()
 	 * @see #getOptionalLogger()
 	 */
 	public boolean isErrorLoggingEnabled() {
@@ -214,7 +213,7 @@ public abstract class AbstractFactoryBeanSupport<T>
 	 * Indicates that {@literal this} {@link FactoryBean} produces a single bean instance.
 	 *
 	 * @return {@literal true} by default.
-	 * @see FactoryBean#isSingleton()
+	 * @see org.springframework.beans.factory.FactoryBean#isSingleton()
 	 */
 	@Override
 	public boolean isSingleton() {

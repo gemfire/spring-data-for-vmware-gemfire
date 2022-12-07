@@ -19,9 +19,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Pivotal GemFire/Apache Geode Authentication and Authorization framework and services.
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableAuth
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableAuth
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @see <a href="https://geode.apache.org/docs/guide/113/managing/security/chapter_overview.html">Security</a>
  * @since 1.9.0
  */
@@ -44,10 +44,10 @@ public class AuthConfiguration extends EmbeddedServiceConfigurationSupport {
 	protected static final String SECURITY_PEER_VERIFY_MEMBER_TIMEOUT = "security-peer-verifymember-timeout";
 
 	/**
-	 * Returns the {@link EnableAuth} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableAuth} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableAuth} {@link Annotation} {@link Class} type.
-	 * @see EnableAuth
+	 * @return the {@link EnableAuth} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableAuth
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

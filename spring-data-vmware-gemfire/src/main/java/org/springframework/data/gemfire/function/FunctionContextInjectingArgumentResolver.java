@@ -30,16 +30,16 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Method
- * @see Region
- * @see Function
- * @see FunctionContext
- * @see RegionFunctionContext
- * @see ResultSender
- * @see PartitionRegionHelper
- * @see Filter
- * @see RegionData
- * @see PdxFunctionArgumentResolver
+ * @see java.lang.reflect.Method
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionContext
+ * @see org.apache.geode.cache.execute.RegionFunctionContext
+ * @see org.apache.geode.cache.execute.ResultSender
+ * @see org.apache.geode.cache.partition.PartitionRegionHelper
+ * @see org.springframework.data.gemfire.function.annotation.Filter
+ * @see org.springframework.data.gemfire.function.annotation.RegionData
+ * @see org.springframework.data.gemfire.function.PdxFunctionArgumentResolver
  * @since 1.3.0
  */
 class FunctionContextInjectingArgumentResolver extends PdxFunctionArgumentResolver {

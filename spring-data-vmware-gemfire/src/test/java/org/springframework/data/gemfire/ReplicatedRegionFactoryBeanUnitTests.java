@@ -19,11 +19,11 @@ import org.apache.geode.cache.RegionFactory;
  * Unit Tests for {@link ReplicatedRegionFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see DataPolicy
- * @see RegionFactory
- * @see ReplicatedRegionFactoryBean
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
  * @since 1.3.3
  */
 public class ReplicatedRegionFactoryBeanUnitTests {

@@ -19,10 +19,10 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  * and regular {@link Region} bean definitions referring to the templates.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Region
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.5.0

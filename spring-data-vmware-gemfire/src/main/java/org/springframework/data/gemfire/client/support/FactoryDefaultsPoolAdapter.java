@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import java.net.InetSocketAddress;
@@ -23,12 +22,12 @@ import org.springframework.data.gemfire.client.PoolAdapter;
  * (e.g. freeConnectionTimeout, idleTimeout, etc).
  *
  * @author John Blum
- * @see InetSocketAddress
- * @see Pool
- * @see PoolFactory
- * @see SocketFactory
+ * @see java.net.InetSocketAddress
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.apache.geode.cache.client.SocketFactory
  * @see org.apache.geode.cache.query.Query
- * @see PoolAdapter
+ * @see org.springframework.data.gemfire.client.PoolAdapter
  * @since 1.8.0
  */
 @SuppressWarnings("unused")

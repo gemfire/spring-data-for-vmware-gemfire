@@ -19,8 +19,8 @@ import example.app.model.User;
  * @author John Blum
  * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see GemfireRepository
- * @see User
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see example.app.model.User
  * @since 2.5.0
  */
 @SuppressWarnings("unused")

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.cache.config;
 
 import org.apache.geode.cache.GemFireCache;
@@ -25,12 +24,12 @@ import org.springframework.data.gemfire.cache.GemfireCacheManager;
  * the SDG provided {@link EnableGemfireCaching} annotation.
  *
  * @author John Blum
- * @see GemFireCache
- * @see EnableCaching
- * @see Bean
- * @see Configuration
- * @see GemfireCacheManager
- * @see EnableGemfireCaching
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.cache.annotation.EnableCaching
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.cache.GemfireCacheManager
+ * @see org.springframework.data.gemfire.cache.config.EnableGemfireCaching
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache">Cache Abstraction</a>
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-store-configuration-gemfire">GemFire-based Cache</a>
  * @see <a href="https://docs.spring.io/spring-data-gemfire/docs/current/reference/html/#apis:spring-cache-abstraction">Support for Spring Cache Abstraction</a>
@@ -46,8 +45,8 @@ public class GemfireCachingConfiguration {
 	 * in Spring's Cache Abstraction.
 	 *
 	 * @return an instance of {@link GemfireCacheManager}.
-	 * @see GemfireCacheManager
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.cache.GemfireCacheManager
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@Bean
 	public GemfireCacheManager cacheManager(GemFireCache gemfireCache) {

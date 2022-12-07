@@ -45,13 +45,13 @@ import org.springframework.util.ObjectUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Region
+ * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
- * @see ClientRegionFactoryBean
- * @see ClientRegionParser
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.ClientRegionParser
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @GemFireUnitTest

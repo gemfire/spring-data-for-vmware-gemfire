@@ -54,11 +54,11 @@ import org.springframework.util.StringUtils;
  * Integration Tests for {@link Region} Templates.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.5.0

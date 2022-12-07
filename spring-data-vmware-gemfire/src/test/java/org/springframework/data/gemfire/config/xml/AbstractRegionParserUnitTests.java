@@ -29,9 +29,9 @@ import org.w3c.dom.Node;
  * Unit tests for {@link AbstractRegionParser}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see AbstractRegionParser
+ * @see org.springframework.data.gemfire.config.xml.AbstractRegionParser
  * @since 1.3.3
  */
 // TODO add more tests

@@ -45,15 +45,15 @@ import org.springframework.util.StringUtils;
  * {@link ApplicationEvent ApplicationEvents} to trigger imports and exports of cache {@link Region} data.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see SnapshotServiceFactoryBean
- * @see ExportSnapshotApplicationEvent
- * @see ImportSnapshotApplicationEvent
- * @see SnapshotApplicationEvent
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
+ * @see org.springframework.data.gemfire.snapshot.event.ExportSnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.snapshot.event.ImportSnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.snapshot.event.SnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

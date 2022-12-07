@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -66,32 +65,32 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Cache
- * @see CacheListener
- * @see CacheLoader
- * @see CacheWriter
- * @see CustomExpiry
- * @see DataPolicy
- * @see DiskStore
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see GemFireCache
- * @see PartitionAttributes
- * @see Region
- * @see RegionAttributes
- * @see RegionFactory
- * @see RegionShortcut
- * @see Scope
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see Compressor
- * @see DisposableBean
- * @see SmartLifecycle
- * @see ConfigurableRegionFactoryBean
- * @see ResolvableRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see EvictingRegionFactoryBean
- * @see ExpiringRegionFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheListener
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.CacheWriter
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.PartitionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.Scope
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.apache.geode.compression.Compressor
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.context.SmartLifecycle
+ * @see org.springframework.data.gemfire.ConfigurableRegionFactoryBean
+ * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean
+ * @see org.springframework.data.gemfire.expiration.ExpiringRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
  */
 @SuppressWarnings("unused")
@@ -150,13 +149,11 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param gemfireCache reference to the {@link GemFireCache}.
 	 * @param regionName {@link String name} of the new {@link Region}.
 	 * @return a new {@link Region} with the given {@link String name}.
-	 * @see GemFireCache
-	 * @see Region
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	protected Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) {
-
-		applyRegionConfigurers(regionName);
 
 		verifyLockGrantorEligibility(getAttributes(), getScope());
 
@@ -228,10 +225,10 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param cache reference to the {@link Cache}.
 	 * @return a {@link RegionFactory} used to construct, configure and initialize the {@link Region}
 	 * specified by this {@link PeerRegionFactoryBean}.
-	 * @see Cache#createRegionFactory(RegionShortcut)
-	 * @see Cache#createRegionFactory(RegionAttributes)
-	 * @see Cache#createRegionFactory()
-	 * @see RegionFactory
+	 * @see org.apache.geode.cache.Cache#createRegionFactory(org.apache.geode.cache.RegionShortcut)
+	 * @see org.apache.geode.cache.Cache#createRegionFactory(org.apache.geode.cache.RegionAttributes)
+	 * @see org.apache.geode.cache.Cache#createRegionFactory()
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected RegionFactory<K, V> createRegionFactory(Cache cache) {
 
@@ -257,7 +254,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param regionFactory {@link RegionFactory} to configure
 	 * @return the given {@link RegionFactory}.
-	 * @see RegionFactory
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected RegionFactory<K, V> configure(RegionFactory<K, V> regionFactory) {
 
@@ -316,7 +313,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param regionFactory {@link RegionFactory} used to create the {@link Region}.
 	 * @return the given {@link RegionFactory}.
-	 * @see RegionFactory
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected RegionFactory<K, V> postProcess(RegionFactory<K, V> regionFactory) {
 		return regionFactory;
@@ -405,10 +402,10 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param regionAttributes the RegionAttributes containing the Region configuration settings to merge to the
 	 * RegionFactory.
 	 * @return the RegionFactory with the configuration settings of the RegionAttributes merged.
-	 * @see #isUserSpecifiedEvictionAttributes(RegionAttributes)
-	 * @see #validateRegionAttributes(RegionAttributes)
-	 * @see RegionAttributes
-	 * @see RegionFactory
+	 * @see #isUserSpecifiedEvictionAttributes(org.apache.geode.cache.RegionAttributes)
+	 * @see #validateRegionAttributes(org.apache.geode.cache.RegionAttributes)
+	 * @see org.apache.geode.cache.RegionAttributes
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected <K, V> RegionFactory<K, V> mergeRegionAttributes(RegionFactory<K, V> regionFactory,
 			RegionAttributes<K, V> regionAttributes) {
@@ -472,8 +469,8 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param regionFactory {@link RegionFactory} to configure.
 	 * @param regionAttributes {@link RegionAttributes} used to configure the {@link RegionFactory}
 	 * if not {@literal null}.
-	 * @see RegionAttributes
-	 * @see RegionFactory
+	 * @see org.apache.geode.cache.RegionAttributes
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	@SuppressWarnings("rawtypes")
 	protected <K, V> void mergePartitionAttributes(RegionFactory<K, V> regionFactory,
@@ -545,7 +542,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 */
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	void validateRegionAttributes(RegionAttributes regionAttributes) {
-		AttributesFactory.validateAttributes(regionAttributes);
+		org.apache.geode.cache.AttributesFactory.validateAttributes(regionAttributes);
 	}
 
 	/**
@@ -582,9 +579,9 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param persistent a boolean value indicating whether the Region should be persistent and persist it's
 	 * data to disk.
 	 * @param dataPolicy the configured Data Policy for the Region.
-	 * @see #resolveDataPolicy(RegionFactory, Boolean, String)
-	 * @see DataPolicy
-	 * @see RegionFactory
+	 * @see #resolveDataPolicy(org.apache.geode.cache.RegionFactory, Boolean, String)
+	 * @see org.apache.geode.cache.DataPolicy
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected void resolveDataPolicy(RegionFactory<K, V> regionFactory, Boolean persistent, DataPolicy dataPolicy) {
 
@@ -605,8 +602,8 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @param regionFactory the GemFire RegionFactory used to create the desired Region.
 	 * @param persistent a boolean value indicating whether the Region should persist it's data to disk.
 	 * @param dataPolicy requested Data Policy as set by the user in the Spring GemFire configuration meta-data.
-	 * @see DataPolicy
-	 * @see RegionFactory
+	 * @see org.apache.geode.cache.DataPolicy
+	 * @see org.apache.geode.cache.RegionFactory
 	 */
 	protected void resolveDataPolicy(RegionFactory<K, V> regionFactory, Boolean persistent, String dataPolicy) {
 
@@ -648,9 +645,9 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Closes and destroys this {@link Region}.
 	 *
 	 * @throws Exception if {@code destroy()} fails.
-	 * @see DisposableBean
-	 * @see Region#close()
-	 * @see Region#destroyRegion()
+	 * @see org.springframework.beans.factory.DisposableBean
+	 * @see org.apache.geode.cache.Region#close()
+	 * @see org.apache.geode.cache.Region#destroyRegion()
 	 */
 	@Override
 	public void destroy() throws Exception {
@@ -677,7 +674,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param asyncEventQueues array of {@link AsyncEventQueue AsyncEventQueues} registered with and used by
 	 * this {@link Region} to perform asynchronous data access operations.
-	 * @see AsyncEventQueue
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
 	 * @see #addAsyncEventQueues(AsyncEventQueue[])
 	 * @see #addAsyncEventQueueIds(String[])
 	 * @see #setAsyncEventQueueIds(String[])
@@ -747,7 +744,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Used only when the {@link Region} is created and not when the {@link Region} is looked up.
 	 *
 	 * @param attributes {@link RegionAttributes} used to configure this {@link Region}.
-	 * @see RegionAttributes
+	 * @see org.apache.geode.cache.RegionAttributes
 	 */
 	public void setAttributes(RegionAttributes<K, V> attributes) {
 		this.attributes = attributes;
@@ -757,7 +754,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Returns the {@link RegionAttributes} used to configure this {@link Region}.
 	 *
 	 * @return the {@link RegionAttributes} used to configure this {@link Region}.
-	 * @see RegionAttributes
+	 * @see org.apache.geode.cache.RegionAttributes
 	 */
 	public RegionAttributes<K, V> getAttributes() {
 
@@ -775,7 +772,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * set with {@link #setAttributes(RegionAttributes)}.
 	 *
 	 * @param cacheListeners array {@link CacheListener CacheListeners} to register with this {@link Region}.
-	 * @see CacheListener
+	 * @see org.apache.geode.cache.CacheListener
 	 */
 	public void setCacheListeners(CacheListener<K, V>[] cacheListeners) {
 		this.cacheListeners = cacheListeners;
@@ -791,7 +788,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * set with {@link #setAttributes(RegionAttributes)}.
 	 *
 	 * @param cacheLoader {@link CacheLoader} to register for this {@link Region}.
-	 * @see CacheLoader
+	 * @see org.apache.geode.cache.CacheLoader
 	 */
 	public void setCacheLoader(CacheLoader<K, V> cacheLoader) {
 		this.cacheLoader = cacheLoader;
@@ -807,7 +804,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * set with {@link #setAttributes(RegionAttributes)}.
 	 *
 	 * @param cacheWriter {@link CacheWriter} to register for this {@link Region}.
-	 * @see CacheWriter
+	 * @see org.apache.geode.cache.CacheWriter
 	 */
 	public void setCacheWriter(CacheWriter<K, V> cacheWriter) {
 		this.cacheWriter = cacheWriter;
@@ -829,7 +826,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Configures the {@link Compressor} used to compress this {@link Region Region's} data.
 	 *
 	 * @param compressor {@link Compressor} used to compress this {@link Region Region's} data.
-	 * @see Compressor
+	 * @see org.apache.geode.compression.Compressor
 	 */
 	public void setCompressor(Compressor compressor) {
 		this.compressor = compressor;
@@ -859,7 +856,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Configure the {@link DataPolicy} for this {@link Region}.
 	 *
 	 * @param dataPolicy {@link DataPolicy} used when configuring this {@link Region}.
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.DataPolicy
 	 * @since 1.4.0
 	 */
 	public void setDataPolicy(DataPolicy dataPolicy) {
@@ -873,7 +870,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * @return the configured, resolved {@link DataPolicy} used by this {@link Region}.
 	 * @throws IllegalStateException if the {@link DataPolicy} has not been configured
 	 * or is not resolvable.
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.DataPolicy
 	 */
 	public DataPolicy getDataPolicy() {
 
@@ -916,7 +913,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param gatewaySenders {@link GatewaySender GatewaySenders} used to send data and events from this {@link Region}
 	 * to a matching {@link Region} in a remote cluster.
-	 * @see GatewaySender
+	 * @see org.apache.geode.cache.wan.GatewaySender
 	 * @see #addGatewaySenders(GatewaySender[])
 	 * @see #addGatewaySendersIds(String[])
 	 * @see #setGatewaySenderIds(String[])
@@ -951,7 +948,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * existing, registered {@link GatewaySender GatewaySenders} for this {@link Region}.
 	 *
 	 * @param gatewaySenders array of {@link GatewaySender GatewaySenders} to register with this {@link Region}.
-	 * @see GatewaySender
+	 * @see org.apache.geode.cache.wan.GatewaySender
 	 * @see #addGatewaySendersIds(String[])
 	 * @see #setGatewaySenders(GatewaySender[])
 	 * @see #setGatewaySenderIds(String[])
@@ -968,7 +965,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * the already existing, registered {@link GatewaySender GatewaySenders} for this {@link Region}.
 	 *
 	 * @param gatewaySenderIds array of {@link GatewaySender} {@link String IDs} to register with this {@link Region}.
-	 * @see GatewaySender
+	 * @see org.apache.geode.cache.wan.GatewaySender
 	 * @see #addGatewaySenders(GatewaySender[])
 	 * @see #setGatewaySenders(GatewaySender[])
 	 * @see #setGatewaySenderIds(String[])
@@ -985,7 +982,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param offHeap {@link Boolean} value indicating whether to enable the use of {@literal off-heap memory}
 	 * for this {@link Region}.
-	 * @see RegionFactory#setOffHeap(boolean)
+	 * @see org.apache.geode.cache.RegionFactory#setOffHeap(boolean)
 	 */
 	public void setOffHeap(Boolean offHeap) {
 		this.offHeap = offHeap;
@@ -1019,9 +1016,9 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Configures the {@link Class key constraint} used to enforce key {@link Class types} for this {@link Region}.
 	 *
 	 * @param keyConstraint {@link Class} specifying the key type constraint for this {@link Region}.
-	 * @see RegionFactory#setKeyConstraint(Class)
-	 * @see RegionAttributes#getKeyConstraint()
-	 * @see Class
+	 * @see org.apache.geode.cache.RegionFactory#setKeyConstraint(Class)
+	 * @see org.apache.geode.cache.RegionAttributes#getKeyConstraint()
+	 * @see java.lang.Class
 	 */
 	public void setKeyConstraint(Class<K> keyConstraint) {
 		this.keyConstraint = keyConstraint;
@@ -1055,7 +1052,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 *
 	 * @param scope {@link Scope} used to configure the {@link Region Region's} data distribution
 	 * and acknowledgement strategy.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 */
 	public void setScope(Scope scope) {
 		this.scope = scope;
@@ -1066,7 +1063,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * and acknowledgement strategy (useful in consistency) for the {@link Region}.
 	 *
 	 * @return the configured {@link Scope} of the {@link Region}.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 */
 	public Scope getScope() {
 		return this.scope;
@@ -1076,7 +1073,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Configures the {@link Region} with the given {@link RegionShortcut}.
 	 *
 	 * @param shortcut {@link RegionShortcut} used to configure pre-defined defaults for the {@link Region}.
-	 * @see RegionShortcut
+	 * @see org.apache.geode.cache.RegionShortcut
 	 */
 	public void setShortcut(RegionShortcut shortcut) {
 		this.shortcut = shortcut;
@@ -1086,7 +1083,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Returns the configured {@link RegionShortcut}.
 	 *
 	 * @return the configured {@link RegionShortcut}.
-	 * @see RegionShortcut
+	 * @see org.apache.geode.cache.RegionShortcut
 	 */
 	public RegionShortcut getShortcut() {
 		return this.shortcut;
@@ -1122,9 +1119,9 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 * Configures the {@link Class value constraint} used to enforce value {@link Class types} for this {@link Region}.
 	 *
 	 * @param valueConstraint {@link Class} specifying the value type constraint for this {@link Region}.
-	 * @see RegionFactory#setValueConstraint(Class)
-	 * @see RegionAttributes#getValueConstraint()
-	 * @see Class
+	 * @see org.apache.geode.cache.RegionFactory#setValueConstraint(Class)
+	 * @see org.apache.geode.cache.RegionAttributes#getValueConstraint()
+	 * @see java.lang.Class
 	 */
 	public void setValueConstraint(Class<V> valueConstraint) {
 		this.valueConstraint = valueConstraint;

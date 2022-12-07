@@ -17,10 +17,10 @@ import org.springframework.beans.factory.InitializingBean;
  *
  * @author Costin Leau
  * @author John Blum
- * @see FactoryBean
- * @see InitializingBean
- * @see EvictionAttributes
- * @see ObjectSizer
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.util.ObjectSizer
  */
 @SuppressWarnings("unused")
 public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttributes>, InitializingBean {
@@ -89,7 +89,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Sets the action to perform on the Region when Eviction occurs.
 	 *
 	 * @param action the specified EvictionAction taken on the Region.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 */
 	public void setAction(final EvictionAction action) {
 		this.action = action;
@@ -99,7 +99,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Gets the action performed on the Region when Eviction occurs.
 	 *
 	 * @return the EvictionAction taken on the Region.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 */
 	public EvictionAction getAction() {
 		return (action != null ? action : EvictionAction.DEFAULT_EVICTION_ACTION);
@@ -109,7 +109,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Sets the GemFire ObjectSizer used in determining object sizes of data stored in the Cache.
 	 *
 	 * @param objectSizer the ObjectSizer used in sizing object data stored in the Cache.
-	 * @see ObjectSizer
+	 * @see org.apache.geode.cache.util.ObjectSizer
 	 */
 	public void setObjectSizer(final ObjectSizer objectSizer) {
 		this.objectSizer = objectSizer;
@@ -119,7 +119,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Gets the GemFire ObjectSizer used in determining object sizes of data stored in the Cache.
 	 *
 	 * @return the ObjectSizer used in sizing object data stored in the Cache.
-	 * @see ObjectSizer
+	 * @see org.apache.geode.cache.util.ObjectSizer
 	 */
 	public ObjectSizer getObjectSizer() {
 		return objectSizer;

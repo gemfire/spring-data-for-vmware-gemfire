@@ -22,13 +22,13 @@ import org.springframework.data.gemfire.function.config.EnableGemfireFunctions;
  * {@link Function Functions} are properly created and registered in Apache Geode.
  *
  * @author John Blum
- * @see Function
- * @see Bean
- * @see Configuration
- * @see CreateIndexFunction
- * @see CreateRegionFunction
- * @see ListIndexesFunction
- * @see EnableGemfireFunctions
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction
+ * @see org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction
+ * @see org.springframework.data.gemfire.config.admin.functions.ListIndexesFunction
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
  * @since 2.0.3
  */
 @Configuration

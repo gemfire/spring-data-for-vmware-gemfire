@@ -15,8 +15,8 @@ import org.springframework.core.Ordered;
  * Unit tests for {@link SchemaObjectDefinition}.
  *
  * @author John Blum
- * @see Test
- * @see SchemaObjectDefinition
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
  * @since 2.0.0
  */
 public class SchemaObjectDefinitionUnitTests {

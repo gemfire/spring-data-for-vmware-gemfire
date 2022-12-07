@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.support;
 
 import java.lang.annotation.Annotation;
@@ -34,23 +33,23 @@ import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.wan.GatewaySenderFactoryBean;
 
 /**
- * A {@link BeanFactoryPostProcessor} to associate the configured {@link GatewaySender}
- * onto the corresponding {@link Region}.
+ * A {@link BeanFactoryPostProcessor} to associate the configured {@link org.apache.geode.cache.wan.GatewaySender}
+ * onto the corresponding {@link org.apache.geode.cache.Region}.
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Region
- * @see GatewaySender
- * @see BeanDefinition
- * @see BeanFactoryPostProcessor
- * @see ConfigurableListableBeanFactory
- * @see RuntimeBeanReference
- * @see ManagedList
- * @see Bean
- * @see Configuration
- * @see PeerRegionFactoryBean
- * @see AbstractAnnotationConfigSupport
- * @see GatewaySenderFactoryBean
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+ * @see org.springframework.beans.factory.config.RuntimeBeanReference
+ * @see org.springframework.beans.factory.support.ManagedList
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  * @since 2.2.0
  */
 @Configuration

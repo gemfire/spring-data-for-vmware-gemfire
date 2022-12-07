@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.annotation;
 
 import java.lang.annotation.ElementType;
@@ -33,7 +32,7 @@ public @interface GemfireFunction {
 	 * If not provided the simple {@link String method name} will be used.
 	 *
 	 * @return the {@link Function} {@link Function#getId() id}.
-	 * @see Function#getId()
+	 * @see org.apache.geode.cache.execute.Function#getId()
      */
 	String id() default "";
 
@@ -48,7 +47,7 @@ public @interface GemfireFunction {
 	 * Attribute used to configure whether the {@link Function} is HA (Highly Available).
 	 *
 	 * @return a boolean value configuring whether the defined {@link Function} is HA.
-	 * @see Function#isHA()
+	 * @see org.apache.geode.cache.execute.Function#isHA()
 	 */
 	boolean HA() default false;
 
@@ -58,7 +57,7 @@ public @interface GemfireFunction {
 	 * This allows overriding a {@code void} method which uses the {@link ResultSender} directly.
 	 *
 	 * @return a boolean value indicating if the {@link Function} is expected to return a result.
-	 * @see Function#hasResult()
+	 * @see org.apache.geode.cache.execute.Function#hasResult()
 	 */
 	boolean hasResult() default false;
 
@@ -66,7 +65,7 @@ public @interface GemfireFunction {
 	 * Attribute to configure whether the {@link Function} is optimized for write operations.
 	 *
 	 * @return a boolean value indicating if the {@link Function} is configured for optimized write operations.
-	 * @see Function#optimizeForWrite()
+	 * @see org.apache.geode.cache.execute.Function#optimizeForWrite()
 	 */
 	boolean optimizeForWrite() default false;
 

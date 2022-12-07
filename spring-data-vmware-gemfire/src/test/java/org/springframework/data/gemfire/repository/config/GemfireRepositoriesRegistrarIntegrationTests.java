@@ -27,12 +27,12 @@ import example.app.repo.UserRepository;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see GemfireRepositoriesRegistrar
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.repository.config.GemfireRepositoriesRegistrar
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration

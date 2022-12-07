@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -14,9 +13,9 @@ import org.springframework.lang.Nullable;
  * Composition of {@link GatewayReceiverConfigurer}.
  *
  * @author Udo Kohlmeyer
- * @see GatewayReceiverConfigurer
- * @see AbstractLazyResolvingComposableConfigurer
- * @see GatewayReceiverFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  * @since 2.2.0
  */
 public class LazyResolvingComposableGatewayReceiverConfigurer

@@ -13,9 +13,9 @@ import org.junit.Test;
  * Unit Tests for {@link IndexTypeConverter}.
  *
  * @author John Blum
- * @see Test
- * @see IndexType
- * @see IndexTypeConverter
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.IndexType
+ * @see org.springframework.data.gemfire.IndexTypeConverter
  * @since 1.5.2
  */
 public class IndexTypeConverterUnitTests {

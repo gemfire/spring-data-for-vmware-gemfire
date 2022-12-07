@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.server;
 
 import static java.util.stream.StreamSupport.stream;
@@ -39,17 +38,17 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Cache
- * @see ClientCache
- * @see CacheServer
- * @see ClientSubscriptionConfig
- * @see ServerLoadProbe
- * @see DisposableBean
- * @see FactoryBean
- * @see InitializingBean
- * @see SmartLifecycle
- * @see CacheServerConfigurer
- * @see AbstractFactoryBeanSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.apache.geode.cache.server.ClientSubscriptionConfig
+ * @see org.apache.geode.cache.server.ServerLoadProbe
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.context.SmartLifecycle
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
 public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServer>
@@ -116,7 +115,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 *
 	 * @param cacheServerConfigurers array of {@link CacheServerConfigurer CacheServerConfigurers} applied to
 	 * this {@link CacheServerFactoryBean}.
-	 * @see CacheServerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
 	 * @see #applyCacheServerConfigurers(Iterable)
 	 */
 	protected void applyCacheServerConfigurers(CacheServerConfigurer... cacheServerConfigurers) {
@@ -129,7 +128,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 *
 	 * @param cacheServerConfigurers {@link Iterable} of {@link CacheServerConfigurer CacheServerConfigurers} applied to
 	 * this {@link CacheServerFactoryBean}.
-	 * @see CacheServerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
 	 */
 	protected void applyCacheServerConfigurers(Iterable<CacheServerConfigurer> cacheServerConfigurers) {
 		stream(nullSafeIterable(cacheServerConfigurers).spliterator(), false)
@@ -147,8 +146,8 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 *
 	 * @param cache {@link Cache} used to add a {@link CacheServer}.
 	 * @return the newly added {@link CacheServer}.
-	 * @see Cache#addCacheServer()
-	 * @see CacheServer
+	 * @see org.apache.geode.cache.Cache#addCacheServer()
+	 * @see org.apache.geode.cache.server.CacheServer
 	 */
 	protected CacheServer addCacheServer(Cache cache) {
 		return cache.addCacheServer();
@@ -159,7 +158,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 *
 	 * @param cacheServer {@link CacheServer} to configure.
 	 * @return the given {@link CacheServer}.
-	 * @see CacheServer
+	 * @see org.apache.geode.cache.server.CacheServer
 	 */
 	protected CacheServer configure(CacheServer cacheServer) {
 
@@ -196,7 +195,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 *
 	 * @param cacheServer {@link CacheServer} to process.
 	 * @return the given {@link CacheServer}.
-	 * @see CacheServer
+	 * @see org.apache.geode.cache.server.CacheServer
 	 */
 	protected CacheServer postProcess(CacheServer cacheServer) {
 		return cacheServer;
@@ -207,7 +206,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	 * to this {@link CacheServerFactoryBean} on Spring container initialization.
 	 *
 	 * @return the Composite {@link CacheServerConfigurer}.
-	 * @see CacheServerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
 	 */
 	protected CacheServerConfigurer getCompositeCacheServerConfigurer() {
 		return this.compositeCacheServerConfigurer;

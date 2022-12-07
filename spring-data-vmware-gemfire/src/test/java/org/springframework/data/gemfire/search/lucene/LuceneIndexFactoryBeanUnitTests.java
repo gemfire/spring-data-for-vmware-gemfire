@@ -44,13 +44,13 @@ import org.springframework.data.gemfire.GemfireUtils;
  * Unit Tests for {@link LuceneIndexFactoryBean}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see LuceneIndexFactoryBean
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 2.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

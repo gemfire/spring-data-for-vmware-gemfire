@@ -14,9 +14,9 @@ import org.apache.geode.cache.EvictionAlgorithm;
  * Unit Tests for {@link EvictionPolicyType} enum.
  *
  * @author John Blum
- * @see Test
- * @see EvictionAlgorithm
- * @see EvictionPolicyType
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.EvictionAlgorithm
+ * @see org.springframework.data.gemfire.eviction.EvictionPolicyType
  * @since 1.6.0
  */
 public class EvictionPolicyTypeUnitTests {

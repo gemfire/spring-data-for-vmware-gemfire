@@ -19,10 +19,10 @@ import lombok.RequiredArgsConstructor;
  * Abstract Data Type (ADT) modeling a {@literal Book} application domain type.
  *
  * @author John Blum
- * @see Comparable
- * @see Serializable
- * @see LuceneIndexed
- * @see Region
+ * @see java.lang.Comparable
+ * @see java.io.Serializable
+ * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @see lombok
  * @since 2.2.0
  */

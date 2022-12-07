@@ -31,16 +31,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using SDG Java configuration.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
- * @see PartitionedRegionFactoryBean
- * @see PeerCacheApplication
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.7.0
  */
 @RunWith(SpringRunner.class)

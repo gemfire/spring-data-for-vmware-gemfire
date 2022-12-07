@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -26,16 +25,16 @@ import org.springframework.util.StringUtils;
  * in a Spring application context.
  *
  * @author John Blum
- * @see Cache
+ * @see org.apache.geode.cache.Cache
  * @see org.springframework.beans.factory.ListableBeanFactory
- * @see Bean
- * @see Configuration
- * @see Import
- * @see CacheFactoryBean
- * @see AbstractCacheConfiguration
- * @see AdministrativeConfiguration
- * @see PeerCacheApplication
- * @see PeerCacheConfigurer
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AdministrativeConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
  * @since 1.9.0
  */
 @Configuration
@@ -63,9 +62,9 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
      * Bean declaration for a single, peer {@link Cache} instance.
      *
      * @return a new instance of a peer {@link Cache}.
-     * @see CacheFactoryBean
+     * @see org.springframework.data.gemfire.CacheFactoryBean
      * @see org.apache.geode.cache.GemFireCache
-     * @see Cache
+     * @see org.apache.geode.cache.Cache
      * @see #constructCacheFactoryBean()
      */
     @Bean
@@ -97,7 +96,7 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
      *
      * @param <T> {@link Class} sub-type of {@link CacheFactoryBean}.
      * @return a new instance of {@link CacheFactoryBean}.
-     * @see CacheFactoryBean
+     * @see org.springframework.data.gemfire.CacheFactoryBean
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -110,7 +109,7 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
      *
      * @param importMetadata {@link AnnotationMetadata} containing peer cache meta-data used to
      * configure the peer {@link Cache}.
-     * @see AnnotationMetadata
+     * @see org.springframework.core.type.AnnotationMetadata
      * @see #isCacheServerOrPeerCacheApplication(AnnotationMetadata)
      */
     @Override
@@ -219,7 +218,7 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
      *
      * @return a {@link String} containing the name of the Spring-configured Apache Geode peer {@link Cache} application
      * and data node in the cluster.
-     * @see Object#toString()
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {

@@ -30,16 +30,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * and bootstrapped by {@link LocatorApplication}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see Cache
- * @see CacheFactory
- * @see DistributedSystem
- * @see Locator
- * @see LocatorApplication
- * @see LocatorApplicationConfiguration
- * @see IntegrationTestsSupport
- * @see SpringRunner
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplicationConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

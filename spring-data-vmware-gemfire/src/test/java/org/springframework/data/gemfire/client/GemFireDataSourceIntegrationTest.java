@@ -35,14 +35,14 @@ import org.springframework.util.FileSystemUtils;
  * Spring configured and bootstrapped Geode Server(s).
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ClientCache
- * @see GemfireDataSourcePostProcessor
- * @see ServerProcess
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
+ * @see org.springframework.data.gemfire.fork.ServerProcess
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

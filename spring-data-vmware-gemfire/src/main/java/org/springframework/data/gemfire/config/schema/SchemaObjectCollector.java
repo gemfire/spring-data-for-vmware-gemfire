@@ -20,8 +20,8 @@ import org.springframework.context.ApplicationContext;
  * to the schema object instances of a particular type.
  *
  * @author John Blum
- * @see GemFireCache
- * @see ApplicationContext
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.context.ApplicationContext
  * @since 2.0.0
  */
 public interface SchemaObjectCollector<T> {
@@ -33,8 +33,8 @@ public interface SchemaObjectCollector<T> {
 	 * of type {@link T}.
 	 * @return a {@link Set} of all schema objects of type {@link T} declared in the {@link ApplicationContext};
 	 * returns an empty {@link Set} if no schema object of type {@link T} could be found.
-	 * @see ApplicationContext
-	 * @see Iterable
+	 * @see org.springframework.context.ApplicationContext
+	 * @see java.lang.Iterable
 	 */
 	default Iterable<T> collectFrom(ApplicationContext applicationContext) {
 		return Collections.emptySet();
@@ -46,8 +46,8 @@ public interface SchemaObjectCollector<T> {
 	 * @param gemfireCache {@link GemFireCache} from which to collect schema objects of type {@link T}.
 	 * @return a {@link Set} of all schema objects of type {@link T} defined in the {@link GemFireCache};
 	 * returns an empty {@link Set} if no schema object of type {@link T} could be found.
-	 * @see GemFireCache
-	 * @see Iterable
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see java.lang.Iterable
 	 */
 	default Iterable<T> collectFrom(GemFireCache gemfireCache) {
 		return Collections.emptySet();

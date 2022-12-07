@@ -26,8 +26,8 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * process using the {@link LocatorLauncher} class.
  *
  * @author John Blum
- * @see Locator
- * @see LocatorLauncher
+ * @see org.apache.geode.distributed.Locator
+ * @see org.apache.geode.distributed.LocatorLauncher
  * @since 1.5.0
  */
 public class LocatorProcess {

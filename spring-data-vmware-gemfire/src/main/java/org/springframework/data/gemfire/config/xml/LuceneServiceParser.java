@@ -15,9 +15,9 @@ import org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean;
  * Spring XML {@link AbstractSingleBeanDefinitionParser parser} for a {@link LuceneServiceFactoryBean} bean definition.
  *
  * @author John Blum
- * @see BeanDefinitionBuilder
- * @see AbstractSingleBeanDefinitionParser
- * @see LuceneServiceFactoryBean
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean
  * @since 1.1.0
  */
 class LuceneServiceParser extends AbstractSingleBeanDefinitionParser {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -38,32 +37,33 @@ import org.springframework.util.StringUtils;
 /**
  * The {@link IndexConfiguration} class is a Spring {@link org.springframework.context.annotation.ImportBeanDefinitionRegistrar}
  * and extension of {@link EntityDefinedRegionsConfiguration} used in the {@link EnableIndexing} annotation
- * to dynamically create GemFire/Geode {@link Region} {@link Index Indexes} based on
+ * to dynamically create GemFire/Geode {@link org.apache.geode.cache.Region} {@link Index Indexes} based on
  * {@link GemfirePersistentEntity} {@link GemfirePersistentProperty} annotations.
  *
  * @author John Blum
- * @see Annotation
- * @see Region
- * @see LuceneIndex
- * @see Index
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see AnnotationMetadata
- * @see Id
- * @see IndexFactoryBean
- * @see IndexType
- * @see EnableIndexing
- * @see EntityDefinedRegionsConfiguration
- * @see GemfirePersistentEntity
- * @see GemfirePersistentProperty
- * @see Indexed
- * @see LuceneIndexed
- * @see LuceneIndexFactoryBean
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.annotation.Id
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.data.gemfire.IndexType
+ * @see org.springframework.data.gemfire.config.annotation.EnableIndexing
+ * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
+ * @see org.springframework.data.gemfire.mapping.annotation.Indexed
+ * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 1.9.0
  */
 public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 
 	@Autowired(required = false)
+	@SuppressWarnings("all")
 	private List<IndexConfigurer> indexConfigurers = Collections.emptyList();
 
 	/**
@@ -73,8 +73,8 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link Region Region} Indexes
 	 * from application persistent entity properties.
 	 * @see EnableIndexing
-	 * @see Annotation
-	 * @see Class
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	protected Class<? extends Annotation> getEnableIndexingAnnotationType() {
 		return EnableIndexing.class;
@@ -87,7 +87,7 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	 * @return the name of the {@link Annotation} {@link Class type} that configures and creates {@link Region Region}
 	 * Indexes from application persistent entity properties.
 	 * @see #getEnableIndexingAnnotationType()
-	 * @see Class#getName()
+	 * @see java.lang.Class#getName()
 	 */
 	protected String getEnableIndexingAnnotationTypeName() {
 		return getEnableIndexingAnnotationType().getName();
@@ -100,7 +100,7 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	 * @return the simple name of the {@link Annotation} {@link Class type} that configures and creates
 	 * {@link Region Region} Indexes from application persistent entity properties.
 	 * @see #getEnableIndexingAnnotationType()
-	 * @see Class#getSimpleName()
+	 * @see java.lang.Class#getSimpleName()
 	 */
 	@SuppressWarnings("unused")
 	protected String getEnableIndexingAnnotationTypeSimpleName() {
@@ -161,12 +161,12 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	 * @param indexType {@link IndexType} enum specifying the Index type (e.g. KEY, HASH, etc).
 	 * @param indexAnnotation Index {@link Annotation}.
 	 * @param registry {@link BeanDefinitionRegistry} used to register the Index bean definition.
-	 * @see Annotation
-	 * @see BeanDefinitionBuilder
-	 * @see BeanDefinitionRegistry
-	 * @see IndexType
-	 * @see GemfirePersistentEntity
-	 * @see GemfirePersistentProperty
+	 * @see java.lang.annotation.Annotation
+	 * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.data.gemfire.IndexType
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
 	 */
 	protected void registerIndexBeanDefinition(AnnotationAttributes enableIndexingAttributes,
 			GemfirePersistentEntity<?> persistentEntity, GemfirePersistentProperty persistentProperty,
@@ -242,12 +242,12 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	 * @param persistentProperty {@link GemfirePersistentProperty} for which the {@link LuceneIndex} will be created.
 	 * @param luceneIndexAnnotation {@link LuceneIndexed} {@link Annotation}.
 	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link LuceneIndex} bean definition.
-	 * @see Annotation
-	 * @see BeanDefinitionBuilder
-	 * @see BeanDefinitionRegistry
-	 * @see GemfirePersistentEntity
-	 * @see GemfirePersistentProperty
-	 * @see LuceneIndexed
+	 * @see java.lang.annotation.Annotation
+	 * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
+	 * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
 	 */
 	@SuppressWarnings("unused")
 	protected void registerLuceneIndexBeanDefinition(AnnotationAttributes enableIndexingAttributes,
@@ -331,7 +331,7 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 			: generateIndexName(persistentEntity, persistentProperty, indexType));
 	}
 
-	private String generateIndexName(GemfirePersistentEntity persistentEntity,
+	private String generateIndexName(GemfirePersistentEntity<?> persistentEntity,
 			GemfirePersistentProperty persistentProperty, IndexType indexType) {
 
 		return String.format("%1$s%2$s%3$sIdx", persistentEntity.getRegionName(),

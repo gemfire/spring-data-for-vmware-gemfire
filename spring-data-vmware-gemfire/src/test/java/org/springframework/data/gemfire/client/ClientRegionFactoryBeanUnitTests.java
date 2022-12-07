@@ -49,18 +49,18 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see Region
- * @see ClientCache
- * @see ClientRegionFactory
- * @see Pool
- * @see ClientRegionFactoryBean
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionFactory
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  */
 @SuppressWarnings("rawtypes")
 @RunWith(MockitoJUnitRunner.class)

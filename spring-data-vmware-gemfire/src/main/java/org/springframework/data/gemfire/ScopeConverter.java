@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.beans.PropertyEditor;
@@ -19,10 +18,10 @@ import org.springframework.lang.Nullable;
  * that converts a {@link String} into a {@link Scope}.
  *
  * @author John Blum
- * @see PropertyEditor
- * @see Scope
- * @see Converter
- * @see AbstractPropertyEditorConverterSupport
+ * @see java.beans.PropertyEditor
+ * @see org.apache.geode.cache.Scope
+ * @see org.springframework.core.convert.converter.Converter
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -33,10 +32,10 @@ public class ScopeConverter extends AbstractPropertyEditorConverterSupport<Scope
 	 *
 	 * @param source the String to convert into a GemFire Scope.
 	 * @return a GemFire Scope for the given String.
-	 * @throws IllegalArgumentException if the String is not a valid GemFire Scope.
-	 * @see Scope#fromString(String)
-	 * @see ScopeType#valueOfIgnoreCase(String)
-	 * @see ScopeType#getScope(ScopeType)
+	 * @throws java.lang.IllegalArgumentException if the String is not a valid GemFire Scope.
+	 * @see org.apache.geode.cache.Scope#fromString(String)
+	 * @see org.springframework.data.gemfire.ScopeType#valueOfIgnoreCase(String)
+	 * @see org.springframework.data.gemfire.ScopeType#getScope(ScopeType)
 	 */
 	@Override
 	public @NonNull Scope convert(@Nullable String source) {

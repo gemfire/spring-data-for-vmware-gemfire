@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -33,19 +32,19 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link DiskStoreConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} used to register
- * a GemFire/Geode {@link DiskStore} bean definition.
+ * a GemFire/Geode {@link org.apache.geode.cache.DiskStore} bean definition.
  *
  * @author John Blum
- * @see DiskStore
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see DiskStoreFactoryBean
- * @see EnableDiskStore
- * @see EnableDiskStores
- * @see DiskStoreConfigurer
- * @see AbstractAnnotationConfigSupport
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 1.9.0
  */
 public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
@@ -71,11 +70,11 @@ public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
 	private List<DiskStoreConfigurer> diskStoreConfigurers = Collections.emptyList();
 
 	/**
-	 * Returns the {@link DiskStore} {@link Annotation} type specified in configuration.
+	 * Returns the {@link DiskStore} {@link java.lang.annotation.Annotation} type specified in configuration.
 	 *
-	 * @return the {@link DiskStore} {@link Annotation} type specified in configuration.
-	 * @see EnableDiskStores
-	 * @see EnableDiskStore
+	 * @return the {@link DiskStore} {@link java.lang.annotation.Annotation} type specified in configuration.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
+	 * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

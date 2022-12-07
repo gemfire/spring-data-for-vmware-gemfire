@@ -22,12 +22,12 @@ import org.apache.geode.cache.lucene.LuceneQueryProvider;
  * Unit Tests for {@link ProjectingLuceneOperations}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see ProjectingLuceneOperations
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneOperations
  * @since 2.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

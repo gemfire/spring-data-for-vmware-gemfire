@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.DataPolicy;
@@ -18,8 +17,8 @@ import org.springframework.util.Assert;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see RegionFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionFactory
  * @see org.springframework.beans.factory.BeanFactory
  */
 public class PartitionedRegionFactoryBean<K, V> extends PeerRegionFactoryBean<K, V> {

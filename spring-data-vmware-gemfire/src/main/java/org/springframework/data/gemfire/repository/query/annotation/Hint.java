@@ -16,10 +16,10 @@ import java.lang.annotation.Target;
  * The Hint class is a annotation type indicating a GemFire OQL Query Hint.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
  * @since 1.7.0
  */
 @Documented

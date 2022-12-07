@@ -12,7 +12,7 @@ import org.springframework.data.gemfire.mapping.annotation.Region;
  * The Algorithm interface define abstract data type modeling a computer algorithm.
  *
  * @author John Blum
- * @see Id
+ * @see org.springframework.data.annotation.Id
  * @see Region
  * @since 1.4.0
  */

@@ -30,12 +30,12 @@ import org.apache.geode.cache.client.Pool;
  * Unit Tests for {@link PoolResolver}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Region
- * @see Pool
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.Pool
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

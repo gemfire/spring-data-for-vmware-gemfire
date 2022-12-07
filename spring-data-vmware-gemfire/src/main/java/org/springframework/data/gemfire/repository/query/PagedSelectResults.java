@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Collections;
@@ -23,11 +22,11 @@ import org.springframework.util.Assert;
  * An Apache Geode {@link SelectResults} implementation with support for {@literal Paging}.
  *
  * @author John Blum
- * @see SelectResults
- * @see Pageable
- * @see AbstractSelectResults
- * @see PagingUtils
- * @see Lazy
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.gemfire.repository.query.AbstractSelectResults
+ * @see org.springframework.data.gemfire.repository.query.support.PagingUtils
+ * @see org.springframework.data.util.Lazy
  * @since 2.4.0
  */
 public class PagedSelectResults<T> extends AbstractSelectResults<T> {
@@ -46,8 +45,8 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	 * @param pageable {@link Pageable} object encapsulating the details of the requested page;
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if the {@link SelectResults} or the {@link Pageable} object is {@literal null}.
-	 * @see SelectResults
-	 * @see Pageable
+	 * @see org.apache.geode.cache.query.SelectResults
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	public PagedSelectResults(@NonNull SelectResults<T> selectResults, @NonNull Pageable pageable) {
 
@@ -69,7 +68,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	 * Returns the {@link Pageable} object encapsulating the details of the requested page.
 	 *
 	 * @return the {@link Pageable} object encapsulating the details of the requested page.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	protected @NonNull Pageable getPageRequest() {
 		return this.pageRequest;
@@ -115,7 +114,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	 * must not be {@literal null}.
 	 * @return this {@link PagedSelectResults}.
 	 * @throws IllegalArgumentException if {@link Pageable} is {@literal null}.
-	 * @see Pageable
+	 * @see org.springframework.data.domain.Pageable
 	 */
 	public PagedSelectResults<T> with(@NonNull Pageable pageRequest) {
 

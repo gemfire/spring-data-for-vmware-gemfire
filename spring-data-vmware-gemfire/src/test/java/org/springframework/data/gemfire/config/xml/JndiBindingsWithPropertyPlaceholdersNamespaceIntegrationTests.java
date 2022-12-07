@@ -24,12 +24,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests testing the configuration of a cache JNDI DataSource using property placeholders.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.springframework.context.ApplicationContext
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0
  */
 @RunWith(SpringRunner.class)

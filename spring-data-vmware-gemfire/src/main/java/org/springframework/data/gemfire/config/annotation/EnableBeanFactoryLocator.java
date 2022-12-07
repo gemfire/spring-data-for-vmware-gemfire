@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -22,13 +21,13 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
  * declared in GemFire/Geode config.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Configuration
- * @see Import
- * @see GemfireBeanFactoryLocator
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.0.0
  */
 @Target(ElementType.TYPE)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import java.net.InetSocketAddress;
@@ -22,8 +21,8 @@ import org.apache.geode.cache.query.QueryService;
  * but no actual connections or operating state information (e.g. pendingEventCount) is needed.
  *
  * @author John Blum
- * @see PoolFactoryBean
- * @see Pool
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
+ * @see org.apache.geode.cache.client.Pool
  * @since 1.8.0
  */
 @SuppressWarnings("unused")

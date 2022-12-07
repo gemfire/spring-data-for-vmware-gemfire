@@ -29,17 +29,17 @@ import org.springframework.mock.env.MockPropertySource;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GatewayReceiver
- * @see GatewayTransportFilter
- * @see Bean
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewayTransportFilter
+ * @see org.springframework.context.annotation.Bean
  * @see org.springframework.context.annotation.Configuration
  * @see org.springframework.core.env.PropertySources
- * @see GatewayReceiverFactoryBean
- * @see GatewayReceiverConfiguration
- * @see GatewayReceiverConfigurer
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
@@ -67,7 +67,7 @@ public class GatewayReceiverConfigurerIntegrationTests extends SpringApplication
 		MockPropertySource testPropertySource = new MockPropertySource();
 
 		newApplicationContext(testPropertySource,
-			TestConfigurationWithProperties.class);
+			GatewayReceiverConfigurerIntegrationTests.TestConfigurationWithProperties.class);
 
 		assertThat(containsBean("GatewayReceiver")).isTrue();
 
@@ -100,7 +100,7 @@ public class GatewayReceiverConfigurerIntegrationTests extends SpringApplication
 			.withProperty("spring.data.gemfire.gateway.receiver.transport-filters", "transportBean1,transportBean2");
 
 		newApplicationContext(testPropertySource,
-			TestConfigurationWithProperties.class);
+			GatewayReceiverConfigurerIntegrationTests.TestConfigurationWithProperties.class);
 
 		assertThat(containsBean("GatewayReceiver")).isTrue();
 
@@ -130,7 +130,7 @@ public class GatewayReceiverConfigurerIntegrationTests extends SpringApplication
 			.withProperty("spring.data.gemfire.gateway.receiver.transport-filters", "transportBean2,transportBean1");
 
 		newApplicationContext(testPropertySource,
-			TestConfiguration.class);
+			GatewayReceiverConfigurerIntegrationTests.TestConfiguration.class);
 
 		assertThat(containsBean("GatewayReceiver")).isTrue();
 
@@ -158,12 +158,12 @@ public class GatewayReceiverConfigurerIntegrationTests extends SpringApplication
 
 		@Bean("transportBean1")
 		GatewayTransportFilter createGatewayTransportBean1() {
-			return new TestGatewayTransportFilter("transportBean1");
+			return new GatewayReceiverConfigurerIntegrationTests.TestGatewayTransportFilter("transportBean1");
 		}
 
 		@Bean("transportBean2")
 		GatewayTransportFilter createGatewayTransportBean2() {
-			return new TestGatewayTransportFilter("transportBean2");
+			return new GatewayReceiverConfigurerIntegrationTests.TestGatewayTransportFilter("transportBean2");
 		}
 
 		@Bean("gatewayConfigurer")
@@ -190,12 +190,12 @@ public class GatewayReceiverConfigurerIntegrationTests extends SpringApplication
 
 		@Bean("transportBean1")
 		GatewayTransportFilter createGatewayTransportBean1() {
-			return new TestGatewayTransportFilter("transportBean1");
+			return new GatewayReceiverConfigurerIntegrationTests.TestGatewayTransportFilter("transportBean1");
 		}
 
 		@Bean("transportBean2")
 		GatewayTransportFilter createGatewayTransportBean2() {
-			return new TestGatewayTransportFilter("transportBean2");
+			return new GatewayReceiverConfigurerIntegrationTests.TestGatewayTransportFilter("transportBean2");
 		}
 
 		@Bean("gatewayConfigurer")

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -20,9 +19,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * in this cluster member.
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableManager
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableManager
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class ManagerConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -30,10 +29,10 @@ public class ManagerConfiguration extends EmbeddedServiceConfigurationSupport {
 	protected static final int DEFAULT_JMX_MANAGER_PORT = 1099;
 
 	/**
-	 * Returns the {@link EnableManager} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableManager} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableManager} {@link Annotation} {@link Class} type.
-	 * @see EnableManager
+	 * @return the {@link EnableManager} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableManager
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

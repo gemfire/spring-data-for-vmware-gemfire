@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -31,21 +30,21 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
  * to become an Apache Geode cache client by creating a {@link ClientCache} instance.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Region
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see SocketFactory
- * @see ResourceManager
- * @see BeanFactory
- * @see Configuration
- * @see Import
- * @see ClientCacheConfiguration
- * @see GemfireBeanFactoryLocator
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.cache.control.ResourceManager
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfiguration
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

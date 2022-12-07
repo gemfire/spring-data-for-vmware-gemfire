@@ -36,16 +36,16 @@ import org.springframework.util.ClassUtils;
  * Unit Tests for {@link RegionDataAccessTracingAspect}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see ClientRegionFactoryBean
- * @see RegionDataAccessTracingAspect
- * @see TestAppender
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.RegionDataAccessTracingAspect
+ * @see org.springframework.data.gemfire.tests.logging.slf4j.logback.TestAppender
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.2
  */
 @RunWith(SpringRunner.class)

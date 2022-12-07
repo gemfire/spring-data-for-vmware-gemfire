@@ -49,12 +49,12 @@ import org.springframework.util.StringUtils;
  * and SDG's {@link Region} lookup functionality combined with {@link Region} attribute(s) mutation.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see LookupRegionFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.LookupRegionFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

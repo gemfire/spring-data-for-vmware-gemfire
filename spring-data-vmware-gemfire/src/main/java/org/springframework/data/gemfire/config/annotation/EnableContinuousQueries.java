@@ -26,17 +26,17 @@ import org.springframework.util.ErrorHandler;
  * application configuration class to enable Pivotal GemFire / Apache Geode Continuous Queries (CQ) feature.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Executor
- * @see Pool
- * @see QueryService
- * @see Configuration
- * @see Import
- * @see ContinuousQueryConfiguration
- * @see ContinuousQueryListenerContainer
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see java.util.concurrent.Executor
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryConfiguration
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
  * @since @.0.0
  */
 @Target(ElementType.TYPE)

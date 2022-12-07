@@ -30,13 +30,13 @@ import org.springframework.util.Assert;
  * as a caching provider applied with Spring Data for Apache Geode.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Cacheable
- * @see IntegrationTestsSupport
- * @see ActiveProfiles
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ActiveProfiles
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.1
  */
 @RunWith(SpringRunner.class)

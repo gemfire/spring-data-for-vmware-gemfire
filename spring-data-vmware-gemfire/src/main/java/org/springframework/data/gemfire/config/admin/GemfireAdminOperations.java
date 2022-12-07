@@ -23,13 +23,13 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * Apache Geode or Pivotal GemFire cluster.
  *
  * @author John Blum
- * @see DiskStore
- * @see Region
- * @see LuceneIndex
- * @see Index
- * @see IndexDefinition
- * @see RegionDefinition
- * @see SchemaObjectDefinition
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.data.gemfire.config.schema.definitions.IndexDefinition
+ * @see org.springframework.data.gemfire.config.schema.definitions.RegionDefinition
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
  * @since 2.0.0
  */
 @SuppressWarnings("unused")
@@ -39,8 +39,8 @@ public interface GemfireAdminOperations {
 	 * Returns a {@link Iterable collection} of {@link Region} names defined on the GemFire Servers in the cluster.
 	 *
 	 * @return an {@link Iterable} of {@link Region} names defined on the GemFire Servers in the cluster.
-	 * @see Region#getName()
-	 * @see Iterable
+	 * @see org.apache.geode.cache.Region#getName()
+	 * @see java.lang.Iterable
 	 */
 	Iterable<String> getAvailableServerRegions();
 
@@ -48,8 +48,8 @@ public interface GemfireAdminOperations {
 	 * Returns an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
 	 *
 	 * @return an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
-	 * @see Index#getName()
-	 * @see Iterable
+	 * @see org.apache.geode.cache.query.Index#getName()
+	 * @see java.lang.Iterable
 	 */
 	Iterable<String> getAvailableServerRegionIndexes();
 
@@ -58,9 +58,9 @@ public interface GemfireAdminOperations {
 	 *
 	 * @param regionDefinition {@link RegionDefinition} encapsulating configuration meta-data defining
 	 * a cache {@link Region}.
-	 * @see RegionDefinition
+	 * @see org.springframework.data.gemfire.config.schema.definitions.RegionDefinition
 	 * @see org.apache.geode.cache.GemFireCache
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	void createRegion(RegionDefinition regionDefinition);
 
@@ -78,9 +78,9 @@ public interface GemfireAdminOperations {
 	 *
 	 * @param luceneIndexDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
 	 * defining a {@link Region} {@link LuceneIndex}.
-	 * @see SchemaObjectDefinition
-	 * @see LuceneIndex
-	 * @see Region
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
+	 * @see org.apache.geode.cache.Region
 	 */
 	void createLuceneIndex(SchemaObjectDefinition luceneIndexDefinition);
 
@@ -97,9 +97,9 @@ public interface GemfireAdminOperations {
 	 *
 	 * @param indexDefinition {@link IndexDefinition} encapsulating the configuration meta-data
 	 * defining a {@link Region} OQL {@link Index}.
-	 * @see IndexDefinition
-	 * @see Index
-	 * @see Region
+	 * @see org.springframework.data.gemfire.config.schema.definitions.IndexDefinition
+	 * @see org.apache.geode.cache.query.Index
+	 * @see org.apache.geode.cache.Region
 	 */
 	void createIndex(IndexDefinition indexDefinition);
 
@@ -116,8 +116,8 @@ public interface GemfireAdminOperations {
 	 *
 	 * @param diskStoreDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
 	 * defining a {@link DiskStore}.
-	 * @see SchemaObjectDefinition
-	 * @see DiskStore
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+	 * @see org.apache.geode.cache.DiskStore
 	 */
 	void createDiskStore(SchemaObjectDefinition diskStoreDefinition);
 

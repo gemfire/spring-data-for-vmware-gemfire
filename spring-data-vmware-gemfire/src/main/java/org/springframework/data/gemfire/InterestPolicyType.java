@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.InterestPolicy;
@@ -12,7 +11,7 @@ import org.apache.geode.cache.InterestPolicy;
  *
  * @author Lyndon Adams
  * @author John Blum
- * @see InterestPolicy
+ * @see org.apache.geode.cache.InterestPolicy
  * @since 1.3.0
  */
 @SuppressWarnings("unused")
@@ -28,7 +27,7 @@ public enum InterestPolicyType {
 	 * Constructs an instance of the SubscriptionType enum initialized with the matching GemFire InterestPolicy.
 	 *
 	 * @param interestPolicy a GemFire InterestPolicy corresponding to this SubscriptionType.
-	 * @see InterestPolicy
+	 * @see org.apache.geode.cache.InterestPolicy
 	 */
 	InterestPolicyType(final InterestPolicy interestPolicy) {
 		this.interestPolicy = interestPolicy;
@@ -40,7 +39,7 @@ public enum InterestPolicyType {
 	 * @param interestPolicyType the InterestPolicyType enum from which to extract GemFire's InterestPolicy
 	 * @return a GemFire InterestPolicy for the given InterestPolicyType enumerated value
 	 * or null if InterestPolicyType is null.
-	 * @see InterestPolicy
+	 * @see org.apache.geode.cache.InterestPolicy
 	 */
 	public static InterestPolicy getInterestPolicy(final InterestPolicyType interestPolicyType) {
 		return (interestPolicyType != null ? interestPolicyType.getInterestPolicy() : null);
@@ -52,7 +51,7 @@ public enum InterestPolicyType {
 	 * @param interestPolicy the GemFire InterestPolicy used to lookup and match a SubscriptionType.
 	 * @return a SubscriptionType enumerated value matching the given GemFire InterestPolicy
 	 * or null if no matching value was found.
-	 * @see InterestPolicy
+	 * @see org.apache.geode.cache.InterestPolicy
 	 * @see #getInterestPolicy()
 	 */
 	public static InterestPolicyType valueOf(final InterestPolicy interestPolicy) {
@@ -71,7 +70,7 @@ public enum InterestPolicyType {
 	 * @param value a String name used to look and match the SubscriptionType.
 	 * @return a SubscriptionType enumerated value for the given case-insensitive named Subscription
 	 * or null if no match was found.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #name()
 	 */
 	public static InterestPolicyType valueOfIgnoreCase(final String value) {
@@ -88,7 +87,7 @@ public enum InterestPolicyType {
 	 * Returns the GemFire InterestPolicy corresponding to this SubscriptionType enumerated value.
 	 *
 	 * @return the GemFire InterestPolicy corresponding to this SubscriptionType.
-	 * @see InterestPolicy
+	 * @see org.apache.geode.cache.InterestPolicy
 	 */
 	public InterestPolicy getInterestPolicy() {
 		return interestPolicy;

@@ -23,10 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Spring's Transaction infrastructure.
  *
  * @author John Blum
- * @see GFConnectionFactory
- * @see Aspect
- * @see Before
- * @see AbstractGemFireAsLastResourceAspectSupport
+ * @see org.apache.geode.ra.GFConnectionFactory
+ * @see org.aspectj.lang.annotation.Aspect
+ * @see org.aspectj.lang.annotation.Before
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractGemFireAsLastResourceAspectSupport
  * @since 2.0.0
  */
 @SuppressWarnings("unused")
@@ -90,7 +90,7 @@ public class GemFireAsLastResourceConnectionAcquiringAspect extends AbstractGemF
 	 * Returns a reference to the configured {@link GFConnectionFactory} instance.
 	 *
 	 * @return a reference to the configured {@link GFConnectionFactory} instance; may be {@literal null}.
-	 * @see GFConnectionFactory
+	 * @see org.apache.geode.ra.GFConnectionFactory
 	 */
 	public synchronized GFConnectionFactory getGemFireConnectionFactory() {
 		return this.gemfireConnectionFactory;

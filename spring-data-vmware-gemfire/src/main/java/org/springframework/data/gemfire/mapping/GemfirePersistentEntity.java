@@ -27,8 +27,8 @@ import org.springframework.util.StringUtils;
  * @author Oliver Gierke
  * @author John Blum
  * @author Gregory Green
- * @see GemfirePersistentProperty
- * @see BasicPersistentEntity
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
+ * @see org.springframework.data.mapping.model.BasicPersistentEntity
  */
 @SuppressWarnings("unused")
 public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, GemfirePersistentProperty> {
@@ -76,7 +76,7 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	 *
 	 * @param information {@link TypeInformation} meta-data describing the domain object (entity) {@link Class} type.
 	 * @throws IllegalArgumentException if the given {@link TypeInformation} is {@literal null}.
-	 * @see TypeInformation
+	 * @see org.springframework.data.util.TypeInformation
 	 */
 	public GemfirePersistentEntity(TypeInformation<T> information) {
 
@@ -99,8 +99,8 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	 * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
 	 * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
 	 * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
-	 * @see Region
-	 * @see Annotation
+	 * @see org.springframework.data.gemfire.mapping.annotation.Region
+	 * @see java.lang.annotation.Annotation
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Annotation> T getRegionAnnotation() {
@@ -113,7 +113,7 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	 *
 	 * @return the {@link Class} type of the {@link Region} {@link Annotation} used to annotate this entity
 	 * or {@literal null} if this entity was not annotated with a {@link Region} {@link Annotation}.
-	 * @see Annotation#annotationType()
+	 * @see java.lang.annotation.Annotation#annotationType()
 	 * @see #getRegionAnnotation()
 	 */
 	public Class<? extends Annotation> getRegionAnnotationType() {
@@ -137,7 +137,7 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 
 	/**
 	 * @inheritDoc
-	 * @see BasicPersistentEntity#returnPropertyIfBetterIdPropertyCandidateOrNull(PersistentProperty)
+	 * @see org.springframework.data.mapping.model.BasicPersistentEntity#returnPropertyIfBetterIdPropertyCandidateOrNull(PersistentProperty)
 	 */
 	@Override
 	protected GemfirePersistentProperty returnPropertyIfBetterIdPropertyCandidateOrNull(

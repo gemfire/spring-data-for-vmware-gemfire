@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Iterator;
@@ -107,7 +106,7 @@ class Predicates implements Predicate {
 		 * Builds a conditional expression for the entity property in the WHERE clause of the GemFire OQL
 		 * query statement.
 		 *
-		 * @see Predicate#toString(String)
+		 * @see org.springframework.data.gemfire.repository.query.Predicate#toString(java.lang.String)
 		 */
 		@Override
 		public String toString(String alias) {

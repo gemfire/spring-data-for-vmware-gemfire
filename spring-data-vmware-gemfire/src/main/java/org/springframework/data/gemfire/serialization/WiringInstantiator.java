@@ -30,7 +30,7 @@ import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
  * Additionally, the instantiator registration is not distributed by default, to allow the application context
  * to be reused. This can be changed through {@link #setDistribute(boolean)}.
  *
- * @see BeanConfigurerSupport
+ * @see org.springframework.beans.factory.wiring.BeanConfigurerSupport
  * @see org.springframework.beans.factory.wiring.BeanWiringInfoResolver
  * @see org.springframework.beans.factory.annotation.Autowired
  * @see javax.annotation.Resource

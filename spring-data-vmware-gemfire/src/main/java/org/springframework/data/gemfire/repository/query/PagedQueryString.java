@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Optional;
@@ -14,7 +13,7 @@ import org.springframework.util.Assert;
  * {@link QueryString} implementation handling {@literal paging} functionality and behavior.
  *
  * @author John Blum
- * @see QueryString
+ * @see org.springframework.data.gemfire.repository.query.QueryString
  * @since 2.4.0
  */
 public class PagedQueryString extends QueryString {
@@ -27,7 +26,7 @@ public class PagedQueryString extends QueryString {
 	 * @return a new instance of {@link PagedQueryString} initialized with the {@literal OQL query}
 	 * from the given {@link QueryString}.
 	 * @throws IllegalArgumentException if {@link QueryString} is {@literal null}.
-	 * @see QueryString
+	 * @see org.springframework.data.gemfire.repository.query.QueryString
 	 * @see #of(String)
 	 */
 	public static PagedQueryString of(@NonNull QueryString queryString) {

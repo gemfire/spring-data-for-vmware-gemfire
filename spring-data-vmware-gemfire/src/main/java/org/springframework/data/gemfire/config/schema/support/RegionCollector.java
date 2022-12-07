@@ -19,10 +19,10 @@ import org.springframework.data.gemfire.config.schema.SchemaObjectCollector;
  * inspecting a context and finding all {@link Region} schema object instances that have been declared in that context.
  *
  * @author John Blum
- * @see GemFireCache
- * @see Region
- * @see ApplicationContext
- * @see SchemaObjectCollector
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectCollector
  * @since 2.0.0
  */
 public class RegionCollector implements SchemaObjectCollector<Region> {

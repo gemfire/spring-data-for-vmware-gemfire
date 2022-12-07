@@ -37,17 +37,17 @@ import org.springframework.test.context.junit4.SpringRunner;
  * that the annotation config supports the Spring Cache Abstractions {@link CacheConfig} annotation.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ClientCache
- * @see CacheConfig
- * @see Cacheable
- * @see EnableCachingDefinedRegions
- * @see CachingDefinedRegionsConfiguration
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.cache.annotation.CacheConfig
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/DATAGEODE-232">Add support for @CacheConfig in @EnableCachingDefinedRegions</a>
  * @since 2.2.0
  */

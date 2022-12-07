@@ -44,16 +44,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Oliver Gierke
  * @author John Blum
  * @author Jens Schauder
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see GemfireTemplate
- * @see LocalRegionFactoryBean
- * @see PeerCacheApplication
- * @see SimpleGemfireRepository
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.LocalRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration

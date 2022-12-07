@@ -33,13 +33,13 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * Integration Tests for {@link EnableCompression} and {@link CompressionConfiguration}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see CompressionConfiguration
- * @see EnableCompression
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.CompressionConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCompression
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.0
  */
 public class EnableCompressionConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -22,28 +21,28 @@ import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.ra.GFConnection;
 import org.apache.geode.ra.GFConnectionFactory;
 
-import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.util.StringUtils;
 
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
+
 /**
  * {@link AbstractGemFireAsLastResourceAspectSupport} is an abstract base class encapsulating functionality common
- * to all AOP Aspect extensions/implementations involving the GemFire JCA ResourceAdapter object registered in
+ * to all AOP Aspect extensions/implementations involving the Apache Geode JCA ResourceAdapter object registered in
  * the JNDI context of a managed environment.
  *
  * @author John Blum
- * @see Context
- * @see GemFireCache
- * @see GFConnection
- * @see Logger
- * @see Ordered
+ * @see javax.naming.Context
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.ra.GFConnection
+ * @see org.slf4j.Logger
+ * @see org.springframework.core.Ordered
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -83,7 +82,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * Returns a reference to the naming {@link Context}.
 	 *
 	 * @return a reference to the naming {@link Context}.
-	 * @see Context
+	 * @see javax.naming.Context
 	 */
 	protected synchronized Context getContext() {
 		return this.context;
@@ -94,7 +93,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 *
 	 * @param <T> {@link Class} sub-type of the {@link GemFireCache} in use.
 	 * @return a reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@SuppressWarnings("unchecked")
 	protected synchronized <T extends GemFireCache> T getGemFireCache() {
@@ -129,7 +128,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * logged by the application.
 	 *
 	 * @return a reference to the configured {@link Logger} used by the application for logging purposes.
-	 * @see Logger
+	 * @see org.slf4j.Logger
 	 */
 	protected Logger getLogger() {
 		return this.logger;
@@ -140,7 +139,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * in Spring's Transaction Management.
 	 *
 	 * @param order int value specifying the relative order of this Aspect.
-	 * @see Ordered
+	 * @see org.springframework.core.Ordered
 	 */
 	public void setOrder(int order) {
 		this.order = order;
@@ -151,7 +150,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * in Spring's Transaction Management.
 	 *
 	 * @return an int value specifying the relative order of this Aspect.
-	 * @see Ordered
+	 * @see org.springframework.core.Ordered
 	 */
 	@Override
 	public int getOrder() {
@@ -203,7 +202,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * application service {@link Class types}.  That is, the {@link org.springframework.transaction.annotation.Transactional}
 	 * annotation is used at the class level.
 	 *
-	 * @see Pointcut
+	 * @see org.aspectj.lang.annotation.Pointcut
 	 */
 	@Pointcut("@within(org.springframework.transaction.annotation.Transactional)")
 	protected void atTransactionalType() {}
@@ -217,7 +216,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * {@link org.springframework.transaction.annotation.Transactional} annotation is used at the service class,
 	 * service {@link java.lang.reflect.Method method} level.
 	 *
-	 * @see Pointcut
+	 * @see org.aspectj.lang.annotation.Pointcut
 	 */
 	@Pointcut("@annotation(org.springframework.transaction.annotation.Transactional)")
 	protected void atTransactionalMethod() {}
@@ -228,7 +227,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to format.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return the {@link String message} formatted with the provided array of {@link Object arguments}.
-	 * @see String#format(String, Object...)
+	 * @see java.lang.String#format(String, Object...)
 	 */
 	protected String format(String message, Object... args) {
 		return String.format(message, args);
@@ -242,8 +241,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to log.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return this aspect.
-	 * @see Logger#isDebugEnabled()
-	 * @see Logger#debug(String, Object...)
+	 * @see org.slf4j.Logger#isDebugEnabled()
+	 * @see org.slf4j.Logger#debug(String, Object...)
 	 * @see #format(String, Object...)
 	 */
 	@SuppressWarnings("unchecked")
@@ -266,8 +265,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to log.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return this aspect.
-	 * @see Logger#isInfoEnabled()
-	 * @see Logger#info(String, Object...)
+	 * @see org.slf4j.Logger#isInfoEnabled()
+	 * @see org.slf4j.Logger#info(String, Object...)
 	 * @see #format(String, Object...)
 	 */
 	@SuppressWarnings("unchecked")
@@ -290,7 +289,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to log.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return this aspect.
-	 * @see Supplier
+	 * @see java.util.function.Supplier
 	 * @see #logTraceInfo(Supplier)
 	 */
 	protected <T extends AbstractGemFireAsLastResourceAspectSupport> T logTraceInfo(String message, Object... args) {
@@ -303,9 +302,9 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param <T> {@link Class} type extension of {@link AbstractGemFireAsLastResourceAspectSupport}.
 	 * @param logMessage {@link Supplier} of the message to log.
 	 * @return this aspect.
-	 * @see Supplier
-	 * @see Logger#isTraceEnabled()
-	 * @see Logger#trace(String)
+	 * @see java.util.function.Supplier
+	 * @see org.slf4j.Logger#isTraceEnabled()
+	 * @see org.slf4j.Logger#trace(String)
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T extends AbstractGemFireAsLastResourceAspectSupport> T logTraceInfo(Supplier<String> logMessage) {
@@ -327,8 +326,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to log.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return this aspect.
-	 * @see Logger#isWarnEnabled()
-	 * @see Logger#warn(String, Object...)
+	 * @see org.slf4j.Logger#isWarnEnabled()
+	 * @see org.slf4j.Logger#warn(String, Object...)
 	 * @see #format(String, Object...)
 	 */
 	@SuppressWarnings("unchecked")
@@ -351,8 +350,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @param message {@link String} containing the message to log.
 	 * @param args array of {@link Object arguments} used to format the message.
 	 * @return this aspect.
-	 * @see Logger#isErrorEnabled()
-	 * @see Logger#error(String, Object...)
+	 * @see org.slf4j.Logger#isErrorEnabled()
+	 * @see org.slf4j.Logger#error(String, Object...)
 	 * @see #format(String, Object...)
 	 */
 	@SuppressWarnings("unchecked")
@@ -375,8 +374,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @return a new instance of the {@link InitialContext} configured with the given {@link Hashtable environment}.
 	 * @throws NamingException if the {@link InitialContext} could not be initialized with
 	 * the provided {@link Hashtable environment}.
-	 * @see InitialContext
-	 * @see Hashtable
+	 * @see javax.naming.InitialContext
+	 * @see java.util.Hashtable
 	 */
 	protected InitialContext newInitialContext(Hashtable<?, ?> environment) throws NamingException {
 		return new InitialContext(environment);
@@ -396,12 +395,12 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 *
 	 * @return the {@link Context} used to perform lookups of registered, managed objects in a managed environment.
 	 * @throws IllegalStateException if the {@link Context} could not be resolved.
-	 * @see GemFireCache#getJNDIContext()
+	 * @see org.apache.geode.cache.GemFireCache#getJNDIContext()
 	 * @see #newInitialContext(Hashtable)
 	 * @see #resolveEnvironment()
 	 * @see #resolveGemFireCache()
 	 * @see #getContext()
-	 * @see Context
+	 * @see javax.naming.Context
 	 */
 	protected synchronized Context resolveContext() {
 
@@ -431,7 +430,7 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * @return the resolved {@link Hashtable environment} used to configure the {@link InitialContext}.
 	 * @see #getInitialContextFactory()
 	 * @see #getProviderUrl()
-	 * @see Hashtable
+	 * @see java.util.Hashtable
 	 */
 	protected Hashtable<?, ?> resolveEnvironment() {
 
@@ -450,8 +449,8 @@ public class AbstractGemFireAsLastResourceAspectSupport implements Ordered {
 	 * the {@link GemFireCache} instance using GemFire's API.
 	 *
 	 * @return a reference to the resolved {@link GemFireCache} instance.
-	 * @see GemfireUtils#resolveGemFireCache()
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.GemfireUtils#resolveGemFireCache()
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #getGemFireCache()
 	 */
 	protected synchronized GemFireCache resolveGemFireCache() {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.HashMap;
@@ -37,7 +36,7 @@ import org.w3c.dom.Element;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractSingleBeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
  * @see PeerRegionFactoryBean
  */
 abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
@@ -60,8 +59,8 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	 * Return the {@link Class type} of the {@link Region} {@link FactoryBean}.
 	 *
 	 * @return the {@link Class type} of the {@link Region} {@link FactoryBean}.
-	 * @see FactoryBean
-	 * @see Class
+	 * @see org.springframework.beans.factory.FactoryBean
+	 * @see java.lang.Class
 	 */
 	protected abstract Class<?> getRegionFactoryClass();
 
@@ -83,7 +82,7 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	 * @param element SDG XML namespace {@link Element}.
 	 * @return a boolean value indicating whether the given SDG XML namespace configuration {@link Element}
 	 * defines a {@link Region} template.
-	 * @see Element
+	 * @see org.w3c.dom.Element
 	 */
 	protected boolean isRegionTemplate(@NonNull Element element) {
 
@@ -99,7 +98,7 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	 * @param element SDG XML namespace {@link Region} {@link Element} to evaluate as a {@link Region Sub-Region}.
 	 * @return a boolean value indicating whether the current SDG XML namespace {@link Region} {@link Element}
 	 * is a {@link Region Sub-Region} definition.
-	 * @see Element
+	 * @see org.w3c.dom.Element
 	 */
 	protected boolean isSubRegion(@NonNull Element element) {
 

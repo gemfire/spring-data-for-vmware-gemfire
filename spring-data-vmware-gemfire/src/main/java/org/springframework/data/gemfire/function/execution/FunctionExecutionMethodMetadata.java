@@ -23,7 +23,7 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see MethodMetadata
+ * @see org.springframework.data.gemfire.function.execution.MethodMetadata
  */
 abstract class FunctionExecutionMethodMetadata<T extends MethodMetadata> {
 

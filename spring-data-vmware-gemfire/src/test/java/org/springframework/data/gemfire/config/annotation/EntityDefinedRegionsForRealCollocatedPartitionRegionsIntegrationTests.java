@@ -28,12 +28,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using {@literal real} {@link DataPolicy#PARTITION} {@link Region Regions}.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see Region
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.7.0
  */
 @RunWith(SpringRunner.class)

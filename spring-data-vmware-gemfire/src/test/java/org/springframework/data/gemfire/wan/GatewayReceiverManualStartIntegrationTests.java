@@ -24,13 +24,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * when configured with SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see GatewayReceiver
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
- * @see GatewayReceiverFactoryBean
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.0
  */
 @RunWith(SpringRunner.class)

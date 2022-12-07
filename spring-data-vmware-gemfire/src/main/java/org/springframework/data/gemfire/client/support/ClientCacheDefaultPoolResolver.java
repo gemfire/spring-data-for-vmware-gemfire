@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import java.util.Optional;
@@ -22,10 +21,10 @@ import org.springframework.util.Assert;
  * on {@literal DEFAULT} {@link Pool} resolution.
  *
  * @author John Blum
- * @see ClientCache
- * @see Pool
- * @see CacheResolver
- * @see PoolResolver
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.client.PoolResolver
  * @since 2.3.0
  */
 public class ClientCacheDefaultPoolResolver implements PoolResolver {
@@ -39,8 +38,8 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	 * @param clientCacheResolver {@link CacheResolver} used to lazily resolve the {@link ClientCache} instance;
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
-	 * @see ClientCache
-	 * @see CacheResolver
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	public ClientCacheDefaultPoolResolver(@NonNull CacheResolver<ClientCache> clientCacheResolver) {
 
@@ -54,8 +53,8 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	 * the {@link ClientCache} instance.
 	 *
 	 * @return the configured {@link CacheResolver} used to resolve the {@link ClientCache} instance.
-	 * @see ClientCache
-	 * @see CacheResolver
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	protected @NonNull CacheResolver<ClientCache> getClientCacheResolver() {
 		return this.clientCacheResolver;

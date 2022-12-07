@@ -30,12 +30,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * and {@link GatewaySender} using SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Region
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)

@@ -29,14 +29,14 @@ import org.springframework.data.repository.config.CustomRepositoryImplementation
  * @author John Blum
  * @author Mark Paluch
  * @param <T> class type of the Repository.
- * @see CreationalContext
- * @see Bean
- * @see BeanManager
- * @see GemfireMappingContext
- * @see GemfireRepositoryFactory
- * @see CdiRepositoryBean
- * @see CustomRepositoryImplementationDetector
- * @see Region
+ * @see javax.enterprise.context.spi.CreationalContext
+ * @see javax.enterprise.inject.spi.Bean
+ * @see javax.enterprise.inject.spi.BeanManager
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactory
+ * @see org.springframework.data.repository.cdi.CdiRepositoryBean
+ * @see org.springframework.data.repository.config.CustomRepositoryImplementationDetector
+ * @see org.apache.geode.cache.Region
  * @since 1.8.0
  */
 class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
@@ -69,9 +69,9 @@ class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
 	 * @param bean the {@link Bean} defining the instance to create.
 	 * @param type the expected component type of the instance created from the {@link Bean}.
 	 * @return an instance of the given {@link Bean}.
-	 * @see BeanManager#getReference(Bean, Type, CreationalContext)
-	 * @see Bean
-	 * @see Type
+	 * @see javax.enterprise.inject.spi.BeanManager#getReference(Bean, Type, CreationalContext)
+	 * @see javax.enterprise.inject.spi.Bean
+	 * @see java.lang.reflect.Type
 	 */
 	@SuppressWarnings("unchecked")
 	protected <S> S getDependencyInstance(Bean<S> bean, Type type) {
@@ -86,8 +86,8 @@ class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
 	 * @param targetType the desired class type of the component.
 	 * @return a resolved component {@link Type} of the {@link Bean}instance.
 	 * @throws IllegalStateException if the desired class type cannot be resolved.
-	 * @see Bean#getTypes()
-	 * @see Class
+	 * @see javax.enterprise.inject.spi.Bean#getTypes()
+	 * @see java.lang.Class
 	 */
 	@SuppressWarnings("unchecked")
 	protected <S> Type resolveType(Bean<S> bean, Class<S> targetType) {
@@ -133,7 +133,7 @@ class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
 	 * @param creationalContext operations used by the {@link javax.enterprise.context.spi.Contextual} implementation
 	 * during creation of the bean instance.
 	 * @param repositoryType the actual class type of the SD (GemFire) Repository.
-	 * @see javax.enterprise.context.spi.Contextual#create(CreationalContext)
+	 * @see javax.enterprise.context.spi.Contextual#create(javax.enterprise.context.spi.CreationalContext)
 	 * @see #newGemfireRepositoryFactory()
 	 */
 	@Override

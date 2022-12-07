@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -36,16 +35,16 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see org.apache.geode.cache.client.Pool
  * @see org.springframework.beans.factory.BeanFactory
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see AnnotationMetadata
- * @see PoolFactoryBean
- * @see AddPoolsConfiguration
- * @see PoolConfigurer
- * @see EnablePools
- * @see EnablePool
- * @see AbstractAnnotationConfigSupport
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnablePools
+ * @see org.springframework.data.gemfire.config.annotation.EnablePool
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 1.9.0
  */
 public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
@@ -76,10 +75,10 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 	 *
 	 * @param enablePoolAttributes {@link EnablePool} annotation attributes.
 	 * @param registry Spring {@link BeanDefinitionRegistry} used to register the {@link PoolFactoryBean} definition.
-	 * @see BeanDefinitionRegistry
-	 * @see PoolFactoryBean
-	 * @see EnablePool
-	 * @see Map
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.data.gemfire.client.PoolFactoryBean
+	 * @see org.springframework.data.gemfire.config.annotation.EnablePool
+	 * @see java.util.Map
 	 */
 	protected void registerPoolFactoryBeanDefinition(AnnotationAttributes enablePoolAttributes,
 			BeanDefinitionRegistry registry) {
@@ -225,8 +224,8 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 	 *
 	 * @param enablePoolAttributes {@link EnablePool} annotation containing
 	 * {@link org.apache.geode.cache.client.Pool} Locator/Server connection endpoint meta-data.
-	 * @see ClientCacheApplication
-	 * @see Map
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+	 * @see java.util.Map
 	 */
 	protected BeanDefinitionBuilder configurePoolConnections(String poolName, AnnotationAttributes enablePoolAttributes,
 			BeanDefinitionBuilder poolFactoryBean) {

@@ -28,14 +28,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * with required permissions specified using the {@link GemfireFunction} {@link Annotation}.
  *
  * @author John Blum
- * @see Test
- * @see Bean
- * @see Configuration
- * @see GemfireFunction
- * @see EnableGemfireFunctions
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
  */
 @RunWith(SpringRunner.class)

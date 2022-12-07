@@ -29,10 +29,10 @@ import org.springframework.core.type.filter.TypeFilter;
  * Unit Tests for {@link CompositeTypeFilter}.
  *
  * @author John Blum
- * @see Test
- * @see Mockito
- * @see TypeFilter
- * @see CompositeTypeFilter
+ * @see org.junit.Test
+ * @see org.mockito.Mockito
+ * @see org.springframework.core.type.filter.TypeFilter
+ * @see org.springframework.data.gemfire.support.CompositeTypeFilter
  * @since 2.4.0
  */
 public class CompositeTypeFilterUnitTests {

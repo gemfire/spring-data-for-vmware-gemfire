@@ -13,8 +13,8 @@ import org.junit.Test;
  * Unit Tests for {@link OqlKeyword}.
  *
  * @author John Blum
- * @see Test
- * @see OqlKeyword
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.repository.query.support.OqlKeyword
  * @since 1.0.0
  */
 public class OqlKeywordUnitTests {

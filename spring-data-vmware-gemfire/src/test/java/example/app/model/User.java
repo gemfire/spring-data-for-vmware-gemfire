@@ -22,7 +22,7 @@ import lombok.ToString;
  * Abstract Data Type (ADT) modeling a user.
  *
  * @author John Blum
- * @see Region
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 2.5.0
  */
 @Getter

@@ -30,11 +30,11 @@ import org.springframework.util.Assert;
  * loaded before the Region having PDX data is loaded from disk.
  *
  * @author John Blum
- * @see BeanFactoryPostProcessor
- * @see ConfigurableListableBeanFactory
- * @see DiskStore
- * @see Region
- * @see AsyncEventQueue
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
  * @since 1.3.3
  */
 public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
@@ -83,7 +83,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	 *
 	 * @param beanFactory the BeanFactory used to evaluate beans in context for PDX Disk Store dependencies.
 	 * @param beanTypes an array of Class types indicating the type of beans to evaluate.
-	 * @see ConfigurableListableBeanFactory#getBeanNamesForType(Class)
+	 * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory#getBeanNamesForType(Class)
 	 */
 	private void postProcessPdxDiskStoreDependencies(ConfigurableListableBeanFactory beanFactory,
 			Class<?>... beanTypes) {
@@ -112,8 +112,8 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	 * by the Bean.
 	 *
 	 * @param beanDefinition the BeanDefinition to add the PDX Disk Store dependency to.
-	 * @see #getDependsOn(BeanDefinition)
-	 * @see BeanDefinition#setDependsOn(String[])
+	 * @see #getDependsOn(org.springframework.beans.factory.config.BeanDefinition)
+	 * @see org.springframework.beans.factory.config.BeanDefinition#setDependsOn(String[])
 	 */
 	private void addPdxDiskStoreDependency(BeanDefinition beanDefinition) {
 
@@ -130,8 +130,8 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	 * @param beanDefinition the BeanDefinition of the Bean containing the dependencies.
 	 * @return an array of Bean names that this Bean depends on, or an empty String array if the dependencies
 	 * are undefined.
-	 * @see #addPdxDiskStoreDependency(BeanDefinition)
-	 * @see BeanDefinition#getDependsOn()
+	 * @see #addPdxDiskStoreDependency(org.springframework.beans.factory.config.BeanDefinition)
+	 * @see org.springframework.beans.factory.config.BeanDefinition#getDependsOn()
 	 */
 	private String[] getDependsOn(BeanDefinition beanDefinition) {
 		return SpringExtensions.defaultIfNull(beanDefinition.getDependsOn(), EMPTY_STRING_ARRAY);

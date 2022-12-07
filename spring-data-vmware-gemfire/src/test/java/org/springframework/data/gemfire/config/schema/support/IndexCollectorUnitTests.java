@@ -36,8 +36,8 @@ import org.springframework.context.ApplicationContext;
  * Unit tests for {@link IndexCollector}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @since 2.0.0
  */

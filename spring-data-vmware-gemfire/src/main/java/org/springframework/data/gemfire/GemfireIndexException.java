@@ -18,11 +18,11 @@ import org.springframework.dao.DataIntegrityViolationException;
  *
  * @author Costin Leau
  * @author John Blum
- * @see IndexCreationException
- * @see IndexExistsException
- * @see IndexInvalidException
- * @see IndexMaintenanceException
- * @see IndexNameConflictException
+ * @see org.apache.geode.cache.query.IndexCreationException
+ * @see org.apache.geode.cache.query.IndexExistsException
+ * @see org.apache.geode.cache.query.IndexInvalidException
+ * @see org.apache.geode.cache.query.IndexMaintenanceException
+ * @see org.apache.geode.cache.query.IndexNameConflictException
  */
 @SuppressWarnings({ "serial", "unused" })
 public class GemfireIndexException extends DataIntegrityViolationException {

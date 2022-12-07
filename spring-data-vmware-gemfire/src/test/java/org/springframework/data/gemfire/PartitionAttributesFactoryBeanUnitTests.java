@@ -17,9 +17,9 @@ import org.apache.geode.cache.PartitionResolver;
  * Unit Tests for {@link PartitionAttributesFactoryBean}.
  *
  * @author John Blum
- * @see Test
- * @see PartitionAttributes
- * @see PartitionAttributesFactoryBean
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.PartitionAttributes
+ * @see org.springframework.data.gemfire.PartitionAttributesFactoryBean
  * @since 1.3.3
  */
 @SuppressWarnings({ "rawtypes", "unused" })

@@ -28,11 +28,11 @@ import org.springframework.stereotype.Service;
  * Integration Tests for {@link EnableEviction} and {@link EvictionConfiguration}.
  *
  * @author John Blum
- * @see Region
- * @see EnableEviction
- * @see EvictionConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.EnableEviction
+ * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 @SuppressWarnings("unused")

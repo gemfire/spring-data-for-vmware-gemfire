@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.CacheFactory;
@@ -19,10 +18,10 @@ import org.springframework.util.ClassUtils;
  * and capabilities of Apache Geode based on version as well as other configuration meta-data.
  *
  * @author John Blum
- * @see CacheFactory
- * @see GemFireVersion
- * @see GemfireFeature
- * @see RegionUtils
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.internal.GemFireVersion
+ * @see org.springframework.data.gemfire.config.support.GemfireFeature
+ * @see org.springframework.data.gemfire.util.RegionUtils
  * @since 1.3.3
  */
 @SuppressWarnings("unused")

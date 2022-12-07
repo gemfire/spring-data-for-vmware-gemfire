@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import static java.util.Arrays.stream;
@@ -52,29 +51,29 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see CacheListener
- * @see CacheLoader
- * @see CacheWriter
- * @see CustomExpiry
- * @see DataPolicy
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see GemFireCache
- * @see Region
- * @see RegionAttributes
- * @see ClientCache
- * @see ClientRegionFactory
- * @see ClientRegionShortcut
- * @see Pool
- * @see Compressor
- * @see DisposableBean
- * @see FactoryBean
- * @see ConfigurableRegionFactoryBean
- * @see PoolResolver
+ * @see org.apache.geode.cache.CacheListener
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.CacheWriter
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionFactory
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.compression.Compressor
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.data.gemfire.ConfigurableRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.PoolResolver
  * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
- * @see EvictingRegionFactoryBean
- * @see ExpiringRegionFactoryBean
- * @see SmartLifecycleSupport
+ * @see org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean
+ * @see org.springframework.data.gemfire.expiration.ExpiringRegionFactoryBean
+ * @see org.springframework.data.gemfire.support.SmartLifecycleSupport
  */
 @SuppressWarnings("unused")
 public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean<K, V>
@@ -146,14 +145,14 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Initializes the {@literal default} {@link PoolResolver} and optionally sets the main {@link PoolResolver}
 	 * used to resolve {@link Pool} objects from Apache Geode if not configured by the user.
 	 *
-	 * @see PoolResolver
-	 * @see BeanFactoryPoolResolver
-	 * @see PoolManagerPoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
+	 * @see org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver
+	 * @see org.springframework.data.gemfire.client.support.PoolManagerPoolResolver
 	 */
 	void initializePoolResolver() {
 
-		this.defaultPoolResolver =
-			ComposablePoolResolver.compose(new BeanFactoryPoolResolver(getBeanFactory()), new PoolManagerPoolResolver());
+		this.defaultPoolResolver = ComposablePoolResolver
+			.compose(new BeanFactoryPoolResolver(getBeanFactory()), new PoolManagerPoolResolver());
 
 		this.poolResolver = this.poolResolver != null ? this.poolResolver : this.defaultPoolResolver;
 	}
@@ -166,13 +165,11 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * @return a new {@link Region} with the given {@link String name}.
 	 * @see #createClientRegionFactory(ClientCache, ClientRegionShortcut)
 	 * @see #newRegion(ClientRegionFactory, Region, String)
-	 * @see GemFireCache
-	 * @see Region
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	protected Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) {
-
-		applyRegionConfigurers(regionName);
 
 		ClientCache clientCache = resolveCache(gemfireCache);
 
@@ -199,7 +196,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 
 		if (parent != null) {
 
-			logInfo("Creating client sub-Region [%1$s] with parent Region [%2$s]",
+			logInfo("Creating client Subregion [%1$s] with parent Region [%2$s]",
 				regionName, parent.getName());
 
 			return clientRegionFactory.createSubregion(parent, regionName);
@@ -216,7 +213,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 
 		return Optional.ofNullable(gemfireCache)
 			.filter(GemfireUtils::isClient)
-			.map(cache -> (ClientCache) cache)
+			.map(ClientCache.class::cast)
 			.orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
 	}
 
@@ -226,8 +223,8 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @return a {@link ClientRegionShortcut} used to configure the {@link DataPolicy}
 	 * for the {@link Region client Region}.
-	 * @see ClientRegionShortcut
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
+	 * @see org.apache.geode.cache.DataPolicy
 	 */
 	ClientRegionShortcut resolveClientRegionShortcut() {
 
@@ -302,9 +299,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to configure
 	 * the {@link Region client Region} {@link DataPolicy}.
 	 * @return a new instance of {@link ClientRegionFactory}.
-	 * @see ClientCache#createClientRegionFactory(ClientRegionShortcut)
-	 * @see ClientRegionShortcut
-	 * @see ClientRegionFactory
+	 * @see org.apache.geode.cache.client.ClientCache#createClientRegionFactory(ClientRegionShortcut)
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionFactory
 	 */
 	protected ClientRegionFactory<K, V> createClientRegionFactory(ClientCache clientCache,
 			ClientRegionShortcut clientRegionShortcut) {
@@ -318,7 +315,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @param clientRegionFactory {@link ClientRegionFactory} to configure.
 	 * @return the configured {@link ClientRegionFactory}.
-	 * @see ClientRegionFactory
+	 * @see org.apache.geode.cache.client.ClientRegionFactory
 	 */
 	protected ClientRegionFactory<K, V> configure(ClientRegionFactory<K, V> clientRegionFactory) {
 
@@ -392,7 +389,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @param clientRegionFactory {@link ClientRegionFactory} to process.
 	 * @return the given {@link ClientRegionFactory}.
-	 * @see ClientRegionFactory
+	 * @see org.apache.geode.cache.client.ClientRegionFactory
 	 */
 	protected ClientRegionFactory<K, V> postProcess(ClientRegionFactory<K, V> clientRegionFactory) {
 		return clientRegionFactory;
@@ -402,7 +399,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Post-process the {@link Region} created by this {@link ClientRegionFactoryBean}.
 	 *
 	 * @param region {@link Region} to process.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	protected Region<K, V> postProcess(Region<K, V> region) {
@@ -452,7 +449,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Closes and destroys the {@link Region}.
 	 *
 	 * @throws Exception if destroy fails.
-	 * @see DisposableBean
+	 * @see org.springframework.beans.factory.DisposableBean
 	 */
 	@Override
 	public void destroy() throws Exception {
@@ -488,7 +485,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * created by this {@link ClientRegionFactoryBean}.
 	 *
 	 * @return the {@link RegionAttributes} used to configure the {@link Region client Region}.
-	 * @see RegionAttributes
+	 * @see org.apache.geode.cache.RegionAttributes
 	 */
 	protected RegionAttributes<K, V> getAttributes() {
 		return this.attributes;
@@ -509,7 +506,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the CacheLoader used to load data local to the client's Region on cache misses.
 	 *
 	 * @param cacheLoader a GemFire CacheLoader used to load data into the client Region.
-	 * @see CacheLoader
+	 * @see org.apache.geode.cache.CacheLoader
 	 */
 	public void setCacheLoader(CacheLoader<K, V> cacheLoader) {
 		this.cacheLoader = cacheLoader;
@@ -519,7 +516,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the CacheWriter used to perform a synchronous write-behind when data is put into the client's Region.
 	 *
 	 * @param cacheWriter the GemFire CacheWriter used to perform synchronous write-behinds on put ops.
-	 * @see CacheWriter
+	 * @see org.apache.geode.cache.CacheWriter
 	 */
 	public void setCacheWriter(CacheWriter<K, V> cacheWriter) {
 		this.cacheWriter = cacheWriter;
@@ -550,7 +547,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Configures the {@link Compressor} used to compress the this {@link Region Region's} data.
 	 *
 	 * @param compressor {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @see org.apache.geode.compression.Compressor
 	 */
 	public void setCompressor(Compressor compressor) {
 		this.compressor = compressor;
@@ -576,7 +573,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the Data Policy. Used only when a new Region is created.
 	 *
 	 * @param dataPolicy the client Region's Data Policy.
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.DataPolicy
 	 */
 	public void setDataPolicy(DataPolicy dataPolicy) {
 		this.dataPolicy = dataPolicy;
@@ -646,7 +643,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets a {@link Class type} constraint on this {@link Region client Region's} keys.
 	 *
 	 * @param keyConstraint {@link Class type} of this {@link Region client Region's} keys.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	public void setKeyConstraint(Class<K> keyConstraint) {
 		this.keyConstraint = keyConstraint;
@@ -677,7 +674,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Configures the {@link Pool} used by this client {@link Region}.
 	 *
 	 * @param pool {@link Pool} used by this client {@link Region} to send/receive data to/from the server.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #setPoolName(String)
 	 */
 	public void setPool(Pool pool) {
@@ -713,7 +710,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * The {@link Pool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
 	 *
 	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link Pool}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public void setPoolResolver(@Nullable PoolResolver poolResolver) {
 		this.poolResolver = poolResolver;
@@ -724,7 +721,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @return the configured {@link PoolResolver}.  If no {@link PoolResolver} was configured, then return the default,
 	 * {@link PoolManagerPoolResolver}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 * @see #getDefaultPoolResolver()
 	 */
 	public @NonNull PoolResolver getPoolResolver() {
@@ -742,9 +739,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * and {@link PoolManagerPoolResolver} to fallback on.
 	 *
 	 * @return the {@literal default} {@link PoolResolver}.
-	 * @see BeanFactoryPoolResolver
-	 * @see PoolManagerPoolResolver
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver
+	 * @see org.springframework.data.gemfire.client.support.PoolManagerPoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public @NonNull PoolResolver getDefaultPoolResolver() {
 		return this.defaultPoolResolver;
@@ -764,7 +761,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @param shortcut {@link ClientRegionShortcut} used to initialize the {@link DataPolicy}
 	 * of this {@link Region client Region}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	public void setShortcut(ClientRegionShortcut shortcut) {
 		this.shortcut = shortcut;
@@ -800,7 +797,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets a {@link Class type} constraint on this {@link Region client Region's} values.
 	 *
 	 * @param valueConstraint {@link Class type} of this {@link Region client Region's} values.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	public void setValueConstraint(Class<V> valueConstraint) {
 		this.valueConstraint = valueConstraint;

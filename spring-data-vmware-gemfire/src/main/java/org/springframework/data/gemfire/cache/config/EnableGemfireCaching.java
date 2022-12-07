@@ -19,11 +19,11 @@ import org.springframework.context.annotation.Import;
  * in Spring's Cache Abstraction.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Import
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.springframework.context.annotation.Import
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache">Cache Abstraction</a>
  * @see <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-store-configuration-gemfire">GemFire-based Cache</a>
  * @see <a href="https://docs.spring.io/spring-data-gemfire/docs/current/reference/html/#apis:spring-cache-abstraction">Support for Spring Cache Abstraction</a>

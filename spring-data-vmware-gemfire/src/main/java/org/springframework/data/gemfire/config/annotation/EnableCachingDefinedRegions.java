@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -33,18 +32,18 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * the SDG {@link org.springframework.data.gemfire.cache.GemfireCacheManager} bean definition.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Region
- * @see RegionShortcut
- * @see ClientRegionShortcut
- * @see Pool
- * @see Configuration
- * @see Import
- * @see EnableGemfireCaching
- * @see CachingDefinedRegionsConfiguration
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.cache.config.EnableGemfireCaching
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
  * @since 2.0.0
  */
 @Target(ElementType.TYPE)

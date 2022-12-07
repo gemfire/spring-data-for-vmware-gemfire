@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
  * an Apache Geode Server process.
  *
  * @author John Blum
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @since 1.5.2
  */
 public class ServerProcess {

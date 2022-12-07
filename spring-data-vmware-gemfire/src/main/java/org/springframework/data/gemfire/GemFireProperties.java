@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -22,7 +21,7 @@ import org.springframework.util.Assert;
  * An Enum (enumeration) of Apache Geode {@literal gemfire.properties}.
  *
  * @author John Blum
- * @see ConfigurationProperties
+ * @see org.apache.geode.distributed.ConfigurationProperties
  * @since 2.3.0
  */
 @SuppressWarnings("unused")
@@ -216,7 +215,7 @@ public enum GemFireProperties {
 	 * Gets this property's {@link Object default value}.
 	 *
 	 * @return this property's {@link Object default value}.
-	 * @see Object
+	 * @see java.lang.Object
 	 */
 	public @Nullable Object getDefaultValue() {
 		return this.defaultValue != null ? this.defaultValue : DEFAULT_PROPERTY_VALUE;
@@ -228,7 +227,7 @@ public enum GemFireProperties {
 	 * @return this property's {@link Object default value} as a {@link String}. If this property's
 	 * {@link Object default value} is {@literal null}, then this method return the {@literal "null"} {@link String}.
 	 * @see #getDefaultValue()
-	 * @see String
+	 * @see java.lang.String
 	 */
 	public @NonNull String getDefaultValueAsString() {
 		return String.valueOf(getDefaultValue());
@@ -287,7 +286,7 @@ public enum GemFireProperties {
 	 * Gets the {@link String name} of {@literal this} property.
 	 *
 	 * @return the {@link String name} of {@literal this} property.
-	 * @see String
+	 * @see java.lang.String
 	 */
 	public @NonNull String getName() {
 		return this.propertyName;
@@ -297,7 +296,7 @@ public enum GemFireProperties {
 	 * Gets the declared {@link Class type} of {@literal this} property.
 	 *
 	 * @return the declared {@link Class type} of {@literal this} property.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	public @NonNull Class<?> getType() {
 		return this.propertyType != null ? this.propertyType : DEFAULT_PROPERTY_TYPE;

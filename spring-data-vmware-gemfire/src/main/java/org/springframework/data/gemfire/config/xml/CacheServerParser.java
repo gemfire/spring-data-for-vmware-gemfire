@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,8 +24,8 @@ import org.w3c.dom.Element;
  *
  * @author Costin Leau
  * @author John Blum
- * @see AbstractSimpleBeanDefinitionParser
- * @see CacheServerFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 1.1.0
  */
 class CacheServerParser extends AbstractSimpleBeanDefinitionParser {

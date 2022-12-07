@@ -25,15 +25,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * for a {@link Region} in the SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Region
- * @see SubscriptionAttributes
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.SubscriptionAttributes
  * @see org.springframework.data.gemfire.SubscriptionAttributesFactoryBean
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.6.0
  */
 @RunWith(SpringRunner.class)

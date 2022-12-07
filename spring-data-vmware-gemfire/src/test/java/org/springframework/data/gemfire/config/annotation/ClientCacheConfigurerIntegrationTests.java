@@ -30,16 +30,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link ClientCacheConfigurer}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see ClientCache
- * @see Bean
- * @see ClientCacheFactoryBean
- * @see ClientCacheApplication
- * @see ClientCacheConfigurer
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
  */
 @RunWith(SpringRunner.class)

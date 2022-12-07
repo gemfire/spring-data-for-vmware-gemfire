@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -21,14 +20,14 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Annotation
+ * @see java.lang.annotation.Annotation
  * @see org.apache.geode.cache.wan.GatewayReceiver
- * @see GatewaySender
- * @see Configuration
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see EnableGatewaySender
- * @see EnableGatewaySenders
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySender
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySenders
  * @since 2.2.0
  */
 @Configuration

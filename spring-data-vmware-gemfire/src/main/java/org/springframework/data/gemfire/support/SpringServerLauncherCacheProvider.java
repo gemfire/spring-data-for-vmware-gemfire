@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Properties;
@@ -30,8 +29,8 @@ import org.springframework.data.gemfire.GemfireUtils;
  * @author Dan Smith
  * @author John Blum
  * @see org.springframework.context.ApplicationContext
- * @see SpringContextBootstrappingInitializer
- * @see ServerLauncherCacheProvider
+ * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
+ * @see org.apache.geode.distributed.ServerLauncherCacheProvider
  * @since 1.7.0
  * @link https://gemfire.docs.pivotal.io/latest/userguide/index.html#basic_config/the_cache/setting_cache_initializer.html
  */

@@ -19,9 +19,9 @@ import org.springframework.util.ObjectUtils;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Serializable
- * @see Id
- * @see Region
+ * @see java.io.Serializable
+ * @see org.springframework.data.annotation.Id
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  */
 @Region("simple")
 @JsonIgnoreProperties("name")

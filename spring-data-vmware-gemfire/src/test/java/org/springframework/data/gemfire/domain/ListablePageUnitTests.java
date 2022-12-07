@@ -21,7 +21,7 @@ import org.springframework.data.domain.Page;
  * Unit tests for {@link ListablePage}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @since 1.0.0
  */
 public class ListablePageUnitTests {

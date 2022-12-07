@@ -33,12 +33,12 @@ import org.springframework.data.gemfire.RegionResolver;
  * Unit Tests for {@link ComposableRegionResolver}.
  *
  * @author John Blum
- * @see Test
- * @see Mockito
- * @see MockitoJUnitRunner
- * @see Region
- * @see RegionResolver
- * @see ComposableRegionResolver
+ * @see org.junit.Test
+ * @see org.mockito.Mockito
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.RegionResolver
+ * @see org.springframework.data.gemfire.support.ComposableRegionResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

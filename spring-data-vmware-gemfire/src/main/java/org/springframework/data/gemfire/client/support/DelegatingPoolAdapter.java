@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import java.net.InetSocketAddress;
@@ -22,11 +21,11 @@ import org.apache.geode.cache.query.QueryService;
  * when the {@link Pool} reference is <code>null</code>.
  *
  * @author John Blum
- * @see InetSocketAddress
- * @see Pool
- * @see SocketFactory
- * @see QueryService
- * @see FactoryDefaultsPoolAdapter
+ * @see java.net.InetSocketAddress
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.data.gemfire.client.support.FactoryDefaultsPoolAdapter
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
@@ -42,7 +41,7 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	 * Constructs an instance of {@link DelegatingPoolAdapter} initialized with the specified {@link Pool}.
 	 *
 	 * @param delegate {@link Pool} used as the delegate; can be {@literal null}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	public DelegatingPoolAdapter(Pool delegate) {
 		this.delegate = delegate;

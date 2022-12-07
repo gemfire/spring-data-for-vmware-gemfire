@@ -14,9 +14,9 @@ import org.springframework.data.gemfire.repository.Query;
  * The UserRepository class is a DAO for accessing and persisting Users.
  *
  * @author John Blum
- * @see GemfireRepository
- * @see Query
- * @see User
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.Query
+ * @see org.springframework.data.gemfire.repository.sample.User
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

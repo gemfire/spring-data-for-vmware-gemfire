@@ -41,18 +41,18 @@ import org.springframework.data.util.ReflectionUtils;
  * Unit Tests for {@link PoolFactoryBean}.
  *
  * @author John Blum
- * @see InetSocketAddress
- * @see Test
+ * @see java.net.InetSocketAddress
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see SocketFactory
- * @see BeanFactory
- * @see PoolFactoryBean
- * @see PoolResolver
- * @see ConnectionEndpoint
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
+ * @see org.springframework.data.gemfire.client.PoolResolver
+ * @see org.springframework.data.gemfire.support.ConnectionEndpoint
  * @since 1.7.0
  */
 public class PoolFactoryBeanUnitTests {

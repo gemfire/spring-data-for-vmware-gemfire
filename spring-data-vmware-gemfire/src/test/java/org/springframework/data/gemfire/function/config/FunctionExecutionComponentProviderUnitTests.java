@@ -24,8 +24,8 @@ import org.springframework.data.gemfire.function.config.one.TestFunctionExecutio
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see FunctionExecutionComponentProvider
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.function.config.FunctionExecutionComponentProvider
  */
 public class FunctionExecutionComponentProviderUnitTests {
 

@@ -62,8 +62,8 @@ public enum JndiDataSourceType {
 	 * @param jndiDataSourceType the given JndiDataSourceType enum used in the match.
 	 * @param name the specified GemFire "named" JNDI DataSource implementation.
 	 * @return a boolean value indicating whether the given JndiDataSourceType enumerated value matched the given name.
-	 * @see String#equalsIgnoreCase(String)
-	 * @see StringUtils#trimWhitespace(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
+	 * @see org.springframework.util.StringUtils#trimWhitespace(String)
 	 */
 	private static boolean isMatch(final JndiDataSourceType jndiDataSourceType, String name) {
 		name = StringUtils.trimWhitespace(name);

@@ -15,8 +15,8 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  *
  * @author John Blum
  * @see EvictionActionType
- * @see AbstractPropertyEditorConverterSupport
- * @see EvictionAction
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
+ * @see org.apache.geode.cache.EvictionAction
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -27,9 +27,9 @@ public class EvictionActionConverter extends AbstractPropertyEditorConverterSupp
 	 *
 	 * @param source the String to convert.
 	 * @return the GemFire EvictionAction value matching the given String.
-	 * @throws IllegalArgumentException if the String could not be converted into
+	 * @throws java.lang.IllegalArgumentException if the String could not be converted into
 	 * an instance of GemFire EvictionAction.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 */
 	@Override
 	public EvictionAction convert(final String source) {

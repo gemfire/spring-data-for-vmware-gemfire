@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -34,9 +33,9 @@ import org.w3c.dom.Element;
  *
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see ScannedGenericBeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.context.annotation.ScannedGenericBeanDefinition
  */
 public class FunctionExecutionBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 

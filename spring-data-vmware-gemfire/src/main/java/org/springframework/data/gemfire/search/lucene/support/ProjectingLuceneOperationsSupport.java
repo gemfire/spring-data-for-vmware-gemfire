@@ -20,7 +20,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * of the {@link ProjectingLuceneOperations} interface.
  *
  * @author John Blum
- * @see ProjectingLuceneOperations
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneOperations
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

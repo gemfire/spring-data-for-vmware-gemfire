@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static java.util.stream.StreamSupport.stream;
@@ -34,14 +33,14 @@ import org.springframework.util.StringUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see File
- * @see DiskStore
- * @see DiskStoreFactory
- * @see GemFireCache
- * @see FactoryBean
- * @see InitializingBean
- * @see DiskStoreConfigurer
- * @see AbstractFactoryBeanSupport
+ * @see java.io.File
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.DiskStoreFactory
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
 public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> implements InitializingBean {
@@ -97,7 +96,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 * @param diskStoreName {@link String} containing the name of the {@link DiskStore}.
 	 * @param diskStoreConfigurers array of {@link DiskStoreConfigurer DiskStoreConfigurers} applied
 	 * to this {@link DiskStoreFactoryBean}.
-	 * @see DiskStoreConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
 	 * @see #applyDiskStoreConfigurers(String, Iterable)
 	 */
 	protected void applyDiskStoreConfigurers(String diskStoreName, DiskStoreConfigurer... diskStoreConfigurers) {
@@ -112,7 +111,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 * @param diskStoreName {@link String} containing the name of the {@link DiskStore}.
 	 * @param diskStoreConfigurers {@link Iterable} of {@link DiskStoreConfigurer DiskStoreConfigurers} applied
 	 * to this {@link DiskStoreFactoryBean}.
-	 * @see DiskStoreConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
 	 */
 	protected void applyDiskStoreConfigurers(String diskStoreName, Iterable<DiskStoreConfigurer> diskStoreConfigurers) {
 		stream(nullSafeIterable(diskStoreConfigurers).spliterator(), false)
@@ -137,8 +136,8 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param cache reference to the {@link GemFireCache} used to create the {@link DiskStoreFactory}.
 	 * @return a new instance of {@link DiskStoreFactory}.
-	 * @see GemFireCache#createDiskStoreFactory()
-	 * @see DiskStoreFactory
+	 * @see org.apache.geode.cache.GemFireCache#createDiskStoreFactory()
+	 * @see org.apache.geode.cache.DiskStoreFactory
 	 */
 	protected DiskStoreFactory createDiskStoreFactory(GemFireCache cache) {
 		return cache.createDiskStoreFactory();
@@ -150,7 +149,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param diskStoreFactory {@link DiskStoreFactory} to configure.
 	 * @return the given {@link DiskStoreFactory}
-	 * @see DiskStoreFactory
+	 * @see org.apache.geode.cache.DiskStoreFactory
 	 */
 	protected DiskStoreFactory configure(DiskStoreFactory diskStoreFactory) {
 
@@ -190,8 +189,8 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 * @param diskStoreFactory {@link DiskStoreFactory} used to create the {@link DiskStore}.
 	 * @param diskStoreName {@link String} containing the name of the new {@link DiskStore}.
 	 * @return a new instance of {@link DiskStore} with the given {@link String name}.
-	 * @see DiskStoreFactory
-	 * @see DiskStore
+	 * @see org.apache.geode.cache.DiskStoreFactory
+	 * @see org.apache.geode.cache.DiskStore
 	 */
 	protected DiskStore newDiskStore(DiskStoreFactory diskStoreFactory, String diskStoreName) {
 		return diskStoreFactory.create(diskStoreName);
@@ -203,7 +202,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param diskStoreFactory {@link DiskStoreFactory} to process.
 	 * @return the given {@link DiskStoreFactory}.
-	 * @see DiskStoreFactory
+	 * @see org.apache.geode.cache.DiskStoreFactory
 	 */
 	protected DiskStoreFactory postProcess(DiskStoreFactory diskStoreFactory) {
 		return diskStoreFactory;
@@ -215,7 +214,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param diskStore {@link DiskStore} to process.
 	 * @return the given {@link DiskStore}.
-	 * @see DiskStore
+	 * @see org.apache.geode.cache.DiskStore
 	 */
 	protected DiskStore postProcess(DiskStore diskStore) {
 		return diskStore;
@@ -226,7 +225,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 * to this {@link DiskStoreFactoryBean} on Spring container initialization.
 	 *
 	 * @return the Composite {@link DiskStoreConfigurer}.
-	 * @see DiskStoreConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
 	 */
 	protected DiskStoreConfigurer getCompositeDiskStoreConfigurer() {
 		return this.compositeDiskStoreConfigurer;
@@ -275,7 +274,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param diskStoreConfigurers array of {@link DiskStoreConfigurer DiskStoreConfigurers} used to apply
 	 * additional configuration to this {@link DiskStoreFactoryBean}.
-	 * @see DiskStoreConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
 	 * @see #setDiskStoreConfigurers(List)
 	 */
 	public void setDiskStoreConfigurers(DiskStoreConfigurer... diskStoreConfigurers) {
@@ -289,7 +288,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	 *
 	 * @param diskStoreConfigurers {@link Iterable } of {@link DiskStoreConfigurer DiskStoreConfigurers} used to
 	 * apply additional configuration to this {@link DiskStoreFactoryBean}.
-	 * @see DiskStoreConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
 	 */
 	public void setDiskStoreConfigurers(List<DiskStoreConfigurer> diskStoreConfigurers) {
 		this.diskStoreConfigurers = Optional.ofNullable(diskStoreConfigurers).orElseGet(Collections::emptyList);

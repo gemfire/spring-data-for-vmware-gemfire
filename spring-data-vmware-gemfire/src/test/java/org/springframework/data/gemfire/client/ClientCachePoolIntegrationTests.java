@@ -28,13 +28,13 @@ import org.springframework.util.Assert;
  * Integration Tests for {@link ClientCache} {@link Pool Pools}.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ClientCache
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.Pool
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)

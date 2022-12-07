@@ -22,12 +22,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration tests using XML for {@link GemfireBeanFactoryLocator}.
  *
  * @author John Blum
- * @see Test
- * @see BeanFactory
- * @see GemfireBeanFactoryLocator
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

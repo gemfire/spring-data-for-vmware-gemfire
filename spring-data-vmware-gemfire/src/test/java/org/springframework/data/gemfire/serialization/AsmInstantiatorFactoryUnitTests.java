@@ -21,8 +21,8 @@ import org.apache.geode.Instantiator;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Instantiator
- * @see AsmInstantiatorGenerator
+ * @see org.apache.geode.Instantiator
+ * @see org.springframework.data.gemfire.serialization.AsmInstantiatorGenerator
  */
 public class AsmInstantiatorFactoryUnitTests {
 

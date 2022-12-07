@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.lang.reflect.Method;
@@ -15,7 +14,7 @@ import org.springframework.data.gemfire.function.annotation.Filter;
  *
  * @author David Turanski
  * @author John Blum
- * @see FunctionExecutionMethodMetadata
+ * @see org.springframework.data.gemfire.function.execution.FunctionExecutionMethodMetadata
  */
 class RegionFunctionExecutionMethodMetadata extends FunctionExecutionMethodMetadata<RegionMethodMetadata>  {
 

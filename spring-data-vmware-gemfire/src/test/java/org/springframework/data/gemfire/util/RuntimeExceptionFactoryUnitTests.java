@@ -20,12 +20,12 @@ import org.mockito.junit.MockitoJUnitRunner;
  * Unit tests for {@link RuntimeExceptionFactory}.
  *
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see RuntimeExceptionFactory
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.util.RuntimeExceptionFactory
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

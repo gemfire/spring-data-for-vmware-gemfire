@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
@@ -14,7 +13,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see NamespaceHandlerSupport
+ * @see org.springframework.beans.factory.xml.NamespaceHandlerSupport
  */
 @SuppressWarnings("unused")
 class GemfireNamespaceHandler extends NamespaceHandlerSupport {

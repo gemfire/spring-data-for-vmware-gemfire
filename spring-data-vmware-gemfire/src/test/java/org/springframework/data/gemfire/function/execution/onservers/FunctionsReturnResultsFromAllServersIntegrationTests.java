@@ -35,14 +35,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Patrick Johnson
  * @author John Blum
- * @see Test
- * @see Function
- * @see GemfireFunction
- * @see EnableGemfireFunctionExecutions
- * @see EnableGemfireFunctions
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @SuppressWarnings("unused")
 @RunWith(SpringRunner.class)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -41,13 +40,13 @@ import org.springframework.util.StringUtils;
  * enabling Pivotal GemFire/Apache Geode cache {@link Region Regions} data compression.
  *
  * @author John Blum
- * @see Region
- * @see BeanFactoryPostProcessor
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see EnableCompression
- * @see AbstractAnnotationConfigSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.data.gemfire.config.annotation.EnableCompression
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 2.0.2
  */
 @Configuration
@@ -64,8 +63,8 @@ public class CompressionConfiguration extends AbstractAnnotationConfigSupport im
 	 * Returns the {@link EnableCompression} {@link Annotation} {@link Class} type.
 	 *
 	 * @return the {@link EnableCompression} {@link Annotation} {@link Class} type.
-	 * @see EnableOffHeap
-	 * @see Annotation
+	 * @see org.springframework.data.gemfire.config.annotation.EnableOffHeap
+	 * @see java.lang.annotation.Annotation
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

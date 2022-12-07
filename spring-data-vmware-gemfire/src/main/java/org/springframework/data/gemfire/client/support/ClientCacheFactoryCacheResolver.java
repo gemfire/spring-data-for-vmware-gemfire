@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import org.apache.geode.cache.client.ClientCache;
@@ -16,10 +15,10 @@ import org.springframework.data.gemfire.support.AbstractCachingCacheResolver;
  * using the {@link ClientCacheFactory} API.
  *
  * @author John Blum
- * @see ClientCache
- * @see ClientCacheFactory
- * @see CacheResolver
- * @see AbstractCachingCacheResolver
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingCacheResolver
  * @since 2.3.0.
  */
 public class ClientCacheFactoryCacheResolver extends AbstractCachingCacheResolver<ClientCache> {

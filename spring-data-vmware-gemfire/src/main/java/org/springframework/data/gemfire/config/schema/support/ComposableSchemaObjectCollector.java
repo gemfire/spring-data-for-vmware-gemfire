@@ -29,7 +29,7 @@ import org.springframework.lang.Nullable;
  * {@link SchemaObjectCollector} using the Composite Software Design Pattern.
  *
  * @author John Blum
- * @see SchemaObjectCollector
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectCollector
  * @since 2.0.0
  */
 public final class ComposableSchemaObjectCollector

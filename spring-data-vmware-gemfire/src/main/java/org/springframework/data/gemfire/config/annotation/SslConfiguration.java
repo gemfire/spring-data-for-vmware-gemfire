@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -27,8 +26,8 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @author Srikanth Manvi
- * @see EnableSsl
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.data.gemfire.config.annotation.EnableSsl
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -37,7 +36,7 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 	 * Returns the {@link EnableSsl} {@link Annotation} {@link Class type}.
 	 *
 	 * @return the {@link EnableSsl} {@link Annotation} {@link Class type}.
-	 * @see EnableSsl
+	 * @see org.springframework.data.gemfire.config.annotation.EnableSsl
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

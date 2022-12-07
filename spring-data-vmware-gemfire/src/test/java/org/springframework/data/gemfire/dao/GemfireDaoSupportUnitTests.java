@@ -22,10 +22,10 @@ import org.springframework.data.gemfire.GemfireTemplate;
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Rule
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  */
 @RunWith(MockitoJUnitRunner.class)
 public class GemfireDaoSupportUnitTests {

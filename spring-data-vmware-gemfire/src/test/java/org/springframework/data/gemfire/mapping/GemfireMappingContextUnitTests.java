@@ -20,8 +20,8 @@ import lombok.Data;
  * Unit tests for {@link GemfireMappingContext} class.
  *
  * @author John Blum
- * @see Test
- * @see GemfireMappingContext
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
  * @since 1.6.3
  */
 public class GemfireMappingContextUnitTests {

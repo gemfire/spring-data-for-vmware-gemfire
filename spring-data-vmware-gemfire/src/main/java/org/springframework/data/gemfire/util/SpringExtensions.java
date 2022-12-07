@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.util.ArrayList;
@@ -41,17 +40,17 @@ import org.springframework.util.StringUtils;
  * and Spring beans.
  *
  * @author John Blum
- * @see Class
- * @see Object
- * @see Function
- * @see Stream
- * @see BeanFactory
- * @see FactoryBean
- * @see BeanDefinition
- * @see RuntimeBeanReference
- * @see Ordered
- * @see AnnotationAwareOrderComparator
- * @see Order
+ * @see java.lang.Class
+ * @see java.lang.Object
+ * @see java.util.function.Function
+ * @see java.util.stream.Stream
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.RuntimeBeanReference
+ * @see org.springframework.core.Ordered
+ * @see org.springframework.core.annotation.AnnotationAwareOrderComparator
+ * @see org.springframework.core.annotation.Order
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
@@ -87,9 +86,9 @@ public abstract class SpringExtensions {
 	 * @param beanType {@link Class type} of the bean.
 	 * @return a boolean value indicating whether the {@link BeanFactory Spring container} contains a bean
 	 * matching by both {@link String name} and {@link Class type}.
-	 * @see BeanFactory
-	 * @see Class
-	 * @see String
+	 * @see org.springframework.beans.factory.BeanFactory
+	 * @see java.lang.Class
+	 * @see java.lang.String
 	 */
 	public static boolean isMatchingBean(@NonNull BeanFactory beanFactory, String beanName, Class<?> beanType) {
 		return beanFactory.containsBean(beanName) && beanFactory.isTypeMatch(beanName, beanType);
@@ -102,7 +101,7 @@ public abstract class SpringExtensions {
 	 * @param beanNames {@link String} array containing names of beans for which the {@link BeanDefinition}
 	 * depends on (or has a dependency).
 	 * @return the given {@link BeanDefinition}.
-	 * @see BeanDefinition
+	 * @see org.springframework.beans.factory.config.BeanDefinition
 	 */
 	@NonNull
 	public static BeanDefinition addDependsOn(@NonNull BeanDefinition beanDefinition, @Nullable String... beanNames) {
@@ -124,9 +123,9 @@ public abstract class SpringExtensions {
 	 * @param beanType {@link Class type} of beans to acquire.
 	 * @return a {@link List} of beans of the given {@link Class type} in order.
 	 * @see #getBeansOfTypeOrdered(ConfigurableListableBeanFactory, Class, boolean, boolean)
-	 * @see ConfigurableListableBeanFactory
-	 * @see Class
-	 * @see List
+	 * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+	 * @see java.lang.Class
+	 * @see java.util.List
 	 */
 	@NonNull
 	public static <T> List<T> getBeansOfTypeOrdered(@NonNull ConfigurableListableBeanFactory beanFactory,
@@ -144,9 +143,9 @@ public abstract class SpringExtensions {
 	 * @param includeNonSingletons boolean indicating whether to include non-Singleton beans from the Spring container.
 	 * @param allowEagerInit boolean indicating whether to eagerly initialize {@link FactoryBean FactoryBeans}.
 	 * @return a {@link List} of beans of the given {@link Class type} in order.
-	 * @see ConfigurableListableBeanFactory
-	 * @see Class
-	 * @see List
+	 * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+	 * @see java.lang.Class
+	 * @see java.util.List
 	 */
 	@NonNull
 	public static <T> List<T> getBeansOfTypeOrdered(@NonNull ConfigurableListableBeanFactory beanFactory,
@@ -232,7 +231,7 @@ public abstract class SpringExtensions {
 	 * @param target {@link Object} to evaluate; may be {@literal null}.
 	 * @return the {@link Integer order} of the given {@link Object} if {@link Ordered},
 	 * otherwise return {@literal null}.
-	 * @see Ordered
+	 * @see org.springframework.core.Ordered
 	 */
 	public static @Nullable Integer getOrder(@Nullable Object target) {
 		return target instanceof Ordered ? ((Ordered) target).getOrder() : null;
@@ -245,9 +244,9 @@ public abstract class SpringExtensions {
 	 * @param beanFactory {@link BeanFactory} from which to acquire the beans.
 	 * @param beanType {@link Class type} of the beans.
 	 * @return an ordered {@link Stream} of beans from the {@link BeanFactory} of the given {@link Class type}.
-	 * @see BeanFactory
-	 * @see Stream
-	 * @see Class
+	 * @see org.springframework.beans.factory.BeanFactory
+	 * @see java.util.stream.Stream
+	 * @see java.lang.Class
 	 */
 	public static <T> Stream<T> getOrderedStreamOfBeansByType(@NonNull BeanFactory beanFactory,
 			@NonNull Class<T> beanType) {
@@ -448,12 +447,6 @@ public abstract class SpringExtensions {
 	public interface ValueReturningThrowableOperation<T> {
 		T get() throws Throwable;
 	}
-
-	/**
-	 * @deprecated use {@link VoidReturningThrowableOperation}.
-	 */
-	@Deprecated
-	public interface VoidReturningExceptionThrowingOperation extends VoidReturningThrowableOperation { }
 
 	@FunctionalInterface
 	public interface VoidReturningThrowableOperation {

@@ -26,14 +26,14 @@ import org.springframework.mock.env.MockPropertySource;
  * Integration Tests for {@link CacheServerApplication} and {@link EnableCacheServer}.
  *
  * @author John Blum
- * @see Test
- * @see CacheServer
- * @see ClientSubscriptionConfig
- * @see PropertySource
- * @see CacheServerApplication
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see MockPropertySource
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.apache.geode.cache.server.ClientSubscriptionConfig
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.mock.env.MockPropertySource
  * @since 2.0.0
  */
 public class CacheServerPropertiesIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

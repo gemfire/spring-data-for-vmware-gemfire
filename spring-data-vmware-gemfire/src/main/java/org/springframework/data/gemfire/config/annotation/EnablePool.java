@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -31,12 +30,12 @@ import org.springframework.data.gemfire.GemfireUtils;
  * annotation.
  *
  * @author John Blum
- * @see Pool
- * @see PoolFactory
- * @see AddPoolConfiguration
- * @see AddPoolsConfiguration
- * @see EnablePools
- * @see PoolConfigurer
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnablePools
+ * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

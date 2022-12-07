@@ -19,8 +19,8 @@ import org.springframework.data.repository.query.parser.PartTree;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see GemfireQueryCreator
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.repository.query.GemfireQueryCreator
  */
 public class GemfireQueryCreatorUnitTests {
 

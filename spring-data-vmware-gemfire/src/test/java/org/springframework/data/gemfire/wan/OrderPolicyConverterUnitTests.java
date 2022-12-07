@@ -15,9 +15,9 @@ import org.apache.geode.cache.wan.GatewaySender;
  * Unit Tests for {@link OrderPolicyConverter}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.util.Gateway.OrderPolicy
- * @see OrderPolicyConverter
+ * @see org.springframework.data.gemfire.wan.OrderPolicyConverter
  * @since 1.7.0
  */
 public class OrderPolicyConverterUnitTests {

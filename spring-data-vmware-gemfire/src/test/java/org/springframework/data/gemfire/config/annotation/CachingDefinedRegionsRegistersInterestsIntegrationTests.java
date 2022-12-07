@@ -36,15 +36,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * to register interests.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see Cacheable
- * @see ClientRegionFactoryBean
- * @see EnableCachingDefinedRegions
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/DATAGEODE-219">DATAGEODE-219</a>
  * @since 2.2.0
  */

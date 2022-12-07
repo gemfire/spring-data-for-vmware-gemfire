@@ -27,12 +27,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration tests for {@link PeerCacheApplication} SDG annotation.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see PeerCacheApplication
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0
  */
 @RunWith(SpringRunner.class)

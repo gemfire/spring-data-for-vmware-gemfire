@@ -21,13 +21,13 @@ import org.springframework.data.domain.Page;
  * as application-specific domain object views.
  *
  * @author John Blum
- * @see ProjectingLuceneAccessor
- * @see ProjectingLuceneOperations
- * @see Region
- * @see LuceneIndex
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneOperations
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
  * @see org.apache.geode.cache.lucene.LuceneQuery
  * @see org.apache.geode.cache.lucene.LuceneQueryFactory
- * @see LuceneQueryProvider
+ * @see org.apache.geode.cache.lucene.LuceneQueryProvider
  * @see org.apache.geode.cache.lucene.LuceneResultStruct
  * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
  * @since 1.1.0
@@ -46,7 +46,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	 * used to perform Lucene queries (searches).
 	 *
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene queries.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 */
 	public ProjectingLuceneTemplate(LuceneIndex luceneIndex) {
 		super(luceneIndex);
@@ -58,7 +58,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	 *
 	 * @param indexName {@link String} containing the name of the {@link LuceneIndex} used in Lucene queries.
 	 * @param region {@link Region} on which Lucene queries are executed.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public ProjectingLuceneTemplate(String indexName, Region<?, ?> region) {
 		super(indexName, region);

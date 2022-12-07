@@ -19,11 +19,11 @@ import org.apache.geode.cache.RegionFactory;
  * Unit Tests for {@link PartitionedRegionFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.Region
- * @see RegionFactory
- * @see PartitionedRegionFactoryBean
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
  * @since 1.3.3
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

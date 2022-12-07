@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import static java.util.stream.StreamSupport.stream;
@@ -52,19 +51,19 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see InetSocketAddress
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see PoolManager
- * @see DistributedSystem
- * @see DisposableBean
- * @see InitializingBean
- * @see PoolResolver
- * @see PoolConfigurer
- * @see AbstractFactoryBeanSupport
- * @see ConnectionEndpoint
- * @see ConnectionEndpointList
+ * @see java.net.InetSocketAddress
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.apache.geode.cache.client.PoolManager
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.client.PoolResolver
+ * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
+ * @see org.springframework.data.gemfire.support.ConnectionEndpoint
+ * @see org.springframework.data.gemfire.support.ConnectionEndpointList
  */
 @SuppressWarnings("unused")
 public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements DisposableBean, InitializingBean {
@@ -142,9 +141,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Prepares the construction, configuration and initialization of a new {@link Pool}.
 	 *
 	 * @throws Exception if {@link Pool} initialization fails.
-	 * @see PoolManager
-	 * @see PoolFactory
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.PoolManager
+	 * @see org.apache.geode.cache.client.PoolFactory
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -155,7 +154,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Initializes the given {@link Pool}
 	 *
 	 * @param existingPool {@link Pool} to initialize.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	private void init(@Nullable Pool existingPool) {
 
@@ -204,7 +203,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * to this {@link PoolFactoryBean}.
 	 *
 	 * @param poolConfigurers array of {@link PoolConfigurer PoolConfigurers} applied to this {@link PoolFactoryBean}.
-	 * @see PoolConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
 	 * @see #applyPoolConfigurers(Iterable)
 	 */
 	protected void applyPoolConfigurers(PoolConfigurer... poolConfigurers) {
@@ -217,7 +216,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers}
 	 * applied to this {@link PoolFactoryBean}.
-	 * @see PoolConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
 	 */
 	protected void applyPoolConfigurers(Iterable<PoolConfigurer> poolConfigurers) {
 		stream(nullSafeIterable(poolConfigurers).spliterator(), false)
@@ -227,7 +226,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	/**
 	 * Releases all system resources and destroys the {@link Pool} when created by this {@link PoolFactoryBean}.
 	 *
-	 * @see DisposableBean#destroy()
+	 * @see org.springframework.beans.factory.DisposableBean#destroy()
 	 */
 	@Override
 	public void destroy() {
@@ -251,8 +250,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Returns an object reference to the {@link Pool} created by this {@link PoolFactoryBean}.
 	 *
 	 * @return an object reference to the {@link Pool} created by this {@link PoolFactoryBean}.
-	 * @see FactoryBean#getObject()
-	 * @see Pool
+	 * @see org.springframework.beans.factory.FactoryBean#getObject()
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	@Override
 	public Pool getObject() throws Exception {
@@ -277,8 +276,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * {@link DistributedSystem} will exist, which is required to create a {@link Pool} instance.
 	 *
 	 * @see org.springframework.beans.factory.BeanFactory#getBean(Class)
-	 * @see ClientCache
-	 * @see DistributedSystem
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.apache.geode.distributed.DistributedSystem
 	 * @see #isClientCachePresent()
 	 */
 	private void eagerlyInitializeClientCache() {
@@ -293,9 +292,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @return a boolean value indicating whether the single {@link ClientCache} instance
 	 * has been created yet.
-	 * @see GemfireUtils#getClientCache()
-	 * @see DistributedSystem
-	 * @see ClientCache
+	 * @see org.springframework.data.gemfire.GemfireUtils#getClientCache()
+	 * @see org.apache.geode.distributed.DistributedSystem
+	 * @see org.apache.geode.cache.client.ClientCache
 	 */
 	boolean isClientCachePresent() {
 
@@ -310,8 +309,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Creates an instance of the {@link PoolFactory} interface to construct, configure and initialize a {@link Pool}.
 	 *
 	 * @return a {@link PoolFactory} implementation to create a {@link Pool}.
-	 * @see PoolManager#createFactory()
-	 * @see PoolFactory
+	 * @see org.apache.geode.cache.client.PoolManager#createFactory()
+	 * @see org.apache.geode.cache.client.PoolFactory
 	 */
 	protected PoolFactory createPoolFactory() {
 		return PoolManager.createFactory();
@@ -322,7 +321,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolFactory {@link PoolFactory} to configure.
 	 * @return the given {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @see org.apache.geode.cache.client.PoolFactory
 	 */
 	protected PoolFactory configure(PoolFactory poolFactory) {
 
@@ -366,7 +365,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolFactory {@link PoolFactory} to initialize.
 	 * @return the initialized {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @see org.apache.geode.cache.client.PoolFactory
 	 */
 	protected PoolFactory initialize(PoolFactory poolFactory) {
 
@@ -380,7 +379,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolFactory {@link PoolFactory} to post process.
 	 * @return the post processed {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @see org.apache.geode.cache.client.PoolFactory
 	 */
 	protected PoolFactory postProcess(PoolFactory poolFactory) {
 		return poolFactory;
@@ -400,8 +399,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * @param poolFactory {@link PoolFactory} used to create the {@link Pool}.
 	 * @param poolName {@link String name} of the new {@link Pool}.
 	 * @return a new instance of {@link Pool} with the given {@link String name}.
-	 * @see PoolFactory#create(String)
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.PoolFactory#create(String)
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	protected Pool createPool(PoolFactory poolFactory, String poolName) {
 		return poolFactory.create(poolName);
@@ -412,7 +411,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param pool {@link Pool} to post process.
 	 * @return the post processed {@link Pool}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	protected Pool postProcess(Pool pool) {
 		return pool;
@@ -422,9 +421,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Returns the {@link Class type} of {@link Pool} produced by this {@link PoolFactoryBean}.
 	 *
 	 * @return the {@link Class type} of {@link Pool} produced by this {@link PoolFactoryBean}.
-	 * @see FactoryBean#getObjectType()
-	 * @see Pool
-	 * @see Class
+	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
+	 * @see org.apache.geode.cache.client.Pool
+	 * @see java.lang.Class
 	 */
 	@Override
 	public Class<?> getObjectType() {
@@ -452,7 +451,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * to this {@link PoolFactoryBean} on Spring container initialization.
 	 *
 	 * @return the {@literal Composite} {@link PoolConfigurer}.
-	 * @see PoolConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
 	 */
 	protected PoolConfigurer getCompositePoolConfigurer() {
 		return this.compositePoolConfigurer;
@@ -483,7 +482,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Configures the {@link Pool} to be returned by this {@link PoolFactoryBean}.
 	 *
 	 * @param pool the {@link Pool} to be returned by this {@link PoolFactoryBean}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	public void setPool(@Nullable Pool pool) {
 		this.pool = pool;
@@ -497,7 +496,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * as the final {@link Pool} built by this {@link PoolFactoryBean}.
 	 *
 	 * @return the {@link Pool} configured and built by this {@link PoolFactoryBean}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #setPool(Pool)
 	 */
 	public @NonNull Pool getPool() {
@@ -744,7 +743,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolConfigurers array of {@link PoolConfigurer PoolConfigurers} used to apply
 	 * additional configuration to this {@link PoolFactoryBean}.
-	 * @see PoolConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
 	 * @see #setPoolConfigurers(List)
 	 */
 	public void setPoolConfigurers(PoolConfigurer... poolConfigurers) {
@@ -757,7 +756,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers} used to apply
 	 * additional configuration to this {@link PoolFactoryBean}.
-	 * @see PoolConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PoolConfigurer
 	 */
 	public void setPoolConfigurers(List<PoolConfigurer> poolConfigurers) {
 		this.poolConfigurers = Optional.ofNullable(poolConfigurers).orElseGet(Collections::emptyList);
@@ -769,7 +768,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolFactoryInitializer {@link PoolFactoryInitializer} user provided callback interface invoked
 	 * by this {@link PoolFactoryBean} to initialize the {@link PoolFactory} constructed to create the {@link Pool}.
-	 * @see PoolFactoryInitializer
+	 * @see org.springframework.data.gemfire.client.PoolFactoryBean.PoolFactoryInitializer
 	 */
 	public void setPoolFactoryInitializer(PoolFactoryInitializer poolFactoryInitializer) {
 		this.poolFactoryInitializer = poolFactoryInitializer;
@@ -781,7 +780,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 *
 	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects
 	 * by {@link String name}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public void setPoolResolver(PoolResolver poolResolver) {
 		this.poolResolver = poolResolver;
@@ -791,7 +790,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Returns the configured {@link PoolResolver} used to resolve {@link Pool} object by {@link String name}.
 	 *
 	 * @return the configured {@link PoolResolver}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public PoolResolver getPoolResolver() {
 
@@ -890,7 +889,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * Callback interface to initialize the {@link PoolFactory} used by this {@link PoolFactoryBean}
 	 * to create a {@link Pool} by providing additional or alternative configuration for the factory.
 	 *
-	 * @see PoolFactory
+	 * @see org.apache.geode.cache.client.PoolFactory
 	 */
 	public interface PoolFactoryInitializer {
 
@@ -899,7 +898,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 		 *
 		 * @param poolFactory {@link PoolFactory} to initialize.
 		 * @return the given {@link PoolFactory}.
-		 * @see PoolFactory
+		 * @see org.apache.geode.cache.client.PoolFactory
 		 */
 		PoolFactory initialize(PoolFactory poolFactory);
 

@@ -37,8 +37,8 @@ import org.springframework.data.gemfire.test.model.Person;
  * Unit tests for {@link GemfireSimpleTypeHolder} class.
  *
  * @author John Blum
- * @see Test
- * @see GemfireSimpleTypeHolder
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.mapping.model.GemfireSimpleTypeHolder
  * @see org.springframework.data.mapping.model.SimpleTypeHolder
  * @since 1.6.3
  */

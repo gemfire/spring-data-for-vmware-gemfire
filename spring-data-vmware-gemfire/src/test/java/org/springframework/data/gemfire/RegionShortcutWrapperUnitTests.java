@@ -14,9 +14,9 @@ import org.apache.geode.cache.RegionShortcut;
  * Unit Tests for {@link RegionShortcutWrapper} enum.
  *
  * @author John Blum
- * @see Test
- * @see RegionShortcut
- * @see RegionShortcutWrapper
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.data.gemfire.RegionShortcutWrapper
  * @since 1.4.0
  */
 public class RegionShortcutWrapperUnitTests {

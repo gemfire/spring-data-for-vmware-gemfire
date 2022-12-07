@@ -52,17 +52,17 @@ import lombok.Setter;
  * where 1 transaction commits and the other rolls back.
  *
  * @author John Blum
- * @see Test
- * @see MultithreadedTestCase
- * @see TestFramework
- * @see ClientCache
- * @see CacheServerApplication
- * @see ClientCacheApplication
- * @see ForkingClientServerIntegrationTestsSupport
- * @see EnableGemfireCacheTransactions
- * @see ContextConfiguration
- * @see SpringRunner
- * @see Transactional
+ * @see org.junit.Test
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
+ * @see org.springframework.transaction.annotation.Transactional
  * @since 2.5.0
  */
 @RunWith(SpringRunner.class)

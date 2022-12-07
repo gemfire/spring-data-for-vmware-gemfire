@@ -21,9 +21,9 @@ import org.springframework.data.gemfire.util.RegionUtils;
  * filtering to find only client {@link Region Regions} in a given context.
  *
  * @author John Blum
- * @see GemFireCache
- * @see Region
- * @see ApplicationContext
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ApplicationContext
  * @see org.springframework.data.gemfire.config.schema.SchemaObjectCollector
  * @since 2.0.0
  */

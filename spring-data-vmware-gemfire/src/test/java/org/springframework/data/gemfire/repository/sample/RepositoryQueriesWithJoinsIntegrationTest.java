@@ -25,13 +25,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * (i.e. {@literal SELECT} statements).
  *
  * @author John Blum
- * @see Test
- * @see Region
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.query.Query
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)

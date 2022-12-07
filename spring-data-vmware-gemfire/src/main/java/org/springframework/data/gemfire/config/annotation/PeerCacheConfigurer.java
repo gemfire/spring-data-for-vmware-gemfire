@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.cache.Cache;
@@ -16,11 +15,11 @@ import org.springframework.data.gemfire.config.annotation.support.Configurer;
  * an instance of a peer {@link Cache}.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see Cache
- * @see CacheFactoryBean
- * @see PeerCacheApplication
- * @see Configurer
+ * @see java.lang.FunctionalInterface
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
  * @since 1.9.0
  */
 @FunctionalInterface

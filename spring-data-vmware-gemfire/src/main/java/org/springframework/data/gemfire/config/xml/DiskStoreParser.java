@@ -28,8 +28,8 @@ import org.springframework.util.xml.DomUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractSingleBeanDefinitionParser
- * @see DiskStoreFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
  */
 class DiskStoreParser extends AbstractSingleBeanDefinitionParser {
 

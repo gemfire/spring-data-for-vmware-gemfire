@@ -33,17 +33,17 @@ import org.springframework.data.gemfire.test.support.MapBuilder;
  * Unit Tests for {@link CollectionUtils}.
  *
  * @author John Blum
- * @see Iterable
- * @see Collection
- * @see Collections
- * @see Enumeration
- * @see Iterator
- * @see List
- * @see Map
- * @see Set
- * @see Test
+ * @see java.lang.Iterable
+ * @see java.util.Collection
+ * @see java.util.Collections
+ * @see java.util.Enumeration
+ * @see java.util.Iterator
+ * @see java.util.List
+ * @see java.util.Map
+ * @see java.util.Set
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see CollectionUtils
+ * @see org.springframework.data.gemfire.util.CollectionUtils
  * @since 1.7.0
  */
 public class CollectionUtilsUnitTests {

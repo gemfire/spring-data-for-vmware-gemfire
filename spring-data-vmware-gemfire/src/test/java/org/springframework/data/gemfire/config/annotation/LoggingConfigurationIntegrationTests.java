@@ -31,16 +31,16 @@ import org.springframework.util.StringUtils;
  * Integration Tests testing the configuration of Apache Geode Logging.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see GemFireCache
- * @see ConfigurableApplicationContext
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see PropertiesPropertySource
- * @see ClientCacheApplication
- * @see EnableLogging
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see PropertiesBuilder
+ * @see org.springframework.core.env.PropertiesPropertySource
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableLogging
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.util.PropertiesBuilder
  * @since 1.9.0
  */
 public class LoggingConfigurationIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

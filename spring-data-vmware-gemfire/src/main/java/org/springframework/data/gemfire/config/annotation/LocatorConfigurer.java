@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.distributed.Locator;
@@ -21,10 +20,10 @@ import org.springframework.data.gemfire.config.annotation.support.Configurer;
  * using the {@link @EnableLocator} annotation.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see Locator
- * @see LocatorFactoryBean
- * @see Configurer
+ * @see java.lang.FunctionalInterface
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
  * @since 2.2.0
  */
 @FunctionalInterface

@@ -31,15 +31,15 @@ import org.springframework.util.Assert;
  * Integration tests for the {@link GemfireTransactionManager}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see IntegrationTestsSupport
- * @see GemfireTransactionManager
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see org.springframework.transaction.annotation.EnableTransactionManagement
- * @see Propagation
+ * @see org.springframework.transaction.annotation.Propagation
  * @since 1.9.1
  */
 @RunWith(SpringRunner.class)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Collection;
@@ -22,8 +21,8 @@ import org.springframework.util.Assert;
  * interface, which delegates to, and is backed by a given, required {@link SelectResults} instance.
  *
  * @author John Blum
- * @see Collection
- * @see SelectResults
+ * @see java.util.Collection
+ * @see org.apache.geode.cache.query.SelectResults
  * @since 2.4.0
  */
 public class AbstractSelectResults<T> implements SelectResults<T> {
@@ -36,7 +35,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	 *
 	 * @param selectResults {@link SelectResults} delegate backing this implementation; must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link SelectResults} is {@literal null}.
-	 * @see SelectResults
+	 * @see org.apache.geode.cache.query.SelectResults
 	 */
 	public AbstractSelectResults(@NonNull SelectResults<T> selectResults) {
 
@@ -50,7 +49,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	 * backing this {@link SelectResults} implementation.
 	 *
 	 * @return the configured, underlying {@link SelectResults}.
-	 * @see SelectResults
+	 * @see org.apache.geode.cache.query.SelectResults
  	 */
 	protected @NonNull SelectResults<T> getSelectResults() {
 		return this.selectResults;

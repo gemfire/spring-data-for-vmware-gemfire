@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see Import
- * @see McastConfiguration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.McastConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import java.util.Collections;
@@ -27,10 +26,10 @@ import org.springframework.lang.Nullable;
  * @author John Blum
  * @param <T> {@link Class} type of the configurable Spring component processed by this {@link Configurer}.
  * @param <C> {@link Class sub-Class} type of {@link Configurer}.
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see OrderComparator
- * @see Configurer
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.core.OrderComparator
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
  * @since 2.2.0
  */
 public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Configurer<T>>
@@ -44,7 +43,7 @@ public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Con
 	 * Sets a reference to the configured Spring {@link BeanFactory}.
 	 *
 	 * @param beanFactory reference to the configured Spring {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	public void setBeanFactory(@Nullable BeanFactory beanFactory) throws BeansException {
@@ -55,7 +54,7 @@ public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Con
 	 * Returns a reference to the configured Spring {@link BeanFactory}.
 	 *
 	 * @return a reference to the configured Spring {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected Optional<BeanFactory> getBeanFactory() {
 		return Optional.ofNullable(this.beanFactory);
@@ -65,7 +64,7 @@ public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Con
 	 * Returns the primary {@link Class} type of the {@link Configurer} composed by this {@link Configurer}.
 	 *
 	 * @return the primary {@link Class} type of the {@link Configurer} composed by this {@link Configurer}.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	protected abstract @NonNull Class<C> getConfigurerType();
 
@@ -74,8 +73,8 @@ public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Con
 	 *
 	 * @return a {@link Stream} of {@link Configurer} objects defined, declared and registered in the Spring
 	 * application context.
-	 * @see Configurer
-	 * @see Stream
+	 * @see org.springframework.data.gemfire.config.annotation.support.Configurer
+	 * @see java.util.stream.Stream
 	 */
 	protected @NonNull Stream<C> resolveConfigurers() {
 
@@ -121,7 +120,7 @@ public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Con
 	 * @param <S> sub-class type of {@link Configurer}.
 	 * @param beanFactory reference to the Spring {@link BeanFactory}.
 	 * @return this {@link AbstractLazyResolvingComposableConfigurer}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #setBeanFactory(BeanFactory)
 	 */
 	@SuppressWarnings("unchecked")

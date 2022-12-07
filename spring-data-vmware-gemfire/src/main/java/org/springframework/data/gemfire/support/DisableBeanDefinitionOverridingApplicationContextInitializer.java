@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
@@ -16,8 +15,8 @@ import org.springframework.context.ConfigurableApplicationContext;
  * ({@link ConfigurableApplicationContext}) default behavior of bean definition overriding.
  *
  * @author John Blum
- * @see ApplicationContextInitializer
- * @see ConfigurableApplicationContext
+ * @see org.springframework.context.ApplicationContextInitializer
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @since 2.6.0
  */
 public final class DisableBeanDefinitionOverridingApplicationContextInitializer

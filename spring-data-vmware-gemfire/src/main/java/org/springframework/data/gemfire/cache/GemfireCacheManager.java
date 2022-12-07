@@ -28,18 +28,18 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Cache
- * @see CacheManager
- * @see AbstractCacheManager
- * @see GemFireCache
- * @see Region
+ * @see org.springframework.cache.Cache
+ * @see org.springframework.cache.CacheManager
+ * @see org.springframework.cache.support.AbstractCacheManager
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
  */
 @SuppressWarnings("unused")
 public class GemfireCacheManager extends AbstractCacheManager {
 
 	private final AtomicBoolean dynamic = new AtomicBoolean(true);
 
-	private GemFireCache gemfireCache;
+	private org.apache.geode.cache.GemFireCache gemfireCache;
 
 	private Set<Region<?, ?>> regions;
 
@@ -83,7 +83,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 * @throws IllegalStateException if a GemFire cache instance was not provided, the provided GemFire cache instance
 	 * has been closed, no GemFire {@link Region} could be found for a given cache name, or the GemFire {@link Region}
 	 * for the given cache name has been destroyed.
-	 * @see Cache
+	 * @see org.springframework.cache.Cache
 	 */
 	@Override
 	protected Collection<Cache> loadCaches() {
@@ -131,7 +131,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 * @param region GemFire {@link Region} to wrap (adapt).
 	 * @return an instance of {@link GemfireCache} initialized with the given GemFire {@link Region}.
 	 * @see GemfireCache
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected GemfireCache newGemfireCache(Region<?, ?> region) {
 		return GemfireCache.wrap(region);
@@ -153,8 +153,8 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 * @param name name of the missing Spring {@link Cache} to lookup (and potentially create).
 	 * @return a Spring {@link Cache} instance for the given {@code name} or {@literal null} if the {@link Cache}
 	 * cannot be found (or possibly created).
-	 * @see AbstractCacheManager#getMissingCache(String)
-	 * @see Cache
+	 * @see org.springframework.cache.support.AbstractCacheManager#getMissingCache(String)
+	 * @see org.springframework.cache.Cache
 	 */
 	@Override
 	protected Cache getMissingCache(String name) {
@@ -182,9 +182,9 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 *
 	 * @param gemfireCache the GemFire cache instance used by this {@link CacheManager}
 	 * to manage Spring {@link Cache Caches}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
-	public void setCache(GemFireCache gemfireCache) {
+	public void setCache(org.apache.geode.cache.GemFireCache gemfireCache) {
 		this.gemfireCache = gemfireCache;
 	}
 
@@ -192,9 +192,9 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 * Returns the {@link GemFireCache} instance backing this {@link CacheManager}.
 	 *
 	 * @return the {@link GemFireCache} instance backing this {@link CacheManager}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
-	protected GemFireCache getCache() {
+	protected org.apache.geode.cache.GemFireCache getCache() {
 		return this.gemfireCache;
 	}
 
@@ -205,7 +205,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 * at runtime by dynamically looking up existing {@link Region Regions} from the GemFire cache instance.
 	 *
 	 * @param cacheNames {@link Set} of cache names that will be used in the application.
-	 * @see Set
+	 * @see java.util.Set
 	 */
 	public void setCacheNames(Set<String> cacheNames) {
 		this.cacheNames = cacheNames;
@@ -220,7 +220,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 *
 	 * @param regions {@link Set} of GemFire {@link Region Regions} used by this {@link CacheManager}
 	 * as Spring {@link Cache Caches}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public void setRegions(Set<Region<?, ?>> regions) {
 		this.regions = regions;
@@ -232,7 +232,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 *
 	 * @return the set of GemFire {@link Region Regions} functioning as Spring {@link Cache Caches}
 	 * in Spring's caching infrastructure
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected Set<Region<?, ?>> getRegions() {
 		return this.regions;

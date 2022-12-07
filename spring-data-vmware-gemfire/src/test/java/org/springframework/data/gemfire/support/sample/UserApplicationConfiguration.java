@@ -16,9 +16,9 @@ import org.springframework.data.gemfire.support.SpringContextBootstrappingInitia
  * The UserApplicationConfiguration class is a configuration component for configuring the user's application.
  *
  * @author John Blum
- * @see Bean
- * @see Configuration
- * @see ImportResource
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportResource
  * @since 1.4.0
  */
 @Configuration

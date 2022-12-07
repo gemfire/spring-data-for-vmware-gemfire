@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -23,21 +22,21 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 
 /**
  * The CacheServerApplication annotation enables an embedded GemFire
- * {@link CacheServer} instance in a Spring Data GemFire based application.
+ * {@link org.apache.geode.cache.server.CacheServer} instance in a Spring Data GemFire based application.
  *
  * In addition, this also implies an embedded GemFire peer {@link org.apache.geode.cache.Cache} must exist
  * and therefore will be configured, constructed and initialized as a Spring bean in the application context.
  *
  * @author John Blum
- * @see ResourceManager
- * @see CacheServer
- * @see ClientSubscriptionConfig
- * @see BeanFactory
- * @see Configuration
- * @see Import
- * @see CacheServerConfiguration
- * @see EnableCacheServers
- * @see EnableCacheServer
+ * @see org.apache.geode.cache.control.ResourceManager
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.apache.geode.cache.server.ClientSubscriptionConfig
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

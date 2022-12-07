@@ -35,7 +35,7 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * Unit tests for {@link ComposableSchemaObjectDefiner}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see SchemaObjectDefiner
  * @see ComposableSchemaObjectDefiner
  * @since 2.0.0

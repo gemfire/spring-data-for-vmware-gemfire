@@ -29,15 +29,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests testing the use of GemFire Repositories on GemFire Cache Subregions.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see Wrapper
- * @see Programmer
- * @see ProgrammerRepository
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
- * @see Region
+ * @see org.springframework.data.gemfire.repository.Wrapper
+ * @see org.springframework.data.gemfire.repository.sample.Programmer
+ * @see org.springframework.data.gemfire.repository.sample.ProgrammerRepository
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
+ * @see org.apache.geode.cache.Region
  * @link https://jira.springsource.org/browse/SGF-251
  * @link https://jira.springsource.org/browse/SGF-252
  * @since 1.4.0

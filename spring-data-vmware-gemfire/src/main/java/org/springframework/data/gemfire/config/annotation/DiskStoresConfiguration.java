@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.util.Arrays;
@@ -17,10 +16,10 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * used to register multiple GemFire/Geode {@link org.apache.geode.cache.DiskStore} bean definitions.
  *
  * @author John Blum
- * @see BeanDefinitionRegistry
- * @see DiskStoreConfiguration
- * @see EnableDiskStore
- * @see EnableDiskStores
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
  * @see org.apache.geode.cache.DiskStore
  * @since 1.9.0
  */

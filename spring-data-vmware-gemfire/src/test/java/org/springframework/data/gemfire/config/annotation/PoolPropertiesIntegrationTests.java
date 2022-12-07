@@ -29,17 +29,17 @@ import org.springframework.mock.env.MockPropertySource;
  * Integration Tests for {@link EnablePool} and {@link EnablePools}.
  *
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see PropertySource
- * @see AddPoolConfiguration
- * @see AddPoolsConfiguration
- * @see EnablePool
- * @see EnablePools
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AddPoolsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnablePool
+ * @see org.springframework.data.gemfire.config.annotation.EnablePools
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.0
  */
 @SuppressWarnings("unused")

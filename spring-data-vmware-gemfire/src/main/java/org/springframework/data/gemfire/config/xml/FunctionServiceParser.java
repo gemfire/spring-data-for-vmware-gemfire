@@ -21,7 +21,7 @@ import org.springframework.util.xml.DomUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractSimpleBeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
  * @see FunctionServiceFactoryBean
  */
 class FunctionServiceParser extends AbstractSimpleBeanDefinitionParser {

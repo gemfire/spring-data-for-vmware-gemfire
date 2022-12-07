@@ -20,8 +20,8 @@ import org.springframework.util.ClassUtils;
  * are actually on the classpath.
  *
  * @author John Blum
- * @see DefaultFunctionArgumentResolver
- * @see PdxInstance
+ * @see org.springframework.data.gemfire.function.DefaultFunctionArgumentResolver
+ * @see org.apache.geode.pdx.PdxInstance
  * @since 1.5.2
  */
 @SuppressWarnings("unused")

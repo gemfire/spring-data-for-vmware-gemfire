@@ -33,15 +33,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link EnableSsl} and {@link SslConfiguration}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see ClientCacheApplication
- * @see EnableSsl
- * @see SslConfiguration
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableSsl
+ * @see org.springframework.data.gemfire.config.annotation.SslConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
  */
 @RunWith(SpringRunner.class)

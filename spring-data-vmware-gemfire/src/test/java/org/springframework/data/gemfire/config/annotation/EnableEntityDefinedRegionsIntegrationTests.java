@@ -26,14 +26,14 @@ import org.springframework.mock.env.MockPropertySource;
  * Integration Tests for {@link EnableEntityDefinedRegions} and {@link EntityDefinedRegionsConfiguration}.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ConfigurableApplicationContext
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see EnableEntityDefinedRegions
- * @see EntityDefinedRegionsConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.2
  */
 public class EnableEntityDefinedRegionsIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

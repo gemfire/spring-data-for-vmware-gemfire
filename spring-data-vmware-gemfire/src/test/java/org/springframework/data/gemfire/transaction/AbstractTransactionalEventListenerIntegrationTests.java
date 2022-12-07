@@ -37,12 +37,12 @@ import lombok.ToString;
  * Apache Geode cache event listener tests.
  *
  * @author John Blum
- * @see ApplicationEventPublisher
- * @see Bean
- * @see Configuration
- * @see IntegrationTestsSupport
- * @see TransactionApplicationEvent
- * @see Transactional
+ * @see org.springframework.context.ApplicationEventPublisher
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.transaction.event.TransactionApplicationEvent
+ * @see org.springframework.transaction.annotation.Transactional
  * @since 2.3.0
  */
 @SuppressWarnings("unused")

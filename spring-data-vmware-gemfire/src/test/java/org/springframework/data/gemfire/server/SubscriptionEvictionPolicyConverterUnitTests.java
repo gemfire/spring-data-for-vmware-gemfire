@@ -13,9 +13,9 @@ import org.junit.Test;
  * Unit tests for {@link SubscriptionEvictionPolicyConverter}.
  *
  * @author John Blum
- * @see Test
- * @see SubscriptionEvictionPolicy
- * @see SubscriptionEvictionPolicyConverter
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConverter
  * @since 1.6.0
  */
 public class SubscriptionEvictionPolicyConverterUnitTests {

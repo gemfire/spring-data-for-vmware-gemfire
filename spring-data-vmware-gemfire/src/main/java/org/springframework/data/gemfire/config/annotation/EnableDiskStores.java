@@ -23,10 +23,10 @@ import org.springframework.context.annotation.Import;
  * @author John Blum
  * @see org.apache.geode.cache.DiskStore
  * @see org.apache.geode.cache.Region
- * @see Import
- * @see DiskStoresConfiguration
- * @see DiskStoreConfigurer
- * @see EnableDiskStore
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoresConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

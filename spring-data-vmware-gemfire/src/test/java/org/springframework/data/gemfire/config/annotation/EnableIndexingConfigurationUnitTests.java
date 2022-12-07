@@ -62,22 +62,22 @@ import org.springframework.lang.Nullable;
  * Unit Tests for the {@link EnableIndexing} and {@link IndexConfiguration} class.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
- * @see LuceneIndex
- * @see Index
- * @see ConfigurableApplicationContext
- * @see Bean
- * @see Configuration
- * @see IndexFactoryBean
- * @see IndexType
- * @see EnableIndexing
- * @see IndexConfiguration
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.data.gemfire.IndexType
+ * @see org.springframework.data.gemfire.config.annotation.EnableIndexing
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
  * @see org.springframework.data.gemfire.mapping.annotation.Indexed
  * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.9.0
  */
 @SuppressWarnings({ "rawtypes", "unused" })

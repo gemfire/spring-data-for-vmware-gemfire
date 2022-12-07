@@ -27,12 +27,12 @@ import org.springframework.data.gemfire.util.SpringExtensions;
  *
  * @author Dan Smith
  * @author John Blum
- * @see Test
- * @see Cache
- * @see ServerLauncher
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.distributed.ServerLauncher
  * @see org.springframework.context.ApplicationContext
- * @see ConfigurableApplicationContext
- * @see SpringServerLauncherCacheProvider
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.data.gemfire.support.SpringServerLauncherCacheProvider
  */
 public class SpringServerLauncherCacheProviderIntegrationTests extends IntegrationTestsSupport {
 

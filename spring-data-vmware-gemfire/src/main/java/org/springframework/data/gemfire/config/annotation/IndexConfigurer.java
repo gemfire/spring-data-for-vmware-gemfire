@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.cache.lucene.LuceneIndex;
@@ -19,13 +18,13 @@ import org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean;
  * {@link Configuration} {@link Class} with {@link EnableIndexing}.
  *
  * @author John Blum
- * @see LuceneIndex
- * @see Index
- * @see IndexFactoryBean
- * @see EnableIndexing
- * @see IndexConfiguration
- * @see Configurer
- * @see LuceneIndexFactoryBean
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.EnableIndexing
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 2.0.0
  */
 public interface IndexConfigurer extends Configurer<IndexFactoryBean> {
@@ -36,7 +35,7 @@ public interface IndexConfigurer extends Configurer<IndexFactoryBean> {
 	 *
 	 * @param beanName name of the {@link Index} bean declared in the Spring application context.
 	 * @param bean reference to the {@link IndexFactoryBean}.
-	 * @see IndexFactoryBean
+	 * @see org.springframework.data.gemfire.IndexFactoryBean
 	 */
 	default void configure(String beanName, IndexFactoryBean bean) { }
 
@@ -46,7 +45,7 @@ public interface IndexConfigurer extends Configurer<IndexFactoryBean> {
 	 *
 	 * @param beanName name of the {@link LuceneIndex} bean declared in the Spring application context.
 	 * @param bean reference to the {@link LuceneIndexFactoryBean}.
-	 * @see LuceneIndexFactoryBean
+	 * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
 	 */
 	default void configure(String beanName, LuceneIndexFactoryBean bean) { }
 

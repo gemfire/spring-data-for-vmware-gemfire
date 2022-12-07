@@ -20,8 +20,8 @@ import org.springframework.util.xml.DomUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractSimpleBeanDefinitionParser
- * @see GatewaySenderFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  */
 class GatewaySenderParser extends AbstractSimpleBeanDefinitionParser {
 

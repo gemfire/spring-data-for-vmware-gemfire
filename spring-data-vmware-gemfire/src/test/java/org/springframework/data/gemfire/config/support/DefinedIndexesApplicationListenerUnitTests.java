@@ -38,9 +38,9 @@ import org.slf4j.Logger;
  * Unit tests for {@link DefinedIndexesApplicationListener}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @see DefinedIndexesApplicationListener
  * @since 1.7.0
  */

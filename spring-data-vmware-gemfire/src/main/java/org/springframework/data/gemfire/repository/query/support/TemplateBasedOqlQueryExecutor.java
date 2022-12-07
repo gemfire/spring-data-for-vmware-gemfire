@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query.support;
 
 import org.apache.geode.cache.query.SelectResults;
@@ -17,10 +16,10 @@ import org.springframework.util.Assert;
  * {@link String OQL queries}.
  *
  * @author John Blum
- * @see SelectResults
- * @see GemfireTemplate
- * @see OqlQueryExecutor
- * @see QueryMethod
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.query.support.OqlQueryExecutor
+ * @see org.springframework.data.repository.query.QueryMethod
  * @since 2.4.0
  */
 public class TemplateBasedOqlQueryExecutor implements OqlQueryExecutor {
@@ -34,7 +33,7 @@ public class TemplateBasedOqlQueryExecutor implements OqlQueryExecutor {
 	 * @param template {@link GemfireTemplate} used to execute Apache Geode {@link String OQL queries};
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link GemfireTemplate} is {@literal null}.
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	public TemplateBasedOqlQueryExecutor(@NonNull GemfireTemplate template) {
 
@@ -47,7 +46,7 @@ public class TemplateBasedOqlQueryExecutor implements OqlQueryExecutor {
 	 * Gets the configured {@link GemfireTemplate} used to execute Apache Geode {@link String OQL queries}.
 	 *
 	 * @return the configured {@link GemfireTemplate} used to execute Apache Geode {@link String OQL queries}.
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	protected @NonNull GemfireTemplate getTemplate() {
 		return this.template;

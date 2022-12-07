@@ -39,16 +39,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  * on a cache {@link Region} by {@literal identifier} using the SDG XML Namespace.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see GemFireCache
- * @see Region
- * @see AsyncEventQueue
- * @see EnableLocator
- * @see PeerCacheApplication
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.springframework.data.gemfire.config.annotation.EnableLocator
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
  */
 @RunWith(SpringRunner.class)

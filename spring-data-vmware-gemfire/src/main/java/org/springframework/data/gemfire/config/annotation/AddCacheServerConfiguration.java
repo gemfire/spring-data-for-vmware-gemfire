@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -34,19 +33,19 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see org.apache.geode.cache.server.CacheServer
  * @see org.springframework.beans.factory.BeanFactory
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see AnnotationMetadata
- * @see AddCacheServersConfiguration
- * @see CacheServerApplication
- * @see CacheServerConfiguration
- * @see CacheServerConfigurer
- * @see EnableCacheServers
- * @see EnableCacheServer
- * @see AbstractAnnotationConfigSupport
- * @see CacheServerFactoryBean
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServersConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 1.9.0
  */
 public class AddCacheServerConfiguration extends AbstractAnnotationConfigSupport
@@ -78,9 +77,9 @@ public class AddCacheServerConfiguration extends AbstractAnnotationConfigSupport
 	 * @param enableCacheServerAttributes attributes for the {@link EnableCacheServer} annotation.
 	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link CacheServerFactoryBean}
 	 * bean definition.
-	 * @see BeanDefinitionBuilder
-	 * @see BeanDefinitionRegistry
-	 * @see CacheServerFactoryBean
+	 * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+	 * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
 	 */
 	protected void registerCacheServerFactoryBeanDefinition(AnnotationAttributes enableCacheServerAttributes,
 			BeanDefinitionRegistry registry) {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -32,24 +31,24 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * the application persistent entities.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
- * @see Region
- * @see RegionShortcut
- * @see ClientRegionShortcut
- * @see Pool
- * @see ComponentScan
- * @see ComponentScan.Filter
- * @see Import
- * @see AliasFor
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.context.annotation.ComponentScan
+ * @see org.springframework.context.annotation.ComponentScan.Filter
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.core.annotation.AliasFor
  * @see PeerRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see EntityDefinedRegionsConfiguration
- * @see IndexConfiguration
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
  * @see CacheTypeAwareRegionFactoryBean
- * @see ClientRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
  * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
  * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
@@ -106,7 +105,7 @@ public @interface EnableEntityDefinedRegions {
 	/**
 	 * Specifies which types are not eligible for component scanning.
 	 *
-	 * @return an array of {@link ComponentScan.Filter Filters} used to
+	 * @return an array of {@link org.springframework.context.annotation.ComponentScan.Filter Filters} used to
 	 * specify application persistent entities to be excluded during the component scan.
 	 */
 	ComponentScan.Filter[] excludeFilters() default {};

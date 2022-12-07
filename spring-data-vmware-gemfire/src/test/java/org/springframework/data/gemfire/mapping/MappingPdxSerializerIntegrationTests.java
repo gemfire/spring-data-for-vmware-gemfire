@@ -61,14 +61,14 @@ import lombok.Setter;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Cache
- * @see Region
- * @see PdxReader
- * @see PdxSerializer
- * @see PdxWriter
- * @see MappingPdxSerializer
- * @see PersistentEntity
- * @see EntityInstantiator
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.pdx.PdxReader
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.PdxWriter
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.springframework.data.mapping.PersistentEntity
+ * @see org.springframework.data.mapping.model.EntityInstantiator
  */
 public class MappingPdxSerializerIntegrationTests {
 

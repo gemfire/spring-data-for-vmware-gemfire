@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -23,10 +22,10 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * an embedded {@link Locator}.
  *
  * @author John Blum
- * @see Locator
- * @see ImportBeanDefinitionRegistrar
- * @see EnableLocator
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableLocator
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class LocatorConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -36,10 +35,10 @@ public class LocatorConfiguration extends EmbeddedServiceConfigurationSupport {
 	protected static final String START_LOCATOR_GEMFIRE_PROPERTY_NAME = "start-locator";
 
 	/**
-	 * Returns the {@link EnableLocator} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableLocator} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableLocator} {@link Annotation} {@link Class} type.
-	 * @see EnableLocator
+	 * @return the {@link EnableLocator} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableLocator
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

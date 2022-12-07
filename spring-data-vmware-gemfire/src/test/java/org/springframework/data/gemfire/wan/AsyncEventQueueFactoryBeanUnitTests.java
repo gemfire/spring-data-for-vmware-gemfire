@@ -38,17 +38,17 @@ import org.springframework.data.gemfire.TestUtils;
  * Unit Tests for {@link AsyncEventQueueFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see AsyncEventListener
- * @see AsyncEventQueue
- * @see AsyncEventQueueFactory
- * @see GatewayEventFilter
- * @see GatewayEventSubstitutionFilter
- * @see GatewaySender
- * @see TestUtils
- * @see AsyncEventQueueFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory
+ * @see org.apache.geode.cache.wan.GatewayEventFilter
+ * @see org.apache.geode.cache.wan.GatewayEventSubstitutionFilter
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.TestUtils
+ * @see org.springframework.data.gemfire.wan.AsyncEventQueueFactoryBean
  * @since 1.3.3
  */
 @RunWith(MockitoJUnitRunner.class)

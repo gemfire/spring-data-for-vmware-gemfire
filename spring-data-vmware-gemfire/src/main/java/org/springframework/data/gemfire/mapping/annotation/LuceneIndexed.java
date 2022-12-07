@@ -24,10 +24,10 @@ import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
  * on a GemFire/Geode {@link org.apache.geode.cache.Region}.
  *
  * @author John Blum
- * @see AliasFor
+ * @see org.springframework.core.annotation.AliasFor
  * @see org.springframework.data.gemfire.IndexType
  * @see org.apache.geode.cache.Region
- * @see LuceneIndex
+ * @see org.apache.geode.cache.lucene.LuceneIndex
  * @since 1.1.0
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

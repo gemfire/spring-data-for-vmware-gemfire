@@ -29,14 +29,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link PeerCacheConfigurer}.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see CacheFactoryBean
- * @see PeerCacheApplication
- * @see PeerCacheConfigurer
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsBeanPostProcessor
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)

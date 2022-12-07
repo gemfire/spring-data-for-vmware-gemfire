@@ -11,7 +11,7 @@ import org.apache.geode.cache.EvictionAction;
  * The EvictionActionType enum is an enumeration of all the GemFire EvictionAction values.
  *
  * @author John Blum
- * @see EvictionAction
+ * @see org.apache.geode.cache.EvictionAction
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -29,7 +29,7 @@ public enum EvictionActionType {
 	 * Constructs an instance of the EvictionActionType enum initialized with the matching GemFire EvictionAction.
 	 *
 	 * @param evictionAction the matching GemFire EvictionAction value for this enumerated value.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 */
 	EvictionActionType(final EvictionAction evictionAction) {
 		this.evictionAction = evictionAction;
@@ -53,7 +53,7 @@ public enum EvictionActionType {
 	 * @param evictionAction the GemFire EvictionAction used to lookup and match the appropriate EvictionActionType.
 	 * @return an EvictionActionType enumerated value matching the given GemFire EvictionAction
 	 * or null if no match was found.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 * @see #getEvictionAction()
 	 */
 	public static EvictionActionType valueOf(final EvictionAction evictionAction) {
@@ -73,7 +73,7 @@ public enum EvictionActionType {
 	 * @param name a String value indicating the name the eviction action used to match EvictionActionType.
 	 * @return an EvictionActionType enumerated value matching the given named, case-insensitive eviction action
 	 * or null if not match was found.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #name()
 	 */
 	public static EvictionActionType valueOfIgnoreCase(final String name) {
@@ -91,7 +91,7 @@ public enum EvictionActionType {
 	 * Gets the matching GemFire EvictionAction represented by this enumerated value.
 	 *
 	 * @return the GemFire EvictionAction represented by this enum.
-	 * @see EvictionAction
+	 * @see org.apache.geode.cache.EvictionAction
 	 */
 	public EvictionAction getEvictionAction() {
 		return this.evictionAction;

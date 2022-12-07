@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -19,9 +18,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Pivotal GemFire/Apache Geode logging.
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableLogging
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableLogging
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class LoggingConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -32,10 +31,10 @@ public class LoggingConfiguration extends EmbeddedServiceConfigurationSupport {
 	public static final String DEFAULT_LOG_LEVEL = "config";
 
 	/**
-	 * Returns the {@link EnableLogging} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableLogging} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableLogging} {@link Annotation} {@link Class} type.
-	 * @see EnableLogging
+	 * @return the {@link EnableLogging} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableLogging
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

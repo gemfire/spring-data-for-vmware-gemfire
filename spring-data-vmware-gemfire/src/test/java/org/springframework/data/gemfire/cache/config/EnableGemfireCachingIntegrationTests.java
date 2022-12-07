@@ -26,17 +26,17 @@ import org.springframework.util.Assert;
  * Integration Tests for {@link EnableGemfireCaching} and {@link GemfireCachingConfiguration}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.Region
- * @see Cacheable
- * @see Bean
- * @see EnableGemfireCaching
- * @see GemfireCachingConfiguration
- * @see EnableCachingDefinedRegions
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.cache.config.EnableGemfireCaching
+ * @see org.springframework.data.gemfire.cache.config.GemfireCachingConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

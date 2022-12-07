@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.lang.reflect.Method;
@@ -29,11 +28,11 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author David Turanski
  * @author John Blum
  * @author Patrick Johnson
- * @see Method
- * @see MethodInterceptor
+ * @see java.lang.reflect.Method
+ * @see org.aopalliance.intercept.MethodInterceptor
  * @see org.springframework.beans.factory.BeanClassLoaderAware
- * @see FactoryBean
- * @see AbstractFactoryBeanSupport
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  */
 public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<Object> implements MethodInterceptor {
 
@@ -56,7 +55,7 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 	 * @param gemfireFunctionOperations template used to execute the {@link Function}.
 	 * @throws IllegalArgumentException if the {@link Class Function Execution Interface} is {@literal null}
 	 * or the {@link Class Function Execution Type} is not an actual interface.
-	 * @see GemfireFunctionOperations
+	 * @see org.springframework.data.gemfire.function.execution.GemfireFunctionOperations
 	 */
 	public GemfireFunctionProxyFactoryBean(@NonNull Class<?> functionExecutionInterface,
 			@NonNull GemfireFunctionOperations gemfireFunctionOperations) {

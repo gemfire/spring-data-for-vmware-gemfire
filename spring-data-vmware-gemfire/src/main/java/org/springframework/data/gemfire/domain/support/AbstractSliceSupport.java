@@ -27,9 +27,9 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * @param <T> {@link Class} type of the individual elements on this {@link Slice}.
  * @see org.springframework.core.convert.converter.Converter
  * @see org.springframework.data.domain.Page
- * @see Pageable
- * @see Slice
- * @see Sort
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.domain.Slice
+ * @see org.springframework.data.domain.Sort
  * @since 1.1.0
  */
 @SuppressWarnings("unused")

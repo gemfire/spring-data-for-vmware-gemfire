@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -20,12 +19,12 @@ import org.w3c.dom.Element;
  * @author Lyndon Adams
  * @author John Blum
  * @author Patrick Johnson
- * @see Element
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionParser
- * @see ParserContext
- * @see ClientCacheFactoryBean
- * @see CacheParser
+ * @see org.w3c.dom.Element
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.BeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.CacheParser
  */
 class ClientCacheParser extends CacheParser {
 

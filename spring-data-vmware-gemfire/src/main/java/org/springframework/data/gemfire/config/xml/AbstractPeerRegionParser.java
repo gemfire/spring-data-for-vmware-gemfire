@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.apache.geode.cache.Region;
@@ -18,13 +17,13 @@ import org.w3c.dom.Element;
  * Abstract Spring XML parser for peer {@link Region} bean definitions.
  *
  * @author John Blum
- * @see Region
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see BeanDefinitionBuilder
- * @see ParserContext
- * @see AbstractRegionParser
- * @see Element
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.config.xml.AbstractRegionParser
+ * @see org.w3c.dom.Element
  * @since 2.2.0
  */
 public abstract class AbstractPeerRegionParser extends AbstractRegionParser {

@@ -14,8 +14,8 @@ import org.junit.Test;
  * Unit Tests for {@link ArrayUtils}.
  *
  * @author John Blum
- * @see Test
- * @see ArrayUtils
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.util.ArrayUtils
  * @since 1.7.0
  */
 public class ArrayUtilsUnitTests {

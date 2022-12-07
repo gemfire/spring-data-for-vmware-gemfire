@@ -14,8 +14,8 @@ import org.springframework.core.convert.converter.Converter;
  * Shortcut representations into actual GemFire ClientRegionShortcut enumerated values.
  *
  * @author John Blum
- * @see Converter
- * @see ClientRegionShortcut
+ * @see org.springframework.core.convert.converter.Converter
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
  * @since 1.3.4
  */
 @SuppressWarnings("unused")
@@ -27,9 +27,9 @@ public class ClientRegionShortcutConverter implements Converter<String, ClientRe
 	 *
 	 * @param value the String to convert to a trimmed, upper case value.
 	 * @return a trimmed, upper case value of the specified String, or "null" if the String value reference is null.
-	 * @see String#toUpperCase()
-	 * @see String#trim()
-	 * @see String#valueOf(Object)
+	 * @see java.lang.String#toUpperCase()
+	 * @see java.lang.String#trim()
+	 * @see java.lang.String#valueOf(Object)
 	 */
 	protected static String toUpperCase(final String value) {
 		return (value != null ? value.toUpperCase().trim() : String.valueOf(value));
@@ -42,7 +42,7 @@ public class ClientRegionShortcutConverter implements Converter<String, ClientRe
 	 * @param source the String representation of the Client Region Shortcut to convert.
 	 * @return a ClientRegionShortcut enumerated value for the String representation.
 	 * @throws IllegalArgumentException if the String source is not a valid ClientRegionShortcut enumerated value.
-	 * @see ClientRegionShortcut#valueOf(String)
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut#valueOf(String)
 	 */
 	@Override
 	public ClientRegionShortcut convert(final String source) {

@@ -17,9 +17,9 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  *
  * @author Costin Leau
  * @author John Blum
- * @see Test
- * @see Cache
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.springframework.cache.Cache
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  */
 public abstract class AbstractNativeCacheTests<T> extends IntegrationTestsSupport {
 

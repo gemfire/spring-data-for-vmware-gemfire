@@ -16,7 +16,7 @@ import org.apache.geode.cache.snapshot.SnapshotFilter;
  * allowing 2 or more SnapshotFilters to be combined by logical AND and OR operators acting as a single SnapshotFilter.
  *
  * @author John Blum
- * @see SnapshotFilter
+ * @see org.apache.geode.cache.snapshot.SnapshotFilter
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -56,8 +56,8 @@ public class ComposableSnapshotFilter<K, V> implements SnapshotFilter<K, V> {
 	 * @param operator the right operand in the boolean-based expression.
 	 * @param rightOperand the operator used to combine the resulting boolean expressions
 	 * from the evaluation of the operands.
-	 * @see Operator
-	 * @see SnapshotFilter
+	 * @see ComposableSnapshotFilter.Operator
+	 * @see org.apache.geode.cache.snapshot.SnapshotFilter
 	 */
 	private ComposableSnapshotFilter(SnapshotFilter<K, V> leftOperand, Operator operator, SnapshotFilter<K, V> rightOperand) {
 
@@ -75,8 +75,8 @@ public class ComposableSnapshotFilter<K, V> implements SnapshotFilter<K, V> {
 	 * @param snapshotFilters the array of SnapshotFilters to compose into a logical boolean expression
 	 * using the Operator.
 	 * @return a SnapshotFilter implementation composed of the SnapshotFilters using the specified Operator.
-	 * @see Operator
-	 * @see SnapshotFilter
+	 * @see ComposableSnapshotFilter.Operator
+	 * @see org.apache.geode.cache.snapshot.SnapshotFilter
 	 */
 	@SuppressWarnings("unchecked")
 	protected static <K, V> SnapshotFilter<K, V> compose(Operator operator, SnapshotFilter<K, V>... snapshotFilters) {
@@ -99,8 +99,8 @@ public class ComposableSnapshotFilter<K, V> implements SnapshotFilter<K, V> {
 	 * @param snapshotFilters the array of SnapshotFilters to compose into a logical boolean expression
 	 * using the AND Operator.
 	 * @return a SnapshotFilter implementation composed of the SnapshotFilters using the AND Operator.
-	 * @see Operator#AND
-	 * @see SnapshotFilter
+	 * @see ComposableSnapshotFilter.Operator#AND
+	 * @see org.apache.geode.cache.snapshot.SnapshotFilter
 	 */
 	public static <K, V> SnapshotFilter<K, V> and(SnapshotFilter<K, V>... snapshotFilters) {
 		return compose(Operator.AND, snapshotFilters);
@@ -114,8 +114,8 @@ public class ComposableSnapshotFilter<K, V> implements SnapshotFilter<K, V> {
 	 * @param snapshotFilters the array of SnapshotFilters to compose into a logical boolean expression
 	 * using the OR Operator.
 	 * @return a SnapshotFilter implementation composed of the SnapshotFilters using the OR Operator.
-	 * @see Operator#OR
-	 * @see SnapshotFilter
+	 * @see ComposableSnapshotFilter.Operator#OR
+	 * @see org.apache.geode.cache.snapshot.SnapshotFilter
 	 */
 	public static <K, V> SnapshotFilter<K, V> or(SnapshotFilter<K, V>... snapshotFilters) {
 		return compose(Operator.OR, snapshotFilters);
@@ -126,9 +126,9 @@ public class ComposableSnapshotFilter<K, V> implements SnapshotFilter<K, V> {
 	 *
 	 * @param entry the Map.Entry to evaluate.
 	 * @return a boolean value indicating whether this composed SnapshotFilter accepts the Map Entry.
-	 * @see Operator
-	 * @see SnapshotFilter#accept(Map.Entry)
-	 * @see Map.Entry
+	 * @see ComposableSnapshotFilter.Operator
+	 * @see org.apache.geode.cache.snapshot.SnapshotFilter#accept(Map.Entry)
+	 * @see java.util.Map.Entry
 	 */
 	@Override
 	public boolean accept(final Map.Entry<K, V> entry) {

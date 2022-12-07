@@ -17,10 +17,10 @@ import java.lang.annotation.Target;
  * which handles all CQ events and errors.
  *
  * @author John Blum
- * @see Documented
- * @see Inherited
- * @see Retention
- * @see Target
+ * @see java.lang.annotation.Documented
+ * @see java.lang.annotation.Inherited
+ * @see java.lang.annotation.Retention
+ * @see java.lang.annotation.Target
  * @since 2.0.0
  */
 @Target(ElementType.METHOD)

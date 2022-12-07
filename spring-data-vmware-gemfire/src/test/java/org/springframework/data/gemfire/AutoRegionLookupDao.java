@@ -24,9 +24,9 @@ import org.springframework.stereotype.Repository;
  * this {@link Repository @Repository} component is auto-wired properly.
  *
  * @author John Blum
- * @see Region
- * @see DaoSupport
- * @see Repository
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.dao.support.DaoSupport
+ * @see org.springframework.stereotype.Repository
  * @since 1.5.0
  */
 //@Lazy

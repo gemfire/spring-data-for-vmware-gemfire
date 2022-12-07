@@ -36,18 +36,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * as the caching provider.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ClientCache
- * @see Cacheable
- * @see CachingConfigurerSupport
- * @see CacheErrorHandler
- * @see EnableGemfireCaching
- * @see ClientCacheApplication
- * @see EnableCachingDefinedRegions
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.cache.annotation.CachingConfigurerSupport
+ * @see org.springframework.cache.interceptor.CacheErrorHandler
+ * @see org.springframework.data.gemfire.cache.config.EnableGemfireCaching
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.3.0
  */
 @RunWith(SpringRunner.class)

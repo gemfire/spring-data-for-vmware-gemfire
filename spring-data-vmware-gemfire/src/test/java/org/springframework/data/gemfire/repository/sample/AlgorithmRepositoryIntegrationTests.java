@@ -23,11 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * of the persistence operations.
  *
  * @author John Blum
- * @see Test
- * @see Region
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.4.0
  */

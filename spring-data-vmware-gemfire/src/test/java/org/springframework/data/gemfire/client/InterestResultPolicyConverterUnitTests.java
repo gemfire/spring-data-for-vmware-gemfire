@@ -15,10 +15,10 @@ import org.apache.geode.cache.InterestResultPolicy;
  * Unit Tests for {@link InterestResultPolicyConverter}.
  *
  * @author John Blum
- * @see Test
- * @see InterestResultPolicy
- * @see InterestResultPolicyConverter
- * @see InterestResultPolicyType
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.springframework.data.gemfire.client.InterestResultPolicyConverter
+ * @see org.springframework.data.gemfire.client.InterestResultPolicyType
  * @since 1.6.0
  */
 public class InterestResultPolicyConverterUnitTests {

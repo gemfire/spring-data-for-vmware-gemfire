@@ -18,8 +18,8 @@ import org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractSimpleBeanDefinitionParser
- * @see GatewayReceiverFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  */
 class GatewayReceiverParser extends AbstractSimpleBeanDefinitionParser {
 

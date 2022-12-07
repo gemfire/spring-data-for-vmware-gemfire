@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.listener;
 
 import java.lang.reflect.Method;
@@ -25,7 +24,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see InitializingBean
+ * @see org.springframework.beans.factory.InitializingBean
  */
 @SuppressWarnings("unused")
 public class ContinuousQueryDefinition implements InitializingBean {
@@ -47,7 +46,7 @@ public class ContinuousQueryDefinition implements InitializingBean {
 			method, ContinuousQuery.class.getName()));
 
 		String name = Optional.of(continuousQuery.name())
-			.filter(StringUtils::hasText)
+			.filter(org.springframework.util.StringUtils::hasText)
 			.orElseGet(() -> String.format("%1$s.%2$s", method.getDeclaringClass().getName(), method.getName()));
 
 		String query = continuousQuery.query();

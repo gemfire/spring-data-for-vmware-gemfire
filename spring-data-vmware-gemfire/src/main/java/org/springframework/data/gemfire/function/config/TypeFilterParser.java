@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -54,7 +53,7 @@ class TypeFilterParser {
 	 * Creates a new {@link TypeFilterParser} with the given {@link ReaderContext}.
 	 *
 	 * @param readerContext must not be {@literal null}.
-	 * @see XmlReaderContext
+	 * @see org.springframework.beans.factory.xml.XmlReaderContext
 	 */
 	public TypeFilterParser(XmlReaderContext readerContext) {
 

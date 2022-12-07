@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -41,20 +40,20 @@ import org.springframework.util.StringUtils;
  * An abstract base class supporting the configuration of Apache Geode embedded services.
  *
  * @author John Blum
- * @see Map
- * @see Properties
- * @see BeanFactory
- * @see AutowireCapableBeanFactory
- * @see BeanDefinitionHolder
- * @see BeanPostProcessor
- * @see NamedBeanHolder
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see AbstractCacheConfiguration
- * @see AbstractAnnotationConfigSupport
+ * @see java.util.Map
+ * @see java.util.Properties
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.AutowireCapableBeanFactory
+ * @see org.springframework.beans.factory.config.BeanDefinitionHolder
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.beans.factory.config.NamedBeanHolder
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 1.9.0
  */
 @SuppressWarnings("unused")
@@ -74,7 +73,7 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 	 * @param <T> {@link Class} type extension of {@link AbstractCacheConfiguration}.
 	 * @return a reference to a single {@link AbstractCacheConfiguration} instance.
 	 * @throws IllegalStateException if the {@link AbstractCacheConfiguration} reference was not configured.
-	 * @see AbstractCacheConfiguration
+	 * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
 	 */
 	@SuppressWarnings("unchecked")
 	protected @NonNull <T extends AbstractCacheConfiguration> T getCacheConfiguration() {
@@ -311,7 +310,7 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 	 * Spring {@link BeanPostProcessor} used to process before initialization Pivotal GemFire or Apache Geode
 	 * {@link Properties} defined as a bean in the Spring application context.
 	 *
-	 * @see BeanPostProcessor
+	 * @see org.springframework.beans.factory.config.BeanPostProcessor
 	 */
 	protected static class GemFirePropertiesBeanPostProcessor implements BeanPostProcessor {
 
@@ -325,7 +324,7 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 		 *
 		 * @param gemfireProperties {@link Properties} used to configure Pivotal GemFire or Apache Geode.
 		 * @throws IllegalArgumentException if {@link Properties} are {@literal null} or empty.
-		 * @see Properties
+		 * @see java.util.Properties
 		 */
 		protected GemFirePropertiesBeanPostProcessor(@NonNull Properties gemfireProperties) {
 

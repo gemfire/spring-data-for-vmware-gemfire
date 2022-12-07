@@ -63,13 +63,13 @@ import lombok.Setter;
  * Abstract base test class for implementing Apache Geode Integrated Security Integration Tests.
  *
  * @author John Blum
- * @see Principal
- * @see Properties
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see AbstractAuthInitialize
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see java.security.Principal
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAuthInitialize
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @since 1.0.0
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -266,7 +266,7 @@ public abstract class AbstractGeodeSecurityIntegrationTests extends ForkingClien
 
 		private final Set<Role> roles = new HashSet<>();
 
-		@NonNull
+		@lombok.NonNull
 		private final String name;
 
 		@Setter(AccessLevel.PROTECTED)

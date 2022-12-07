@@ -38,12 +38,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link QueryPostProcessor}.
  *
  * @author John Blum
- * @see Test
- * @see GemFireCache
- * @see QueryPostProcessor
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

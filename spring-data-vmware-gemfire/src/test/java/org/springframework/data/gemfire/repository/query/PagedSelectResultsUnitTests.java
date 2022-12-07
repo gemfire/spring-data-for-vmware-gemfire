@@ -32,13 +32,13 @@ import org.springframework.data.domain.Pageable;
  * Unit Tests for {@link PagedSelectResults}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see SelectResults
- * @see Pageable
- * @see PagedSelectResults
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.gemfire.repository.query.PagedSelectResults
  * @since 2.4.0
  */
 @RunWith(MockitoJUnitRunner.class)

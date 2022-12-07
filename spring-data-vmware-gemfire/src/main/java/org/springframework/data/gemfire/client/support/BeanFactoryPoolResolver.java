@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import org.apache.geode.cache.client.Pool;
@@ -23,10 +22,10 @@ import org.springframework.util.Assert;
  * proper bean declaration in this case.
  *
  * @author John Blum
- * @see Pool
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see PoolResolver
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.data.gemfire.client.PoolResolver
  * @since 2.3.0
  */
 public class BeanFactoryPoolResolver implements BeanFactoryAware, PoolResolver {
@@ -38,7 +37,7 @@ public class BeanFactoryPoolResolver implements BeanFactoryAware, PoolResolver {
 	 * the given Spring {@link BeanFactory} used to resolve managed {@link Pool} objects.
 	 *
 	 * @param beanFactory Spring {@link BeanFactory} used to resolve managed {@link Pool} objects.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	public BeanFactoryPoolResolver(@NonNull BeanFactory beanFactory) {
 		setBeanFactory(beanFactory);
@@ -59,7 +58,7 @@ public class BeanFactoryPoolResolver implements BeanFactoryAware, PoolResolver {
 	 * Returns a reference to the configured Spring {@link BeanFactory} used to resolve managed {@link Pool} objects.
 	 *
 	 * @return a reference to the configured Spring {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected BeanFactory getBeanFactory() {
 		return this.beanFactory;
@@ -71,7 +70,7 @@ public class BeanFactoryPoolResolver implements BeanFactoryAware, PoolResolver {
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
 	 * @return the resolved, {@link String named}, managed {@link Pool} object or {@literal null} if no {@link Pool}
 	 * with the given {@link String name} could be resolved from the configured Spring {@link BeanFactory}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #getBeanFactory()
 	 */
 	@Nullable @Override

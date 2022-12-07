@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import java.util.Optional;
@@ -24,13 +23,13 @@ import org.springframework.lang.Nullable;
  * or peer with a secure Apache Geode cluster.
  *
  * @author John Blum
- * @see Properties
- * @see Cache
- * @see DistributedMember
- * @see AuthInitialize
- * @see EnvironmentAware
- * @see Environment
- * @see WiringDeclarableSupport
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.distributed.DistributedMember
+ * @see org.apache.geode.security.AuthInitialize
+ * @see org.springframework.context.EnvironmentAware
+ * @see org.springframework.core.env.Environment
+ * @see org.springframework.data.gemfire.support.WiringDeclarableSupport
  * @since 2.0.0
  */
 public abstract class AbstractAuthInitialize extends WiringDeclarableSupport
@@ -43,7 +42,7 @@ public abstract class AbstractAuthInitialize extends WiringDeclarableSupport
 	 * Sets a reference to the configured Spring {@link Environment}.
 	 *
 	 * @param environment reference to the configured Spring {@link Environment}.
-	 * @see Environment
+	 * @see org.springframework.core.env.Environment
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -55,8 +54,8 @@ public abstract class AbstractAuthInitialize extends WiringDeclarableSupport
 	 * Get an {@link Optional} reference to the configured Spring {@link Environment}.
 	 *
 	 * @return an {@link Optional} reference to the configured Spring {@link Environment}.
-	 * @see Environment
-	 * @see Optional
+	 * @see org.springframework.core.env.Environment
+	 * @see java.util.Optional
 	 */
 	protected Optional<Environment> getEnvironment() {
 		return Optional.ofNullable(this.environment);
@@ -93,9 +92,9 @@ public abstract class AbstractAuthInitialize extends WiringDeclarableSupport
 	 * @return the given Apache Geode {@link Properties}.
 	 * @throws AuthenticationFailedException if this Apache Geode node could not be authenticated with
 	 * the Apache Geode distributed system (cluster).
-	 * @see DistributedMember
+	 * @see org.apache.geode.distributed.DistributedMember
 	 * @see #doGetCredentials(Properties)
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	@Override
 	public final Properties getCredentials(Properties properties, DistributedMember distributedMember, boolean isPeer)

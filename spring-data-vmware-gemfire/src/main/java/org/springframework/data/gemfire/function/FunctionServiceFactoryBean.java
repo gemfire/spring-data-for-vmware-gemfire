@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function;
 
 import java.util.List;
@@ -22,10 +21,10 @@ import org.springframework.util.CollectionUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see FactoryBean
- * @see InitializingBean
- * @see Function
- * @see FunctionService
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionService
  */
 public class FunctionServiceFactoryBean implements FactoryBean<FunctionService>, InitializingBean {
 

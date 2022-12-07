@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction.event;
 
 import java.time.Instant;
@@ -18,9 +17,9 @@ import org.springframework.util.StringUtils;
  * a transaction.
  *
  * @author John Blum
- * @see Instant
- * @see LocalDateTime
- * @see ApplicationEvent
+ * @see java.time.Instant
+ * @see java.time.LocalDateTime
+ * @see org.springframework.context.ApplicationEvent
  * @since 2.3.0
  */
 public class TransactionApplicationEvent extends ApplicationEvent {

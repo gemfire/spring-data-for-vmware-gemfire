@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see AbstractFunctionExecutionBeanDefinitionBuilder
+ * @see org.springframework.data.gemfire.function.config.AbstractFunctionExecutionBeanDefinitionBuilder
  */
 abstract class MemberBasedFunctionExecutionBeanDefinitionBuilder
 		extends AbstractFunctionExecutionBeanDefinitionBuilder {

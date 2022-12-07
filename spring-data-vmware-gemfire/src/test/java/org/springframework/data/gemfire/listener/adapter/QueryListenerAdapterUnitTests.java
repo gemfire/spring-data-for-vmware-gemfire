@@ -31,8 +31,8 @@ import org.springframework.data.gemfire.listener.ContinuousQueryListener;
  * @author Costin Leau
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see ContinuousQueryListenerAdapter
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter
  */
 public class QueryListenerAdapterUnitTests {
 

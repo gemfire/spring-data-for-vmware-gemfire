@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.util.ArrayList;
@@ -32,14 +31,14 @@ import org.springframework.util.StringUtils;
  * using the {@link LocatorLauncher} class.
  *
  * @author John Blum
- * @see Properties
- * @see Locator
- * @see LocatorLauncher
- * @see FactoryBean
- * @see InitializingBean
- * @see LocatorConfigurer
- * @see AbstractFactoryBeanSupport
- * @see GemfireBeanFactoryLocator
+ * @see java.util.Properties
+ * @see org.apache.geode.distributed.Locator
+ * @see org.apache.geode.distributed.LocatorLauncher
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.config.annotation.LocatorConfigurer
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.2.0
  */
 @SuppressWarnings("unused")

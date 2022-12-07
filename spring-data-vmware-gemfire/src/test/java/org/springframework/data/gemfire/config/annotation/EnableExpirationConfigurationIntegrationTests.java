@@ -26,15 +26,15 @@ import org.springframework.stereotype.Service;
  * Integration Tests for {@link EnableExpiration} and {@link ExpirationConfiguration}.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ConfigurableApplicationContext
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see EnableExpiration
- * @see ExpirationConfiguration
- * @see AnnotationBasedExpiration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.EnableExpiration
+ * @see org.springframework.data.gemfire.config.annotation.ExpirationConfiguration
+ * @see org.springframework.data.gemfire.expiration.AnnotationBasedExpiration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 @SuppressWarnings("unused")

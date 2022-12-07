@@ -19,10 +19,10 @@ import org.apache.geode.cache.GemFireCache;
  * Unit Tests for {@link CacheResolver}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see CacheResolver
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.CacheResolver
  * @since 2.3.0
  */
 public class CacheResolverUnitTests {

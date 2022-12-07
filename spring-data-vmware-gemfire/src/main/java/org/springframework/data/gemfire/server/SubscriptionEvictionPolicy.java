@@ -30,8 +30,8 @@ public enum SubscriptionEvictionPolicy {
 	 * @param name the String name of a SubscriptionEvictionPolicy enumerated value.
 	 * @return a SubscriptionEvictionPolicy enumerated value given a String name or null if no enum value
 	 * with name was found.
-	 * @see SubscriptionEvictionPolicy
-	 * @see String#equalsIgnoreCase(String)
+	 * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #values()
 	 * @see #name()
 	 */
@@ -51,7 +51,7 @@ public enum SubscriptionEvictionPolicy {
 	 * @param config a GemFire ClientSubscriptionConfig object holding the configuration setting and meta-data
 	 * about the client's subscription configuration.
 	 * @return the ClientSubscriptionConfig object.
-	 * @see ClientSubscriptionConfig#setEvictionPolicy(String)
+	 * @see org.apache.geode.cache.server.ClientSubscriptionConfig#setEvictionPolicy(String)
 	 */
 	public ClientSubscriptionConfig setEvictionPolicy(final ClientSubscriptionConfig config) {
 		if (config != null) {

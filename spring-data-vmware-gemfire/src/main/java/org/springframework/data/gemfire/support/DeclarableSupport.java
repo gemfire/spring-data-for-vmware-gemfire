@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import static org.springframework.data.gemfire.support.GemfireBeanFactoryLocator.newBeanFactoryLocator;
@@ -25,10 +24,10 @@ import org.springframework.data.gemfire.PeerRegionFactoryBean;
  *
  * @author Costin Leau
  * @author John Blum
- * @see CacheCallback
- * @see Declarable
- * @see BeanFactory
- * @see GemfireBeanFactoryLocator
+ * @see org.apache.geode.cache.CacheCallback
+ * @see org.apache.geode.cache.Declarable
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  */
 @SuppressWarnings("unused")
 public abstract class DeclarableSupport implements CacheCallback, Declarable {
@@ -39,8 +38,8 @@ public abstract class DeclarableSupport implements CacheCallback, Declarable {
 	 * Returns a reference to the Spring {@link BeanFactory}.
 	 *
 	 * @return a reference to the Spring {@link BeanFactory}.
-	 * @see GemfireBeanFactoryLocator#useBeanFactory(String)
-	 * @see BeanFactory
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator#useBeanFactory(String)
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #locateBeanFactory()
 	 */
 	protected BeanFactory getBeanFactory() {
@@ -69,7 +68,7 @@ public abstract class DeclarableSupport implements CacheCallback, Declarable {
 	 * Returns a reference to the Spring {@link BeanFactory}.
 	 *
 	 * @return a reference to the Spring {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #locateBeanFactory(String)
 	 * @see #getBeanFactoryKey()
 	 */
@@ -82,8 +81,8 @@ public abstract class DeclarableSupport implements CacheCallback, Declarable {
 	 *
 	 * @param beanFactoryKey {@link String} containing the key used to lookup the Spring {@link BeanFactory}.
 	 * @return a reference to the Spring {@link BeanFactory} for the given {@code beanFactoryKey}.
-	 * @see GemfireBeanFactoryLocator#useBeanFactory(String)
-	 * @see BeanFactory
+	 * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator#useBeanFactory(String)
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected BeanFactory locateBeanFactory(String beanFactoryKey) {
 		return newBeanFactoryLocator().useBeanFactory(beanFactoryKey);

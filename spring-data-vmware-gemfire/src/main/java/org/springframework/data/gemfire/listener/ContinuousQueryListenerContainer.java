@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.listener;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
@@ -63,27 +62,27 @@ import org.springframework.util.StringUtils;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Executor
- * @see RegionService
- * @see Pool
+ * @see java.util.concurrent.Executor
+ * @see org.apache.geode.cache.RegionService
+ * @see org.apache.geode.cache.client.Pool
  * @see org.apache.geode.cache.client.PoolManager
- * @see CqAttributes
- * @see CqEvent
- * @see CqListener
- * @see CqQuery
- * @see QueryService
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see BeanNameAware
- * @see DisposableBean
- * @see InitializingBean
- * @see SmartLifecycle
- * @see SimpleAsyncTaskExecutor
- * @see TaskExecutor
- * @see PoolResolver
- * @see DefaultableDelegatingPoolAdapter
- * @see DelegatingPoolAdapter
- * @see ErrorHandler
+ * @see org.apache.geode.cache.query.CqAttributes
+ * @see org.apache.geode.cache.query.CqEvent
+ * @see org.apache.geode.cache.query.CqListener
+ * @see org.apache.geode.cache.query.CqQuery
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.beans.factory.BeanNameAware
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.context.SmartLifecycle
+ * @see org.springframework.core.task.SimpleAsyncTaskExecutor
+ * @see org.springframework.core.task.TaskExecutor
+ * @see org.springframework.data.gemfire.client.PoolResolver
+ * @see org.springframework.data.gemfire.client.support.DefaultableDelegatingPoolAdapter
+ * @see org.springframework.data.gemfire.client.support.DelegatingPoolAdapter
+ * @see org.springframework.util.ErrorHandler
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -158,7 +157,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param configurers array of {@link ContinuousQueryListenerContainerConfigurer} used to customize
 	 * the configuration of this {@link ContinuousQueryListenerContainer}.
-	 * @see ContinuousQueryListenerContainerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryListenerContainerConfigurer
 	 */
 	protected void applyContinuousQueryListenerContainerConfigurers(
 			ContinuousQueryListenerContainerConfigurer... configurers) {
@@ -175,7 +174,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param configurers {@link Iterable} of {@link ContinuousQueryListenerContainerConfigurer} used to customize
 	 * the configuration of this {@link ContinuousQueryListenerContainer}.
-	 * @see ContinuousQueryListenerContainerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryListenerContainerConfigurer
 	 */
 	protected void applyContinuousQueryListenerContainerConfigurers(
 			Iterable<ContinuousQueryListenerContainerConfigurer> configurers) {
@@ -189,7 +188,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
 	 * @return a resolved {@link Pool} object from the given {@link String name}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #getPoolResolver()
 	 */
 	@Nullable Pool resolvePool(String poolName) {
@@ -255,7 +254,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * @param poolName {@link String} containing the name of the {@link Pool} used obtain the {@link QueryService}
 	 * if CQs are tied to a specific {@link Pool}.
 	 * @return the initialized {@link QueryService}.
-	 * @see QueryService
+	 * @see org.apache.geode.cache.query.QueryService
 	 */
 	QueryService initQueryService(String poolName) {
 
@@ -280,7 +279,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * @param queryService {@link QueryService} to validate.
 	 * @throws IllegalStateException if the {@link QueryService} is {@literal null}.
 	 * @return the given {@link QueryService}
-	 * @see QueryService
+	 * @see org.apache.geode.cache.query.QueryService
 	 */
 	private QueryService validateQueryService(QueryService queryService) {
 
@@ -293,7 +292,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Initialize the {@link Executor} used to process CQ events asynchronously.
 	 *
 	 * @return a new isntance of {@link Executor} used to process CQ events asynchronously.
-	 * @see Executor
+	 * @see java.util.concurrent.Executor
 	 */
 	Executor initExecutor() {
 
@@ -314,7 +313,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * (or the class name, if no bean name is specified) as the Thread name prefix.</p>
 	 *
 	 * @return an instance of the {@link TaskExecutor} used to process CQ events asynchronously.
-	 * @see SimpleAsyncTaskExecutor
+	 * @see org.springframework.core.task.SimpleAsyncTaskExecutor
 	 */
 	protected Executor createDefaultTaskExecutor() {
 
@@ -372,7 +371,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Determines whether this CQ listener container will automatically start on startup.
 	 *
 	 * @return a boolean value indicating whether this CQ listener container automatically starts.
-	 * @see SmartLifecycle#isAutoStartup()
+	 * @see org.springframework.context.SmartLifecycle#isAutoStartup()
 	 */
 	@Override
 	public boolean isAutoStartup() {
@@ -404,7 +403,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns a reference to the configured {@link BeanFactory}.
 	 *
 	 * @return a reference to the configured {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected BeanFactory getBeanFactory() {
 		return this.beanFactory;
@@ -436,7 +435,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Set the underlying RegionService (GemFire Cache) used for registering Queries.
 	 *
 	 * @param cache the RegionService (GemFire Cache) used for registering Queries.
-	 * @see RegionService
+	 * @see org.apache.geode.cache.RegionService
 	 */
 	public void setCache(RegionService cache) {
 		setQueryService(cache.getQueryService());
@@ -446,8 +445,8 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns a reference to all the configured/registered {@link CqQuery Continuous Queries}.
 	 *
 	 * @return a reference to all the configured/registered {@link CqQuery Continuous Queries}.
-	 * @see CqQuery
-	 * @see Queue
+	 * @see org.apache.geode.cache.query.CqQuery
+	 * @see java.util.Queue
 	 */
 	protected Queue<CqQuery> getContinuousQueries() {
 		return this.continuousQueries;
@@ -457,8 +456,8 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns a reference to all the configured {@link ContinuousQueryDefinition ContinuousQueryDefinitions}.
 	 *
 	 * @return a reference to all the configured {@link ContinuousQueryDefinition ContinuousQueryDefinitions}.
-	 * @see ContinuousQueryDefinition
-	 * @see Set
+	 * @see org.springframework.data.gemfire.listener.ContinuousQueryDefinition
+	 * @see java.util.Set
 	 */
 	protected Set<ContinuousQueryDefinition> getContinuousQueryDefinitions() {
 		return this.continuousQueryDefinitions;
@@ -470,7 +469,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param configurers array of {@link ContinuousQueryListenerContainerConfigurer} objects used to customize
 	 * the configuration of this {@link ContinuousQueryListenerContainer}.
-	 * @see ContinuousQueryListenerContainerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryListenerContainerConfigurer
 	 * @see #setContinuousQueryListenerContainerConfigurers(List)
 	 */
 	public void setContinuousQueryListenerContainerConfigurers(ContinuousQueryListenerContainerConfigurer... configurers) {
@@ -487,7 +486,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param configurers {@link Iterable} of {@link ContinuousQueryListenerContainerConfigurer} objects used to
 	 * customize the configuration of this {@link ContinuousQueryListenerContainer}.
-	 * @see ContinuousQueryListenerContainerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryListenerContainerConfigurer
 	 */
 	public void setContinuousQueryListenerContainerConfigurers(List<ContinuousQueryListenerContainerConfigurer> configurers) {
 		this.cqListenerContainerConfigurers = CollectionUtils.nullSafeList(configurers);
@@ -500,7 +499,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @return a Composite object containing a collection of {@link ContinuousQueryListenerContainerConfigurer} objects
 	 * used to customize the configuration of this {@link ContinuousQueryListenerContainer}.
-	 * @see ContinuousQueryListenerContainerConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryListenerContainerConfigurer
 	 */
 	protected ContinuousQueryListenerContainerConfigurer getCompositeContinuousQueryListenerContainerConfigurer() {
 		return this.compositeCqListenerContainerConfigurer;
@@ -514,7 +513,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param errorHandler {@link ErrorHandler} invoked when uncaught {@link Exception Exceptions} are thrown
 	 * while processing the CQ event.
-	 * @see ErrorHandler
+	 * @see org.springframework.util.ErrorHandler
 	 */
 	public void setErrorHandler(ErrorHandler errorHandler) {
 		this.errorHandler = errorHandler;
@@ -525,7 +524,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * any unhandled {@link Exception Exceptions} are thrown when invoking CQ listeners processing CQ events.
 	 *
 	 * @return an {@link Optional} reference to the configured {@link ErrorHandler}.
-	 * @see ErrorHandler
+	 * @see org.springframework.util.ErrorHandler
 	 */
 	public Optional<ErrorHandler> getErrorHandler() {
 		return Optional.ofNullable(this.errorHandler);
@@ -575,7 +574,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects
 	 * by {@link String name}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public void setPoolResolver(PoolResolver poolResolver) {
 		this.poolResolver = poolResolver;
@@ -585,7 +584,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns the configured {@link PoolResolver} used to resolve {@link Pool} object by {@link String name}.
 	 *
 	 * @return the configured {@link PoolResolver}.
-	 * @see PoolResolver
+	 * @see org.springframework.data.gemfire.client.PoolResolver
 	 */
 	public PoolResolver getPoolResolver() {
 		return this.poolResolver != null ? this.poolResolver : DEFAULT_POOL_RESOLVER;
@@ -606,7 +605,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Set the GemFire QueryService used by this container to create ContinuousQueries (CQ).
 	 *
 	 * @param queryService the GemFire QueryService object used by the container to create ContinuousQueries (CQ).
-	 * @see QueryService
+	 * @see org.apache.geode.cache.query.QueryService
 	 */
 	public void setQueryService(QueryService queryService) {
 		this.queryService = queryService;
@@ -616,7 +615,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns a reference to the configured {@link QueryService}.
 	 *
 	 * @return a reference to the configured {@link QueryService}.
-	 * @see QueryService
+	 * @see org.apache.geode.cache.query.QueryService
 	 */
 	public QueryService getQueryService() {
 		return this.queryService;
@@ -629,7 +628,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * messages coming in.
 	 *
 	 * @param taskExecutor The Task Executor used to run event listeners when query results messages are received.
-	 * @see Executor
+	 * @see java.util.concurrent.Executor
 	 */
 	public void setTaskExecutor(Executor taskExecutor) {
 		this.taskExecutor = taskExecutor;
@@ -639,7 +638,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Returns a reference to the configured {@link Executor TaskExecutor}.
 	 *
 	 * @return a reference to the configured {@link Executor TaskExecutor}.
-	 * @see Executor
+	 * @see java.util.concurrent.Executor
 	 */
 	public Executor getTaskExecutor() {
 		return this.taskExecutor;
@@ -651,7 +650,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * If the container is running, the listener starts receiving (matching) messages as soon as possible.
 	 *
 	 * @param definition {@link ContinuousQueryDefinition Continuous Query (CQ) definition} to register.
-	 * @see ContinuousQueryDefinition
+	 * @see org.springframework.data.gemfire.listener.ContinuousQueryDefinition
 	 */
 	public void addListener(ContinuousQueryDefinition definition) {
 
@@ -743,8 +742,8 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 *
 	 * @param listener {@link ContinuousQueryListener} which will process/handle the {@link CqEvent CQ event}.
 	 * @param event {@link CqEvent CQ event} to process.
-	 * @see ContinuousQueryListener
-	 * @see CqEvent
+	 * @see org.springframework.data.gemfire.listener.ContinuousQueryListener
+	 * @see org.apache.geode.cache.query.CqEvent
 	 */
 	protected void dispatchEvent(ContinuousQueryListener listener, CqEvent event) {
 		getTaskExecutor().execute(() -> notify(listener, event));

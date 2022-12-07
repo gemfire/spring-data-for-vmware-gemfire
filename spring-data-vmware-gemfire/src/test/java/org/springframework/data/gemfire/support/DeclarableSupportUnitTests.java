@@ -21,11 +21,11 @@ import org.springframework.beans.factory.BeanFactory;
  * Unit Tests for {@link DeclarableSupport}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

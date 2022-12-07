@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -15,10 +14,10 @@ import org.springframework.lang.Nullable;
  * Composition for {@link IndexConfigurer}.
  *
  * @author John Blum
- * @see IndexFactoryBean
- * @see IndexConfigurer
- * @see AbstractLazyResolvingComposableConfigurer
- * @see LuceneIndexFactoryBean
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 2.2.0
  */
 public class LazyResolvingComposableIndexConfigurer

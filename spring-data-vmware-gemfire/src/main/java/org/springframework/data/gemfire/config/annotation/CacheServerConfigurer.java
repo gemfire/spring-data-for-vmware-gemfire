@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.cache.server.CacheServer;
@@ -16,13 +15,13 @@ import org.springframework.data.gemfire.server.CacheServerFactoryBean;
  * an instance of {@link CacheServer}.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see CacheServer
- * @see CacheServerApplication
- * @see EnableCacheServer
- * @see EnableCacheServers
- * @see Configurer
- * @see CacheServerFactoryBean
+ * @see java.lang.FunctionalInterface
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 2.0.0
  */
 @FunctionalInterface

@@ -13,7 +13,7 @@ import org.apache.geode.cache.EvictionAlgorithm;
  *
  * @author Costin Leau
  * @author John Blum
- * @see EvictionAlgorithm
+ * @see org.apache.geode.cache.EvictionAlgorithm
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -30,7 +30,7 @@ public enum EvictionPolicyType {
 	 * Constructs an instance of the EvictionPolicyType enum initialized with the matching GemFire EvictionAlgorithm.
 	 *
 	 * @param evictionAlgorithm the GemFire EvictionAlgorithm represented by this EvictionPolicyType enumerated value.
-	 * @see EvictionAlgorithm
+	 * @see org.apache.geode.cache.EvictionAlgorithm
 	 */
 	EvictionPolicyType(final EvictionAlgorithm evictionAlgorithm) {
 		this.evictionAlgorithm = evictionAlgorithm;
@@ -41,7 +41,7 @@ public enum EvictionPolicyType {
 	 *
 	 * @param evictionPolicyType the EvictionPolicyType from which to extract the GemFire EvictionAlgorithm.
 	 * @return the GemFire EvictionAlgorithm for the corresponding EvictionPolicyType or null if evictionType is null.
-	 * @see EvictionAlgorithm
+	 * @see org.apache.geode.cache.EvictionAlgorithm
 	 * @see #getEvictionAlgorithm()
 	 */
 	public static EvictionAlgorithm getEvictionAlgorithm(final EvictionPolicyType evictionPolicyType) {
@@ -53,7 +53,7 @@ public enum EvictionPolicyType {
 	 *
 	 * @param evictionAlgorithm the GemFire EvictionAlgorithm used to lookup and match the EvictionPolicyType.
 	 * @return an EvictionPolicyType matching the specified GemFire EvictionAlgorithm or null if no match was found.
-	 * @see EvictionAlgorithm
+	 * @see org.apache.geode.cache.EvictionAlgorithm
 	 * @see #getEvictionAlgorithm()
 	 */
 	public static EvictionPolicyType valueOf(final EvictionAlgorithm evictionAlgorithm) {
@@ -72,7 +72,7 @@ public enum EvictionPolicyType {
 	 *
 	 * @param name a String indicating the name of the eviction policy used to match EvictionPolicyType.
 	 * @return an EvictionPolicyType matching the given the case-insensitive, named eviction policy.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #name()
 	 */
 	public static EvictionPolicyType valueOfIgnoreCase(final String name) {
@@ -90,7 +90,7 @@ public enum EvictionPolicyType {
 	 * Gets the GemFire EvictionAlgorithm represented by this enumerated value.
 	 *
 	 * @return the GemFire EvictionAlgorithm represented by this enum.
-	 * @see EvictionAlgorithm
+	 * @see org.apache.geode.cache.EvictionAlgorithm
 	 */
 	public EvictionAlgorithm getEvictionAlgorithm() {
 		return this.evictionAlgorithm;

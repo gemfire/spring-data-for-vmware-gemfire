@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.cache;
 
 import java.util.concurrent.Callable;
@@ -22,10 +21,10 @@ import org.springframework.util.Assert;
  * use with Spring's Cache Abstraction.
  *
  * @author John Blum
- * @see Callable
- * @see CacheLoader
- * @see LoaderHelper
- * @see Region
+ * @see java.util.concurrent.Callable
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.LoaderHelper
+ * @see org.apache.geode.cache.Region
  * @since 1.9.0
  */
 @SuppressWarnings("unused")
@@ -44,7 +43,7 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 *
 	 * @param delegate the {@link CacheLoader} delegated to by this adapter.
 	 * @see #CallableCacheLoaderAdapter(CacheLoader, Object, Region, Object)
-	 * @see CacheLoader
+	 * @see org.apache.geode.cache.CacheLoader
 	 */
 	public CallableCacheLoaderAdapter(CacheLoader<K, V> delegate) {
 		this(delegate, null, null, null);
@@ -59,8 +58,8 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * @param key the key for which the value will be loaded.
 	 * @param region the {@link Region} in which the entry (key/value) belongs.
 	 * @see #CallableCacheLoaderAdapter(CacheLoader, Object, Region, Object)
-	 * @see CacheLoader
-	 * @see Region
+	 * @see org.apache.geode.cache.CacheLoader
+	 * @see org.apache.geode.cache.Region
 	 */
 	public CallableCacheLoaderAdapter(CacheLoader<K, V> delegate, K key, Region<K, V> region) {
 		this(delegate, key, region, null);
@@ -77,8 +76,8 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * @param region the {@link Region} in which the entry (key/value) belongs.
 	 * @param argument the Object argument used with the {@link CacheLoader} delegate.
 	 * @see #CallableCacheLoaderAdapter(CacheLoader, Object, Region, Object)
-	 * @see CacheLoader
-	 * @see Region
+	 * @see org.apache.geode.cache.CacheLoader
+	 * @see org.apache.geode.cache.Region
 	 */
 	public CallableCacheLoaderAdapter(CacheLoader<K, V> delegate, K key, Region<K, V> region, Object argument) {
 
@@ -103,7 +102,7 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * The {@link CacheLoader} delegate used to actually load the cache value for the specified key.
 	 *
 	 * @return a reference to the actual {@link CacheLoader} used when loading the cache value for the specified key.
-	 * @see CacheLoader
+	 * @see org.apache.geode.cache.CacheLoader
 	 */
 	protected CacheLoader<K, V> getCacheLoader() {
 		return this.cacheLoader;
@@ -122,7 +121,7 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * Returns the Region to which the entry (key/value) belongs.
 	 *
 	 * @return the Region to which the entry belongs.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected Region<K, V> getRegion() {
 		return this.region;
@@ -132,8 +131,8 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * Invoked to load a cache value for the specified key.  Delegates to {@link #load(LoaderHelper)}.
 	 *
 	 * @return the loaded cache value for the specified key.
-	 * @throws IllegalStateException if the {@link Region} or key references are null.
-	 * @throws Exception if the load operation fails.
+	 * @throws java.lang.IllegalStateException if the {@link Region} or key references are null.
+	 * @throws java.lang.Exception if the load operation fails.
 	 * @see #load(LoaderHelper)
 	 */
 	public final V call() throws Exception {
@@ -182,8 +181,8 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, CacheLoade
 	 * @throws CacheLoaderException if an error occurs during the load operation. This exception, or any other
 	 * Exception thrown by this method will be propagated back to the application from the
 	 * {@link Region#get(Object)} method.
-	 * @see CacheLoader#load(LoaderHelper)
-	 * @see LoaderHelper
+	 * @see org.apache.geode.cache.CacheLoader#load(LoaderHelper)
+	 * @see org.apache.geode.cache.LoaderHelper
 	 * @see #getCacheLoader()
 	 */
 	public V load(LoaderHelper<K, V> loaderHelper) throws CacheLoaderException {

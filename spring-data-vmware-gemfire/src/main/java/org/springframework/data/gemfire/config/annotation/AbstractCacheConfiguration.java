@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.CacheFactoryBean.JndiDataSource;
@@ -42,33 +41,33 @@ import org.springframework.util.StringUtils;
  * client or peer-based cache instance using Spring's Java-based, Annotation {@link Configuration} support.
  *
  * This class encapsulates configuration settings common to both Pivotal GemFire/Apache Geode
- * {@link Cache peer caches}
- * and {@link ClientCache client caches}.
+ * {@link org.apache.geode.cache.Cache peer caches}
+ * and {@link org.apache.geode.cache.client.ClientCache client caches}.
  *
  * @author John Blum
- * @see Annotation
- * @see Properties
- * @see Cache
+ * @see java.lang.annotation.Annotation
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.GemFireCache
- * @see ClientCache
- * @see CacheServer
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.server.CacheServer
  * @see org.springframework.beans.factory.BeanFactory
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
  * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see Resource
- * @see AnnotationMetadata
- * @see CacheFactoryBean
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.io.Resource
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.CacheFactoryBean
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
- * @see AbstractAnnotationConfigSupport
- * @see CustomEditorBeanFactoryPostProcessor
- * @see DefinedIndexesApplicationListener
- * @see DiskStoreDirectoryBeanPostProcessor
- * @see PropertiesBuilder
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.config.support.DefinedIndexesApplicationListener
+ * @see org.springframework.data.gemfire.config.support.DiskStoreDirectoryBeanPostProcessor
+ * @see org.springframework.data.gemfire.util.PropertiesBuilder
  * @since 1.9.0
  */
 @Configuration
@@ -110,7 +109,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private List<JndiDataSource> jndiDataSources;
 	private List<TransactionListener> transactionListeners;
 
-	private PropertiesBuilder customGemFireProperties = PropertiesBuilder.create();
+	private final PropertiesBuilder customGemFireProperties = PropertiesBuilder.create();
 
 	private Resource cacheXml;
 
@@ -137,7 +136,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * @return a {@link Properties} object containing Pivotal GemFire/Apache Geode properties used to configure
 	 * the Pivotal GemFire/Apache Geode cache instance.
 	 * @see <a href="https://geode.apache.org/docs/guide/113/reference/topics/gemfire_properties.html">Geode Properties</a>
-	 * @see Properties
+	 * @see java.util.Properties
 	 * @see #locators()
 	 * @see #logLevel()
 	 * @see #mcastPort()
@@ -176,7 +175,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing annotation meta-data
 	 * for the Spring Data GemFire cache application class.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	protected void configureInfrastructure(AnnotationMetadata importMetadata) {
 
@@ -213,7 +212,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * Configures Pivotal GemFire/Apache Geode cache specific settings.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing the cache meta-data used to configure the cache.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	protected void configureCache(AnnotationMetadata importMetadata) {
 
@@ -272,7 +271,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * Callback method allowing developers to configure other cache or application specific configuration settings.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing meta-data used to configure the cache or application.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	protected void configureOptional(AnnotationMetadata importMetadata) { }
 
@@ -289,7 +288,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
 	 * or {@link PeerCacheApplication}).
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see org.springframework.data.gemfire.CacheFactoryBean
 	 * @see #configureCacheFactoryBean(CacheFactoryBean)
 	 * @see #newCacheFactoryBean()
 	 */
@@ -310,7 +309,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
 	 * or {@link PeerCacheApplication}).
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see org.springframework.data.gemfire.CacheFactoryBean
 	 */
 	protected abstract <T extends CacheFactoryBean> T newCacheFactoryBean();
 
@@ -321,7 +320,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * @param gemfireCache {@link CacheFactoryBean} to configure.
 	 * @return the given {@link CacheFactoryBean} with common cache configuration settings applied.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see org.springframework.data.gemfire.CacheFactoryBean
 	 */
 	protected <T extends CacheFactoryBean> T configureCacheFactoryBean(T gemfireCache) {
 
@@ -347,14 +346,14 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	// TODO: Review Javadoc from here
 
 	/**
-	 * Determines whether this is a GemFire {@link CacheServer} application,
+	 * Determines whether this is a GemFire {@link org.apache.geode.cache.server.CacheServer} application,
 	 * which is indicated by the presence of the {@link CacheServerApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
+	 * {@link org.springframework.context.annotation.Configuration @Configuration} class.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
 	 * from the annotations used to configure the Spring application.
 	 * @return a boolean value indicating whether this is a GemFire cache server application.
-	 * @see CacheServerApplication
+	 * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
 	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
 	 */
 	protected boolean isCacheServerApplication(AnnotationMetadata importMetadata) {
@@ -362,14 +361,14 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determines whether this is a GemFire {@link ClientCache} application,
+	 * Determines whether this is a GemFire {@link org.apache.geode.cache.client.ClientCache} application,
 	 * which is indicated by the presence of the {@link ClientCacheApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
+	 * {@link org.springframework.context.annotation.Configuration @Configuration} class.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
 	 * from the annotations used to configure the Spring application.
 	 * @return a boolean value indicating whether this is a GemFire cache client application.
-	 * @see ClientCacheApplication
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
 	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
 	 */
 	protected boolean isClientCacheApplication(AnnotationMetadata importMetadata) {
@@ -377,14 +376,14 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determines whether this is a GemFire peer {@link Cache} application,
+	 * Determines whether this is a GemFire peer {@link org.apache.geode.cache.Cache} application,
 	 * which is indicated by the presence of the {@link PeerCacheApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
+	 * {@link org.springframework.context.annotation.Configuration @Configuration} class.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
 	 * from the annotations used to configure the Spring application.
 	 * @return a boolean value indicating whether this is a GemFire peer cache application.
-	 * @see PeerCacheApplication
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
 	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
 	 */
 	protected boolean isPeerCacheApplication(AnnotationMetadata importMetadata) {
@@ -399,8 +398,8 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * from the annotations used to configure the Spring application.
 	 * @return a boolean value indicating if this Spring application is annotated with the given GemFire
 	 * cache type annotation.
-	 * @see AnnotationMetadata
-	 * @see Annotation
+	 * @see org.springframework.core.type.AnnotationMetadata
+	 * @see java.lang.annotation.Annotation
 	 * @see #getAnnotationTypeName()
 	 * @see #getAnnotationType()
 	 */
@@ -411,17 +410,17 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determines whether this is a GemFire {@link CacheServer} or
-	 * {@link Cache peer cache} application, which is indicated by the presence
+	 * Determines whether this is a GemFire {@link org.apache.geode.cache.server.CacheServer} or
+	 * {@link org.apache.geode.cache.Cache peer cache} application, which is indicated by the presence
 	 * of either the {@link CacheServerApplication} annotation or the {@link PeerCacheApplication} annotation
-	 * on a Spring application {@link Configuration @Configuration} class.
+	 * on a Spring application {@link org.springframework.context.annotation.Configuration @Configuration} class.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
 	 * from the annotations used to configure the Spring application.
 	 * @return a boolean value indicating whether this is a GemFire cache server or peer cache application.
-	 * @see AnnotationMetadata
-	 * @see CacheServerApplication
-	 * @see PeerCacheApplication
+	 * @see org.springframework.core.type.AnnotationMetadata
+	 * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
 	 * @see #isCacheServerApplication(AnnotationMetadata)
 	 * @see #isPeerCacheApplication(AnnotationMetadata)
 	 */
@@ -430,8 +429,8 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determine whether this Spring application is a {@link CacheServer},
-	 * {@link ClientCache} or a {@link Cache} application.
+	 * Determine whether this Spring application is a {@link org.apache.geode.cache.server.CacheServer},
+	 * {@link org.apache.geode.cache.client.ClientCache} or a {@link org.apache.geode.cache.Cache} application.
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
 	 * from the class type-level annotations used to configure the Spring application.
@@ -516,7 +515,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		this.jndiDataSources = jndiDataSources;
 	}
 
-	protected List<JndiDataSource> getJndiDataSources() {
+	protected List<CacheFactoryBean.JndiDataSource> getJndiDataSources() {
 		return nullSafeList(this.jndiDataSources);
 	}
 

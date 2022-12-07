@@ -14,8 +14,8 @@ import java.util.Set;
  * that can reverse engineer a schema object instance back into a definition of the schema object.
  *
  * @author John Blum
- * @see SchemaObjectDefinition
- * @see SchemaObjectType
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
  * @since 2.0.0
  */
 public interface SchemaObjectDefiner {
@@ -24,8 +24,8 @@ public interface SchemaObjectDefiner {
 	 * Returns a {@link Set} of {@link SchemaObjectType schema object types} definable by this definer.
 	 *
 	 * @return a {@link Set} of {@link SchemaObjectType schema object types} definable by this definer.
-	 * @see SchemaObjectType
-	 * @see Set
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
+	 * @see java.util.Set
 	 */
 	default Set<SchemaObjectType> getSchemaObjectTypes() {
 		return Collections.emptySet();
@@ -37,7 +37,7 @@ public interface SchemaObjectDefiner {
 	 * @param schemaObject {@link Object} to evaluate.
 	 * @return a boolean value indicating whether this definer is able to define
 	 * the given {@link Object schema object} instance.
-	 * @see Object#getClass()
+	 * @see java.lang.Object#getClass()
 	 * @see #canDefine(Class)
 	 */
 	default boolean canDefine(Object schemaObject) {
@@ -50,7 +50,7 @@ public interface SchemaObjectDefiner {
 	 * @param schemaObjectType {@link Class type} of the {@link Object schema object} instance to evaluate.
 	 * @return a boolean value indicating whether this definer is able to define {@link Object schema objects}
 	 * of the given {@link Class type}.
-	 * @see SchemaObjectType#from(Class)
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectType#from(Class)
 	 * @see #canDefine(SchemaObjectType)
 	 */
 	default boolean canDefine(Class<?> schemaObjectType) {
@@ -64,7 +64,7 @@ public interface SchemaObjectDefiner {
 	 * @param schemaObjectType {@link SchemaObjectType} to evaluate.
 	 * @return a boolean value indicating whether this handler is able to handle schema objects
 	 * of the given {@link SchemaObjectType enumerated schema object type}.
-	 * @see SchemaObjectType
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
 	 */
 	default boolean canDefine(SchemaObjectType schemaObjectType) {
 		return getSchemaObjectTypes().contains(schemaObjectType);
@@ -77,7 +77,7 @@ public interface SchemaObjectDefiner {
 	 * @param schemaObject {@link Object schema object} to define.
 	 * @return an {@link Optional} {@link SchemaObjectDefinition definition} for the given
 	 * {@link Object schema object} instance.
-	 * @see SchemaObjectDefinition
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
 	 */
 	Optional<? extends SchemaObjectDefinition> define(Object schemaObject);
 

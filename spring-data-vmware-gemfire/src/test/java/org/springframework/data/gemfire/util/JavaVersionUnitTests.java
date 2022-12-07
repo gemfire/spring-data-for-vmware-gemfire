@@ -12,8 +12,8 @@ import org.junit.Test;
  * Unit Tests for {@link JavaVersion}.
  *
  * @author John Blum
- * @see Test
- * @see JavaVersion
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.util.JavaVersion
  * @since 2.6.0
  */
 public class JavaVersionUnitTests {

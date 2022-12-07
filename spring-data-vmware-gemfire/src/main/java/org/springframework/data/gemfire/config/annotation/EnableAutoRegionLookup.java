@@ -23,10 +23,10 @@ import org.springframework.context.annotation.Import;
  * which may have be defined in {@literal cache.xml} or by using the Cluster Configuration Service.
  *
  * @author John Blum
- * @see Region
- * @see Import
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean#setLookupEnabled(Boolean)
- * @see AutoRegionLookupConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AutoRegionLookupConfiguration
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -38,7 +38,7 @@ import org.springframework.context.annotation.Import;
 public @interface EnableAutoRegionLookup {
 
 	/**
-	 * Attribute indicating whether auto {@link Region} lookup should be enabled;
+	 * Attribute indicating whether auto {@link org.apache.geode.cache.Region} lookup should be enabled;
 	 *
 	 * Defaults to {@literal true}.
 	 *

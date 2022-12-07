@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Turanski
  * @author John Blum
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
  */
 public class SpringContainerProcess {
 

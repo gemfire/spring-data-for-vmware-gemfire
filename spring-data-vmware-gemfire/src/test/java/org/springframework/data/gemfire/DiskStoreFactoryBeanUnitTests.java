@@ -13,9 +13,9 @@ import org.junit.Test;
  * Unit Tests for {@link DiskStoreFactoryBean}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.DiskStore
- * @see DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
  * @since 1.3.4
  */
 public class DiskStoreFactoryBeanUnitTests {

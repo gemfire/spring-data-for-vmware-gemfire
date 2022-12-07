@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -20,9 +19,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * an embedded Memcached server in this cluster member.
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableMemcachedServer
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableMemcachedServer
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class MemcachedServerConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -30,10 +29,10 @@ public class MemcachedServerConfiguration extends EmbeddedServiceConfigurationSu
 	protected static final int DEFAULT_MEMCACHED_SERVER_PORT = 11211;
 
 	/**
-	 * Returns the {@link EnableMemcachedServer} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableMemcachedServer} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableMemcachedServer} {@link Annotation} {@link Class} type.
-	 * @see EnableMemcachedServer
+	 * @return the {@link EnableMemcachedServer} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableMemcachedServer
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

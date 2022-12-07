@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
@@ -36,14 +35,14 @@ import org.w3c.dom.Element;
  * @author David Turanski
  * @author Lyndon Adams
  * @author John Blum
- * @see BeanDefinition
- * @see RuntimeBeanReference
- * @see BeanDefinitionBuilder
- * @see ManagedList
- * @see ParserContext
- * @see Conventions
- * @see DomUtils
- * @see Element
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.config.RuntimeBeanReference
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.ManagedList
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.core.Conventions
+ * @see org.springframework.util.xml.DomUtils
+ * @see org.w3c.dom.Element
  * @since 1.0.0
  */
 abstract class ParsingUtils {

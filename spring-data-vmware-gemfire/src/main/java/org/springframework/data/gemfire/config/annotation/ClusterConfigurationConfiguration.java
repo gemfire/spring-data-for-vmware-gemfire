@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.CacheUtils.isClient;
@@ -60,23 +59,23 @@ import org.springframework.util.StringUtils;
  * as Spring beans in the Spring container.
  *
  * @author John Blum
- * @see Annotation
- * @see GemFireCache
- * @see Region
- * @see ClientCache
- * @see Index
- * @see ListableBeanFactory
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.beans.factory.ListableBeanFactory
  * @see org.springframework.beans.factory.config.BeanPostProcessor
- * @see Bean
- * @see Configuration
- * @see ImportAware
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
  * @see org.springframework.context.event.EventListener
- * @see AnnotationAttributes
- * @see Environment
- * @see AnnotationMetadata
- * @see GemfireAdminOperations
- * @see AbstractAnnotationConfigSupport
- * @see ClientHttpRequestInterceptor
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.env.Environment
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.http.client.ClientHttpRequestInterceptor
  * @since 2.0.0
  */
 @Configuration
@@ -276,8 +275,8 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * {@link ApplicationContext}.
 	 *
 	 * @return a {@link List} of declared and registered {@link ClientHttpRequestInterceptor} beans.
-	 * @see ClientHttpRequestInterceptor
-	 * @see List
+	 * @see org.springframework.http.client.ClientHttpRequestInterceptor
+	 * @see java.util.List
 	 */
 	protected List<ClientHttpRequestInterceptor> resolveClientHttpRequestInterceptors(boolean enableInterceptors) {
 
@@ -291,8 +290,8 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * {@link ApplicationContext}.
 	 *
 	 * @return a {@link List} of declared and registered {@link RestTemplateConfigurer} beans.
-	 * @see RestTemplateConfigurer
-	 * @see List
+	 * @see org.springframework.data.gemfire.config.support.RestTemplateConfigurer
+	 * @see java.util.List
 	 */
 	protected List<RestTemplateConfigurer> resolveRestTemplateConfigurers() {
 		return resolveBeansOfType(this.restTemplateConfigurers, RestTemplateConfigurer.class);
@@ -305,9 +304,9 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * @param environment reference to the {@link Environment}.
 	 * @param clientCache reference to the {@link ClientCache}.
 	 * @return the resovled {@link GemfireAdminOperations} instance.
-	 * @see Environment
-	 * @see GemfireAdminOperations
-	 * @see ClientCache
+	 * @see org.springframework.core.env.Environment
+	 * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+	 * @see org.apache.geode.cache.client.ClientCache
 	 * @see #newGemfireAdminOperations(Environment, ClientCache)
 	 */
 	protected GemfireAdminOperations resolveGemfireAdminOperations(Environment environment, ClientCache clientCache) {
@@ -326,8 +325,8 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * to access the GemFire system.
 	 * @return an implementation of the {@link GemfireAdminOperations} interface to perform administrative functions
 	 * on a GemFire system.
-	 * @see GemfireAdminOperations
-	 * @see ClientCache
+	 * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+	 * @see org.apache.geode.cache.client.ClientCache
 	 * @see #resolveClientHttpRequestInterceptors(boolean)
 	 * @see #resolveManagementHttpHost()
 	 * @see #resolveManagementHttpPort()
@@ -375,7 +374,7 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 *
 	 * @return a new instance of {@link SchemaObjectCollector} to inspect a GemFire system schema
 	 * in search of specific GemFire schema objects (e.g. {@link Region} or {@link Index}).
-	 * @see SchemaObjectCollector
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectCollector
 	 */
 	private SchemaObjectCollector<?> newSchemaObjectCollector() {
 
@@ -390,7 +389,7 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * to build a definition.
 	 *
 	 * @return a new instance of {@link SchemaObjectDefiner}.
-	 * @see SchemaObjectDefiner
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefiner
 	 */
 	private SchemaObjectDefiner newSchemaObjectDefiner() {
 

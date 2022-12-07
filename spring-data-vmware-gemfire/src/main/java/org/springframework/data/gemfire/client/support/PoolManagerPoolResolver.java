@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client.support;
 
 import org.apache.geode.cache.Region;
@@ -18,10 +17,10 @@ import org.springframework.util.StringUtils;
  * resolution logic to the Apache Geode {@link PoolManager}.
  *
  * @author John Blum
- * @see Region
- * @see Pool
- * @see PoolManager
- * @see PoolResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.PoolManager
+ * @see org.springframework.data.gemfire.client.PoolResolver
  * @since 2.3.0
  */
 public class PoolManagerPoolResolver implements PoolResolver {
@@ -31,8 +30,8 @@ public class PoolManagerPoolResolver implements PoolResolver {
 	 *
 	 * @param region {@link Region} from which to resolve the associated {@link Pool}.
 	 * @return the {@link Pool} used by the given {@link Region}.
-	 * @see PoolManager#find(Region)
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.PoolManager#find(Region)
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	@Override
 	public @Nullable Pool resolve(@Nullable Region<?, ?> region) {
@@ -45,8 +44,8 @@ public class PoolManagerPoolResolver implements PoolResolver {
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
 	 * @return the {@link Pool} with the given {@link String name} or {@link null} if no {@link Pool} exists with
 	 * the {@link String name}.
-	 * @see PoolManager#find(String)
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.PoolManager#find(String)
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	@Override
 	public @Nullable Pool resolve(@Nullable String poolName) {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.ArrayList;
@@ -36,12 +35,12 @@ import org.springframework.util.StringUtils;
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see Matcher
- * @see Pattern
- * @see Region
- * @see Sort
- * @see OqlKeyword
- * @see Repository
+ * @see java.util.regex.Matcher
+ * @see java.util.regex.Pattern
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.domain.Sort
+ * @see org.springframework.data.gemfire.repository.query.support.OqlKeyword
+ * @see org.springframework.data.repository.Repository
  */
 public class QueryString {
 
@@ -125,7 +124,7 @@ public class QueryString {
 	 * @return the {@literal digits} extracted from the give {@link String} value as a whole number
 	 * or an {@link String#isEmpty() empty String} if the given {@link String} is {@literal null}, {@literal empty}
 	 * or contains no {@literal digits}.
-	 * @see String
+	 * @see java.lang.String
 	 */
 	protected static String getDigitsOnly(@Nullable String value) {
 
@@ -178,7 +177,7 @@ public class QueryString {
 	 * @param query {@link String} containing the OQL query.
 	 * @throws IllegalArgumentException if {@link String query} is {@literal null} or {@literal empty}.
 	 * @see #validateQuery(String)
-	 * @see String
+	 * @see java.lang.String
 	 */
 	public QueryString(@NonNull String query) {
 		this.query = validateQuery(query);
@@ -228,7 +227,7 @@ public class QueryString {
 	 * Returns the parameter indexes used in this query.
 	 *
 	 * @return the parameter indexes used in this query or an empty {@link Iterable} if no parameter indexes are used.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 */
 	public Iterable<Integer> getInParameterIndexes() {
 
@@ -316,7 +315,7 @@ public class QueryString {
 	 * @param query {@link String} containing the query to evaluate.
 	 * @return a {@literal SELECT DISTINCT} {@link String query} if the {@link String query} does not contain
 	 * the {@literal DISTINCT} OQL keyword.
-	 * @see String#replaceFirst(String, String)
+	 * @see java.lang.String#replaceFirst(String, String)
 	 */
 	String asDistinct(String query) {
 
@@ -332,7 +331,7 @@ public class QueryString {
 	 * @param values {@link Collection} of values to bind; must not be {@literal null} or {@literal empty}.
 	 * @return a new {@link QueryString} having {@literal IN} parameter bound with values
 	 * or returns this {@link QueryString} if the {@link Collection} of values is {@literal null} or {@literal empty}.
-	 * @see Collection
+	 * @see java.util.Collection
 	 */
 	public @NonNull QueryString bindIn(@NonNull Collection<?> values) {
 
@@ -361,8 +360,8 @@ public class QueryString {
 	 * @param domainType {@link Class type} of the persistent entity to query; must not be {@literal null}.
 	 * @return a new {@link QueryString} with an OQL {@literal SELECT statement} having a {@literal FROM clause}
 	 * based on the selected {@link Region}.
-	 * @see Region
-	 * @see Class
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.Class
 	 */
 	@SuppressWarnings("unused")
 	public QueryString fromRegion(Region<?, ?> region, Class<?> domainType) {
@@ -383,8 +382,8 @@ public class QueryString {
 	 * @param sort {@link Sort} indicating the order of the query results.
 	 * @return a new {@link QueryString} with an ORDER BY clause if {@link Sort} is not {@literal null},
 	 * or this {@link QueryString} as-is if {@link Sort} is {@literal null}.
-	 * @see Sort
-	 * @see QueryString
+	 * @see org.springframework.data.domain.Sort
+	 * @see org.springframework.data.gemfire.repository.query.QueryString
 	 */
 	public @NonNull QueryString orderBy(@Nullable Sort sort) {
 
@@ -410,7 +409,7 @@ public class QueryString {
 	 *
 	 * @param sort {@link Sort} to evaluate.
 	 * @return a boolean value indicating whether the {@link Sort} is valid.
-	 * @see Sort
+	 * @see org.springframework.data.domain.Sort
 	 */
 	private boolean hasSort(@Nullable Sort sort) {
 		return sort != null && sort.iterator().hasNext();
@@ -480,8 +479,8 @@ public class QueryString {
 	 * Returns the complete {@link String OQL query statement}.
 	 *
 	 * @return a {@link String} representation of this {@link QueryString}.
-	 * @see Object#toString()
-	 * @see String
+	 * @see java.lang.Object#toString()
+	 * @see java.lang.String
 	 */
 	@Override
 	public String toString() {

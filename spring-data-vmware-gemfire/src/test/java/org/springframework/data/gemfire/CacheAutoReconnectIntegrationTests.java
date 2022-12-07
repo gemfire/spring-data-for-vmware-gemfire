@@ -20,10 +20,10 @@ import org.springframework.data.gemfire.tests.integration.SpringApplicationConte
  * Integration Tests testing SDG support of Apache Geode Auto-Reconnect functionality.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see CacheFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.5.0
  */
 public class CacheAutoReconnectIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

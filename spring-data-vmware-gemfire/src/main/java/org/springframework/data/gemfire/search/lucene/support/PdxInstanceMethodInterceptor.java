@@ -24,9 +24,9 @@ import org.springframework.util.ReflectionUtils;
  * to back a proxy during intercepted method invocations.
  *
  * @author John Blum
- * @see MethodInterceptor
- * @see PdxInstance
- * @see WritablePdxInstance
+ * @see org.aopalliance.intercept.MethodInterceptor
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.apache.geode.pdx.WritablePdxInstance
  * @since 1.1.0
  */
 public class PdxInstanceMethodInterceptor implements MethodInterceptor {
@@ -60,7 +60,7 @@ public class PdxInstanceMethodInterceptor implements MethodInterceptor {
 	 * the given {@link PdxInstance source}.
 	 * @throws IllegalArgumentException if {@link PdxInstance source} is {@literal null}.
 	 * @see #PdxInstanceMethodInterceptor(PdxInstance)
-	 * @see PdxInstance
+	 * @see org.apache.geode.pdx.PdxInstance
 	 */
 	public static PdxInstanceMethodInterceptor newPdxInstanceMethodInterceptor(PdxInstance source) {
 		return new PdxInstanceMethodInterceptor(source);
@@ -72,7 +72,7 @@ public class PdxInstanceMethodInterceptor implements MethodInterceptor {
 	 *
 	 * @param source {@link PdxInstance} used as the source to back the proxy in method invocations.
 	 * @throws IllegalArgumentException if {@link PdxInstance source} is {@literal null}.
-	 * @see PdxInstance
+	 * @see org.apache.geode.pdx.PdxInstance
 	 */
 	public PdxInstanceMethodInterceptor(PdxInstance source) {
 		Assert.notNull(source, "Source must not be null");
@@ -83,7 +83,7 @@ public class PdxInstanceMethodInterceptor implements MethodInterceptor {
 	 * Returns the {@link PdxInstance source} backing the proxy for intercepted method invocations.
 	 *
 	 * @return the {@link PdxInstance source} backing the proxy for intercepted method invocations.
-	 * @see PdxInstance
+	 * @see org.apache.geode.pdx.PdxInstance
 	 */
 	protected PdxInstance getSource() {
 		return this.source;

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -37,26 +36,26 @@ import org.springframework.util.StringUtils;
 
 /**
  * Spring {@link Configuration} class used to construct, configure and initialize
- * a {@link ClientCache} instance in a Spring application context.
+ * a {@link org.apache.geode.cache.client.ClientCache} instance in a Spring application context.
  *
  * @author John Blum
- * @see Annotation
- * @see ClientCache
- * @see Pool
- * @see SocketFactory
- * @see CacheServer
- * @see BeanFactory
- * @see BeanDefinition
- * @see BeanDefinitionBuilder
- * @see Bean
- * @see Configuration
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see CacheFactoryBean
- * @see ClientCacheFactoryBean
- * @see AbstractCacheConfiguration
- * @see ClientCacheConfigurer
- * @see ClientRegionPoolBeanFactoryPostProcessor
+ * @see java.lang.annotation.Annotation
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.BeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
+ * @see org.springframework.data.gemfire.config.support.ClientRegionPoolBeanFactoryPostProcessor
  * @since 1.9.0
  */
 @Configuration
@@ -97,7 +96,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	private Iterable<ConnectionEndpoint> servers;
 
 	@Autowired(required = false)
-	private List<ClientCacheConfigurer> clientCacheConfigurers = Collections.emptyList();
+	private final List<ClientCacheConfigurer> clientCacheConfigurers = Collections.emptyList();
 
 	private Long idleTimeout;
 	private Long pingInterval;
@@ -110,8 +109,8 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 * Bean declaration for a single, peer {@link ClientCache} instance.
 	 *
 	 * @return a new instance of a peer {@link ClientCache}.
-	 * @see ClientCacheFactoryBean
-	 * @see ClientCache
+	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+	 * @see org.apache.geode.cache.client.ClientCache
 	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #constructCacheFactoryBean()
 	 */
@@ -186,7 +185,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 *
 	 * @param <T> {@link Class} sub-type of {@link CacheFactoryBean}.
 	 * @return a new instance of {@link ClientCacheFactoryBean}.
-	 * @see ClientCacheFactoryBean
+	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
@@ -203,7 +202,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing annotation meta-data
 	 * for the Spring Data GemFire cache application class.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 */
 	@Override
 	protected void configureInfrastructure(AnnotationMetadata importMetadata) {
@@ -233,7 +232,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing client cache meta-data used to
 	 * configure the {@link ClientCache}.
-	 * @see AnnotationMetadata
+	 * @see org.springframework.core.type.AnnotationMetadata
 	 * @see #configureLocatorsAndServers(Map)
 	 */
 	@Override
@@ -374,8 +373,8 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 *
 	 * @param clientCacheApplicationAttributes {@link ClientCacheApplication} annotation containing {@link Pool}
 	 * Locator/Server connection endpoint meta-data.
-	 * @see ClientCacheApplication
-	 * @see Map
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+	 * @see java.util.Map
 	 */
 	private void configureLocatorsAndServers(Map<String, Object> clientCacheApplicationAttributes) {
 
@@ -670,7 +669,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 *
 	 * @return a {@link String} containing the name of the Spring-configured Apache Geode
 	 * {@link ClientCache} application.
-	 * @see Object#toString()
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {

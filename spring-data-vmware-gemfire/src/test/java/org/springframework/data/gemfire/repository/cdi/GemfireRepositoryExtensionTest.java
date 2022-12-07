@@ -39,12 +39,12 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * of the {@link GemfireRepositoryExtension} class in a Java EE CDI context.
  *
  * @author John Blum
- * @see Bean
- * @see Test
+ * @see javax.enterprise.inject.spi.Bean
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemfireMappingContext
- * @see GemfireRepository
- * @see GemfireRepositoryExtension
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryExtension
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")

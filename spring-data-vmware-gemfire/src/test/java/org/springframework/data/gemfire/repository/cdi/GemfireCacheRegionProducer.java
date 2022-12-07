@@ -22,12 +22,12 @@ import org.springframework.util.Assert;
  * for creating the GemFire Cache "People" Region used to store {@link Person} instances.
  *
  * @author John Blum
- * @see ApplicationScoped
- * @see Produces
- * @see Cache
- * @see CacheFactory
- * @see Region
- * @see RegionFactory
+ * @see javax.enterprise.context.ApplicationScoped
+ * @see javax.enterprise.inject.Produces
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionFactory
  * @since 1.8.0
  */
 @SuppressWarnings("unused")

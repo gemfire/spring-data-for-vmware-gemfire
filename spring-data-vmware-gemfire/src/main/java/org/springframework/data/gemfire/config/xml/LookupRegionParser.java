@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
@@ -21,13 +20,13 @@ import org.springframework.util.xml.DomUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see BeanDefinitionBuilder
- * @see ParserContext
- * @see LookupRegionFactoryBean
- * @see AbstractRegionParser
- * @see Element
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.LookupRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.AbstractRegionParser
+ * @see org.w3c.dom.Element
  */
 class LookupRegionParser extends AbstractRegionParser {
 

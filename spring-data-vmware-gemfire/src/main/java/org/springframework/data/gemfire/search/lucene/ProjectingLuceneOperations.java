@@ -16,10 +16,10 @@ import org.springframework.data.domain.Page;
  * Lucene data access operations and mapping the results to entity domain {@link Class types}.
  *
  * @author John Blum
- * @see List
- * @see Page
- * @see LuceneOperations
- * @see LuceneQueryProvider
+ * @see java.util.List
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.gemfire.search.lucene.LuceneOperations
+ * @see org.apache.geode.cache.lucene.LuceneQueryProvider
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -36,7 +36,7 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return a {@link List} of Lucene query results projected as instances of {@link Class projectionType}.
 	 * @see #query(String, String, int, Class)
-	 * @see List
+	 * @see java.util.List
 	 */
 	default <T> List<T> query(String query, String defaultField, Class<T> projectionType) {
 		return query(query, defaultField, DEFAULT_RESULT_LIMIT, projectionType);
@@ -54,7 +54,7 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return a {@link List} of Lucene query results projected as instances of {@link Class projectionType}.
 	 * @see #query(String, String, int, Class)
-	 * @see List
+	 * @see java.util.List
 	 */
 	<T> List<T> query(String query, String defaultField, int resultLimit, Class<T> projectionType);
 
@@ -70,7 +70,7 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param pageSize number of results on a {@link Page}.
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return the first {@link Page} of results returned from the Lucene query.
-	 * @see Page
+	 * @see org.springframework.data.domain.Page
 	 */
 	<T> Page<T> query(String query, String defaultField, int resultLimit, int pageSize, Class<T> projectionType);
 
@@ -82,9 +82,9 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param queryProvider {@link LuceneQueryProvider} providing the Lucene {@link String query} to execute.
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return a {@link List} of Lucene query results projected as instances of {@link Class projectionType}.
-	 * @see LuceneQueryProvider
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
 	 * @see #query(LuceneQueryProvider, int, Class)
-	 * @see List
+	 * @see java.util.List
 	 */
 	default <T> List<T> query(LuceneQueryProvider queryProvider, Class<T> projectionType) {
 		return query(queryProvider, DEFAULT_RESULT_LIMIT, projectionType);
@@ -99,8 +99,8 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param resultLimit limit on the number of query results to return.
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return a {@link List} of Lucene query results projected as instances of {@link Class projectionType}.
-	 * @see LuceneQueryProvider
-	 * @see List
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+	 * @see java.util.List
 	 */
 	<T> List<T> query(LuceneQueryProvider queryProvider, int resultLimit, Class<T> projectionType);
 
@@ -114,8 +114,8 @@ public interface ProjectingLuceneOperations extends LuceneOperations {
 	 * @param pageSize number of results on a {@link Page}.
 	 * @param projectionType {@link Class} type of the individual elements in the query results.
 	 * @return the first {@link Page} of results returned from the Lucene query.
-	 * @see LuceneQueryProvider
-	 * @see Page
+	 * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+	 * @see org.springframework.data.domain.Page
 	 */
 	<T> Page<T> query(LuceneQueryProvider queryProvider, int resultLimit, int pageSize, Class<T> projectionType);
 

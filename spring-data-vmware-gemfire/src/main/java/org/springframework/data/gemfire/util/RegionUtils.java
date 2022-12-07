@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
@@ -23,8 +22,8 @@ import org.springframework.util.StringUtils;
  * The {@link RegionUtils} class is an abstract utility class for working with {@link Region Regions}.
  *
  * @author John Blum
- * @see Region
- * @see RegionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
  * @since 2.0.0
  */
 @SuppressWarnings("unused")
@@ -36,8 +35,8 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param clientRegionShortcut {@link ClientRegionShortcut} resolved from the SDG XML namespace.
 	 * @param persistent boolean indicating the value of the {@literal persistent} configuration attribute.
-	 * @see ClientRegionShortcutWrapper
-	 * @see ClientRegionShortcut
+	 * @see org.springframework.data.gemfire.client.ClientRegionShortcutWrapper
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	public static void assertClientRegionShortcutAndPersistentAttributeAreCompatible(
 			ClientRegionShortcut clientRegionShortcut, Boolean persistent) {
@@ -60,7 +59,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param dataPolicy {@link DataPolicy} resolved from the SDG XML namespace.
 	 * @param persistent boolean indicating the value of the {@literal persistent} configuration attribute.
-	 * @see DataPolicy
+	 * @see org.apache.geode.cache.DataPolicy
 	 */
 	public static void assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy dataPolicy, Boolean persistent) {
 
@@ -81,7 +80,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param region {@link Region} to close
 	 * @return a boolean indicating whether the {@link Region} was successfully closed or not.
-	 * @see Region#close
+	 * @see org.apache.geode.cache.Region#close
 	 */
 	public static boolean close(Region<?, ?> region) {
 
@@ -101,7 +100,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param region {@link Region} to evaluate.
 	 * @return a boolean indicating whether the target {@link Region} is a {@literal client} {@link Region}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public static boolean isClient(@Nullable Region<?, ?> region) {
 
@@ -117,7 +116,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param region {@link Region} to evaluate.
 	 * @return a boolean value indicating whether the {@link Region} is closeable or not.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public static boolean isCloseable(Region<?, ?> region) {
 
@@ -133,7 +132,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 * @param region {@link Region} to evaluate.
 	 * @return a boolean value indicating whether the given {@link Region} is a non-distributed,
 	 * {@literal local} {@link Region}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public static boolean isLocal(@Nullable Region<?, ?> region) {
 		return region instanceof LocalRegion;
@@ -171,7 +170,7 @@ public abstract class RegionUtils extends CacheUtils {
 	 *
 	 * @param region {@link Region} to evaluate.
 	 * @return a boolean indicating whether the target {@link Region} is a {@literal server-side} {@link Region}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public static boolean isServer(@Nullable Region<?, ?> region) {
 		return region != null && !isClient(region);

@@ -20,11 +20,11 @@ import org.springframework.util.Assert;
  * Spring {@link FactoryBean} used to get an instance of the {@link GemFireCache} {@link LuceneService}.
  *
  * @author John Blum
- * @see GemFireCache
- * @see LuceneService
- * @see LuceneServiceProvider
- * @see FactoryBean
- * @see InitializingBean
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.lucene.LuceneService
+ * @see org.apache.geode.cache.lucene.LuceneServiceProvider
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -54,8 +54,8 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	 *
 	 * @param gemFireCache {@link GemFireCache} used to resolve the {@link LuceneService} instance.
 	 * @return a single instance of the GemFire {@link LuceneService}.
-	 * @see GemFireCache
-	 * @see LuceneService
+	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.lucene.LuceneService
 	 */
 	protected LuceneService resolveLuceneService(GemFireCache gemFireCache) {
 		return LuceneServiceProvider.get(gemfireCache);
@@ -84,7 +84,7 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	 * Sets a reference to the single {@link GemFireCache} instance.
 	 *
 	 * @param gemfireCache {@link GemFireCache} reference.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	public void setCache(GemFireCache gemfireCache) {
 		this.gemfireCache = gemfireCache;
@@ -94,7 +94,7 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	 * Returns a reference to the single {@link GemFireCache} instance.
 	 *
 	 * @return a reference to the single {@link GemFireCache} instance.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	protected GemFireCache getCache() {
 		return this.gemfireCache;

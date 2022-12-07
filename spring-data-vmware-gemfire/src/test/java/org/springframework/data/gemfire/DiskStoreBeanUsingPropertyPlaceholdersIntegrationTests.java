@@ -25,13 +25,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * properties using property placeholders in the SDG XML namespace &lt;disk-store&gt; bean definition attributes.
  *
  * @author John Blum
- * @see Test
- * @see DiskStore
- * @see DiskStoreFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.context.GemFireMockObjectsApplicationContextInitializer
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @link https://jira.springsource.org/browse/SGF-249
  * @since 1.3.4
  */

@@ -22,8 +22,8 @@ import org.springframework.data.gemfire.function.config.GemfireFunctionBeanPostP
  *
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinitionParser
- * @see GemfireFunctionBeanPostProcessor
+ * @see org.springframework.beans.factory.xml.BeanDefinitionParser
+ * @see org.springframework.data.gemfire.function.config.GemfireFunctionBeanPostProcessor
  */
 class AnnotationDrivenParser implements BeanDefinitionParser {
 

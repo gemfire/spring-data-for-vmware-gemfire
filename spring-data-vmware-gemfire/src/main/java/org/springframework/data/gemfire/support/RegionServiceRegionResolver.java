@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
@@ -24,14 +23,14 @@ import org.springframework.util.Assert;
  * using the configured {@link RegionService}.
  *
  * @author John Blum
- * @see Cache
- * @see GemFireCache
- * @see Region
- * @see RegionService
- * @see ClientCache
- * @see CacheResolver
- * @see RegionResolver
- * @see AbstractCachingRegionResolver
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionService
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.RegionResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
 public class RegionServiceRegionResolver<T extends RegionService> extends AbstractCachingRegionResolver {
@@ -48,7 +47,7 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	 * @return a new instance of {@link RegionServiceRegionResolver}.
 	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
 	 * @see #RegionServiceRegionResolver(RegionServiceResolver)
-	 * @see CacheResolver
+	 * @see org.springframework.data.gemfire.CacheResolver
 	 */
 	@NonNull
 	public static <S extends GemFireCache> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
@@ -69,7 +68,7 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	 * identified by {@link String name}; may be {@literal null}.
 	 * @return a new instance of {@link RegionServiceRegionResolver}.
 	 * @see #RegionServiceRegionResolver(RegionServiceResolver)
-	 * @see RegionService
+	 * @see org.apache.geode.cache.RegionService
 	 */
 	@NonNull
 	public static RegionServiceRegionResolver<RegionService> from(@Nullable RegionService regionService) {
@@ -113,7 +112,7 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param regionName {@link String name} of the {@link Region} to resolve.
 	 * @return the resolved cache {@link Region} identified by the given {@link String name}; may be {@literal null}.
-	 * @see RegionService#getRegion(String)
+	 * @see org.apache.geode.cache.RegionService#getRegion(String)
 	 * @see #getRegionServiceResolver()
 	 */
 	@Nullable @Override

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -30,17 +29,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * annotated class used to configure the GemFire "Last Resource" Spring Data GemFire {@link Aspect Aspects}.
  *
  * @author John Blum
- * @see GemFireCache
- * @see Aspect
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
- * @see AnnotationMetadata
- * @see EnableGemFireAsLastResource
- * @see GemFireAsLastResourceConnectionAcquiringAspect
- * @see GemFireAsLastResourceConnectionClosingAspect
- * @see EnableTransactionManagement
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.aspectj.lang.annotation.Aspect
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.EnableGemFireAsLastResource
+ * @see org.springframework.data.gemfire.config.annotation.support.GemFireAsLastResourceConnectionAcquiringAspect
+ * @see org.springframework.data.gemfire.config.annotation.support.GemFireAsLastResourceConnectionClosingAspect
+ * @see org.springframework.transaction.annotation.EnableTransactionManagement
  * @since 1.0.0
  */
 @Configuration

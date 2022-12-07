@@ -12,7 +12,7 @@ import org.apache.geode.cache.InterestResultPolicy;
  *
  * @author John Blum
  * @param <K> {@link Class} type of the key.
- * @see Interest
+ * @see org.springframework.data.gemfire.client.Interest
  */
 @SuppressWarnings("unused")
 public class KeyInterest<K> extends Interest<K> {

@@ -30,12 +30,12 @@ import org.slf4j.Logger;
  * Unit Tests for {@link AbstractFactoryBeanSupport}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see AbstractFactoryBeanSupport
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

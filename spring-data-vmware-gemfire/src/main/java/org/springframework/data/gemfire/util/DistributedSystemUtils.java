@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
@@ -23,9 +22,9 @@ import org.springframework.util.StringUtils;
  * DistributedSystemUtils is an abstract utility class for working with the GemFire DistributedSystem.
  *
  * @author John Blum
- * @see GemFireCache
- * @see DistributedSystem
- * @see InternalDistributedSystem
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.distributed.internal.InternalDistributedSystem
  * @see org.apache.geode.internal.DistributionLocator
  * @since 1.7.0
  */

@@ -29,12 +29,12 @@ import org.aopalliance.intercept.MethodInvocation;
  *
  * @author David Turanski
  * @author John Blum
- * @see AccessibleObject
- * @see Method
- * @see Test
+ * @see java.lang.reflect.AccessibleObject
+ * @see java.lang.reflect.Method
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MethodInvocation
- * @see GemfireFunctionProxyFactoryBean
+ * @see org.aopalliance.intercept.MethodInvocation
+ * @see org.springframework.data.gemfire.function.execution.GemfireFunctionProxyFactoryBean
  */
 public class GemfireFunctionProxyFactoryBeanUnitTests {
 

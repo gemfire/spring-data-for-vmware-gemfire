@@ -14,9 +14,9 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
  * Unit Tests for {@link ClientRegionShortcutWrapper} enum.
  *
  * @author John Blum
- * @see Test
- * @see ClientRegionShortcut
- * @see ClientRegionShortcutWrapper
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.data.gemfire.client.ClientRegionShortcutWrapper
  * @since 1.4.0
  */
 public class ClientRegionShortcutWrapperUnitTests {

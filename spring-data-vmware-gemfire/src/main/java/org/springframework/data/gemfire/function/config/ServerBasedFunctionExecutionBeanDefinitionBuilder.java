@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.config;
 
 import java.util.Optional;
@@ -21,11 +20,11 @@ import org.springframework.util.StringUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see OnServer
- * @see OnServers
- * @see AbstractFunctionExecutionBeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.data.gemfire.function.annotation.OnServer
+ * @see org.springframework.data.gemfire.function.annotation.OnServers
+ * @see org.springframework.data.gemfire.function.config.AbstractFunctionExecutionBeanDefinitionBuilder
  */
 abstract class ServerBasedFunctionExecutionBeanDefinitionBuilder
 		extends AbstractFunctionExecutionBeanDefinitionBuilder {

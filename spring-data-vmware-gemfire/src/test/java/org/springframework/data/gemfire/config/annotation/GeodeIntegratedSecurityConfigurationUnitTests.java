@@ -17,9 +17,9 @@ import org.springframework.data.gemfire.test.support.MapBuilder;
  * Unit Tests for {@link GeodeIntegratedSecurityConfiguration}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see GeodeIntegratedSecurityConfiguration
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.config.annotation.GeodeIntegratedSecurityConfiguration
  * @since 1.0.0
  */
 public class GeodeIntegratedSecurityConfigurationUnitTests {

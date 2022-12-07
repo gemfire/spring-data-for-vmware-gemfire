@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -21,7 +20,7 @@ import org.springframework.util.Assert;
  * {@link TypeFilter TypeFilters} acting a single instance of {@link TypeFilter}.
  *
  * @author John Blum
- * @see TypeFilter
+ * @see org.springframework.core.type.filter.TypeFilter
  * @see <a href="https://en.wikipedia.org/wiki/Composite_pattern">Composite Software Design Pattern</a>
  * @since 2.4.0
  */
@@ -41,7 +40,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @return a composed {@link TypeFilter} consisting of {@literal this} {@link TypeFilter}
 	 * and the given {@link TypeFilter}.
 	 * @throws IllegalArgumentException if {@link TypeFilter} is {@literal null}.
-	 * @see TypeFilter
+	 * @see org.springframework.core.type.filter.TypeFilter
 	 * @see #orThen(TypeFilter)
 	 */
 	default @NonNull CompositeTypeFilter andThen(@NonNull TypeFilter typeFilter) {
@@ -63,7 +62,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @param array array of {@link TypeFilter TypeFilters} to compose.
 	 * @return a {@literal Composite} {@link TypeFilter} composed from the array of {@link TypeFilter TypeFilers}
 	 * using the {@literal logical AND operator}; may return {@literal null}.
-	 * @see TypeFilter
+	 * @see org.springframework.core.type.filter.TypeFilter
 	 * @see #composeAnd(Iterable)
 	 */
 	static @Nullable TypeFilter composeAnd(@Nullable TypeFilter... array) {
@@ -80,8 +79,8 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @param iterable {@link Iterable} of {@link TypeFilter TypeFilters} to compose.
 	 * @return a {@literal Composite} {@link TypeFilter} composed from the {@link Iterable}
 	 * of {@link TypeFilter TypeFilers} using the {@literal logical AND operator}; may return {@literal null}.
-	 * @see TypeFilter
-	 * @see Iterable
+	 * @see org.springframework.core.type.filter.TypeFilter
+	 * @see java.lang.Iterable
 	 */
 	static @Nullable TypeFilter composeAnd(@Nullable Iterable<TypeFilter> iterable) {
 
@@ -106,7 +105,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @param array array of {@link TypeFilter TypeFilters} to compose.
 	 * @return a {@literal Composite} {@link TypeFilter} composed from the array of {@link TypeFilter TypeFilers}
 	 * using the {@literal logical OR operator}; may return {@literal null}.
-	 * @see TypeFilter
+	 * @see org.springframework.core.type.filter.TypeFilter
 	 * @see #composeOr(Iterable)
 	 */
 	static @Nullable TypeFilter composeOr(@Nullable TypeFilter... array) {
@@ -123,8 +122,8 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @param iterable {@link Iterable} of {@link TypeFilter TypeFilters} to compose.
 	 * @return a {@literal Composite} {@link TypeFilter} composed from the {@link Iterable}
 	 * of {@link TypeFilter TypeFilers} using the {@literal logical OR operator}; may return {@literal null}.
-	 * @see TypeFilter
-	 * @see Iterable
+	 * @see org.springframework.core.type.filter.TypeFilter
+	 * @see java.lang.Iterable
 	 */
 	static @Nullable TypeFilter composeOr(@Nullable Iterable<TypeFilter> iterable) {
 
@@ -145,7 +144,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @param typeFilter {@link TypeFilter} to wrap; must not be {@literal null}.
 	 * @return a {@link CompositeTypeFilter} wrapping the existing {@link TypeFilter}.
 	 * @throws IllegalArgumentException if {@link TypeFilter} is {@literal null}.
-	 * @see TypeFilter
+	 * @see org.springframework.core.type.filter.TypeFilter
 	 */
 	static @NonNull CompositeTypeFilter of(@NonNull TypeFilter typeFilter) {
 
@@ -161,7 +160,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * {@link #match(MetadataReader, MetadataReaderFactory)} operation.
 	 *
 	 * @return {@literal this} {@link TypeFilter} negated.
-	 * @see CompositeTypeFilter
+	 * @see org.springframework.data.gemfire.support.CompositeTypeFilter
 	 */
 	default @NonNull CompositeTypeFilter negate() {
 		return (metadataReader, metadataReaderFactory) -> !this.match(metadataReader, metadataReaderFactory);
@@ -176,7 +175,7 @@ public interface CompositeTypeFilter extends TypeFilter {
 	 * @return a composed {@link TypeFilter} consisting of {@literal this} {@link TypeFilter}
 	 * and the given {@link TypeFilter}.
 	 * @throws IllegalArgumentException if {@link TypeFilter} is {@literal null}.
-	 * @see TypeFilter
+	 * @see org.springframework.core.type.filter.TypeFilter
 	 * @see #andThen(TypeFilter)
 	 */
 	default @NonNull CompositeTypeFilter orThen(@NonNull TypeFilter typeFilter) {

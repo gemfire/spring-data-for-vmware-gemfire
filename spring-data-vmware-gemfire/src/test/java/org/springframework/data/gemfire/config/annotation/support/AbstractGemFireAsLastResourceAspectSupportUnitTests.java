@@ -45,16 +45,16 @@ import org.slf4j.Logger;
  * Unit Tests for {@link AbstractGemFireAsLastResourceAspectSupport}.
  *
  * @author John Blum
- * @see Context
- * @see InitialContext
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see javax.naming.Context
+ * @see javax.naming.InitialContext
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see GemFireCache
- * @see AbstractGemFireAsLastResourceAspectSupport
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractGemFireAsLastResourceAspectSupport
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

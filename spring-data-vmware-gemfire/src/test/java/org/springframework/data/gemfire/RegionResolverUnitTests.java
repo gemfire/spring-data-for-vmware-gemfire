@@ -21,10 +21,10 @@ import org.apache.geode.cache.Region;
  * Unit Tests for {@link RegionResolver}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see RegionResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.RegionResolver
  * @since 2.3.0
  */
 public class RegionResolverUnitTests {

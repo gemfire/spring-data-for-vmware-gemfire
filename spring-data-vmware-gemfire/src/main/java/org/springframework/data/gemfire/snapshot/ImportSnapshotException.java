@@ -10,7 +10,7 @@ package org.springframework.data.gemfire.snapshot;
  * into the GemFire Cache Regions.
  *
  * @author John Blum
- * @see RuntimeException
+ * @see java.lang.RuntimeException
  * @since 1.7.0
  */
 @SuppressWarnings("unused")

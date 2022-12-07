@@ -20,13 +20,13 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 /**
- * Unit Tests for {@link FollowRedirectsSimpleClientHttpRequestFactory}.
+ * Unit Tests for {@link RestHttpGemfireAdminTemplate.FollowRedirectsSimpleClientHttpRequestFactory}.
  *
  * @author John Blum
- * @see HttpURLConnection
- * @see Test
- * @see Mockito
- * @see FollowRedirectsSimpleClientHttpRequestFactory
+ * @see java.net.HttpURLConnection
+ * @see org.junit.Test
+ * @see org.mockito.Mockito
+ * @see org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate.FollowRedirectsSimpleClientHttpRequestFactory
  * @since 2.2.0
  */
 public class RestHttpGemfireAdminTemplateFollowRedirectsClientHttpRequestFactoryUnitTests {

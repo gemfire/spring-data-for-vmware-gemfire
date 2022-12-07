@@ -24,9 +24,9 @@ import org.springframework.util.Assert;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Region
- * @see DaoSupport
- * @see GemfireTemplate
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.dao.support.DaoSupport
+ * @see org.springframework.data.gemfire.GemfireTemplate
  */
 public abstract class GemfireDaoSupport extends DaoSupport {
 
@@ -36,8 +36,8 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 * Set the GemfireTemplate for this DAO explicitly as an alternative to specifying a GemFire Cache {@link Region}.
 	 *
 	 * @param gemfireTemplate the GemfireTemplate to be use by this DAO.
-	 * @see GemfireOperations
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireOperations
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 * @see #setRegion
 	 */
 	public final void setGemfireTemplate(GemfireOperations gemfireTemplate) {
@@ -48,8 +48,8 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 * Returns the GemfireTemplate for this DAO, pre-initialized with the Region or set explicitly.
 	 *
 	 * @return an instance of the GemfireTemplate to perform data access operations on the GemFire Cache Region.
-	 * @see GemfireOperations
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireOperations
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	public final GemfireOperations getGemfireTemplate() {
 		return this.gemfireTemplate;
@@ -60,8 +60,8 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 * an instance of the GemfireTemplate for the given Region.
 	 *
 	 * @param region the GemFire Cache Region upon which this DAO operates.
-	 * @see Region
-	 * @see #createGemfireTemplate(Region)
+	 * @see org.apache.geode.cache.Region
+	 * @see #createGemfireTemplate(org.apache.geode.cache.Region)
 	 */
 	public void setRegion(Region<?, ?> region) {
 		this.gemfireTemplate = createGemfireTemplate(region);
@@ -74,7 +74,7 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 *
 	 * @param region the GemFire Cache Region for which the GemfireTemplate is created.
 	 * @return a new GemfireTemplate instance configured with the given GemFire Cache Region.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #setRegion
 	 */
 	protected GemfireTemplate createGemfireTemplate(Region<?, ?> region) {

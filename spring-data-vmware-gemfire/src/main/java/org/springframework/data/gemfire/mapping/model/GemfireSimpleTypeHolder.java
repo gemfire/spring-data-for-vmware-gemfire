@@ -36,7 +36,7 @@ import org.springframework.data.mapping.model.SimpleTypeHolder;
  * simple types to the collection.
  *
  * @author John Blum
- * @see SimpleTypeHolder
+ * @see org.springframework.data.mapping.model.SimpleTypeHolder
  * @since 1.6.3
  */
 @SuppressWarnings("unused")
@@ -74,7 +74,7 @@ public class GemfireSimpleTypeHolder extends SimpleTypeHolder {
 	 * Constructs an instance of GemfireSimpleTypeHolder initialized with additional, custom simple types
 	 * handled by GemFire along with register the default simple types.
 	 *
-	 * @see SimpleTypeHolder#SimpleTypeHolder(Set, boolean)
+	 * @see org.springframework.data.mapping.model.SimpleTypeHolder#SimpleTypeHolder(Set, boolean)
 	 */
 	public GemfireSimpleTypeHolder() {
 		super(CUSTOM_SIMPLE_TYPES, REGISTER_DEFAULTS);

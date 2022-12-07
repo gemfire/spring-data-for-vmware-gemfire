@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.Scope;
@@ -13,7 +12,7 @@ import org.springframework.util.StringUtils;
  * The ScopeType enum is an enumeration of GemFire Scopes.
  *
  * @author John Blum
- * @see Scope
+ * @see org.apache.geode.cache.Scope
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -30,7 +29,7 @@ public enum ScopeType {
 	 * Constructs an instance of the ScopeType initialized with a matching GemFire Scope.
 	 *
 	 * @param gemfireScope the GemFire Scope paired with this enumerated value.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 */
 	ScopeType(Scope gemfireScope) {
 		this.gemfireScope = gemfireScope;
@@ -42,7 +41,7 @@ public enum ScopeType {
 	 *
 	 * @param scopeType the ScopeType enumerated value from which to extract the GemFire Scope.
 	 * @return the paired GemFire Scope from the given ScopeType or null if scopeType is null.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 * @see #getScope()
 	 */
 	public static Scope getScope(ScopeType scopeType) {
@@ -54,7 +53,7 @@ public enum ScopeType {
 	 *
 	 * @param scope the GemFire Scope used to lookup and match the appropriate ScopeType.
 	 * @return a ScopeType for the given GemFire Scope or null if no match was found.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 * @see #getScope()
 	 * @see #values()
 	 */
@@ -74,7 +73,7 @@ public enum ScopeType {
 	 *
 	 * @param name a String name describing the ScopeType enum value.
 	 * @return a ScopeType for the given case-insensitive, named GemFire Scope.
-	 * @see String#equalsIgnoreCase(String)
+	 * @see java.lang.String#equalsIgnoreCase(String)
 	 * @see #values()
 	 * @see #name()
 	 * @see #transform(String)
@@ -108,7 +107,7 @@ public enum ScopeType {
 	 * Gets the matching GemFire Scope for this enumerated value.
 	 *
 	 * @return a GemFire Scope for this enumerated value.
-	 * @see Scope
+	 * @see org.apache.geode.cache.Scope
 	 */
 	public Scope getScope() {
 		return this.gemfireScope;

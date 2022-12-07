@@ -16,10 +16,10 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
  * Unit tests for {@link ClientRegionShortcutToDataPolicyConverter}.
  *
  * @author John Blum
- * @see Test
- * @see DataPolicy
- * @see ClientRegionShortcut
- * @see ClientRegionShortcutToDataPolicyConverter
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.data.gemfire.client.ClientRegionShortcutToDataPolicyConverter
  * @since 2.0.2
  */
 public class ClientRegionShortcutToDataPolicyConverterUnitTests {

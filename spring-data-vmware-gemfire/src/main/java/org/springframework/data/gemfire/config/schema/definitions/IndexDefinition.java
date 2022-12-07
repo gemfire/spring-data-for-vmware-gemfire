@@ -27,12 +27,12 @@ import org.springframework.util.StringUtils;
  * a new Apache Geode / Pivotal GemFire {@link Region} {@link Index}.
  *
  * @author John Blum
- * @see Region
- * @see Index
- * @see IndexType
- * @see GemfireAdminOperations
- * @see SchemaObjectDefinition
- * @see SchemaObjectType
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.data.gemfire.IndexType
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
  * @since 2.0.0
  */
 public class IndexDefinition extends SchemaObjectDefinition {
@@ -46,7 +46,7 @@ public class IndexDefinition extends SchemaObjectDefinition {
 	 * must not be {@literal null}.
 	 * @return a new instance of {@link IndexDefinition} defined from the given {@link Index}.
 	 * @throws IllegalArgumentException if {@link Index} is {@literal null}.
-	 * @see Index
+	 * @see org.apache.geode.cache.query.Index
 	 */
 	public static IndexDefinition from(Index index) {
 		return new IndexDefinition(index);
@@ -65,7 +65,7 @@ public class IndexDefinition extends SchemaObjectDefinition {
 	 *
 	 * @param index {@link Index} on which this definition is defined; must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link Index} is {@literal null}.
-	 * @see Index
+	 * @see org.apache.geode.cache.query.Index
 	 */
 	protected IndexDefinition(Index index) {
 
@@ -79,7 +79,7 @@ public class IndexDefinition extends SchemaObjectDefinition {
 	 * Returns a reference to the {@link Index} on which this definition is defined.
 	 *
 	 * @return a reference to the {@link Index} on which this definition is defined.
-	 * @see Index
+	 * @see org.apache.geode.cache.query.Index
 	 */
 	protected Index getIndex() {
 		return this.index;

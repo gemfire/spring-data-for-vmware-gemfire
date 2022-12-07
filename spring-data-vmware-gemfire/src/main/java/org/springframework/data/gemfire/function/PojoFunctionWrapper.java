@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
@@ -39,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Turanski
  * @author John Blum
- * @see Function
+ * @see org.apache.geode.cache.execute.Function
  * @since 1.2.0
  */
 @SuppressWarnings({ "rawtypes", "serial"})

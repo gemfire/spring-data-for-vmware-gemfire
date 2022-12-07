@@ -53,14 +53,14 @@ import org.springframework.util.Assert;
  * Integration Tests to test Apache Geode durable clients.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see Region
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3
  */

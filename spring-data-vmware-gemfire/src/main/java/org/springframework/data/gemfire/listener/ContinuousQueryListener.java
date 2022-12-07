@@ -19,7 +19,7 @@ public interface ContinuousQueryListener {
 	 * Action performed by the listener when notified of a CQ event.
 	 *
 	 * @param event the event from the CQ.
-	 * @see CqEvent
+	 * @see org.apache.geode.cache.query.CqEvent
 	 */
 	void onEvent(CqEvent event);
 

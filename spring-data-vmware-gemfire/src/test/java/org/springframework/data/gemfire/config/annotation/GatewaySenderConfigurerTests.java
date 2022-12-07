@@ -37,19 +37,19 @@ import org.springframework.mock.env.MockPropertySource;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
- * @see GatewaySender
- * @see Configuration
- * @see EnableGatewaySender
- * @see EnableGatewaySenders
- * @see GatewaySenderConfiguration
- * @see GatewaySendersConfiguration
- * @see GatewaySenderConfigurer
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySender
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySenders
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySenderConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySendersConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySenderConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  * @since 2.2.0
  */

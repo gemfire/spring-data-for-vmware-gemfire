@@ -12,8 +12,8 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  * Strings into a SubscriptionEvictionPolicy enumerated value.
  *
  * @author John Blum
- * @see SubscriptionEvictionPolicy
- * @see AbstractPropertyEditorConverterSupport
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -24,9 +24,9 @@ public class SubscriptionEvictionPolicyConverter extends AbstractPropertyEditorC
 	 *
 	 * @param source the String to convert into a SubscriptionEvictionPolicy enum.
 	 * @return a SubscriptionEvictionPolicy enumerated value for the given String.
-	 * @throws IllegalArgumentException if the String is a valid SubscriptionEvictionPolicy
+	 * @throws java.lang.IllegalArgumentException if the String is a valid SubscriptionEvictionPolicy
 	 * enumerated value.
-	 * @see SubscriptionEvictionPolicy#valueOfIgnoreCase(String)
+	 * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
 	 */
 	@Override

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Collections;
@@ -33,11 +32,11 @@ import org.slf4j.LoggerFactory;
  * @author David Turanski
  * @author John Blum
  * @author Patrick Johnson
- * @see TimeUnit
- * @see Execution
- * @see Function
- * @see FunctionService
- * @see ResultCollector
+ * @see java.util.concurrent.TimeUnit
+ * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionService
+ * @see org.apache.geode.cache.execute.ResultCollector
  */
 @SuppressWarnings("unused")
 abstract class AbstractFunctionExecution {
@@ -128,7 +127,7 @@ abstract class AbstractFunctionExecution {
 	 *
 	 * @param <T> {@link Class type} of the result.
 	 * @return an {@link Iterable} containing the results from the {@link Function} {@link Execution}.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 * @see #execute(Boolean)
 	 */
 	<T> Iterable<T> execute() {
@@ -142,7 +141,7 @@ abstract class AbstractFunctionExecution {
 	 * @param returnResult boolean value indicating whether the {@link Function} should return a result
 	 * from the {@link Execution}.
 	 * @return an {@link Iterable} containing the results from the {@link Function} {@link Execution}.
-	 * @see Iterable
+	 * @see java.lang.Iterable
 	 * @see #getExecution()
 	 * @see #getFunction()
 	 * @see #getFunctionId()

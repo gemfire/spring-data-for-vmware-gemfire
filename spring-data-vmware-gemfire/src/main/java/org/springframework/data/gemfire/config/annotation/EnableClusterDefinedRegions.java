@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Import;
  * defined in an Apache Geode/Pivotal GemFire cluster.
  *
  * @author John Blum
- * @see Region
+ * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
- * @see Configuration
- * @see Import
- * @see ClusterDefinedRegionsConfiguration
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.ClusterDefinedRegionsConfiguration
  * @since 2.1.0
  */
 @Target(ElementType.TYPE)
@@ -45,7 +45,7 @@ public @interface EnableClusterDefinedRegions {
 	 *
 	 * Defaults to {@link ClientRegionShortcut#PROXY}.
 	 *
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	ClientRegionShortcut clientRegionShortcut() default ClientRegionShortcut.PROXY;
 

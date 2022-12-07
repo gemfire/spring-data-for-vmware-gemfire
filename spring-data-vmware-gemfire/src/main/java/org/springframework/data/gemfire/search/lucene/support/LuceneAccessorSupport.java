@@ -24,7 +24,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * for extending classes.
  *
  * @author John Blum
- * @see LuceneAccessor
+ * @see org.springframework.data.gemfire.search.lucene.LuceneAccessor
  * @since 1.1.0
  */
 @SuppressWarnings("unused")
@@ -41,7 +41,7 @@ public abstract class LuceneAccessorSupport extends LuceneAccessor {
 	 * Constructs an instance of {@link LuceneAccessorSupport} initialized with the given {@link LuceneIndex}.
 	 *
 	 * @param luceneIndex {@link LuceneIndex} used in Lucene queries.
-	 * @see LuceneIndex
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
 	 */
 	public LuceneAccessorSupport(LuceneIndex luceneIndex) {
 		super(luceneIndex);
@@ -53,7 +53,7 @@ public abstract class LuceneAccessorSupport extends LuceneAccessor {
 	 *
 	 * @param indexName {@link String} containing the name of the {@link LuceneIndex}.
 	 * @param region {@link Region} on which the Lucene query is executed.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public LuceneAccessorSupport(String indexName, Region<?, ?> region) {
 		super(indexName, region);

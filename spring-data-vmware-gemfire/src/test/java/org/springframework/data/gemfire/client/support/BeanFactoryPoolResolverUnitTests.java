@@ -30,13 +30,13 @@ import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
  * Unit Tests for {@link BeanFactoryPoolResolver}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Pool
- * @see BeanFactory
- * @see BeanFactoryPoolResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

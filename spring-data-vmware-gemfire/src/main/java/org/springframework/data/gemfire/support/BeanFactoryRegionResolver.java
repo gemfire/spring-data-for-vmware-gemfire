@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import org.apache.geode.cache.Region;
@@ -21,11 +20,11 @@ import org.springframework.util.StringUtils;
  * from a Spring {@link BeanFactory}.
  *
  * @author John Blum
- * @see Region
- * @see BeanFactory
- * @see BeanFactoryAware
- * @see RegionResolver
- * @see AbstractCachingRegionResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.BeanFactoryAware
+ * @see org.springframework.data.gemfire.RegionResolver
+ * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
 public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver implements BeanFactoryAware {
@@ -37,7 +36,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	 *
 	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link Region Regions}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 * @see #setBeanFactory(BeanFactory)
 	 */
 	public BeanFactoryRegionResolver(BeanFactory beanFactory) {
@@ -50,7 +49,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link Region Regions}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @throws BeansException if configuration of the {@link BeanFactory} fails.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	public final void setBeanFactory(@NonNull BeanFactory beanFactory) throws BeansException {
@@ -64,7 +63,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	 * Returns the configured reference to the {@link BeanFactory} used to resolve cache {@link Region Regions}.
 	 *
 	 * @return a reference to the configured {@link BeanFactory}.
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	protected @NonNull BeanFactory getBeanFactory() {
 		return this.beanFactory;

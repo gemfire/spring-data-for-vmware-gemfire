@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -18,9 +17,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * during startup.
  *
  * @author John Blum
- * @see EnableGemFireProperties
- * @see EmbeddedServiceConfigurationSupport
- * @see PropertiesBuilder
+ * @see org.springframework.data.gemfire.config.annotation.EnableGemFireProperties
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
+ * @see org.springframework.data.gemfire.util.PropertiesBuilder
  * @since 1.9.0
  */
 public class GemFirePropertiesConfiguration extends EmbeddedServiceConfigurationSupport {

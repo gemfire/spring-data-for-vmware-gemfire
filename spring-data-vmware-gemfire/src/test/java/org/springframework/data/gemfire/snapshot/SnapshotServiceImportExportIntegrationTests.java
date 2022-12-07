@@ -31,10 +31,10 @@ import org.springframework.util.FileCopyUtils;
  * SDG's Data Namespace &gt;gfe-data:snapshot-service&lt; (XML) element.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see SnapshotServiceFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.7.0
  */
 @SuppressWarnings("unused")

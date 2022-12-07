@@ -1,11 +1,8 @@
 
-
-
 /*
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 
 /**
  * Support package for Spring Gemfire integration.

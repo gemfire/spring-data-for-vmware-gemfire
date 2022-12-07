@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Properties;
@@ -31,17 +30,17 @@ import org.springframework.util.Assert;
  * with Spring bean dependencies defined in a Spring {@link ApplicationContext}.
  *
  * @author John Blum
- * @see Properties
- * @see Cache
- * @see CacheCallback
- * @see Declarable
- * @see BeanFactory
- * @see DisposableBean
- * @see ApplicationContext
- * @see ApplicationListener
- * @see ContextRefreshedEvent
- * @see SpringContextBootstrappingInitializer
- * @see WiringDeclarableSupport
+ * @see java.util.Properties
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheCallback
+ * @see org.apache.geode.cache.Declarable
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationListener
+ * @see org.springframework.context.event.ContextRefreshedEvent
+ * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
+ * @see org.springframework.data.gemfire.support.WiringDeclarableSupport
  * @since 1.3.4
  */
 @SuppressWarnings("unused")
@@ -64,7 +63,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * this {@link Declarable} object to be properly configured and initialized with any required,
 	 * Spring-defined dependencies.
 	 *
-	 * @see SpringContextBootstrappingInitializer
+	 * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
 	 * 	#register(org.springframework.context.ApplicationListener)
 	 */
 	public LazyWiringDeclarableSupport() {
@@ -81,7 +80,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 *
 	 * @throws IllegalStateException if this {@link Declarable} object was not been properly constructed, configured
 	 * and initialized by the Spring container.
-	 * @see #init(Properties)
+	 * @see #init(java.util.Properties)
 	 * @see #isInitialized()
 	 */
 	protected void assertInitialized() {
@@ -98,9 +97,9 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * It is possible, though rare, that the {@link #init(Properties)} method might be called multiple times by GemFire
 	 * before the Spring container constructs, configures, initializes and generally puts this component to use.
 	 *
-	 * @throws IllegalStateException if the Declarable object has already been configured and initialized
+	 * @throws java.lang.IllegalStateException if the Declarable object has already been configured and initialized
 	 * by the Spring container.
-	 * @see #init(Properties)
+	 * @see #init(java.util.Properties)
 	 * @see #isNotInitialized()
 	 */
 	protected void assertUninitialized() {
@@ -144,7 +143,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
 	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
 	 * @see #doInit(BeanFactory, Properties)
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	@Override
 	public final void initialize(@Nullable Cache cache, @NonNull Properties parameters) {
@@ -160,17 +159,17 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	/**
 	 * Performs the actual configuration and initialization of this {@link Declarable} object before use.
 	 *
-	 * This method is triggered by the Spring {@link ApplicationContext}, Spring application
+	 * This method is triggered by the Spring {@link org.springframework.context.ApplicationContext}, Spring application
 	 * {@link ContextRefreshedEvent}) indicating that the Spring container (context) has been created and refreshed.
 	 *
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
 	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
 	 * @throws IllegalArgumentException if the {@literal bean-name} parameter was specified in GemFire's
 	 * configuration meta-data but no bean with the specified name could be found in the Spring context.
-	 * @see #init(Properties)
+	 * @see #init(java.util.Properties)
 	 * @see #configureThis(BeanFactory, String)
-	 * @see #doPostInit(Properties)
-	 * @see Properties
+	 * @see #doPostInit(java.util.Properties)
+	 * @see java.util.Properties
 	 */
 	synchronized void doInit(@NonNull BeanFactory beanFactory, @NonNull Properties parameters) {
 
@@ -188,7 +187,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
 	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
 	 * @see #doInit(BeanFactory, Properties)
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	protected void doPostInit(@NonNull Properties parameters) { }
 
@@ -198,7 +197,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 *
 	 * @return a {@link Properties} containing the configured parameters parsed from GemFire's configuration meta-data
 	 * (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	protected @NonNull Properties nullSafeGetParameters() {
 
@@ -212,7 +211,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 *
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
 	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
-	 * @see Properties
+	 * @see java.util.Properties
 	 */
 	protected void setParameters(@Nullable Properties parameters) {
 		this.parametersReference.set(parameters);
@@ -224,7 +223,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 *
 	 * @param event {@link ContextRefreshedEvent} published by the Spring {@link ApplicationContext} after it is
 	 * successfully created and initialized by GemFire.
-	 * @see ContextRefreshedEvent
+	 * @see org.springframework.context.event.ContextRefreshedEvent
 	 * @see #doInit(BeanFactory, Properties)
 	 * @see #nullSafeGetParameters()
 	 */
@@ -249,7 +248,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * make sure this component gets unregistered from the {@link SpringContextBootstrappingInitializer} properly.
 	 *
 	 * @throws Exception if bean destruction is unsuccessful.
-	 * @see SpringContextBootstrappingInitializer
+	 * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
 	 * 	#unregister(org.springframework.context.ApplicationListener)
 	 * @see #setParameters(Properties)
 	 */

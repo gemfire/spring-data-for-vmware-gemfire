@@ -39,17 +39,17 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link GemfireTemplate}.
  *
  * @author John Blum
- * @see Properties
- * @see Test
- * @see GemFireCache
- * @see Region
- * @see SelectResults
- * @see Bean
- * @see Configuration
- * @see GemfireTemplate
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see java.util.Properties
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0
  */
 @RunWith(SpringRunner.class)

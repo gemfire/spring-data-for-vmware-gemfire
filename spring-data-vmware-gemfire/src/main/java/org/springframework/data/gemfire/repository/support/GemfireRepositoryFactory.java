@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.support;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -74,8 +73,8 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if either {@link Regions} or the {@link MappingContext} is {@literal null}.
 	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
-	 * @see Regions
-	 * @see MappingContext
+	 * @see org.springframework.data.gemfire.mapping.Regions
+	 * @see org.springframework.data.mapping.context.MappingContext
 	 */
 	public GemfireRepositoryFactory(@NonNull Iterable<Region<?, ?>> regions,
 			@NonNull MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext) {
@@ -93,7 +92,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	 *
 	 * @return a reference to the GemFire {@link MappingContext}.
 	 * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
-	 * @see MappingContext
+	 * @see org.springframework.data.mapping.context.MappingContext
 	 */
 	protected MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> getMappingContext() {
 		return this.mappingContext;
@@ -103,7 +102,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	 * Returns a reference to the configured, application-defined {@link Region Regions}.
 	 *
 	 * @return a reference to the configured, application-defined {@link Region Regions}.
-	 * @see Regions
+	 * @see org.springframework.data.gemfire.mapping.Regions
 	 */
 	protected Regions getRegions() {
 		return this.regions;
@@ -152,9 +151,9 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	 * @see #resolvePersistentEntity(Class)
 	 * @see #resolveRegion(RepositoryMetadata, GemfirePersistentEntity)
 	 * @see #validate(RepositoryMetadata, GemfirePersistentEntity, Region)
-	 * @see RepositoryMetadata
-	 * @see GemfireTemplate
-	 * @see Region
+	 * @see org.springframework.data.repository.core.RepositoryMetadata
+	 * @see org.springframework.data.gemfire.GemfireTemplate
+	 * @see org.apache.geode.cache.Region
 	 */
 	protected GemfireTemplate newTemplate(RepositoryMetadata repositoryMetadata) {
 

@@ -36,13 +36,13 @@ import org.springframework.data.gemfire.config.schema.definitions.IndexDefinitio
  * Unit tests for {@link CreateIndexFunction}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Cache
- * @see Index
- * @see QueryService
- * @see IndexDefinition
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.data.gemfire.config.schema.definitions.IndexDefinition
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

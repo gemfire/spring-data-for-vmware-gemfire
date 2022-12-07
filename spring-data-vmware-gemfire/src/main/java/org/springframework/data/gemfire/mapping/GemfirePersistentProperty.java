@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.mapping;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
@@ -26,7 +25,7 @@ import org.springframework.data.mapping.model.SimpleTypeHolder;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see AnnotationBasedPersistentProperty
+ * @see org.springframework.data.mapping.model.AnnotationBasedPersistentProperty
  */
 public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty<GemfirePersistentProperty> {
 
@@ -39,10 +38,10 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	 * @param property {@link Property} representing the {@link GemfirePersistentEntity entity's}  persistent property.
 	 * @param owner {@link GemfirePersistentEntity entity} owning the persistent property.
 	 * @param simpleTypeHolder {@link SimpleTypeHolder} used to handle primitive types.
-	 * @see PersistentEntity
-	 * @see PersistentProperty
-	 * @see Property
-	 * @see SimpleTypeHolder
+	 * @see org.springframework.data.mapping.PersistentEntity
+	 * @see org.springframework.data.mapping.PersistentProperty
+	 * @see org.springframework.data.mapping.model.Property
+	 * @see org.springframework.data.mapping.model.SimpleTypeHolder
 	 */
 	public GemfirePersistentProperty(Property property, PersistentEntity<?, GemfirePersistentProperty> owner,
 			SimpleTypeHolder simpleTypeHolder) {
@@ -66,7 +65,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	 *
 	 * @return a boolean value indicating whether this {@link GemfirePersistentProperty} explicitly identifies
 	 * an {@link GemfirePersistentEntity entity} identifier.
-	 * @see Id
+	 * @see org.springframework.data.annotation.Id
 	 * @see #isAnnotationPresent(Class)
 	 */
 	public boolean isExplicitIdProperty() {
@@ -75,7 +74,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 
 	/**
 	 * @inheritDoc
-	 * @see AnnotationBasedPersistentProperty#isIdProperty()
+	 * @see org.springframework.data.mapping.model.AnnotationBasedPersistentProperty#isIdProperty()
 	 */
 	@Override
 	public boolean isIdProperty() {
@@ -103,7 +102,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	 * Returns the {@link String name} of this {@link GemfirePersistentProperty's} {@link Class type}.
 	 *
 	 * @return the {@link String name} of this {@link GemfirePersistentProperty's} {@link Class type}.
-	 * @see Class#getName()
+	 * @see java.lang.Class#getName()
 	 * @see #getType()
 	 */
 	public String getTypeName() {

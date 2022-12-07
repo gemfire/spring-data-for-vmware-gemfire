@@ -33,10 +33,10 @@ import org.apache.geode.cache.wan.GatewaySender;
  * Unit tests for {@link SchemaObjectType}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see SchemaObjectType
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

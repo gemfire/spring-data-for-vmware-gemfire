@@ -45,10 +45,10 @@ import org.springframework.data.repository.core.support.RepositoryComposition;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see GemfireRepositoryFactory
+ * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactory
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("rawtypes")

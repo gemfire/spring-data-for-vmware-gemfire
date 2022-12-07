@@ -24,12 +24,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link CacheServer} configuration using SDG XML namespace configuration metadata.
  *
  * @author John Blum
- * @see Test
- * @see CacheServer
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.server.CacheServer
  * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.3
  */
 @RunWith(SpringRunner.class)

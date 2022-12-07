@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.wan;
 
 import org.apache.geode.cache.Cache;
@@ -24,11 +23,11 @@ import org.springframework.util.StringUtils;
  * @author David Turanski
  * @author John Blum
  * @author Udo Kohlmeyer
- * @see Cache
- * @see GemFireCache
- * @see DisposableBean
- * @see InitializingBean
- * @see AbstractFactoryBeanSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.beans.factory.DisposableBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  */
 public abstract class AbstractWANComponentFactoryBean<T> extends AbstractFactoryBeanSupport<T>
 		implements DisposableBean, InitializingBean {

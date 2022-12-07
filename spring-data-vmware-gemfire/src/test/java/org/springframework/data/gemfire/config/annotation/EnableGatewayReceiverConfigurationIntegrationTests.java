@@ -28,13 +28,13 @@ import org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean;
  *
  * @author Udo Kohlmeyer
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GatewayReceiver
- * @see GatewayReceiverFactoryBean
- * @see GatewayReceiverConfiguration
- * @see GatewayReceiverConfigurer
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
@@ -59,8 +59,8 @@ public class EnableGatewayReceiverConfigurationIntegrationTests extends SpringAp
         assertThat(gatewayReceiver.getSocketBufferSize()).isEqualTo(32768);
         assertThat(gatewayReceiver.isManualStart()).isEqualTo(false);
         assertThat(gatewayReceiver.getGatewayTransportFilters().size()).isEqualTo(2);
-        assertThat(((TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean1");
-        assertThat(((TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(1)).name).isEqualTo("transportBean2");
+        assertThat(((EnableGatewayReceiverConfigurationIntegrationTests.TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean1");
+        assertThat(((EnableGatewayReceiverConfigurationIntegrationTests.TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(1)).name).isEqualTo("transportBean2");
         assertThat(gatewayReceiverConfigurer.beanNames.toArray()).isEqualTo(new String[]{"transportBean1", "transportBean2"});
     }
 
@@ -82,8 +82,8 @@ public class EnableGatewayReceiverConfigurationIntegrationTests extends SpringAp
         assertThat(gatewayReceiver.getSocketBufferSize()).isEqualTo(16384);
         assertThat(gatewayReceiver.isManualStart()).isEqualTo(false);
         assertThat(gatewayReceiver.getGatewayTransportFilters().size()).isEqualTo(2);
-        assertThat(((TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean1");
-        assertThat(((TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(1)).name).isEqualTo("transportBean2");
+        assertThat(((EnableGatewayReceiverConfigurationIntegrationTests.TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean1");
+        assertThat(((EnableGatewayReceiverConfigurationIntegrationTests.TestGatewayTransportFilter)gatewayReceiver.getGatewayTransportFilters().get(1)).name).isEqualTo("transportBean2");
         assertThat(gatewayReceiverConfigurer.beanNames.toArray()).isEqualTo(new String[]{"transportBean1", "transportBean2"});
     }
 

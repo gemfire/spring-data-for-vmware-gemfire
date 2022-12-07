@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.serialization.json;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -47,11 +46,11 @@ import org.springframework.util.CollectionUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see JSONFormatter
- * @see PdxInstance
- * @see Aspect
- * @see Around
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.pdx.JSONFormatter
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.aspectj.lang.annotation.Aspect
+ * @see org.aspectj.lang.annotation.Around
  */
 @Aspect
 @SuppressWarnings("unused")
@@ -143,7 +142,7 @@ public class JSONRegionAdvice {
 			}
 			else {
 				result = returnValue.entrySet().stream()
-					.collect(Collectors.toMap(Entry::getKey, entry -> convertToJson(entry.getValue())));
+					.collect(Collectors.toMap(Map.Entry::getKey, entry -> convertToJson(entry.getValue())));
 			}
 		}
 		catch (Throwable t) {

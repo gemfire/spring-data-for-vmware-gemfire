@@ -12,8 +12,8 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  * a String into a specific SDG IndexMaintenancePolicyType.
  *
  * @author John Blum
- * @see IndexMaintenancePolicyType
- * @see AbstractPropertyEditorConverterSupport
+ * @see org.springframework.data.gemfire.IndexMaintenancePolicyType
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -24,8 +24,8 @@ public class IndexMaintenancePolicyConverter extends AbstractPropertyEditorConve
 	 *
 	 * @param source the String value to convert into a IndexMaintenancePolicyType.
 	 * @return an IndexMaintenancePolicyType converted from the given String value.
-	 * @throws IllegalArgumentException if the String is not a valid IndexMaintenancePolicyType.
-	 * @see IndexMaintenancePolicyType#valueOfIgnoreCase(String)
+	 * @throws java.lang.IllegalArgumentException if the String is not a valid IndexMaintenancePolicyType.
+	 * @see org.springframework.data.gemfire.IndexMaintenancePolicyType#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
 	 */
 	@Override

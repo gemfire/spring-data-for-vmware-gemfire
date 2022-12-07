@@ -65,18 +65,18 @@ import lombok.ToString;
  * using Apache Geode PDX serialization.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see PdxInstance
- * @see PdxSerializer
- * @see GemfireTemplate
- * @see EnableEntityDefinedRegions
- * @see EnablePdx
- * @see PeerCacheApplication
- * @see MappingPdxSerializer
- * @see ActiveProfiles
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.EnablePdx
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.springframework.test.context.ActiveProfiles
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.7.0
  */
 @RunWith(SpringRunner.class)

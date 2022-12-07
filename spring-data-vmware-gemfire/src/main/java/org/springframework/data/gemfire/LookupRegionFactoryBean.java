@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -31,7 +30,7 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see org.apache.geode.cache.AttributesMutator
- * @see ResolvableRegionFactoryBean
+ * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean
  * @since 1.6.0
  */
 @SuppressWarnings("unused")

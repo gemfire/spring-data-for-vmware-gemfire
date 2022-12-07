@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.function.annotation.RegionData;
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  */
 @SuppressWarnings("rawtypes")
 public class FunctionArgumentResolverUnitTests {

@@ -13,21 +13,8 @@ project.ext.set("pomProjectArtifactName", "spring-data-2.7-gemfire-${gemfireBase
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
-  api("org.springframework.data:spring-data-geode:$springDataGeodeVersion") {
-    exclude group: 'org.apache.geode', module: 'geode-core'
-    exclude group: 'org.apache.geode', module: 'geode-logging'
-    exclude group: 'org.apache.geode', module: 'geode-cq'
-    exclude group: 'org.apache.geode', module: 'geode-wan'
-    exclude group: 'org.apache.geode', module: 'geode-gfsh'
-    exclude group: 'org.apache.geode', module: 'geode-lucene'
-    exclude group: 'org.apache.geode', module: 'geode-tcp-server'
-  }
-
-  api("com.vmware.gemfire:gemfire-server-all:$gemfireVersion") {
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-jcl'
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-jul'
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
-    exclude group: 'com.vmware.gemfire', module: 'geode-log4j'
+  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
+    exclude group: 'org.apache.geode', module: 'geode-log4j'
   }
 
   api "com.vmware.gemfire:geode-core:$gemfireVersion"
@@ -39,16 +26,15 @@ dependencies {
   api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
   api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
-
   implementation 'javax.cache:cache-api:1.1.1'
-  implementation 'org.springframework:spring-context-support:5.3.23'
-  implementation 'org.springframework:spring-tx:5.3.23'
-  implementation 'org.springframework:spring-web:5.3.23'
-  implementation "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
-  implementation 'org.apache.shiro:shiro-spring:1.10.0'
-  implementation 'org.aspectj:aspectjweaver:1.9.7'
-  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+  api 'org.springframework:spring-context-support:5.3.24'
+  api 'org.springframework:spring-tx:5.3.24'
+  api 'org.springframework:spring-web:5.3.24'
+  api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
+  api 'org.apache.shiro:shiro-spring:1.10.0'
+  api 'org.aspectj:aspectjweaver:1.9.7'
+  api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -60,8 +46,8 @@ dependencies {
   testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.17.2'
   testImplementation 'javax.annotation:javax.annotation-api:1.3.2'
   testImplementation 'org.apache.derby:derbyLocale_zh_TW:10.9.1.0'
-  testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.26'
-  testImplementation 'org.assertj:assertj-core:3.22.0'
+  testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
+  testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
   testImplementation('org.springframework.data:spring-data-geode-test:0.3.4-RAJ') {
     exclude group: 'org.mockito', module: 'mockito-core'
@@ -71,7 +57,7 @@ dependencies {
     exclude group: 'com.google.guava', module: 'guava'
   }
   testImplementation 'edu.umd.cs.mtc:multithreadedtc:1.01'
-  testImplementation('org.mockito:mockito-core:4.4.0') {
+  testImplementation('org.mockito:mockito-core:3.12.4') {
     force = true
   }
   testImplementation('javax.enterprise:cdi-api:1.0') {

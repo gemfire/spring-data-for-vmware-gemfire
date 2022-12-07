@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
@@ -15,9 +14,9 @@ import org.springframework.data.repository.core.support.PersistentEntityInformat
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see GemfirePersistentEntity
- * @see GemfireEntityInformation
- * @see PersistentEntityInformation
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
+ * @see org.springframework.data.gemfire.repository.query.GemfireEntityInformation
+ * @see org.springframework.data.repository.core.support.PersistentEntityInformation
  */
 // TODO: Move to org.springframework.data.gemfire.repository.core.support
 public class DefaultGemfireEntityInformation<T, ID> extends PersistentEntityInformation<T, ID>

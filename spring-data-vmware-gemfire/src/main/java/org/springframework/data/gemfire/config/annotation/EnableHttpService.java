@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -29,9 +28,9 @@ import org.springframework.context.annotation.Import;
  * thereby serving as a toggle.
  *
  * @author John Blum
- * @see Annotation
- * @see Import
- * @see HttpServiceConfiguration
+ * @see java.lang.annotation.Annotation
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.HttpServiceConfiguration
  * @see <a href="https://geode.apache.org/docs/guide/113/rest_apps/book_intro.html">Developing REST Applications for Apache Geode</a>
  * @since 1.9.0
  */
@@ -76,7 +75,7 @@ public @interface EnableHttpService {
 	 *
 	 * To enable SSL communications for the HTTP service, use the {@link EnableSsl} annotation and set the
 	 * {@link EnableSsl#components()} to contain
-	 * {@link EnableSsl.Component#WEB}.
+	 * {@link org.springframework.data.gemfire.config.annotation.EnableSsl.Component#WEB}.
 	 *
 	 * Defaults to {@literal false}.
 	 *

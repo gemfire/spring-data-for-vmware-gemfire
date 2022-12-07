@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Interest
+ * @see org.springframework.data.gemfire.client.Interest
  */
 @SuppressWarnings("unused")
 public class RegexInterest extends Interest<String> {

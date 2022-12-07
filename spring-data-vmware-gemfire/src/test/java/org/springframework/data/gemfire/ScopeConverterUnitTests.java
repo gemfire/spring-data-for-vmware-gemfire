@@ -15,9 +15,9 @@ import org.apache.geode.cache.Scope;
  * Unit Tests for {@link ScopeConverter}.
  *
  * @author John Blum
- * @see Test
- * @see ScopeConverter
- * @see Scope
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.ScopeConverter
+ * @see org.apache.geode.cache.Scope
  * @since 1.6.0
  */
 public class ScopeConverterUnitTests {

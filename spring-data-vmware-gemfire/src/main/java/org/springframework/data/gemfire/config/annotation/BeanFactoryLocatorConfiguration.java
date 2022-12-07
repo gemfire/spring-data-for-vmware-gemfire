@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.BeansException;
@@ -21,17 +20,17 @@ import org.springframework.lang.NonNull;
  * GemFire/Geode Objects declared in GemFire/Geode config (e.g. XML or properties).
  *
  * @author John Blum
- * @see BeanPostProcessor
- * @see Bean
- * @see Configuration
- * @see CacheFactoryBean
- * @see LocatorFactoryBean
- * @see ClientCacheFactoryBean
- * @see ClientCacheConfigurer
- * @see LocatorConfigurer
- * @see PeerCacheConfigurer
- * @see EnableBeanFactoryLocator
- * @see GemfireBeanFactoryLocator
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.LocatorConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.0.0
  */
 @Configuration
@@ -44,7 +43,7 @@ public class BeanFactoryLocatorConfiguration {
 	 * property to {@literal true}.
 	 *
 	 * @return a Spring {@link BeanPostProcessor} used to post process an SDG {@link CacheFactoryBean}.
-	 * @see BeanPostProcessor
+	 * @see org.springframework.beans.factory.config.BeanPostProcessor
 	 */
 	@Bean
 	public BeanPostProcessor useBeanFactoryLocatorBeanPostProcessor() {
@@ -73,7 +72,7 @@ public class BeanFactoryLocatorConfiguration {
 	 *
 	 * @return a {@link ClientCacheConfigurer} used to configure and set the SDG {@link ClientCacheFactoryBean}
 	 * {@literal useBeanFactoryLocator} property to {@literal true}.
-	 * @see ClientCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
 	 */
 	@Bean
 	public @NonNull ClientCacheConfigurer useBeanFactoryLocatorClientCacheConfigurer() {
@@ -86,7 +85,7 @@ public class BeanFactoryLocatorConfiguration {
 	 *
 	 * @return a {@link LocatorConfigurer} used to configure and set the SDG {@link LocatorFactoryBean}
 	 * {@literal useBeanFactoryLocator} property to {@literal true}.
-	 * @see LocatorConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.LocatorConfigurer
 	 */
 	@Bean
 	public @NonNull LocatorConfigurer useBeanFactoryLocatorLocatorConfigurer() {
@@ -99,7 +98,7 @@ public class BeanFactoryLocatorConfiguration {
 	 *
 	 * @return a {@link PeerCacheConfigurer} used to configure and set the SDG {@link CacheFactoryBean}
 	 * {@literal useBeanFactoryLocator} property to {@literal true}.
-	 * @see PeerCacheConfigurer
+	 * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
 	 */
 	@Bean
 	public @NonNull PeerCacheConfigurer useBeanFactoryLocatorPeerCacheConfigurer() {

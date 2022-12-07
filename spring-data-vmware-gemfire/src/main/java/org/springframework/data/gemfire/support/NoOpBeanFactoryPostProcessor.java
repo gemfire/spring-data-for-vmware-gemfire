@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import org.springframework.beans.BeansException;
@@ -14,8 +13,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * that performs no operation.
  *
  * @author John Blum
- * @see BeanFactoryPostProcessor
- * @see ConfigurableListableBeanFactory
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @since 1.0.0
  */
 @SuppressWarnings("unused")

@@ -19,8 +19,8 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * supporting administrative (management) operations against a Pivotal GemFire or Apache Geode cluster.
  *
  * @author John Blum
- * @see GemfireAdminOperations
- * @see SchemaObjectDefinition
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
  * @since 2.0.0
  */
 public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
@@ -31,8 +31,8 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 * Returns a {@link Iterable collection} of {@link Region} names defined on the GemFire Servers in the cluster.
 	 *
 	 * @return an {@link Iterable} of {@link Region} names defined on the GemFire Servers in the cluster.
-	 * @see Region#getName()
-	 * @see Iterable
+	 * @see org.apache.geode.cache.Region#getName()
+	 * @see java.lang.Iterable
 	 */
 	@Override
 	public Iterable<String> getAvailableServerRegions() {
@@ -43,8 +43,8 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 * Returns an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
 	 *
 	 * @return an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
-	 * @see Index#getName()
-	 * @see Iterable
+	 * @see org.apache.geode.cache.query.Index#getName()
+	 * @see java.lang.Iterable
 	 */
 	@Override
 	public Iterable<String> getAvailableServerRegionIndexes() {
@@ -56,9 +56,9 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 *
 	 * @param regionDefinition {@link RegionDefinition} encapsulating configuration meta-data defining
 	 * a cache {@link Region}.
-	 * @see RegionDefinition
+	 * @see org.springframework.data.gemfire.config.schema.definitions.RegionDefinition
 	 * @see org.apache.geode.cache.GemFireCache
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	public void createRegion(RegionDefinition regionDefinition) {
@@ -71,9 +71,9 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 *
 	 * @param luceneIndexDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
 	 * defining a {@link Region} {@link LuceneIndex}.
-	 * @see SchemaObjectDefinition
-	 * @see LuceneIndex
-	 * @see Region
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+	 * @see org.apache.geode.cache.lucene.LuceneIndex
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	public void createLuceneIndex(SchemaObjectDefinition luceneIndexDefinition) {
@@ -85,9 +85,9 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 *
 	 * @param indexDefinition {@link IndexDefinition} encapsulating the configuration meta-data
 	 * defining a {@link Region} OQL {@link Index}.
-	 * @see IndexDefinition
-	 * @see Index
-	 * @see Region
+	 * @see org.springframework.data.gemfire.config.schema.definitions.IndexDefinition
+	 * @see org.apache.geode.cache.query.Index
+	 * @see org.apache.geode.cache.Region
 	 */
 	@Override
 	public void createIndex(IndexDefinition indexDefinition) {
@@ -99,8 +99,8 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 *
 	 * @param diskStoreDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
 	 * defining a {@link DiskStore}.
-	 * @see SchemaObjectDefinition
-	 * @see DiskStore
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
+	 * @see org.apache.geode.cache.DiskStore
 	 */
 	@Override
 	public void createDiskStore(SchemaObjectDefinition diskStoreDefinition) {

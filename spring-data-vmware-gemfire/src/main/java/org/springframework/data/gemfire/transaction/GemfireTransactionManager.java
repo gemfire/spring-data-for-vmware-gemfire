@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction;
 
 import static org.springframework.data.gemfire.transaction.GemfireTransactionManager.CacheHolder.newCacheHolder;
@@ -49,16 +48,16 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author John Blum
  * @see org.apache.geode.CopyHelper#copy(Object)
- * @see GemFireCache#setCopyOnRead(boolean)
- * @see CacheTransactionManager
- * @see Region
- * @see TransactionId
- * @see InitializingBean
- * @see PlatformTransactionManager
- * @see TransactionDefinition
- * @see AbstractPlatformTransactionManager
- * @see ResourceTransactionManager
- * @see TransactionSynchronizationManager
+ * @see org.apache.geode.cache.GemFireCache#setCopyOnRead(boolean)
+ * @see org.apache.geode.cache.CacheTransactionManager
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.TransactionId
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.transaction.PlatformTransactionManager
+ * @see org.springframework.transaction.TransactionDefinition
+ * @see org.springframework.transaction.support.AbstractPlatformTransactionManager
+ * @see org.springframework.transaction.support.ResourceTransactionManager
+ * @see org.springframework.transaction.support.TransactionSynchronizationManager
  * @see #setCopyOnRead(boolean)
  */
 @SuppressWarnings("unused")
@@ -85,7 +84,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * the given {@link GemFireCache} reference.
 	 *
 	 * @param cache reference to the {@link GemFireCache} associated with cache transactions.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 * @see #afterPropertiesSet()
 	 */
 	public GemfireTransactionManager(GemFireCache cache) {
@@ -268,7 +267,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * manages local cache transactions.
 	 *
 	 * @param cache reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	public void setCache(GemFireCache cache) {
 		this.cache = cache;
@@ -279,7 +278,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * manages local cache transactions.
 	 *
 	 * @return a reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	public GemFireCache getCache() {
 		return this.cache;
@@ -290,7 +289,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * cache transactions.
 	 *
 	 * @return a reference to the {@link CacheTransactionManager}.
-	 * @see CacheTransactionManager
+	 * @see org.apache.geode.cache.CacheTransactionManager
 	 * @see #getCache()
 	 */
 	protected CacheTransactionManager getCacheTransactionManager() {
@@ -333,7 +332,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * @param <V> {@link Class} type of the {@link Region} value.
 	 * @param region GemFire cache {@link Region} directly involved in the local cache transaction.
 	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 */
 	public <K, V> void setRegion(Region<K, V> region) {
 
@@ -354,7 +353,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Sets the timeout used to wait for the GemFire cache transaction to resume.
 	 *
 	 * @param resumeWaitTime long value with the timeout used to wait for the GemFire cache transaction to resume.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see org.apache.geode.cache.CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
 	 */
 	public void setResumeWaitTime(Long resumeWaitTime) {
 		this.resumeWaitTime = resumeWaitTime;
@@ -364,7 +363,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Returns the timeout used to wait for the GemFire cache transaction to resume.
 	 *
 	 * @return the long value with the timeout used to wait for the GemFire cache transaction to resume.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see org.apache.geode.cache.CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
 	 */
 	protected Long getResumeWaitTime() {
 		return this.resumeWaitTime;
@@ -375,7 +374,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 *
 	 * @return a boolean value to indicate whether the user specified a wait time
 	 * for resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see org.apache.geode.cache.CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
 	 * @see #getResumeWaitTime()
 	 */
 	protected boolean isResumeWaitTimeSet() {
@@ -389,7 +388,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Sets the {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
 	 *
 	 * @param resumeWaitTimeUnit {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see org.apache.geode.cache.CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
 	 */
 	public void setResumeWaitTimeUnit(TimeUnit resumeWaitTimeUnit) {
 		this.resumeWaitTimeUnit = resumeWaitTimeUnit;
@@ -401,7 +400,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Defaults to {@link TimeUnit#SECONDS}.
 	 *
 	 * @return the {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see org.apache.geode.cache.CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
 	 */
 	protected TimeUnit getResumeWaitTimeUnit() {
 		return Optional.ofNullable(this.resumeWaitTimeUnit).orElse(DEFAULT_RESUME_WAIT_TIME_UNIT);

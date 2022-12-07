@@ -22,10 +22,10 @@ import org.springframework.util.StringUtils;
  * or Pivotal GemFire schema object (e.g. {@link Region} or {@link Index}).
  *
  * @author John Blum
- * @see Serializable
- * @see Ordered
- * @see SchemaObjectDefiner
- * @see SchemaObjectType
+ * @see java.io.Serializable
+ * @see org.springframework.core.Ordered
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefiner
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
  * @since 2.0.0
  */
 public abstract class SchemaObjectDefinition implements Serializable, Ordered {
@@ -56,7 +56,7 @@ public abstract class SchemaObjectDefinition implements Serializable, Ordered {
 	 * Returns the {@link SchemaObjectType type} of schema object defined by this {@link SchemaObjectDefinition}.
 	 *
 	 * @return the {@link SchemaObjectType type} of schema object defined by this {@link SchemaObjectDefinition}.
-	 * @see SchemaObjectType
+	 * @see org.springframework.data.gemfire.config.schema.SchemaObjectType
 	 */
 	public abstract SchemaObjectType getType();
 
@@ -65,7 +65,7 @@ public abstract class SchemaObjectDefinition implements Serializable, Ordered {
 	 *
 	 * @param gemfireAdminOperations {@link GemfireAdminOperations} used to create an actual schema object from this
 	 * {@link SchemaObjectDefinition}.
-	 * @see GemfireAdminOperations
+	 * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
 	 */
 	public void create(GemfireAdminOperations gemfireAdminOperations) {
 	}

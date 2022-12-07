@@ -33,13 +33,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see Execution
- * @see Function
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.Function
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = FunctionExecutionClientCacheIntegrationTests.ClientCacheTestConfiguration.class)

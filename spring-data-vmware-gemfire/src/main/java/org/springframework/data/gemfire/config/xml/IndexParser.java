@@ -23,8 +23,8 @@ import org.springframework.data.gemfire.config.support.DefinedIndexesApplication
  *
  * @author Costin Leau
  * @author John Blum
- * @see IndexFactoryBean
- * @see AbstractSimpleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.IndexFactoryBean
+ * @see org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser
  * @since 1.1.0
  */
 class IndexParser extends AbstractSimpleBeanDefinitionParser {

@@ -12,7 +12,7 @@ import org.springframework.data.gemfire.mapping.MappingPdxSerializerUnitTests;
  * the {@link MappingPdxSerializerUnitTests}.
  *
  * @author John Blum
- * @see MappingPdxSerializerUnitTests
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializerUnitTests
  * @since 1.0.0
  */
 public class TestGemStoneGemFireType {

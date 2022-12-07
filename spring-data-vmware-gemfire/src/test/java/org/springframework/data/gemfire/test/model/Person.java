@@ -24,13 +24,13 @@ import org.springframework.util.ObjectUtils;
  * The {@link Person} class is an Abstract Data Type (ADT) modeling a person.
  *
  * @author John Blum
- * @see Comparable
+ * @see java.lang.Comparable
  * @see java.util.Calendar
- * @see Date
- * @see Id
- * @see PersistenceConstructor
- * @see Region
- * @see Indexed
+ * @see java.util.Date
+ * @see org.springframework.data.annotation.Id
+ * @see org.springframework.data.annotation.PersistenceConstructor
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
+ * @see org.springframework.data.gemfire.mapping.annotation.Indexed
  * @see org.springframework.data.gemfire.test.support.IdentifierSequence
  * @since 2.0.0
  */

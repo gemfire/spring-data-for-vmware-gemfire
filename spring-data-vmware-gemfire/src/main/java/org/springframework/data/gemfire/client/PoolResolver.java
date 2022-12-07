@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import java.util.Optional;
@@ -26,9 +25,9 @@ import org.springframework.util.StringUtils;
  * as an SPI for different strategies when resolving a {@link Pool}.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see Region
- * @see Pool
+ * @see java.lang.FunctionalInterface
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.Pool
  * @since 2.3.0
  */
 @FunctionalInterface
@@ -41,9 +40,9 @@ public interface PoolResolver {
 	 *
 	 * @param clientCache {@link ClientCache} instance from which to resolve the {@literal DEFAULT} {@link Pool}.
 	 * @return the configured {@literal DEFAULT} {@link Pool} from the given {@link ClientCache} instance.
-	 * @see ClientCache#getDefaultPool()
-	 * @see ClientCache
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.ClientCache#getDefaultPool()
+	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	default @Nullable Pool resolve(@Nullable ClientCache clientCache) {
 		return clientCache != null ? clientCache.getDefaultPool() : null;
@@ -62,8 +61,8 @@ public interface PoolResolver {
 	 * @return the {@link Pool} instance associated with the given {@link Region},
 	 * or the {@literal DEFAULT} {@link Pool} if the {@link Region} is a {@literal client} {@link Region},
 	 * or {@literal null} if the {@link Region} is not a {@literal client} {@link Region}.
-	 * @see Region
-	 * @see Pool
+	 * @see org.apache.geode.cache.Region
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	default @Nullable Pool resolve(@Nullable Region<?, ?> region) {
 
@@ -81,7 +80,7 @@ public interface PoolResolver {
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
 	 * @return the {@link Pool} with the given {@link String name} or {@link null} if no {@link Pool} exists with
 	 * the {@link String name}.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 */
 	@Nullable Pool resolve(@Nullable String poolName);
 
@@ -92,7 +91,7 @@ public interface PoolResolver {
 	 * @return the required {@link Pool} with the given {@link String name} or throw an {@link IllegalStateException}
 	 * if a {@link Pool} with {@link String name} does not exist!
 	 * @throws IllegalStateException if a {@link Pool} with the given {@link String name} does not exist.
-	 * @see Pool
+	 * @see org.apache.geode.cache.client.Pool
 	 * @see #resolve(String)
 	 */
 	default @NonNull Pool require(@NonNull String poolName) {

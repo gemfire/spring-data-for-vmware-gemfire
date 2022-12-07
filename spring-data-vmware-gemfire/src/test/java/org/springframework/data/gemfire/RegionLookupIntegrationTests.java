@@ -24,11 +24,11 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  * Integration Tests testing SDG lookup functionality for various peer {@link Region} types.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.4.0
  * @link https://jira.spring.io/browse/SGF-204
  */

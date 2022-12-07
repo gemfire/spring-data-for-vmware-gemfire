@@ -26,13 +26,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for custom OQL {@link Query} annotations.
  *
  * @author John Blum
- * @see Test
- * @see Region
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see Query
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.repository.Query
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

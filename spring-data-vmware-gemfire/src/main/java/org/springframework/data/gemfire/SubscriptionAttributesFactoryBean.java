@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.InterestPolicy;
@@ -18,10 +17,10 @@ import org.springframework.beans.factory.InitializingBean;
  *
  * @author Lyndon Adams
  * @author John Blum
- * @see FactoryBean
- * @see InitializingBean
- * @see InterestPolicy
- * @see SubscriptionAttributes
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.InterestPolicy
+ * @see org.apache.geode.cache.SubscriptionAttributes
  * @since 1.3.0
  */
 public class SubscriptionAttributesFactoryBean implements FactoryBean<SubscriptionAttributes>, InitializingBean {
@@ -74,8 +73,8 @@ public class SubscriptionAttributesFactoryBean implements FactoryBean<Subscripti
 	 * the data interests and distribution of changes.
 	 *
 	 * @param interestPolicy the GemFire InterestsPolicy to set for Subscription.
-	 * @see InterestPolicy
-	 * @see SubscriptionAttributes#SubscriptionAttributes(InterestPolicy)
+	 * @see org.apache.geode.cache.InterestPolicy
+	 * @see org.apache.geode.cache.SubscriptionAttributes#SubscriptionAttributes(org.apache.geode.cache.InterestPolicy)
 	 */
 	public void setInterestPolicy(InterestPolicy interestPolicy) {
 		this.interestPolicy = interestPolicy;
@@ -86,8 +85,8 @@ public class SubscriptionAttributesFactoryBean implements FactoryBean<Subscripti
 	 * and distribution of changes.
 	 *
 	 * @return the GemFire InterestsPolicy set for Subscription.
-	 * @see InterestPolicy
-	 * @see SubscriptionAttributes#getInterestPolicy()
+	 * @see org.apache.geode.cache.InterestPolicy
+	 * @see org.apache.geode.cache.SubscriptionAttributes#getInterestPolicy()
 	 */
 	public InterestPolicy getInterestPolicy() {
 		return this.interestPolicy != null ? this.interestPolicy : InterestPolicy.DEFAULT;

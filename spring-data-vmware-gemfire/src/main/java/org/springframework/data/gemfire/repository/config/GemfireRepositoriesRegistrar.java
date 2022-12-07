@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.config;
 
 import java.lang.annotation.Annotation;
@@ -19,10 +18,10 @@ import org.springframework.lang.NonNull;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see Repository
- * @see RepositoryBeanDefinitionRegistrarSupport
- * @see RepositoryConfigurationExtension
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupport
+ * @see org.springframework.data.repository.config.RepositoryConfigurationExtension
  */
 public class GemfireRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
 
@@ -32,8 +31,8 @@ public class GemfireRepositoriesRegistrar extends RepositoryBeanDefinitionRegist
 	 * Defaults to {@link EnableGemfireRepositories}.
 	 *
 	 * @return the {@link Annotation} {@link Class} enabling Apache Geode {@link Repository Repositories}.
-	 * @see Annotation
-	 * @see Class
+	 * @see java.lang.annotation.Annotation
+	 * @see java.lang.Class
 	 */
 	@Override
 	protected @NonNull Class<? extends Annotation> getAnnotation() {
@@ -46,7 +45,7 @@ public class GemfireRepositoriesRegistrar extends RepositoryBeanDefinitionRegist
 	 *
 	 * @return the {@link RepositoryConfigurationExtension} implementing class to configure Apache Geode
 	 * {@link Repository Repositories}.
-	 * @see RepositoryConfigurationExtension
+	 * @see org.springframework.data.repository.config.RepositoryConfigurationExtension
 	 */
 	@Override
 	protected @NonNull RepositoryConfigurationExtension getExtension() {

@@ -20,17 +20,17 @@ import org.apache.geode.security.SecurityManager;
 import org.springframework.util.StringUtils;
 
 /**
- * The {@link TestSecurityManager} class is an Apache Geode {@link SecurityManager}
+ * The {@link TestSecurityManager} class is an Apache Geode {@link org.apache.geode.security.SecurityManager}
  * implementation used for testing purposes.
  *
  * @author John Blum
- * @see Principal
- * @see Properties
+ * @see java.security.Principal
+ * @see java.util.Properties
  * @see javax.security.auth.Subject
- * @see SecurityManager
+ * @see org.apache.geode.security.SecurityManager
  * @since 2.0.0
  */
-public final class TestSecurityManager implements SecurityManager {
+public final class TestSecurityManager implements org.apache.geode.security.SecurityManager {
 
 	public static final String SECURITY_USERNAME = "testUser";
 	public static final String SECURITY_PASSWORD = "&t35t9@55w0rd!";
@@ -73,7 +73,7 @@ public final class TestSecurityManager implements SecurityManager {
 	}
 
 	@SuppressWarnings("unused")
-	public static final class TestPrincipal implements Principal, java.io.Serializable {
+	public static final class TestPrincipal implements java.security.Principal, java.io.Serializable {
 
 		private final String name;
 

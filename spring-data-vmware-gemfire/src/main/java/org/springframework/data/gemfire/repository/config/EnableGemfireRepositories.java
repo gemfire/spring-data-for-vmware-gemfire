@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.config;
 
 import java.lang.annotation.Documented;
@@ -28,7 +27,7 @@ import org.springframework.data.repository.query.QueryLookupStrategy.Key;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Repository
+ * @see org.springframework.data.repository.Repository
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -108,7 +107,7 @@ public @interface EnableGemfireRepositories {
 	 * Defaults to {@link Key#CREATE_IF_NOT_FOUND}.
 	 *
 	 * @return the {@link Key} used to determine the query lookup and creation strategy.
-	 * @see Key
+	 * @see org.springframework.data.repository.query.QueryLookupStrategy.Key
 	 */
 	Key queryLookupStrategy() default Key.CREATE_IF_NOT_FOUND;
 
@@ -117,7 +116,7 @@ public @interface EnableGemfireRepositories {
 	 * for this particular configuration.
 	 *
 	 * @return the {@link Repository} {@link Class base class} used to create {@link Repository} proxies.
-	 * @see SimpleGemfireRepository
+	 * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
 	 * @since 1.7
 	 */
 	Class<?> repositoryBaseClass() default SimpleGemfireRepository.class;
@@ -128,7 +127,7 @@ public @interface EnableGemfireRepositories {
 	 * Defaults to {@link GemfireRepositoryFactoryBean}.
 	 *
 	 * @return the {@link FactoryBean} {@link Class} used to create each {@link Repository} instance.
-	 * @see GemfireRepositoryFactoryBean
+	 * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean
 	 */
 	Class<?> repositoryFactoryBeanClass() default GemfireRepositoryFactoryBean.class;
 

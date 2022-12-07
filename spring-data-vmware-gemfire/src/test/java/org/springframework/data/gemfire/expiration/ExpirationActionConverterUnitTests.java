@@ -15,9 +15,9 @@ import org.apache.geode.cache.ExpirationAction;
  * Unit Tests for {@link ExpirationActionConverter}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.EvictionAction
- * @see ExpirationActionConverter
+ * @see org.springframework.data.gemfire.expiration.ExpirationActionConverter
  * @since 1.6.0
  */
 public class ExpirationActionConverterUnitTests {

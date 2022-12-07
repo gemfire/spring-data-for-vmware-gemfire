@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import org.apache.geode.cache.Region;
@@ -17,7 +16,7 @@ import org.springframework.util.StringUtils;
  * (Strategies) used to resolve a cache {@link Region}.
  *
  * @author John Blum
- * @see Region
+ * @see org.apache.geode.cache.Region
  * @since 2.3.0
  */
 @FunctionalInterface
@@ -30,8 +29,8 @@ public interface RegionResolver {
 	 * @param <V> {@link Class type} of the {@link Region} value;
 	 * @param regionName {@link String name} of the {@link Region} to resolve; may be {@literal null}.
 	 * @return the resolved {@link Region} with the given {@link String name}; may be {@literal null}.
-	 * @see Region
-	 * @see String
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.String
 	 */
 	@Nullable <K, V> Region<K, V> resolve(@Nullable String regionName);
 
@@ -43,8 +42,8 @@ public interface RegionResolver {
 	 * @param regionName {@link String name} of the {@link Region} to resolve; must not be {@literal null}.
 	 * @return the resolved {@link Region} with the given {@link String name}; never {@literal null}.
 	 * @throws IllegalStateException if the resolved {@link Region} is {@literal null}, i.e. does not exist.
-	 * @see Region
-	 * @see String
+	 * @see org.apache.geode.cache.Region
+	 * @see java.lang.String
 	 * @see #resolve(String)
 	 */
 	default @NonNull <K, V> Region<K, V> require(@NonNull String regionName) {

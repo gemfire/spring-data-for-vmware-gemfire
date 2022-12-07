@@ -35,12 +35,12 @@ import org.springframework.lang.Nullable;
  * Unit Tests for {@link AbstractLazyResolvingComposableConfigurer}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
- * @see Mockito
- * @see FactoryBean
- * @see ListableBeanFactory
- * @see AbstractLazyResolvingComposableConfigurer
+ * @see org.junit.Test
+ * @see org.mockito.Mock
+ * @see org.mockito.Mockito
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.ListableBeanFactory
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
  * @since 2.2.0
  */
 @RunWith(MockitoJUnitRunner.class)

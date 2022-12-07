@@ -40,14 +40,14 @@ import lombok.ToString;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Pattern
- * @see Test
- * @see Mock
+ * @see java.util.regex.Pattern
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Region
- * @see MockitoJUnitRunner
- * @see Sort
- * @see QueryString
+ * @see org.apache.geode.cache.Region
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.domain.Sort
+ * @see org.springframework.data.gemfire.repository.query.QueryString
  */
 @RunWith(MockitoJUnitRunner.class)
 public class QueryStringUnitTests {

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -39,17 +38,17 @@ import org.springframework.util.Assert;
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see SelectResults
- * @see Page
- * @see Pageable
- * @see Sort
- * @see GemfireTemplate
- * @see Query
- * @see GemfireRepositoryQuery
- * @see OqlQueryExecutor
- * @see Repository
- * @see QueryMethod
- * @see RepositoryQuery
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.domain.Sort
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.Query
+ * @see org.springframework.data.gemfire.repository.query.GemfireRepositoryQuery
+ * @see org.springframework.data.gemfire.repository.query.support.OqlQueryExecutor
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.query.QueryMethod
+ * @see org.springframework.data.repository.query.RepositoryQuery
  */
 @SuppressWarnings("unused")
 public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
@@ -93,8 +92,8 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link GemfireQueryMethod} or {@link GemfireTemplate} are {@literal null}.
 	 * @throws IllegalStateException if the {@link GemfireQueryMethod} represents a modifying query.
-	 * @see GemfireQueryMethod
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.repository.query.GemfireQueryMethod
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	public StringBasedGemfireRepositoryQuery(String query, GemfireQueryMethod queryMethod, GemfireTemplate template) {
 
@@ -178,7 +177,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 *
 	 * @return the configured {@link OqlQueryExecutor} (strategy) used to execute Apache Geode
 	 * {@link Page non-paged} {@link String OQL queries}.
-	 * @see OqlQueryExecutor
+	 * @see org.springframework.data.gemfire.repository.query.support.OqlQueryExecutor
 	 */
 	protected @NonNull OqlQueryExecutor getNonPagedQueryExecutor() {
 		return this.nonPagedQueryExecutor;
@@ -190,7 +189,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 *
 	 * @return the configured {@link OqlQueryExecutor} (strategy) used to execute Apache Geode
 	 * {@link Page paged} {@link String OQL queries}.
-	 * @see OqlQueryExecutor
+	 * @see org.springframework.data.gemfire.repository.query.support.OqlQueryExecutor
 	 */
 	protected @NonNull OqlQueryExecutor getPagedQueryExecutor() {
 		return this.pagedQueryExecutor;
@@ -200,7 +199,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * Returns a reference to the {@link QueryString managed query}.
 	 *
 	 * @return a reference to the {@link QueryString managed query}.
-	 * @see QueryString
+	 * @see org.springframework.data.gemfire.repository.query.QueryString
 	 */
 	protected @NonNull QueryString getQuery() {
 		return this.query;
@@ -210,7 +209,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * Returns a reference to the {@link GemfireTemplate} used to perform all data access and query operations.
 	 *
 	 * @return a reference to the {@link GemfireTemplate} used to perform all data access and query operations.
-	 * @see GemfireTemplate
+	 * @see org.springframework.data.gemfire.GemfireTemplate
 	 */
 	protected @NonNull GemfireTemplate getTemplate() {
 		return this.template;
@@ -241,9 +240,9 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @param query {@link QueryString} containing the OQL query statement.
 	 * @param arguments array of {@link Object} values containing the arguments for the OQL query bind in parameters.
 	 * @return the {@literal prepared} OQL query to execute.
-	 * @see QueryPostProcessor
-	 * @see QueryString
-	 * @see QueryMethod
+	 * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor
+	 * @see org.springframework.data.gemfire.repository.query.QueryString
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 * @see #bindInParameters(QueryMethod, QueryString, Object[])
 	 * @see #resolveFromClause(QueryMethod, QueryString)
 	 * @see #getQueryPostProcessor()
@@ -286,8 +285,8 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @param queryMethod {@link QueryMethod} used to resolve the {@link OqlQueryExecutor}; must not be {@literal null}.
 	 * @return the resolve {@link OqlQueryExecutor} appropriate for executing the {@link String OQL query statement}
 	 * modeled by the give {@link QueryMethod}.
-	 * @see OqlQueryExecutor
-	 * @see QueryMethod
+	 * @see org.springframework.data.gemfire.repository.query.support.OqlQueryExecutor
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 */
 	protected @NonNull OqlQueryExecutor resolveOqlQueryExecutor(@NonNull QueryMethod queryMethod) {
 
@@ -305,8 +304,8 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @throws IncorrectResultSizeDataAccessException if the query result does not match
 	 * the {@link QueryMethod} {@link Class return type}.
 	 * @throws IllegalStateException if the OQL query is not supported based on the return value.
-	 * @see QueryMethod
-	 * @see SelectResults
+	 * @see org.springframework.data.repository.query.QueryMethod
+	 * @see org.apache.geode.cache.query.SelectResults
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected @Nullable Object processQueryResults(@NonNull QueryMethod queryMethod,
@@ -357,9 +356,9 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @param source the resulting object from the GemFire Query.
 	 * @return the querying resulting object as a Collection.
 	 * @see java.util.Arrays#asList(Object[])
-	 * @see Collection
+	 * @see java.util.Collection
 	 * @see org.springframework.util.CollectionUtils#arrayToList(Object)
-	 * @see SelectResults
+	 * @see org.apache.geode.cache.query.SelectResults
 	 */
 	@SuppressWarnings("rawtypes")
 	@NonNull Collection toCollection(@Nullable Object source) {
@@ -471,7 +470,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 *
 		 * @param template {@link GemfireTemplate} used to execute Apache Geode OQL queries; must not be {@literal null}.
 		 * @throws IllegalArgumentException if {@link GemfireTemplate} is {@literal null}.
-		 * @see GemfireTemplate
+		 * @see org.springframework.data.gemfire.GemfireTemplate
 		 */
 		TwoPhasePagedOqlQueryExecutor(@NonNull GemfireTemplate template) {
 			super(template);
@@ -487,8 +486,8 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * @param pageRequest {@link Pageable} object encapsulating the details of the {@link Page requested page};
 		 * must not be {@literal null}.
 		 * @return the {@link SelectResults} as is.
-		 * @see SelectResults
-		 * @see Pageable
+		 * @see org.apache.geode.cache.query.SelectResults
+		 * @see org.springframework.data.domain.Pageable
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
@@ -521,7 +520,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 *
 		 * @param template {@link GemfireTemplate} used to execute Apache Geode OQL queries; must not be {@literal null}.
 		 * @throws IllegalArgumentException if {@link GemfireTemplate} is {@literal null}.
-		 * @see GemfireTemplate
+		 * @see org.springframework.data.gemfire.GemfireTemplate
 		 */
 		SmartPagedOqlQueryExecutor(@NonNull GemfireTemplate template) {
 			super(template);
@@ -553,7 +552,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * @param pageRequest {@link Pageable} object encapsulating the details of the requested page.
 		 * @return a boolean value indicating whether the original {@link String OQL query} should be executed directly,
 		 * bypassing the 2-phase implementation.
-		 * @see Pageable
+		 * @see org.springframework.data.domain.Pageable
 		 */
 		protected boolean isExecutable(@NonNull Pageable pageRequest) {
 
@@ -578,7 +577,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 *
 		 * @param template {@link GemfireTemplate} used to execute Apache Geode OQL queries; must not be {@literal null}.
 		 * @throws IllegalArgumentException if {@link GemfireTemplate} is {@literal null}.
-		 * @see GemfireTemplate
+		 * @see org.springframework.data.gemfire.GemfireTemplate
 		 */
 		PageLimitingOqlQueryExecutor(@NonNull GemfireTemplate template) {
 			super(template);
@@ -633,7 +632,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * This base class implementation simply returns the entire/full (i.e. non-limited) {@link SelectResults OQL query result set}
 	 * and then performs the paging logic to extract subsets of the results based on the {@link Page requested page}.
 	 *
-	 * @see TemplateBasedOqlQueryExecutor
+	 * @see org.springframework.data.gemfire.repository.query.support.TemplateBasedOqlQueryExecutor
 	 */
 	static abstract class SimplePagedOqlQueryExecutor extends TemplateBasedOqlQueryExecutor {
 
@@ -643,7 +642,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 *
 		 * @param template {@link GemfireTemplate} used to execute Apache Geode OQL queries; must not be {@literal null}.
 		 * @throws IllegalArgumentException if {@link GemfireTemplate} is {@literal null}.
-		 * @see GemfireTemplate
+		 * @see org.springframework.data.gemfire.GemfireTemplate
 		 */
 		SimplePagedOqlQueryExecutor(@NonNull GemfireTemplate template) {
 			super(template);
@@ -679,9 +678,9 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * @param arguments array of {@link Object arguments} passed to the placeholders in
 		 * the {@link String OQL query statement}.
 		 * @return the {@link SelectResults} from executing the {@link String OQL query statement}.
-		 * @see SelectResults
-		 * @see Pageable
-		 * @see QueryMethod
+		 * @see org.apache.geode.cache.query.SelectResults
+		 * @see org.springframework.data.domain.Pageable
+		 * @see org.springframework.data.repository.query.QueryMethod
 		 */
 		@SuppressWarnings("rawtypes")
 		protected SelectResults doExecute(@NonNull Pageable pageRequest, @NonNull QueryMethod queryMethod,
@@ -700,7 +699,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * @param query {@link String} containing the OQL query statement to prepare.
 		 * @param pageRequest {@link Pageable} object containing the details of the {@link Page requested page}.
 		 * @return the prepared {@link String OQL query}.
-		 * @see Pageable
+		 * @see org.springframework.data.domain.Pageable
 		 */
 		protected @NonNull String preparePagedQuery(String query, Pageable pageRequest) {
 			return query;
@@ -713,8 +712,8 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * @param pageRequest {@link Pageable} object encapsulating the details of the {@link Page requested page};
 		 * must not be {@literal null}.
 		 * @return the processed {@link SelectResults}.
-		 * @see SelectResults
-		 * @see Pageable
+		 * @see org.apache.geode.cache.query.SelectResults
+		 * @see org.springframework.data.domain.Pageable
 		 */
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		protected @NonNull SelectResults processPagedQueryResults(@NonNull SelectResults selectResults,

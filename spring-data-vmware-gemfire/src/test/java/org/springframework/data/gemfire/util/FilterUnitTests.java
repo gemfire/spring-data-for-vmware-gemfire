@@ -20,9 +20,9 @@ import org.junit.Test;
  * Unit tests for {@link Filter}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Filter
+ * @see org.springframework.data.gemfire.util.Filter
  * @since 1.0.0
  */
 public class FilterUnitTests {

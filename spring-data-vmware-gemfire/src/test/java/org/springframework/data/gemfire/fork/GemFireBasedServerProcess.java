@@ -17,7 +17,7 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
  * using GemFire's {@link ServerLauncher} API.
  *
  * @author John Blum
- * @see ServerLauncher
+ * @see org.apache.geode.distributed.ServerLauncher
  * @since 1.7.0
  */
 public class GemFireBasedServerProcess {

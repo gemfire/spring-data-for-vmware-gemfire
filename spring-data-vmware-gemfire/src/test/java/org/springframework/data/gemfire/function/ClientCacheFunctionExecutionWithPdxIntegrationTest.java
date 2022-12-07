@@ -41,19 +41,19 @@ import org.springframework.util.ObjectUtils;
  * and server cache when PDX is configured and read-serialized is set to {@literal true}.
  *
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see PdxInstance
- * @see PdxInstanceFactory
- * @see PdxReader
- * @see PdxSerializer
- * @see PdxWriter
- * @see PdxInstanceEnum
- * @see GemfireFunction
- * @see ApplicationDomainFunctionExecutions
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.apache.geode.pdx.PdxInstanceFactory
+ * @see org.apache.geode.pdx.PdxReader
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.PdxWriter
+ * @see org.apache.geode.pdx.internal.PdxInstanceEnum
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.function.sample.ApplicationDomainFunctionExecutions
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.2
  */
 @RunWith(SpringRunner.class)

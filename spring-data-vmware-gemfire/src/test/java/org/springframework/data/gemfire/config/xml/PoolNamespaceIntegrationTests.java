@@ -27,15 +27,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Test
- * @see Pool
- * @see PoolAdapter
- * @see PoolFactoryBean
- * @see PoolParser
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.client.PoolAdapter
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.PoolParser
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @GemFireUnitTest

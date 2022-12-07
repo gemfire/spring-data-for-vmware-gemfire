@@ -30,10 +30,10 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
  * the {@link EnableCacheServers} annotation.
 
  * @author John Blum
- * @see CacheServer
- * @see AddCacheServerConfiguration
- * @see CacheServerConfigurer
- * @see EnableCacheServers
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

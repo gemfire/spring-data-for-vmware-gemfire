@@ -28,8 +28,8 @@ import org.springframework.lang.Nullable;
  * using the Composite Software Design Pattern.
  *
  * @author John Blum
- * @see Iterable
- * @see SchemaObjectDefiner
+ * @see java.lang.Iterable
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefiner
  * @since 2.0.0
  */
 public final class ComposableSchemaObjectDefiner

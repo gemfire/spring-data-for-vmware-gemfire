@@ -32,9 +32,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using GemFire/Geode System properties.
  *
  * @author John Blum
- * @see Test
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
  */
 @RunWith(SpringRunner.class)

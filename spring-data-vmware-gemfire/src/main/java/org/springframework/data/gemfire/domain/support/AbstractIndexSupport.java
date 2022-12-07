@@ -15,7 +15,7 @@ import org.apache.geode.cache.query.IndexType;
  * of the Pivotal GemFire / Apache Geode {@link Index} interface.
  *
  * @author John Blum
- * @see Index
+ * @see org.apache.geode.cache.query.Index
  * @since 2.0.0
  */
 public abstract class AbstractIndexSupport implements Index {

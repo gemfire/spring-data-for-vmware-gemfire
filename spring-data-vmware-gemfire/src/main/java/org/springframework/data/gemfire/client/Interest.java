@@ -23,10 +23,10 @@ import org.springframework.util.Assert;
  *
  * @author Costin Leau
  * @author John Blum
- * @see Pattern
- * @see InterestResultPolicy
- * @see InitializingBean
- * @see Constants
+ * @see java.util.regex.Pattern
+ * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.core.Constants
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -132,10 +132,10 @@ public class Interest<K> implements InitializingBean {
 	}
 
 	/**
-	 * Attempts to resolve the {@link Type} based on the configured {@link #getKey()}.
+	 * Attempts to resolve the {@link Interest.Type} based on the configured {@link #getKey()}.
 	 *
-	 * @param type provided {@link Type} used if {@literal non-null}.
-	 * @return the resolved {@link Type}.
+	 * @param type provided {@link Interest.Type} used if {@literal non-null}.
+	 * @return the resolved {@link Interest.Type}.
 	 * @see #isRegularExpression(Object)
 	 */
 	protected Type resolveType(Type type) {
@@ -167,7 +167,7 @@ public class Interest<K> implements InitializingBean {
 	 * @param value {@link String} to evaluate.
 	 * @return a boolean value indicating whether the given {@link String} {@code value} is a Regular Expression.
 	 * @see #containsNonAlphaNumericWhitespace(String)
-	 * @see Pattern#compile(String)
+	 * @see java.util.regex.Pattern#compile(String)
 	 */
 	@SuppressWarnings("all")
 	protected boolean isRegularExpression(String value) {
@@ -215,9 +215,9 @@ public class Interest<K> implements InitializingBean {
 	 * @param character {@link Character} to evaluate.
 	 * @return a boolean value indicating whether the given {@code character} is an alphanumeric
 	 * or whitespace character.
-	 * @see Character#isDigit(char)
-	 * @see Character#isLetter(char)
-	 * @see Character#isWhitespace(char)
+	 * @see java.lang.Character#isDigit(char)
+	 * @see java.lang.Character#isLetter(char)
+	 * @see java.lang.Character#isWhitespace(char)
 	 */
 	protected boolean isAlphaNumericWhitespace(char character) {
 		return (Character.isDigit(character) || Character.isLetter(character)  || Character.isWhitespace(character));
@@ -278,7 +278,7 @@ public class Interest<K> implements InitializingBean {
 	 *
 	 * @param policy initial {@link InterestResultPolicy} to set.
 	 * @throws IllegalArgumentException if the given {@code policy} is not a valid type.
-	 * @see InterestResultPolicy
+	 * @see org.apache.geode.cache.InterestResultPolicy
 	 */
 	public void setPolicy(Object policy) {
 
@@ -314,8 +314,8 @@ public class Interest<K> implements InitializingBean {
 	/**
 	 * Returns the type of interest registration (e.g. based on KEY or Regex).
 	 *
-	 * @return a {@link Type} determining the type of interest.
-	 * @see Type
+	 * @return a {@link Interest.Type} determining the type of interest.
+	 * @see Interest.Type
 	 */
 	public Type getType() {
 		return this.type;
@@ -324,8 +324,8 @@ public class Interest<K> implements InitializingBean {
 	/**
 	 * Set the type of interest registration (e.g. based on KEY or Regex).
 	 *
-	 * @param type {@link Type} qualifying the type of interest.
-	 * @see Type
+	 * @param type {@link Interest.Type} qualifying the type of interest.
+	 * @see Interest.Type
 	 */
 	public void setType(Type type) {
 		this.type = type;
@@ -335,7 +335,7 @@ public class Interest<K> implements InitializingBean {
 	 * Determines whether this {@link Interest} is a KEY interest registration.
 	 *
 	 * @return a boolean value indicating whether this is KEY interest.
-	 * @see Type#KEY
+	 * @see Interest.Type#KEY
 	 * @see #getType()
 	 */
 	public boolean isKeyType() {
@@ -346,7 +346,7 @@ public class Interest<K> implements InitializingBean {
 	 * Determines whether this {@link Interest} is a REGEX interest registration.
 	 *
 	 * @return a boolean value indicating whether this is REGEX interest.
-	 * @see Type#REGEX
+	 * @see Interest.Type#REGEX
 	 * @see #getType()
 	 */
 	public boolean isRegexType() {
@@ -365,9 +365,9 @@ public class Interest<K> implements InitializingBean {
 	/**
 	 * Builder method to specify the type of interest registration.
 	 *
-	 * @param type {@link Type} of interest registration.
+	 * @param type {@link Interest.Type} of interest registration.
 	 * @return this {@link Interest}.
-	 * @see Type
+	 * @see Interest.Type
 	 * @see #resolveType(Type)
 	 * @see #setType(Type)
 	 */
@@ -405,7 +405,7 @@ public class Interest<K> implements InitializingBean {
 	 *
 	 * @param policy {@link InterestResultPolicy}.
 	 * @return this {@link Interest}.
-	 * @see InterestResultPolicy
+	 * @see org.apache.geode.cache.InterestResultPolicy
 	 * @see #setPolicy(Object)
 	 */
 	public Interest usingPolicy(InterestResultPolicy policy) {

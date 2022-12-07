@@ -12,8 +12,8 @@ import org.junit.Test;
  * Unit Tests for {@link JndiDataSourceType} enum.
  *
  * @author John Blum
- * @see Test
- * @see JndiDataSourceType
+ * @see org.junit.Test
+ * @see org.springframework.data.gemfire.JndiDataSourceType
  * @since 1.7.0
  */
 public class JndiDataSourceTypeUnitTests {

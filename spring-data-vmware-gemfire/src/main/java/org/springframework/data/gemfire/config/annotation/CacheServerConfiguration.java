@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeSet;
@@ -36,17 +35,17 @@ import org.springframework.util.StringUtils;
  * in a Spring application context.
  *
  * @author John Blum
- * @see Cache
- * @see CacheServer
- * @see Bean
- * @see Configuration
- * @see AddCacheServerConfiguration
- * @see AddCacheServersConfiguration
- * @see CacheServerConfigurer
- * @see EnableCacheServer
- * @see EnableCacheServers
- * @see PeerCacheConfiguration
- * @see CacheServerFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServersConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfiguration
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 1.9.0
  */
 @Configuration
@@ -91,9 +90,9 @@ public class CacheServerConfiguration extends PeerCacheConfiguration {
 	 * @param gemfireCache peer {@link Cache} instance in which to add the {@link CacheServer}.
 	 * @return a {@link CacheServerFactoryBean} used to construct, configure and initialize
 	 * the {@link CacheServer} instance.
-	 * @see CacheServerFactoryBean
-	 * @see CacheServer
-	 * @see Cache
+	 * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
+	 * @see org.apache.geode.cache.server.CacheServer
+	 * @see org.apache.geode.cache.Cache
 	 */
 	@Bean
 	public CacheServerFactoryBean gemfireCacheServer(GemFireCache gemfireCache) {
@@ -139,8 +138,8 @@ public class CacheServerConfiguration extends PeerCacheConfiguration {
 	 *
 	 * @param importMetadata {@link AnnotationMetadata} containing cache server meta-data used to
 	 * configure the {@link CacheServer}.
-	 * @see AnnotationMetadata
-	 * @see CacheServer
+	 * @see org.springframework.core.type.AnnotationMetadata
+	 * @see org.apache.geode.cache.server.CacheServer
 	 */
 	@Override
 	protected void configureOptional(AnnotationMetadata importMetadata) {
@@ -350,7 +349,7 @@ public class CacheServerConfiguration extends PeerCacheConfiguration {
 	 *
 	 * @return a {@link String} containing the name of the Spring-configured Apache Geode {@link CacheServer} application
 	 * and data node in the cluster.
-	 * @see Object#toString()
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {

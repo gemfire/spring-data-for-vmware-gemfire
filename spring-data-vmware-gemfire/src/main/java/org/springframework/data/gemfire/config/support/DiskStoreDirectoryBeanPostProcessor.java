@@ -23,7 +23,7 @@ import org.springframework.util.ObjectUtils;
  * before creating the {@link org.apache.geode.cache.DiskStore}.
  *
  * @author John Blum
- * @see BeanPostProcessor
+ * @see org.springframework.beans.factory.config.BeanPostProcessor
  * @see org.apache.geode.cache.DiskStore
  * @since 1.5.0
  */

@@ -20,10 +20,10 @@ import org.springframework.context.Lifecycle;
  * Unit Tests for {@link CompositeLifecycle}.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Lifecycle
- * @see CompositeLifecycle
+ * @see org.springframework.context.Lifecycle
+ * @see org.springframework.data.gemfire.support.CompositeLifecycle
  * @since 2.2.0
  */
 public class CompositeLifecycleUnitTests {

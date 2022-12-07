@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Import;
  * annotated class to configure GemFire/Geode System properties at runtime during [Spring Boot] application startup.
  *
  * @author John Blum
- * @see GemFirePropertiesConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.GemFirePropertiesConfiguration
  * @see <a href="https://geode.apache.org/docs/guide/113/reference/topics/gemfire_properties.html">Geode Properties</a>
  * @since 1.9.0
  */

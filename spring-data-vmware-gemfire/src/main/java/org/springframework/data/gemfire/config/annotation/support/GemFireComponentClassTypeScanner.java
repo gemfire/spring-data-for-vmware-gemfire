@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static java.util.stream.StreamSupport.stream;
@@ -35,11 +34,11 @@ import org.slf4j.LoggerFactory;
  * for GemFire components based on {@link Class} type.
  *
  * @author John Blum
- * @see Iterable
- * @see ConfigurableApplicationContext
- * @see ClassPathScanningCandidateComponentProvider
- * @see Environment
- * @see TypeFilter
+ * @see java.lang.Iterable
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
+ * @see org.springframework.core.env.Environment
+ * @see org.springframework.core.type.filter.TypeFilter
  * @since 1.9.0
  */
 @SuppressWarnings("unused")
@@ -89,7 +88,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 *
 	 * @param basePackages {@link Set} of base packages to scan for GemFire component clases.
 	 * @throws IllegalArgumentException if the {@link Set} is {@literal null} or empty.
-	 * @see Set
+	 * @see java.util.Set
 	 */
 	protected GemFireComponentClassTypeScanner(Set<String> basePackages) {
 		Assert.notEmpty(basePackages, "Base packages is required");
@@ -100,7 +99,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 * Returns a reference to the Spring {@link org.springframework.context.ApplicationContext}.
 	 *
 	 * @return a reference to the Spring {@link org.springframework.context.ApplicationContext}.
-	 * @see ConfigurableApplicationContext
+	 * @see org.springframework.context.ConfigurableApplicationContext
 	 */
 	protected ConfigurableApplicationContext getApplicationContext() {
 		return this.applicationContext;
@@ -110,7 +109,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 * Returns an unmodifiable {@link Set} of base packages to scan for GemFire components.
 	 *
 	 * @return an unmodifiable {@link Set} of base packages to scan for GemFire components.
-	 * @see Set
+	 * @see java.util.Set
 	 */
 	protected Set<String> getBasePackages() {
 		return Collections.unmodifiableSet(this.basePackages);
@@ -122,8 +121,8 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 *
 	 * @return the {@link ClassLoader} used to find and load GemFire application persistent entity classes.
 	 * @see org.springframework.beans.factory.config.ConfigurableBeanFactory#getBeanClassLoader()
-	 * @see Thread#getContextClassLoader()
-	 * @see ClassLoader
+	 * @see java.lang.Thread#getContextClassLoader()
+	 * @see java.lang.ClassLoader
 	 * @see #getApplicationContext()
 	 */
 	protected ClassLoader getEntityClassLoader() {
@@ -140,8 +139,8 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 *
 	 * @return a reference to the Spring {@link Environment}.
 	 * @see org.springframework.context.ApplicationContext#getEnvironment()
-	 * @see Environment
-	 * @see StandardEnvironment
+	 * @see org.springframework.core.env.Environment
+	 * @see org.springframework.core.env.StandardEnvironment
 	 * @see #getApplicationContext()
 	 */
 	protected Environment getEnvironment() {
@@ -156,8 +155,8 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 * during the classpath component scan.
 	 *
 	 * @return a collection of {@link TypeFilter} objects
-	 * @see TypeFilter
-	 * @see Iterable
+	 * @see org.springframework.core.type.filter.TypeFilter
+	 * @see java.lang.Iterable
 	 */
 	protected Iterable<TypeFilter> getExcludes() {
 		return this.excludes;
@@ -168,8 +167,8 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 * during the classpath component scan.
 	 *
 	 * @return a collection of {@link TypeFilter} objects
-	 * @see TypeFilter
-	 * @see Iterable
+	 * @see org.springframework.core.type.filter.TypeFilter
+	 * @see java.lang.Iterable
 	 */
 	protected Iterable<TypeFilter> getIncludes() {
 		return this.includes;
@@ -186,7 +185,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 *
 	 * @return a {@link Set} of GemFire application component {@link Class} types found on the classpath.
 	 * @see #newClassPathScanningCandidateComponentProvider(boolean)
-	 * @see Set
+	 * @see java.util.Set
 	 */
 	public Set<Class<?>> scan() {
 
@@ -221,7 +220,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 * no default filters.
 	 *
 	 * @return a new instance of the {@link ClassPathScanningCandidateComponentProvider}.
-	 * @see ClassPathScanningCandidateComponentProvider
+	 * @see org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 	 * @see #newClassPathScanningCandidateComponentProvider(boolean)
 	 */
 	protected ClassPathScanningCandidateComponentProvider newClassPathScanningCandidateComponentProvider() {
@@ -235,7 +234,7 @@ public class GemFireComponentClassTypeScanner implements Iterable<String> {
 	 *
 	 * @param useDefaultFilters boolean value to indicate whether to use default filters.
 	 * @return a new instance of the {@link ClassPathScanningCandidateComponentProvider}.
-	 * @see ClassPathScanningCandidateComponentProvider
+	 * @see org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 	 * @see #newClassPathScanningCandidateComponentProvider(boolean)
 	 */
 	protected ClassPathScanningCandidateComponentProvider newClassPathScanningCandidateComponentProvider(

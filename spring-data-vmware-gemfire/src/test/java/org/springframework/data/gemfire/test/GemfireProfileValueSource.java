@@ -17,7 +17,7 @@ import org.springframework.test.annotation.ProfileValueSource;
  * profile and environment specific configuration for test enablement.
  *
  * @author John Blum
- * @see ProfileValueSource
+ * @see org.springframework.test.annotation.ProfileValueSource
  * @since 1.7.0
  */
 @SuppressWarnings("unused")

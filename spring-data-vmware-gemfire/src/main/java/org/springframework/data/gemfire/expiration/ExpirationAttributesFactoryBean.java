@@ -17,9 +17,9 @@ import org.springframework.beans.factory.InitializingBean;
  * Entry Time-to-Live (TTL) and Idle-Timeouts (TTI).
  *
  * @author John Blum
- * @see FactoryBean
- * @see InitializingBean
- * @see ExpirationAttributes
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.apache.geode.cache.ExpirationAttributes
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -58,7 +58,7 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * Sets the action to perform when a Region or an Entry expire.
 	 *
 	 * @param action the type of action to perform on expiration
-	 * @see ExpirationAction
+	 * @see org.apache.geode.cache.ExpirationAction
 	 */
 	public void setAction(final ExpirationAction action) {
 		this.action = action;
@@ -69,7 +69,7 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 *
 	 * @return the type of action to perform on expiration.
 	 * @see ExpirationActionType
-	 * @see ExpirationAttributes#getAction()
+	 * @see org.apache.geode.cache.ExpirationAttributes#getAction()
 	 */
 	public ExpirationAction getAction() {
 		return (action != null ? action : DEFAULT_EXPIRATION_ACTION);
@@ -88,7 +88,7 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * Gets the number of seconds before a Region or an Entry expires.
 	 *
 	 * @return the number of seconds before a Region or an Entry expires.
-	 * @see ExpirationAttributes#getTimeout()
+	 * @see org.apache.geode.cache.ExpirationAttributes#getTimeout()
 	 */
 	public int getTimeout() {
 		return (timeout != null ? timeout : DEFAULT_TIMEOUT);
@@ -101,7 +101,7 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * @see #getAction()
 	 * @see #getTimeout()
 	 * @see ExpirationActionType#getExpirationAction()
-	 * @see ExpirationAttributes
+	 * @see org.apache.geode.cache.ExpirationAttributes
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {

@@ -33,13 +33,13 @@ import org.w3c.dom.NodeList;
  *
  * @author John Blum
  * @author Patrick Johnson
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see ClientCacheParser
- * @see Element
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.xml.ClientCacheParser
+ * @see org.w3c.dom.Element
  * @since 1.8.0
  */
 @RunWith(MockitoJUnitRunner.class)

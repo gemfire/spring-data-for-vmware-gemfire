@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.client;
 
 import java.util.ArrayList;
@@ -40,16 +39,16 @@ import org.springframework.util.ObjectUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see ClientCache
- * @see ClientRegionFactory
- * @see ClientRegionShortcut
- * @see Function
- * @see GetRegionsFunction
- * @see BeanFactoryPostProcessor
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionFactory
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.management.internal.cli.functions.GetRegionsFunction
+ * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see ListRegionsOnServerFunction
- * @see GemfireOnServersFunctionTemplate
+ * @see org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction
+ * @see org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate
  * @see ListRegionsOnServerFunction
  * @since 1.2.0
  */
@@ -68,8 +67,8 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 *
 	 * @param beanFactory reference to the {@link BeanFactory}.
 	 * @throws BeansException if the {@link BeanFactory} is not a {@link ConfigurableBeanFactory}.
-	 * @see ConfigurableBeanFactory
-	 * @see BeanFactory
+	 * @see org.springframework.beans.factory.config.ConfigurableBeanFactory
+	 * @see org.springframework.beans.factory.BeanFactory
 	 */
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -86,7 +85,7 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 * Returns a reference to the configured {@link ConfigurableBeanFactory}.
 	 *
 	 * @return a reference to the configured {@link ConfigurableBeanFactory}.
-	 * @see ConfigurableBeanFactory
+	 * @see org.springframework.beans.factory.config.ConfigurableBeanFactory
 	 */
 	public Optional<ConfigurableBeanFactory> getBeanFactory() {
 		return Optional.ofNullable(this.beanFactory);
@@ -97,7 +96,7 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 *
 	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to define the data policy
 	 * used by the client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 */
 	public void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
@@ -108,8 +107,8 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 *
 	 * @return the configured {@link ClientRegionShortcut} used to define the data policy
 	 * used by the client {@link Region}.
-	 * @see ClientRegionShortcut
-	 * @see Optional
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
+	 * @see java.util.Optional
 	 */
 	public Optional<ClientRegionShortcut> getClientRegionShortcut() {
 		return Optional.ofNullable(this.clientRegionShortcut);
@@ -119,7 +118,7 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 * Resolves the {@link ClientRegionShortcut} used to configure and create client {@link Region Regions}.
 	 *
 	 * @return the resolved {@link ClientRegionShortcut}.
-	 * @see ClientRegionShortcut
+	 * @see org.apache.geode.cache.client.ClientRegionShortcut
 	 * @see #getClientRegionShortcut()
 	 */
 	protected ClientRegionShortcut resolveClientRegionShortcut() {
@@ -130,7 +129,7 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	 * Returns a reference to the configured {@link Logger} used to log messages.
 	 *
 	 * @return a reference to the configured {@link Logger}.
-	 * @see Logger
+	 * @see org.slf4j.Logger
 	 */
 	protected Logger getLogger() {
 		return this.logger;

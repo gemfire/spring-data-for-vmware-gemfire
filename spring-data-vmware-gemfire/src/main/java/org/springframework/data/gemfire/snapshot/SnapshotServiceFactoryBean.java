@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.snapshot;
 
 import static java.util.Arrays.stream;
@@ -54,13 +53,13 @@ import org.springframework.util.StringUtils;
  * if the Region is not specified, otherwise a RegionSnapshotService is used based on the configured Region.
  *
  * @author John Blum
- * @see DisposableBean
+ * @see org.springframework.beans.factory.DisposableBean
  * @see org.springframework.beans.factory.FactoryBean
- * @see InitializingBean
- * @see ApplicationListener
- * @see SnapshotServiceAdapter
- * @see CacheSnapshotService
- * @see RegionSnapshotService
+ * @see org.springframework.beans.factory.InitializingBean
+ * @see org.springframework.context.ApplicationListener
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapter
+ * @see org.apache.geode.cache.snapshot.CacheSnapshotService
+ * @see org.apache.geode.cache.snapshot.RegionSnapshotService
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -93,7 +92,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * or Region if initialized.  In addition, this initialization method will perform the actual import.
 	 *
 	 * @throws Exception if the construction and initialization of the GemFire Snapshot Service fails.
-	 * @see SnapshotServiceAdapter
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapter
 	 * @see #getSuppressImportOnInit()
 	 * @see #getImports()
 	 * @see #create()
@@ -133,9 +132,9 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @param cacheSnapshotService the GemFire CacheSnapshotService to wrap.
 	 * @return a SnapshotServiceAdapter wrapping the GemFire CacheSnapshotService.
-	 * @see SnapshotServiceAdapter
-	 * @see CacheSnapshotServiceAdapter
-	 * @see CacheSnapshotService
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.CacheSnapshotServiceAdapter
+	 * @see org.apache.geode.cache.snapshot.CacheSnapshotService
 	 */
 	protected SnapshotServiceAdapter<Object, Object> wrap(CacheSnapshotService cacheSnapshotService) {
 		return new CacheSnapshotServiceAdapter(cacheSnapshotService);
@@ -147,9 +146,9 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @param regionSnapshotService the GemFire RegionSnapshotService to wrap.
 	 * @return a SnapshotServiceAdapter wrapping the GemFire RegionSnapshotService.
-	 * @see SnapshotServiceAdapter
-	 * @see RegionSnapshotServiceAdapter
-	 * @see RegionSnapshotService
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.RegionSnapshotServiceAdapter
+	 * @see org.apache.geode.cache.snapshot.RegionSnapshotService
 	 */
 	protected SnapshotServiceAdapter<K, V> wrap(RegionSnapshotService<K, V> regionSnapshotService) {
 		return new RegionSnapshotServiceAdapter<>(regionSnapshotService);
@@ -160,7 +159,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @param cache the GemFire Cache used to create an instance of CacheSnapshotService.
 	 * @throws IllegalArgumentException if the Cache reference is null.
-	 * @see Cache
+	 * @see org.apache.geode.cache.Cache
 	 * @see #getCache()
 	 */
 	public void setCache(Cache cache) {
@@ -173,7 +172,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @return the GemFire Cache used to create an instance of CacheSnapshotService.
 	 * @throws IllegalStateException if the Cache argument is null.
-	 * @see Cache
+	 * @see org.apache.geode.cache.Cache
 	 * @see #setCache(Cache)
 	 */
 	protected Cache getCache() {
@@ -185,7 +184,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Sets the meta-data (location, filter and format) used to create a snapshot from the Cache or Region data.
 	 *
 	 * @param exports an array of snapshot meta-data used for each export.
-	 * @see SnapshotMetadata
+	 * @see SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public void setExports(SnapshotMetadata<K, V>[] exports) {
 		this.exports = exports;
@@ -195,7 +194,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Sets the meta-data (location, filter and format) used to create a snapshot from the Cache or Region data.
 	 *
 	 * @return an array of snapshot meta-data used for each export.
-	 * @see SnapshotMetadata
+	 * @see SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	@SuppressWarnings("unchecked")
 	protected SnapshotMetadata<K, V>[] getExports() {
@@ -207,7 +206,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * or individual Region.
 	 *
 	 * @param imports an array of snapshot meta-data used for each import.
-	 * @see SnapshotMetadata
+	 * @see SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	public void setImports(SnapshotMetadata<K, V>[] imports) {
 		this.imports = imports;
@@ -218,7 +217,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * or individual Region.
 	 *
 	 * @return an array of snapshot meta-data used for each import.
-	 * @see SnapshotMetadata
+	 * @see SnapshotServiceFactoryBean.SnapshotMetadata
 	 */
 	@SuppressWarnings("unchecked")
 	protected SnapshotMetadata<K, V>[] getImports() {
@@ -229,7 +228,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Sets a reference to the GemFire Region for which the snapshot will be taken.
 	 *
 	 * @param region the GemFire Region used to create an instance of the RegionSnapshotService.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #getRegion()
 	 */
 	public void setRegion(Region<K, V> region) {
@@ -240,7 +239,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Gets a reference to the GemFire Region for which the snapshot will be taken.
 	 *
 	 * @return the GemFire Region used to create an instance of the RegionSnapshotService.
-	 * @see Region
+	 * @see org.apache.geode.cache.Region
 	 * @see #getRegion()
 	 */
 	protected Region<K, V> getRegion() {
@@ -273,7 +272,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @return the GemFire Snapshot Service created by this FactoryBean.
 	 * @throws Exception if the GemFire Snapshot Service failed to be created.
-	 * @see SnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapter
 	 */
 	@Override
 	public SnapshotServiceAdapter<K, V> getObject() throws Exception {
@@ -284,9 +283,9 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Gets the type of Snapshot Service created by this FactoryBean.
 	 *
 	 * @return a Class object representing the type of Snapshot Service created by this FactoryBean.
-	 * @see SnapshotServiceAdapter
-	 * @see CacheSnapshotServiceAdapter
-	 * @see RegionSnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.CacheSnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.RegionSnapshotServiceAdapter
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
@@ -311,7 +310,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * Performs an export of the GemFire Cache or Region if configured.
 	 *
 	 * @throws Exception if the Cache/Region data export operation fails.
-	 * @see SnapshotServiceAdapter
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapter
 	 * @see #getExports()
 	 * @see #getObject()
 	 */
@@ -326,10 +325,10 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * when details of the event match the criteria of this factory's constructed GemFire SnapshotService.
 	 *
 	 * @param event the SnapshotApplicationEvent triggering a GemFire Cache or Region data import/export.
-	 * @see SnapshotServiceAdapter
-	 * @see ExportSnapshotApplicationEvent
+	 * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapter
+	 * @see org.springframework.data.gemfire.snapshot.event.ExportSnapshotApplicationEvent
 	 * @see org.springframework.data.gemfire.snapshot.event.ImportSnapshotApplicationEvent
-	 * @see SnapshotApplicationEvent
+	 * @see org.springframework.data.gemfire.snapshot.event.SnapshotApplicationEvent
 	 * @see #isMatch(SnapshotApplicationEvent)
 	 * @see #resolveSnapshotMetadata(SnapshotApplicationEvent)
 	 * @see #getObject()
@@ -417,7 +416,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 *
 	 * @param <K> the class type of the Cache Region key.
 	 * @param <V> the class type of the Cache Region value.
-	 * @see SnapshotServiceAdapter
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapter
 	 */
 	protected static abstract class SnapshotServiceAdapterSupport<K, V> implements SnapshotServiceAdapter<K, V> {
 
@@ -558,7 +557,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	/**
 	 * The CacheSnapshotServiceAdapter is a SnapshotServiceAdapter adapting GemFire's CacheSnapshotService.
 	 *
-	 * @see SnapshotServiceAdapterSupport
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapterSupport
 	 */
 	protected static class CacheSnapshotServiceAdapter extends SnapshotServiceAdapterSupport<Object, Object> {
 
@@ -642,7 +641,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	/**
 	 * The RegionSnapshotServiceAdapter is a SnapshotServiceAdapter adapting GemFire's RegionSnapshotService.
 	 *
-	 * @see SnapshotServiceAdapterSupport
+	 * @see SnapshotServiceFactoryBean.SnapshotServiceAdapterSupport
 	 */
 	protected static class RegionSnapshotServiceAdapter<K, V> extends SnapshotServiceAdapterSupport<K, V> {
 
@@ -816,8 +815,8 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * The ArchiveFileFilter class is a Java FileFilter implementation accepting any File that is either
 	 * a JAR file or ZIP file.
 	 *
-	 * @see File
-	 * @see FileFilter
+	 * @see java.io.File
+	 * @see java.io.FileFilter
 	 */
 	protected static final class ArchiveFileFilter implements FileFilter {
 

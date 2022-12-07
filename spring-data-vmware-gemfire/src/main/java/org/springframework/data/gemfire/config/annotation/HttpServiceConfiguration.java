@@ -20,9 +20,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Pivotal GemFire/Apache Geode's embedded HTTP service and dependent services (e.g. Pulse).
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableHttpService
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableHttpService
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @see <a href="https://geode.apache.org/docs/guide/113/rest_apps/book_intro.html">Developing REST Applications for Apache Geode</a>
  * @since 1.9.0
  */
@@ -34,10 +34,10 @@ public class HttpServiceConfiguration extends EmbeddedServiceConfigurationSuppor
 	public static final int DEFAULT_HTTP_SERVICE_PORT = 7070;
 
 	/**
-	 * Returns the {@link EnableHttpService} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableHttpService} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableHttpService} {@link Annotation} {@link Class} type.
-	 * @see EnableHttpService
+	 * @return the {@link EnableHttpService} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableHttpService
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

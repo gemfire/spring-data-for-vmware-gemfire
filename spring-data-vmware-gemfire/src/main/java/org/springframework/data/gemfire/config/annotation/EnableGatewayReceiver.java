@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -22,10 +21,10 @@ import org.springframework.context.annotation.Import;
  * or Pivotal GemFire peer {@link Cache}.
  *
  * @author Udo Kohlmeyer
- * @see Cache
- * @see GatewayReceiver
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.wan.GatewayReceiver
  * @see org.apache.geode.cache.wan.GatewayTransportFilter
- * @see Import
+ * @see org.springframework.context.annotation.Import
  * @since 2.2.0
  */
 @Target(ElementType.TYPE)
@@ -37,7 +36,7 @@ import org.springframework.context.annotation.Import;
 public @interface EnableGatewayReceiver {
 
 	/**
-	 * The IP address or hostname that the {@link GatewayReceiver} communication socket will be bound to.
+	 * The IP address or hostname that the {@link org.apache.geode.cache.wan.GatewayReceiver} communication socket will be bound to.
 	 * An empty String will cause the underlying socket to bind to 0.0.0.0<br>
 	 * This property can also be configured using the <b><i>spring.data.gemfire.gateway.receiver.bind-address</i></b> property <br>
 	 * Default value is {@value GatewayReceiverConfiguration#DEFAULT_BIND_ADDRESS}
@@ -46,7 +45,7 @@ public @interface EnableGatewayReceiver {
 
 	/**
 	 * The hostname or IP Address that the {@link org.apache.geode.cache.wan.GatewaySender} will use to connect and communicate with the
-	 * {@link GatewayReceiver}. An empty String will cause the system to expose the hostname
+	 * {@link org.apache.geode.cache.wan.GatewayReceiver}. An empty String will cause the system to expose the hostname
 	 * to the {@link org.apache.geode.cache.wan.GatewaySender}. Generally this property is set when there are multiple
 	 * network interfaces or when they are designated as "internal" or "public" network interfaces. In a cloud environment
 	 * the notion of external and internal network interfaces exist and generally the "externally"/outwardly facing network
@@ -67,8 +66,8 @@ public @interface EnableGatewayReceiver {
 	boolean manualStart() default GatewayReceiverConfiguration.DEFAULT_MANUAL_START;
 
 	/**
-	 * An integer value in milliseconds representing the maximum time which a {@link GatewayReceiver}
-	 * will wait to receive a ping back from a {@link org.apache.geode.cache.wan.GatewaySender} before the {@link GatewayReceiver}
+	 * An integer value in milliseconds representing the maximum time which a {@link org.apache.geode.cache.wan.GatewayReceiver}
+	 * will wait to receive a ping back from a {@link org.apache.geode.cache.wan.GatewaySender} before the {@link org.apache.geode.cache.wan.GatewayReceiver}
 	 * believes the sender to be not available.<br>
 	 * This property can also be configured using the <b><i>spring.data.gemfire.gateway.receiver.maximum-time-between-pings</i></b> property<br>
 	 * Default value is {@value GatewayReceiverConfiguration#DEFAULT_MAXIMUM_TIME_BETWEEN_PINGS}
@@ -92,7 +91,7 @@ public @interface EnableGatewayReceiver {
 	int endPort() default GatewayReceiverConfiguration.DEFAULT_END_PORT;
 
 	/**
-	 * The socket buffer size for the {@link GatewayReceiver}. This setting is in bytes.<br>
+	 * The socket buffer size for the {@link org.apache.geode.cache.wan.GatewayReceiver}. This setting is in bytes.<br>
 	 * This property can also be configured using the <b><i>spring.data.gemfire.gateway.receiver.socket-buffer-size</i></b> property<br>
 	 * Default value is {@value GatewayReceiverConfiguration#DEFAULT_SOCKET_BUFFER_SIZE}
 	 */
@@ -100,7 +99,7 @@ public @interface EnableGatewayReceiver {
 
 	/**
 	 * An in-order list of {@link org.apache.geode.cache.wan.GatewayTransportFilter} to be applied to
-	 * {@link GatewayReceiver}<br>
+	 * {@link org.apache.geode.cache.wan.GatewayReceiver}<br>
 	 * This property can also be configured using the <b><i>spring.data.gemfire.gateway.receiver.transport-filters</i></b> property<br>
 	 * Default value is an empty String array
 	 */

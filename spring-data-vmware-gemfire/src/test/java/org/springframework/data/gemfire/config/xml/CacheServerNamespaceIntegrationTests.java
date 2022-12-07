@@ -25,11 +25,11 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Test
- * @see CacheServer
- * @see ApplicationContext
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  */

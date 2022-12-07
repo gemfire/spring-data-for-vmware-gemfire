@@ -22,12 +22,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Stuart Williams
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @link https://github.com/spring-projects/spring-data-gemfire/pull/55
  * @since 1.4.0
  */

@@ -14,9 +14,9 @@ import org.apache.geode.cache.Scope;
  * Unit Tests for {@link ScopeType} enum.
  *
  * @author John Blum
- * @see Test
- * @see Scope
- * @see ScopeType
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Scope
+ * @see org.springframework.data.gemfire.ScopeType
  * @since 1.6.0
  */
 public class ScopeTypeUnitTests {

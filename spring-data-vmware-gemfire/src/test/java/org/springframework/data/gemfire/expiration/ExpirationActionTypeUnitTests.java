@@ -14,9 +14,9 @@ import org.apache.geode.cache.ExpirationAction;
  * Unit Tests for {@link ExpirationActionType} enum.
  *
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see ExpirationActionType
- * @see ExpirationAction
+ * @see org.apache.geode.cache.ExpirationAction
  * @since 1.6.0
  */
 public class ExpirationActionTypeUnitTests {

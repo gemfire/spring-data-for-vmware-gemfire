@@ -23,14 +23,14 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * the {@link DiskStoreConfiguration} and {@link DiskStoresConfiguration} classes.
  *
  * @author John Blum
- * @see Test
- * @see DiskStore
- * @see EnableDiskStore
- * @see EnableDiskStores
- * @see DiskStoreConfiguration
- * @see DiskStoresConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoresConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 @SuppressWarnings("unused")

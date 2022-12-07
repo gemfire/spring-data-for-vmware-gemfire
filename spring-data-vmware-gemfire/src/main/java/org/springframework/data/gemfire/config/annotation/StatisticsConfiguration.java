@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -19,9 +18,9 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Pivotal GemFire/Apache Geode Statistics.
  *
  * @author John Blum
- * @see ImportBeanDefinitionRegistrar
- * @see EnableStatistics
- * @see EmbeddedServiceConfigurationSupport
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
+ * @see org.springframework.data.gemfire.config.annotation.EnableStatistics
+ * @see org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport
  * @since 1.9.0
  */
 public class StatisticsConfiguration extends EmbeddedServiceConfigurationSupport {
@@ -33,10 +32,10 @@ public class StatisticsConfiguration extends EmbeddedServiceConfigurationSupport
 	public static final int DEFAULT_STATISTIC_SAMPLE_RATE = 1000;
 
 	/**
-	 * Returns the {@link EnableStatistics} {@link Annotation} {@link Class} type.
+	 * Returns the {@link EnableStatistics} {@link java.lang.annotation.Annotation} {@link Class} type.
 	 *
-	 * @return the {@link EnableStatistics} {@link Annotation} {@link Class} type.
-	 * @see EnableStatistics
+	 * @return the {@link EnableStatistics} {@link java.lang.annotation.Annotation} {@link Class} type.
+	 * @see org.springframework.data.gemfire.config.annotation.EnableStatistics
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

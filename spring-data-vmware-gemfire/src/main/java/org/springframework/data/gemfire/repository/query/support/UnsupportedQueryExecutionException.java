@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query.support;
 
 /**
@@ -10,7 +9,7 @@ package org.springframework.data.gemfire.repository.query.support;
  * by the {@link OqlQueryExecutor}.
  *
  * @author John Blum
- * @see RuntimeException
+ * @see java.lang.RuntimeException
  * @since 2.4.0
  */
 @SuppressWarnings("unused")
@@ -26,7 +25,7 @@ public class UnsupportedQueryExecutionException extends RuntimeException {
 	 * the given {@link String message} describing the exception.
 	 *
 	 * @param message {@link String} containing a description of the exception.
-	 * @see String
+	 * @see java.lang.String
 	 */
 	public UnsupportedQueryExecutionException(String message) {
 		super(message);
@@ -37,7 +36,7 @@ public class UnsupportedQueryExecutionException extends RuntimeException {
 	 * the given {@link Throwable} as the underlying {@literal cause} of this exception.
 	 *
 	 * @param cause {@link Throwable} used as the cause of this exception.
-	 * @see Throwable
+	 * @see java.lang.Throwable
 	 */
 	public UnsupportedQueryExecutionException(Throwable cause) {
 		super(cause);
@@ -50,8 +49,8 @@ public class UnsupportedQueryExecutionException extends RuntimeException {
 	 *
 	 * @param message {@link String} containing a description of the exception.
 	 * @param cause {@link Throwable} used as the cause of this exception.
-	 * @see String
-	 * @see Throwable
+	 * @see java.lang.String
+	 * @see java.lang.Throwable
 	 */
 	public UnsupportedQueryExecutionException(String message, Throwable cause) {
 		super(message, cause);

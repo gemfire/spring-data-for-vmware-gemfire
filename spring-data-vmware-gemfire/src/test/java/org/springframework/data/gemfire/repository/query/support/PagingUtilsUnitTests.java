@@ -44,13 +44,13 @@ import lombok.ToString;
  * Unit Tests for {@link PagingUtils}.
  *
  * @author John Blum
- * @see Iterable
- * @see List
- * @see Test
+ * @see java.lang.Iterable
+ * @see java.util.List
+ * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Page
- * @see Pageable
- * @see PagingUtils
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.gemfire.repository.query.support.PagingUtils
  * @since 2.4.0
  */
 public class PagingUtilsUnitTests {

@@ -29,11 +29,11 @@ import org.springframework.data.gemfire.test.support.MapBuilder;
  * Unit Tests for the {@link GemfireOperations} interface.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see GemfireOperations
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.GemfireOperations
  * @since 2.5.0
  */
 @RunWith(MockitoJUnitRunner.class)

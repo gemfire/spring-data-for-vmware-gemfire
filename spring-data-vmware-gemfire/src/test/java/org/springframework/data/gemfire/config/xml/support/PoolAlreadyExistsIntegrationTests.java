@@ -28,14 +28,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * a client {@link Region} requiring the configured {@link Pool}.
  *
  * @author John Blum
- * @see Test
- * @see Region
- * @see ClientCache
- * @see Pool
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
  * @see org.springframework.data.gemfire.client.PoolFactoryBean
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
  */
 @RunWith(SpringRunner.class)

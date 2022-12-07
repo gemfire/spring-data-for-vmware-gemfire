@@ -36,12 +36,12 @@ import org.springframework.data.gemfire.search.lucene.support.LuceneAccessorSupp
  * Unit Tests for {@link LuceneAccessor}.
  *
  * @author John Blum
- * @see Test
- * @see Mock
+ * @see org.junit.Test
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see LuceneAccessor
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.LuceneAccessor
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

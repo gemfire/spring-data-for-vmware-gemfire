@@ -25,9 +25,9 @@ import org.springframework.util.ReflectionUtils;
  * Unit Tests for {@link GemFireProperties}.
  *
  * @author John Blum
- * @see Test
- * @see ConfigurationProperties
- * @see GemFireProperties
+ * @see org.junit.Test
+ * @see org.apache.geode.distributed.ConfigurationProperties
+ * @see org.springframework.data.gemfire.GemFireProperties
  * @since 2.3.0
  */
 public class GemFirePropertiesUnitTests {

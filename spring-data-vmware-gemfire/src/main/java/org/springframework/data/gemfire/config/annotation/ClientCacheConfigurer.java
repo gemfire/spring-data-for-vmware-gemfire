@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.cache.client.ClientCache;
@@ -16,11 +15,11 @@ import org.springframework.data.gemfire.config.annotation.support.Configurer;
  * an instance of a {@link ClientCache}.
  *
  * @author John Blum
- * @see FunctionalInterface
- * @see ClientCache
- * @see ClientCacheFactoryBean
- * @see ClientCacheApplication
- * @see Configurer
+ * @see java.lang.FunctionalInterface
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.support.Configurer
  * @since 2.0.0
  */
 @FunctionalInterface

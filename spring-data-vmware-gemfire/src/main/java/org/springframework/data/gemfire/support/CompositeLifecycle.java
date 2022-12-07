@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.support;
 
 import java.util.Collections;
@@ -20,9 +19,9 @@ import org.springframework.lang.Nullable;
  * {@link Lifecycle} components as a single, logical, composite {@link Lifecycle} object.
  *
  * @author John Blum
- * @see Iterable
- * @see Lifecycle
- * @see SmartLifecycle
+ * @see java.lang.Iterable
+ * @see org.springframework.context.Lifecycle
+ * @see org.springframework.context.SmartLifecycle
  * @since 2.2.0
  */
 @SuppressWarnings("unused")
@@ -56,7 +55,7 @@ public final class CompositeLifecycle implements Iterable<Lifecycle>, SmartLifec
 	 * Returns an {@link Iterator} over the {@link Lifecycle} objects contained by this composite.
 	 *
 	 * @return an {@link Iterator} over the {@link Lifecycle} objects contained by this composite.
-	 * @see Iterator
+	 * @see java.util.Iterator
 	 */
 	@Override
 	public Iterator<Lifecycle> iterator() {
@@ -89,7 +88,7 @@ public final class CompositeLifecycle implements Iterable<Lifecycle>, SmartLifec
 	 *
 	 * @return a boolean value indicating whether any {@link Lifecycle} object
 	 * contained by this composite is running.
-	 * @see Lifecycle#isRunning()
+	 * @see org.springframework.context.Lifecycle#isRunning()
 	 */
 	@Override
 	public boolean isRunning() {

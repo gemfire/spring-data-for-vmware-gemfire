@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import org.w3c.dom.Element;
@@ -22,10 +21,10 @@ import org.springframework.util.xml.DomUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Element
- * @see BeanDefinitionBuilder
- * @see AbstractSingleBeanDefinitionParser
- * @see AsyncEventQueueFactoryBean
+ * @see org.w3c.dom.Element
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.data.gemfire.wan.AsyncEventQueueFactoryBean
  */
 class AsyncEventQueueParser extends AbstractSingleBeanDefinitionParser {
 

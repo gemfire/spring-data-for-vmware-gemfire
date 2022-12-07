@@ -51,14 +51,14 @@ import lombok.RequiredArgsConstructor;
  * followed by a {@link CacheEvict} annotation on an application {@link @Service} component.
  *
  * @author John Blum
- * @see Test
- * @see CacheEvict
- * @see CachePut
- * @see Caching
- * @see EnableCaching
- * @see IntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.junit.Test
+ * @see org.springframework.cache.annotation.CacheEvict
+ * @see org.springframework.cache.annotation.CachePut
+ * @see org.springframework.cache.annotation.Caching
+ * @see org.springframework.cache.annotation.EnableCaching
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @see GemfireCache#evict(Object)
  * @see GemfireCache#put(Object, Object)
  * @see <a href="https://stackoverflow.com/questions/39830488/gemfire-entrynotfoundexception-for-cacheevict">Gemfire EntryNotFoundException on @CacheEvict</a>

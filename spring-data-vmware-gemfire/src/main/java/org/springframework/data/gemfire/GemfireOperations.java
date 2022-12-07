@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
 
 import java.util.Collection;
@@ -25,8 +24,8 @@ import org.springframework.data.gemfire.util.CollectionUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see QueryService
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.query.QueryService
  */
 public interface GemfireOperations {
 
@@ -130,7 +129,7 @@ public interface GemfireOperations {
 	 * @param <T> type parameter specifying the returned result type.
 	 * @param action callback object that specifies the Gemfire action to execute.
 	 * @return a result object returned by the action, or <code>null</code>.
-	 * @throws DataAccessException in case of GemFire errors.
+	 * @throws org.springframework.dao.DataAccessException in case of GemFire errors.
 	 */
 	<T> T execute(GemfireCallback<T> action) throws DataAccessException;
 
@@ -141,7 +140,7 @@ public interface GemfireOperations {
 	 * @param action callback object that specifies the Gemfire action to execute.
 	 * @param exposeNativeRegion whether to expose the native GemFire region to callback code.
 	 * @return a result object returned by the action, or <code>null</code>.
-	 * @throws DataAccessException in case of GemFire errors.
+	 * @throws org.springframework.dao.DataAccessException in case of GemFire errors.
 	 */
 	<T> T execute(GemfireCallback<T> action, boolean exposeNativeRegion) throws DataAccessException;
 

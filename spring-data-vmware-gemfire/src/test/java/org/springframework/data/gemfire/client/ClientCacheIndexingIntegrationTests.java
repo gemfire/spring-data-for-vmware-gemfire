@@ -28,14 +28,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for testing {@link ClientCache} {@link Index Indexes}.
  *
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see Index
- * @see QueryService
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.query.QueryService
  * @see org.springframework.data.gemfire.IndexFactoryBean
- * @see ForkingClientServerIntegrationTestsSupport
- * @see ContextConfiguration
- * @see SpringRunner
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.2
  */
 @RunWith(SpringRunner.class)

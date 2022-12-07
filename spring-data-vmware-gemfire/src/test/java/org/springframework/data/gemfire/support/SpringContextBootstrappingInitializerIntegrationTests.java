@@ -44,15 +44,15 @@ import org.springframework.util.Assert;
  * Integration Tests for the {@link SpringContextBootstrappingInitializer}.
  *
  * @author John Blum
- * @see Test
- * @see Cache
- * @see CacheFactory
- * @see Region
- * @see ConfigurableApplicationContext
- * @see Bean
- * @see Configuration
- * @see SpringContextBootstrappingInitializer
- * @see IntegrationTestsSupport
+ * @see org.junit.Test
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

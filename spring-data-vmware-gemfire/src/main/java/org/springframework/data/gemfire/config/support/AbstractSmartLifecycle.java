@@ -19,7 +19,7 @@ import org.springframework.context.SmartLifecycle;
  * to support custom implementations.
  *
  * @author John Blum
- * @see SmartLifecycle
+ * @see org.springframework.context.SmartLifecycle
  * @since 2.0.2
  */
 @SuppressWarnings("unused")

@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.annotation;
 
 import java.io.IOException;
@@ -46,23 +45,23 @@ import org.slf4j.LoggerFactory;
  * interface along with setting the necessary Apache Geode {@link Properties}.
  *
  * @author John Blum
- * @see Authenticator
- * @see PasswordAuthentication
- * @see Properties
- * @see AuthInitialize
+ * @see java.net.Authenticator
+ * @see java.net.PasswordAuthentication
+ * @see java.util.Properties
+ * @see org.apache.geode.security.AuthInitialize
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see Bean
+ * @see org.springframework.context.annotation.Bean
  * @see org.springframework.context.annotation.Condition
- * @see Configuration
- * @see ConfigurationCondition
- * @see Environment
- * @see GemFireProperties
- * @see EnableBeanFactoryLocator
- * @see Authentication
- * @see AutoConfiguredAuthenticationInitializer
- * @see RestTemplateConfigurer
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ConfigurationCondition
+ * @see org.springframework.core.env.Environment
+ * @see org.springframework.data.gemfire.GemFireProperties
+ * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
+ * @see org.springframework.data.gemfire.config.annotation.support.Authentication
+ * @see org.springframework.data.gemfire.config.annotation.support.AutoConfiguredAuthenticationInitializer
+ * @see org.springframework.data.gemfire.config.support.RestTemplateConfigurer
  * @see org.springframework.data.gemfire.util.PropertiesBuilder
- * @see ClientHttpRequestInterceptor
+ * @see org.springframework.http.client.ClientHttpRequestInterceptor
  * @since 2.0.0
  */
 @Configuration

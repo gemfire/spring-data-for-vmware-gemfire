@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction.config;
 
 import java.lang.annotation.Annotation;
@@ -36,23 +35,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * to manage local, cache transactions for either Pivotal GemFire or Apache Geode.
  *
  * @author John Blum
- * @see GemFireCache
- * @see TransactionListener
- * @see TransactionWriter
- * @see ApplicationEventPublisher
- * @see Bean
- * @see Configuration
- * @see ImportAware
- * @see AnnotationAttributes
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.TransactionListener
+ * @see org.apache.geode.cache.TransactionWriter
+ * @see org.springframework.context.ApplicationEventPublisher
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.ImportAware
+ * @see org.springframework.core.annotation.AnnotationAttributes
  * @see org.springframework.core.type.AnnotatedTypeMetadata
- * @see CacheFactoryBean
- * @see ClientCacheConfigurer
- * @see PeerCacheConfigurer
- * @see AbstractAnnotationConfigSupport
- * @see GemfireTransactionManager
- * @see ComposableTransactionWriter
- * @see TransactionListenerAdapter
- * @see EnableTransactionManagement
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
+ * @see org.springframework.data.gemfire.transaction.event.ComposableTransactionWriter
+ * @see org.springframework.data.gemfire.transaction.event.TransactionListenerAdapter
+ * @see org.springframework.transaction.annotation.EnableTransactionManagement
  * @since 2.0.0
  */
 @Configuration
@@ -85,8 +84,8 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	 *
 	 * @param gemfireCache reference to the {@link GemFireCache}.
 	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link GemFireCache}.
-	 * @see GemfireTransactionManager
-	 * @see GemFireCache
+	 * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
+	 * @see org.apache.geode.cache.GemFireCache
 	 */
 	@Bean
 	public GemfireTransactionManager transactionManager(GemFireCache gemfireCache) {

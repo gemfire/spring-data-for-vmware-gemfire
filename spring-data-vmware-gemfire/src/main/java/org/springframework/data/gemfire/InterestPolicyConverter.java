@@ -14,8 +14,8 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  * the conversion between Strings and GemFire InterestPolicy values.
  *
  * @author John Blum
- * @see AbstractPropertyEditorConverterSupport
- * @see InterestPolicy
+ * @see org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport
+ * @see org.apache.geode.cache.InterestPolicy
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
@@ -26,9 +26,9 @@ public class InterestPolicyConverter extends AbstractPropertyEditorConverterSupp
 	 *
 	 * @param source the String value to convert into a GemFire InterestPolicy value.
 	 * @return a GemFire InterestPolicy value for the given String description of the GemFire InterestPolicy
-	 * @throws IllegalArgumentException if the String is not a valid GemFire InterestPolicy.
-	 * @see InterestPolicyType#getInterestPolicy(InterestPolicyType)
-	 * @see InterestPolicyType#valueOfIgnoreCase(String)
+	 * @throws java.lang.IllegalArgumentException if the String is not a valid GemFire InterestPolicy.
+	 * @see org.springframework.data.gemfire.InterestPolicyType#getInterestPolicy(InterestPolicyType)
+	 * @see org.springframework.data.gemfire.InterestPolicyType#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
 	 */
 	@Override

@@ -34,16 +34,16 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  *
  * @author Dan Smith
  * @author John Blum
- * @see Test
+ * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see Cache
- * @see ServerLauncher
- * @see ServerLauncherCacheProvider
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.distributed.ServerLauncher
+ * @see org.apache.geode.distributed.ServerLauncherCacheProvider
  * @see org.springframework.context.ApplicationContext
- * @see ConfigurableApplicationContext
- * @see SpringServerLauncherCacheProvider
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.data.gemfire.support.SpringServerLauncherCacheProvider
  */
 public class SpringServerLauncherCacheProviderUnitTests extends IntegrationTestsSupport {
 

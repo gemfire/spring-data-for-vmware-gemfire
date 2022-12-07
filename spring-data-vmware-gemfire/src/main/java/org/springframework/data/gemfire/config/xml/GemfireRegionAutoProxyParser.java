@@ -24,7 +24,7 @@ import org.springframework.util.StringUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see BeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.BeanDefinitionParser
  * @see JSONRegionAdvice
  */
 class GemfireRegionAutoProxyParser implements BeanDefinitionParser {

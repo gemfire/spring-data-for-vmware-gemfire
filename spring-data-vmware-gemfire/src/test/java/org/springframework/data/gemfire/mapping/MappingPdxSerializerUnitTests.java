@@ -70,16 +70,16 @@ import org.springframework.data.mapping.model.ParameterValueProvider;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Test
- * @see RunWith
- * @see Mock
+ * @see org.junit.Test
+ * @see org.junit.runner.RunWith
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see ConversionService
- * @see MappingPdxSerializer
- * @see PdxReader
- * @see PdxSerializer
- * @see PdxWriter
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.core.convert.ConversionService
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.apache.geode.pdx.PdxReader
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.PdxWriter
  */
 @RunWith(MockitoJUnitRunner.class)
 public class MappingPdxSerializerUnitTests {
@@ -689,7 +689,7 @@ public class MappingPdxSerializerUnitTests {
 
 	@Test
 	public void fromDataWithTypeFilterFiltersJavaTypesReturnsNull() {
-		assertThat(this.pdxSerializer.fromData(Principal.class, this.mockReader)).isNull();
+		assertThat(this.pdxSerializer.fromData(java.security.Principal.class, this.mockReader)).isNull();
 	}
 
 	@Test
@@ -854,7 +854,7 @@ public class MappingPdxSerializerUnitTests {
 
 	@Test
 	public void toDataFiltersJavaTypesReturnsFalse() {
-		assertThat(this.pdxSerializer.toData(Principal.class, this.mockWriter)).isFalse();
+		assertThat(this.pdxSerializer.toData(java.security.Principal.class, this.mockWriter)).isFalse();
 	}
 
 	@Test

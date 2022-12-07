@@ -25,18 +25,18 @@ import org.apache.geode.cache.wan.GatewaySender;
  * and that can be created remotely, from a client application.
  *
  * @author John Blum
- * @see AsyncEventQueue
- * @see Cache
- * @see DiskStore
- * @see Region
- * @see ClientCache
- * @see Pool
- * @see Function
- * @see LuceneIndex
- * @see Index
- * @see GatewayReceiver
- * @see GatewaySender
- * @see SchemaObjectDefinition
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
  * @since 2.0.0
  */
 public enum SchemaObjectType {
@@ -61,7 +61,7 @@ public enum SchemaObjectType {
 	 * the actual GemFire {@link Class schema object instance type}.
 	 *
 	 * @param objectType actual {@link Class interface type} of the GemFire schema object instance.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	SchemaObjectType(Class<?> objectType) {
 		this.objectType = objectType;
@@ -107,7 +107,7 @@ public enum SchemaObjectType {
 	 * Returns the {@link Class class type} of the GemFire schema object represented by this enumerated value.
 	 *
 	 * @return the {@link Class class type} of the GemFire schema object represented by this enumerated value.
-	 * @see Class
+	 * @see java.lang.Class
 	 */
 	public Class<?> getObjectType() {
 		return this.objectType;

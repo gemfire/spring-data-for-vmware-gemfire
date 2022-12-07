@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.transaction.event;
 
 import org.apache.geode.cache.TransactionEvent;
@@ -20,11 +19,11 @@ import org.springframework.util.Assert;
  * and beans declared in the Spring {@link ApplicationContext} using the {@link ApplicationEventPublisher}.
  *
  * @author John Blum
- * @see TransactionEvent
- * @see TransactionListener
- * @see TransactionWriter
- * @see ApplicationContext
- * @see ApplicationEventPublisher
+ * @see org.apache.geode.cache.TransactionEvent
+ * @see org.apache.geode.cache.TransactionListener
+ * @see org.apache.geode.cache.TransactionWriter
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ApplicationEventPublisher
  * @since 2.3.0
  */
 public class TransactionListenerAdapter implements TransactionListener, TransactionWriter {
@@ -39,7 +38,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	 * @param applicationEventPublisher {@link ApplicationEventPublisher} used to publish Apache Geode cache
 	 * {@link TransactionEvent TransactionEvents}.
 	 * @throws IllegalArgumentException if the {@link ApplicationEventPublisher} is {@literal null}.
-	 * @see ApplicationEventPublisher
+	 * @see org.springframework.context.ApplicationEventPublisher
 	 */
 	public TransactionListenerAdapter(ApplicationEventPublisher applicationEventPublisher) {
 
@@ -52,7 +51,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	 * Returns a reference to the configured {@link ApplicationEventPublisher}.
 	 *
 	 * @return a reference to the configured {@link ApplicationEventPublisher}.
-	 * @see ApplicationEventPublisher
+	 * @see org.springframework.context.ApplicationEventPublisher
 	 */
 	protected @NonNull ApplicationEventPublisher getApplicationEventPublisher() {
 		return this.applicationEventPublisher;

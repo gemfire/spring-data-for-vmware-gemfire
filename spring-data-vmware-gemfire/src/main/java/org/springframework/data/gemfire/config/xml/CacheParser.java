@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
@@ -46,14 +45,14 @@ import org.w3c.dom.NamedNodeMap;
  * @author David Turanski
  * @author John Blum
  * @author Patrick Johnson
- * @see AbstractBeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see AbstractSingleBeanDefinitionParser
- * @see BeanDefinitionParser
- * @see ParserContext
- * @see CacheFactoryBean
- * @see Element
+ * @see org.springframework.beans.factory.support.AbstractBeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.BeanDefinitionParser
+ * @see org.springframework.beans.factory.xml.ParserContext
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.w3c.dom.Element
  */
 class CacheParser extends AbstractSingleBeanDefinitionParser {
 

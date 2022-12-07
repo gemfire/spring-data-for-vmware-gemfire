@@ -41,17 +41,17 @@ import org.springframework.util.StringUtils;
  * GemFire cache application class is annotated with {@link EnableAutoRegionLookup}.
  *
  * @author John Blum
- * @see BeanFactory
- * @see AbstractBeanDefinition
- * @see BeanDefinitionBuilder
- * @see BeanDefinitionRegistry
- * @see ImportBeanDefinitionRegistrar
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.support.AbstractBeanDefinition
+ * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
+ * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
+ * @see org.springframework.context.annotation.ImportBeanDefinitionRegistrar
  * @see org.springframework.core.env.Environment
- * @see AnnotationMetadata
- * @see EnableAutoRegionLookup
- * @see AbstractAnnotationConfigSupport
- * @see AutoRegionLookupBeanPostProcessor
- * @see ExpressionParser
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.config.annotation.EnableAutoRegionLookup
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
+ * @see org.springframework.data.gemfire.config.support.AutoRegionLookupBeanPostProcessor
+ * @see org.springframework.expression.ExpressionParser
  * @since 1.9.0
  */
 public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSupport

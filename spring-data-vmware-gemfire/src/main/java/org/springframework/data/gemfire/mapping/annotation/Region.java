@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.mapping.annotation;
 
 import java.lang.annotation.Annotation;
@@ -22,7 +21,7 @@ import org.springframework.core.annotation.AliasFor;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Annotation
+ * @see java.lang.annotation.Annotation
  * @see org.apache.geode.cache.Region
  */
 @Target(ElementType.TYPE)
@@ -44,7 +43,7 @@ public @interface Region {
 	 * Name, or fully-qualified bean name of the {@link org.apache.geode.cache.Region}
 	 * in which the application persistent entity will be stored (e.g. "Users", or "/Local/Admin/Users").
 	 *
-	 * Defaults to simple name of the application persistent entity defined by {@link Class#getSimpleName()}.
+	 * Defaults to simple name of the application persistent entity defined by {@link java.lang.Class#getSimpleName()}.
 	 *
 	 * @return the name or fully-qualified path of the {@link Region} in which the application persistent entity
 	 * will be stored.
@@ -56,7 +55,7 @@ public @interface Region {
 	 * Name, or fully-qualified bean name of the {@link org.apache.geode.cache.Region}
 	 * in which the application persistent entity will be stored (e.g. "Users", or "/Local/Admin/Users").
 	 *
-	 * Defaults to simple name of the application persistent entity defined by {@link Class#getSimpleName()}.
+	 * Defaults to simple name of the application persistent entity defined by {@link java.lang.Class#getSimpleName()}.
 	 *
 	 * @return the name or fully-qualified path of the {@link Region} in which the application persistent entity
 	 * will be stored.

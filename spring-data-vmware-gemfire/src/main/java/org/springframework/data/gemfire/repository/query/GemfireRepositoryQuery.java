@@ -2,7 +2,6 @@
  * Copyright (c) VMware, Inc. 2022. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.repository.query;
 
 import org.springframework.data.repository.Repository;
@@ -21,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see Repository
- * @see RepositoryQuery
- * @see GemfireQueryMethod
+ * @see org.springframework.data.repository.Repository
+ * @see org.springframework.data.repository.query.RepositoryQuery
+ * @see org.springframework.data.gemfire.repository.query.GemfireQueryMethod
  */
 @SuppressWarnings("rawtypes")
 public abstract class GemfireRepositoryQuery implements RepositoryQuery {
@@ -48,7 +47,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 * @param queryMethod {@link GemfireQueryMethod} capturing the metadata and implementation of the {@link Repository}
 	 * {@link QueryMethod}; must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link GemfireQueryMethod} is {@literal null}.
-	 * @see GemfireQueryMethod
+	 * @see org.springframework.data.gemfire.repository.query.GemfireQueryMethod
 	 */
 	public GemfireRepositoryQuery(GemfireQueryMethod queryMethod) {
 
@@ -61,7 +60,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 * Returns a reference to the {@link Repository} {@link GemfireQueryMethod} modeling the Apache Geode OQL query.
 	 *
 	 * @return a reference to the {@link Repository} {@link GemfireQueryMethod} modeling the Apache Geode OQL query.
-	 * @see GemfireQueryMethod
+	 * @see org.springframework.data.gemfire.repository.query.GemfireQueryMethod
 	 * @see #getQueryMethod()
 	 */
 	protected @NonNull GemfireQueryMethod getGemfireQueryMethod() {
@@ -72,7 +71,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 * Returns the configured SLF4J {@link Logger} used log statements.
 	 *
 	 * @return the configured SLF4J {@link Logger}.
-	 * @see Logger
+	 * @see org.slf4j.Logger
 	 */
 	protected @NonNull Logger getLogger() {
 		return this.logger;
@@ -82,7 +81,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 * Returns a reference to the {@link Repository} {@link QueryMethod} modeling the data store query.
 	 *
 	 * @return a reference to the {@link Repository} {@link QueryMethod} modeling the data store query.
-	 * @see QueryMethod
+	 * @see org.springframework.data.repository.query.QueryMethod
 	 */
 	@Override
 	public @NonNull QueryMethod getQueryMethod() {
@@ -94,7 +93,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 * {@literal OQL queries} prior to execution.
 	 *
 	 * @return a reference to the composed {@link QueryPostProcessor QueryPostProcessors}.
-	 * @see QueryPostProcessor
+	 * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor
 	 */
 	protected @NonNull QueryPostProcessor<Repository, String> getQueryPostProcessor() {
 		return this.queryPostProcessor;
@@ -111,7 +110,7 @@ public abstract class GemfireRepositoryQuery implements RepositoryQuery {
 	 *
 	 * @param queryPostProcessor {@link QueryPostProcessor} to register.
 	 * @return this {@link GemfireRepositoryQuery}.
-	 * @see QueryPostProcessor#processBefore(QueryPostProcessor)
+	 * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor#processBefore(QueryPostProcessor)
 	 */
 	public GemfireRepositoryQuery register(@Nullable QueryPostProcessor<Repository, String> queryPostProcessor) {
 		this.queryPostProcessor = this.queryPostProcessor.processBefore(queryPostProcessor);
