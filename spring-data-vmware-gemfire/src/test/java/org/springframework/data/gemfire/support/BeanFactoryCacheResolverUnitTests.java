@@ -1,0 +1,168 @@
+/*
+ * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package org.springframework.data.gemfire.support;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import org.apache.geode.cache.GemFireCache;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver;
+
+/**
+ * Unit Tests for {@link BeanFactoryCacheResolver}.
+ *
+ * @author John Blum
+ * @see org.junit.Test
+ * @see Mock
+ * @see org.mockito.Mockito
+ * @see org.mockito.Spy
+ * @see MockitoJUnitRunner
+ * @see GemFireCache
+ * @see BeanFactory
+ * @see BeanFactoryCacheResolver
+ * @since 2.3.0
+ */
+@RunWith(MockitoJUnitRunner.class)
+public class BeanFactoryCacheResolverUnitTests {
+
+	@Mock
+	private BeanFactory mockBeanFactory;
+
+	@Mock
+	private GemFireCache mockCache;
+
+	@Test
+	public void constructBeanFactoryCacheResolver() {
+
+		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+
+		assertThat(cacheResolver).isNotNull();
+		assertThat(cacheResolver.getBeanFactory()).isSameAs(this.mockBeanFactory);
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isNull();
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void constructWithNullBeanFactoryThrowsIllegalArgumentException() {
+
+		try {
+			new BeanFactoryPoolResolver(null);
+		}
+		catch (IllegalArgumentException expected) {
+
+			assertThat(expected).hasMessage("BeanFactory must not be null");
+			assertThat(expected).hasNoCause();
+
+			throw expected;
+		}
+	}
+
+	@Test
+	public void setAndGetBeanFactory() {
+
+		BeanFactory mockBeanFactoryTwo = mock(BeanFactory.class);
+
+		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+
+		assertThat(cacheResolver.getBeanFactory()).isSameAs(this.mockBeanFactory);
+
+		cacheResolver.setBeanFactory(mockBeanFactoryTwo);
+
+		assertThat(cacheResolver.getBeanFactory()).isSameAs(mockBeanFactoryTwo);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setBeanFactoryToNullThrowsIllegalArgumentException() {
+
+		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+
+		try {
+
+			assertThat(cacheResolver.getBeanFactory()).isEqualTo(this.mockBeanFactory);
+
+			cacheResolver.setBeanFactory(null);
+		}
+		catch (IllegalArgumentException expected) {
+
+			assertThat(expected).hasMessage("BeanFactory must not be null");
+			assertThat(expected).hasNoCause();
+
+			throw expected;
+		}
+		finally {
+			assertThat(cacheResolver.getBeanFactory()).isEqualTo(this.mockBeanFactory);
+		}
+	}
+
+	@Test
+	public void setAndGetCacheBeanName() {
+
+		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isNull();
+
+		cacheResolver.setCacheBeanName("TestCacheBeanName");
+
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isEqualTo("TestCacheBeanName");
+
+		cacheResolver.setCacheBeanName("  ");
+
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isNull();
+
+		cacheResolver.setCacheBeanName("");
+
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isNull();
+
+		cacheResolver.setCacheBeanName(null);
+
+		assertThat(cacheResolver.getCacheBeanName().orElse(null)).isNull();
+	}
+
+	@Test
+	public void doResolveResolvesGemFireCache() {
+
+		when(this.mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(this.mockCache);
+
+		BeanFactoryCacheResolver cacheResolver = spy(new BeanFactoryCacheResolver(this.mockBeanFactory));
+
+		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
+		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
+
+		verify(this.mockBeanFactory, times(1)).getBean(eq(GemFireCache.class));
+		verify(cacheResolver, times(1)).doResolve();
+		verifyNoInteractions(this.mockCache);
+	}
+
+	@Test
+	public void doResolveQualifiedGemFireCache() {
+
+		when(this.mockBeanFactory.getBean(eq("QualifiedCache"), eq(GemFireCache.class)))
+			.thenReturn(this.mockCache);
+
+		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+
+		assertThat(cacheResolver.doResolve()).isNull();
+
+		cacheResolver.setCacheBeanName("NonExistingCache");
+
+		assertThat(cacheResolver.doResolve()).isNull();
+
+		cacheResolver.setCacheBeanName("QualifiedCache");
+
+		assertThat(cacheResolver.doResolve()).isEqualTo(this.mockCache);
+	}
+}

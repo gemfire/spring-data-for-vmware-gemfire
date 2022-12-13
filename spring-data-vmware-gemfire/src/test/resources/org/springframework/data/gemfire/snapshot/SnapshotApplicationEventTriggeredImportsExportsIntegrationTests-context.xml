@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:gfe-data="http://www.springframework.org/schema/data/geode"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/data/geode https://www.springframework.org/schema/data/geode/spring-data-geode.xsd
+        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">SnapshotApplicationEventTriggeredImportsExportsIntegrationTests</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:partitioned-region id="Doe" persistent="false"/>
+	<gfe:partitioned-region id="EveryoneElse" persistent="false"/>
+	<gfe:partitioned-region id="Handy" persistent="false"/>
+	<gfe:partitioned-region id="People" persistent="false"/>
+
+	<bean id="nonHandyNonDoeSnapshotFilter" class="org.springframework.data.gemfire.snapshot.filter.ComposableSnapshotFilter" factory-method="and">
+		<constructor-arg index="0">
+			<list>
+				<bean class="org.springframework.data.gemfire.snapshot.SnapshotApplicationEventTriggeredImportsExportsIntegrationTests.NotLastNameSnapshotFilter"
+					  c:lastName="Doe"/>
+				<bean class="org.springframework.data.gemfire.snapshot.SnapshotApplicationEventTriggeredImportsExportsIntegrationTests.NotLastNameSnapshotFilter"
+					  c:lastName="Handy"/>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<context:annotation-config/>
+
+	<bean class="org.springframework.data.gemfire.snapshot.SnapshotApplicationEventTriggeredImportsExportsIntegrationTests.SnapshotImportsMonitor"/>
+
+	<task:scheduler id="snapshotImportsMonitorScheduler" pool-size="1"/>
+
+	<task:annotation-driven scheduler="snapshotImportsMonitorScheduler"/>
+
+	<gfe-data:snapshot-service id="peopleSnapshotService" region-ref="People">
+		<gfe-data:snapshot-export location="gemfire/data/snapshots/people-snapshot.gfd"/>
+		<gfe-data:snapshot-export location="gemfire/data/snapshots/nonHandyNonDoePeople-snapshot.gfd"
+								  filter-ref="nonHandyNonDoeSnapshotFilter"/>
+	</gfe-data:snapshot-service>
+
+	<gfe-data:snapshot-service id="doeSnapshotService" region-ref="Doe" suppress-import-on-init="true">
+		<gfe-data:snapshot-import location="gemfire/data/snapshots/people-snapshot.gfd">
+			<bean class="org.springframework.data.gemfire.snapshot.SnapshotApplicationEventTriggeredImportsExportsIntegrationTests.LastNameSnapshotFilter"
+				  c:lastName="Doe"/>
+		</gfe-data:snapshot-import>
+	</gfe-data:snapshot-service>
+
+	<gfe-data:snapshot-service id="everyoneElseSnapshotService" region-ref="EveryoneElse" suppress-import-on-init="true">
+		<gfe-data:snapshot-import location="gemfire/data/snapshots/nonHandyNonDoePeople-snapshot.gfd"/>
+	</gfe-data:snapshot-service>
+
+	<gfe-data:snapshot-service id="handySnapshotService" region-ref="Handy" suppress-import-on-init="true">
+		<gfe-data:snapshot-import location="gemfire/data/snapshots/people-snapshot.gfd">
+			<bean class="org.springframework.data.gemfire.snapshot.SnapshotApplicationEventTriggeredImportsExportsIntegrationTests.LastNameSnapshotFilter"
+				  c:lastName="Handy"/>
+		</gfe-data:snapshot-import>
+	</gfe-data:snapshot-service>
+
+</beans>

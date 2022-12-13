@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package com.gemstone.gemfire;
+
+import org.springframework.data.gemfire.mapping.MappingPdxSerializerUnitTests;
+
+/**
+ * The {@link TestGemStoneGemFireType} class is a test {@link Class type} used by
+ * the {@link MappingPdxSerializerUnitTests}.
+ *
+ * @author John Blum
+ * @see MappingPdxSerializerUnitTests
+ * @since 1.0.0
+ */
+public class TestGemStoneGemFireType {
+
+}

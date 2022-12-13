@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="clientProperties">
+		<prop key="gemfire.cache.client.locator.1.host">pluto</prop>
+		<prop key="gemfire.cache.client.locator.1.port">20668</prop>
+		<prop key="gemfire.cache.client.locators.hosts-and-ports">backspace,jambox[11235],skullbox[12480]</prop>
+		<prop key="gemfire.cache.client.server.1.host">saturn</prop>
+		<prop key="gemfire.cache.client.server.1.port">41414</prop>
+		<prop key="gemfire.cache.client.server.2.host">mars</prop>
+		<prop key="gemfire.cache.client.server.2.port">5112</prop>
+		<prop key="gemfire.cache.client.servers.hosts-and-ports">boombox[1234],jambox,toolbox[81$81%]*</prop>
+	</util:properties>
+
+	<context:property-placeholder properties-ref="clientProperties"/>
+
+	<bean class="org.springframework.data.gemfire.client.SpELExpressionConfiguredPoolsIntegrationTests.TestBeanPostProcessor"/>
+
+	<bean id="spelBean" class="org.springframework.data.gemfire.client.SpELExpressionConfiguredPoolsIntegrationTests.SpELBoundBean">
+		<constructor-arg index="0" ref="clientProperties"/>
+	</bean>
+
+	<gfe:pool id="locatorPoolOne" locators="${gemfire.cache.client.locators.hosts-and-ports}">
+		<gfe:locator host="${gemfire.cache.client.locator.1.host}" port="${gemfire.cache.client.locator.1.port}"/>
+		<gfe:locator host="mars" port="30303"/>
+	</gfe:pool>
+
+	<gfe:pool id="locatorPoolTwo" locators="[10335], cardboardbox[], #{spelBean.locatorsHostsPorts()}"/>
+
+	<gfe:pool id="serverPoolOne" servers="mercury[1234],venus[9876],earth[4554],jupiter[],uranis[$Ox0+(!)*]">
+		<gfe:server host="#{spelBean.serverTwoHost()}" port="#{spelBean.serverTwoPort()}"/>
+		<gfe:server host="${gemfire.cache.client.server.1.host}" port="${gemfire.cache.client.server.1.port}"/>
+		<gfe:server host="neptune" port="42424"/>
+	</gfe:pool>
+
+	<gfe:pool id="serverPoolTwo" servers="${gemfire.cache.client.servers.hosts-and-ports}"/>
+
+
+</beans>

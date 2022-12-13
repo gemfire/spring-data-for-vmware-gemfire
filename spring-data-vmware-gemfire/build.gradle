@@ -1,0 +1,146 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+// Copyright (c) VMware, Inc. 2022. All rights reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+plugins {
+  id 'java-library'
+  id "io.freefair.lombok" version "6.5.0.2"
+  id 'gemfire-repo-artifact-publishing'
+  id 'spring-java-jar'
+}
+
+project.ext.set("pomProjectLongName", "Spring Data VMware GemFire")
+project.ext.set("pomProjectArtifactName", "spring-data-3.0-gemfire-${gemfireBaseVersion}")
+project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
+
+dependencies {
+  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
+    exclude group: 'org.apache.geode', module: 'geode-log4j'
+  }
+
+  api "com.vmware.gemfire:geode-core:$gemfireVersion"
+  api "com.vmware.gemfire:geode-logging:$gemfireVersion"
+  api "com.vmware.gemfire:geode-cq:$gemfireVersion"
+  api "com.vmware.gemfire:geode-wan:$gemfireVersion"
+  api "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
+  api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
+  api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
+  api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+
+  implementation 'javax.cache:cache-api:1.1.1'
+  api 'org.springframework:spring-context-support:6.0.2'
+  api 'org.springframework:spring-tx:6.0.2'
+  api 'org.springframework:spring-web:6.0.2'
+  api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
+  api 'org.apache.shiro:shiro-spring:1.10.0'
+  api 'org.aspectj:aspectjweaver:1.9.9.1'
+  api 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
+  api 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+  runtimeOnly 'antlr:antlr:2.7.7'
+  compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
+    exclude group: 'javax.annotation', module: 'jsr250-api'
+  }
+
+  testImplementation 'org.springframework:spring-test:6.0.2'
+  testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
+  testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
+  testImplementation 'javax.el:el-api:2.2'
+  testImplementation 'ch.qos.logback:logback-classic:1.4.1'
+  testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.19.0'
+  testImplementation 'jakarta.annotation:jakarta.annotation-api:2.1.0'
+  testImplementation 'org.apache.derby:derbyLocale_zh_TW:10.9.1.0'
+  testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27:jakarta'
+  testImplementation 'org.apache.openwebbeans:openwebbeans-spi:2.0.27:jakarta'
+  testImplementation 'org.apache.openwebbeans:openwebbeans-impl:2.0.27:jakarta'
+  testImplementation 'org.assertj:assertj-core:3.21.0'
+  testImplementation 'org.iq80.snappy:snappy:0.4'
+  testImplementation('org.springframework.data:spring-data-geode-test:1.0.0-M5') {
+    exclude group: 'org.mockito', module: 'mockito-core'
+    exclude group: 'org.springframework.data', module: 'spring-data-geode'
+  }
+  testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
+    exclude group: 'com.google.guava', module: 'guava'
+  }
+  testImplementation 'edu.umd.cs.mtc:multithreadedtc:1.01'
+  testImplementation('org.mockito:mockito-core:3.12.4') {
+    force = true
+  }
+  testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
+    exclude group: 'javax.annotation', module: 'jsr250-api'
+  }
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+  testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
+
+test {
+  forkEvery = 1
+//  maxParallelForks = 1
+
+  systemProperty "java.util.logging.config.file", "${project.buildDir}/test-classes/java-util-logging.properties"
+  systemProperty "javax.net.ssl.keyStore", "${project.buildDir}/test-classes/trusted.keystore"
+  systemProperty "gemfire.disableShutdownHook", "true"
+  systemProperty "logback.log.level", "error"
+  systemProperty "spring.profiles.active", "apache-geode"
+
+  filter {
+    includeTestsMatching "*.*Tests"
+    includeTestsMatching "*.*Test"
+  }
+}
+
+gradle.taskGraph.whenReady({ graph ->
+  tasks.withType(Test).each { test ->
+    check.dependsOn test
+    test.configure {
+      onlyIf { !Boolean.getBoolean('skip.tests') }
+      jvmArgs += ['-XX:+HeapDumpOnOutOfMemoryError', '-ea']
+      if (project.hasProperty('testJVMVer') && testJVMVer.toInteger() >= 9) {
+        jvmArgs += [
+                // Product: BufferPool uses DirectBuffer
+                "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
+                // Tests: CertificateBuilder uses numerous types declared here
+                "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
+                // Product: ManagementAgent's custom MBean servers extend types declared here
+                "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
+
+                // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
+                "--add-opens=java.base/java.nio=ALL-UNNAMED",
+                // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
+                "--add-opens=java.base/java.util=ALL-UNNAMED",
+                // Tests: SecurityTestUtils resets SSL-related fields
+                "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
+                "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED",
+        ]
+      }
+      if (project.hasProperty('testJVMVer') && testJVMVer.toInteger() >= 17) {
+        if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
+          jvmArgs += ["-XX:+UseZGC"]
+        }
+      }
+    }
+  }
+})
+
+repositories {
+  def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
+  if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
+    additionalMavenRepoURLs.split(',').each {
+      project.getRepositories()
+              .maven(mavenRepository -> {
+                mavenRepository.setUrl(uri(it.toString()))
+              })
+    }
+  }
+
+  maven { url "https://repo.spring.io/libs-release" }
+  maven { url "https://repo.spring.io/libs-milestone" }
+  maven { url "https://repo.spring.io/libs-snapshot" }
+}
+

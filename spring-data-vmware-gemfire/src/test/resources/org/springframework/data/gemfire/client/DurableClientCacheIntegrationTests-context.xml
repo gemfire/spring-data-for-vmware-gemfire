@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="clientProperties">
+		<prop key="gemfire.cache.client.durable-client-id">DurableClientCacheIntegrationTests</prop>
+		<prop key="gemfire.cache.client.durable-client-timeout">
+			${org.springframework.data.gemfire.client.DurableClientCacheIntegrationTests.durable-client-timeout:300}
+		</prop>
+		<prop key="gemfire.cache.client.interests.result-policy">
+			${org.springframework.data.gemfire.client.DurableClientCacheIntegrationTests.interests-result-policy:KEYS_VALUES}
+		</prop>
+		<prop key="gemfire.cache.server.host">localhost</prop>
+		<prop key="gemfire.cache.server.port">${spring.data.gemfire.cache.server.port:40404}</prop>
+	</util:properties>
+
+	<context:property-placeholder properties-ref="clientProperties"/>
+
+	<bean class="org.springframework.data.gemfire.client.DurableClientCacheIntegrationTests$ClientCacheBeanPostProcessor"/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">DurableClientCacheIntegrationTestClient</prop>
+		<prop key="log-level">error</prop>
+		<prop key="durable-client-id">TestDurableClientId</prop>
+		<prop key="durable-client-timeout">300</prop>
+	</util:properties>
+
+	<gfe:client-cache properties-ref="gemfireProperties" durable-client-id="${gemfire.cache.client.durable-client-id}"
+					  durable-client-timeout="${gemfire.cache.client.durable-client-timeout}"
+					  keep-alive="true" ready-for-events="true"/>
+
+	<gfe:pool id="gemfireServerPool" keep-alive="true" subscription-enabled="true">
+		<gfe:server host="${gemfire.cache.server.host}" port="${gemfire.cache.server.port}"/>
+	</gfe:pool>
+
+	<gfe:client-region id="Example" pool-name="gemfireServerPool" shortcut="CACHING_PROXY">
+		<gfe:cache-listener>
+			<bean class="org.springframework.data.gemfire.client.DurableClientCacheIntegrationTests.RegionEntryEventRecordingCacheListener"/>
+		</gfe:cache-listener>
+		<gfe:regex-interest durable="true" pattern= ".*" result-policy="${gemfire.cache.client.interests.result-policy}"/>
+	</gfe:client-region>
+
+</beans>
