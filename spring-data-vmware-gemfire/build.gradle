@@ -27,6 +27,7 @@ dependencies {
   api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
   api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
   api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
   api 'org.springframework:spring-context-support:6.0.2'
