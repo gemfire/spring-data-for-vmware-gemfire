@@ -4,8 +4,8 @@
  */
 package org.springframework.data.gemfire;
 
+import com.vmware.gemfire.internal.version.GemFireVersion;
 import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.internal.GemFireVersion;
 
 import org.w3c.dom.Element;
 
@@ -19,7 +19,6 @@ import org.springframework.util.ClassUtils;
  *
  * @author John Blum
  * @see CacheFactory
- * @see GemFireVersion
  * @see GemfireFeature
  * @see RegionUtils
  * @since 1.3.3
