@@ -17,14 +17,14 @@ dependencies {
     exclude group: 'org.apache.geode', module: 'geode-log4j'
   }
 
-  api "com.vmware.gemfire:geode-core:$gemfireVersion"
-  api "com.vmware.gemfire:geode-logging:$gemfireVersion"
-  api "com.vmware.gemfire:geode-cq:$gemfireVersion"
-  api "com.vmware.gemfire:geode-wan:$gemfireVersion"
-  api "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
-  api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
-  api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
-  api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-core:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-lucene:1.0.0-build.0"
+  api "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
@@ -86,6 +86,7 @@ test {
 }
 
 repositories {
+  mavenLocal()
   def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
   if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
     additionalMavenRepoURLs.split(',').each {

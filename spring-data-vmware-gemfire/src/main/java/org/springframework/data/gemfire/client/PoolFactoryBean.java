@@ -81,7 +81,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	private boolean multiUserAuthentication = PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
 	private boolean prSingleHopEnabled = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
 	private boolean subscriptionEnabled = PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
-	private boolean threadLocalConnections = PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS;
 
 	private int freeConnectionTimeout = PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
 	private int loadConditioningInterval = PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
@@ -235,7 +234,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			.filter(this::isSpringManagedPool)
 			.filter(pool -> !pool.isDestroyed())
 			.ifPresent(pool -> {
-				pool.releaseThreadLocalConnection();
 				pool.destroy(this.keepAlive);
 				setPool(null);
 				logDebug("Destroyed Pool [%s]", pool.getName());
@@ -348,7 +346,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			it.setSubscriptionMessageTrackingTimeout(this.subscriptionMessageTrackingTimeout);
 			it.setSubscriptionRedundancy(this.subscriptionRedundancy);
 			it.setSubscriptionTimeoutMultiplier(this.subscriptionTimeoutMultiplier);
-			it.setThreadLocalConnections(this.threadLocalConnections);
 
 			CollectionUtils.nullSafeCollection(this.locators).forEach(locator ->
 				it.addLocator(locator.getHost(), locator.getPort()));
@@ -659,11 +656,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			}
 
 			@Override
-			public boolean getThreadLocalConnections() {
-				return PoolFactoryBean.this.threadLocalConnections;
-			}
-
-			@Override
 			public void destroy() {
 				destroy(false);
 			}
@@ -677,17 +669,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 				catch (Exception ignore) {
 					Optional.ofNullable(PoolFactoryBean.this.pool).ifPresent(pool -> pool.destroy(keepAlive));
 				}
-			}
-
-			@Override
-			public void releaseThreadLocalConnection() {
-
-				Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(it -> {
-						it.releaseThreadLocalConnection();
-						return it;
-					})
-					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 		});
 	}
@@ -870,11 +851,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	public void setSubscriptionTimeoutMultiplier(int subscriptionTimeoutMultiplier) {
 		this.subscriptionTimeoutMultiplier = subscriptionTimeoutMultiplier;
-	}
-
-	@Deprecated
-	public void setThreadLocalConnections(boolean threadLocalConnections) {
-		this.threadLocalConnections = threadLocalConnections;
 	}
 
 	public void setXmlDeclaredLocators(ConnectionEndpointList xmlDeclaredLocators) {

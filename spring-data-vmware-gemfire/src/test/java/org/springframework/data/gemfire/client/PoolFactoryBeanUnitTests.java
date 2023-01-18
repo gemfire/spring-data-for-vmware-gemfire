@@ -113,7 +113,6 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setSubscriptionEnabled(true);
 		poolFactoryBean.setSubscriptionMessageTrackingTimeout(20000);
 		poolFactoryBean.setSubscriptionRedundancy(2);
-		poolFactoryBean.setThreadLocalConnections(false);
 		poolFactoryBean.afterPropertiesSet();
 
 		assertThat(poolFactoryBean.getBeanFactory()).isEqualTo(mockBeanFactory);
@@ -141,7 +140,6 @@ public class PoolFactoryBeanUnitTests {
 		verify(mockPoolFactory, times(1)).setSubscriptionEnabled(eq(true));
 		verify(mockPoolFactory, times(1)).setSubscriptionMessageTrackingTimeout(eq(20000));
 		verify(mockPoolFactory, times(1)).setSubscriptionRedundancy(eq(2));
-		verify(mockPoolFactory, times(1)).setThreadLocalConnections(eq(false));
 		verify(mockPoolFactory, times(1)).addLocator(eq("localhost"), eq(54321));
 		verify(mockPoolFactory, times(1)).addServer(eq("localhost"), eq(12345));
 		verify(mockPoolFactory, times(1)).create(eq("GemFirePool"));
@@ -219,7 +217,6 @@ public class PoolFactoryBeanUnitTests {
 		InOrder order = inOrder(mockPool);
 
 		order.verify(mockPool, times(1)).isDestroyed();
-		order.verify(mockPool, times(1)).releaseThreadLocalConnection();
 		order.verify(mockPool, times(1)).destroy(eq(false));
 		order.verify(mockPool, times(1)).getName();
 
@@ -385,7 +382,6 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setSubscriptionMessageTrackingTimeout(20000);
 		poolFactoryBean.setSubscriptionRedundancy(2);
 		poolFactoryBean.setSubscriptionTimeoutMultiplier(4);
-		poolFactoryBean.setThreadLocalConnections(false);
 
 		Pool pool = poolFactoryBean.getPool();
 
@@ -415,7 +411,6 @@ public class PoolFactoryBeanUnitTests {
 		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(20000);
 		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(2);
 		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(4);
-		assertThat(pool.getThreadLocalConnections()).isFalse();
 	}
 
 	@Test
@@ -550,44 +545,6 @@ public class PoolFactoryBeanUnitTests {
 		pool.destroy(true);
 
 		verify(poolFactoryBean, times(2)).destroy();
-	}
-
-	@Test
-	public void getPoolAndReleaseThreadLocalConnectionWithPool() {
-
-		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
-
-		Pool pool = poolFactoryBean.getPool();
-		Pool mockPool = mock(Pool.class);
-
-		assertThat(pool).isNotSameAs(mockPool);
-		assertThat(pool).isInstanceOf(PoolAdapter.class);
-
-		poolFactoryBean.setPool(mockPool);
-		pool.releaseThreadLocalConnection();
-
-		verify(mockPool, times(1)).releaseThreadLocalConnection();
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void getPoolAndReleaseThreadLocalConnectionWithoutPool() {
-
-		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
-
-		Pool pool = poolFactoryBean.getPool();
-
-		assertThat(pool).isInstanceOf(PoolAdapter.class);
-
-		try {
-			pool.releaseThreadLocalConnection();
-		}
-		catch (IllegalStateException expected) {
-
-			assertThat(expected).hasMessage("Pool [null] has not been initialized");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
 	}
 
 	@Test

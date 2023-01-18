@@ -75,7 +75,6 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	private Boolean multiUserAuthentication;
 	private Boolean prSingleHopEnabled;
 	private Boolean subscriptionEnabled;
-	private Boolean threadLocalConnections;
 
 	private Integer durableClientTimeout;
 	private Integer freeConnectionTimeout;
@@ -146,7 +145,6 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		gemfireCache.setSubscriptionEnabled(getSubscriptionEnabled());
 		gemfireCache.setSubscriptionMessageTrackingTimeout(getSubscriptionMessageTrackingTimeout());
 		gemfireCache.setSubscriptionRedundancy(getSubscriptionRedundancy());
-		gemfireCache.setThreadLocalConnections(getThreadLocalConnections());
 
 		return gemfireCache;
 	}
@@ -357,11 +355,6 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 				resolveProperty(namedPoolProperty("default", "subscription-redundancy"),
 				resolveProperty(poolProperty("subscription-redundancy"),
 				(Integer) clientCacheApplicationAttributes.get("subscriptionRedundancy"))));
-
-			setThreadLocalConnections(
-				resolveProperty(namedPoolProperty("default", "thread-local-connections"),
-				resolveProperty(poolProperty("thread-local-connections"),
-				Boolean.TRUE.equals(clientCacheApplicationAttributes.get("threadLocalConnections")))));
 
 			configureLocatorsAndServers(clientCacheApplicationAttributes);
 		}
@@ -653,14 +646,6 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	protected Integer getSubscriptionRedundancy() {
 		return this.subscriptionRedundancy;
-	}
-
-	void setThreadLocalConnections(Boolean threadLocalConnections) {
-		this.threadLocalConnections = threadLocalConnections;
-	}
-
-	protected Boolean getThreadLocalConnections() {
-		return this.threadLocalConnections;
 	}
 
 	/**

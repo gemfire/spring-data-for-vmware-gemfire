@@ -274,14 +274,6 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	}
 
 	@Override
-	public boolean getThreadLocalConnections() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getThreadLocalConnections)
-			.orElseGet(super::getThreadLocalConnections);
-	}
-
-	@Override
 	public void destroy() {
 		Optional.ofNullable(getDelegate()).ifPresent(Pool::destroy);
 	}
@@ -289,10 +281,5 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	@Override
 	public void destroy(boolean keepAlive) {
 		Optional.ofNullable(getDelegate()).ifPresent(delegate -> delegate.destroy(keepAlive));
-	}
-
-	@Override
-	public void releaseThreadLocalConnection() {
-		Optional.ofNullable(getDelegate()).ifPresent(Pool::releaseThreadLocalConnection);
 	}
 }

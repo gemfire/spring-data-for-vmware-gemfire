@@ -143,19 +143,11 @@ public abstract class PoolAdapter implements Pool {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
-	public boolean getThreadLocalConnections() {
-		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-	}
-
 	public void destroy() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	public void destroy(boolean keepAlive) {
-		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-	}
-
-	public void releaseThreadLocalConnection() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 }

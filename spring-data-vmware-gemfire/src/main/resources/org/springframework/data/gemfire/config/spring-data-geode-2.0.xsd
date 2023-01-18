@@ -147,8 +147,6 @@ Defines a connection from a Cache client to a set of GemFire Cache Servers.
 						   type="xsd:string" use="optional" />
 			<xsd:attribute name="subscription-redundancy"
 						   type="xsd:string" use="optional" />
-			<xsd:attribute name="thread-local-connections"
-						   type="xsd:string" use="optional" />
 		</xsd:complexType>
 	</xsd:element>
 	<!-- JSON support -->

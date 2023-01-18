@@ -116,7 +116,6 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setSubscriptionEnabled(true);
 		configuration.setSubscriptionMessageTrackingTimeout(60000);
 		configuration.setSubscriptionRedundancy(1);
-		configuration.setThreadLocalConnections(false);
 
 		assertThat(configuration.gemfireCache()).isEqualTo(clientCacheFactoryBean);
 
@@ -159,7 +158,6 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionEnabled(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionMessageTrackingTimeout(eq(60000));
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionRedundancy(eq(1));
-		verify(clientCacheFactoryBean, times(1)).setThreadLocalConnections(eq(false));
 	}
 
 	@Test

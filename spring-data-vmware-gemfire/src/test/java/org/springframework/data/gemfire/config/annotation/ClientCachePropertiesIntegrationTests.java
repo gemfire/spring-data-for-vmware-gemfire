@@ -174,7 +174,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 			.withProperty("spring.data.gemfire.pool.default.subscription-enabled", true)
 			.withProperty("spring.data.gemfire.pool.default.subscription-message-tracking-timeout", 300000)
 			.withProperty("spring.data.gemfire.pool.default.subscription-redundancy", 2)
-			.withProperty("spring.data.gemfire.pool.default.thread-local-connections", true)
 			.withProperty("spring.data.gemfire.pdx.disk-store-name", "TestPdxDiskStore")
 			.withProperty("spring.data.gemfire.pdx.ignore-unread-fields", false)
 			.withProperty("spring.data.gemfire.pdx.persistent", true)
@@ -244,7 +243,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		assertThat(defaultPool.getSubscriptionEnabled()).isTrue();
 		assertThat(defaultPool.getSubscriptionMessageTrackingTimeout()).isEqualTo(300000);
 		assertThat(defaultPool.getSubscriptionRedundancy()).isEqualTo(2);
-		assertThat(defaultPool.getThreadLocalConnections()).isTrue();
 
 		ResourceManager resourceManager = clientCache.getResourceManager();
 

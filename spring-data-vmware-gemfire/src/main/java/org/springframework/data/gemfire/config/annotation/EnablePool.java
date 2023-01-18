@@ -333,17 +333,6 @@ public @interface EnablePool {
 	 */
 	int subscriptionRedundancy() default PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
 
-	/**
-	 * Configures the thread local connections policy for this pool.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_THREAD_LOCAL_CONNECTIONS}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.<poolName>.thread-local-connections} property
-	 * or the {@literal spring.data.gemfire.pool.thread-local-connections} property
-	 * in {@literal application.properties}.
-	 */
-	boolean threadLocalConnections() default PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS;
-
 	@interface Locator {
 
 		String host() default "localhost";

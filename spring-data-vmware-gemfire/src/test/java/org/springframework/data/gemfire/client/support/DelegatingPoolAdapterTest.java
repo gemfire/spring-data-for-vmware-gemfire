@@ -92,7 +92,6 @@ public class DelegatingPoolAdapterTest {
 		when(this.mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(60000);
 		when(this.mockPool.getSubscriptionRedundancy()).thenReturn(2);
 		when(this.mockPool.getSubscriptionTimeoutMultiplier()).thenReturn(3);
-		when(this.mockPool.getThreadLocalConnections()).thenReturn(false);
 	}
 
 	@Test
@@ -133,7 +132,6 @@ public class DelegatingPoolAdapterTest {
 		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(60000);
 		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(2);
 		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(3);
-		assertThat(pool.getThreadLocalConnections()).isFalse();
 
 		verify(this.mockPool, times(1)).isDestroyed();
 		verify(this.mockPool, times(1)).getFreeConnectionTimeout();
@@ -162,7 +160,6 @@ public class DelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getSubscriptionMessageTrackingTimeout();
 		verify(this.mockPool, times(1)).getSubscriptionRedundancy();
 		verify(this.mockPool, times(1)).getSubscriptionTimeoutMultiplier();
-		verify(this.mockPool, times(1)).getThreadLocalConnections();
 	}
 
 	@Test
@@ -175,12 +172,6 @@ public class DelegatingPoolAdapterTest {
 	public void destroyWithKeepAliveUsingDelegateCallsDestroy() {
 		DelegatingPoolAdapter.from(this.mockPool).destroy(true);
 		verify(this.mockPool, times(1)).destroy(eq(true));
-	}
-
-	@Test
-	public void releaseThreadLocalConnectionWithDelegateCallsReleaseThreadLocalConnection() {
-		DelegatingPoolAdapter.from(this.mockPool).releaseThreadLocalConnection();
-		verify(this.mockPool, times(1)).releaseThreadLocalConnection();
 	}
 
 	@Test
@@ -210,7 +201,6 @@ public class DelegatingPoolAdapterTest {
 		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
 		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
 		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER);
-		assertThat(pool.getThreadLocalConnections()).isEqualTo(PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
 
 		verifyNoInteractions(this.mockPool);
 	}
@@ -272,11 +262,5 @@ public class DelegatingPoolAdapterTest {
 	public void destroyWithKeepAliveUsingNullIsNoOp() {
 		DelegatingPoolAdapter.from(null).destroy(false);
 		verify(this.mockPool, never()).destroy(anyBoolean());
-	}
-
-	@Test
-	public void releaseThreadLocalConnectionWithNullIsNoOp() {
-		DelegatingPoolAdapter.from(null).releaseThreadLocalConnection();
-		verify(this.mockPool, never()).releaseThreadLocalConnection();
 	}
 }

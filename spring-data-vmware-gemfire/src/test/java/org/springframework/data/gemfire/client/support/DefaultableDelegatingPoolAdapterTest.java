@@ -98,7 +98,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		when(this.mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(20000);
 		when(this.mockPool.getSubscriptionRedundancy()).thenReturn(2);
 		when(this.mockPool.getSubscriptionTimeoutMultiplier()).thenReturn(3);
-		when(this.mockPool.getThreadLocalConnections()).thenReturn(false);
 	}
 
 	@Before
@@ -343,7 +342,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getSubscriptionMessageTrackingTimeout(15000)).isEqualTo(15000);
 		assertThat(this.poolAdapter.getSubscriptionRedundancy(1)).isEqualTo(1);
 		assertThat(this.poolAdapter.getSubscriptionTimeoutMultiplier(1)).isEqualTo(1);
-		assertThat(this.poolAdapter.getThreadLocalConnections(true)).isTrue();
 
 		verify(this.mockPool, times(1)).getName();
 		verify(this.mockPool, times(1)).getPendingEventCount();
@@ -386,7 +384,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getSubscriptionMessageTrackingTimeout(null)).isEqualTo(20000);
 		assertThat(this.poolAdapter.getSubscriptionRedundancy(1)).isEqualTo(1);
 		assertThat(this.poolAdapter.getSubscriptionTimeoutMultiplier(null)).isEqualTo(3);
-		assertThat(this.poolAdapter.getThreadLocalConnections(null)).isFalse();
 
 		verify(this.mockPool, times(1)).getFreeConnectionTimeout();
 		verify(this.mockPool, times(1)).getIdleTimeout();
@@ -404,7 +401,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getStatisticInterval();
 		verify(this.mockPool, times(1)).getSubscriptionMessageTrackingTimeout();
 		verify(this.mockPool, times(1)).getSubscriptionTimeoutMultiplier();
-		verify(this.mockPool, times(1)).getThreadLocalConnections();
 		verifyNoMoreInteractions(this.mockPool);
 	}
 
@@ -443,7 +439,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getSubscriptionMessageTrackingTimeout(null)).isEqualTo(20000);
 		assertThat(this.poolAdapter.getSubscriptionRedundancy(null)).isEqualTo(2);
 		assertThat(this.poolAdapter.getSubscriptionTimeoutMultiplier(null)).isEqualTo(3);
-		assertThat(this.poolAdapter.getThreadLocalConnections(null)).isFalse();
 
 		verify(this.mockPool, times(1)).getFreeConnectionTimeout();
 		verify(this.mockPool, times(1)).getIdleTimeout();
@@ -471,7 +466,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getSubscriptionMessageTrackingTimeout();
 		verify(this.mockPool, times(1)).getSubscriptionRedundancy();
 		verify(this.mockPool, times(1)).getSubscriptionTimeoutMultiplier();
-		verify(this.mockPool, times(1)).getThreadLocalConnections();
 		verifyNoMoreInteractions(this.mockPool);
 	}
 
@@ -510,7 +504,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getSubscriptionMessageTrackingTimeout(30000)).isEqualTo(20000);
 		assertThat(this.poolAdapter.getSubscriptionRedundancy(1)).isEqualTo(2);
 		assertThat(this.poolAdapter.getSubscriptionTimeoutMultiplier(2)).isEqualTo(3);
-		assertThat(this.poolAdapter.getThreadLocalConnections(true)).isFalse();
 
 		verify(this.mockPool, times(1)).getFreeConnectionTimeout();
 		verify(this.mockPool, times(1)).getIdleTimeout();
@@ -538,7 +531,6 @@ public class DefaultableDelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getSubscriptionMessageTrackingTimeout();
 		verify(this.mockPool, times(1)).getSubscriptionRedundancy();
 		verify(this.mockPool, times(1)).getSubscriptionTimeoutMultiplier();
-		verify(this.mockPool, times(1)).getThreadLocalConnections();
 		verifyNoMoreInteractions(this.mockPool);
 	}
 
@@ -559,23 +551,5 @@ public class DefaultableDelegatingPoolAdapterTest {
 
 		verify(this.mockPool, times(1)).destroy();
 		verify(this.mockPool, times(1)).destroy(anyBoolean());
-	}
-
-	@Test
-	public void poolAdapterReleaseThreadLocalConnections() {
-
-		assertThat(this.poolAdapter.preferDefault()).isSameAs(this.poolAdapter);
-		assertThat(this.poolAdapter.getDelegate()).isEqualTo(this.mockPool);
-		assertThat(this.poolAdapter.prefersDefault()).isTrue();
-
-		this.poolAdapter.releaseThreadLocalConnection();
-
-		assertThat(this.poolAdapter.preferPool()).isSameAs(this.poolAdapter);
-		assertThat(this.poolAdapter.getDelegate()).isEqualTo(this.mockPool);
-		assertThat(this.poolAdapter.prefersPool()).isTrue();
-
-		this.poolAdapter.releaseThreadLocalConnection();
-
-		verify(this.mockPool, times(2)).releaseThreadLocalConnection();
 	}
 }
