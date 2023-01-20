@@ -15,10 +15,6 @@ project.ext.set("pomProjectArtifactName", "spring-data-3.0-gemfire-${gemfireBase
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
-  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
-    exclude group: 'org.apache.geode', module: 'geode-log4j'
-  }
-
   api "com.vmware.gemfire:geode-core:$gemfireVersion"
   api "com.vmware.gemfire:geode-logging:$gemfireVersion"
   api "com.vmware.gemfire:geode-cq:$gemfireVersion"
@@ -30,20 +26,20 @@ dependencies {
   api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:6.0.2'
-  api 'org.springframework:spring-tx:6.0.2'
-  api 'org.springframework:spring-web:6.0.2'
+  api 'org.springframework:spring-context-support:6.0.4'
+  api 'org.springframework:spring-tx:6.0.4'
+  api 'org.springframework:spring-web:6.0.4'
   api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
   api 'org.apache.shiro:shiro-spring:1.10.0'
   api 'org.aspectj:aspectjweaver:1.9.9.1'
-  api 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+  api 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
+  api 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
 
-  testImplementation 'org.springframework:spring-test:6.0.2'
+  testImplementation 'org.springframework:spring-test:6.0.44'
   testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
   testImplementation 'javax.el:el-api:2.2'
