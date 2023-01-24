@@ -44,7 +44,7 @@ public abstract class GemfireUtils extends RegionUtils {
 	public static String apacheGeodeProductName() {
 
 		try {
-			return GemFireVersion.getProductName();
+			return new GemFireVersion().getName();
 		}
 		catch (Throwable ignore) {
 			return APACHE_GEODE_NAME;
