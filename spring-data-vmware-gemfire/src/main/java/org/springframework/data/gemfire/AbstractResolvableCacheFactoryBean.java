@@ -1,11 +1,11 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
-import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeProductName;
-import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeVersion;
+import static org.springframework.data.gemfire.GemfireUtils.gemFireProductName;
+import static org.springframework.data.gemfire.GemfireUtils.gemFireVersion;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
 
 import java.util.Optional;
@@ -80,7 +80,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 			.ifPresent(cache -> {
 
 				logInfo(() -> String.format("%1$s %2$s version [%3$s] Cache [%4$s]", this.cacheResolutionMessagePrefix,
-					apacheGeodeProductName(), apacheGeodeVersion(), cache.getName()));
+					gemFireProductName(), gemFireVersion(), cache.getName()));
 
 				Optional.ofNullable(cache.getDistributedSystem())
 					.map(DistributedSystem::getDistributedMember)

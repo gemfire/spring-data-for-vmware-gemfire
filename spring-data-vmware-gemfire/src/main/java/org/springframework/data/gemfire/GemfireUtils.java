@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -26,40 +26,27 @@ import org.springframework.util.ClassUtils;
  */
 @SuppressWarnings("unused")
 public abstract class GemfireUtils extends RegionUtils {
+  public final static String GEMFIRE_NAME = new GemFireVersion().getName();
+  public final static String GEMFIRE_VERSION = CacheFactory.getVersion();
+  private static final String ASYNC_EVENT_QUEUE_ELEMENT_NAME = "async-event-queue";
+  private static final String ASYNC_EVENT_QUEUE_TYPE_NAME =
+      "org.apache.geode.cache.asyncqueue.AsyncEventQueue";
+  private static final String CQ_ELEMENT_NAME = "cq-listener-container";
+  private static final String CQ_TYPE_NAME = "org.apache.geode.cache.query.CqQuery";
+  private static final String GATEWAY_RECEIVER_ELEMENT_NAME = "gateway-receiver";
+  private static final String GATEWAY_RECEIVER_TYPE_NAME =
+      "org.apache.geode.cache.wan.GatewayReceiverFactory";
+  private static final String GATEWAY_SENDER_ELEMENT_NAME = "gateway-sender";
+  private static final String GATEWAY_SENDER_TYPE_NAME =
+      "org.apache.geode.cache.wan.GatewaySenderFactory";
 
-	public final static String APACHE_GEODE_NAME = "Apache Geode";
-	public final static String GEMFIRE_NAME = apacheGeodeProductName();
-	public final static String GEMFIRE_VERSION = apacheGeodeVersion();
-	public final static String UNKNOWN = "unknown";
+  public static String gemFireProductName() {
+    return GEMFIRE_NAME;
+  }
 
-	private static final String ASYNC_EVENT_QUEUE_ELEMENT_NAME = "async-event-queue";
-	private static final String ASYNC_EVENT_QUEUE_TYPE_NAME = "org.apache.geode.cache.asyncqueue.AsyncEventQueue";
-	private static final String CQ_ELEMENT_NAME = "cq-listener-container";
-	private static final String CQ_TYPE_NAME = "org.apache.geode.cache.query.CqQuery";
-	private static final String GATEWAY_RECEIVER_ELEMENT_NAME = "gateway-receiver";
-	private static final String GATEWAY_RECEIVER_TYPE_NAME = "org.apache.geode.cache.wan.GatewayReceiverFactory";
-	private static final String GATEWAY_SENDER_ELEMENT_NAME = "gateway-sender";
-	private static final String GATEWAY_SENDER_TYPE_NAME = "org.apache.geode.cache.wan.GatewaySenderFactory";
-
-	public static String apacheGeodeProductName() {
-
-		try {
-			return new GemFireVersion().getName();
-		}
-		catch (Throwable ignore) {
-			return APACHE_GEODE_NAME;
-		}
-	}
-
-	public static String apacheGeodeVersion() {
-
-		try {
-			return CacheFactory.getVersion();
-		}
-		catch (Throwable ignore) {
-			return UNKNOWN;
-		}
-	}
+  public static String gemFireVersion() {
+    return GEMFIRE_VERSION;
+  }
 
 	public static boolean isClassAvailable(String fullyQualifiedClassName) {
 		return ClassUtils.isPresent(fullyQualifiedClassName, GemfireUtils.class.getClassLoader());
