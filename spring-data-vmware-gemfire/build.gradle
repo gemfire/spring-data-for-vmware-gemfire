@@ -23,12 +23,12 @@ dependencies {
     exclude group: 'org.apache.geode', module: 'geode-tcp-server'
   }
 
-  api("com.vmware.gemfire:gemfire-server-all:$gemfireVersion") {
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-jcl'
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-jul'
-    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
-    exclude group: 'com.vmware.gemfire', module: 'geode-log4j'
-  }
+//  api("com.vmware.gemfire:gemfire-server-all:$gemfireVersion") {
+//    exclude group: 'org.apache.logging.log4j', module: 'log4j-jcl'
+//    exclude group: 'org.apache.logging.log4j', module: 'log4j-jul'
+//    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+//    exclude group: 'com.vmware.gemfire', module: 'geode-log4j'
+//  }
 
   api "com.vmware.gemfire:geode-core:$gemfireVersion"
   api "com.vmware.gemfire:geode-logging:$gemfireVersion"
@@ -142,3 +142,5 @@ repositories {
     }
   }
 }
+
+tasks.withType(Copy).all { duplicatesStrategy 'exclude' }
