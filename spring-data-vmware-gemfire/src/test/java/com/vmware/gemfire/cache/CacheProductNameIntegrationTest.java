@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
-import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 
 import java.io.File;
 
