@@ -38,12 +38,13 @@ dependencies {
   api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
   api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
   api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+  api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
 
   implementation 'javax.cache:cache-api:1.1.1'
-  implementation 'org.springframework:spring-context-support:5.3.23'
-  implementation 'org.springframework:spring-tx:5.3.23'
-  implementation 'org.springframework:spring-web:5.3.23'
+  implementation 'org.springframework:spring-context-support:5.3.25'
+  implementation 'org.springframework:spring-tx:5.3.25'
+  implementation 'org.springframework:spring-web:5.3.25'
   implementation "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
   implementation 'org.apache.shiro:shiro-spring:1.10.0'
   implementation 'org.aspectj:aspectjweaver:1.9.7'
