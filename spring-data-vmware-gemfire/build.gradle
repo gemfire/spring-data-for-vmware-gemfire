@@ -39,7 +39,7 @@ dependencies {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
 
-  testImplementation 'org.springframework:spring-test:6.0.44'
+  testImplementation 'org.springframework:spring-test:6.0.4'
   testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
   testImplementation 'javax.el:el-api:2.2'
