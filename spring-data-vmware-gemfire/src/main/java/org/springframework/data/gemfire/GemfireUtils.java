@@ -1,17 +1,15 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
 import com.vmware.gemfire.internal.version.GemFireVersion;
 import org.apache.geode.cache.CacheFactory;
-
-import org.w3c.dom.Element;
-
 import org.springframework.data.gemfire.config.support.GemfireFeature;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.util.ClassUtils;
+import org.w3c.dom.Element;
 
 /**
  * {@link GemfireUtils} is an abstract utility class encapsulating common functionality for accessing features
@@ -27,8 +25,6 @@ import org.springframework.util.ClassUtils;
 @SuppressWarnings("unused")
 public abstract class GemfireUtils extends RegionUtils {
 
-	public final static String APACHE_GEODE_NAME = "Apache Geode";
-	public final static String GEMFIRE_NAME = apacheGeodeProductName();
 	public final static String GEMFIRE_VERSION = apacheGeodeVersion();
 	public final static String UNKNOWN = "unknown";
 
@@ -40,15 +36,10 @@ public abstract class GemfireUtils extends RegionUtils {
 	private static final String GATEWAY_RECEIVER_TYPE_NAME = "org.apache.geode.cache.wan.GatewayReceiverFactory";
 	private static final String GATEWAY_SENDER_ELEMENT_NAME = "gateway-sender";
 	private static final String GATEWAY_SENDER_TYPE_NAME = "org.apache.geode.cache.wan.GatewaySenderFactory";
+	private static final String GEMFIRE_PRODUCT_NAME = "VMware GemFire";
 
 	public static String apacheGeodeProductName() {
-
-		try {
-			return new GemFireVersion().getName();
-		}
-		catch (Throwable ignore) {
-			return APACHE_GEODE_NAME;
-		}
+		return GEMFIRE_PRODUCT_NAME;
 	}
 
 	public static String apacheGeodeVersion() {
@@ -122,6 +113,6 @@ public abstract class GemfireUtils extends RegionUtils {
 	}
 
 	public static void main(final String... args) {
-		System.out.printf("Product Name [%1$s] Version [%2$s]%n", GEMFIRE_NAME, GEMFIRE_VERSION);
+		System.out.printf("Product Name [%1$s] Version [%2$s]%n", GEMFIRE_PRODUCT_NAME, GEMFIRE_VERSION);
 	}
 }
