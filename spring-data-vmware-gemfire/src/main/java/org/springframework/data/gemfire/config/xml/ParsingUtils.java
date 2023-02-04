@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.xml;
@@ -452,7 +452,7 @@ abstract class ParsingUtils {
 		if (GemfireUtils.isGemfireFeatureUnavailable(element)) {
 
 			String message = String.format("[%1$s] is not supported in %2$s v%3$s",
-				element.getLocalName(), GemfireUtils.GEMFIRE_NAME, GemfireUtils.GEMFIRE_VERSION);
+				element.getLocalName(), GemfireUtils.GEMFIRE_PRODUCT_NAME, GemfireUtils.GEMFIRE_VERSION);
 
 			parserContext.getReaderContext().error(message, element);
 		}

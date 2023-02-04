@@ -36,7 +36,7 @@ public abstract class GemfireUtils extends RegionUtils {
 	private static final String GATEWAY_RECEIVER_TYPE_NAME = "org.apache.geode.cache.wan.GatewayReceiverFactory";
 	private static final String GATEWAY_SENDER_ELEMENT_NAME = "gateway-sender";
 	private static final String GATEWAY_SENDER_TYPE_NAME = "org.apache.geode.cache.wan.GatewaySenderFactory";
-	private static final String GEMFIRE_PRODUCT_NAME = "VMware GemFire";
+	public static final String GEMFIRE_PRODUCT_NAME = "VMware GemFire";
 
 	public static String apacheGeodeProductName() {
 		return GEMFIRE_PRODUCT_NAME;
