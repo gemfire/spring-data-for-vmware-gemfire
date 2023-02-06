@@ -100,7 +100,7 @@ environment or the prefix specified (if any) in the resource
 location.</p>
 
 In addition to referencing an external XML configuration file, you can
-also specify GemFire System [properties](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-gemfire_properties.html)
+also specify GemFire System [properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html)
 that use any of Spring's `Properties` support features.
 
 For example, you can use the `properties` element defined in the `util`
@@ -178,7 +178,7 @@ following listing shows:
 Comments:
 1. Attributes support various cache options. For further information
     regarding anything shown in this example, see the [GemFire
-    product documentation](https://docs.vmware.com/en/VMware-Tanzu-GemFire/). The
+    product documentation](https://docs.vmware.com/en/VMware-GemFire/). The
     `close` attribute determines whether the cache should be closed when
     the Spring application context is closed. The default is `true`.
     However, for use cases in which multiple application contexts use
@@ -187,7 +187,7 @@ Comments:
 2. Setting the `enable-auto-reconnect` attribute to `true` (the default
     is `false`) lets a disconnected GemFire member
     automatically reconnect and rejoin the GemFire cluster.
-    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-member-reconnect.html) in the GemFire product documentation.
+    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 3. Setting the `use-bean-factory-locator` attribute to `true` (it
     defaults to `false`) applies only when both Spring (XML)
@@ -202,7 +202,7 @@ Comments:
 4. Setting the `use-cluster-configuration` attribute to `true` (the
     default is `false`) enables a GemFire member to retrieve
     the common, shared Cluster-based configuration from a Locator. For more details, see
-    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
+    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
 5. Example of a `TransactionListener` callback declaration that uses a
     bean reference. The referenced bean must implement
@@ -296,7 +296,7 @@ have a clean way to know when to call
 for an application to do so, which is why this "feature" of
 GemFire is not recommended for peer `Cache` applications.
 
-For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-member-reconnect.html) in the GemFire product documentation.
+For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 ### <a id="using-cluster-based-configuration"></a>Using Cluster-based Configuration
 
@@ -333,7 +333,7 @@ when using GemFire's public Java API directly. It, too, is not
 recorded.</p>
 
 For more information about GemFire's Cluster Configuration
-Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
+Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
 ## <a id="configuring-gemfire-cacheserver"></a>Configuring a GemFire CacheServer
 

@@ -38,7 +38,7 @@ limitations under the License.
 
 Spring Data for VMware GemFire supports cache and Region snapshots by using
 GemFire's Snapshot Service. The out-of-the-box Snapshot Service support offers
-several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
+several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
 
 Snapshots let you save and subsequently reload
 the cached data later, which can be useful for moving data between

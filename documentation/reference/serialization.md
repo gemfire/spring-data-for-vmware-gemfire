@@ -41,7 +41,7 @@ compact results over
 standard Java serialization in addition to working transparently across
 various language platforms (Java, C++, and .NET).
 
-For more details, see [PDX Serialization Features](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.10/tgf/GUID-developing-data_serialization-gemfire_pdx_serialization.html).
+For more details, see [PDX Serialization Features](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-data_serialization-gemfire_pdx_serialization.html).
 
 This topic discusses the ways in which Spring Data for VMware GemFire simplifies
 and improves GemFire's custom serialization in Java.

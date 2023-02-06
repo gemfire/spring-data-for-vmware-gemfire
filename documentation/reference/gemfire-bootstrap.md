@@ -45,7 +45,7 @@ your application.
 However, it is sometimes necessary (perhaps as a requirement imposed by
 your IT organization) that GemFire be fully managed and
 operated by the provided GemFire tool suite, perhaps using
-[gfsh](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-gfsh-chapter_overview.html). By
+[gfsh](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-gfsh-chapter_overview.html). By
 using `gfsh`, GemFire bootstraps your Spring
 `ApplicationContext` rather than the other way around. Instead of an
 application server or a Java main class that uses Spring Boot,
@@ -57,10 +57,10 @@ GemFire does the bootstrapping and hosts your application.
 
 Ro bootstrap a Spring `ApplicationContext` in GemFire
 when starting a GemFire server using `gfsh`, you must use
-GemFire's [initializer](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-basic_config-the_cache-setting_cache_initializer.html) capability. An initializer block can declare a application callback that is launched after the cache is initialized by GemFire.
+GemFire's [initializer](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/basic_config-the_cache-setting_cache_initializer.html) capability. An initializer block can declare a application callback that is launched after the cache is initialized by GemFire.
 
 An initializer is declared within an
-[initializer](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-cache_xml.html#initializer)
+[initializer](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-cache_xml.html#initializer)
 element by using a minimal snippet of GemFire's native
 `cache.xml`. To bootstrap the Spring `ApplicationContext`, a `cache.xml`
 file is required, in much the same way as a minimal snippet of Spring

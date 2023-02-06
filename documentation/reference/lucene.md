@@ -35,7 +35,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-[Vmware Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/index.html)
+[Vmware GemFire](https://docs.vmware.com/en/VMware-GemFire/index.html)
 integrates with [Apache Lucene](https://lucene.apache.org/) to let you index and search data
 stored in GemFire by using Lucene queries. Search-based
 queries also include the ability to page through query results.

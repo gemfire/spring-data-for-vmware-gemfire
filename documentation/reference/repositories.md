@@ -122,7 +122,7 @@ Spring Data for VMware GemFire Repositories. With a GemFire `PARTITION` Region,
 the join must be performed on collocated `PARTITION` Regions, since
 GemFire does not support "distributed" joins. In addition, the
 Equi-Join OQL Query must be performed inside a GemFire
-Function. For more information about GemFire Equi-Join Queries, see [Performing an Equi-Join Query on Partitioned Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-partitioned_regions-join_query_partitioned_regions.html) in the GemFire product documentation.
+Function. For more information about GemFire Equi-Join Queries, see [Performing an Equi-Join Query on Partitioned Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-partitioned_regions-join_query_partitioned_regions.html) in the GemFire product documentation.
 
 You can customize many other aspects of the Spring Data for VMware GemFire's Repository infrastructure
 extension. For details about all configuration settings, see [@EnableGemfireRepositories](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/repository/config/EnableGemfireRepositories.html).
@@ -309,25 +309,25 @@ include the following:
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-query_index_hints.html">HINT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-query_index_hints.html">HINT</a></td>
       <td><code>@Hint</code></td>
       <td>OQL query index hints</td>
       <td><code>String[]</code> (Example: @Hint({ "IdIdx", "TxDateIdx" }))</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_select-the_import_statement.html">IMPORT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_select-the_import_statement.html">IMPORT</a></td>
       <td><code>@Import</code></td>
       <td>Qualify application-specific types.</td>
       <td><code>String</code> (Example: @Import("org.example.app.domain.Type"))</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_select-the_select_statement.html#limit">LIMIT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_select-the_select_statement.html#limit">LIMIT</a></td>
       <td><code>@Limit</code></td>
       <td>Limit the returned query result set.</td>
       <td><code>Integer</code> (Example: @Limit(10); default is Integer.MAX_VALUE)</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_additional-query_debugging.html">TRACE</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_additional-query_debugging.html">TRACE</a></td>
       <td><code>@Trace</code></td>
       <td>Enable OQL query-specific debugging.</td>
       <td>N/A</td>

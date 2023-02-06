@@ -44,7 +44,7 @@ backup, and several other Distributed System components to support a
 variety of application use cases with minimal effort.
 
 This topic assumes that you have basic familiarity with GemFire. For more information
-about GemFire, see the [GemFire product documentation](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-about_gemfire.html).
+about GemFire, see the [GemFire product documentation](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/about_gemfire.html).
 
 ## <a id="advantages"></a>Advantages of using Spring over GemFire `cache.xml`
 
@@ -274,7 +274,7 @@ environment or the prefix specified (if any) in the resource
 location.</p>
 
 In addition to referencing an external XML configuration file, you can
-also specify GemFire System [properties](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-gemfire_properties.html)
+also specify GemFire System [properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html)
 that use any of Spring's `Properties` support features.
 
 For example, you can use the `properties` element defined in the `util`
@@ -352,7 +352,7 @@ following listing shows:
 Comments:
 1. Attributes support various cache options. For further information
     regarding anything shown in this example, see the [GemFire
-    product documentation](https://docs.vmware.com/en/VMware-Tanzu-GemFire/). The
+    product documentation](https://docs.vmware.com/en/VMware-GemFire/). The
     `close` attribute determines whether the cache should be closed when
     the Spring application context is closed. The default is `true`.
     However, for use cases in which multiple application contexts use
@@ -361,7 +361,7 @@ Comments:
 2. Setting the `enable-auto-reconnect` attribute to `true` (the default
     is `false`) lets a disconnected GemFire member
     automatically reconnect and rejoin the GemFire cluster.
-    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-member-reconnect.html) in the GemFire product documentation.
+    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 3. Setting the `use-bean-factory-locator` attribute to `true` (it
     defaults to `false`) applies only when both Spring (XML)
@@ -376,7 +376,7 @@ Comments:
 4. Setting the `use-cluster-configuration` attribute to `true` (the
     default is `false`) enables a GemFire member to retrieve
     the common, shared Cluster-based configuration from a Locator. For more details, see
-    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
+    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
 5. Example of a `TransactionListener` callback declaration that uses a
     bean reference. The referenced bean must implement
@@ -470,7 +470,7 @@ have a clean way to know when to call
 for an application to do so, which is why this "feature" of
 GemFire is not recommended for peer `Cache` applications.
 
-For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-member-reconnect.html) in the GemFire product documentation.
+For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 #### Using Cluster-based Configuration
 
@@ -507,7 +507,7 @@ when using GemFire's public Java API directly. It, too, is not
 recorded.</p>
 
 For more information about GemFire's Cluster Configuration
-Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
+Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
 ### <a id="configuring-gemfire-cacheserver"></a>Configuring a GemFire CacheServer
 
@@ -762,7 +762,7 @@ GemFire implements the following types of Regions:
   processes that access the same server Region.
 
 For more information about the various Region types and their
-capabilities as well as configuration options, see [Region Types](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-region_types.html) in the GemFire product documentation.
+capabilities as well as configuration options, see [Region Types](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-region_types.html) in the GemFire product documentation.
 
 ### <a id="using-externally-configured-region"></a>Using an Externally Configured Region
 
@@ -899,7 +899,7 @@ Region through the following elements:
 
 * Client Region: `<client-region>`
 
-For description of these types, see [Region Types](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-region_types.html) in the GemFire product documentation.
+For description of these types, see [Region Types](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-region_types.html) in the GemFire product documentation.
 
 #### Common Region Attributes
 
@@ -1150,7 +1150,7 @@ The following example shows a Region with compression enabled:
 </beans>
 ```
 
-For more information, see [Region Compression](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-region_compression.html) in the GemFire product documentation.
+For more information, see [Region Compression](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-region_compression.html) in the GemFire product documentation.
 
 ### <a id="off-heap"></a>Off-Heap
 
@@ -1189,7 +1189,7 @@ to keep up, then the `ResourceManager` refuses additions to the cache
 until the off-heap memory manager has freed up an adequate amount of
 memory.
 
-For more information, see [Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-heap_use-off_heap_management.html) in the GemFire product documentation:
+For more information, see [Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-heap_use-off_heap_management.html) in the GemFire product documentation:
 
 ### <a id="subregions"></a>Subregions
 
@@ -1524,12 +1524,12 @@ configuration:
 ```
 
 <p class="note warning"><strong>Warning</strong>: Replicas cannot use <code>local destroy</code>
-eviction since that would invalidate them. For more information, see the <a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/index.html">GemFire product documentation</a>.</p>
+eviction since that would invalidate them. For more information, see the <a href="https://docs.vmware.com/en/VMware-GemFire/index.html">GemFire product documentation</a>.</p>
 
 When configuring Regions for overflow, you should configure the storage
 through the `disk-store` element for maximum efficiency.
 
-For a detailed description of eviction policies, see [Eviction](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-eviction-chapter_overview.html?hWord=N4IghgNiBcIKYDcCWBjALkg9gOxAXyA) in the GemFire product documentation.
+For a detailed description of eviction policies, see [Eviction](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-eviction-chapter_overview.html?hWord=N4IghgNiBcIKYDcCWBjALkg9gOxAXyA) in the GemFire product documentation.
 
 ### <a id="data-expiration"></a>Data Expiration
 
@@ -1569,7 +1569,7 @@ set:
 </gfe:replicated-region>
 ```
 
-For a detailed description of expiration policies, see [Expiration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-expiration-chapter_overview.html) in the GemFire product documentation.
+For a detailed description of expiration policies, see [Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-chapter_overview.html) in the GemFire product documentation.
 
 #### Annotation-based Data Expiration
 
@@ -1617,7 +1617,7 @@ namespace, as follows:
 ```
 
 Spring Data for VMware GemFire's `@Expiration` annotation support is implemented with
-GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
+GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
 
 The Spring Data for VMware GemFire `AnnotationBasedExpiration` class and `CustomExpiry`
 implementation is responsible for processing the Spring Data for VMware GemFire
@@ -1798,7 +1798,7 @@ For more information, see [Configuring a DiskStore](#configuring-a-diskstore).
 
 
 GemFire allows configuration of [peer-to-peer
-(P2P) event messaging](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-events-configure_p2p_event_messaging.html) to control the entry events that the Region
+(P2P) event messaging](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-events-configure_p2p_event_messaging.html) to control the entry events that the Region
 receives. Spring Data for VMware GemFire provides the `<gfe:subscription/>` sub-element to
 set the subscription policy on `REPLICATE` and `PARTITION` Regions to
 either `ALL` or `CACHE_CONTENT`. The following example shows a region
@@ -1849,7 +1849,7 @@ shows a minimal declaration:
 <gfe:replicated-region id="exampleReplica"/>
 ```
 
-For more information, see [Distributed and Replicated Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-distributed_regions-chapter_overview.html) in the GemFire product documentation.
+For more information, see [Distributed and Replicated Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-distributed_regions-chapter_overview.html) in the GemFire product documentation.
 
 ### <a id="partitioned-region"></a>Partitioned Region
 
@@ -1883,7 +1883,7 @@ redundant copies:
 </gfe:partitioned-region>
 ```
 
-For more information, see [Partitioned Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-partitioned_regions-chapter_overview.html) in the GemFire product documentation.
+For more information, see [Partitioned Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-partitioned_regions-chapter_overview.html) in the GemFire product documentation.
 
 #### Partitioned Region Attributes
 
@@ -2005,7 +2005,7 @@ servers by using the <code>server</code> element.</p>
 
 For a full list of options to set on the client and especially on the
 `Pool`, see the [Spring Data for VMware GemFire Schema](../appendix/appendix-schema.html) and
-[Client/Server Configuration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-cs_configuration-chapter_overview.html) in the GemFire product documentation.
+[Client/Server Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-cs_configuration-chapter_overview.html) in the GemFire product documentation.
 
 #### Client Interests
 
@@ -2123,7 +2123,7 @@ the cluster, set the `durable-client-timeout` attribute on the
 ```
 
 For more information, see [Client-to-Server
-Event Distribution](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-events-how_client_server_distribution_works.html) in the GemFire product documentation.
+Event Distribution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-events-how_client_server_distribution_works.html) in the GemFire product documentation.
 
 ### <a id="json-support"></a>JSON Support
 
@@ -2263,7 +2263,7 @@ XML schema for a full set of options.
 
 For more information about indexing in GemFire, see [Working
 with
-Indexes](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-query_index.html) in the GemFire product documentation.
+Indexes](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-query_index.html) in the GemFire product documentation.
 
 ### <a id="defining-indexes"></a>Defining Indexes
 
@@ -2283,7 +2283,7 @@ fired, Spring Data for VMware GemFire calls
 Defining indexes and creating them at the same time boosts speed and
 efficiency when creating indexes.
 
-For more information, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-create_multiple_indexes.html) in the GemFire product documentation.
+For more information, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-create_multiple_indexes.html) in the GemFire product documentation.
 
 ### <a id="ignoreiexists-and-override"></a>`IgnoreIfExists` and `Override`
 
@@ -2445,13 +2445,13 @@ WAN Gateways. Multiple GemFire components may share the same
 `DiskStore`. Additionally, multiple file system directories may be
 defined for a single `DiskStore`, as shown in the preceding example.
 
-For an explanation of persistence, overflow, and configuration options on `DiskStore` instances, see [Persistence and Overflow](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-storing_data_on_disk-chapter_overview.html) in the GemFire product documentation.
+For an explanation of persistence, overflow, and configuration options on `DiskStore` instances, see [Persistence and Overflow](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-storing_data_on_disk-chapter_overview.html) in the GemFire product documentation.
 
 ## <a id="configuring-snapshot-service"></a>Configuring the Snapshot Service
 
 Spring Data for VMware GemFire supports cache and Region snapshots by using
 GemFire's Snapshot Service. The out-of-the-box Snapshot Service support offers
-several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
+several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
 
 Snapshots let you save and subsequently reload
 the cached data later, which can be useful for moving data between
@@ -2729,7 +2729,7 @@ implementing, registering and executing GemFire Functions.
 Spring Data for VMware GemFire also provides XML namespace support for registering
 GemFire [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) for remote function execution.
 
-For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-function_exec-chapter_overview.html) in the GemFire product documentation.
+For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html) in the GemFire product documentation.
 
 GemFire Functions are declared as Spring beans and must
 implement the `org.apache.geode.cache.execute.Function` interface or
@@ -2815,4 +2815,4 @@ follows:
 </gfe:gateway-receiver>
 ```
 
-For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-multi_site_configuration-chapter_overview.html) in the GemFire product documentation.
+For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-multi_site_configuration-chapter_overview.html) in the GemFire product documentation.

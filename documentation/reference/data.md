@@ -156,7 +156,7 @@ For more information about the semantics and behavior of the underlying
 Geode transaction manager, see:
 
 * [CacheTransactionManager Javadoc](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheTransactionManager.html)
-* [Transactions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-transactions-chapter_overview.html) in the GemFire product documentation
+* [Transactions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-transactions-chapter_overview.html) in the GemFire product documentation
 
 ## <a id="global-jta-transaction-management"></a>Global - JTA Transaction Management
 
@@ -189,11 +189,11 @@ more than one transactional resource. Additionally, there can only be 1
 non-XA compliant resource (e.g. GemFire) in such an
 arrangement.
 
-1\. First, you must complete Steps 1-4 in [JTA Global Transactions with Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-archive_transactions-JTA_transactions.html).
+1\. First, you must complete Steps 1-4 in [JTA Global Transactions with GemFire](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-archive_transactions-JTA_transactions.html).
 This is independent of your Spring [Boot] and/or [Data for GemFire] application and must be completed
 successfully.
 
-2\. Referring to Step 5 in GemFire's [JTA Global Transactions with Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-archive_transactions-JTA_transactions.html),
+2\. Referring to Step 5 in GemFire's [JTA Global Transactions with GemFire](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-archive_transactions-JTA_transactions.html),
 Spring Data for VMware GemFire's Annotation support will attempt to set the `GemFireCache`,
 [copyOnRead](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/GemFireCache.html#setCopyOnRead-boolean-)
 property for you when using the `@EnableGemFireAsLastResource` annotation.f Spring Data for VMware GemFire's auto-configuration is unsuccessful in this regard,
@@ -253,7 +253,7 @@ attribute or the <code>copyOnRead</code> property unnecessary. Enabling transact
 reads.</p>
 
 3\. Skip Steps 6-8 in GemFire's
-[JTA Global Transactions with Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-archive_transactions-JTA_transactions.html).
+[JTA Global Transactions with GemFire](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-archive_transactions-JTA_transactions.html).
 Annotate your Spring `@Configuration` class with Spring Data for VMware GemFire's
 `@EnableGemFireAsLastResource` annotation and a combination of Spring's
 [Transaction Management](https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#transaction)
@@ -485,7 +485,7 @@ for more details.
 
 ## <a id="continuous-query"></a>Continuous Query (CQ)
 
-A powerful functionality offered by GemFire is [Continuous Query](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-chapter_overview.html) (CQ).
+A powerful functionality offered by GemFire is [Continuous Query](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html) (CQ).
 
 CQ allows a developer to create and register an OQL query, and
 then automatically be notified when new data that gets added to
@@ -505,7 +505,7 @@ based on GemFire.
 
 <p class="note"><strong>Note</strong>: Continuous Query is only supported in
 GemFire's client/server topology. Additionally, the client
-Pool used is required to have the subscription enabled. For more information, see <a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-implementing_continuous_querying.htmlPlease">Implementing Continuous Querying</a>.</p>
+Pool used is required to have the subscription enabled. For more information, see <a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-implementing_continuous_querying.htmlPlease">Implementing Continuous Querying</a>.</p>
 
 ### <a id="continuous-query-listener-container"></a>Continuous Query Listener Container
 

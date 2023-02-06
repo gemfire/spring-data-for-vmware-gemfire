@@ -104,5 +104,5 @@ follows:
 </gfe:gateway-receiver>
 ```
 
-For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-multi_site_configuration-chapter_overview.html) in the GemFire product documentation.
+For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-multi_site_configuration-chapter_overview.html) in the GemFire product documentation.
 

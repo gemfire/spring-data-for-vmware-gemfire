@@ -65,7 +65,7 @@ GemFire implements the following types of Regions:
   processes that access the same server Region.
 
 For more information about the various Region types and their
-capabilities as well as configuration options, see [Region Types](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-region_types.html) in the GemFire product documentation.
+capabilities as well as configuration options, see [Region Types](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-region_types.html) in the GemFire product documentation.
 
 ## <a id="using-externally-configured-region"></a>Using an Externally Configured Region
 
@@ -202,7 +202,7 @@ Region through the following elements:
 
 * Client Region: `<client-region>`
 
-For description of these types, see [Region Types](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-region_types.html) in the GemFire product documentation.
+For description of these types, see [Region Types](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-region_types.html) in the GemFire product documentation.
 
 ### <a id="common-region-attributes"></a>Common Region Attributes
 
@@ -453,7 +453,7 @@ The following example shows a Region with compression enabled:
 </beans>
 ```
 
-For more information, see [Region Compression](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-region_compression.html) in the GemFire product documentation.
+For more information, see [Region Compression](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-region_compression.html) in the GemFire product documentation.
 
 ## <a id="off-heap"></a>Off-Heap
 
@@ -492,7 +492,7 @@ to keep up, then the `ResourceManager` refuses additions to the cache
 until the off-heap memory manager has freed up an adequate amount of
 memory.
 
-For more information, see [Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-heap_use-off_heap_management.html) in the GemFire product documentation:
+For more information, see [Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-heap_use-off_heap_management.html) in the GemFire product documentation:
 
 ## <a id="subregions"></a>Subregions
 
@@ -827,12 +827,12 @@ configuration:
 ```
 
 <p class="note warning"><strong>Warning</strong>: Replicas cannot use <code>local destroy</code>
-eviction since that would invalidate them. For more information, see the <a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/index.html">GemFire product documentation</a>.</p>
+eviction since that would invalidate them. For more information, see the <a href="https://docs.vmware.com/en/VMware-GemFire/index.html">GemFire product documentation</a>.</p>
 
 When configuring Regions for overflow, you should configure the storage
 through the `disk-store` element for maximum efficiency.
 
-For a detailed description of eviction policies, see [Eviction](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-eviction-chapter_overview.html?hWord=N4IghgNiBcIKYDcCWBjALkg9gOxAXyA) in the GemFire product documentation.
+For a detailed description of eviction policies, see [Eviction](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-eviction-chapter_overview.html?hWord=N4IghgNiBcIKYDcCWBjALkg9gOxAXyA) in the GemFire product documentation.
 
 ## <a id="data-expiration"></a>Data Expiration
 
@@ -872,7 +872,7 @@ set:
 </gfe:replicated-region>
 ```
 
-For a detailed description of expiration policies, see [Expiration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-expiration-chapter_overview.html) in the GemFire product documentation.
+For a detailed description of expiration policies, see [Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-chapter_overview.html) in the GemFire product documentation.
 
 ### <a id="annotation-based-data-expiration"></a>Annotation-Based Data Expiration
 
@@ -920,7 +920,7 @@ namespace, as follows:
 ```
 
 Spring Data for VMware GemFire's `@Expiration` annotation support is implemented with
-GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
+GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
 
 The Spring Data for VMware GemFire `AnnotationBasedExpiration` class and `CustomExpiry`
 implementation is responsible for processing the Spring Data for VMware GemFire
@@ -1101,7 +1101,7 @@ For more information, see [Configuring a DiskStore](#configuring-a-diskstore).
 
 
 GemFire allows configuration of [peer-to-peer
-(P2P) event messaging](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-events-configure_p2p_event_messaging.html) to control the entry events that the Region
+(P2P) event messaging](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-events-configure_p2p_event_messaging.html) to control the entry events that the Region
 receives. Spring Data for VMware GemFire provides the `<gfe:subscription/>` sub-element to
 set the subscription policy on `REPLICATE` and `PARTITION` Regions to
 either `ALL` or `CACHE_CONTENT`. The following example shows a region
@@ -1152,7 +1152,7 @@ shows a minimal declaration:
 <gfe:replicated-region id="exampleReplica"/>
 ```
 
-For more information, see [Distributed and Replicated Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-distributed_regions-chapter_overview.html) in the GemFire product documentation.
+For more information, see [Distributed and Replicated Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-distributed_regions-chapter_overview.html) in the GemFire product documentation.
 
 ## <a id="partitioned-region"></a>Partitioned Region
 
@@ -1186,7 +1186,7 @@ redundant copies:
 </gfe:partitioned-region>
 ```
 
-For more information, see [Partitioned Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-partitioned_regions-chapter_overview.html) in the GemFire product documentation.
+For more information, see [Partitioned Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-partitioned_regions-chapter_overview.html) in the GemFire product documentation.
 
 ### <a id="partitioned-region-attributes"></a>Partitioned Region Attributes
 
@@ -1308,7 +1308,7 @@ servers by using the <code>server</code> element.</p>
 
 For a full list of options to set on the client and especially on the
 `Pool`, see the [Spring Data for VMware GemFire Schema](../appendix/appendix-schema.html) and
-[Client/Server Configuration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-cs_configuration-chapter_overview.html) in the GemFire product documentation.
+[Client/Server Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-cs_configuration-chapter_overview.html) in the GemFire product documentation.
 
 ### <a id="client-interests"></a>
 
@@ -1426,7 +1426,7 @@ the cluster, set the `durable-client-timeout` attribute on the
 ```
 
 For more information, see [Client-to-Server
-Event Distribution](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-events-how_client_server_distribution_works.html) in the GemFire product documentation.
+Event Distribution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-events-how_client_server_distribution_works.html) in the GemFire product documentation.
 
 ## <a id="json-support"></a>JSON Support
 
