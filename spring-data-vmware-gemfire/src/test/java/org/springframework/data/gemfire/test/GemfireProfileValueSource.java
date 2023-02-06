@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -31,7 +31,7 @@ public class GemfireProfileValueSource implements ProfileValueSource {
 
 	static {
 		Map<String, String> profileValues = new ConcurrentHashMap<String, String>(1);
-		profileValues.put(PRODUCT_NAME_KEY, System.getProperty(PRODUCT_NAME_KEY, GemfireUtils.GEMFIRE_NAME));
+		profileValues.put(PRODUCT_NAME_KEY, System.getProperty(PRODUCT_NAME_KEY, GemfireUtils.GEMFIRE_PRODUCT_NAME));
 		PROFILE_VALUES = Collections.unmodifiableMap(profileValues);
 	}
 
