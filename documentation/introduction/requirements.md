@@ -43,6 +43,6 @@ Spring Data for VMware GemFire requires:
 
 * [Spring Framework](https://spring.io/projects/spring-framework) 5 or later
 
-* [VMware Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/index.html) 9.10 or later
+* [VMware GemFire](https://docs.vmware.com/en/VMware-GemFire/index.html) 9.10 or later
 
 

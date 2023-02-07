@@ -37,7 +37,7 @@ limitations under the License.
 
 
 
-A powerful functionality offered by GemFire is [Continuous Query](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-chapter_overview.html) (CQ).
+A powerful functionality offered by GemFire is [Continuous Query](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html) (CQ).
 
 CQ allows a developer to create and register an OQL query, and
 then automatically be notified when new data that gets added to
@@ -57,7 +57,7 @@ based on GemFire.
 
 <p class="note"><strong>Note</strong>: Continuous Query is only supported in
 GemFire's client/server topology. Additionally, the client
-Pool used is required to have the subscription enabled. For more information, see <a href="https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-implementing_continuous_querying.htmlPlease">Implementing Continuous Querying</a>.</p>
+Pool used is required to have the subscription enabled. For more information, see <a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-implementing_continuous_querying.htmlPlease">Implementing Continuous Querying</a>.</p>
 
 
 ## <a id="continuous-query-listener-container"></a>Continuous Query Listener Container

@@ -36,7 +36,7 @@ limitations under the License.
 -->
 
 Spring Data for VMware GemFire includes annotation support to simplify working with
-GemFire [Function execution](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-function_exec-chapter_overview.html).
+GemFire [Function execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html).
 
 
 Under the hood, the GemFire API provides classes to implement
@@ -398,7 +398,7 @@ arguments are a variable argument `List`.
 ## <a id="function-execution-with-pdx"></a>Function Execution with PDX
 
 When using Spring Data for VMware GemFire's Function annotation support combined with
-GemFire's [PDX Serialization](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-data_serialization-gemfire_pdx_serialization.html), there are a few logistical things to keep in mind.
+GemFire's [PDX Serialization](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-data_serialization-gemfire_pdx_serialization.html), there are a few logistical things to keep in mind.
 
 As explained earlier in this section, and by way of example, you should
 typically define GemFire Functions by using POJO classes

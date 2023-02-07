@@ -50,25 +50,25 @@ as *easily* as possible.
 ## <a id="introduction"></a>Introduction
 
 GemFire can be difficult to setup and use correctly, given all
-the [configuration properties](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-gemfire_properties.html) and different configuration options:
+the [configuration properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html) and different configuration options:
 
 
 - [Java API](https://geode.apache.org/releases/latest/javadoc/)
 
-- [cache.xml](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-chapter_overview_cache_xml.html)
+- [cache.xml](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-chapter_overview_cache_xml.html)
 
-- [gfsh](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-gfsh-chapter_overview.html)
-  with [Cluster Configuration](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-chapter_overview.html)
+- [gfsh](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-gfsh-chapter_overview.html)
+  with [Cluster Configuration](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/configuring-chapter_overview.html)
 
 - [Spring XML/Java-based configuration](bootstrap.html)
 
 Further complexity arises from the different supported topologies:
 
-- [Client/Server](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-cs_configuration-chapter_overview.html)
+- [Client/Server](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-cs_configuration-chapter_overview.html)
 
-- [Peer-to-peer](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-p2p_configuration-chapter_overview.html)
+- [Peer-to-peer](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-p2p_configuration-chapter_overview.html)
 
-- [Multi-site (WAN)](https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-multi_site_configuration-chapter_overview.html)
+- [Multi-site (WAN)](https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-multi_site_configuration-chapter_overview.html)
 
 - Distributed system design patterns (such as shared-nothing architecture)
 
@@ -162,7 +162,7 @@ server can be a peer member (data node) of the cluster managing data
 without serving any clients while other peer members in the cluster are
 indeed set up to serve clients in addition to managing data. It is also
 possible to set up certain peer members in the cluster as non-data
-nodes, <a href="https://docs-staging.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-data_hosts_and_accessors.html">data accessors</a>,
+nodes, <a href="https://docs-staging.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-data_hosts_and_accessors.html">data accessors</a>,
 which do not store data, but act as a proxy to service
 clients as <code>CacheServers</code>. Many different topologies and
 cluster arrangements are supported by GemFire, but are beyond
@@ -352,7 +352,7 @@ enables single-hop data access operations.
 
 A complete discussion of Locators is beyond the scope of this document.
 For more details about Locators and their role in the clusters, see
-[How Member Discovery Works](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-topology_concepts-how_member_discovery_works.html)
+[How Member Discovery Works](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-topology_concepts-how_member_discovery_works.html)
 in the GemFire product documentation.
 
 To configure and bootstrap a standalone Locator process, do the following:
@@ -779,7 +779,7 @@ running Locators as standalone, independent processes in the
 cluster.</p>
 
 For more information about how GemFire Locators work, see
-[How Member Discovery Works](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-topologies_and_comm-topology_concepts-how_member_discovery_works.html)
+[How Member Discovery Works](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-topology_concepts-how_member_discovery_works.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-an-embedded-manager"></a>Configuring an Embedded Manager
@@ -867,7 +867,7 @@ gfsh>connect --jmx-manager=localhost[1099]
 development-time only annotation and not something used in production. We strongly recommend that Managers,
 like Locators, be standalone, independent and dedicated processes in the cluster.</p>
 
-For more details about GemFire management and monitoring, see [Managing Tanzu GemFire](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-book_intro.html)
+For more details about GemFire management and monitoring, see [Managing GemFire](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-book_intro.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-the-embedded-http-server"></a>Configuring the Embedded HTTP Server
@@ -878,8 +878,8 @@ Jetty](https://www.eclipse.org/jetty/).
 
 The embedded HTTP server is used to host GemFire's Management
 (Admin) REST API (not a publicly advertised API), the
-[Developer REST API](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-rest_apps-book_intro.html), and
-the [Pulse Monitoring Web Application](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-pulse-pulse-overview.html).
+[Developer REST API](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/rest_apps-book_intro.html), and
+the [Pulse Monitoring Web Application](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-pulse-pulse-overview.html).
 
 However, to use any of these GemFire-provided web
 applications, you must have a full installation of GemFire
@@ -924,7 +924,7 @@ To enable the embedded Memcached service, add the
 public class ServerApplication { .. }
 ```
 
-For more details about GemFire's Memcached service, see [Gemcached](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-gemcached-chapter_overview.html)
+For more details about GemFire's Memcached service, see [Gemcached](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-gemcached-chapter_overview.html)
 in the GemFire product documentation.
 
 ## <a id="configuring-logging"></a>Configuring Logging
@@ -963,7 +963,7 @@ analysis and troubleshooting when complex problems, which are often
 distributed in nature and where timing is a crucial factor, occur.
 
 When statistics are enabled, you can use GemFire's
-[Visual Statistics Display (VSD)](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-vsd-chapter_overview.html)
+[Visual Statistics Display (VSD)](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-vsd-chapter_overview.html)
 tool to analyze the statistical data that is collected.
 
 To enable statistics, annotate your application class with
@@ -987,7 +987,7 @@ properties to customize the statistics gathering and collection process.
 
 For more details, see the [@EnableStatistics annotation Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableStatistics.html).
 
-For more information about GemFire's statistics, see [Statistics](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-statistics-chapter_overview.html)
+For more information about GemFire's statistics, see [Statistics](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-statistics-chapter_overview.html)
 in the GemFire product documentation.
 
 ## <a id="configuring-pdx"></a>Configuring PDX
@@ -995,7 +995,7 @@ in the GemFire product documentation.
 
 
 
-One of the more powerful features of GemFire is [PDX serialization](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-data_serialization-gemfire_pdx_serialization.html).
+One of the more powerful features of GemFire is [PDX serialization](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-data_serialization-gemfire_pdx_serialization.html).
 While a complete discussion of PDX is beyond the scope
 of this document, serialization using PDX is a much better alternative
 to Java serialization, with the following benefits:
@@ -1145,7 +1145,7 @@ server-specific (for example `distributedSystemId`,
 `enableNetworkPartitionDetection`, `enforceUniqueHost`, `memberTimeout`,
 `redundancyZone`).
 
-For more details about GemFire properties, see [GemFire properties](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-gemfire_properties.html)
+For more details about GemFire properties, see [GemFire properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html)
 in the GemFire product documentation.
 
 ## <a id="configuring-regions"></a>Configuring Regions
@@ -1160,7 +1160,7 @@ words, we still need some place to store our application data and make
 it generally available and accessible.
 
 GemFire organizes data in a cache into
-[Data Regions](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-basic_config-data_regions-chapter_overview.html?hWord=N4IghgNiBcICZgC5gAQCcCmBzAlgewDsBnEAXyA).
+[Data Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/basic_config-data_regions-chapter_overview.html?hWord=N4IghgNiBcICZgC5gAQCcCmBzAlgewDsBnEAXyA).
 You can think of a Region as a table in a relational database.
 Generally, a Region should only store a single type of object, which
 makes it more conducive for building effective indexes and writing
@@ -1365,7 +1365,7 @@ GemFire supports many different types of Regions. Each type corresponds to the R
 which determines exactly how the data in the Region will be managed.
 
 Other configuration settings, such as the Region's `scope`, can also affect how data is managed.
-For details, see [Storage and Distribution Options](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-storage_distribution_options.html)
+For details, see [Storage and Distribution Options](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-storage_distribution_options.html)
 in the GemFire product documentation.
 
 When you annotate your application domain object types with the generic
@@ -1429,7 +1429,7 @@ type of Region. For example, the `collocatedWith` and `redundantCopies`
 attributes in the `PartitionRegion` annotation apply to server-side,
 `PARTITION` Regions only.
 
-For more details about GemFire Region types, see [Region Types](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-region_options-region_types.html)
+For more details about GemFire Region types, see [Region Types](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-region_options-region_types.html)
 in the GemFire product documentation.
 
 ### <a id="configured-cluster-defined-regions"></a>Configured Cluster-Defined Regions
@@ -1685,7 +1685,7 @@ determine the the size of objects stored in a Region.
 For a complete list of eviction configuration options, see the
 [@EnableEviction annotation Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableEviction.html)
 
-For more details about GemFire eviction, see [Eviction](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-eviction-chapter_overview.html)
+For more details about GemFire eviction, see [Eviction](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-eviction-chapter_overview.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-expiration"></a>Configuring Expiration
@@ -1751,7 +1751,7 @@ Expiration policies are usually set on the Regions in the servers.
 For a complete list of expiration configuration options,
 see the [@EnableExpiration annotation Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableExpiration.html).
 
-For more details about GemFire expiration, see [Expiration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-expiration-chapter_overview.html)
+For more details about GemFire expiration, see [Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-chapter_overview.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-compression"></a>Configuring Compression
@@ -1808,7 +1808,7 @@ bean in the Spring compressor, and set the <code>compressorBeanName</code> to th
 
 For more details, see the [@EnableCompression annotation Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableCompression.html).
 
-For more information about compression, see [Region Compression](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-region_compression.html)
+For more information about compression, see [Region Compression](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-region_compression.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-off-heap-memory"></a>Configuring Off-Heap Memory
@@ -1821,7 +1821,7 @@ Rather than storing Region entries on the JVM Heap, entries are stored
 in the system's main memory. Off-heap memory generally works best when
 the objects being stored are uniform in size, are mostly less than 128K,
 and do not need to be deserialized frequently, as explained in
-[Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-heap_use-off_heap_management.html)
+[Managing Off-Heap Memory](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-heap_use-off_heap_management.html)
 in the GemFire product documentation.
 
 To enable off-heap, annotate the application class with
@@ -1941,7 +1941,7 @@ For more details about the available attributes as well as associated configurat
 - [@EnableDiskStores Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableDiskStores.html)
 
 For more details about Region persistence and overflow, see
-[Persistence and Overflow](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-storing_data_on_disk-chapter_overview.html)
+[Persistence and Overflow](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-storing_data_on_disk-chapter_overview.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-indexes"></a>Configuring Indexes
@@ -1963,8 +1963,8 @@ full table scan.
 Indexes are created and maintained for fields on objects used in query
 predicates to match the data of interest, as expressed by the query's
 projection. Different types of indexes, such as
-[key](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-creating_key_indexes.html)
-and [hash](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-creating_hash_indexes.html)
+[key](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-creating_key_indexes.html)
+and [hash](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-creating_hash_indexes.html)
 indexes, can be created.
 
 Spring Data for VMware GemFire makes it easy to create indexes on Regions where the data is
@@ -2146,7 +2146,7 @@ You can define indexes up front and then create them all at once by
 setting the `define` attribute on the `@EnableIndexing` annotation to
 `true`.
 
-For more details, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-create_multiple_indexes.html)
+For more details, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-create_multiple_indexes.html)
 in the GemFire product documentation.
 
 Creating sensible indexes is an important task, since it is possible for
@@ -2160,19 +2160,19 @@ annotation
 * [@LuceneIndexed](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/mapping/annotation/LuceneIndexed.html)
 annotation Javadoc
 
-For more details about GemFire OQL queries, see [Querying](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-querying_basics-chapter_overview.html)
+For more details about GemFire OQL queries, see [Querying](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-querying_basics-chapter_overview.html)
 in the GemFire product documentation.
 
 For more details about GemFire indexes, see
-see [Working with Indexes](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-query_index.html)
+see [Working with Indexes](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-query_index.html)
 in the GemFire product documentation.
 
-For more details about GemFire Lucene queries, see [Apache Lucene® Integration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-tools_modules-lucene_integration.html)
+For more details about GemFire Lucene queries, see [Apache Lucene® Integration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-lucene_integration.html)
 in the GemFire product documentation.
 
 ## <a id="configuring-continuous-queries"></a>Configuring Continuous Queries
 
-Another very important and useful feature of GemFire is [Continuous Queries](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-chapter_overview.html).
+Another very important and useful feature of GemFire is [Continuous Queries](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html).
 
 In a world of Internet-enabled things, events and streams of data come
 from everywhere. Being able to handle and process a large stream of data
@@ -2239,7 +2239,7 @@ For more details about available attributes and configuration settings, see the 
 
 For more information about continuous query support, see [Continuous Query (CQ)](cq-container.html).
 
-For more information about Continuous Querying in GemFire, see [Continuous Querying](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-continuous_querying-chapter_overview.html)
+For more information about Continuous Querying in GemFire, see [Continuous Querying](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html)
 in the GemFire product documentation.
 
 ## <a id="configuring-springs-cache-abstraction"></a>Configuring Spring's Cache Abstraction
@@ -2423,7 +2423,7 @@ behalf.
 
 Pushing configuration from the client to the servers in the cluster and
 having the cluster remember it is made possible in part by the use of
-GemFire's [Cluster Configuration](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-configuring-cluster_config-gfsh_persist.html)
+GemFire's [Cluster Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html)
 service. GemFire's Cluster Configuration service is the same service used by `gfsh` to record schema-related issued by the
 user to the cluster from the shell.
 
@@ -2550,7 +2550,7 @@ properties.
 
 For more details, see the [@EnableSsl annotation Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableSsl.html).
 
-For more details about GemFire SSL support, see [SSL](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-security-ssl_overview.html).
+For more details about GemFire SSL support, see [SSL](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-security-ssl_overview.html).
 
 ## <a id="configuring-security"></a>Configuring Security
 
@@ -2558,7 +2558,7 @@ Application security is important, and
 Spring Data for VMware GemFire provides comprehensive support for securing both
 GemFire clients and servers.
 
-GemFire includes an [Integrated Security](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-security-implementing_security.html)
+GemFire includes an [Integrated Security](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-security-implementing_security.html)
 framework for handling authentication and authorization. One of
 the main features and benefits of this new security framework is that it
 integrates with [Apache Shiro](https://shiro.apache.org/) and can
@@ -2660,7 +2660,7 @@ For more details about available attributes and associated configuration propert
 the [@EnableSecurity](https://docs.spring.io/spring-data/gemfire/docs/current/api/index.html?org/springframework/data/gemfire/config/annotation/EnableSecurity.html)
 annotation Javadoc.
 
-For more details about GemFire security, see [Security](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-security-chapter_overview.html)
+For more details about GemFire security, see [Security](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-security-chapter_overview.html)
 in the GemFire product documentation.
 
 ### <a id="configuring-client-security"></a>Configuring Client Security
@@ -2718,7 +2718,7 @@ For more details about available attributes and associated configuration propert
 [@EnableSecurity](https://docs.spring.io/spring-data/gemfire/docs/current/api/index.html?org/springframework/data/gemfire/config/annotation/EnableSecurity.html)
 annotation Javadoc.
 
-For more details about GemFire security, see [Security](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-managing-security-chapter_overview.html)
+For more details about GemFire security, see [Security](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-security-chapter_overview.html)
 in the GemFire product documentation.
 
 ## <a id="configuration-tips"></a>Configuration Tips

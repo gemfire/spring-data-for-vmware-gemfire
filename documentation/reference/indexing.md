@@ -124,7 +124,7 @@ XML schema for a full set of options.
 
 For more information about indexing in GemFire, see [Working
 with
-Indexes](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-query_index.html) in the GemFire product documentation.
+Indexes](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-query_index.html) in the GemFire product documentation.
 
 ## <a id="defining-indexes"></a>Defining Indexes
 
@@ -144,7 +144,7 @@ fired, Spring Data for VMware GemFire calls
 Defining indexes and creating them at the same time boosts speed and
 efficiency when creating indexes.
 
-For more information, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-developing-query_index-create_multiple_indexes.html) in the GemFire product documentation.
+For more information, see [Creating Multiple Indexes at Once](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-create_multiple_indexes.html) in the GemFire product documentation.
 
 ## <a id="ignoreiexists-and-override"></a>`IgnoreIfExists` and `Override`
 

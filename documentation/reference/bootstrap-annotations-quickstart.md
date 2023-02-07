@@ -381,7 +381,7 @@ public class ServerApplication {
 ```
 
 Some GemFire properties are client-side only while others are server-side only. For
-the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: Tanzu GemFire Properties](https://docs.vmware.com/en/VMware-Tanzu-GemFire/9.15/tgf/GUID-reference-topics-gemfire_properties.html) in the GemFire product documentation.
+the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: GemFire Properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html) in the GemFire product documentation.
 
 See [@EnableGemFireProperties Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableGemFireProperties.html).
 
