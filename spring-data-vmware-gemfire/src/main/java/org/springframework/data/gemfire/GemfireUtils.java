@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -19,7 +19,6 @@ import org.springframework.util.ClassUtils;
  *
  * @author John Blum
  * @see org.apache.geode.cache.CacheFactory
- * @see org.apache.geode.internal.GemFireVersion
  * @see org.springframework.data.gemfire.config.support.GemfireFeature
  * @see org.springframework.data.gemfire.util.RegionUtils
  * @since 1.3.3
@@ -27,8 +26,7 @@ import org.springframework.util.ClassUtils;
 @SuppressWarnings("unused")
 public abstract class GemfireUtils extends RegionUtils {
 
-	public final static String APACHE_GEODE_NAME = "Apache Geode";
-	public final static String GEMFIRE_NAME = apacheGeodeProductName();
+	public final static String GEMFIRE_NAME = "VMware GemFire";
 	public final static String GEMFIRE_VERSION = apacheGeodeVersion();
 	public final static String UNKNOWN = "unknown";
 
@@ -42,13 +40,7 @@ public abstract class GemfireUtils extends RegionUtils {
 	private static final String GATEWAY_SENDER_TYPE_NAME = "org.apache.geode.cache.wan.GatewaySenderFactory";
 
 	public static String apacheGeodeProductName() {
-
-		try {
-			return GemFireVersion.getProductName();
-		}
-		catch (Throwable ignore) {
-			return APACHE_GEODE_NAME;
-		}
+		return GEMFIRE_NAME;
 	}
 
 	public static String apacheGeodeVersion() {

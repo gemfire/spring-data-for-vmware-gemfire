@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.support;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +45,7 @@ import org.springframework.util.Assert;
  */
 @RunWith(SpringRunner.class)
 @GemFireUnitTest
+//@Ignore("Ignored until GemFire Extension support can be added into product")
 @SuppressWarnings("unused")
 public class LuceneIndexRegionBeanFactoryPostProcessorIntegrationTests extends IntegrationTestsSupport {
 

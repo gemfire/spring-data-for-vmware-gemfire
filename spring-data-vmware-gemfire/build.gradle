@@ -3,7 +3,7 @@
 
 plugins {
   id 'java-library'
-  id "io.freefair.lombok" version "6.5.0.2"
+  id "io.freefair.lombok" version "6.6.1"
   id 'gemfire-repo-artifact-publishing'
   id 'spring-java-jar'
 }
@@ -13,24 +13,20 @@ project.ext.set("pomProjectArtifactName", "spring-data-2.7-gemfire-${gemfireBase
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
-  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
-    exclude group: 'org.apache.geode', module: 'geode-log4j'
-  }
-
   api "com.vmware.gemfire:gemfire-core:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-lucene:1.0.0-build.0"
+  api "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
   api "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:5.3.24'
-  api 'org.springframework:spring-tx:5.3.24'
-  api 'org.springframework:spring-web:5.3.24'
+  api 'org.springframework:spring-context-support:5.3.25'
+  api 'org.springframework:spring-tx:5.3.25'
+  api 'org.springframework:spring-web:5.3.25'
   api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
   api 'org.apache.shiro:shiro-spring:1.10.0'
   api 'org.aspectj:aspectjweaver:1.9.7'
@@ -50,10 +46,7 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-  testImplementation('org.springframework.data:spring-data-geode-test:0.3.4-RAJ') {
-    exclude group: 'org.mockito', module: 'mockito-core'
-    exclude group: 'org.springframework.data', module: 'spring-data-geode'
-  }
+//  testImplementation "com.vmware.gemfire:spring-test-gemfire-10.0-2.7:1.1.0-build.9999"
   testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
     exclude group: 'com.google.guava', module: 'guava'
   }
@@ -64,10 +57,17 @@ dependencies {
   testImplementation('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
+  testImplementation "junit:junit:4.13.2"
+  testImplementation "org.assertj:assertj-core:3.22.0"
+  testImplementation "org.mockito:mockito-core:4.5.1"
+  testImplementation "org.projectlombok:lombok:1.18.24"
+  testImplementation "org.springframework:spring-test:5.3.25"
+  testImplementation "org.springframework.boot:spring-boot:2.7.8"
+  testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
 
 test {
   forkEvery = 1

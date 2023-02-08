@@ -1,14 +1,16 @@
 /*
- * Copyright (c) VMware, Inc. 2022. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.process.ProcessWrapper;
+import org.springframework.data.gemfire.tests.util.FileSystemUtils;
+import org.springframework.data.gemfire.tests.util.FileUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -46,61 +50,68 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SuppressWarnings("unused")
 public class SecurityManagerSecuredLocatorToLocatorApplicationIntegrationTests
-		extends ForkingClientServerIntegrationTestsSupport {
+        extends ForkingClientServerIntegrationTestsSupport {
 
-	private static ProcessWrapper locatorProcess;
+    private static ProcessWrapper locatorProcess;
 
-	@BeforeClass
-	public static void startGeodeLocator() throws IOException {
+    @BeforeClass
+    public static void startGeodeLocator() throws IOException {
 
-		int locatorPort = findAndReserveAvailablePort();
+        File file = new File(FileSystemUtils.WORKING_DIRECTORY + "/ConfigDiskDir_LocatorAuthClient");
+        if(file.exists())
+        {
+            org.springframework.util.FileSystemUtils.deleteRecursively(file);
+        }
 
-		locatorProcess= run(LocatorAuthServer.class,
-			"-Dspring.profiles.active=locator-auth-server",
-			String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
+        int locatorPort = findAndReserveAvailablePort();
 
-		waitForServerToStart("localhost", locatorPort);
+        locatorProcess = run(LocatorAuthServer.class,
+                "-Dspring.profiles.active=locator-auth-server",
+                String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
 
-		System.setProperty("spring.data.gemfire.locators", String.format("localhost[%d]", locatorPort));
-	}
+        waitForServerToStart("localhost", locatorPort);
 
-	@AfterClass
-	public static void stopGeodeLocator() {
-		stop(locatorProcess);
-		System.clearProperty("spring.data.gemfire.locators");
-	}
+        System.setProperty("spring.data.gemfire.locators", String.format("localhost[%d]", locatorPort));
+    }
 
-	@Autowired
-	private Locator locator;
+    @AfterClass
+    public static void stopGeodeLocator() {
+        stop(locatorProcess);
+        System.clearProperty("spring.data.gemfire.locators");
+    }
 
-	@Test
-	public void locatorIsRunning() {
+    @Autowired
+    private Locator locator;
 
-		assertThat(this.locator).isNotNull();
+    @Test
+    public void locatorIsRunning() {
 
-		DistributedSystem distributedSystem = this.locator.getDistributedSystem();
+        assertThat(this.locator).isNotNull();
 
-		assertThat(distributedSystem).isNotNull();
-		assertThat(distributedSystem.isConnected()).isTrue();
-		assertThat(distributedSystem.getName()).isEqualTo("LocatorAuthClient");
-		assertThat(distributedSystem.getDistributedMember().getName()).isEqualTo("LocatorAuthClient");
-		assertThat(distributedSystem.getAllOtherMembers()).hasSize(1);
-	}
+        DistributedSystem distributedSystem = this.locator.getDistributedSystem();
 
-	@LocatorApplication(name = "LocatorAuthServer")
-	@EnableSecurity(securityManagerClass = TestSecurityManager.class)
-	@Profile("locator-auth-server")
-	static class LocatorAuthServer {
+        assertThat(distributedSystem).isNotNull();
+        assertThat(distributedSystem.isConnected()).isTrue();
+        assertThat(distributedSystem.getName()).isEqualTo("LocatorAuthClient");
+        assertThat(distributedSystem.getDistributedMember().getName()).isEqualTo("LocatorAuthClient");
+        assertThat(distributedSystem.getAllOtherMembers()).hasSize(1);
+    }
 
-		public static void main(String[] args) {
-			runSpringApplication(LocatorAuthServer.class);
-			block();
-		}
-	}
+    @LocatorApplication(name = "LocatorAuthServer")
+    @EnableSecurity(securityManagerClass = TestSecurityManager.class)
+    @Profile("locator-auth-server")
+    static class LocatorAuthServer {
 
-	@LocatorApplication(name = "LocatorAuthClient", port = 0)
-	@EnableSecurity(securityUsername = TestSecurityManager.SECURITY_USERNAME, securityPassword = TestSecurityManager.SECURITY_PASSWORD)
-	@Profile("locator-auth-client")
-	static class LocatorAuthClient { }
+        public static void main(String[] args) {
+            runSpringApplication(LocatorAuthServer.class);
+            block();
+        }
+    }
+
+    @LocatorApplication(name = "LocatorAuthClient", port = 0)
+    @EnableSecurity(securityUsername = TestSecurityManager.SECURITY_USERNAME, securityPassword = TestSecurityManager.SECURITY_PASSWORD)
+    @Profile("locator-auth-client")
+    static class LocatorAuthClient {
+    }
 
 }
