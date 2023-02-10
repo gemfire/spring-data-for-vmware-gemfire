@@ -144,7 +144,8 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	public static Cache getCache() {
 
 		try {
-			return CacheFactory.getAnyInstance();
+//			return CacheFactory.getAnyInstance();
+			return GemFireCacheImpl.getInstance();
 		}
 		catch (CacheClosedException ignore) {
 			return null;

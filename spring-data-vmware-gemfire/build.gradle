@@ -19,9 +19,9 @@ dependencies {
   api "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
   api "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
-  api "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
+  implementation "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
+  implementation "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
+  implementation "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
   api 'org.springframework:spring-context-support:5.3.25'
@@ -46,7 +46,6 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-//  testImplementation "com.vmware.gemfire:spring-test-gemfire-10.0-2.7:1.1.0-build.9999"
   testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
     exclude group: 'com.google.guava', module: 'guava'
   }
