@@ -15,8 +15,8 @@ import org.apache.geode.cache.RegionShortcut;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see RegionShortcut
- * @see RegionShortcutConverter
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.data.gemfire.RegionShortcutConverter
  * @since 1.3.4
  */
 public class RegionShortcutConverterUnitTests {

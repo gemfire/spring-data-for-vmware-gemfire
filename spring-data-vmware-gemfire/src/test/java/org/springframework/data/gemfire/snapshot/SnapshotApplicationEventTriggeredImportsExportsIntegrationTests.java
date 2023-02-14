@@ -46,12 +46,12 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see SnapshotServiceFactoryBean
- * @see ExportSnapshotApplicationEvent
- * @see ImportSnapshotApplicationEvent
- * @see SnapshotApplicationEvent
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
+ * @see org.springframework.data.gemfire.snapshot.event.ExportSnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.snapshot.event.ImportSnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.snapshot.event.SnapshotApplicationEvent
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0

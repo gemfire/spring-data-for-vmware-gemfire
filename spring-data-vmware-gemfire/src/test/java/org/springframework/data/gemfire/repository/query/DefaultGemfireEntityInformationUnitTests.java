@@ -22,7 +22,7 @@ import org.springframework.data.gemfire.repository.sample.Animal;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see DefaultGemfireEntityInformation
+ * @see org.springframework.data.gemfire.repository.query.DefaultGemfireEntityInformation
  * @since 1.4.0
  */
 public class DefaultGemfireEntityInformationUnitTests {

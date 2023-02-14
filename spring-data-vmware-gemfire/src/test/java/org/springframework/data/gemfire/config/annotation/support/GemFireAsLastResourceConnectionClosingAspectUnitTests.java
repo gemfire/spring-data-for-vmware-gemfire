@@ -30,11 +30,11 @@ import org.slf4j.Logger;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see GemFireAsLastResourceConnectionClosingAspect
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.annotation.support.GemFireAsLastResourceConnectionClosingAspect
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

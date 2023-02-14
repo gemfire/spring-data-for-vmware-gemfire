@@ -23,10 +23,10 @@ import org.xml.sax.SAXParseException;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.ExpirationAttributes
- * @see Region
- * @see ConfigurableApplicationContext
- * @see GenericXmlApplicationContext
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.GenericXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
  * @since 1.5.0
  */

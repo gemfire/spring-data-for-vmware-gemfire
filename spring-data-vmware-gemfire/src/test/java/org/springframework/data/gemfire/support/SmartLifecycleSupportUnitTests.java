@@ -23,7 +23,7 @@ import org.springframework.context.SmartLifecycle;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see SmartLifecycleSupport
+ * @see org.springframework.data.gemfire.support.SmartLifecycleSupport
  * @since 1.0.0
  */
 public class SmartLifecycleSupportUnitTests {

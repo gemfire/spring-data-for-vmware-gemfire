@@ -32,7 +32,7 @@ import org.springframework.data.gemfire.listener.ContinuousQueryListener;
  * @author Oliver Gierke
  * @author John Blum
  * @see org.junit.Test
- * @see ContinuousQueryListenerAdapter
+ * @see org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter
  */
 public class QueryListenerAdapterUnitTests {
 

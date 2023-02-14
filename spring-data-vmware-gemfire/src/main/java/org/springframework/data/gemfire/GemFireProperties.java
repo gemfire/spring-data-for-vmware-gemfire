@@ -141,6 +141,9 @@ public enum GemFireProperties {
 	UDP_FRAGMENT_SIZE(ConfigurationProperties.UDP_FRAGMENT_SIZE, Integer.class, 60000),
 	UDP_RECV_BUFFER_SIZE(ConfigurationProperties.UDP_RECV_BUFFER_SIZE, Integer.class, 1048576),
 	UPD_SEND_BUFFER_SIZE(ConfigurationProperties.UDP_SEND_BUFFER_SIZE, Integer.class, 65535),
+
+	USE_UDP_MEMBERSHIP_MESSENGER(ConfigurationProperties.USE_UDP_MEMBERSHIP_MESSENGER, Boolean.class,false),
+
 	USE_CLUSTER_CONFIGURATION(ConfigurationProperties.USE_CLUSTER_CONFIGURATION, Boolean.class, true),
 	USER_COMMAND_PACKAGES(ConfigurationProperties.USER_COMMAND_PACKAGES, String.class),
 	VALIDATE_SERIALIZABLE_OBJECTS(ConfigurationProperties.VALIDATE_SERIALIZABLE_OBJECTS, Boolean.class, false);

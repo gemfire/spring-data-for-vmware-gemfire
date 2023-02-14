@@ -33,9 +33,9 @@ import org.apache.geode.cache.server.ServerLoadProbe;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see CacheServer
- * @see CacheServerFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.server.CacheServer
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @since 1.6.0
  */
 public class CacheServerFactoryBeanUnitTests {

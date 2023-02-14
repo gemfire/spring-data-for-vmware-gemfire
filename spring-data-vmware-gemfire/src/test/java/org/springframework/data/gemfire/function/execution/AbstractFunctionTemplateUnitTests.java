@@ -26,12 +26,12 @@ import org.apache.geode.cache.execute.ResultCollector;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Function
- * @see ResultCollector
- * @see AbstractFunctionExecution
- * @see AbstractFunctionTemplate
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.ResultCollector
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionExecution
+ * @see org.springframework.data.gemfire.function.execution.AbstractFunctionTemplate
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

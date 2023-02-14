@@ -31,10 +31,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ProjectingLuceneOperations
- * @see ProjectingLuceneTemplate
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneOperations
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneTemplate
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0

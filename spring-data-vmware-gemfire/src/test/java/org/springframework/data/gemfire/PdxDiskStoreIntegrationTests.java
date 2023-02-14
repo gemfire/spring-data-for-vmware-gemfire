@@ -31,12 +31,12 @@ import org.springframework.util.Assert;
  * and to reproduce the issue in JIRA SGF-197.
  *
  * @author John Blum
- * @see File
+ * @see java.io.File
  * @see org.junit.Test
- * @see DiskStore
- * @see Region
- * @see DiskStoreFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.annotation.DirtiesContext
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner

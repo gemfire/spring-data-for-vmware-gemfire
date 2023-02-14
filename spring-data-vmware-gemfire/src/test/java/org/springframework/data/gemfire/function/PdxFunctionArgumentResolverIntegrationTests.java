@@ -39,14 +39,14 @@ import org.springframework.util.ObjectUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see FunctionContext
- * @see PdxInstance
- * @see PdxInstanceFactory
- * @see PdxSerializer
- * @see PdxInstanceEnum
- * @see PdxFunctionArgumentResolver
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.execute.FunctionContext
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.apache.geode.pdx.PdxInstanceFactory
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.internal.PdxInstanceEnum
+ * @see org.springframework.data.gemfire.function.PdxFunctionArgumentResolver
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.5.2
  */
 @SuppressWarnings("rawtypes")

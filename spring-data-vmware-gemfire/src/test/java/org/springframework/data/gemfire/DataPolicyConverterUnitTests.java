@@ -16,7 +16,7 @@ import org.apache.geode.cache.DataPolicy;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see DataPolicyConverter
+ * @see org.springframework.data.gemfire.DataPolicyConverter
  */
 public class DataPolicyConverterUnitTests {
 

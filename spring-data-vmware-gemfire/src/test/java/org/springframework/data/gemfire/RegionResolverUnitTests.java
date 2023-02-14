@@ -23,8 +23,8 @@ import org.apache.geode.cache.Region;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see RegionResolver
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.RegionResolver
  * @since 2.3.0
  */
 public class RegionResolverUnitTests {

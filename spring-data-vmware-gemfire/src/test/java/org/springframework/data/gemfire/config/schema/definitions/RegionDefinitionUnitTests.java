@@ -31,9 +31,9 @@ import org.springframework.data.gemfire.tests.util.IOUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see RegionDefinition
+ * @see org.springframework.data.gemfire.config.schema.definitions.RegionDefinition
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

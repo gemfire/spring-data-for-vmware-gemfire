@@ -35,11 +35,11 @@ import org.apache.geode.cache.RegionEvent;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mockito
- * @see MultithreadedTestCase
- * @see TestFramework
- * @see Region
- * @see AbstractCachingRegionResolver
+ * @see org.mockito.Mockito
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

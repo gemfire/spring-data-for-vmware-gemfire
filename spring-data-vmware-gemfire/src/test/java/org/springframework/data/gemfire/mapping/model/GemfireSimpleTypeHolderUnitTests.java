@@ -38,7 +38,7 @@ import org.springframework.data.gemfire.test.model.Person;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemfireSimpleTypeHolder
+ * @see org.springframework.data.gemfire.mapping.model.GemfireSimpleTypeHolder
  * @see org.springframework.data.mapping.model.SimpleTypeHolder
  * @since 1.6.3
  */

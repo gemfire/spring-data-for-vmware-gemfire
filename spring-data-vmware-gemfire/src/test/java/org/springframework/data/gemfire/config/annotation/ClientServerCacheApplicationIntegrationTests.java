@@ -34,12 +34,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ClientCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.server.CacheServer
- * @see CacheServerApplication
- * @see ClientCacheApplication
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0

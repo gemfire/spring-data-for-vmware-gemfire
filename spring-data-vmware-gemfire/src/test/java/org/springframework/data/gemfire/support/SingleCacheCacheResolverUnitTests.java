@@ -21,10 +21,10 @@ import org.springframework.data.gemfire.CacheResolver;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see ClientCache
- * @see CacheResolver
- * @see SingleCacheCacheResolver
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.SingleCacheCacheResolver
  * @since 2.3.0
  */
 public class SingleCacheCacheResolverUnitTests {

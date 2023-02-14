@@ -30,16 +30,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see GemFireCache
- * @see Region
- * @see Bean
- * @see PeerCacheApplication
- * @see GemfireTransactionManager
- * @see EnableGemfireCacheTransactions
- * @see GemfireCacheTransactionsConfiguration
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
+ * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
+ * @see org.springframework.data.gemfire.transaction.config.GemfireCacheTransactionsConfiguration
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
- * @see Transactional
+ * @see org.springframework.transaction.annotation.Transactional
  * @since 2.0.0
  */
 @RunWith(SpringRunner.class)

@@ -27,9 +27,9 @@ import org.apache.geode.cache.Region;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
- * @see GemfireFunctions
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.support.GemfireFunctions
  * @since 2.7.0
  */
 public class GemfireFunctionsUnitTests {

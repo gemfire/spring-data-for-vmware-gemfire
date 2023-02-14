@@ -33,10 +33,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
- * @see GemfireTemplate
- * @see AutoConfiguredAuthenticationConfiguration
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.config.annotation.AutoConfiguredAuthenticationConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0
@@ -108,7 +108,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests
 
 		private CacheLoader<Object, Object> newEchoCacheLoader() {
 
-			return new CacheLoader<>() {
+			return new CacheLoader<Object, Object>() {
 
 				@Override
 				public Object load(LoaderHelper<Object, Object> loaderHelper) throws CacheLoaderException {

@@ -21,11 +21,11 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * Unit tests for {@link FunctionContextInjectingArgumentResolver}.
  *
  * @author John Blum
- * @see Method
+ * @see java.lang.reflect.Method
  * @see org.junit.Test
- * @see FunctionContext
- * @see RegionFunctionContext
- * @see FunctionContextInjectingArgumentResolver
+ * @see org.apache.geode.cache.execute.FunctionContext
+ * @see org.apache.geode.cache.execute.RegionFunctionContext
+ * @see org.springframework.data.gemfire.function.FunctionContextInjectingArgumentResolver
  * @since 1.0.0
  */
 @SuppressWarnings("unused")

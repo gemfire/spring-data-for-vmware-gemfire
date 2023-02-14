@@ -30,13 +30,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Function
- * @see FunctionContext
- * @see FunctionException
- * @see ServerProcess
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionContext
+ * @see org.apache.geode.cache.execute.FunctionException
+ * @see org.springframework.data.gemfire.fork.ServerProcess
  * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
- * @see ExceptionThrowingFunctionExecution
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.function.sample.ExceptionThrowingFunctionExecution
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0

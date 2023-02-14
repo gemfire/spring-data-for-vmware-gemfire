@@ -39,10 +39,10 @@ import org.springframework.data.gemfire.util.CollectionUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see AutoRegionLookupBeanPostProcessor
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.support.AutoRegionLookupBeanPostProcessor
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

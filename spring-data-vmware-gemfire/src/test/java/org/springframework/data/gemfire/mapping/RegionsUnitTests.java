@@ -32,8 +32,8 @@ import org.springframework.data.mapping.context.MappingContext;
  * @author John J. Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Regions
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.mapping.Regions
  * @since 1.3.4
  */
 @SuppressWarnings("unchecked")

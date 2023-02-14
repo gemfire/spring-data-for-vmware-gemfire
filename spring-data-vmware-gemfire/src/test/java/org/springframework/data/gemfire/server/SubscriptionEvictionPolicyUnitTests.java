@@ -20,7 +20,7 @@ import org.apache.geode.cache.server.ClientSubscriptionConfig;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see SubscriptionEvictionPolicy
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
  * @since 1.6.0
  */
 public class SubscriptionEvictionPolicyUnitTests {

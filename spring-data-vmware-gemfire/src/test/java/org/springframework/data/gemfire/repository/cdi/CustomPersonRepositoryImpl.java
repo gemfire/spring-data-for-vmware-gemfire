@@ -11,7 +11,7 @@ package org.springframework.data.gemfire.repository.cdi;
  *
  * @author John Blum
  * @author Mark Paluch
- * @see CustomPersonRepository
+ * @see org.springframework.data.gemfire.repository.cdi.CustomPersonRepository
  * @since 1.8.0
  */
 public class CustomPersonRepositoryImpl implements CustomPersonRepository {

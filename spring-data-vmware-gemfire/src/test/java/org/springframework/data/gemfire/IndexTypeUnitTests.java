@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see IndexType
+ * @see org.springframework.data.gemfire.IndexType
  * @since 1.5.2
  */
 @SuppressWarnings("deprecation")

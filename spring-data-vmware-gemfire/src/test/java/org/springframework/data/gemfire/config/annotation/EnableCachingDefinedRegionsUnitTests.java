@@ -50,15 +50,15 @@ import org.springframework.stereotype.Service;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see Cacheable
- * @see CacheEvict
- * @see CachePut
- * @see Caching
- * @see CachingDefinedRegionsConfiguration
- * @see EnableCachingDefinedRegions
- * @see GemFireMockObjectsSupport
- * @see Service
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.cache.annotation.CacheEvict
+ * @see org.springframework.cache.annotation.CachePut
+ * @see org.springframework.cache.annotation.Caching
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport
+ * @see org.springframework.stereotype.Service
  * @since 2.0.0
  */
 public class EnableCachingDefinedRegionsUnitTests {
@@ -561,7 +561,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 	static class CacheableServiceSix {
 
 		@javax.cache.annotation.CachePut(cacheName = "RegionTwo")
-		@CacheResult(cacheName = "RegionOne")
+		@javax.cache.annotation.CacheResult(cacheName = "RegionOne")
 		public void cacheableMethodOne() {}
 
 		@CacheRemove(cacheName = "RegionThree")

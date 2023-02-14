@@ -31,15 +31,15 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.server.CacheServer
- * @see Configuration
- * @see AddCacheServerConfiguration
- * @see AddCacheServersConfiguration
- * @see CacheServerConfigurer
- * @see EnableCacheServer
- * @see EnableCacheServers
- * @see CacheServerFactoryBean
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsBeanPostProcessor
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServerConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.AddCacheServersConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
+ * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
+ * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.1.0

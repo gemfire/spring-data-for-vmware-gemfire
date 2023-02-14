@@ -56,9 +56,9 @@ import org.slf4j.Logger;
  * @see org.junit.Rule
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see SnapshotServiceFactoryBean
- * @see CacheSnapshotService
- * @see RegionSnapshotService
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
+ * @see org.apache.geode.cache.snapshot.CacheSnapshotService
+ * @see org.apache.geode.cache.snapshot.RegionSnapshotService
  * @since 1.7.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -18,12 +18,12 @@ import org.springframework.data.gemfire.repository.query.annotation.Trace;
  * The UsingQueryAnnotationExtensionsInUserRepository class...
  *
  * @author John Blum
- * @see GemfireRepository
- * @see Hint
- * @see Import
- * @see Limit
- * @see Trace
- * @see User
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.query.annotation.Hint
+ * @see org.springframework.data.gemfire.repository.query.annotation.Import
+ * @see org.springframework.data.gemfire.repository.query.annotation.Limit
+ * @see org.springframework.data.gemfire.repository.query.annotation.Trace
+ * @see org.springframework.data.gemfire.repository.sample.User
  * @since 1.7.0
  */
 @SuppressWarnings("unused")

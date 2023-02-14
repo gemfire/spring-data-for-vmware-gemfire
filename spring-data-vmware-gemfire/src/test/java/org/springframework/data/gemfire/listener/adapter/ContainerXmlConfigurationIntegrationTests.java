@@ -26,13 +26,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Test
- * @see ClientCache
- * @see Pool
- * @see CqQuery
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.query.CqQuery
  * @see org.springframework.data.gemfire.fork.CqCacheServerProcess
- * @see ContinuousQueryListenerContainer
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

@@ -35,17 +35,16 @@ import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.repository.GemfireRepository;
 
 /**
- * Integration Tests for the {@link GemfireRepositoryExtension} class and functionality in a Java EE CDI context.
+ * The GemfireRepositoryExtensionTest class is a test suite of unit tests testing the contract and proper functionality
+ * of the {@link GemfireRepositoryExtension} class in a Java EE CDI context.
  *
  * @author John Blum
  * @see jakarta.enterprise.inject.spi.Bean
- * @see jakarta.enterprise.inject.spi.BeanManager
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see GemfireMappingContext
- * @see GemfireRepository
- * @see GemfireRepositoryExtension
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryExtension
  * @since 1.0.0
  */
 @SuppressWarnings("unchecked")

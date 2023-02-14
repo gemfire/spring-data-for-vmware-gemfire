@@ -18,11 +18,11 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see CacheFactoryBean
- * @see BeanFactoryLocatorConfiguration
- * @see EnableBeanFactoryLocator
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.BeanFactoryLocatorConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.0
  */
 public class EnableBeanFactoryLocatorConfigurationIntegrationTests

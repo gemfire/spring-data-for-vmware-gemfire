@@ -28,12 +28,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Test
- * @see Pool
- * @see PoolAdapter
- * @see PoolFactoryBean
- * @see PoolParser
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.client.PoolAdapter
+ * @see org.springframework.data.gemfire.client.PoolFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.PoolParser
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */
@@ -142,7 +142,6 @@ public class PoolNamespaceIntegrationTests extends IntegrationTestsSupport {
 		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(30000);
 		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(2);
 		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(3);
-		assertThat(pool.getThreadLocalConnections()).isFalse();
 
 		ConnectionEndpointList servers = TestUtils.readField("servers", poolFactoryBean);
 

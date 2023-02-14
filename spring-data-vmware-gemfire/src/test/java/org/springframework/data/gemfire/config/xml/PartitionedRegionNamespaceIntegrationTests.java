@@ -39,12 +39,12 @@ import org.springframework.util.ObjectUtils;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see DataPolicy#PARTITION
- * @see Region
- * @see PartitionedRegionFactoryBean
- * @see PartitionedRegionParser
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.DataPolicy#PARTITION
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.xml.PartitionedRegionParser
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

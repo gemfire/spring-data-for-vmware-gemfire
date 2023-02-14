@@ -23,11 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ConfigurableListableBeanFactory
+ * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @see org.springframework.context.ApplicationContextInitializer
- * @see ConfigurableApplicationContext
- * @see DisableBeanDefinitionOverridingApplicationContextInitializer
- * @see IntegrationTestsSupport
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.data.gemfire.support.DisableBeanDefinitionOverridingApplicationContextInitializer
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.6.0

@@ -30,11 +30,11 @@ import org.apache.geode.cache.TransactionWriterException;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see TransactionWriter
- * @see ComposableTransactionWriter
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.TransactionWriter
+ * @see org.springframework.data.gemfire.transaction.event.ComposableTransactionWriter
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -40,7 +40,7 @@ import org.slf4j.Logger;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @see DefinedIndexesApplicationListener
  * @since 1.7.0
  */

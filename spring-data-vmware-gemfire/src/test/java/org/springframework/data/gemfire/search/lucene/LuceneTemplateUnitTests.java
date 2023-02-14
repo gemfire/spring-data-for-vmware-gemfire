@@ -41,17 +41,17 @@ import org.apache.geode.cache.lucene.PageableLuceneQueryResults;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see LuceneQuery
- * @see LuceneQueryFactory
- * @see LuceneQueryProvider
- * @see LuceneResultStruct
- * @see LuceneService
- * @see PageableLuceneQueryResults
- * @see LuceneTemplate
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.lucene.LuceneQuery
+ * @see org.apache.geode.cache.lucene.LuceneQueryFactory
+ * @see org.apache.geode.cache.lucene.LuceneQueryProvider
+ * @see org.apache.geode.cache.lucene.LuceneResultStruct
+ * @see org.apache.geode.cache.lucene.LuceneService
+ * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
+ * @see org.springframework.data.gemfire.search.lucene.LuceneTemplate
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

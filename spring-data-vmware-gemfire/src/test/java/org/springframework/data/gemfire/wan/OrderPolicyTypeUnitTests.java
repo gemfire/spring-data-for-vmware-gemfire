@@ -15,8 +15,8 @@ import org.apache.geode.cache.wan.GatewaySender;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GatewaySender.OrderPolicy
- * @see OrderPolicyType
+ * @see org.apache.geode.cache.wan.GatewaySender.OrderPolicy
+ * @see org.springframework.data.gemfire.wan.OrderPolicyType
  * @since 1.7.0
  */
 public class OrderPolicyTypeUnitTests {

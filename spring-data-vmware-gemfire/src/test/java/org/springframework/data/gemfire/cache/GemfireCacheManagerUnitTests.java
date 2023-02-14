@@ -34,8 +34,8 @@ import org.springframework.cache.Cache;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
- * @see MockitoJUnitRunner
+ * @see org.mockito.Mock
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

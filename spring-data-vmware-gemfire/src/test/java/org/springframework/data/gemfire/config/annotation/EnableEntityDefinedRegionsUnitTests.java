@@ -59,20 +59,20 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see EnableEntityDefinedRegions
- * @see EntityDefinedRegionsConfiguration
- * @see ClientRegion
- * @see LocalRegion
- * @see PartitionRegion
- * @see ReplicateRegion
- * @see ReplicateRegion
- * @see MockObjectsSupport
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
+ * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
+ * @see org.springframework.data.gemfire.tests.mock.MockObjectsSupport
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 @SuppressWarnings({ "unchecked", "unused" })

@@ -36,9 +36,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsApplicationContextInitializer
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.context.GemFireMockObjectsApplicationContextInitializer
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

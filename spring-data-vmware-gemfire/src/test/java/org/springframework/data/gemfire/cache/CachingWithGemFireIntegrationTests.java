@@ -2,6 +2,7 @@
  * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.springframework.data.gemfire.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Map;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.apache.geode.cache.Region;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ActiveProfiles;
@@ -31,8 +32,8 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Cacheable
- * @see IntegrationTestsSupport
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ActiveProfiles
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
@@ -47,12 +48,11 @@ public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport 
 	@Autowired
 	private NamedNumbersService namedNumbersService;
 
-	@Autowired
-	@Qualifier("NamedNumbersRegion")
+	@Resource(name = "NamedNumbersRegion")
 	private Region<String, Integer> namedNumbersRegion;
 
 	@Test(expected = NullPointerException.class)
-	public void regionCacheHitIsCorrect() {
+	public void testRegionCacheHit() {
 
 		assertThat(namedNumbersRegion.get("eleven")).isNull();
 		assertThat(namedNumbersRegion.containsKey("eleven")).isFalse();
@@ -75,7 +75,7 @@ public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport 
 	}
 
 	@Test
-	public void regionCachingIsCorrect() {
+	public void testRegionCaching() {
 
 		assertThat(namedNumbersService.wasCacheMiss()).isFalse();
 		assertThat(namedNumbersService.get("one").intValue()).isEqualTo(1);

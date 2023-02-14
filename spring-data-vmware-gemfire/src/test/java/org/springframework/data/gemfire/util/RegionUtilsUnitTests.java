@@ -22,7 +22,7 @@ import org.apache.geode.internal.cache.LocalRegion;
  * Unit Tests for {@link RegionUtils}.
  *
  * @author John Blum
- * @see RegionUtils
+ * @see org.springframework.data.gemfire.util.RegionUtils
  * @since 2.1.0
  */
 public class RegionUtilsUnitTests {

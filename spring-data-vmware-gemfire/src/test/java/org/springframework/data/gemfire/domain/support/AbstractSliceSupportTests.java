@@ -31,7 +31,7 @@ import org.springframework.data.domain.Pageable;
  * @see org.junit.runner.RunWith
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

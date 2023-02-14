@@ -29,12 +29,12 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
- * @see PdxSerializer
- * @see EnablePdx
- * @see PdxConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.data.gemfire.config.annotation.EnablePdx
+ * @see org.springframework.data.gemfire.config.annotation.PdxConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 public class EnablePdxConfigurationIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

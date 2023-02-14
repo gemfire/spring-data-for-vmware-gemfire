@@ -39,17 +39,17 @@ import org.springframework.data.gemfire.wan.OrderPolicyType;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see Region
- * @see GatewaySender
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.wan.GatewaySender
  * @see org.springframework.context.annotation.Configuration
- * @see EnableGatewaySender
- * @see EnableGatewaySenders
- * @see GatewaySenderConfigurer
- * @see GatewaySenderConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see GatewaySenderFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySender
+ * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySenders
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySenderConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.GatewaySenderConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
@@ -99,9 +99,9 @@ public class GatewaySenderConfigurationIntegrationTests extends SpringApplicatio
 			assertThat(gatewaySender.getSocketBufferSize()).isEqualTo(16384);
 
 			assertThat(gatewaySender.getGatewayTransportFilters().size()).isEqualTo(2);
-			assertThat(((TestGatewayTransportFilter) gatewaySender
+			assertThat(((GatewaySenderConfigurationIntegrationTests.TestGatewayTransportFilter) gatewaySender
 				.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean2");
-			assertThat(((TestGatewayTransportFilter) gatewaySender
+			assertThat(((GatewaySenderConfigurationIntegrationTests.TestGatewayTransportFilter) gatewaySender
 				.getGatewayTransportFilters().get(1)).name).isEqualTo("transportBean1");
 			assertThat(gatewaySenderConfigurer.beanNames.get(gatewaySender.getId()).toArray())
 				.isEqualTo(new String[] { "transportBean2", "transportBean1" });
@@ -208,7 +208,7 @@ public class GatewaySenderConfigurationIntegrationTests extends SpringApplicatio
 		GatewaySender gatewaySender = getBean("TestGatewaySender", GatewaySender.class);
 
 		assertThat(gatewaySender.getGatewayTransportFilters().size()).isEqualTo(1);
-		assertThat(((TestGatewayTransportFilter) gatewaySender
+		assertThat(((GatewaySenderConfigurationIntegrationTests.TestGatewayTransportFilter) gatewaySender
 			.getGatewayTransportFilters().get(0)).name).isEqualTo("transportBean1");
 
 		gatewaySender = getBean("TestGatewaySender2", GatewaySender.class);

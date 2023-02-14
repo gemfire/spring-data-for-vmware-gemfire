@@ -26,10 +26,10 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see MemberBasedFunctionExecutionBeanDefinitionBuilder
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.function.config.MemberBasedFunctionExecutionBeanDefinitionBuilder
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

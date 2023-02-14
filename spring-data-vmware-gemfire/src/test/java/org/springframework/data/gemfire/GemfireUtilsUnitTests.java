@@ -25,7 +25,7 @@ import org.apache.geode.distributed.DistributedSystem;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemfireUtils
+ * @see org.springframework.data.gemfire.GemfireUtils
  * @since 1.3.3
  */
 public class GemfireUtilsUnitTests {

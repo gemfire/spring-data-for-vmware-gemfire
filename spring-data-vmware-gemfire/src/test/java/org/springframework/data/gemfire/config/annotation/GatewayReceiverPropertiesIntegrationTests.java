@@ -33,12 +33,12 @@ import org.springframework.mock.env.MockPropertySource;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GatewayReceiver
- * @see Bean
- * @see GatewayReceiverConfigurer
- * @see GatewayReceiverConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see GatewayReceiverFactoryBean
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.GatewayReceiverConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0
@@ -68,7 +68,7 @@ public class GatewayReceiverPropertiesIntegrationTests extends SpringApplication
     @Test
     public void gatewayReceiverPropertiesConfiguration() {
 
-        newApplicationContext(TestConfigurationWithProperties.class);
+        newApplicationContext(GatewayReceiverPropertiesIntegrationTests.TestConfigurationWithProperties.class);
 
         assertThat(requireApplicationContext().containsBean("GatewayReceiver")).isTrue();
 
@@ -94,17 +94,17 @@ public class GatewayReceiverPropertiesIntegrationTests extends SpringApplication
 
         @Bean("transportBean1")
         GatewayTransportFilter createGatewayTransportBean1() {
-            return new TestGatewayTransportFilter("transportBean1");
+            return new GatewayReceiverPropertiesIntegrationTests.TestGatewayTransportFilter("transportBean1");
         }
 
         @Bean("transportBean2")
         GatewayTransportFilter createGatewayTransportBean2() {
-            return new TestGatewayTransportFilter("transportBean2");
+            return new GatewayReceiverPropertiesIntegrationTests.TestGatewayTransportFilter("transportBean2");
         }
 
         @Bean("gatewayConfigurer")
         GatewayReceiverConfigurer gatewayReceiverConfigurer() {
-            return new TestGatewayReceiverConfigurer();
+            return new GatewayReceiverPropertiesIntegrationTests.TestGatewayReceiverConfigurer();
         }
     }
 
@@ -120,7 +120,7 @@ public class GatewayReceiverPropertiesIntegrationTests extends SpringApplication
         @Override
         public void configure(String beanName, GatewayReceiverFactoryBean bean) {
             bean.getTransportFilters().stream().forEach(transportFilter ->
-                this.beanNames.add(((TestGatewayTransportFilter) transportFilter).name));
+                this.beanNames.add(((GatewayReceiverPropertiesIntegrationTests.TestGatewayTransportFilter) transportFilter).name));
         }
     }
 

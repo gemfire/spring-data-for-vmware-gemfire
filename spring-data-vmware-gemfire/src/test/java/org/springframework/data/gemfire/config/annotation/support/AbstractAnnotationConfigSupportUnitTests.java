@@ -46,12 +46,12 @@ import org.springframework.data.gemfire.test.model.Person;
  * Unit Tests for {@link AbstractAnnotationConfigSupport}.
  *
  * @author John Blum
- * @see Annotation
+ * @see java.lang.annotation.Annotation
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see AbstractAnnotationConfigSupport
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport
  * @since 1.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

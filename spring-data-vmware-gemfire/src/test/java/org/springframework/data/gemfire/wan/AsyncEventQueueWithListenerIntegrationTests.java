@@ -31,11 +31,11 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see AsyncEventListener
- * @see AsyncEventQueue
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
- * @see AsyncEventQueueFactoryBean
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
+ * @see org.springframework.data.gemfire.wan.AsyncEventQueueFactoryBean
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0
@@ -99,9 +99,9 @@ public class AsyncEventQueueWithListenerIntegrationTests extends IntegrationTest
 	 * The QueueAsyncEventListener class is an implementation of the AsyncEventListener interface that contains
 	 * a reference to the AsyncEventQueue upon which it is registered.
 	 *
-	 * @see AsyncEvent
-	 * @see AsyncEventListener
-	 * @see AsyncEventQueue
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEvent
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
+	 * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
 	 */
 	@SuppressWarnings("unused")
 	public static class TestAsyncEventListener implements AsyncEventListener {

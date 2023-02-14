@@ -32,12 +32,12 @@ import lombok.Setter;
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Test
- * @see CacheLoader
- * @see Region
- * @see BeanFactory
- * @see GemfireBeanFactoryLocator
- * @see WiringDeclarableSupport
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.CacheLoader
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
+ * @see org.springframework.data.gemfire.support.WiringDeclarableSupport
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

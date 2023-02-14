@@ -22,12 +22,12 @@ import org.aopalliance.intercept.MethodInterceptor;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see MethodInterceptor
- * @see PdxInstance
- * @see PdxInstanceMethodInterceptorFactory
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.aopalliance.intercept.MethodInterceptor
+ * @see org.apache.geode.pdx.PdxInstance
+ * @see org.springframework.data.gemfire.search.lucene.support.PdxInstanceMethodInterceptorFactory
  * @since 1.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -30,11 +30,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see AsyncEventQueue
- * @see GatewaySender
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0

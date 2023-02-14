@@ -47,9 +47,9 @@ import org.springframework.data.gemfire.function.execution.GemfireFunctionOperat
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see FunctionGemfireAdminTemplate
+ * @see org.springframework.data.gemfire.config.admin.remote.FunctionGemfireAdminTemplate
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

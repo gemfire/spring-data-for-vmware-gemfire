@@ -54,11 +54,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
- * @see ClassPathResource
- * @see LocatorProcess
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.core.io.ClassPathResource
+ * @see org.springframework.data.gemfire.fork.LocatorProcess
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @since 1.5.0
  */
 @SuppressWarnings("unused")

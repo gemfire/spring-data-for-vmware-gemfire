@@ -17,8 +17,8 @@ import lombok.ToString;
  * {@link ComplexType} class used for testing purposes.
  *
  * @author John Blum
- * @see Id
- * @see Region
+ * @see org.springframework.data.annotation.Id
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 2.5.0
  */
 @Data

@@ -21,8 +21,8 @@ import org.apache.geode.cache.util.ObjectSizer;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see EvictionAttributes
- * @see EvictionAttributesFactoryBean
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean
  * @since 1.3.4
  */
 public class EvictionAttributesFactoryBeanTest {

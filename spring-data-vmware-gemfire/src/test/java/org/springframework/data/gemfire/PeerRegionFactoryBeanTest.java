@@ -45,15 +45,15 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  *
  * @author David Turanski
  * @author John Blum
- * @see Cache
- * @see DataPolicy
- * @see PartitionAttributes
- * @see Region
- * @see RegionAttributes
- * @see RegionFactory
- * @see RegionShortcut
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.PartitionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.apache.geode.cache.RegionFactory
+ * @see org.apache.geode.cache.RegionShortcut
  * @see PeerRegionFactoryBean
- * @see AbstractRegionFactoryBeanTests
+ * @see org.springframework.data.gemfire.test.support.AbstractRegionFactoryBeanTests
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {

@@ -31,13 +31,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see CustomExpiry
- * @see ExpirationAttributes
- * @see Region
- * @see AnnotationBasedExpiration
- * @see ExpirationAttributesFactoryBean
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.CustomExpiry
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.expiration.AnnotationBasedExpiration
+ * @see org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0

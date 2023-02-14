@@ -27,11 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see DataPolicy
- * @see Region
- * @see RegionShortcut
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionShortcut
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0
@@ -167,7 +167,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutDefaults.getAttributes().isDiskSynchronous()).isFalse();
 		assertThat(shortcutDefaults.getAttributes().getIgnoreJTA()).isTrue();
 		assertThat(shortcutDefaults.getAttributes().getInitialCapacity()).isEqualTo(101);
-		assertThat(new Float(shortcutDefaults.getAttributes().getLoadFactor())).isEqualTo(new Float(0.85f));
+		assertThat(shortcutDefaults.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 		assertThat(shortcutDefaults.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
 		assertThat(shortcutDefaults.getAttributes().getMulticastEnabled()).isFalse();
 		assertThat(shortcutDefaults.getAttributes().getValueConstraint()).isEqualTo(String.class);
@@ -195,7 +195,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutOverrides.getAttributes().isDiskSynchronous()).isTrue();
 		assertThat(shortcutOverrides.getAttributes().getIgnoreJTA()).isFalse();
 		assertThat(shortcutOverrides.getAttributes().getInitialCapacity()).isEqualTo(51);
-		assertThat(new Float(shortcutOverrides.getAttributes().getLoadFactor())).isEqualTo(new Float(0.72f));
+		assertThat(shortcutOverrides.getAttributes().getLoadFactor()).isEqualTo(0.72f);
 		assertThat(shortcutOverrides.getAttributes().getKeyConstraint()).isEqualTo(String.class);
 		assertThat(shortcutOverrides.getAttributes().getValueConstraint()).isEqualTo(Object.class);
 		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes()).isNotNull();

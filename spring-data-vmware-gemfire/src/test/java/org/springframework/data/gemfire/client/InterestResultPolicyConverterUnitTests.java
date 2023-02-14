@@ -16,9 +16,9 @@ import org.apache.geode.cache.InterestResultPolicy;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see InterestResultPolicy
- * @see InterestResultPolicyConverter
- * @see InterestResultPolicyType
+ * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.springframework.data.gemfire.client.InterestResultPolicyConverter
+ * @see org.springframework.data.gemfire.client.InterestResultPolicyType
  * @since 1.6.0
  */
 public class InterestResultPolicyConverterUnitTests {

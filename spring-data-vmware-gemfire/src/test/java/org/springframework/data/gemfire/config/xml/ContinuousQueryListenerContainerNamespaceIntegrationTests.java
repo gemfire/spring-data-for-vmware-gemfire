@@ -38,11 +38,11 @@ import org.springframework.util.ErrorHandler;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see ClientCache
- * @see CqListener
- * @see CqQuery
- * @see ContinuousQueryListenerContainer
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.CqListener
+ * @see org.apache.geode.cache.query.CqQuery
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0

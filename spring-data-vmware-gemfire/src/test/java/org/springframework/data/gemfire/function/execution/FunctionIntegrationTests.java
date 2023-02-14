@@ -36,10 +36,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see Function
- * @see GemfireFunction
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

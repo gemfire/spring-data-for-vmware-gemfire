@@ -46,12 +46,12 @@ import lombok.ToString;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.distributed.Locator
- * @see Bean
- * @see Configuration
- * @see Import
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0

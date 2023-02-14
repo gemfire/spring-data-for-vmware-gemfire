@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.Vector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,34 +33,21 @@ import org.springframework.data.gemfire.test.support.MapBuilder;
  * Unit Tests for {@link CollectionUtils}.
  *
  * @author John Blum
- * @see Iterable
- * @see Collection
- * @see Arrays
- * @see Collection
- * @see Collections
- * @see Enumeration
- * @see Iterator
- * @see List
- * @see Map
- * @see Set
+ * @see java.lang.Iterable
+ * @see java.util.Collection
+ * @see java.util.Collections
+ * @see java.util.Enumeration
+ * @see java.util.Iterator
+ * @see java.util.List
+ * @see java.util.Map
+ * @see java.util.Set
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see CollectionUtils
+ * @see org.springframework.data.gemfire.util.CollectionUtils
  * @since 1.7.0
  */
 public class CollectionUtilsUnitTests {
 
-	@SuppressWarnings("unchecked")
-	private <T> Vector<T> vectorOf(T... elements) {
-
-		T[] nullSafeElements = (T[]) ArrayUtils.nullSafeArray(elements, Object.class);
-
-		Vector<T> vector = new Vector<>(nullSafeElements.length);
-
-		Collections.addAll(vector, nullSafeElements);
-
-		return vector;
-	}
 	@Test
 	public void addAllIterableElementsToList() {
 
@@ -128,7 +114,6 @@ public class CollectionUtilsUnitTests {
 	}
 
 	@Test
-	@SuppressWarnings("all")
 	public void asSetContainsAllArrayElements() {
 
 		Object[] elements = { "a", "b", "c" };
@@ -141,7 +126,6 @@ public class CollectionUtilsUnitTests {
 	}
 
 	@Test
-	@SuppressWarnings("all")
 	public void asSetContainsUniqueArrayElements() {
 
 		Object[] elements = { 1, 2, 1 };
@@ -205,32 +189,6 @@ public class CollectionUtilsUnitTests {
 		assertThat(iterable).isNotNull();
 		assertThat(iterable.iterator()).isNotNull();
 		assertThat(iterable.iterator().hasNext()).isFalse();
-	}
-
-	@Test
-	public void iterableOfEnumeration() {
-
-		Enumeration<Integer> enumeration = vectorOf(1, 2, 3).elements();
-
-		Iterable<Integer> iterable = CollectionUtils.iterable(enumeration);
-
-		assertThat(iterable).isNotNull();
-		//assertThat(iterable).containsExactly(1, 2, 3);
-		assertThat(StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toSet()))
-			.containsExactly(1, 2, 3);
-	}
-
-	@Test
-	public void iterableOfSingleEnumeration() {
-
-		Enumeration<Integer> enumeration = vectorOf(1).elements();
-
-		Iterable<Integer> iterable = CollectionUtils.iterable(enumeration);
-
-		assertThat(iterable).isNotNull();
-		//assertThat(iterable).containsExactly(1);
-		assertThat(StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toSet()))
-			.containsExactly(1);
 	}
 
 	@Test

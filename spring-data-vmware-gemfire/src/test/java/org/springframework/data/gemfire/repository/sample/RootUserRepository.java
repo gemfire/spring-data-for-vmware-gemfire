@@ -13,8 +13,8 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * The RootUserRepository class is a DAO for accessing and persisting RootUsers.
  *
  * @author John Blum
- * @see GemfireRepository
- * @see RootUser
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.sample.RootUser
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

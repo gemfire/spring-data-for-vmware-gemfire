@@ -22,7 +22,7 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Filter
+ * @see org.springframework.data.gemfire.util.Filter
  * @since 1.0.0
  */
 public class FilterUnitTests {

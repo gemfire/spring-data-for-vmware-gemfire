@@ -193,11 +193,6 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 				resolveProperty(poolProperty("subscription-redundancy"),
 					enablePoolAttributes.<Integer>getNumber("subscriptionRedundancy"))));
 
-		poolFactoryBean.addPropertyValue("threadLocalConnections",
-			resolveProperty(namedPoolProperty(poolName, "thread-local-connections"),
-				resolveProperty(poolProperty("thread-local-connections"),
-					enablePoolAttributes.getBoolean("threadLocalConnections"))));
-
 		configurePoolConnections(poolName, enablePoolAttributes, poolFactoryBean);
 
 		registry.registerBeanDefinition(poolName, poolFactoryBean.getBeanDefinition());

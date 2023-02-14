@@ -29,10 +29,10 @@ import org.springframework.data.gemfire.test.support.AbstractNativeCacheTests;
  * @author John Blum
  * @author Oliver Gierke
  * @see org.junit.Test
- * @see MultithreadedTestCase
- * @see TestFramework
- * @see Region
- * @see Cache
+ * @see edu.umd.cs.mtc.MultithreadedTestCase
+ * @see edu.umd.cs.mtc.TestFramework
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.cache.Cache
  */
 public class GemfireCacheIntegrationTests extends AbstractNativeCacheTests<Region<Object, Object>> {
 

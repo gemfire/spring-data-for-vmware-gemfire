@@ -44,13 +44,13 @@ import lombok.RequiredArgsConstructor;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see LuceneResultStruct
- * @see PageableLuceneQueryResults
- * @see ProjectingLuceneAccessor
- * @see LucenePage
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.lucene.LuceneResultStruct
+ * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
+ * @see org.springframework.data.gemfire.search.lucene.support.LucenePage
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

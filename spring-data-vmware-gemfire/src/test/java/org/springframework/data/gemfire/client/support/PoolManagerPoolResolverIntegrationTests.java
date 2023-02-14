@@ -33,12 +33,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see ClientCache
- * @see Pool
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.Pool
  * @see org.apache.geode.cache.client.PoolManager
- * @see PoolResolver
- * @see PoolManagerPoolResolver
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.client.PoolResolver
+ * @see org.springframework.data.gemfire.client.support.PoolManagerPoolResolver
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.3.0

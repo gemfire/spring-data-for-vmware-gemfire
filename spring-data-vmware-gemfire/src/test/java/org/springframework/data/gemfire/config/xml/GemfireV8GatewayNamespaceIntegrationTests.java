@@ -26,10 +26,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GatewayReceiver
- * @see GatewaySender
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
  * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  * @see org.springframework.test.context.ContextConfiguration

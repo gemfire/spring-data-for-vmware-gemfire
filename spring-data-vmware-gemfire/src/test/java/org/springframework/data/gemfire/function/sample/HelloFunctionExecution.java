@@ -12,7 +12,7 @@ import org.springframework.data.gemfire.function.annotation.OnMember;
  * for the 'hello' GemFire Function and hello greetings.
  *
  * @author John Blum
- * @see OnMember
+ * @see org.springframework.data.gemfire.function.annotation.OnMember
  * @since 1.7.0
  */
 @OnMember(groups = "HelloGroup")

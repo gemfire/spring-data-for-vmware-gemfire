@@ -299,7 +299,6 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		clientCacheFactory.setPoolSubscriptionEnabled(pool.getSubscriptionEnabled(getSubscriptionEnabled()));
 		clientCacheFactory.setPoolSubscriptionMessageTrackingTimeout(pool.getSubscriptionMessageTrackingTimeout(getSubscriptionMessageTrackingTimeout()));
 		clientCacheFactory.setPoolSubscriptionRedundancy(pool.getSubscriptionRedundancy(getSubscriptionRedundancy()));
-		clientCacheFactory.setPoolThreadLocalConnections(pool.getThreadLocalConnections(getThreadLocalConnections()));
 
 		AtomicBoolean noServers = new AtomicBoolean(getServers().isEmpty());
 

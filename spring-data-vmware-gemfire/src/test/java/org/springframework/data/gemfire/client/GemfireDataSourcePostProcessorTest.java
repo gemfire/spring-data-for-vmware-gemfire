@@ -57,15 +57,15 @@ import org.springframework.data.gemfire.util.RegionUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see RegionAttributes
- * @see ClientCache
- * @see ClientRegionFactory
- * @see Function
- * @see BeanFactory
- * @see ConfigurableBeanFactory
- * @see GemfireDataSourcePostProcessor
- * @see ListRegionsOnServerFunction
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionAttributes
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionFactory
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.ConfigurableBeanFactory
+ * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
+ * @see org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

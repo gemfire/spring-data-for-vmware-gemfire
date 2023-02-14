@@ -32,13 +32,13 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see EvictionAttributes
- * @see Region
- * @see EnableEviction
- * @see EvictionConfiguration
- * @see EvictionAttributesFactoryBean
+ * @see org.apache.geode.cache.EvictionAttributes
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.EnableEviction
+ * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration
+ * @see org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 public class EnableEvictionConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {

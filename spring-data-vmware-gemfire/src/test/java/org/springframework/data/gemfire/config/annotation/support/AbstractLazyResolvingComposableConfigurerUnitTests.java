@@ -36,11 +36,11 @@ import org.springframework.lang.Nullable;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
- * @see Mockito
- * @see FactoryBean
- * @see ListableBeanFactory
- * @see AbstractLazyResolvingComposableConfigurer
+ * @see org.mockito.Mock
+ * @see org.mockito.Mockito
+ * @see org.springframework.beans.factory.FactoryBean
+ * @see org.springframework.beans.factory.ListableBeanFactory
+ * @see org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer
  * @since 2.2.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -27,13 +27,13 @@ import org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Cache
- * @see ClientCache
- * @see ClientRegionShortcut
- * @see AnnotationMetadata
- * @see GemfireDataSourcePostProcessor
- * @see ClusterDefinedRegionsConfiguration
- * @see EnableClusterDefinedRegions
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.core.type.AnnotationMetadata
+ * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
+ * @see org.springframework.data.gemfire.config.annotation.ClusterDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableClusterDefinedRegions
  * @since 2.1.0
  */
 public class EnableClusterDefinedRegionsUnitTests {

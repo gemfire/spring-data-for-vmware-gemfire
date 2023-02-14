@@ -25,11 +25,11 @@ import org.apache.geode.cache.lucene.LuceneService;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see LuceneServiceFactoryBean
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean
  * @since 1.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

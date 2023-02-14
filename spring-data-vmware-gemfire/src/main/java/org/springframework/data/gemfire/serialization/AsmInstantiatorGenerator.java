@@ -23,6 +23,7 @@ import org.springframework.asm.MethodVisitor;
 import org.springframework.asm.Opcodes;
 import org.springframework.asm.Type;
 import org.springframework.beans.BeanUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
@@ -72,13 +73,12 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 		this(AsmInstantiatorGenerator.class.getClassLoader());
 	}
 
-	public AsmInstantiatorGenerator(final ClassLoader classLoader) {
-		Assert.notNull(classLoader);
-		this.classLoader = AccessController.doPrivileged(new PrivilegedAction<BytecodeClassLoader>() {
-			public BytecodeClassLoader run() {
-				return new BytecodeClassLoader(classLoader);
-			}
-		});
+	public AsmInstantiatorGenerator(@NonNull final ClassLoader classLoader) {
+		if(classLoader == null)
+		{
+			throw new NullPointerException("Classloader must not be null");
+		}
+		this.classLoader = AccessController.doPrivileged((PrivilegedAction<BytecodeClassLoader>) () -> new BytecodeClassLoader(classLoader));
 	}
 
 	public Instantiator getInstantiator(Class<? extends DataSerializable> clazz, int classId) {

@@ -47,11 +47,11 @@ import org.springframework.util.MethodInvoker;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mock
- * @see Spy
- * @see PdxSerializer
- * @see MockitoJUnitRunner
- * @see EnablePdx
- * @see PdxConfiguration
+ * @see org.mockito.Spy
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.config.annotation.EnablePdx
+ * @see org.springframework.data.gemfire.config.annotation.PdxConfiguration
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

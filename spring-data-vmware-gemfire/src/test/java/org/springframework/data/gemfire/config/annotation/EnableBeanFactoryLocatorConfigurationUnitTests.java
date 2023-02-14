@@ -25,10 +25,10 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see CacheFactoryBean
- * @see ClientCacheFactoryBean
- * @see BeanFactoryLocatorConfiguration
- * @see EnableBeanFactoryLocator
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.BeanFactoryLocatorConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
  * @since 2.2.1
  */
 public class EnableBeanFactoryLocatorConfigurationUnitTests {

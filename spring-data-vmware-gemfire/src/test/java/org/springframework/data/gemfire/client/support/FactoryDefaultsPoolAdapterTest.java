@@ -20,11 +20,11 @@ import org.springframework.data.gemfire.GemfireUtils;
  * Unit Tests for {@link FactoryDefaultsPoolAdapter}.
  *
  * @author John Blum
- * @see InetSocketAddress
+ * @see java.net.InetSocketAddress
  * @see org.junit.Test
  * @see org.apache.geode.cache.client.Pool
- * @see PoolFactory
- * @see FactoryDefaultsPoolAdapter
+ * @see org.apache.geode.cache.client.PoolFactory
+ * @see org.springframework.data.gemfire.client.support.FactoryDefaultsPoolAdapter
  * @since 1.8.0
  */
 public class FactoryDefaultsPoolAdapterTest {
@@ -61,7 +61,6 @@ public class FactoryDefaultsPoolAdapterTest {
 		assertThat(this.poolAdapter.getSubscriptionMessageTrackingTimeout()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
 		assertThat(this.poolAdapter.getSubscriptionRedundancy()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
 		assertThat(this.poolAdapter.getSubscriptionTimeoutMultiplier()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER);
-		assertThat(this.poolAdapter.getThreadLocalConnections()).isEqualTo(PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
 	}
 
 	@Test
@@ -122,10 +121,5 @@ public class FactoryDefaultsPoolAdapterTest {
 	@Test(expected = UnsupportedOperationException.class)
 	public void destroyedWithKeepAliveIsUnsupported() {
 		testPoolOperationIsUnsupported(() -> { this.poolAdapter.destroy(false); return null; });
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void releaseThreadLocalConnectionsIsUnsupported() {
-		testPoolOperationIsUnsupported(() -> { this.poolAdapter.releaseThreadLocalConnection(); return null; });
 	}
 }

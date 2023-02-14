@@ -27,14 +27,14 @@ import org.springframework.stereotype.Service;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ConfigurableApplicationContext
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see EnableExpiration
- * @see ExpirationConfiguration
- * @see AnnotationBasedExpiration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.config.annotation.EnableExpiration
+ * @see org.springframework.data.gemfire.config.annotation.ExpirationConfiguration
+ * @see org.springframework.data.gemfire.expiration.AnnotationBasedExpiration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 1.9.0
  */
 @SuppressWarnings("unused")

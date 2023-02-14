@@ -15,7 +15,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.data.mapping.IdentifierAccessor;
 import org.springframework.data.mapping.MappingException;
-import org.springframework.data.util.ClassTypeInformation;
+import org.springframework.data.util.TypeInformation;
 
 /**
  * Unit Tests for {@link GemfirePersistentEntity}.
@@ -24,7 +24,7 @@ import org.springframework.data.util.ClassTypeInformation;
  * @author John Blum
  * @author Gregory Green
  * @see org.junit.Test
- * @see GemfirePersistentEntity
+ * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
  */
 public class GemfirePersistentEntityUnitTests {
 
@@ -45,7 +45,7 @@ public class GemfirePersistentEntityUnitTests {
 	}
 
 	protected <T> GemfirePersistentEntity<T> newPersistentEntity(Class<T> type) {
-		return new GemfirePersistentEntity<>(ClassTypeInformation.from(type));
+		return new GemfirePersistentEntity<>(TypeInformation.of(type));
 	}
 
 	@Test

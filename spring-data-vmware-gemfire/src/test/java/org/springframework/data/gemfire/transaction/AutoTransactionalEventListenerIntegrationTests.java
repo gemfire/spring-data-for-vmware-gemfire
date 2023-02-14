@@ -43,16 +43,16 @@ import org.springframework.transaction.event.TransactionalEventListener;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Bean
- * @see Import
- * @see PeerCacheApplication
- * @see PeerCacheConfigurer
- * @see EnableGemfireCacheTransactions
- * @see TransactionApplicationEvent
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Import
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+ * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
+ * @see org.springframework.data.gemfire.transaction.event.TransactionApplicationEvent
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
- * @see TransactionPhase
- * @see TransactionalEventListener
+ * @see org.springframework.transaction.event.TransactionPhase
+ * @see org.springframework.transaction.event.TransactionalEventListener
  * @since 2.3.0
  */
 @RunWith(SpringRunner.class)

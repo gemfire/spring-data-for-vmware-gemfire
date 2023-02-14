@@ -29,10 +29,10 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ClientCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.Pool
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.0.0

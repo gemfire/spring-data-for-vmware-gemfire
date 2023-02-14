@@ -38,14 +38,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ClientCache
- * @see CacheConfig
- * @see Cacheable
- * @see EnableCachingDefinedRegions
- * @see CachingDefinedRegionsConfiguration
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.cache.annotation.CacheConfig
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/DATAGEODE-232">Add support for @CacheConfig in @EnableCachingDefinedRegions</a>

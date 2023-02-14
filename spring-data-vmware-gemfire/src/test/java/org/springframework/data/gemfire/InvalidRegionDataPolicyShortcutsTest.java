@@ -18,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see ClassPathXmlApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @since 1.4.0
  */
 public class InvalidRegionDataPolicyShortcutsTest {

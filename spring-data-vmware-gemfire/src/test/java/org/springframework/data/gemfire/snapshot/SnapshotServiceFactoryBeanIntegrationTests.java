@@ -23,7 +23,7 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see SnapshotServiceAdapterSupport
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapterSupport
  * @since 1.7.0
  */
 @SuppressWarnings("rawtypes")

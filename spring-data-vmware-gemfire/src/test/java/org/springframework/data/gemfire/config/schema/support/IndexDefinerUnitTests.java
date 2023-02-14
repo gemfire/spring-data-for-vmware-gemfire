@@ -26,11 +26,11 @@ import org.springframework.data.gemfire.config.schema.definitions.IndexDefinitio
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Index
- * @see IndexType
- * @see IndexDefinition
+ * @see org.apache.geode.cache.query.Index
+ * @see org.springframework.data.gemfire.IndexType
+ * @see org.springframework.data.gemfire.config.schema.definitions.IndexDefinition
  * @see IndexDefiner
  * @since 1.0.0
  */

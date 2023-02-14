@@ -30,15 +30,15 @@ import org.springframework.stereotype.Service;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
- * @see Region
- * @see CacheConfig
- * @see Cacheable
- * @see EnableCachingDefinedRegions
- * @see CachingDefinedRegionsConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
- * @see Service
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.cache.annotation.CacheConfig
+ * @see org.springframework.cache.annotation.Cacheable
+ * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
+ * @see org.springframework.stereotype.Service
  * @see <a href="https://jira.spring.io/browse/DATAGEODE-232">Add support for @CacheConfig in @EnableCachingDefinedRegions</a>
  * @since 2.2.0
  */

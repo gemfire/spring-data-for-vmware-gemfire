@@ -15,8 +15,8 @@ import org.apache.geode.cache.Scope;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Scope
- * @see ScopeType
+ * @see org.apache.geode.cache.Scope
+ * @see org.springframework.data.gemfire.ScopeType
  * @since 1.6.0
  */
 public class ScopeTypeUnitTests {

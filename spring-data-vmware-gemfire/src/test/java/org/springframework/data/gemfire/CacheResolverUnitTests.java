@@ -21,8 +21,8 @@ import org.apache.geode.cache.GemFireCache;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemFireCache
- * @see CacheResolver
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.CacheResolver
  * @since 2.3.0
  */
 public class CacheResolverUnitTests {

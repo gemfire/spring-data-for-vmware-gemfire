@@ -13,8 +13,8 @@ import org.springframework.data.gemfire.function.annotation.OnServer;
  * that throws a {@link RuntimeException}.
  *
  * @author John Blum
- * @see Function
- * @see OnServer
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.annotation.OnServer
  * @since 1.7.0
  */
 @OnServer

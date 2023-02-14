@@ -30,10 +30,10 @@ import org.springframework.beans.factory.BeanFactory;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see BeanFactory
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.RegionResolver
- * @see BeanFactoryRegionResolver
+ * @see org.springframework.data.gemfire.support.BeanFactoryRegionResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

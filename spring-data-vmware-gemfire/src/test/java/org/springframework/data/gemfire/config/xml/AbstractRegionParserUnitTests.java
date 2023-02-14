@@ -31,7 +31,7 @@ import org.w3c.dom.Node;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see AbstractRegionParser
+ * @see org.springframework.data.gemfire.config.xml.AbstractRegionParser
  * @since 1.3.3
  */
 // TODO add more tests

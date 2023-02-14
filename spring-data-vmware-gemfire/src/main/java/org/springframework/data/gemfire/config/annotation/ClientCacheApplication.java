@@ -436,19 +436,6 @@ public @interface ClientCacheApplication {
 	int subscriptionRedundancy() default PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
 
 	/**
-	 * Configures the {@link ThreadLocal} connection policy for the {@literal DEFAULT} {@link Pool}.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_THREAD_LOCAL_CONNECTIONS}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.default.thread-local-connections} property
-	 * or the {@literal spring.data.gemfire.pool.thread-local-connections} property
-	 * in {@literal application.properties}.
-	 * @deprecated
-	 */
-	@Deprecated
-	boolean threadLocalConnections() default PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS;
-
-	/**
 	 * Configures whether the {@link GemfireBeanFactoryLocator} should be enabled to lookup the Spring
 	 * {@link BeanFactory} to auto-wire, configure and initialize Apache Geode components created in
 	 * a non-Spring managed, Apache Geode context (for example: {@literal cache.xml}).

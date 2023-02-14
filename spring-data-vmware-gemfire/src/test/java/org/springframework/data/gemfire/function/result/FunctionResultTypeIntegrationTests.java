@@ -29,14 +29,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author Patrick Johnson
  * @author John Blum
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @see org.springframework.data.gemfire.function.annotation.OnRegion
- * @see EnableGemfireFunctionExecutions
- * @see EnableGemfireFunctions
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

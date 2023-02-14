@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,16 +35,17 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see LuceneIndexRegionBeanFactoryPostProcessor
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.support.LuceneIndexRegionBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
  */
 @RunWith(SpringRunner.class)
 @GemFireUnitTest
+//@Ignore("Ignored until GemFire Extension support can be added into product")
 @SuppressWarnings("unused")
 public class LuceneIndexRegionBeanFactoryPostProcessorIntegrationTests extends IntegrationTestsSupport {
 

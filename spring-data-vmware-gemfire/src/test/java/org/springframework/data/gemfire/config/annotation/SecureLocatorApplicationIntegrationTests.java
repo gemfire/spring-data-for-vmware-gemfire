@@ -28,14 +28,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests testing the configuration of a "secure" Apache Geode Locator.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see DistributedSystem
- * @see Locator
- * @see GemFireProperties
- * @see LocatorApplication
- * @see EnableSecurity
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.distributed.DistributedSystem
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.data.gemfire.GemFireProperties
+ * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
+ * @see org.springframework.data.gemfire.config.annotation.EnableSecurity
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.3.0

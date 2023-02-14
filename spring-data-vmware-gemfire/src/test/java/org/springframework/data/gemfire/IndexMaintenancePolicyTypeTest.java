@@ -20,7 +20,7 @@ import org.apache.geode.cache.RegionFactory;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see IndexMaintenancePolicyType
+ * @see org.springframework.data.gemfire.IndexMaintenancePolicyType
  * @since 1.6.0
  */
 public class IndexMaintenancePolicyTypeTest {

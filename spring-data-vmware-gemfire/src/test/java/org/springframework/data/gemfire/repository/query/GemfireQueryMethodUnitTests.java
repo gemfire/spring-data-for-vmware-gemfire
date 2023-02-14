@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.util.ClassTypeInformation;
+import org.springframework.data.util.TypeInformation;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -105,7 +105,7 @@ public class GemfireQueryMethodUnitTests {
 
 		doReturn(Person.class).when(this.repositoryMetadata).getDomainType();
 		doReturn(Person.class).when(this.repositoryMetadata).getReturnedDomainClass(any(Method.class));
-		doReturn(ClassTypeInformation.from(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
+		doReturn(TypeInformation.of(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
 	}
 
 	@Test

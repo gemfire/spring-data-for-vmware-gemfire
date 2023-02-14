@@ -12,8 +12,8 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * Account objects.
  *
  * @author John Blum
- * @see Account
- * @see GemfireRepository
+ * @see org.springframework.data.gemfire.repository.sample.Account
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
  * @since 1.0.0
  */
 @SuppressWarnings("unused")

@@ -48,10 +48,10 @@ import org.slf4j.Logger;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ApplicationContext
- * @see ConfigurableApplicationContext
- * @see AnnotationConfigApplicationContext
- * @see SpringContextBootstrappingInitializer
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
+ * @see org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

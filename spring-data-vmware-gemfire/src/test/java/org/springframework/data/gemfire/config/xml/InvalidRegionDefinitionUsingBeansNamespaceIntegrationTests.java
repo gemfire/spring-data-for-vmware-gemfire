@@ -28,10 +28,10 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see PeerRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.6.0
  */
 public class InvalidRegionDefinitionUsingBeansNamespaceIntegrationTests extends IntegrationTestsSupport {

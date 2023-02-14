@@ -12,7 +12,7 @@ import org.springframework.data.gemfire.repository.GemfireRepository;
  * to a GemFire Cache/Region.
  *
  * @author John Blum
- * @see GemfireRepository
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

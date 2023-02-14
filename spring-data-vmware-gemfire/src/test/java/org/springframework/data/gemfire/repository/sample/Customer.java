@@ -18,7 +18,7 @@ import lombok.Data;
  * The Customer class is a class abstraction modeling a Customer.
  *
  * @author John Blum
- * @see Id
+ * @see org.springframework.data.annotation.Id
  * @see Region
  * @since 1.0.0
  */

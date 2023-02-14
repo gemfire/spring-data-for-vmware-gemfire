@@ -15,9 +15,9 @@ import org.springframework.data.gemfire.function.annotation.OnServer;
  * GemFire Server.
  *
  * @author John Blum
- * @see ClientCacheFunctionExecutionWithPdxIntegrationTest
- * @see OnServer
- * @see PdxInstance
+ * @see org.springframework.data.gemfire.function.ClientCacheFunctionExecutionWithPdxIntegrationTest
+ * @see org.springframework.data.gemfire.function.annotation.OnServer
+ * @see org.apache.geode.pdx.PdxInstance
  * @since 1.0.0
  */
 @OnServer

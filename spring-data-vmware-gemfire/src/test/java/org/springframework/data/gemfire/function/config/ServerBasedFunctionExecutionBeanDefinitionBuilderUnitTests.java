@@ -25,7 +25,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ServerBasedFunctionExecutionBeanDefinitionBuilder
+ * @see org.springframework.data.gemfire.function.config.ServerBasedFunctionExecutionBeanDefinitionBuilder
  * @since 1.7.0
  */
 public class ServerBasedFunctionExecutionBeanDefinitionBuilderUnitTests {

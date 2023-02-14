@@ -36,14 +36,14 @@ import org.springframework.data.gemfire.support.ConnectionEndpoint;
  * Unit Tests for {@link ClientCacheConfiguration}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.client.ClientCache
- * @see BeanFactory
- * @see Resource
- * @see ClientCacheFactoryBean
- * @see ClientCacheConfiguration
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.core.io.Resource
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfiguration
  * @since 2.4.0
  */
 public class ClientCacheConfigurationUnitTests {
@@ -116,7 +116,6 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setSubscriptionEnabled(true);
 		configuration.setSubscriptionMessageTrackingTimeout(60000);
 		configuration.setSubscriptionRedundancy(1);
-		configuration.setThreadLocalConnections(false);
 
 		assertThat(configuration.gemfireCache()).isEqualTo(clientCacheFactoryBean);
 
@@ -159,7 +158,6 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionEnabled(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionMessageTrackingTimeout(eq(60000));
 		verify(clientCacheFactoryBean, times(1)).setSubscriptionRedundancy(eq(1));
-		verify(clientCacheFactoryBean, times(1)).setThreadLocalConnections(eq(false));
 	}
 
 	@Test

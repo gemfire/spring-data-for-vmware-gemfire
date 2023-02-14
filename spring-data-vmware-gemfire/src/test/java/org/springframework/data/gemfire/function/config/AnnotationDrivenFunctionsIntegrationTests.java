@@ -32,10 +32,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see Function
- * @see FunctionService
- * @see GemfireFunction
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.apache.geode.cache.execute.FunctionService
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */

@@ -22,7 +22,7 @@ import org.springframework.data.gemfire.function.annotation.GemfireFunction;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemfireFunctionUtils
+ * @see org.springframework.data.gemfire.function.GemfireFunctionUtils
  * @since 2.1.0
  */
 @SuppressWarnings("unused")

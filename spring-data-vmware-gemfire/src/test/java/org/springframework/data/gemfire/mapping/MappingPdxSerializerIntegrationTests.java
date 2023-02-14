@@ -47,7 +47,6 @@ import org.springframework.data.gemfire.repository.sample.Address;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.EntityInstantiator;
-import org.springframework.data.util.ClassTypeInformation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,20 +54,21 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.util.TypeInformation;
 
 /**
  * Integration Tests for {@link MappingPdxSerializer}.
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see Cache
- * @see Region
- * @see PdxReader
- * @see PdxSerializer
- * @see PdxWriter
- * @see MappingPdxSerializer
- * @see PersistentEntity
- * @see EntityInstantiator
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.pdx.PdxReader
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.PdxWriter
+ * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
+ * @see org.springframework.data.mapping.PersistentEntity
+ * @see org.springframework.data.mapping.model.EntityInstantiator
  */
 public class MappingPdxSerializerIntegrationTests {
 
@@ -160,7 +160,7 @@ public class MappingPdxSerializerIntegrationTests {
 
 		EntityInstantiator mockEntityInstantiator = mock(EntityInstantiator.class);
 
-		PersistentEntity entity = this.mappingContext.createPersistentEntity(ClassTypeInformation.from(Person.class));
+		PersistentEntity entity = this.mappingContext.createPersistentEntity(TypeInformation.of(Person.class));
 
 		assertThat(cache.getPdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
 
@@ -184,7 +184,7 @@ public class MappingPdxSerializerIntegrationTests {
 
 		EntityInstantiator mockEntityInstantiator = mock(EntityInstantiator.class);
 
-		PersistentEntity entity = this.mappingContext.createPersistentEntity(ClassTypeInformation.from(Address.class));
+		PersistentEntity entity = this.mappingContext.createPersistentEntity(TypeInformation.of(Address.class));
 
 		assertThat(cache.getPdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
 

@@ -50,10 +50,10 @@ import org.springframework.data.repository.config.CustomRepositoryImplementation
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see GemfireRepositoryBean
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.repository.cdi.GemfireRepositoryBean
  * @since 1.0.0
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -266,7 +266,7 @@ public class GemfireRepositoryBeanTest {
 		final AtomicBoolean repositoryProxyPostProcessed = new AtomicBoolean(false);
 
 		GemfireRepositoryBean<PersonRepository> repositoryBean =
-			new GemfireRepositoryBean<>(this.mockBeanManager, PersonRepository.class,
+			new GemfireRepositoryBean<PersonRepository>(this.mockBeanManager, PersonRepository.class,
 				Collections.emptySet(), newCustomRepositoryImplementationDetector(), null,
 					CollectionUtils.asSet(mockRegionBean))
 		{

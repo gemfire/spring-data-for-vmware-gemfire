@@ -2,6 +2,7 @@
  * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.springframework.data.gemfire.repository.cdi;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,11 +13,11 @@ import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.util.Assert;
 
 /**
- * {@link RepositoryClient} is a user/consumer of the {@link SamplePersonRepository} bean in a CDI context.
+ * The RepositoryClient class is a user/consumer of the {@link SamplePersonRepository} bean in a CDI context.
  *
  * @author John Blum
  * @see jakarta.inject.Inject
- * @see SamplePersonRepository
+ * @see org.springframework.data.gemfire.repository.cdi.SamplePersonRepository
  * @since 1.8.0
  */
 public class RepositoryClient {

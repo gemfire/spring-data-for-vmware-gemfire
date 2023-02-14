@@ -31,9 +31,9 @@ import org.springframework.data.gemfire.util.SpringExtensions;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see Region
+ * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.execute.Function
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  */
 public class FunctionExecutionIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
 

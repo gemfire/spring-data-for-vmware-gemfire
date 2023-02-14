@@ -45,14 +45,14 @@ import lombok.SneakyThrows;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see LuceneIndex
- * @see LuceneService
- * @see LuceneIndexParser
- * @see LuceneServiceParser
+ * @see org.apache.geode.cache.lucene.LuceneIndex
+ * @see org.apache.geode.cache.lucene.LuceneService
+ * @see org.springframework.data.gemfire.config.xml.LuceneIndexParser
+ * @see org.springframework.data.gemfire.config.xml.LuceneServiceParser
  * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
- * @see LuceneServiceFactoryBean
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0

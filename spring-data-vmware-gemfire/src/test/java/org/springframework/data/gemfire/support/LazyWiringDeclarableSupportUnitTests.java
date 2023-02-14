@@ -40,13 +40,13 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * Unit Tests for {@link LazyWiringDeclarableSupport}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see BeanFactory
- * @see GemfireBeanFactoryLocator
- * @see LazyWiringDeclarableSupport
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
+ * @see org.springframework.data.gemfire.support.LazyWiringDeclarableSupport
  * @since 1.3.4
  */
 @RunWith(MockitoJUnitRunner.class)

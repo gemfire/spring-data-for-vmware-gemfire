@@ -38,13 +38,13 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see PeerRegionFactoryBean
- * @see ClientRegionFactoryBean
- * @see RegionConfigurer
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.1.0
  */
 public class RegionConfigurerIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

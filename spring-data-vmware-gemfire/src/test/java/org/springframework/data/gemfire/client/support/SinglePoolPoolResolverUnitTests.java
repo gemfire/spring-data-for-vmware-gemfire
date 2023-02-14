@@ -25,11 +25,11 @@ import org.springframework.data.gemfire.client.PoolResolver;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Pool
- * @see SinglePoolPoolResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.client.support.SinglePoolPoolResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

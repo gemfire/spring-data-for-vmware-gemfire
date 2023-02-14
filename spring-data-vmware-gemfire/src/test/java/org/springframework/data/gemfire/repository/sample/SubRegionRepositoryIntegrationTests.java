@@ -31,13 +31,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see Wrapper
- * @see Programmer
- * @see ProgrammerRepository
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.repository.Wrapper
+ * @see org.springframework.data.gemfire.repository.sample.Programmer
+ * @see org.springframework.data.gemfire.repository.sample.ProgrammerRepository
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
- * @see Region
+ * @see org.apache.geode.cache.Region
  * @link https://jira.springsource.org/browse/SGF-251
  * @link https://jira.springsource.org/browse/SGF-252
  * @since 1.4.0

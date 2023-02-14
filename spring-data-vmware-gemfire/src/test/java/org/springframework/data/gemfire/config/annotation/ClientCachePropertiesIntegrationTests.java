@@ -32,14 +32,14 @@ import org.springframework.mock.env.MockPropertySource;
  * Integration Tests for {@link ClientCacheApplication}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see ClientCache
- * @see PropertySource
- * @see ClientCacheFactoryBean
- * @see ClientCacheApplication
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.mock.env.MockPropertySource
  * @since 2.0.0
  */
@@ -174,7 +174,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 			.withProperty("spring.data.gemfire.pool.default.subscription-enabled", true)
 			.withProperty("spring.data.gemfire.pool.default.subscription-message-tracking-timeout", 300000)
 			.withProperty("spring.data.gemfire.pool.default.subscription-redundancy", 2)
-			.withProperty("spring.data.gemfire.pool.default.thread-local-connections", true)
 			.withProperty("spring.data.gemfire.pdx.disk-store-name", "TestPdxDiskStore")
 			.withProperty("spring.data.gemfire.pdx.ignore-unread-fields", false)
 			.withProperty("spring.data.gemfire.pdx.persistent", true)
@@ -244,7 +243,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		assertThat(defaultPool.getSubscriptionEnabled()).isTrue();
 		assertThat(defaultPool.getSubscriptionMessageTrackingTimeout()).isEqualTo(300000);
 		assertThat(defaultPool.getSubscriptionRedundancy()).isEqualTo(2);
-		assertThat(defaultPool.getThreadLocalConnections()).isTrue();
 
 		ResourceManager resourceManager = clientCache.getResourceManager();
 

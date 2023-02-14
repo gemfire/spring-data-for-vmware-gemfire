@@ -13,8 +13,8 @@ import org.springframework.data.gemfire.repository.Query;
  * Note, this Spring GemFire Repository extension incorrectly maps Plants to the Plants Region on purpose
  *
  * @author John Blum
- * @see GemfireRepository
- * @see Query
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.Query
  * @since 1.4.0
  */
 @SuppressWarnings("unused")

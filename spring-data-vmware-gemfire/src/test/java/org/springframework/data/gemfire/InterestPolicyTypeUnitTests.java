@@ -15,8 +15,8 @@ import org.apache.geode.cache.InterestPolicy;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see InterestPolicy
- * @see InterestPolicyType
+ * @see org.apache.geode.cache.InterestPolicy
+ * @see org.springframework.data.gemfire.InterestPolicyType
  * @since 1.6.0
  */
 public class InterestPolicyTypeUnitTests {

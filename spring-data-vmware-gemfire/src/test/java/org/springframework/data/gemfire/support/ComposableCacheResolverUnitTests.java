@@ -27,11 +27,11 @@ import org.springframework.data.gemfire.CacheResolver;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see GemFireCache
- * @see ComposableCacheResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.data.gemfire.support.ComposableCacheResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

@@ -42,11 +42,11 @@ import lombok.RequiredArgsConstructor;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see MockitoJUnitRunner
- * @see ProjectingLuceneTemplate
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneTemplate
  * @since 2.1.0
  */
 @RunWith(MockitoJUnitRunner.class)

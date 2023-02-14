@@ -32,14 +32,14 @@ import org.springframework.mock.env.MockPropertySource;
  * the {@link Locator} is configured with {@link Properties}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see Locator
- * @see ConfigurableApplicationContext
- * @see PropertySource
- * @see LocatorFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.distributed.Locator
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.mock.env.MockPropertySource
  * @since 2.2.0
  */

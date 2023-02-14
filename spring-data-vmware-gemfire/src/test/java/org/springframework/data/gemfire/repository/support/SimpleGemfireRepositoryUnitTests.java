@@ -74,19 +74,19 @@ import lombok.ToString;
  * Unit Tests for {@link SimpleGemfireRepository}.
  *
  * @author John Blum
- * @see Function
- * @see Stream
+ * @see java.util.function.Function
+ * @see java.util.stream.Stream
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see Region
- * @see Page
- * @see Pageable
- * @see Sort
- * @see GemfireTemplate
- * @see Wrapper
- * @see SimpleGemfireRepository
- * @see EntityInformation
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.domain.Page
+ * @see org.springframework.data.domain.Pageable
+ * @see org.springframework.data.domain.Sort
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.Wrapper
+ * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
+ * @see org.springframework.data.repository.core.EntityInformation
  * @since 1.4.5
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

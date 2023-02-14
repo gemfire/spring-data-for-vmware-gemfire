@@ -26,8 +26,8 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Oliver Gierke
  * @author John Blum
  * @see org.junit.Test
- * @see AbstractGemfireRepositoryFactoryIntegrationTests
- * @see GemfireRepositoryFactory
+ * @see org.springframework.data.gemfire.repository.support.AbstractGemfireRepositoryFactoryIntegrationTests
+ * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactory
  */
 @ContextConfiguration("../config/repo-context.xml")
 @SuppressWarnings("unused")

@@ -14,8 +14,8 @@ import org.junit.Test;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see SubscriptionEvictionPolicy
- * @see SubscriptionEvictionPolicyConverter
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicy
+ * @see org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConverter
  * @since 1.6.0
  */
 public class SubscriptionEvictionPolicyConverterUnitTests {

@@ -33,13 +33,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.DiskStoreFactory
  * @see org.apache.geode.cache.GemFireCache
  * @see org.springframework.context.annotation.Configuration
- * @see DiskStoreFactoryBean
- * @see DiskStoreConfiguration
- * @see DiskStoreConfigurer
- * @see EnableDiskStore
- * @see EnableDiskStores
- * @see IntegrationTestsSupport
- * @see GemFireMockObjectsBeanPostProcessor
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
+ * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.1.0

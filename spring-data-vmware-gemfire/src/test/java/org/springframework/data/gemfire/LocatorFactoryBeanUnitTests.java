@@ -39,14 +39,14 @@ import org.springframework.data.gemfire.config.annotation.LocatorConfigurer;
  * Unit Tests for {@link LocatorFactoryBean}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see Mockito
+ * @see org.mockito.Mockito
  * @see org.mockito.Spy
- * @see Locator
- * @see LocatorLauncher
- * @see LocatorFactoryBean
- * @see LocatorConfigurer
+ * @see org.apache.geode.distributed.Locator
+ * @see org.apache.geode.distributed.LocatorLauncher
+ * @see org.springframework.data.gemfire.LocatorFactoryBean
+ * @see org.springframework.data.gemfire.config.annotation.LocatorConfigurer
  * @since 2.2.0
  */
 public class LocatorFactoryBeanUnitTests {

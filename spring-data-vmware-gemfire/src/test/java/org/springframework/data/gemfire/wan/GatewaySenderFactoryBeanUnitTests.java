@@ -26,10 +26,10 @@ import org.springframework.data.gemfire.TestUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see GatewaySender
- * @see GatewaySenderFactory
- * @see GatewaySenderFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.apache.geode.cache.wan.GatewaySenderFactory
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  * @since 1.4.0
  */
 public class GatewaySenderFactoryBeanUnitTests {

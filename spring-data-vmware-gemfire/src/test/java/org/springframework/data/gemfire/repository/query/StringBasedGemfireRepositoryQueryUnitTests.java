@@ -26,7 +26,7 @@ import org.apache.geode.cache.query.SelectResults;
  * @author John Blum
  * @see org.mockito.Mockito
  * @see org.junit.Test
- * @see StringBasedGemfireRepositoryQuery
+ * @see org.springframework.data.gemfire.repository.query.StringBasedGemfireRepositoryQuery
  * @since 1.4.0
  */
 public class StringBasedGemfireRepositoryQueryUnitTests {

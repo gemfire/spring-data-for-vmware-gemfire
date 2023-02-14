@@ -16,9 +16,9 @@ import org.junit.Test;
  *
  * @author John Blum
  * @author Jacob Barret
- * @see InetSocketAddress
+ * @see java.net.InetSocketAddress
  * @see org.junit.Test
- * @see ConnectionEndpoint
+ * @see org.springframework.data.gemfire.support.ConnectionEndpoint
  * @since 1.6.3
  */
 public class ConnectionEndpointUnitTests {

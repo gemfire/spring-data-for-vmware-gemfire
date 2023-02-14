@@ -14,10 +14,10 @@ import org.springframework.data.gemfire.repository.sample.Person;
  * operations on instances of {@link Person}.
  *
  * @author John Blum
- * @see GemfireRepository
- * @see CustomPersonRepository
- * @see CustomPersonRepositoryImpl
- * @see Person
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
+ * @see org.springframework.data.gemfire.repository.cdi.CustomPersonRepository
+ * @see org.springframework.data.gemfire.repository.cdi.CustomPersonRepositoryImpl
+ * @see org.springframework.data.gemfire.repository.sample.Person
  * @since 1.8.0
  */
 @Region("People")

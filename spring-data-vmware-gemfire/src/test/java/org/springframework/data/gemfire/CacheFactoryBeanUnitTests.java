@@ -56,21 +56,21 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
  *
  * @author John Blum
  * @author Patrick Johnson
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Cache
- * @see CacheFactory
- * @see GemFireCache
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.CacheFactory
+ * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.distributed.DistributedMember
  * @see org.apache.geode.distributed.DistributedSystem
- * @see PdxSerializer
- * @see BeanFactory
- * @see Resource
- * @see CacheFactoryBean
- * @see GemfireBeanFactoryLocator
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.core.io.Resource
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)

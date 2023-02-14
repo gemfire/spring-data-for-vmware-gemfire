@@ -25,8 +25,8 @@ import org.springframework.data.repository.query.QueryMethod;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see GemfireTemplate
- * @see TemplateBasedOqlQueryExecutor
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.repository.query.support.TemplateBasedOqlQueryExecutor
  * @since 2.4.0
  */
 public class TemplateBasedOqlQueryExecutorUnitTests {

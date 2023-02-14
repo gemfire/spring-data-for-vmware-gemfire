@@ -39,15 +39,15 @@ import org.springframework.data.gemfire.CacheResolver;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Cache
- * @see GemFireCache
- * @see Region
- * @see RegionService
- * @see ClientCache
- * @see CacheResolver
- * @see RegionServiceRegionResolver
- * @see RegionServiceResolver
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.RegionService
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver
+ * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)

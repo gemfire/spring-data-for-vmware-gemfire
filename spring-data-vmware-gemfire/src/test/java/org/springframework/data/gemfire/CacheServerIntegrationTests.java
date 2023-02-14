@@ -25,9 +25,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see CacheServer
+ * @see org.apache.geode.cache.server.CacheServer
  * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.3

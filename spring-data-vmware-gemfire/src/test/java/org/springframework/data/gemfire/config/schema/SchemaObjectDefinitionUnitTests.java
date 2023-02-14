@@ -16,7 +16,7 @@ import org.springframework.core.Ordered;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see SchemaObjectDefinition
+ * @see org.springframework.data.gemfire.config.schema.SchemaObjectDefinition
  * @since 2.0.0
  */
 public class SchemaObjectDefinitionUnitTests {

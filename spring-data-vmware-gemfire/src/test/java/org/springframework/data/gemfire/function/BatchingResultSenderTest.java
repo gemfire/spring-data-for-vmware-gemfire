@@ -27,8 +27,8 @@ import org.assertj.core.api.Assertions;
  * @author Udo Kohlmeyer
  * @author John Blum
  * @see org.junit.Test
- * @see ResultSender
- * @see BatchingResultSender
+ * @see org.apache.geode.cache.execute.ResultSender
+ * @see org.springframework.data.gemfire.function.BatchingResultSender
  * @since 1.3.0
  */
 public class BatchingResultSenderTest {

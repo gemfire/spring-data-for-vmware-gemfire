@@ -46,13 +46,13 @@ import lombok.RequiredArgsConstructor;
  * @author John Blum
  * @see org.junit.Test
  * @see lombok
- * @see GemFireCache
- * @see Region
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.lucene.LuceneIndex
- * @see PeerCacheApplication
- * @see LuceneIndexFactoryBean
- * @see LuceneOperations
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
+ * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
+ * @see org.springframework.data.gemfire.search.lucene.LuceneOperations
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.1.0

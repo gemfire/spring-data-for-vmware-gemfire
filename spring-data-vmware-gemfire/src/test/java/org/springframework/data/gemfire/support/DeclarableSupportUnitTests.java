@@ -22,10 +22,10 @@ import org.springframework.beans.factory.BeanFactory;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
  * @since 2.0.0
  */
 @RunWith(MockitoJUnitRunner.class)

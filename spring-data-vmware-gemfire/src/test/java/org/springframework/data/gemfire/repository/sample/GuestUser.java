@@ -12,7 +12,7 @@ import org.springframework.data.gemfire.mapping.annotation.Region;
  *
  * @author John Blum
  * @see Region
- * @see User
+ * @see org.springframework.data.gemfire.repository.sample.User
  * @since 1.4.0
  */
 @Region("/Local/Guest/Users")

@@ -15,8 +15,8 @@ import org.springframework.data.gemfire.repository.Query;
  * Customer objects.
  *
  * @author John Blum
- * @see Customer
- * @see GemfireRepository
+ * @see org.springframework.data.gemfire.repository.sample.Customer
+ * @see org.springframework.data.gemfire.repository.GemfireRepository
  * @since 1.0.0
  */
 @SuppressWarnings("unused")

@@ -15,7 +15,7 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.DiskStore
- * @see DiskStoreFactoryBean
+ * @see org.springframework.data.gemfire.DiskStoreFactoryBean
  * @since 1.3.4
  */
 public class DiskStoreFactoryBeanUnitTests {

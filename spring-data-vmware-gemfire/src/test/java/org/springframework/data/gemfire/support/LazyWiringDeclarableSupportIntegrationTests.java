@@ -33,12 +33,12 @@ import org.springframework.util.Assert;
  * Integration Tests for {@link LazyWiringDeclarableSupport}.
  *
  * @author John Blum
- * @see Properties
- * @see DataSource
+ * @see java.util.Properties
+ * @see javax.sql.DataSource
  * @see org.junit.Test
- * @see ApplicationContext
- * @see IntegrationTestsSupport
- * @see CacheMockObjects
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.CacheMockObjects
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.4

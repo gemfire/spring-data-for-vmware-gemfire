@@ -28,11 +28,11 @@ import org.springframework.data.gemfire.tests.integration.ForkingClientServerInt
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see ForkingClientServerIntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.ClientCacheFactory
+ * @see org.apache.geode.cache.client.Pool
+ * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  */
 public class GemfireFunctionTemplateIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
 

@@ -17,9 +17,9 @@ import org.springframework.util.ObjectUtils;
  * Abstract Data Type (ADT) modeling an authorized user of an application, software service or computer system.
  *
  * @author John Blum
- * @see Comparable
- * @see Id
- * @see Region
+ * @see java.lang.Comparable
+ * @see org.springframework.data.annotation.Id
+ * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @see Region
  * @since 1.4.0
  */

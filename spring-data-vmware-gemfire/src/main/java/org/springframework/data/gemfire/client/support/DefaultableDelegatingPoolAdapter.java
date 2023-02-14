@@ -199,20 +199,12 @@ public abstract class DefaultableDelegatingPoolAdapter {
 			() -> getDelegate().getSubscriptionTimeoutMultiplier());
 	}
 
-	public boolean getThreadLocalConnections(Boolean defaultThreadLocalConnections) {
-		return defaultIfNull(defaultThreadLocalConnections, () -> getDelegate().getThreadLocalConnections());
-	}
-
 	public void destroy() {
 		getDelegate().destroy();
 	}
 
 	public void destroy(boolean keepAlive) {
 		getDelegate().destroy(keepAlive);
-	}
-
-	public void releaseThreadLocalConnection() {
-		getDelegate().releaseThreadLocalConnection();
 	}
 
 	enum Preference {

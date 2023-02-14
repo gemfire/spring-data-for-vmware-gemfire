@@ -16,7 +16,7 @@ import org.springframework.util.ErrorHandler;
  *
  * @author Costin Leau
  * @author John Blum
- * @see ErrorHandler
+ * @see org.springframework.util.ErrorHandler
  */
 public class StubErrorHandler implements ErrorHandler, Iterable<Throwable> {
 

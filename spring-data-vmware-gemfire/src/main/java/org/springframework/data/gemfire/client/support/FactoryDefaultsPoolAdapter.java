@@ -168,11 +168,6 @@ public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
 		return PoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER;
 	}
 
-	@Override
-	public boolean getThreadLocalConnections() {
-		return PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS;
-	}
-
 	public void destroy() {
 		destroy(DEFAULT_KEEP_ALIVE);
 	}

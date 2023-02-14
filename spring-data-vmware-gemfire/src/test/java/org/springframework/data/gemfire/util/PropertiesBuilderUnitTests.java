@@ -20,9 +20,9 @@ import org.junit.Test;
  * Unit Tests for {@link PropertiesBuilder}
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see PropertiesBuilder
+ * @see org.springframework.data.gemfire.util.PropertiesBuilder
  * @since 1.9.0
  */
 public class PropertiesBuilderUnitTests {

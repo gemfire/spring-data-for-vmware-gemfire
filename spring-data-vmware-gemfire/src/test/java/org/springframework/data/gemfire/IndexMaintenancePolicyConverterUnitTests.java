@@ -14,8 +14,8 @@ import org.junit.Test;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see IndexMaintenancePolicyConverter
- * @see IndexMaintenancePolicyType
+ * @see org.springframework.data.gemfire.IndexMaintenancePolicyConverter
+ * @see org.springframework.data.gemfire.IndexMaintenancePolicyType
  * @since 1.6.0
  */
 public class IndexMaintenancePolicyConverterUnitTests {

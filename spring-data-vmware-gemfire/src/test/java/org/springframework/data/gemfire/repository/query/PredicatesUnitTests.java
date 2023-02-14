@@ -21,7 +21,7 @@ import org.springframework.data.repository.query.parser.Part;
  * @author Oliver Gierke
  * @author John Blum
  * @see org.junit.Test
- * @see Predicates
+ * @see org.springframework.data.gemfire.repository.query.Predicates
  */
 @SuppressWarnings("unused")
 public class PredicatesUnitTests {

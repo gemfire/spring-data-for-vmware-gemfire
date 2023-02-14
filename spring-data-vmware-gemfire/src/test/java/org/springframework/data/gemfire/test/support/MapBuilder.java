@@ -11,7 +11,7 @@ import java.util.Map;
  * The {@link MapBuilder} class employs the Builder Software Design Pattern to build a {@link Map}.
  *
  * @author John Blum
- * @see Map
+ * @see java.util.Map
  * @since 2.0.0
  */
 public class MapBuilder<KEY, VALUE> {

@@ -51,15 +51,15 @@ import org.slf4j.Logger;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see Spy
- * @see MockitoJUnitRunner
- * @see Cache
- * @see ClientCache
- * @see Index
- * @see QueryService
- * @see IndexFactoryBean
+ * @see org.mockito.Spy
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.Index
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.springframework.data.gemfire.IndexFactoryBean
  * @since 1.5.2
  */
 @RunWith(MockitoJUnitRunner.class)

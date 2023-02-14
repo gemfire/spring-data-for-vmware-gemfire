@@ -33,8 +33,8 @@ import org.apache.geode.cache.execute.ResultSender;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Region
- * @see ListRegionsOnServerFunction
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction
  * @since 1.7.0
  */
 public class ListRegionsOnServerFunctionUnitTests {

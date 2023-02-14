@@ -16,8 +16,8 @@ import org.apache.geode.cache.ExpirationAttributes;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see ExpirationAttributes
- * @see ExpirationAttributesFactoryBean
+ * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBean
  * @since 1.6.0
  */
 public class ExpirationAttributesFactoryBeanUnitTests {

@@ -31,12 +31,12 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemFireCache
- * @see Region
- * @see EnableOffHeap
- * @see OffHeapConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.config.annotation.EnableOffHeap
+ * @see org.springframework.data.gemfire.config.annotation.OffHeapConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.2
  */
 public class EnableOffHeapConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {

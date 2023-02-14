@@ -46,14 +46,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see GFConnection
- * @see GFConnectionFactory
- * @see EnableGemFireAsLastResource
- * @see GemFireAsLastResourceConfiguration
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see PlatformTransactionManager
- * @see EnableTransactionManagement
- * @see Transactional
+ * @see org.apache.geode.ra.GFConnection
+ * @see org.apache.geode.ra.GFConnectionFactory
+ * @see org.springframework.data.gemfire.config.annotation.EnableGemFireAsLastResource
+ * @see org.springframework.data.gemfire.config.annotation.GemFireAsLastResourceConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.transaction.PlatformTransactionManager
+ * @see org.springframework.transaction.annotation.EnableTransactionManagement
+ * @see org.springframework.transaction.annotation.Transactional
  * @since 2.0.0
  */
 public class EnableGemFireAsLastResourceIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

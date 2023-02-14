@@ -52,11 +52,11 @@ import lombok.RequiredArgsConstructor;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see CacheEvict
- * @see CachePut
- * @see Caching
- * @see EnableCaching
- * @see IntegrationTestsSupport
+ * @see org.springframework.cache.annotation.CacheEvict
+ * @see org.springframework.cache.annotation.CachePut
+ * @see org.springframework.cache.annotation.Caching
+ * @see org.springframework.cache.annotation.EnableCaching
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @see GemfireCache#evict(Object)

@@ -46,16 +46,16 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see Region
- * @see ClientCache
- * @see Query
- * @see QueryService
- * @see SelectResults
- * @see GemfireTemplate
- * @see IntegrationTestsSupport
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.query.Query
+ * @see org.apache.geode.cache.query.QueryService
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.gemfire.GemfireTemplate
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  */
 @SuppressWarnings("unused")
 @RunWith(MockitoJUnitRunner.class)

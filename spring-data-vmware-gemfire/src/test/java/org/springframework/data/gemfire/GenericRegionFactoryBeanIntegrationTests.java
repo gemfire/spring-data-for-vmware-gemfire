@@ -28,10 +28,10 @@ import org.springframework.data.gemfire.util.CacheUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Cache
- * @see Region
- * @see GenericRegionFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.GenericRegionFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.7.0
  */
 public class GenericRegionFactoryBeanIntegrationTests extends IntegrationTestsSupport {

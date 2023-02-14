@@ -15,8 +15,8 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.EvictionAttributes
- * @see EvictionPolicyConverter
- * @see EvictionPolicyType
+ * @see org.springframework.data.gemfire.eviction.EvictionPolicyConverter
+ * @see org.springframework.data.gemfire.eviction.EvictionPolicyType
  * @since 1.6.0
  */
 public class EvictionPolicyConverterUnitTests {

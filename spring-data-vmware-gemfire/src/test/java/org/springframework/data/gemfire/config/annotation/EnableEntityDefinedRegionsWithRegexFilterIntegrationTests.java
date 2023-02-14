@@ -41,14 +41,14 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link EnableEntityDefinedRegions} and {@link EntityDefinedRegionsConfiguration}.
  *
  * @author John Blum
- * @see Pattern
+ * @see java.util.regex.Pattern
  * @see org.junit.Test
- * @see Region
- * @see ApplicationContext
- * @see EnableEntityDefinedRegions
- * @see EntityDefinedRegionsConfiguration
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
+ * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.4.0

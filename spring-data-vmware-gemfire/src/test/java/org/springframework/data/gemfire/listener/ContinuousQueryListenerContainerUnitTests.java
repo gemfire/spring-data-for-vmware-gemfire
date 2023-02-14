@@ -56,7 +56,7 @@ import org.springframework.util.ErrorHandler;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ContinuousQueryListenerContainer
+ * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
  * @since 1.8.0
  */
 @RunWith(MockitoJUnitRunner.class)

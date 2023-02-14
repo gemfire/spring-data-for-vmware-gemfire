@@ -32,9 +32,9 @@ import org.springframework.util.FileCopyUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see SnapshotServiceFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.7.0
  */
 @SuppressWarnings("unused")

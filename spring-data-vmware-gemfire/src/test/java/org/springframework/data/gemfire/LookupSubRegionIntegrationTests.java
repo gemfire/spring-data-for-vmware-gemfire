@@ -23,9 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ApplicationContext
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.3.3

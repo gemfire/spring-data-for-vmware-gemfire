@@ -41,9 +41,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.GemFireCache
- * @see Person
- * @see PersonRepository
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.repository.sample.Person
+ * @see org.springframework.data.gemfire.repository.sample.PersonRepository
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0
@@ -191,7 +191,7 @@ public class PersonRepositoryIntegrationTests extends IntegrationTestsSupport {
 	@Configuration
 	@EnableGemfireRepositories(basePackages = "org.springframework.data.gemfire.repository.sample",
 		includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
-			value = PersonRepository.class))
+			value = org.springframework.data.gemfire.repository.sample.PersonRepository.class))
 	public static class TestConfiguration {
 
 		Properties gemfireProperties() {

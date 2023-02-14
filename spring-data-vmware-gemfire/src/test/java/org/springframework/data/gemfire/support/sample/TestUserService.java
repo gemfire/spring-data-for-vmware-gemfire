@@ -15,8 +15,8 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.springframework.data.gemfire.repository.sample.User
- * @see UserService
- * @see Service
+ * @see org.springframework.data.gemfire.support.sample.UserService
+ * @see org.springframework.stereotype.Service
  * @since 1.4.0
  */
 @Service("userService")

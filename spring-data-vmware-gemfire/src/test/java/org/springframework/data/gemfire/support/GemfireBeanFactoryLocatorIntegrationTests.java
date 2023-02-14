@@ -23,9 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see BeanFactory
- * @see GemfireBeanFactoryLocator
- * @see IntegrationTestsSupport
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0

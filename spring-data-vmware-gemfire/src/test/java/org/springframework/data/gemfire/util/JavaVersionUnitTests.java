@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see JavaVersion
+ * @see org.springframework.data.gemfire.util.JavaVersion
  * @since 2.6.0
  */
 public class JavaVersionUnitTests {

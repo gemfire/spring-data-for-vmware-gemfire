@@ -31,10 +31,10 @@ import org.springframework.cache.Cache;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Mock
- * @see MockitoJUnitRunner
- * @see Region
- * @see GemfireCache
+ * @see org.mockito.Mock
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.cache.GemfireCache
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)

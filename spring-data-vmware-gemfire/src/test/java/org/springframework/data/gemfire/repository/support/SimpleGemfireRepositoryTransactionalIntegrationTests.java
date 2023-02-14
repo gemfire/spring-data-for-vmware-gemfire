@@ -43,7 +43,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see SimpleGemfireRepository
+ * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.0

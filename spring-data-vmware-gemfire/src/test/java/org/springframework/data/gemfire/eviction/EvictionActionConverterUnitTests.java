@@ -16,8 +16,8 @@ import org.apache.geode.cache.EvictionAction;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see EvictionAction
- * @see EvictionActionConverter
+ * @see org.apache.geode.cache.EvictionAction
+ * @see org.springframework.data.gemfire.eviction.EvictionActionConverter
  * @since 1.6.0
  */
 public class EvictionActionConverterUnitTests {

@@ -22,12 +22,12 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  *
  * @author John Blum
  * @see org.junit.Test
- * @see DataPolicy
- * @see Region
- * @see ClientRegionShortcut
- * @see ClassPathXmlApplicationContext
+ * @see org.apache.geode.cache.DataPolicy
+ * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
- * @see IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.3.3
  */
 public class ClientRegionUsingDataPolicyAndShortcutIntegrationTests extends IntegrationTestsSupport {

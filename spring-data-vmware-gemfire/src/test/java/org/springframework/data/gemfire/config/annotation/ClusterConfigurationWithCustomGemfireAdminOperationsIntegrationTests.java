@@ -35,10 +35,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see GemfireAdminOperations
- * @see IntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.2.0

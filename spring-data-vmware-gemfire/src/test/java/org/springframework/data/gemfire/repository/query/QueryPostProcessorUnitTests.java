@@ -25,7 +25,7 @@ import org.springframework.data.repository.query.QueryMethod;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see QueryPostProcessor
+ * @see org.springframework.data.gemfire.repository.query.QueryPostProcessor
  * @since 1.0.0
  */
 public class QueryPostProcessorUnitTests {

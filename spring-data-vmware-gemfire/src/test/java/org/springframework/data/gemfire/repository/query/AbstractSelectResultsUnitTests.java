@@ -37,9 +37,9 @@ import org.springframework.lang.NonNull;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see SelectResults
- * @see AbstractSelectResults
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.apache.geode.cache.query.SelectResults
+ * @see org.springframework.data.gemfire.repository.query.AbstractSelectResults
  * @since 2.4.0
  */
 @RunWith(MockitoJUnitRunner.class)

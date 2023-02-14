@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see JndiDataSourceType
+ * @see org.springframework.data.gemfire.JndiDataSourceType
  * @since 1.7.0
  */
 public class JndiDataSourceTypeUnitTests {

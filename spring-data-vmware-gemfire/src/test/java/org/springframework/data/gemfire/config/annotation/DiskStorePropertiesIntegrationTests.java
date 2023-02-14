@@ -26,12 +26,12 @@ import org.springframework.mock.env.MockPropertySource;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see DiskStore
- * @see DiskStoreFactory
- * @see PropertySource
- * @see EnableDiskStore
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.DiskStoreFactory
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @see org.springframework.mock.env.MockPropertySource
  * @since 2.0.0
  */

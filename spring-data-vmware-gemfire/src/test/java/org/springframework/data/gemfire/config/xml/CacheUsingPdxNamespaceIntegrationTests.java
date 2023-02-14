@@ -22,11 +22,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see PdxSerializer
- * @see CacheFactoryBean
- * @see PdxDiskStoreAwareBeanFactoryPostProcessor
- * @see IntegrationTestsSupport
- * @see GemFireUnitTest
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.3.3

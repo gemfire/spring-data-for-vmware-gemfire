@@ -36,13 +36,13 @@ import org.springframework.data.gemfire.wan.GatewaySenderFactoryBean;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see AsyncEventQueue
- * @see GatewayReceiver
- * @see GatewaySender
- * @see RecreatingSpringApplicationContextTest
- * @see GemFireMockObjectsApplicationContextInitializer
+ * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
+ * @see org.apache.geode.cache.wan.GatewayReceiver
+ * @see org.apache.geode.cache.wan.GatewaySender
+ * @see org.springframework.data.gemfire.RecreatingSpringApplicationContextTest
+ * @see org.springframework.data.gemfire.tests.mock.context.GemFireMockObjectsApplicationContextInitializer
  * @see org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean
- * @see GatewaySenderFactoryBean
+ * @see org.springframework.data.gemfire.wan.GatewaySenderFactoryBean
  */
 @SuppressWarnings("unused")
 public class GemfireV7GatewayNamespaceIntegrationTests extends RecreatingSpringApplicationContextTest {

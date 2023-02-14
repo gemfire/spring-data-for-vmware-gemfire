@@ -29,11 +29,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Bean
- * @see Configuration
- * @see GemfireFunction
- * @see EnableGemfireFunctions
- * @see IntegrationTestsSupport
+ * @see org.springframework.context.annotation.Bean
+ * @see org.springframework.context.annotation.Configuration
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0

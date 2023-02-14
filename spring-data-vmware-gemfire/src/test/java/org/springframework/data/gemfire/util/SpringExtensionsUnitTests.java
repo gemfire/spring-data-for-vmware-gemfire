@@ -40,8 +40,6 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.util.SpringExtensions.ValueReturningThrowableOperation;
@@ -50,14 +48,14 @@ import org.springframework.data.gemfire.util.SpringExtensions.ValueReturningThro
  * Unit Tests for {@link SpringExtensions}.
  *
  * @author John Blum
- * @see Function
- * @see Supplier
+ * @see java.util.function.Function
+ * @see java.util.function.Supplier
  * @see org.junit.Test
- * @see Mock
+ * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see MockitoJUnitRunner
- * @see BeanFactory
- * @see BeanDefinition
+ * @see org.mockito.junit.MockitoJUnitRunner
+ * @see org.springframework.beans.factory.BeanFactory
+ * @see org.springframework.beans.factory.config.BeanDefinition
  * @see SpringExtensions
  * @since 1.9.0
  */
@@ -68,17 +66,17 @@ public class SpringExtensionsUnitTests {
 	private BeanDefinition mockBeanDefinition;
 
 	@Test
+	public void areNotNullIsNullSafe() {
+		assertThat(SpringExtensions.areNotNull((Object[]) null)).isTrue();
+	}
+
+	@Test
 	public void areNotNullWithAllNullValuesReturnsFalse() {
 		assertThat(SpringExtensions.areNotNull(null, null, null)).isFalse();
 	}
 
 	@Test
-	public void areNotNullWithNullArrayIsNullSafe() {
-		assertThat(SpringExtensions.areNotNull((Object[]) null)).isTrue();
-	}
-
-	@Test
-	public void areNotNullWithNonNullArrayAndNoNullValuesReturnsTrue() {
+	public void areNotNullWithNoNullValuesReturnsTrue() {
 		assertThat(SpringExtensions.areNotNull(1, 2, 3)).isTrue();
 	}
 
@@ -168,26 +166,6 @@ public class SpringExtensionsUnitTests {
 		verify(this.mockBeanDefinition, times(1)).getDependsOn();
 		verify(this.mockBeanDefinition, times(1))
 			.setDependsOn("testBeanNameOne", "testBeanNameTwo", "testBeanNameThree", "testBeanNameFour");
-	}
-
-	@Test
-	public void getOrderFromOrderAnnotatedBean() {
-		assertThat(SpringExtensions.getOrder(new OrderAnnotatedBean())).isEqualTo(4);
-	}
-
-	@Test
-	public void getOrderFromOrderedBean() {
-		assertThat(SpringExtensions.getOrder(new OrderedBean(2))).isEqualTo(2);
-	}
-
-	@Test
-	public void getOrderFromNonOrderedBean() {
-		assertThat(SpringExtensions.getOrder("TEST")).isNull();
-	}
-
-	@Test
-	public void getOrderFromNullIsNullSafe() {
-		assertThat(SpringExtensions.getOrder(null)).isNull();
 	}
 
 	@Test
@@ -644,23 +622,6 @@ public class SpringExtensionsUnitTests {
 			assertThat(expected.getCause()).hasNoCause();
 
 			throw expected;
-		}
-	}
-
-	@Order(value = 4)
-	static final class OrderAnnotatedBean { }
-
-	static final class OrderedBean implements Ordered {
-
-		private final int order;
-
-		public OrderedBean(int order) {
-			this.order = order;
-		}
-
-		@Override
-		public int getOrder() {
-			return this.order;
 		}
 	}
 }

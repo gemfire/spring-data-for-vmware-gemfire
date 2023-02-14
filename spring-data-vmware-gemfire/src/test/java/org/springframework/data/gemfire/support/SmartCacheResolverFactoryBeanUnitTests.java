@@ -48,11 +48,11 @@ import org.springframework.data.gemfire.support.SmartCacheResolverFactoryBean.Co
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see Cache
- * @see GemFireCache
- * @see ClientCache
- * @see CacheResolver
- * @see SmartCacheResolverFactoryBean
+ * @see org.apache.geode.cache.Cache
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.CacheResolver
+ * @see org.springframework.data.gemfire.support.SmartCacheResolverFactoryBean
  * @since 2.3.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

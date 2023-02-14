@@ -25,10 +25,10 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Region
- * @see ConfigurableApplicationContext
- * @see ClassPathXmlApplicationContext
- * @see IntegrationTestsSupport
+ * @see org.apache.geode.cache.Region
+ * @see org.springframework.context.ConfigurableApplicationContext
+ * @see org.springframework.context.support.ClassPathXmlApplicationContext
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.4.0
  * @link https://jira.spring.io/browse/SGF-204
  */
@@ -88,7 +88,7 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(appDataRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(appDataRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
 			assertThat(appDataRegion.getAttributes().getInitialCapacity()).isEqualTo(101);
-			assertThat(new Float(appDataRegion.getAttributes().getLoadFactor())).isEqualTo(new Float(0.85f));
+			assertThat(appDataRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 			assertThat(appDataRegion.getAttributes().getCloningEnabled()).isTrue();
 			assertThat(appDataRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
 			assertThat(appDataRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
@@ -203,7 +203,7 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeLocalRegion.getAttributes().getConcurrencyLevel()).isEqualTo(80);
 			assertThat(nativeLocalRegion.getAttributes().getInitialCapacity()).isEqualTo(101);
 			assertThat(nativeLocalRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(new Float(nativeLocalRegion.getAttributes().getLoadFactor())).isEqualTo(new Float(0.95f));
+			assertThat(nativeLocalRegion.getAttributes().getLoadFactor()).isEqualTo(0.95f);
 			assertThat(nativeLocalRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
 			Region<?, ?> nativePartitionRegion = applicationContext.getBean("NativePartitionRegion", Region.class);
@@ -219,7 +219,7 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativePartitionRegion.getAttributes().getConcurrencyLevel()).isEqualTo(40);
 			assertThat(nativePartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 			assertThat(nativePartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(new Float(nativePartitionRegion.getAttributes().getLoadFactor())).isEqualTo(new Float(0.85f));
+			assertThat(nativePartitionRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 			assertThat(nativePartitionRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(nativePartitionRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
@@ -234,7 +234,7 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeReplicateRegion.getAttributes().getCloningEnabled()).isFalse();
 			assertThat(nativeReplicateRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
 			assertThat(nativeReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(23);
-			assertThat(new Float(nativeReplicateRegion.getAttributes().getLoadFactor())).isEqualTo(new Float(0.75f));
+			assertThat(nativeReplicateRegion.getAttributes().getLoadFactor()).isEqualTo(0.75f);
 			assertThat(nativeReplicateRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
 			assertThat(nativeReplicateRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(nativeReplicateRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);

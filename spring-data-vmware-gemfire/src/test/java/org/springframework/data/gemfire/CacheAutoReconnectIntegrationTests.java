@@ -21,9 +21,9 @@ import org.springframework.data.gemfire.tests.integration.SpringApplicationConte
  *
  * @author John Blum
  * @see org.junit.Test
- * @see Cache
- * @see CacheFactoryBean
- * @see SpringApplicationContextIntegrationTestsSupport
+ * @see org.apache.geode.cache.Cache
+ * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.5.0
  */
 public class CacheAutoReconnectIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {

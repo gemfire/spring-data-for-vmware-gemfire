@@ -19,9 +19,9 @@ import org.springframework.stereotype.Component;
  *
  * @author John Blum
  * @since 2.6.0
- * @see Function
- * @see GemfireFunction
- * @see Component
+ * @see org.apache.geode.cache.execute.Function
+ * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
+ * @see org.springframework.stereotype.Component
  */
 @Component
 @SuppressWarnings("unused")

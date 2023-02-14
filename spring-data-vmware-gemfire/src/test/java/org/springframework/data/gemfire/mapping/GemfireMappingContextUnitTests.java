@@ -21,7 +21,7 @@ import lombok.Data;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see GemfireMappingContext
+ * @see org.springframework.data.gemfire.mapping.GemfireMappingContext
  * @since 1.6.3
  */
 public class GemfireMappingContextUnitTests {

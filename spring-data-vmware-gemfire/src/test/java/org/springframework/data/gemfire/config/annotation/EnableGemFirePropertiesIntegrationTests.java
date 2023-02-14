@@ -28,19 +28,20 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
 
 /**
- * Integration Tests for {@link EnableAuth}, {@link EnableGemFireProperties}, {@link EnableHttpService},
+ * Integration tests for {@link EnableAuth}, {@link EnableGemFireProperties}, {@link EnableHttpService},
  * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
- * {@link EnableOffHeap}, {@link EnableSecurity}, {@link EnableSsl}, {@link EnableStatistics}.
+ * {@link EnableOffHeap},, {@link EnableSecurity}, {@link EnableSsl},
+ * {@link EnableStatistics}.
  *
  * @author John Blum
- * @see Properties
+ * @see java.util.Properties
  * @see org.junit.Test
- * @see GemFireCache
- * @see ConfigurableApplicationContext
+ * @see org.apache.geode.cache.GemFireCache
+ * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
- * @see PropertySource
- * @see SpringApplicationContextIntegrationTestsSupport
- * @see EnableGemFireMockObjects
+ * @see org.springframework.core.env.PropertySource
+ * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
  * @since 2.0.0
  */
 @SuppressWarnings("rawtypes")
@@ -317,6 +318,29 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(mockPdxSerializer).isNotNull();
 		assertThat(gemfireCache.getPdxSerializer()).isEqualTo(mockPdxSerializer);
 	}
+
+//	@Test
+//	public void redisServerGemFirePropertiesConfiguration() {
+//
+//		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
+//			.withProperty("spring.data.gemfire.service.redis.bind-address", "10.16.8.4")
+//			.withProperty("spring.data.gemfire.service.redis.port", "13579");
+//
+//		newApplicationContext(testPropertySource, TestRedisServerGemFirePropertiesConfiguration.class);
+//
+//		assertThat(containsBean("gemfireCache")).isTrue();
+//
+//		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+//
+//		assertThat(gemfireCache).isNotNull();
+//		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
+//
+//		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
+//
+//		assertThat(gemfireProperties).isNotNull();
+//		assertThat(gemfireProperties.getProperty("redis-bind-address")).isEqualTo("10.16.8.4");
+//		assertThat(gemfireProperties.getProperty("redis-port")).isEqualTo("13579");
+//	}
 
 	@Test
 	public void securityGemFirePropertiesConfiguration() {
