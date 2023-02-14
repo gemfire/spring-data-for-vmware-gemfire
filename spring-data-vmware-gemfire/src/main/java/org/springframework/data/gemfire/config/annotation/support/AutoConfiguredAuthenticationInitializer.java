@@ -47,7 +47,7 @@ public class AutoConfiguredAuthenticationInitializer extends AbstractAuthInitial
 		AutoConfiguredAuthenticationInitializer authenticationInitializer =
 			new AutoConfiguredAuthenticationInitializer();
 
-		authenticationInitializer.initialize(GemfireUtils.getCache(), NO_PARAMETERS);
+		authenticationInitializer.initialize(null, NO_PARAMETERS);
 
 		return authenticationInitializer;
 	}
