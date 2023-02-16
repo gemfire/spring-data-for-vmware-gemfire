@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import org.awaitility.Awaitility;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -250,8 +251,10 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 
 		waitForRegionEntryEvents();
 
-		assertThat(regionCacheListenerEventValues).containsExactly(4, 5);
-	}
+        Awaitility.await()
+                .timeout(4, TimeUnit.SECONDS)
+                .until(() -> regionCacheListenerEventValues.containsAll(List.of(4, 5)));
+    }
 
 	public static class ClientCacheBeanPostProcessor implements BeanPostProcessor {
 

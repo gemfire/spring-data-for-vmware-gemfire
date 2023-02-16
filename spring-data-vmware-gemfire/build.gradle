@@ -49,7 +49,7 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-  testImplementation('com.vmware.gemfire:spring-test-gemfire-9.15-2.6:1.0.0-build.7')
+  testImplementation('com.vmware.gemfire:spring-test-gemfire-9.15-2.6:1.0.0')
   testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
     exclude group: 'com.google.guava', module: 'guava'
   }
@@ -60,6 +60,8 @@ dependencies {
   testImplementation('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
+
+  testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
