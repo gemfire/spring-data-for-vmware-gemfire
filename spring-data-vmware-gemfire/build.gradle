@@ -16,10 +16,6 @@ project.ext.set("pomProjectArtifactName","spring-data-2.6-gemfire-${gemfireBaseV
 project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
 
 dependencies {
-  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
-    exclude group: 'org.apache.geode', module: 'geode-log4j'
-  }
-
   api "com.vmware.gemfire:geode-core:$gemfireVersion"
   api "com.vmware.gemfire:geode-logging:$gemfireVersion"
   api "com.vmware.gemfire:geode-cq:$gemfireVersion"
