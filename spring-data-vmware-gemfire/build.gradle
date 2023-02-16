@@ -67,6 +67,8 @@ dependencies {
   testImplementation('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
+
+  testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
