@@ -38,7 +38,7 @@ dependencies {
   api 'org.apache.shiro:shiro-spring:1.10.1'
   api 'org.aspectj:aspectjweaver:1.9.19'
   api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -53,10 +53,7 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-  testImplementation('org.springframework.data:spring-data-geode-test:0.3.4-RAJ') {
-    exclude group: 'org.mockito', module: 'mockito-core'
-    exclude group: 'org.springframework.data', module: 'spring-data-geode'
-  }
+  testImplementation('com.vmware.gemfire:spring-test-gemfire-9.15-2.7:1.0.0')
   testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
     exclude group: 'com.google.guava', module: 'guava'
   }
