@@ -42,6 +42,7 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("unused")
 public class PeerCacheConfiguration extends AbstractCacheConfiguration {
 
+    protected static final boolean DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER = false;
     protected static final boolean DEFAULT_ENABLE_AUTO_RECONNECT = false;
     protected static final boolean DEFAULT_USE_CLUSTER_CONFIGURATION = false;
 
@@ -49,6 +50,7 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
 
     private boolean enableAutoReconnect = DEFAULT_ENABLE_AUTO_RECONNECT;
     private boolean useClusterConfiguration = DEFAULT_USE_CLUSTER_CONFIGURATION;
+    private boolean useUDPMembershipMessenger = DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER;
 
     private Integer lockLease;
     private Integer lockTimeout;
@@ -79,6 +81,7 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
         gemfireCache.setPeerCacheConfigurers(resolvePeerCacheConfigurers());
         gemfireCache.setSearchTimeout(searchTimeout());
         gemfireCache.setUseClusterConfiguration(useClusterConfiguration());
+        gemfireCache.setUseUDPMembershipMessenger(useUDPMembershipMessenger());
 
         return gemfireCache;
     }
@@ -140,6 +143,9 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
 
                 setUseClusterConfiguration(resolveProperty(cachePeerProperty("use-cluster-configuration"),
 					Boolean.TRUE.equals(peerCacheApplicationAttributes.get("useClusterConfiguration"))));
+
+                setUseUDPMembershipMessenger(resolveProperty(cachePeerProperty("use-udp-membership-messenger"),
+                        Boolean.TRUE.equals(peerCacheApplicationAttributes.get("useUDPMembershipMessenger"))));
 
                 Optional.ofNullable((String) peerCacheApplicationAttributes.get("locators"))
 					.filter(PeerCacheConfiguration::hasValue)
@@ -208,8 +214,16 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
         this.useClusterConfiguration = useClusterConfiguration;
     }
 
+    void setUseUDPMembershipMessenger(boolean useUDPMembershipMessenger) {
+        this.useUDPMembershipMessenger = useUDPMembershipMessenger;
+    }
+
     protected boolean useClusterConfiguration() {
         return this.useClusterConfiguration;
+    }
+
+    protected Boolean useUDPMembershipMessenger() {
+        return this.useUDPMembershipMessenger;
     }
 
     /**

@@ -106,7 +106,7 @@ public class CacheFactoryBeanUnitTests {
 		Properties gemfireProperties = cacheFactoryBean.getProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(2);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
 		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
 		assertThat(gemfireProperties.getProperty("disable-auto-reconnect")).isEqualTo("true");
@@ -125,7 +125,7 @@ public class CacheFactoryBeanUnitTests {
 		Properties gemfireProperties = cacheFactoryBean.getProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(2);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
 		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
 		assertThat(gemfireProperties.getProperty("disable-auto-reconnect")).isEqualTo("true");
@@ -144,11 +144,27 @@ public class CacheFactoryBeanUnitTests {
 		Properties gemfireProperties = cacheFactoryBean.getProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(2);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
 		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
 		assertThat(gemfireProperties.getProperty("disable-auto-reconnect")).isEqualTo("false");
 		assertThat(gemfireProperties.getProperty("use-cluster-configuration")).isEqualTo("true");
+	}
+
+	@Test
+	public void applyCacheConfigurersWithUseUDPMembershipMessengerEnabled() {
+
+		CacheFactoryBean cacheFactoryBean = new CacheFactoryBean();
+
+		cacheFactoryBean.setUseUDPMembershipMessenger(true);
+		cacheFactoryBean.applyCacheConfigurers();
+
+		Properties gemfireProperties = cacheFactoryBean.getProperties();
+
+		assertThat(gemfireProperties).isNotNull();
+		assertThat(gemfireProperties).hasSize(3);
+		assertThat(gemfireProperties.containsKey("use-udp-membership-messenger")).isTrue();
+		assertThat(gemfireProperties.getProperty("use-udp-membership-messenger")).isEqualTo("true");
 	}
 
 	@Test
@@ -163,7 +179,7 @@ public class CacheFactoryBeanUnitTests {
 		Properties gemfireProperties = cacheFactoryBean.getProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(2);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
 		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
 		assertThat(gemfireProperties.getProperty("disable-auto-reconnect")).isEqualTo("true");
@@ -182,7 +198,7 @@ public class CacheFactoryBeanUnitTests {
 		Properties gemfireProperties = cacheFactoryBean.getProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(2);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
 		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
 		assertThat(gemfireProperties.getProperty("disable-auto-reconnect")).isEqualTo("false");

@@ -52,6 +52,7 @@ public class LocatorFactoryBean extends AbstractFactoryBeanSupport<Locator> impl
 
 	private boolean useBeanFactoryLocator = false;
 	private boolean useClusterConfigurationService = false;
+	private boolean useUDPMembershipMessenger = false;
 
 	private Integer port = DEFAULT_PORT;
 
@@ -140,6 +141,9 @@ public class LocatorFactoryBean extends AbstractFactoryBeanSupport<Locator> impl
 
 		locatorBuilder.set(GemFireProperties.USE_CLUSTER_CONFIGURATION.getName(),
 			String.valueOf(isUseClusterConfigurationService()));
+
+		locatorBuilder.set(GemFireProperties.USE_UDP_MEMBERSHIP_MESSENGER.getName(),
+				String.valueOf(isUseUDPMembershipMessenger()));
 
 		return locatorBuilder;
 	}
@@ -293,5 +297,13 @@ public class LocatorFactoryBean extends AbstractFactoryBeanSupport<Locator> impl
 
 	public boolean isUseClusterConfigurationService() {
 		return this.useClusterConfigurationService;
+	}
+
+	public void setUseUDPMembershipMessenger(boolean useUDPMembershipMessenger) {
+		this.useUDPMembershipMessenger = useUDPMembershipMessenger;
+	}
+
+	public boolean isUseUDPMembershipMessenger() {
+		return this.useUDPMembershipMessenger;
 	}
 }

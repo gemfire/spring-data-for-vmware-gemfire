@@ -56,6 +56,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 
 	private Boolean enableAutoReconnect;
 	private Boolean useClusterConfiguration;
+	private Boolean useUDPMembershipMessenger;
 
 	private GatewayConflictResolver gatewayConflictResolver;
 
@@ -93,6 +94,8 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 			gemfireProperties.setProperty(GemFireProperties.USE_CLUSTER_CONFIGURATION.getName(),
 				String.valueOf(Boolean.TRUE.equals(getUseClusterConfiguration())));
 
+			gemfireProperties.setProperty(GemFireProperties.USE_UDP_MEMBERSHIP_MESSENGER.getName(),
+					String.valueOf(Boolean.TRUE.equals(getUseUDPMembershipMessenger())));
 		};
 
 		this.peerCacheConfigurers.add(autoReconnectClusterConfigurationConfigurer);
@@ -468,6 +471,24 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 */
 	public @Nullable Boolean getUseClusterConfiguration() {
 		return this.useClusterConfiguration;
+	}
+
+	/**
+	 * Sets the state of the {@literal use-udp-membership-messenger} VMware GemFire property.
+	 *
+	 * @param useUDPMembershipMessenger boolean value to set the {@literal use-udp-membership-messenger} property.
+	 */
+	public void setUseUDPMembershipMessenger(@Nullable Boolean useUDPMembershipMessenger) {
+		this.useUDPMembershipMessenger = useUDPMembershipMessenger;
+	}
+
+	/**
+	 * Return the state of the {@literal use-udp-membership-messenger}property.
+	 *
+	 * @return the current boolean value for the {@literal use-udp-membership-messenger} property..
+	 */
+	public @Nullable Boolean getUseUDPMembershipMessenger() {
+		return this.useUDPMembershipMessenger;
 	}
 
 	public static class CacheFactoryToPdxConfigurerAdapter implements PdxConfigurer<CacheFactory> {

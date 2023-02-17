@@ -327,6 +327,15 @@ public @interface CacheServerApplication {
 	boolean useClusterConfiguration() default false;
 
 	/**
+	 * Configures whether to use UDP for membership communication, or TCP.
+	 * UDP was the old default. TCP is the current default.
+	 *
+	 * Use {@literal spring.data.gemfire.cache.server.use-udp-membership-messenger} property
+	 * 	 * in {@literal application.properties}.
+	 */
+	boolean useUDPMembershipMessenger() default CacheServerConfiguration.DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER;
+
+	/**
 	 * Configures the tcpNoDelay setting of sockets used to send messages to clients.
 	 *
 	 * TcpNoDelay is enabled by default.
