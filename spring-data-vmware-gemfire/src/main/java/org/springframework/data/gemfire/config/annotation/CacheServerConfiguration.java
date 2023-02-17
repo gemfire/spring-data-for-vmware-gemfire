@@ -52,13 +52,15 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("unused")
 public class CacheServerConfiguration extends PeerCacheConfiguration {
 
-	protected static final boolean DEFAULT_AUTO_STARTUP = true;
+	public static final boolean DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER = false;
+    protected static final boolean DEFAULT_AUTO_STARTUP = true;
 
 	protected static final String DEFAULT_NAME = "SpringBasedCacheServerApplication";
 
 	private boolean autoStartup = DEFAULT_AUTO_STARTUP;
 
 	private Boolean tcpNoDelay;
+	private Boolean useUDPMembershipMessenger;
 
 	private Integer maxConnections;
 	private Integer maxMessageCount;
@@ -339,8 +341,16 @@ public class CacheServerConfiguration extends PeerCacheConfiguration {
 		this.tcpNoDelay = tcpNoDelay;
 	}
 
+	void setUseUdpMembershipMessenger(Boolean useUDPMembershipMessenger) {
+		this.useUDPMembershipMessenger = useUDPMembershipMessenger;
+	}
+
 	protected Boolean getTcpNoDelay() {
 		return Optional.ofNullable(this.tcpNoDelay).orElse(CacheServer.DEFAULT_TCP_NO_DELAY);
+	}
+
+	protected Boolean getUseUDPMembershipMessenger() {
+		return Optional.ofNullable(this.useUDPMembershipMessenger).orElse(DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER);
 	}
 
 	/**

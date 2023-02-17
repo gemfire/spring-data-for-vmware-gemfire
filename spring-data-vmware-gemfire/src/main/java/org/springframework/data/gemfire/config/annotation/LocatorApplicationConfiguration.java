@@ -62,8 +62,9 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 
 	public static final String DEFAULT_LOG_LEVEL = "warn";
 	public static final String DEFAULT_NAME = "SpringBasedLocatorApplication";
+	public static final boolean DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER = false;
 
-	protected static final String LOCATOR_APPLICATION_MUTEX_ERROR_MESSAGE =
+    protected static final String LOCATOR_APPLICATION_MUTEX_ERROR_MESSAGE =
 		"A Spring application cannot be both a Cache and a Locator application;"
 			+ " You may annotate your Spring application main class with 1 of"
 			+ " [@ClientCacheApplication, @CacheServerApplication, @PeerCacheApplication] or @LocatorApplication;"
@@ -77,6 +78,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 
 	private boolean useBeanFactoryLocator = DEFAULT_USE_BEAN_FACTORY_LOCATOR;
 	private boolean useClusterConfigurationService = DEFAULT_USE_CLUSTER_CONFIGURATTION_SERVICE;
+	private boolean useUDPMembershipMessenger = DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER;
 
 	private int port = DEFAULT_PORT;
 
@@ -183,6 +185,9 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 
 			setUseClusterConfigurationService(resolveProperty(locatorProperty("use-cluster-configuration"),
 				Boolean.class, locatorApplicationAnnotationAttributes.getBoolean("useClusterConfiguration")));
+
+			setUseUDPMembershipMessenger(resolveProperty(locatorProperty("use-udp-membership-messenger"),
+					Boolean.class, locatorApplicationAnnotationAttributes.getBoolean("useUDPMembershipMessenger")));
 		}
 	}
 
@@ -200,6 +205,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 		locatorFactoryBean.setPort(getPort());
 		locatorFactoryBean.setUseBeanFactoryLocator(isUseBeanFactoryLocator());
 		locatorFactoryBean.setUseClusterConfigurationService(isUseClusterConfigurationService());
+		locatorFactoryBean.setUseUDPMembershipMessenger(isUseUDPMembershipMessenger());
 
 		return locatorFactoryBean;
 	}
@@ -272,7 +278,15 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
 		this.useClusterConfigurationService = useClusterConfigurationService;
 	}
 
+	public void setUseUDPMembershipMessenger(boolean useUDPMembershipMessenger) {
+		this.useUDPMembershipMessenger = useUDPMembershipMessenger;
+	}
+
 	public boolean isUseClusterConfigurationService() {
 		return useClusterConfigurationService;
+	}
+
+	public boolean isUseUDPMembershipMessenger() {
+		return useUDPMembershipMessenger;
 	}
 }

@@ -126,4 +126,13 @@ public @interface LocatorApplication {
 	 */
 	boolean useClusterConfiguration() default LocatorApplicationConfiguration.DEFAULT_USE_CLUSTER_CONFIGURATTION_SERVICE;
 
+	/**
+	 * Configures whether to use UDP for membership communication, or TCP.
+	 * UDP was the old default. TCP is the current default.
+	 *
+	 * Use {@literal spring.data.gemfire.cache.locator.use-udp-membership-messenger} property
+	 * 	 * in {@literal application.properties}.
+	 */
+	boolean useUDPMembershipMessenger() default LocatorApplicationConfiguration.DEFAULT_USE_UDP_MEMBERSHIP_MESSENGER;
+
 }

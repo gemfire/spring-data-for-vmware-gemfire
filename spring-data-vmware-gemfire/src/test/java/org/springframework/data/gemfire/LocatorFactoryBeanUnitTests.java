@@ -176,6 +176,9 @@ public class LocatorFactoryBeanUnitTests {
 		verify(locatorBuilderSpy, times(1))
 			.set(eq(GemFireProperties.USE_CLUSTER_CONFIGURATION.getName()), eq("false"));
 
+		verify(locatorBuilderSpy, times(1))
+				.set(eq(GemFireProperties.USE_UDP_MEMBERSHIP_MESSENGER.getName()), eq("false"));
+
 		verifyNoMoreInteractions(locatorBuilderSpy);
 	}
 
@@ -419,5 +422,19 @@ public class LocatorFactoryBeanUnitTests {
 		this.locatorFactoryBean.setUseClusterConfigurationService(false);
 
 		assertThat(this.locatorFactoryBean.isUseClusterConfigurationService()).isFalse();
+	}
+
+	@Test
+	public void locatorFactoryBeanUseOfUDPMembershipMessenger() {
+
+		assertThat(this.locatorFactoryBean.isUseUDPMembershipMessenger()).isFalse();
+
+		this.locatorFactoryBean.setUseUDPMembershipMessenger(true);
+
+		assertThat(this.locatorFactoryBean.isUseUDPMembershipMessenger()).isTrue();
+
+		this.locatorFactoryBean.setUseUDPMembershipMessenger(false);
+
+		assertThat(this.locatorFactoryBean.isUseUDPMembershipMessenger()).isFalse();
 	}
 }
