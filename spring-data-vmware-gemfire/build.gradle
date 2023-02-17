@@ -38,7 +38,7 @@ dependencies {
   api 'org.apache.shiro:shiro-spring:1.10.1'
   api 'org.aspectj:aspectjweaver:1.9.19'
   api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
+  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
