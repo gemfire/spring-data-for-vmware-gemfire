@@ -16,33 +16,39 @@ project.ext.set("pomProjectArtifactName","spring-data-2.7-gemfire-${gemfireBaseV
 project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
 
 dependencies {
-  api(platform("com.vmware.gemfire:gemfire-server-bom:$gemfireVersion")) {
-    exclude group: 'org.apache.geode', module: 'geode-log4j'
-  }
-
-  api "com.vmware.gemfire:geode-core:$gemfireVersion"
-  api "com.vmware.gemfire:geode-logging:$gemfireVersion"
-  api "com.vmware.gemfire:geode-cq:$gemfireVersion"
-  api "com.vmware.gemfire:geode-wan:$gemfireVersion"
-  api "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
-  api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
-  api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
-  api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-core:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-logging:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-cq:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-wan:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-lucene:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
   api 'org.springframework:spring-context-support:5.3.25'
   api 'org.springframework:spring-tx:5.3.25'
   api 'org.springframework:spring-web:5.3.25'
   api "org.springframework.data:spring-data-commons:$springDataVersion"
-  api 'org.apache.shiro:shiro-spring:1.10.1'
-  api 'org.aspectj:aspectjweaver:1.9.19'
-  api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+  implementation 'org.apache.shiro:shiro-spring:1.10.1'
+  implementation 'org.aspectj:aspectjweaver:1.9.19'
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
+
+
+  testImplementation "com.vmware.gemfire:geode-core:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-logging:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-cq:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-wan:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-lucene:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+
   testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.2'
   testImplementation 'javax.el:el-api:2.2'
