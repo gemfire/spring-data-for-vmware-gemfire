@@ -13,29 +13,38 @@ project.ext.set("pomProjectArtifactName", "spring-data-2.7-gemfire-${gemfireBase
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
-  api "com.vmware.gemfire:gemfire-core:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
-  api "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
-  implementation "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
-  implementation "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
-  implementation "com.vmware.gemfire:gemfire-version:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-core:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
+  compileOnly "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
+  compileOnly "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
   api 'org.springframework:spring-context-support:5.3.25'
   api 'org.springframework:spring-tx:5.3.25'
   api 'org.springframework:spring-web:5.3.25'
   api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
-  api 'org.apache.shiro:shiro-spring:1.10.0'
-  api 'org.aspectj:aspectjweaver:1.9.7'
-  api 'com.fasterxml.jackson.core:jackson-annotations:2.13.4'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
+  implementation 'org.apache.shiro:shiro-spring:1.10.0'
+  implementation 'org.aspectj:aspectjweaver:1.9.7'
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
+
+  testImplementation "com.vmware.gemfire:gemfire-core:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
+  testImplementation "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
+  testImplementation "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
+
   testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
   testImplementation 'javax.el:el-api:2.2'
