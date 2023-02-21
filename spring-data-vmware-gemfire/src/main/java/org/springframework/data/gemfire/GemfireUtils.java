@@ -4,7 +4,6 @@
  */
 package org.springframework.data.gemfire;
 
-import com.vmware.gemfire.internal.version.GemFireVersion;
 import org.apache.geode.cache.CacheFactory;
 
 import org.w3c.dom.Element;
@@ -26,7 +25,7 @@ import org.springframework.util.ClassUtils;
  */
 @SuppressWarnings("unused")
 public abstract class GemfireUtils extends RegionUtils {
-  public final static String GEMFIRE_NAME = new GemFireVersion().getName();
+  public final static String GEMFIRE_NAME = "VMware GemFire";
   public final static String GEMFIRE_VERSION = CacheFactory.getVersion();
   private static final String ASYNC_EVENT_QUEUE_ELEMENT_NAME = "async-event-queue";
   private static final String ASYNC_EVENT_QUEUE_TYPE_NAME =
