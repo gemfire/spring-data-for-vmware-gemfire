@@ -23,7 +23,6 @@ dependencies {
     compileOnly "com.vmware.gemfire:geode-lucene:$gemfireVersion"
     compileOnly "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
     compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
-    compileOnly "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
     implementation 'javax.cache:cache-api:1.1.1'
     api 'org.springframework:spring-context-support:6.0.4'
@@ -47,7 +46,6 @@ dependencies {
     testImplementation "com.vmware.gemfire:geode-lucene:$gemfireVersion"
     testImplementation "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
     testImplementation "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
-    testImplementation "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
     testImplementation 'org.springframework:spring-test:6.0.4'
     testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
