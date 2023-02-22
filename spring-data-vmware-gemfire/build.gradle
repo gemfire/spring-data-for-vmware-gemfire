@@ -15,15 +15,15 @@ project.ext.set("pomProjectArtifactName", "spring-data-3.0-gemfire-${gemfireBase
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
-    api "com.vmware.gemfire:geode-core:$gemfireVersion"
-    api "com.vmware.gemfire:geode-logging:$gemfireVersion"
-    api "com.vmware.gemfire:geode-cq:$gemfireVersion"
-    api "com.vmware.gemfire:geode-wan:$gemfireVersion"
-    api "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
-    api "com.vmware.gemfire:geode-lucene:$gemfireVersion"
-    api "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
-    api "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
-    api "com.vmware.gemfire:gemfire-version:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-core:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-logging:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-cq:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-wan:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-lucene:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+    compileOnly "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
     implementation 'javax.cache:cache-api:1.1.1'
     api 'org.springframework:spring-context-support:6.0.4'
@@ -38,6 +38,16 @@ dependencies {
     compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
         exclude group: 'javax.annotation', module: 'jsr250-api'
     }
+
+    testImplementation "com.vmware.gemfire:geode-core:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-logging:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-cq:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-wan:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-gfsh:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-lucene:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
+    testImplementation "com.vmware.gemfire:gemfire-version:$gemfireVersion"
 
     testImplementation 'org.springframework:spring-test:6.0.4'
     testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
