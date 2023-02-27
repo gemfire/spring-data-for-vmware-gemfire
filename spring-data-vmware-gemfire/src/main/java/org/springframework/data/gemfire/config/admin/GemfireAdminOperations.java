@@ -11,7 +11,6 @@ import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeIter
 
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.lucene.LuceneIndex;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
@@ -25,7 +24,6 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * @author John Blum
  * @see DiskStore
  * @see Region
- * @see LuceneIndex
  * @see Index
  * @see IndexDefinition
  * @see RegionDefinition
@@ -70,26 +68,6 @@ public interface GemfireAdminOperations {
 
 	default void createRegions(Iterable<RegionDefinition> regionDefinitions) {
 		nullSafeIterable(regionDefinitions).forEach(this::createRegion);
-	}
-
-	/**
-	 * Creates a {@link Region} {@link LuceneIndex} based on the given
-	 * {@link SchemaObjectDefinition schema object definition}.
-	 *
-	 * @param luceneIndexDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
-	 * defining a {@link Region} {@link LuceneIndex}.
-	 * @see SchemaObjectDefinition
-	 * @see LuceneIndex
-	 * @see Region
-	 */
-	void createLuceneIndex(SchemaObjectDefinition luceneIndexDefinition);
-
-	default void createLuceneIndexes(SchemaObjectDefinition... luceneIndexDefinitions) {
-		stream(nullSafeArray(luceneIndexDefinitions, SchemaObjectDefinition.class)).forEach(this::createLuceneIndex);
-	}
-
-	default void createLuceneIndexes(Iterable<SchemaObjectDefinition> luceneIndexDefinitions) {
-		nullSafeIterable(luceneIndexDefinitions).forEach(this::createLuceneIndex);
 	}
 
 	/**

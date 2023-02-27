@@ -100,7 +100,7 @@ public class ComposableSchemaObjectDefinerUnitTests {
 	public void getSchemaObjectTypesIsComposed() {
 
 		when(this.mockHandlerOne.getSchemaObjectTypes())
-			.thenReturn(asSet(SchemaObjectType.INDEX, SchemaObjectType.LUCENE_INDEX));
+			.thenReturn(asSet(SchemaObjectType.INDEX));
 
 		when(this.mockHandlerTwo.getSchemaObjectTypes())
 			.thenReturn(Collections.singleton(SchemaObjectType.DISK_STORE));
@@ -111,7 +111,7 @@ public class ComposableSchemaObjectDefinerUnitTests {
 		assertThat(handler).isNotNull();
 
 		assertThat(handler.getSchemaObjectTypes()).containsAll(
-			Arrays.asList(SchemaObjectType.INDEX, SchemaObjectType.LUCENE_INDEX, SchemaObjectType.DISK_STORE));
+			Arrays.asList(SchemaObjectType.INDEX, SchemaObjectType.DISK_STORE));
 	}
 
 	@Test

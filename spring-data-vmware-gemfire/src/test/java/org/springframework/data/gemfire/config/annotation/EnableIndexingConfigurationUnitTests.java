@@ -31,15 +31,10 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionFactory;
 import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.lucene.LuceneIndex;
-import org.apache.geode.cache.lucene.LuceneIndexFactory;
-import org.apache.geode.cache.lucene.LuceneService;
 import org.apache.geode.cache.query.Index;
 import org.apache.geode.cache.query.IndexExistsException;
 import org.apache.geode.cache.query.IndexNameConflictException;
 import org.apache.geode.cache.query.QueryService;
-
-import org.apache.lucene.analysis.Analyzer;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +61,6 @@ import org.springframework.lang.Nullable;
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.lucene.LuceneIndex
  * @see org.apache.geode.cache.query.Index
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.Bean
@@ -76,7 +70,6 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.data.gemfire.config.annotation.EnableIndexing
  * @see org.springframework.data.gemfire.config.annotation.IndexConfiguration
  * @see org.springframework.data.gemfire.mapping.annotation.Indexed
- * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @since 1.9.0
  */
@@ -118,15 +111,6 @@ public class EnableIndexingConfigurationUnitTests extends SpringApplicationConte
 		indexes.clear();
 	}
 
-	private void assertLuceneIndex(LuceneIndex index, String name, String regionPath, String... fields) {
-
-		assertThat(index).isNotNull();
-		assertThat(index.getName()).isEqualTo(name);
-		assertThat(index.getRegionPath()).isEqualTo(regionPath);
-		assertThat(index.getFieldNames()).hasSize(fields.length);
-		assertThat(index.getFieldNames()).contains(fields);
-	}
-
 	private void assertOqlIndex(Index index, String name, String expression, String from, IndexType indexType) {
 
 		assertThat(index).isNotNull();
@@ -141,15 +125,7 @@ public class EnableIndexingConfigurationUnitTests extends SpringApplicationConte
 
 		newApplicationContext(IndexingEnabledWithIndexedPersistentEntityConfiguration.class);
 
-		assertLuceneIndexes(requireApplicationContext());
 		assertOqlIndexes(requireApplicationContext());
-	}
-
-	private void assertLuceneIndexes(ConfigurableApplicationContext applicationContext) {
-
-		LuceneIndex luceneIndex = applicationContext.getBean("TitleLuceneIdx", LuceneIndex.class);
-
-		assertLuceneIndex(luceneIndex, "TitleLuceneIdx", "Customers", "title");
 	}
 
 	private void assertOqlIndexes(ConfigurableApplicationContext applicationContext) {
@@ -253,50 +229,6 @@ public class EnableIndexingConfigurationUnitTests extends SpringApplicationConte
 			when(mockCache.createRegionFactory(anyString())).thenReturn(mockRegionFactory);
 
 			return mockCache;
-		}
-
-		@Bean
-		@SuppressWarnings("unchecked")
-		LuceneService luceneService() {
-			LuceneService mockLuceneService = mock(LuceneService.class);
-
-			when(mockLuceneService.createIndexFactory()).thenAnswer(invocation -> {
-				LuceneIndexFactory mockLuceneIndexFactory = mock(LuceneIndexFactory.class);
-
-				List<String> fieldNames = new ArrayList<>();
-
-				when(mockLuceneIndexFactory.setFields((String[]) any())).thenAnswer(setFieldsInvocation -> {
-					Collections.addAll(fieldNames, toStringArray(setFieldsInvocation.getArguments()));
-					return mockLuceneIndexFactory;
-				});
-
-				Map<String, Analyzer> fieldAnalyzers = new HashMap<>();
-
-				when(mockLuceneIndexFactory.setFields(any(Map.class))).thenAnswer(setFieldsInvocation -> {
-					fieldAnalyzers.putAll(setFieldsInvocation.getArgument(0));
-					return mockLuceneIndexFactory;
-				});
-
-				doAnswer(createInvocation -> {
-					LuceneIndex mockLuceneIndex = mock(LuceneIndex.class);
-
-					String indexName = createInvocation.getArgument(0);
-					String regionPath = createInvocation.getArgument(1);
-
-					when(mockLuceneIndex.getName()).thenReturn(indexName);
-					when(mockLuceneIndex.getRegionPath()).thenReturn(regionPath);
-					when(mockLuceneIndex.getFieldAnalyzers()).thenReturn(fieldAnalyzers);
-					when(mockLuceneIndex.getFieldNames()).thenReturn(asArray(fieldNames));
-
-					when(mockLuceneService.getIndex(eq(indexName), eq(regionPath))).thenReturn(mockLuceneIndex);
-
-					return mockLuceneIndex;
-				}).when(mockLuceneIndexFactory).create(anyString(), anyString());
-
-				return mockLuceneIndexFactory;
-			});
-
-			return mockLuceneService;
 		}
 	}
 

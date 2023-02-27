@@ -14,7 +14,6 @@ import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.lucene.LuceneIndex;
 import org.apache.geode.cache.query.Index;
 import org.apache.geode.cache.wan.GatewayReceiver;
 import org.apache.geode.cache.wan.GatewaySender;
@@ -32,7 +31,6 @@ import org.apache.geode.cache.wan.GatewaySender;
  * @see ClientCache
  * @see Pool
  * @see Function
- * @see LuceneIndex
  * @see Index
  * @see GatewayReceiver
  * @see GatewaySender
@@ -49,7 +47,6 @@ public enum SchemaObjectType {
 	GATEWAY_RECEIVER(GatewayReceiver.class),
 	GATEWAY_SENDER(GatewaySender.class),
 	INDEX(Index.class),
-	LUCENE_INDEX(LuceneIndex.class),
 	POOL(Pool.class),
 	REGION(Region.class),
 	UNKNOWN(Void.class);

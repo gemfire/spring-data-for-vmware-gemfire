@@ -7,7 +7,6 @@ package org.springframework.data.gemfire.config.admin;
 
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.lucene.LuceneIndex;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
@@ -62,21 +61,6 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 */
 	@Override
 	public void createRegion(RegionDefinition regionDefinition) {
-		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-	}
-
-	/**
-	 * Creates a {@link Region} {@link LuceneIndex} based on the given
-	 * {@link SchemaObjectDefinition schema object definition}.
-	 *
-	 * @param luceneIndexDefinition {@link SchemaObjectDefinition} encapsulating the configuration meta-data
-	 * defining a {@link Region} {@link LuceneIndex}.
-	 * @see SchemaObjectDefinition
-	 * @see LuceneIndex
-	 * @see Region
-	 */
-	@Override
-	public void createLuceneIndex(SchemaObjectDefinition luceneIndexDefinition) {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 

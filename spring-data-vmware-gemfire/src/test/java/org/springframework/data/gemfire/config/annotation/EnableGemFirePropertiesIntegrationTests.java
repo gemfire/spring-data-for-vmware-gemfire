@@ -319,29 +319,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireCache.getPdxSerializer()).isEqualTo(mockPdxSerializer);
 	}
 
-//	@Test
-//	public void redisServerGemFirePropertiesConfiguration() {
-//
-//		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-//			.withProperty("spring.data.gemfire.service.redis.bind-address", "10.16.8.4")
-//			.withProperty("spring.data.gemfire.service.redis.port", "13579");
-//
-//		newApplicationContext(testPropertySource, TestRedisServerGemFirePropertiesConfiguration.class);
-//
-//		assertThat(containsBean("gemfireCache")).isTrue();
-//
-//		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-//
-//		assertThat(gemfireCache).isNotNull();
-//		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-//
-//		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-//
-//		assertThat(gemfireProperties).isNotNull();
-//		assertThat(gemfireProperties.getProperty("redis-bind-address")).isEqualTo("10.16.8.4");
-//		assertThat(gemfireProperties.getProperty("redis-port")).isEqualTo("13579");
-//	}
-
 	@Test
 	public void securityGemFirePropertiesConfiguration() {
 
