@@ -34,6 +34,7 @@ import org.springframework.data.gemfire.search.lucene.support.LuceneAccessorSupp
  * @see org.apache.geode.cache.lucene.LuceneResultStruct
  * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOperations {

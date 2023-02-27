@@ -40,6 +40,7 @@ import org.springframework.util.StringUtils;
  * @see org.apache.geode.cache.lucene.LuceneService
  * @see org.apache.geode.cache.lucene.LuceneServiceProvider
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public abstract class LuceneAccessor extends LuceneOperationsSupport implements InitializingBean {

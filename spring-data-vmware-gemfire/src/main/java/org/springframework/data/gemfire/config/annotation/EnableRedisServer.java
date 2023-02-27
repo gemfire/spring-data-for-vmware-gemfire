@@ -32,8 +32,7 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.config.annotation.MemcachedServerConfiguration
  * @since 1.9.0
- * @deprecated Support for the Redis Server protocol in Apache Geode to service Redis clients is targeted
- * to be removed in the Apache Geode project as of Apache Geode 1.15.
+ * @deprecated To be removed in GemFire 10 integration
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

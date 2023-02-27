@@ -34,6 +34,7 @@ import org.springframework.util.Assert;
  * @see org.springframework.data.gemfire.domain.support.AbstractPageSupport
  * @see org.springframework.data.gemfire.search.lucene.ProjectingLuceneAccessor
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 

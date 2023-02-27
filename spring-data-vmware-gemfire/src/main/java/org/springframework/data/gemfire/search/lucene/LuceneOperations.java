@@ -23,6 +23,7 @@ import org.apache.geode.cache.lucene.PageableLuceneQueryResults;
  * @see org.apache.geode.cache.lucene.LuceneResultStruct
  * @see org.apache.geode.cache.lucene.PageableLuceneQueryResults
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public interface LuceneOperations {

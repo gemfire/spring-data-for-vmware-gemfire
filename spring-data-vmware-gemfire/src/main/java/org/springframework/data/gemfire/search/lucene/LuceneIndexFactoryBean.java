@@ -57,6 +57,7 @@ import org.springframework.util.StringUtils;
  * @see org.springframework.data.gemfire.config.annotation.IndexConfigurer
  * @see org.springframework.data.gemfire.support.AbstractFactoryBeanSupport
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public class LuceneIndexFactoryBean extends AbstractFactoryBeanSupport<LuceneIndex>
