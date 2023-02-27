@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.lucene.LuceneIndex;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,6 @@ import org.springframework.data.gemfire.config.xml.GemfireConstants;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
 import org.springframework.data.gemfire.mapping.annotation.Indexed;
-import org.springframework.data.gemfire.mapping.annotation.LuceneIndexed;
-import org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean;
 import org.springframework.data.mapping.PropertyHandler;
 import org.springframework.util.StringUtils;
 
@@ -43,7 +40,6 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see java.lang.annotation.Annotation
  * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.lucene.LuceneIndex
  * @see org.apache.geode.cache.query.Index
  * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
  * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
@@ -56,8 +52,6 @@ import org.springframework.util.StringUtils;
  * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
  * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
  * @see org.springframework.data.gemfire.mapping.annotation.Indexed
- * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
- * @see org.springframework.data.gemfire.search.lucene.LuceneIndexFactoryBean
  * @since 1.9.0
  */
 public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
@@ -136,13 +130,6 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 				indexedAnnotation.ifPresent(indexed ->
 					registerIndexBeanDefinition(enableIndexingAttributes, localPersistentEntity, persistentProperty,
 						indexed.type(), indexed, registry));
-
-				Optional<LuceneIndexed> luceneIndexedAnnotation =
-					Optional.ofNullable(persistentProperty.findAnnotation(LuceneIndexed.class));
-
-				luceneIndexedAnnotation.ifPresent(luceneIndexed ->
-					registerLuceneIndexBeanDefinition(enableIndexingAttributes, localPersistentEntity,
-						persistentProperty, luceneIndexed, registry));
 			});
 		}
 
@@ -229,59 +216,6 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 			.filter(StringUtils::hasText)
 			.map(it -> from.startsWith(Region.SEPARATOR) ? from : GemfireUtils.toRegionPath(from))
 			.orElseThrow(() -> newIllegalArgumentException("From clause [%s] is required", from));
-	}
-
-	/**
-	 * Registers a {@link LuceneIndex} for the {@link GemfirePersistentProperty} on the {@link GemfirePersistentEntity}
-	 * using the {@link Annotation} meta-data to define the Index.
-	 *
-	 * @param enableIndexingAttributes {@link AnnotationAttributes} containing meta-data
-	 * for the {@link EnableIndexing} annotation.
-	 * @param persistentEntity {@link GemfirePersistentEntity} containing the {@link GemfirePersistentProperty}
-	 * to be indexed.
-	 * @param persistentProperty {@link GemfirePersistentProperty} for which the {@link LuceneIndex} will be created.
-	 * @param luceneIndexAnnotation {@link LuceneIndexed} {@link Annotation}.
-	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link LuceneIndex} bean definition.
-	 * @see java.lang.annotation.Annotation
-	 * @see org.springframework.beans.factory.support.BeanDefinitionBuilder
-	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry
-	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentEntity
-	 * @see org.springframework.data.gemfire.mapping.GemfirePersistentProperty
-	 * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
-	 */
-	@SuppressWarnings("unused")
-	protected void registerLuceneIndexBeanDefinition(AnnotationAttributes enableIndexingAttributes,
-			GemfirePersistentEntity<?> persistentEntity, GemfirePersistentProperty persistentProperty,
-			Annotation luceneIndexAnnotation, BeanDefinitionRegistry registry) {
-
-		Optional.ofNullable(luceneIndexAnnotation).ifPresent(localLuceneIndexAnnotation -> {
-
-			AnnotationAttributes luceneIndexAttributes =
-				AnnotationAttributes.fromMap(AnnotationUtils.getAnnotationAttributes(localLuceneIndexAnnotation));
-
-			BeanDefinitionBuilder luceneIndexFactoryBeanBuilder =
-				BeanDefinitionBuilder.genericBeanDefinition(LuceneIndexFactoryBean.class);
-
-			String indexName = luceneIndexAttributes.getString("name");
-
-			boolean destroy = luceneIndexAttributes.containsKey("destroy")
-				&& luceneIndexAttributes.getBoolean("destroy");
-
-			luceneIndexFactoryBeanBuilder.addPropertyReference("cache",
-				GemfireConstants.DEFAULT_GEMFIRE_CACHE_NAME);
-
-			luceneIndexFactoryBeanBuilder.addPropertyValue("destroy", destroy);
-
-			luceneIndexFactoryBeanBuilder.addPropertyValue("fields", persistentProperty.getName());
-
-			luceneIndexFactoryBeanBuilder.addPropertyValue("indexConfigurers", resolveIndexConfigurers());
-
-			luceneIndexFactoryBeanBuilder.addPropertyValue("indexName", indexName);
-
-			luceneIndexFactoryBeanBuilder.addPropertyValue("regionPath", persistentEntity.getRegionName());
-
-			registry.registerBeanDefinition(indexName, luceneIndexFactoryBeanBuilder.getBeanDefinition());
-		});
 	}
 
 	private List<IndexConfigurer> resolveIndexConfigurers() {

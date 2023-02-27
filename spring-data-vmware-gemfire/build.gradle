@@ -18,7 +18,6 @@ dependencies {
   compileOnly "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
   compileOnly "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
   compileOnly "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
-  compileOnly "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
   compileOnly "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
   compileOnly "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
@@ -41,7 +40,6 @@ dependencies {
   testImplementation "com.vmware.gemfire:gemfire-cq:$gemfireVersion"
   testImplementation "com.vmware.gemfire:gemfire-wan:$gemfireVersion"
   testImplementation "com.vmware.gemfire:gemfire-gfsh:$gemfireVersion"
-  testImplementation "com.vmware.gemfire:gemfire-lucene:1.0.0-build.172"
   testImplementation "com.vmware.gemfire:gemfire-tcp-server:$gemfireVersion"
   testImplementation "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
@@ -74,8 +72,8 @@ dependencies {
   testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
-java.targetCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_1_8
 
 test {
   forkEvery = 1

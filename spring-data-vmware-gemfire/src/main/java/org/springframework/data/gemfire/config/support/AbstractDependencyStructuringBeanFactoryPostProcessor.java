@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.lucene.LuceneIndex;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -31,7 +30,7 @@ import org.springframework.util.StringUtils;
 /**
  * The {@link AbstractDependencyStructuringBeanFactoryPostProcessor} class is a Spring {@link BeanFactoryPostProcessor}
  * post processing the Spring {@link BeanFactory} to help ensure that the dependencies between different Apache Geode
- * or Pivotal GemFire objects (e.g. {@link Region} and a {@link LuceneIndex} or an OQL {@link Index}) have been
+ * or Pivotal GemFire objects (e.g. {@link Region} and an OQL {@link Index}) have been
  * properly declared in order to the lifecycle of those components are upheld according to Apache Geode
  * or Pivotal GemFire requirements/rules.
  *

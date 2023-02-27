@@ -618,6 +618,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		assertThat(page.getSort()).isEqualTo(orderBy);
 		assertThat(page.getTotalElements()).isEqualTo(total);
 		assertThat(page.getTotalPages()).isEqualTo(totalPages);
+		assertThat(content).isNotNull();
 		assertThat(page.getContent()).containsExactly(content);
 	}
 

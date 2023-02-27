@@ -97,24 +97,6 @@ public class ComposableSchemaObjectDefinerUnitTests {
 	}
 
 	@Test
-	public void getSchemaObjectTypesIsComposed() {
-
-		when(this.mockHandlerOne.getSchemaObjectTypes())
-			.thenReturn(asSet(SchemaObjectType.INDEX, SchemaObjectType.LUCENE_INDEX));
-
-		when(this.mockHandlerTwo.getSchemaObjectTypes())
-			.thenReturn(Collections.singleton(SchemaObjectType.DISK_STORE));
-
-		SchemaObjectDefiner handler =
-			ComposableSchemaObjectDefiner.compose(this.mockHandlerOne, this.mockHandlerTwo);
-
-		assertThat(handler).isNotNull();
-
-		assertThat(handler.getSchemaObjectTypes()).containsAll(
-			Arrays.asList(SchemaObjectType.INDEX, SchemaObjectType.LUCENE_INDEX, SchemaObjectType.DISK_STORE));
-	}
-
-	@Test
 	public void defineReturnsRegionDefinition() {
 
 		Region<?, ?> mockRegion = mock(Region.class);

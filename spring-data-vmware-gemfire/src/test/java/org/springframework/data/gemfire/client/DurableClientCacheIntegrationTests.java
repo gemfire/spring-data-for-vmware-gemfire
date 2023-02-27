@@ -9,6 +9,7 @@ import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -252,7 +253,8 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 
         Awaitility.await()
                 .timeout(4, TimeUnit.SECONDS)
-                .until(() -> regionCacheListenerEventValues.containsAll(List.of(4, 5)));
+                .until(() -> regionCacheListenerEventValues.containsAll(
+						Arrays.asList(new Integer[]{4,5})));
     }
 
     public static class ClientCacheBeanPostProcessor implements BeanPostProcessor {

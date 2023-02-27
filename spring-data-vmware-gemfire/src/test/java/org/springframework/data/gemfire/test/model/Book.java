@@ -8,7 +8,6 @@ package org.springframework.data.gemfire.test.model;
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.gemfire.mapping.annotation.LuceneIndexed;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 
 import lombok.Data;
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
  * @author John Blum
  * @see java.lang.Comparable
  * @see java.io.Serializable
- * @see org.springframework.data.gemfire.mapping.annotation.LuceneIndexed
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @see lombok
  * @since 2.2.0
@@ -34,7 +32,6 @@ public class Book implements Comparable<Book>, Serializable {
 	@NonNull @Id
 	private final Long id;
 
-	@NonNull @LuceneIndexed(name = "BookTitleIdx")
 	private String title;
 
 	@Override

@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
 /**
  * Integration tests for {@link EnableAuth}, {@link EnableGemFireProperties}, {@link EnableHttpService},
  * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
- * {@link EnableOffHeap}, {@link EnableRedisServer}, {@link EnableSecurity}, {@link EnableSsl},
+ * {@link EnableOffHeap}, {@link EnableSecurity}, {@link EnableSsl},
  * {@link EnableStatistics}.
  *
  * @author John Blum
@@ -111,7 +111,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("security-log-file")).isEqualTo("/path/to/security.log");
 		assertThat(gemfireProperties.getProperty("security-log-level")).isEqualTo("info");
 	}
-
 	@Test
 	public void httpGemFirePropertiesConfiguration() {
 
@@ -138,7 +137,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("http-service-ssl-require-authentication")).isEqualTo("true");
 		assertThat(gemfireProperties.getProperty("start-dev-rest-api")).isEqualTo("true");
 	}
-
 	@Test
 	public void locatorGemFirePropertiesConfiguration() {
 
@@ -160,7 +158,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties).isNotNull();
 		assertThat(gemfireProperties.getProperty("start-locator")).isEqualTo("10.64.32.16[11235]");
 	}
-
 	@Test
 	public void loggingGemFirePropertiesConfiguration() {
 
@@ -187,7 +184,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("log-file-size-limit")).isEqualTo("10");
 		assertThat(gemfireProperties.getProperty("log-level")).isEqualTo("info");
 	}
-
 	@Test
 	public void managerGemFirePropertiesConfiguration() {
 
@@ -221,7 +217,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("jmx-manager-start")).isEqualTo("true");
 		assertThat(gemfireProperties.getProperty("jmx-manager-update-rate")).isEqualTo("1000");
 	}
-
 	@Test
 	public void memcachedServerGemFirePropertiesConfiguration() {
 
@@ -244,7 +239,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("memcached-port")).isEqualTo("2468");
 		assertThat(gemfireProperties.getProperty("memcached-protocol")).isEqualTo("BINARY");
 	}
-
 	@Test
 	public void nameAndGroupsAnnotationBasedGemFirePropertiesConfiguration() {
 
@@ -268,7 +262,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.containsKey("groups")).isTrue();
 		assertThat(gemfireProperties.getProperty("groups")).isEqualTo("TestGroupOne,TestGroupTwo");
 	}
-
 	@Test
 	public void offHeapGemFirePropertiesConfiguration() {
 
@@ -289,7 +282,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties).isNotNull();
 		assertThat(gemfireProperties.getProperty("off-heap-memory-size")).isEqualTo("1024g");
 	}
-
 	@Test
 	public void pdxGemFirePropertiesConfiguration() {
 
@@ -318,30 +310,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(mockPdxSerializer).isNotNull();
 		assertThat(gemfireCache.getPdxSerializer()).isEqualTo(mockPdxSerializer);
 	}
-
-	@Test
-	public void redisServerGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.service.redis.bind-address", "10.16.8.4")
-			.withProperty("spring.data.gemfire.service.redis.port", "13579");
-
-		newApplicationContext(testPropertySource, TestRedisServerGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("redis-bind-address")).isEqualTo("10.16.8.4");
-		assertThat(gemfireProperties.getProperty("redis-port")).isEqualTo("13579");
-	}
-
 	@Test
 	public void securityGemFirePropertiesConfiguration() {
 
@@ -370,7 +338,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("security-post-processor")).isEqualTo("example.security.PostProcessor");
 		assertThat(gemfireProperties.getProperty("security-shiro-init")).isEqualTo("/path/to/shiro.ini");
 	}
-
 	@Test
 	public void serializableObjectFilterAndValidateSerializableObjectsGemFirePropertiesConfiguration() {
 
@@ -387,7 +354,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.containsKey("validate-serializable-objects")).isTrue();
 		assertThat(gemfireProperties.getProperty("validate-serializable-objects")).isEqualTo("true");
 	}
-
 	@Test
 	public void sslGemFirePropertiesConfiguration() {
 
@@ -435,7 +401,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("ssl-truststore-password")).isEqualTo("p@55w0rd");
 		assertThat(gemfireProperties.getProperty("ssl-truststore-type")).isEqualTo("PKCS11");
 	}
-
 	@Test
 	public void statisticsGemFirePropertiesConfiguration() {
 
@@ -524,12 +489,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 			return mock(PdxSerializer.class);
 		}
 	}
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableRedisServer
-	static class TestRedisServerGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication
