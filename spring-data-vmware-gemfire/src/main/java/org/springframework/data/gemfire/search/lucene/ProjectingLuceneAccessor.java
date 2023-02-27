@@ -42,6 +42,7 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
  * @see org.apache.geode.cache.lucene.LuceneService
  * @see org.apache.geode.cache.lucene.LuceneServiceProvider
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 		implements BeanClassLoaderAware, BeanFactoryAware, ProjectingLuceneOperations {

@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
  * @see LuceneOperations
  * @see LuceneQueryProvider
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public interface ProjectingLuceneOperations extends LuceneOperations {

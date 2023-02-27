@@ -22,6 +22,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * @author John Blum
  * @see ProjectingLuceneOperations
  * @since 1.1.0
+ * @deprecated To be removed in GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public abstract class ProjectingLuceneOperationsSupport extends LuceneOperationsSupport
