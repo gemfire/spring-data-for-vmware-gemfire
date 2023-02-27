@@ -26,6 +26,7 @@ import org.springframework.util.xml.DomUtils;
  * @see AbstractSingleBeanDefinitionParser
  * @see LuceneIndexFactoryBean
  * @since 1.1.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 class LuceneIndexParser extends AbstractSingleBeanDefinitionParser {
 

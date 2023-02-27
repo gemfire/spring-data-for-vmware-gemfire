@@ -22,6 +22,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
  * @author John Blum
  * @see ProjectingLuceneAccessor
  * @since 1.1.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public abstract class ProjectingLuceneAccessorSupport extends ProjectingLuceneAccessor {

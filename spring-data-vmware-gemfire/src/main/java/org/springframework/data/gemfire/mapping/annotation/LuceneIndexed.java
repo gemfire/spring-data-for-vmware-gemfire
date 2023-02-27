@@ -28,6 +28,7 @@ import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
  * @see org.springframework.data.gemfire.IndexType
  * @see org.apache.geode.cache.Region
  * @see LuceneIndex
+ * @Deprecated To be removed with GemFire 10 integration
  * @since 1.1.0
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

@@ -43,6 +43,7 @@ import org.springframework.data.gemfire.search.lucene.support.LuceneAccessorSupp
  * @see MockitoJUnitRunner
  * @see LuceneAccessor
  * @since 1.0.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 @RunWith(MockitoJUnitRunner.class)
 public class LuceneAccessorUnitTests {

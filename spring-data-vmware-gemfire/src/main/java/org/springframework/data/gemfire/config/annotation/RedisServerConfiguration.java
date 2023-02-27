@@ -23,6 +23,7 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * @see EnableRedisServer
  * @see EmbeddedServiceConfigurationSupport
  * @since 1.9.0
+ * @Deprecated To be removed in GemFire 10 integration
  */
 public class RedisServerConfiguration extends EmbeddedServiceConfigurationSupport {
 

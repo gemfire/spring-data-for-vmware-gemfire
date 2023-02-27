@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Import;
  * @see Import
  * @see MemcachedServerConfiguration
  * @since 1.9.0
+ * @Deprecated To be removed in GemFire 10 integration
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

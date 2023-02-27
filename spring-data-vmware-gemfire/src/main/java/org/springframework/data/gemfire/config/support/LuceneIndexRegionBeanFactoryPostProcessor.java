@@ -33,6 +33,7 @@ import org.springframework.util.StringUtils;
  * @see LuceneIndexFactoryBean
  * @see AbstractDependencyStructuringBeanFactoryPostProcessor
  * @since 2.1.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public class LuceneIndexRegionBeanFactoryPostProcessor extends AbstractDependencyStructuringBeanFactoryPostProcessor {

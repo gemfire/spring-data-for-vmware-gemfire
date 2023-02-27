@@ -26,6 +26,7 @@ import org.springframework.util.Assert;
  * @see FactoryBean
  * @see InitializingBean
  * @since 1.1.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 @SuppressWarnings("unused")
 public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneService> implements InitializingBean {

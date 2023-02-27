@@ -793,6 +793,7 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", propertyName("service."), propertyNameSuffix);
 	}
 
+	@Deprecated
 	protected String redisServiceProperty(String propertyNameSuffix) {
 		return String.format("%1$s%2$s", serviceProperty("redis."), propertyNameSuffix);
 	}

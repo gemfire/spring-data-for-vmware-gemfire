@@ -19,6 +19,7 @@ import org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean;
  * @see AbstractSingleBeanDefinitionParser
  * @see LuceneServiceFactoryBean
  * @since 1.1.0
+ * @Deprecated To be removed with GemFire 10 integration
  */
 class LuceneServiceParser extends AbstractSingleBeanDefinitionParser {
 
