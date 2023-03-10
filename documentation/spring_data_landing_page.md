@@ -151,7 +151,7 @@ To add Spring Data for VMware GemFire to a project:
          </dependency>
          <dependency>
              <groupId>com.vmware.gemfire</groupId>
-             <artifactId>geode-sever-all</artifactId>
+             <artifactId>geode-server-all</artifactId>
              <version>GEMFIRE_VERSION</version>
              <exclusions>
                  <exclusion>
