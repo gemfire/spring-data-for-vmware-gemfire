@@ -79,24 +79,24 @@ To add Spring Data for VMware GemFire to a project:
 
 1. After you have set up the repository and credentials, add the Spring Data for VMware GemFire dependency to your application.
 
-    The `<artifactId>` should match the `major.minor` version of Spring Data and GemFire that your application is connecting with. For example, if you are using Spring Data 2.7.x and GemFire version 9.15.3, then the `<artifactId>` will be `spring-data-2.7-gemfire-9.15`.
-
     For version 1.0.0:
 
-    * **Maven**:
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available.
 
         ```
         <dependency>
             <groupId>com.vmware.gemfire</groupId>
             <artifactId>spring-data-2.7-gemfire-9.15</artifactId>
-            <version>1.0.0</version>
+            <version>VERSION</version>
         </dependency>
         ```
 
-    * **Gradle**:
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available.
 
         ```
-        implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:1.0.0"
+        dependencies {
+            implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:VERSION"
+        
         ```
 
     For version 1.1.0 and later:
@@ -105,52 +105,54 @@ To add Spring Data for VMware GemFire to a project:
 
     For clients:
 
-    * **Maven**:
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
 
         ```
         <dependency>
             <groupId>com.vmware.gemfire</groupId>
             <artifactId>spring-data-2.7-gemfire-9.15</artifactId>
-            <version>1.1.0</version>
+            <version>VERSION</version>
         </dependency>
         <dependency>
             <groupId>com.vmware.gemfire</groupId>
             <artifactId>geode-core</artifactId>
-            <version>9.15.4</version>
+            <version>GEMFIRE_VERSION</version>
         </dependency>
         <!--if using continuous queries-->
         <dependency>
             <groupId>com.vmware.gemfire</groupId>
             <artifactId>geode-cq</artifactId>
-            <version>9.15.4</version>
+            <version>GEMFIRE_VERSION</version>
         </dependency>
         ```
 
-    * **Gradle**:
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Boot for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
 
         ```
-        implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:1.1.0"
-        implementation "com.vmware.gemfire:geode-core:9.15.4"
-        // if using continuous queries
-        implementation "com.vmware.gemfire:geode-cq:9.15.4"
+        dependencies {
+            implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:VERSION"
+            implementation "com.vmware.gemfire:geode-core:GEMFIRE_VERSION"
+            // if using continuous queries
+            implementation "com.vmware.gemfire:geode-cq:GEMFIRE_VERSION"
+        }
         ```
 
     For servers:
 
     NOTE: The server dependencies are only required if the user is starting an embedded GemFire server using Spring.
 
-    * **Maven**:
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
 
         ```
         <dependency>
            <groupId>com.vmware.gemfire</groupId>
              <artifactId>spring-data-2.7-gemfire-9.15</artifactId>
-             <version>1.1.0</version>
+             <version>VERSION</version>
          </dependency>
          <dependency>
              <groupId>com.vmware.gemfire</groupId>
              <artifactId>geode-sever-all</artifactId>
-             <version>9.15.4</version>
+             <version>GEMFIRE_VERSION</version>
              <exclusions>
                  <exclusion>
                      <groupId>com.vmware.gemfire</groupId>
@@ -160,11 +162,15 @@ To add Spring Data for VMware GemFire to a project:
          </dependency>
         ```
 
-    * **Gradle**:
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
 
         ```
-        implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:1.1.0"
-        implementation ("com.vmware.gemfire:geode-server-all:9.15.4"){exclude group: 'com.vmware.gemfire', module: 'geode-log4j'}
+        dependencies {
+            implementation "com.vmware.gemfire:spring-data-2.7-gemfire-9.15:VERSION"
+            implementation ("com.vmware.gemfire:geode-server-all:GEMFIRE_VERSION"){
+                exclude group: 'com.vmware.gemfire', module: 'geode-log4j'
+            }
+        }
         ```
 
 1. Your application is now ready to connect with your GemFire instance.
