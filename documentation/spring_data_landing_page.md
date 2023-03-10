@@ -126,7 +126,7 @@ To add Spring Data for VMware GemFire to a project:
         </dependency>
         ```
 
-    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Boot for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of VMware GemFire being used for the project.
 
         ```
         dependencies {
