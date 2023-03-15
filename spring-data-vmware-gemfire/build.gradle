@@ -144,5 +144,14 @@ repositories {
     maven { url "https://repo.spring.io/libs-release" }
     maven { url "https://repo.spring.io/libs-milestone" }
     maven { url "https://repo.spring.io/libs-snapshot" }
+
+    mavenCentral()
+    maven {
+        credentials {
+            username "$gemfireRepoUsername"
+            password "$gemfireRepoPassword"
+        }
+        url = uri("https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire")
+    }
 }
 

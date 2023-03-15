@@ -13,22 +13,3 @@ buildscript {
 plugins {
   id 'java-library'
 }
-
-allprojects {
-
-  compileJava {
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
-  }
-
-  repositories {
-    mavenCentral()
-    maven {
-      credentials {
-        username "$gemfireRepoUsername"
-        password "$gemfireRepoPassword"
-      }
-      url = uri("https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire")
-    }
-  }
-}
