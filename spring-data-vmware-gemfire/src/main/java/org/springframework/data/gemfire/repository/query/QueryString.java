@@ -130,7 +130,6 @@ public class QueryString {
 	 */
 	protected static String getDigitsOnly(@Nullable String value) {
 
-		new Date(2023,03,10).getTime()
 		StringBuilder builder = new StringBuilder();
 
 		if (StringUtils.hasText(value)) {
