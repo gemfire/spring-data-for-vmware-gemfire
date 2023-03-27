@@ -6,6 +6,7 @@ package org.springframework.data.gemfire.repository.query;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -62,7 +63,8 @@ public class QueryString {
 	protected static final String IN_PATTERN = "(?<=IN (SET|LIST) )\\$\\d";
 	protected static final String IN_PARAMETER_PATTERN = "(?<=IN (SET|LIST) \\$)\\d";
 	protected static final String IN_VALUES_TEMPLATE = "(%s)";
-	protected static final String REGION_PATTERN = "\\/(\\/?\\w)+";
+//	protected static final String REGION_PATTERN = "\\/(\\/?\\w)+";
+	protected static final String REGION_PATTERN = "\\/(\\/?[-.\\w])+";
 	protected static final String STAR_PROJECTION = "*";
 
 	/**
@@ -128,6 +130,7 @@ public class QueryString {
 	 */
 	protected static String getDigitsOnly(@Nullable String value) {
 
+		new Date(2023,03,10).getTime()
 		StringBuilder builder = new StringBuilder();
 
 		if (StringUtils.hasText(value)) {
