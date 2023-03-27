@@ -412,6 +412,46 @@ public class QueryStringUnitTests {
 	}
 
 	@Test
+	public void replaceCorrectlyFormattedRegionNamesWithSubRegions() {
+
+		when(this.region.getFullPath()).thenReturn("/Remote/Root/Users");
+		QueryString query = QueryString.of("SELECT * FROM //Local/Root/Users u WHERE u.username = $1");
+		assertThat(query.fromRegion(this.region, RootUser.class).toString())
+				.isEqualTo("SELECT * FROM /Remote/Root/Users u WHERE u.username = $1");
+
+	}
+
+	@Test
+	public void replaceCorrectlyFormattedRegionNamesWithHypens() {
+		when(this.region.getFullPath()).thenReturn("/Remote/Root/Users");
+
+		QueryString query = QueryString.of("SELECT * FROM //Local-Root-Users u WHERE u.username =" +
+				" $1");
+		assertThat(query.fromRegion(this.region, RootUser.class).toString())
+				.isEqualTo("SELECT * FROM /Remote/Root/Users u WHERE u.username = $1");
+	}
+
+	@Test
+	public void replaceCorrectlyFormattedRegionNamesWithUnderscores() {
+
+		when(this.region.getFullPath()).thenReturn("/Remote/Root/Users");
+
+		QueryString query = QueryString.of("SELECT * FROM //Local_Root_Users u WHERE u.username = $1");
+		assertThat(query.fromRegion(this.region, RootUser.class).toString())
+				.isEqualTo("SELECT * FROM /Remote/Root/Users u WHERE u.username = $1");
+	}
+
+	@Test
+	public void replaceCorrectlyFormattedRegionNamesWithFullstops() {
+
+		when(this.region.getFullPath()).thenReturn("/Remote/Root/Users");
+
+		QueryString query = QueryString.of("SELECT * FROM //Local.Root.Users u WHERE u.username = $1");
+		assertThat(query.fromRegion(this.region, RootUser.class).toString())
+				.isEqualTo("SELECT * FROM /Remote/Root/Users u WHERE u.username = $1");
+	}
+
+	@Test
 	public void bindsInValuesCorrectly() {
 
 		QueryString query = QueryString.of("SELECT * FROM /Collection WHERE elements IN SET $1");
