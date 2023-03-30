@@ -7,6 +7,7 @@ package org.springframework.data.gemfire.repository.query;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
 
@@ -16,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import org.springframework.core.ResolvableType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
@@ -28,7 +30,7 @@ import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.util.ClassTypeInformation;
+import org.springframework.data.util.TypeInformation;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -105,7 +107,7 @@ public class GemfireQueryMethodUnitTests {
 
 		doReturn(Person.class).when(this.repositoryMetadata).getDomainType();
 		doReturn(Person.class).when(this.repositoryMetadata).getReturnedDomainClass(any(Method.class));
-		doReturn(ClassTypeInformation.from(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
+		doReturn(TypeInformation.of(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
 	}
 
 	@Test
@@ -133,6 +135,8 @@ public class GemfireQueryMethodUnitTests {
 
 	@Test
 	public void acceptsQueryMethodWithPageableParameter() throws Exception {
+		TypeInformation typeInformation = TypeInformation.of(ResolvableType.forClass(Person.class));
+		when(repositoryMetadata.getDomainTypeInformation()).thenReturn(typeInformation);
 		new GemfireQueryMethod(PageablePojo.class.getMethod("pageableMethod", Pageable.class),
 			this.repositoryMetadata, this.projectionFactory, this.mappingContext);
 	}
