@@ -5,7 +5,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id 'java-library'
-    id "io.freefair.lombok" version "6.6.1"
+    id "io.freefair.lombok" version "8.0.1"
     id 'gemfire-repo-artifact-publishing'
     id 'spring-java-jar'
 }
@@ -25,14 +25,14 @@ dependencies {
     compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
     implementation 'javax.cache:cache-api:1.1.1'
-    api 'org.springframework:spring-context-support:6.0.4'
-    api 'org.springframework:spring-tx:6.0.4'
-    api 'org.springframework:spring-web:6.0.4'
+    api 'org.springframework:spring-context-support:6.0.7'
+    api 'org.springframework:spring-tx:6.0.7'
+    api 'org.springframework:spring-web:6.0.7'
     api "org.springframework.data:spring-data-commons:$springDataVersion"
-    api 'org.apache.shiro:shiro-spring:1.10.0'
-    api 'org.aspectj:aspectjweaver:1.9.9.1'
-    api 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+    api 'org.apache.shiro:shiro-spring:1.11.0'
+    api 'org.aspectj:aspectjweaver:1.9.19'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     runtimeOnly 'antlr:antlr:2.7.7'
     compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
         exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -47,7 +47,7 @@ dependencies {
     testImplementation "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
     testImplementation "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
-    testImplementation 'org.springframework:spring-test:6.0.4'
+    testImplementation 'org.springframework:spring-test:6.0.7'
     testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
     testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
     testImplementation 'javax.el:el-api:2.2'
