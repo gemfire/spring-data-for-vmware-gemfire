@@ -131,6 +131,7 @@ gradle.taskGraph.whenReady({ graph ->
 })
 
 repositories {
+    mavenCentral()
     def additionalMavenRepoURLs = project.ext.get('additionalMavenRepoURLs')
     if (!additionalMavenRepoURLs.isEmpty() && !additionalMavenRepoURLs.isBlank()) {
         additionalMavenRepoURLs.split(',').each {
@@ -140,9 +141,5 @@ repositories {
                     })
         }
     }
-
-    maven { url "https://repo.spring.io/libs-release" }
-    maven { url "https://repo.spring.io/libs-milestone" }
-    maven { url "https://repo.spring.io/libs-snapshot" }
 }
 
