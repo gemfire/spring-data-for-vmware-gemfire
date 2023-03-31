@@ -46,8 +46,8 @@ publishing {
               // Username / password credentials are only supported for http, https, and sftp repos.
               // See the Gradle documentation on Repository Types for more information.
               credentials {
-                username project.findProperty("gemfireRepoUsername")
-                password project.findProperty("gemfireRepoPassword")
+                username project.findProperty("gemfirePublishRepoUsername")
+                password project.findProperty("gemfirePublishRepoPassword")
               }
             }
           } else {
