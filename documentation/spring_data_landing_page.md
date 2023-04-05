@@ -6,6 +6,19 @@ Spring Data for VMware GemFire brings the full power of the Spring Framework to 
 
 This reference guide explains how to add the Spring Data for VMware GemFire dependency to your project. Once the dependency has been added, refer to the [Spring Data for Apache Geode Reference Guide](https://docs.spring.io/spring-data/geode/docs/current/reference/html/) for in-depth information about using the dependency.
 
+## Release Notes:
+### 1.1.1
+* Update to latest Spring Data patch version (3.0.4, 2.7.10 and 2.6.10)
+* Update to latest Spring Framework patch version (6.0.7 and 5.3.26)
+* Update all dependencies to latest patch version
+
+### 1.1.0
+* First release that removes dependency on Spring Data For Apache Geode
+* "ByoG" - Bring your own GemFire. Requires users to provide a working version of VMware GemFire.
+
+### 1.0.0
+* Initial Spring Data For VMware GemFire for VMware GemFire, still dependent on Spring Data For Apache Geode
+
 
 ## Add Spring Data for VMware GemFire to a Project
 
