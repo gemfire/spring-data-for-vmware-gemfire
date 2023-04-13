@@ -3,7 +3,7 @@
 
 plugins {
   id 'java-library'
-  id "io.freefair.lombok" version "6.6.1"
+  id "io.freefair.lombok" version "8.0.1"
   id 'gemfire-repo-artifact-publishing'
   id 'spring-java-jar'
 }
@@ -22,14 +22,14 @@ dependencies {
   compileOnly "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:5.3.25'
-  api 'org.springframework:spring-tx:5.3.25'
-  api 'org.springframework:spring-web:5.3.25'
+  api 'org.springframework:spring-context-support:5.3.26'
+  api 'org.springframework:spring-tx:5.3.26'
+  api 'org.springframework:spring-web:5.3.26'
   api "org.springframework.data:spring-data-commons:$springDataGeodeVersion"
-  implementation 'org.apache.shiro:shiro-spring:1.10.0'
-  implementation 'org.aspectj:aspectjweaver:1.9.7'
-  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.1'
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+  implementation 'org.apache.shiro:shiro-spring:1.11.0'
+  implementation 'org.aspectj:aspectjweaver:1.9.19'
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('javax.enterprise:cdi-api:1.0') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -47,7 +47,7 @@ dependencies {
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
   testImplementation 'javax.el:el-api:2.2'
   testImplementation 'ch.qos.logback:logback-classic:1.2.5'
-  testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.17.2'
+  testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.19.0'
   testImplementation 'javax.annotation:javax.annotation-api:1.3.2'
   testImplementation 'org.apache.derby:derbyLocale_zh_TW:10.9.1.0'
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
@@ -67,8 +67,8 @@ dependencies {
   testImplementation "org.assertj:assertj-core:3.22.0"
   testImplementation "org.mockito:mockito-core:4.5.1"
   testImplementation "org.projectlombok:lombok:1.18.24"
-  testImplementation "org.springframework:spring-test:5.3.25"
-  testImplementation "org.springframework.boot:spring-boot:2.7.8"
+  testImplementation "org.springframework:spring-test:5.3.26"
+  testImplementation "org.springframework.boot:spring-boot:2.7.10"
   testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
