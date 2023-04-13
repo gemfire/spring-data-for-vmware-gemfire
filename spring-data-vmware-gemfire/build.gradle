@@ -75,8 +75,8 @@ dependencies {
   testImplementation "org.assertj:assertj-core:3.22.0"
   testImplementation "org.mockito:mockito-core:4.8.1"
   testImplementation "org.projectlombok:lombok:1.18.24"
-  testImplementation "org.springframework:spring-test:5.3.25"
-  testImplementation "org.springframework.boot:spring-boot:3.0.1"
+  testImplementation "org.springframework:spring-test:6.0.7"
+  testImplementation "org.springframework.boot:spring-boot:3.0.5"
   testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
