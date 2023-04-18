@@ -1,4 +1,4 @@
-# Spring Data GemFire Documentation
+# [spring-data-gemfire-name] Documentation
 <!-- 
  Copyright (c) VMware, Inc. 2022. All rights reserved.
  Licensed to the Apache Software Foundation (ASF) under one or more contributor license
@@ -15,10 +15,10 @@
  the License.
 -->
 
-* [Spring Data for VMware GemFire Quick Start](spring_data_landing_page.html)
+* [[spring-data-gemfire-name] Quick Start](spring_data_landing_page.html)
 
 ---
 
-* [Spring Boot for GemFire](https://docs.vmware.com/en/Spring-Boot-for-VMware-GemFire/index.html)
-* [Spring Session for VMware GemFire Quick Start](https://docs.vmware.com/en/Spring-Session-for-VMware-GemFire/index.html)
+* [Spring Boot for [vmware-gemfire-short-name]](https://docs.vmware.com/en/Spring-Boot-for-VMware-GemFire/index.html)
+* [[spring-session-gemfire-name] Quick Start](https://docs.vmware.com/en/Spring-Session-for-VMware-GemFire/index.html)
 

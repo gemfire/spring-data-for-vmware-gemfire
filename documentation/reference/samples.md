@@ -35,13 +35,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-The Spring Data for VMware GemFire project also includes one sample application. Named
+The [spring-data-gemfire-name] project also includes one sample application. Named
 "Hello World", the sample application demonstrates how to configure and
-use GemFire inside a Spring application. At run time, the
+use [vmware-gemfire-short-name] inside a Spring application. At run time, the
 sample offers a shell that lets you run various commands against the
 data grid. It provides an excellent starting point for developers who
 are unfamiliar with the essential components or with Spring and
-GemFire concepts.
+[vmware-gemfire-short-name] concepts.
 
 The sample is bundled with the distribution and is Maven-based. You can
 import it into any Maven-aware IDE (such as the [Spring Tool
@@ -50,14 +50,14 @@ Suite](https://spring.io/tools/sts)) or run them from the command-line.
 ## <a id="hello-world"></a>The "Hello World" Sample Application
 
 The "Hello World" sample application demonstrates the core functionality
-of the Spring Data for VMware GemFire project. It bootstraps GemFire, configures
+of the [spring-data-gemfire-name] project. It bootstraps [vmware-gemfire-short-name], configures
 it, executes arbitrary commands against the cache, and shuts it down
 when the application exits. Multiple instances of the application can be
 started at the same time and work together, sharing data without any
 user intervention.
 
 <p class="note"><strong>Running under Linux</strong>: 
-If you experience networking problems when starting GemFire or
+If you experience networking problems when starting [vmware-gemfire-short-name] or
 the samples, try adding the following system property
 <code>java.net.preferIPv4Stack=true</code> to the command line (for
 example, <code>-Djava.net.preferIPv4Stack=true</code>). For an
@@ -82,7 +82,7 @@ Once started, the sample application creates a shared data grid and lets you iss
 commands against it. The output should resemble the following:
 
 ```highlight
-INFO: Created GemFire Cache [Spring GemFire World] v. X.Y.Z
+INFO: Created [vmware-gemfire-short-name] Cache [Spring [vmware-gemfire-short-name] World] v. X.Y.Z
 INFO: Created new cache region [myWorld]
 INFO: Member xxxxxx:50694/51611 connecting to region [myWorld]
 Hello World!
@@ -119,7 +119,7 @@ VMs automatically see the existing region and its information, as the
 following example shows:
 
 ```highlight
-INFO: Connected to Distributed System ['Spring GemFire World'=xxxx:56218/49320@yyyyy]
+INFO: Connected to Distributed System ['Spring [vmware-gemfire-short-name] World'=xxxx:56218/49320@yyyyy]
 Hello World!
 ...
 
@@ -147,7 +147,7 @@ scanning](https://docs.spring.io/spring/docs/current/spring-framework-reference/
 for Spring
 [components](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-annotation-config).
 
-The cache configuration defines the GemFire cache, a region,
+The cache configuration defines the [vmware-gemfire-short-name] cache, a region,
 and for illustrative purposes, a `CacheListener` that acts as a logger.
 
 The main beans are `HelloWorld` and `CommandProcessor`, which rely on

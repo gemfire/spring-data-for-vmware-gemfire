@@ -1,5 +1,5 @@
 ---
-title: Bootstrapping a Spring ApplicationContext in GemFire
+title: Bootstrapping a Spring ApplicationContext in [vmware-gemfire-short-name]
 ---
 
 <!-- 
@@ -36,32 +36,32 @@ limitations under the License.
 -->
 
 Normally, a Spring-based application [bootstraps
-GemFire](bootstrap.html) by using Spring Data for VMware GemFire's features. By
-specifying a `<gfe:cache/>` element that uses the Spring Data for VMware GemFire XML
-namespace, a single embedded GemFire peer `Cache` instance is
+[vmware-gemfire-short-name]](bootstrap.html) by using [spring-data-gemfire-name]'s features. By
+specifying a `<gfe:cache/>` element that uses the [spring-data-gemfire-name] XML
+namespace, a single embedded [vmware-gemfire-short-name] peer `Cache` instance is
 created and initialized with default settings in the same JVM process as
 your application.
 
 However, it is sometimes necessary (perhaps as a requirement imposed by
-your IT organization) that GemFire be fully managed and
-operated by the provided GemFire tool suite, perhaps using
+your IT organization) that [vmware-gemfire-short-name] be fully managed and
+operated by the provided [vmware-gemfire-short-name] tool suite, perhaps using
 [gfsh](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/tools_modules-gfsh-chapter_overview.html). By
-using `gfsh`, GemFire bootstraps your Spring
+using `gfsh`, [vmware-gemfire-short-name] bootstraps your Spring
 `ApplicationContext` rather than the other way around. Instead of an
 application server or a Java main class that uses Spring Boot,
-GemFire does the bootstrapping and hosts your application.
+[vmware-gemfire-short-name] does the bootstrapping and hosts your application.
 
-<p class="note"><strong>Note</strong>: GemFire is not an application server. Additionally, there are limitations to using this approach where the GemFire cache configuration is concerned.</p>
+<p class="note"><strong>Note</strong>: [vmware-gemfire-short-name] is not an application server. Additionally, there are limitations to using this approach where the [vmware-gemfire-short-name] cache configuration is concerned.</p>
 
-## <a id="using-gemfire-to-bootstrap"></a>Using GemFire to Bootstrap a Spring Context Started with gfsh
+## <a id="using-gemfire-to-bootstrap"></a>Using [vmware-gemfire-short-name] to Bootstrap a Spring Context Started with gfsh
 
-Ro bootstrap a Spring `ApplicationContext` in GemFire
-when starting a GemFire server using `gfsh`, you must use
-GemFire's [initializer](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/basic_config-the_cache-setting_cache_initializer.html) capability. An initializer block can declare a application callback that is launched after the cache is initialized by GemFire.
+Ro bootstrap a Spring `ApplicationContext` in [vmware-gemfire-short-name]
+when starting a [vmware-gemfire-short-name] server using `gfsh`, you must use
+[vmware-gemfire-short-name]'s [initializer](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/basic_config-the_cache-setting_cache_initializer.html) capability. An initializer block can declare a application callback that is launched after the cache is initialized by [vmware-gemfire-short-name].
 
 An initializer is declared within an
 [initializer](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-cache_xml.html#initializer)
-element by using a minimal snippet of GemFire's native
+element by using a minimal snippet of [vmware-gemfire-short-name]'s native
 `cache.xml`. To bootstrap the Spring `ApplicationContext`, a `cache.xml`
 file is required, in much the same way as a minimal snippet of Spring
 XML config is needed to bootstrap a Spring `ApplicationContext`
@@ -73,7 +73,7 @@ framework: the
 [SpringContextBootstrappingInitializer](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/support/SpringContextBootstrappingInitializer.html).
 
 The following example shows a typical, yet minimal, configuration for
-this class inside GemFire's `cache.xml` file:
+this class inside [vmware-gemfire-short-name]'s `cache.xml` file:
 
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
@@ -124,7 +124,7 @@ as the following example shows:
 
 Then, with a properly configured and constructed `CLASSPATH` and
 `cache.xml` file (shown earlier) specified as a command-line option when
-starting a GemFire server in `gfsh`, the command-line would be
+starting a [vmware-gemfire-short-name] server in `gfsh`, the command-line would be
 as follows:
 
 ```highlight
@@ -134,46 +134,46 @@ gfsh>start server --name=ExampleServer --log-level=config ...
 ```
 
 The `application-context.xml` can be any valid Spring configuration
-metadata, including all of the Spring Data for VMware GemFire XML namespace elements. The
-only limitation with this approach is that a GemFire cache
-cannot be configured by using the Spring Data for VMware GemFire XML namespace. In other
+metadata, including all of the [spring-data-gemfire-name] XML namespace elements. The
+only limitation with this approach is that a [vmware-gemfire-short-name] cache
+cannot be configured by using the [spring-data-gemfire-name] XML namespace. In other
 words, none of the `<gfe:cache/>` element attributes (such as
 `cache-xml-location`, `properties-ref`, `critical-heap-percentage`,
 `pdx-serializer-ref`, `lock-lease`, and others) can be specified. If
 used, these attributes are ignored.
 
-The reason for this is that GemFire itself has already created
+The reason for this is that [vmware-gemfire-short-name] itself has already created
 and initialized the cache before the initializer gets invoked. As a
 result, the cache already exists and, since it is a "singleton", it
 cannot be re-initialized or have any of its configuration augmented.
 
-## <a id="lazy-wiring-gemfire-components"></a>Lazy-wiring GemFire Components
+## <a id="lazy-wiring-gemfire-components"></a>Lazy-wiring [vmware-gemfire-short-name] Components
 
-Spring Data for VMware GemFire already provides support for auto-wiring GemFire
+[spring-data-gemfire-name] already provides support for auto-wiring [vmware-gemfire-short-name]
 components (such as `CacheListeners`, `CacheLoaders`, `CacheWriters` and
-so on) that are declared and created by GemFire in `cache.xml`
-by using Spring Data for VMware GemFire's `WiringDeclarableSupport` class, as described
-in [Configuration Using Auto-Wiring and Annotations](data.html#configurations-using-auto-wiring-and-annotations) in _Working with GemFire APIs_. However, this works only when Spring is the one doing the bootstrapping
-(that is, when Spring bootstraps GemFire).
+so on) that are declared and created by [vmware-gemfire-short-name] in `cache.xml`
+by using [spring-data-gemfire-name]'s `WiringDeclarableSupport` class, as described
+in [Configuration Using Auto-Wiring and Annotations](data.html#configurations-using-auto-wiring-and-annotations) in _Working with [vmware-gemfire-short-name] APIs_. However, this works only when Spring is the one doing the bootstrapping
+(that is, when Spring bootstraps [vmware-gemfire-short-name]).
 
 When your Spring `ApplicationContext` is bootstrapped by
-GemFire, these GemFire application components go
+[vmware-gemfire-short-name], these [vmware-gemfire-short-name] application components go
 unnoticed, because the Spring `ApplicationContext` does not exist yet.
 The Spring `ApplicationContext` does not get created until
-GemFire calls the initializer block, which only occurs after
-all the other GemFire components (cache, Regions, and others)
+[vmware-gemfire-short-name] calls the initializer block, which only occurs after
+all the other [vmware-gemfire-short-name] components (cache, Regions, and others)
 have already been created and initialized.
 
 To solve this problem, a new `LazyWiringDeclarableSupport` class was
 introduced. This new class is aware of the Spring `ApplicationContext`.
 The intention behind this abstract base class is that any implementing
 class registers itself to be configured by the Spring container that is
-eventually created by GemFire once the initializer is called.
-In essence, this gives your GemFire application components a
+eventually created by [vmware-gemfire-short-name] once the initializer is called.
+In essence, this gives your [vmware-gemfire-short-name] application components a
 chance to be configured and auto-wired with Spring beans defined in the
 Spring container.
 
-In order for your GemFire application components to be
+In order for your [vmware-gemfire-short-name] application components to be
 auto-wired by the Spring container, you should create an application
 class that extends the `LazyWiringDeclarableSupport` and annotate any
 class member that needs to be provided as a Spring bean dependency,
@@ -192,15 +192,15 @@ public class UserDataSourceCacheLoader extends LazyWiringDeclarableSupport
 
 As implied in the `CacheLoader` example above, you might necessarily
 (though rarely) have defined both a Region and a `CacheListener`
-component in GemFire `cache.xml`. The `CacheLoader` may need
+component in [vmware-gemfire-short-name] `cache.xml`. The `CacheLoader` may need
 access to an application Repository (or perhaps a JDBC `DataSource`
 defined in the Spring `ApplicationContext`) for loading `Users` into a
-GemFire `REPLICATE` Region on startup.
+[vmware-gemfire-short-name] `REPLICATE` Region on startup.
 
-Be careful when mixing the different life-cycles of GemFire
+Be careful when mixing the different life-cycles of [vmware-gemfire-short-name]
 and the Spring container together in this manner. Not all use cases and
-scenarios are supported. The GemFire `cache.xml` configuration
-would be similar to the following (which comes from Spring Data for VMware GemFire's test
+scenarios are supported. The [vmware-gemfire-short-name] `cache.xml` configuration
+would be similar to the following (which comes from [spring-data-gemfire-name]'s test
 suite):
 
 ```highlight

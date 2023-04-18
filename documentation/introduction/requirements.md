@@ -35,14 +35,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-Spring Data for Apache Geode requires Java 8.0, Spring Framework 5, and Apache Geode 1.9.0.
+[spring-data-gemfire-name] requires Java 8.0+, Spring Framework 5+, and [vmware-gemfire-name] 9.15 or later.
 
-Spring Data for VMware GemFire requires:
+[spring-data-gemfire-name] requires:
 
-* Java 8.0
+* Java version 8.0 to 17
 
 * [Spring Framework](https://spring.io/projects/spring-framework) 5 or later
 
-* [VMware GemFire](https://docs.vmware.com/en/VMware-GemFire/index.html) 9.10 or later
+* [[vmware-gemfire-name]](https://docs.vmware.com/en/VMware-GemFire/index.html) 9.15 or later
 
 

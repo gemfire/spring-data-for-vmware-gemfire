@@ -37,40 +37,40 @@ limitations under the License.
 
 
 
-A powerful functionality offered by GemFire is [Continuous Query](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html) (CQ).
+A powerful functionality offered by [vmware-gemfire-short-name] is [Continuous Query](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-chapter_overview.html) (CQ).
 
 CQ allows a developer to create and register an OQL query, and
 then automatically be notified when new data that gets added to
-GemFire matches the query predicate. Spring Data for VMware GemFire provides
+[vmware-gemfire-short-name] matches the query predicate. [spring-data-gemfire-name] provides
 dedicated support for CQs through the
 `org.springframework.data.gemfire.listener` package and its **listener
 container**; very similar in functionality and naming to the JMS
 integration in the *Spring Framework*; in fact, users familiar with the
 JMS support in Spring, should feel right at home.
 
-Spring Data for VMware GemFire allows methods on POJOs to become end-points for
+[spring-data-gemfire-name] allows methods on POJOs to become end-points for
 CQ. Simply define the query and indicate the method that should be
-called to be notified when there is a match. Spring Data for VMware GemFire takes care of
+called to be notified when there is a match. [spring-data-gemfire-name] takes care of
 the rest. This is similar to Java EE's message-driven bean style,
 but without any requirement for base class or interface implementations,
-based on GemFire.
+based on [vmware-gemfire-short-name].
 
 <p class="note"><strong>Note</strong>: Continuous Query is only supported in
-GemFire's client/server topology. Additionally, the client
+[vmware-gemfire-short-name]'s client/server topology. Additionally, the client
 Pool used is required to have the subscription enabled. For more information, see <a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-continuous_querying-implementing_continuous_querying.htmlPlease">Implementing Continuous Querying</a>.</p>
 
 
 ## <a id="continuous-query-listener-container"></a>Continuous Query Listener Container
 
-Spring Data for VMware GemFire simplifies creation, registration, life-cycle, and dispatch of
+[spring-data-gemfire-name] simplifies creation, registration, life-cycle, and dispatch of
 CQ events by taking care of the infrastructure around CQ with the use of
-Spring Data for VMware GemFire's `ContinuousQueryListenerContainer`, which does all the heavy
+[spring-data-gemfire-name]'s `ContinuousQueryListenerContainer`, which does all the heavy
 lifting on behalf of the user. Users familiar with EJB and JMS should
 find the concepts familiar as it is designed as close as possible to the
 support provided in the *Spring Framework* with its Message-driven POJOs
 (MDPs).
 
-The Spring Data for VMware GemFire `ContinuousQueryListenerContainer` acts as an event (or message)
+The [spring-data-gemfire-name] `ContinuousQueryListenerContainer` acts as an event (or message)
 listener container; it is used to receive the events from the registered
 CQs and invoke the POJOs that are injected into it. The listener
 container is responsible for all threading of message reception and
@@ -80,7 +80,7 @@ of creation and registration of CQs (to receive events), resource
 acquisition and release, exception conversion and the like. This allows
 you, as an application developer, to write the (possibly complex)
 business logic associated with receiving an event (and reacting to it),
-and delegate the boilerplate GemFire infrastructure concerns
+and delegate the boilerplate [vmware-gemfire-short-name] infrastructure concerns
 to the framework.
 
 The listener container is fully customizable. A developer can chose
@@ -96,7 +96,7 @@ proper `TaskExecutor` to take advantage of its runtime.
 ## <a id="continuousquerylistener-and-continuousquerylisteneradapter"></a>`ContinuousQueryListener` and `ContinuousQueryListenerAdapter`
 
 The `ContinuousQueryListenerAdapter` class is the final component in
-Spring Data for VMware GemFire CQ support. In a nutshell, class allows you to expose almost
+[spring-data-gemfire-name] CQ support. In a nutshell, class allows you to expose almost
 **any** implementing class as an EDP with minimal constraints.
 `ContinuousQueryListenerAdapter` implements the
 `ContinuousQueryListener` interface, a simple listener interface similar
@@ -127,7 +127,7 @@ class DefaultEventDelegate implements EventDelegate {
 ```
 
 In particular, note how the above implementation of the `EventDelegate`
-interface has no GemFire dependencies. It is
+interface has no [vmware-gemfire-short-name] dependencies. It is
 a POJO that we can and will make into an EDP using the following
 configuration.
 
@@ -169,7 +169,7 @@ also the name of the method (the default is <code>handleEvent</code>).
 The specified method can have various argument types, the
 <code>EventDelegate</code> interface lists the allowed types.
 
-The example above uses the Spring Data for VMware GemFire namespace to declare the event
+The example above uses the [spring-data-gemfire-name] namespace to declare the event
 listener container and automatically register the listeners. The complete definition is displayed below:
 
 ```highlight
@@ -196,7 +196,7 @@ listener container and automatically register the listeners. The complete defini
 ```
 
 Each time an event is received, the adapter automatically performs type
-translation between the GemFire event and the required method
+translation between the [vmware-gemfire-short-name] event and the required method
 arguments transparently. Any exception caused by the method invocation
 is caught and handled by the container (by default, being logged).
 

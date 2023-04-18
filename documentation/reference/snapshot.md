@@ -36,20 +36,20 @@ limitations under the License.
 -->
 
 
-Spring Data for VMware GemFire supports cache and Region snapshots by using
-GemFire's Snapshot Service. The out-of-the-box Snapshot Service support offers
-several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
+[spring-data-gemfire-name] supports cache and Region snapshots by using
+[vmware-gemfire-short-name]'s Snapshot Service. The out-of-the-box Snapshot Service support offers
+several convenient features to simplify the use of [vmware-gemfire-short-name]'s [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the [vmware-gemfire-short-name] product documentation.
 
 Snapshots let you save and subsequently reload
 the cached data later, which can be useful for moving data between
 environments, such as from production to a staging or test environment
 to reproduce data-related issues in a controlled context. You
-can combine Spring Data for VMware GemFire's Snapshot Service support with [Spring's bean
+can combine [spring-data-gemfire-name]'s Snapshot Service support with [Spring's bean
 definition
 profiles](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-definition-profiles)
 to load snapshot data specific to the environment as necessary.
 
-Spring Data for VMware GemFire's support for GemFire's Snapshot Service begins
+[spring-data-gemfire-name]'s support for [vmware-gemfire-short-name]'s Snapshot Service begins
 with the `<gfe-data:snapshot-service>` element from the `<gfe-data>` XML
 namespace.
 
@@ -68,11 +68,11 @@ definition, as follows:
 
 You can define as many imports and exports as you like. You can define
 only imports or only exports. The file locations and directory paths can
-be absolute or relative to the Spring Data for VMware GemFire application, which is the JVM
+be absolute or relative to the [spring-data-gemfire-name] application, which is the JVM
 process's working directory.
 
 The preceding example is pretty simple, and the Snapshot Service defined
-in this case refers to the GemFire cache instance with the
+in this case refers to the [vmware-gemfire-short-name] cache instance with the
 default name of `gemfireCache` (as described in [Configuring a
 Cache](#configuring-cache)). If you name your cache bean definition
 something other than the default, you can use the `cache-ref` attribute
@@ -98,19 +98,19 @@ specifying the `region-ref` attribute, as follows:
 </gfe-data:snapshot-service>
 ```
 
-When the `region-ref` attribute is specified, Spring Data for VMware GemFire's
+When the `region-ref` attribute is specified, [spring-data-gemfire-name]'s
 `SnapshotServiceFactoryBean` resolves the `region-ref` attribute value
 to a Region bean defined in the Spring container and creates a
 [RegionSnapshotService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html).
 The snapshot import and export definitions function the same way.
 However, the `location` must refer to a file on an export.
 
-<p class="note"><strong>Note</strong>: GemFire is strict about imported snapshot
+<p class="note"><strong>Note</strong>: [vmware-gemfire-short-name] is strict about imported snapshot
 files actually existing before they are referenced. For exports,
-GemFire creates the snapshot file. If the snapshot file for
+[vmware-gemfire-short-name] creates the snapshot file. If the snapshot file for
 export already exists, the data is overwritten.</p>
 
-Spring Data for VMware GemFire includes a <code>suppress-import-on-init</code> attribute on the
+[spring-data-gemfire-name] includes a <code>suppress-import-on-init</code> attribute on the
 <code><gfe-data:snapshot-service></code> element to suppress the
 configured Snapshot Service from trying to import data into the cache or
 Region on initialization. Doing so is useful, for example, when data
@@ -125,15 +125,15 @@ files to load rather than individual snapshot files, as the overloaded
 [load](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html#load-java.io.File-org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat)
 method in the `CacheSnapshotService` API indicates.
 
-You can also use the overloaded <code>load(:File[], :SnapshotFormat, :SnapshotOptions)</code> method to specify which snapshot files to load into the GemFire cache.
+You can also use the overloaded <code>load(:File[], :SnapshotFormat, :SnapshotOptions)</code> method to specify which snapshot files to load into the [vmware-gemfire-short-name] cache.
 
 
-However, Spring Data for VMware GemFire recognizes that a typical developer workflow might
+However, [spring-data-gemfire-name] recognizes that a typical developer workflow might
 be to extract and export data from one environment into several snapshot
 files, zip all of them up, and then conveniently move the zip file to
 another environment for import.
 
-Therefore, Spring Data for VMware GemFire lets you specify a jar or zip file on import for a
+Therefore, [spring-data-gemfire-name] lets you specify a jar or zip file on import for a
 `cache`-based Snapshot Service, as follows:
 
 ```highlight
@@ -142,7 +142,7 @@ Therefore, Spring Data for VMware GemFire lets you specify a jar or zip file on 
   </gfe-data:snapshot-service>
 ```
 
-Spring Data for VMware GemFire conveniently extracts the provided zip file and treats it as
+[spring-data-gemfire-name] conveniently extracts the provided zip file and treats it as
 a directory import (load).
 
 ## <a id="snapshot-filters"></a>Snapshot Filters
@@ -154,7 +154,7 @@ realized through the use of snapshot filters. Snapshot filters implement the
 interface and are used to filter Region entries for inclusion into the
 Region on import and for inclusion into the snapshot on export.
 
-Spring Data for VMware GemFire lets you use snapshot filters on import and export by using
+[spring-data-gemfire-name] lets you use snapshot filters on import and export by using
 the `filter-ref` attribute or an anonymous, nested bean definition, as
 the following example shows:
 
@@ -230,18 +230,18 @@ another filter by using `or`, as follows:
 
 ## <a id="snapshot-events"></a>Snapshot Events
 
-By default, Spring Data for VMware GemFire uses GemFire's Snapshot Services on
+By default, [spring-data-gemfire-name] uses [vmware-gemfire-short-name]'s Snapshot Services on
 startup to import data and on shutdown to export data. However, you may
 want to trigger periodic, event-based snapshots, for either import or
 export, from within your Spring application.
 
-For this purpose, Spring Data for VMware GemFire defines two additional Spring application
+For this purpose, [spring-data-gemfire-name] defines two additional Spring application
 events, extending Spring's
 [ApplicationEvent](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/ApplicationEvent.html) class for imports and exports, respectively:
 `ImportSnapshotApplicationEvent` and `ExportSnapshotApplicationEvent`.
 
 The two application events can be targeted for the entire
-GemFire cache or for individual GemFire Regions. The
+[vmware-gemfire-short-name] cache or for individual [vmware-gemfire-short-name] Regions. The
 constructors in these classes accept an optional Region pathname (such
 as `/Example`) as well as zero or more `SnapshotMetadata` instances.
 

@@ -35,8 +35,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-The Spring Data for VMware GemFire reference guide explains how to use the Spring Framework
-to configure and develop applications with GemFire. It
+The [spring-data-gemfire-name] reference guide explains how to use the Spring Framework
+to configure and develop applications with [vmware-gemfire-short-name]. It
 presents the basic concepts and provides numerous examples to help you
 get started quickly.
 

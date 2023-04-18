@@ -35,18 +35,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-In addition to the core XML namespace (`gfe`), Spring Data for VMware GemFire provides a
+In addition to the core XML namespace (`gfe`), [spring-data-gemfire-name] provides a
 data access XML namespace (`gfe-data`), which is primarily intended to
-simplify the development of GemFire client applications. This
-namespace currently contains support for [GemFire
+simplify the development of [vmware-gemfire-short-name] client applications. This
+namespace currently contains support for [[vmware-gemfire-short-name]
 Repositories](repositories.html) and [Function
 execution](function-annotations.html), as well as a `<datasource>` tag that
-offers a convenient way to connect to a GemFire cluster.
+offers a convenient way to connect to a [vmware-gemfire-short-name] cluster.
 
-## <a id="connect-to-gemfire"></a>An Easy Way to Connect to GemFire
+## <a id="connect-to-gemfire"></a>An Easy Way to Connect to [vmware-gemfire-short-name]
 
-For many applications, a basic connection to a GemFire data
-grid using default values is sufficient. Spring Data for VMware GemFire's `<datasource>` tag
+For many applications, a basic connection to a [vmware-gemfire-short-name] data
+grid using default values is sufficient. [spring-data-gemfire-name]'s `<datasource>` tag
 provides a simple way to access data. The data source creates a
 `ClientCache` and connection `Pool`. In addition, it queries the cluster
 servers for all existing root Regions and creates an empty client

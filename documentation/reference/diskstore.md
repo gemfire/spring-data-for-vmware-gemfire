@@ -34,7 +34,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-Spring Data for VMware GemFire supports `DiskStore` configuration and creation through the
+[spring-data-gemfire-name] supports `DiskStore` configuration and creation through the
 `disk-store` element, as the following example shows:
 
 ```highlight
@@ -47,8 +47,8 @@ Spring Data for VMware GemFire supports `DiskStore` configuration and creation t
 
 `DiskStore` instances are used by Regions for file system persistent
 backup and overflow of evicted entries as well as persistent backup for
-WAN Gateways. Multiple GemFire components may share the same
+WAN Gateways. Multiple [vmware-gemfire-short-name] components may share the same
 `DiskStore`. Additionally, multiple file system directories may be
 defined for a single `DiskStore`, as shown in the preceding example.
 
-For an explanation of persistence, overflow, and configuration options on `DiskStore` instances, see [Persistence and Overflow](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-storing_data_on_disk-chapter_overview.html) in the GemFire product documentation.
+For an explanation of persistence, overflow, and configuration options on `DiskStore` instances, see [Persistence and Overflow](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-storing_data_on_disk-chapter_overview.html) in the [vmware-gemfire-short-name] product documentation.

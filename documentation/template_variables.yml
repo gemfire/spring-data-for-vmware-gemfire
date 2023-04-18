@@ -1,0 +1,63 @@
+template_variables:
+  revdate: {localdate}
+  revnumber: {version}
+  doctype: book
+  hide-uri-scheme:
+  icons: font
+  include-dir: _includes
+  numbered:
+  source-highlighter: prettify
+  toc: left
+  toclevels: 1
+  java-version: 17
+  jdk-javadoc: https://docs.oracle.com/en/java/javase/{java-version}/docs/api/
+  vmware-gemfire-version: {vmware-gemfire-artifact-version}
+  vmware-gemfire-doc-version: {vmware-gemfire-doc-version}
+  vmware-gemfire-docs: https://geode.apache.org/docs/guide/{vmware-gemfire-doc-version}
+  vmware-gemfire-javadoc: https://gemfire.docs.pivotal.io/apidocs/
+  vmware-gemfire-website: https://geode.apache.org/
+  vmware-gemfire-wiki: https://cwiki.apache.org/confluence/display/GEODE
+  pivotal-cloudcache-name: VMware GemFire for Tanzu Application Service
+  pivotal-cloudcache-version: {pivotal-cloudcache-doc-version}
+  pivotal-cloudcache-docs: https://docs.pivotal.io/p-cloud-cache/{pivotal-cloudcache-version}
+  pivotal-cloudcache-website: https://pivotal.io/pivotal-cloud-cache
+  pivotal-cloudfoundry-name: VMware Tanzu Application Service (TAS)
+  pivotal-cloudfoundry-version: 2-11
+  pivotal-cloudfoundry-docs: https://docs.pivotal.io/platform/application-service/{pivotal-cloudfoundry-version}
+  pivotal-cloudfoundry-website: https://pivotal.io/platform
+  vmware-gemfire-version: {vmware-gemfire-doc-version}
+  vmware-gemfire-docs: (https://gemfire.docs.pivotal.io/apidocs/
+  vmware-gemfire-javadoc: https://gemfire-{vmware-gemfire-version}-javadocs.docs.pivotal.io/
+  vmware-gemfire-website: https://pivotal.io/vmware-gemfire
+  vmware-gemfire-name: VMware GemFire
+  vmware-gemfire-short-name: GemFire
+  spring-boot-gemfire-name: Spring Boot for VMware GemFire
+  spring-session-gemfire-name: Spring Session for VMware GemFire
+  spring-boot-docs: https://docs.spring.io/spring-boot/docs/current/reference
+  spring-boot-docs-html: {spring-boot-docs}/html
+  spring-boot-javadoc: https://docs.spring.io/spring-boot/docs/current/api
+  spring-boot-website: https://spring.io/projects/spring-boot
+  spring-boot-gemfire-javadoc: https://docs.spring.io/spring-boot-data-geode-build/current/api
+  spring-data-commons-docs: https://docs.spring.io/spring-data/commons/docs/current/reference
+  spring-data-commons-docs-html: {spring-data-commons-docs}/html
+  spring-data-commons-javadoc: https://docs.spring.io/spring-data/commons/docs/current/api
+  spring-data-commons-website: https://spring.io/projects/spring-data
+  spring-data-gemfire-website: https://spring.io/projects/spring-data-gemfire
+  spring-data-gemfire-docs: https://docs.spring.io/spring-gemfire/docs/current/reference/html
+  spring-data-gemfire-docs-html: {spring-data-gemfire-docs}/html
+  spring-data-gemfire-javadoc: https://docs.spring.io/spring-gemfire/docs/current/api
+  spring-data-gemfire-website: https://spring.io/projects/spring-data-geode
+  spring-data-gemfire-name: Spring Data for VMware GemFire
+  spring-data-website: https://spring.io/projects/spring-data
+  spring-dependency-management-gradle-plugin-version: 1.0.10.RELEASE
+  spring-framework-docs: https://docs.spring.io/spring/docs/current/spring-framework-reference
+  spring-framework-javadoc: https://docs.spring.io/spring-gemfire/docs/current/api
+  spring-framework-website: https://spring.io/projects/spring-framework
+  spring-session-docs: https://docs.spring.io/spring-session/docs/current/reference/html5
+  spring-session-javadoc: https://docs.spring.io/spring-session/docs/current/api
+  spring-session-website: https://spring.io/projects/spring-session
+  spring-session-gemfire-docs: https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/current/reference/html5
+  spring-session-gemfire-javadoc: https://docs.spring.io/spring-session-data-geode/docs/current/api
+  spring-session-gemfire-website: https://spring.io/projects/spring-session-data-geode
+  spring-test-data-gemfire-website: https://github.com/spring-projects/spring-test-data-geode#spring-test-framework-for-apache-geode--vmware-tanzu-gemfire
+  wikipedia-docs: https://en.wikipedia.org/wiki
