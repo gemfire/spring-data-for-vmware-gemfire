@@ -1,5 +1,5 @@
 ---
-title: [spring-data-gemfire-name] Repositories
+title: Spring Data for VMware GemFire Repositories
 ---
 
 <!-- 

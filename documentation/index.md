@@ -1,5 +1,5 @@
 ---
-title:  [spring-data-gemfire-name] 2.7 Documentation
+title:  Spring Data for VMware GemFire 2.7 Documentation
 ---
 
 <!-- 

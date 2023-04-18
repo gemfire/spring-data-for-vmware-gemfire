@@ -1,4 +1,4 @@
-# [spring-data-gemfire-name] Documentation
+# Spring Data for VMware GemFire Documentation
 <!-- 
  Copyright (c) VMware, Inc. 2022. All rights reserved.
  Licensed to the Apache Software Foundation (ASF) under one or more contributor license

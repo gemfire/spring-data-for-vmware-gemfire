@@ -1,4 +1,4 @@
-# [spring-data-gemfire-name] Documentation
+# Spring Data for VMware GemFire Documentation
 
 *   [Version 2.7](landing-page.html)
 *   [Preface](preface.html)

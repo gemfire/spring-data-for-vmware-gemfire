@@ -1,5 +1,5 @@
 ---
-title: [spring-data-gemfire-name] Schema
+title: Spring Data for VMware GemFire Schema
 ---
 
 <!-- 
