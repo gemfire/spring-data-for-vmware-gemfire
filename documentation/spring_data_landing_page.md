@@ -1,32 +1,51 @@
 ---
-title: [spring-data-gemfire-name] Quick Start
+title: Spring Data for VMware GemFire Quick Start
 ---
 
-[spring-data-gemfire-name] brings the full power of the Spring Framework to your [vmware-gemfire-name] applications.The primary goal of the [spring-data-gemfire-name] project is to make it easier to build highly scalable Spring powered applications using [vmware-gemfire-name] for distributed data management.
+Spring Data for VMware GemFire brings the full power of the Spring Framework to your [vmware-gemfire-name] applications.The primary goal of the Spring Data for VMware GemFire project is to make it easier to build highly scalable Spring powered applications using [vmware-gemfire-name] for distributed data management.
 
-This reference guide explains how to add the [spring-data-gemfire-name] dependency to your project. Once the dependency has been added, refer to the [[spring-data-gemfire-name] Reference Guide](https://docs.spring.io/spring-data/geode/docs/current/reference/html/) for in-depth information about using the dependency.
+This reference guide explains how to add the Spring Data for VMware GemFire dependency to your project. Once the dependency has been added, refer to the [Spring Data for VMware GemFire Reference Guide](https://docs.spring.io/spring-data/geode/docs/current/reference/html/) for in-depth information about using the dependency.
+
+## Compatibility
+
+Spring Data for VMware GemFire 1.1.0 is compatibile with the following:
+
+<table>
+    <tr>
+        <td>Spring Data</td>
+        <td>2.6, 2.7, 3.0</td>
+    </tr>
+    <tr>
+        <td>GemFire</td>
+        <td>9.15.0 to 9.15.4</td>
+    </tr>
+</table>
+
 
 ## Release Notes:
+
 ### 1.1.1
+
 * Update to latest Spring Data patch version (3.0.4, 2.7.10 and 2.6.10)
 * Update to latest Spring Framework patch version (6.0.7 and 5.3.26)
 * Update all dependencies to latest patch version
 
 ### 1.1.0
-* First release that removes dependency on [spring-data-gemfire-name]
-* "ByoG" - Bring your own [vmware-gemfire-short-name]. Requires users to provide a working version of [vmware-gemfire-name].
+
+* First release that removes dependency on Spring Data For Apache Geode
+* **"Bring your own GemFire" (ByoG)**:  You can now explicitly specify the GemFire version that you need. See below for examples of declaring the GemFire version. ByoG requires that you provide a working version of VMware GemFire.
 
 ### 1.0.0
-* Initial [spring-data-gemfire-name] for [vmware-gemfire-name], still dependent on [spring-data-gemfire-name]
 
+* Initial Spring Data For VMware GemFire for VMware GemFire, still dependent on Spring Data For Apache Geode
 
-## Add [spring-data-gemfire-name] to a Project
+## Add Spring Data for VMware GemFire to a Project
 
-The [spring-data-gemfire-name] dependencies are available from the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth). Access to the Pivotal Commercial Maven Repository requires a one-time registration step to create an account.
+The Spring Data for VMware GemFire dependencies are available from the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth). Access to the Pivotal Commercial Maven Repository requires a one-time registration step to create an account.
 
-[spring-data-gemfire-name] requires users to add the [vmware-gemfire-short-name] repository to their projects.
+Spring Data for VMware GemFire requires users to add the [vmware-gemfire-short-name] repository to their projects.
 
-To add [spring-data-gemfire-name] to a project:
+To add Spring Data for VMware GemFire to a project:
 
 1. In a browser, navigate to the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth).
 
@@ -90,11 +109,11 @@ To add [spring-data-gemfire-name] to a project:
         gemfireRepoPassword=MY-DECRYPTED-PASSWORD
         ```
 
-1. After you have set up the repository and credentials, add the [spring-data-gemfire-name] dependency to your application.
+1. After you have set up the repository and credentials, add the Spring Data for VMware GemFire dependency to your application.
 
     For version 1.0.0:
 
-    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available.
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available.
 
         ```
         <dependency>
@@ -104,7 +123,7 @@ To add [spring-data-gemfire-name] to a project:
         </dependency>
         ```
 
-    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available.
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available.
 
         ```
         dependencies {
@@ -114,11 +133,11 @@ To add [spring-data-gemfire-name] to a project:
 
     For version 1.1.0 and later:
 
-    Starting in version 1.1.0, you will be required to "Bring Your Own [vmware-gemfire-short-name]," which will allow for improved flexibility with [vmware-gemfire-short-name] patch versions. In addition to the [spring-data-gemfire-name] dependency, you must add an explicit dependency on the desired version of [vmware-gemfire-short-name]. The required dependencies will differ for clients and servers.
+    Starting in version 1.1.0, you will be required to "Bring Your Own [vmware-gemfire-short-name]," which will allow for improved flexibility with [vmware-gemfire-short-name] patch versions. In addition to the Spring Data for VMware GemFire dependency, you must add an explicit dependency on the desired version of [vmware-gemfire-short-name]. The required dependencies will differ for clients and servers.
 
     For clients:
 
-    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
 
         ```
         <dependency>
@@ -139,7 +158,7 @@ To add [spring-data-gemfire-name] to a project:
         </dependency>
         ```
 
-    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
 
         ```
         dependencies {
@@ -154,7 +173,7 @@ To add [spring-data-gemfire-name] to a project:
 
     NOTE: The server dependencies are only required if the user is starting an embedded [vmware-gemfire-short-name] server using Spring.
 
-    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
+    * **Maven**: Add the following to your `pom.xml` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
 
         ```
         <dependency>
@@ -175,7 +194,7 @@ To add [spring-data-gemfire-name] to a project:
          </dependency>
         ```
 
-    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of [spring-data-gemfire-name] available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
+    * **Gradle**: Add the following to your `build.gradle` file. Replace `VERSION` with the current version of Spring Data for VMware GemFire available and `GEMFIRE_VERSION` with the version of [vmware-gemfire-name] being used for the project.
 
         ```
         dependencies {
@@ -190,4 +209,4 @@ To add [spring-data-gemfire-name] to a project:
 
 ## Reference Guide
 
-For further information, refer to the [[spring-data-gemfire-name] Reference Guide](https://docs.spring.io/spring-data/geode/docs/current/reference/html/).
+For further information, refer to the [Spring Data for VMware GemFire Reference Guide](https://docs.spring.io/spring-data/geode/docs/current/reference/html/).
