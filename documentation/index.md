@@ -35,13 +35,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-[spring-data-gemfire-name] focuses on integrating the Spring Framework's powerful, non-invasive programming model and concepts with [vmware-gemfire-short-name] to simplify configuration and development of Java applications when using [vmware-gemfire-short-name] as your data management solution.
+Spring Data for VMware GemFire focuses on integrating the Spring Framework's powerful, non-invasive programming model and concepts with GemFire to simplify configuration and development of Java applications when using GemFire as your data management solution.
 
 ## <a id="setup"></a>Setup
 
-[spring-data-gemfire-name] and [spring-boot-gemfire-name] are the Spring dependencies to use when developing applications for [vmware-gemfire-short-name]. This guide is intended to help you set up and start using [spring-data-gemfire-name] and [spring-boot-gemfire-name].
+Spring Data for VMware GemFire and [spring-boot-gemfire-name] are the Spring dependencies to use when developing applications for GemFire. This guide is intended to help you set up and start using Spring Data for VMware GemFire and [spring-boot-gemfire-name].
 
-The [spring-data-gemfire-name] dependencies are available from the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth). Access to the Pivotal Commercial Maven Repository requires a one-time registration step to create an account.
+The Spring Data for VMware GemFire dependencies are available from the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth). Access to the Pivotal Commercial Maven Repository requires a one-time registration step to create an account.
 
 1. In a browser, navigate to the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth).
 
@@ -55,7 +55,7 @@ The [spring-data-gemfire-name] dependencies are available from the [Pivotal Comm
 
 6. After account activation, log in to the  [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth) to access the configuration information found in [gemfire-release-repo](https://commercial-repo.pivotal.io/repository/gemfire-release-repo).
 
-7. Add the [vmware-gemfire-short-name] repository to your project
+7. Add the GemFire repository to your project
 
     * **Maven**
 
@@ -63,7 +63,7 @@ The [spring-data-gemfire-name] dependencies are available from the [Pivotal Comm
         ```xml
         <repository>
             <id>gemfire-release-repo</id>
-            <name>[vmware-gemfire-name] Release Repository</name>
+            <name>VMware GemFire Release Repository</name>
             <url>https://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire</url>
         </repository>
         ```
@@ -110,7 +110,7 @@ The [spring-data-gemfire-name] dependencies are available from the [Pivotal Comm
 
 9. After you have set up the repository and credentials, add the Spring dependencies needed for your application. The `springDataGemFireVersion` and `springBootDataGemFireVersion` variables are property placeholders for the dependency versions.
 
-    * **[spring-data-gemfire-name]**
+    * **Spring Data for VMware GemFire**
 
         * **Maven**
 
@@ -146,8 +146,8 @@ The [spring-data-gemfire-name] dependencies are available from the [Pivotal Comm
             implementation "com.vmware.gemfire.boot:spring-gemfire-starter:$springBootDataGemFireVersion"
             ```
  
-Your application is now ready to connect with your [vmware-gemfire-short-name] instance.
+Your application is now ready to connect with your GemFire instance.
 
 ## <a id="reference-guide"></a>Reference Guide
 
-All reference documentation currently corresponds with the reference documentation for [[spring-data-gemfire-name]](https://spring.io/projects/spring-data-geode#learn) and [[spring-boot-gemfire-name]](https://docs.spring.io/spring-boot-data-geode-build/current/reference/html5/).
+All reference documentation currently corresponds with the reference documentation for [Spring Data for VMware GemFire](https://spring.io/projects/spring-data-geode#learn) and [[spring-boot-gemfire-name]](https://docs.spring.io/spring-boot-data-geode-build/current/reference/html5/).

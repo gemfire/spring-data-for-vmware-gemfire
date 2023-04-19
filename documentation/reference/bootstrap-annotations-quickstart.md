@@ -36,22 +36,22 @@ limitations under the License.
 -->
 
 
-The following sections provide an overview to the [spring-data-gemfire-name]
+The following sections provide an overview to the Spring Data for VMware GemFire
 annotations to get started quickly.
 
 All annotations provide additional configuration
 attributes along with associated <a
 href="#bootstrap-annotation-config-properties">properties</a> to
 conveniently customize the configuration and behavior of
-[vmware-gemfire-short-name] at runtime. However, in general, none of the
+GemFire at runtime. However, in general, none of the
 attributes or associated properties are required to use a particular
-[vmware-gemfire-short-name] feature. Simply declare the annotation to enable the
+GemFire feature. Simply declare the annotation to enable the
 feature and you are done. Refer to the individual Javadoc of each
 annotation for more details.
 
 ## <a id="configure-clientcache-application"></a>Configure a `ClientCache` Application
 
-To configure and bootstrap a [vmware-gemfire-short-name] `ClientCache`
+To configure and bootstrap a GemFire `ClientCache`
 application, use the following:
 
 ```highlight
@@ -67,12 +67,12 @@ public class ClientApplication {
 
 See [@ClientCacheApplication Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/ClientCacheApplication.html).
 
-For more information, see [Configuring [vmware-gemfire-short-name] Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring GemFire Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-peer-cache-application"></a>Configure a Peer `Cache` Application
 
-To configure and bootstrap a [vmware-gemfire-short-name] Peer `Cache` application,
+To configure and bootstrap a GemFire Peer `Cache` application,
 use the following:
 
 ```highlight
@@ -102,8 +102,8 @@ See [@CacheServerApplication Javadoc](https://docs.spring.io/spring-data/geode/d
 See
 [@PeerCacheApplication Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/PeerCacheApplication.html).
 
-For more information, see [Configuring [vmware-gemfire-short-name] Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring GemFire Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-embedded-locator"></a>Configure an Embedded Locator
 
@@ -124,13 +124,13 @@ public class ServerApplication {
 }
 ```
 
-<code>@EnableLocator</code> can only be used with [vmware-gemfire-short-name] server applications.
+<code>@EnableLocator</code> can only be used with GemFire server applications.
 
 See
 [@EnableLocator Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLocator.html).
 
 For more information, see [Configuring an Embedded Locator](bootstrap-annotations.html#configuring-an-embedded-locator) in
-__Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_._
+__Bootstrapping GemFire with the Spring Container Using Annotations_._
 
 ## <a id="configure-embedded-manager"></a>Configure an Embedded Manager
 
@@ -151,12 +151,12 @@ public class ServerApplication {
 }
 ```
 
-<code>@EnableManager</code> can only be used with [vmware-gemfire-short-name] server applications.
+<code>@EnableManager</code> can only be used with GemFire server applications.
 
 See [@EnableManager Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableManager.html).
 
 For more information, see [Configuring an Embedded Manager](bootstrap-annotations.html#configuring-an-embedded-manager)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-embedded-http-server"></a>Configure the Embedded HTTP Server
 
@@ -175,12 +175,12 @@ public class ServerApplication {
   }
 }
 ```
-@EnableHttpService</code> can only be used with [vmware-gemfire-short-name] server applications.
+@EnableHttpService</code> can only be used with GemFire server applications.
 
 See [@EnableHttpService Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableHttpService.html).
 
 For more information, see [Configuring the Embedded HTTP Server](bootstrap-annotations.html#configuring-the-embedded-http-server)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-embedded-memcached-server"></a>Configure the Embedded Memcached Server
 
@@ -201,17 +201,17 @@ public class ServerApplication {
 }
 ```
 
-<code>@EnableMemcachedServer</code> can only be used with [vmware-gemfire-short-name] server applications.
+<code>@EnableMemcachedServer</code> can only be used with GemFire server applications.
 
 See [@EnableMemcachedServer Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableMemcachedServer.html).
 
 For more information, see [Configuring the Embedded Memcached Server (Gemcached)](bootstrap-annotations.html#configuring-the-embedded-memcached-server)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-logging"></a>Configure Logging
 
-To configure or adjust [vmware-gemfire-short-name] logging, annotate your Spring,
-[vmware-gemfire-short-name] client or server application class with
+To configure or adjust GemFire logging, annotate your Spring,
+GemFire client or server application class with
 `@EnableLogging`, as follows:
 
 ```highlight
@@ -226,18 +226,18 @@ public class ClientApplication {
 }
 ```
 
-Default <code>log-level</code> is **config**. This annotation does not adjust log levels in your application and is only used for [vmware-gemfire-short-name].
+Default <code>log-level</code> is **config**. This annotation does not adjust log levels in your application and is only used for GemFire.
 
 See
 [@EnableLogging Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLogging.html).
 
 For more information, see [Configuring Logging](bootstrap-annotations.html#configuring-logging)
-_Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+_Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-statistics"></a>Configure Statistics
 
-To gather [vmware-gemfire-short-name] statistics at runtime, annotate your Spring,
-[vmware-gemfire-short-name] client or server application class with
+To gather GemFire statistics at runtime, annotate your Spring,
+GemFire client or server application class with
 `@EnableStatistics`, as follows:
 
 ```highlight
@@ -255,12 +255,12 @@ public class ClientApplication {
 See [@EnableStatistics Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableStatistics.html).
 
 For more information, see [Configuring Statistics](bootstrap-annotations.html#configuring-statistics)
-_Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+_Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-pdx"></a>Configure PDX
 
-To enable [vmware-gemfire-short-name] PDX serialization, annotate your Spring,
-[vmware-gemfire-short-name] client or server application class with `@EnablePdx`,
+To enable GemFire PDX serialization, annotate your Spring,
+GemFire client or server application class with `@EnablePdx`,
 as follows:
 
 ```highlight
@@ -275,13 +275,13 @@ public class ClientApplication {
 }
 ```
 
-[vmware-gemfire-short-name] PDX Serialization is an 
+GemFire PDX Serialization is an 
 alternative to Java Serialization with many added benefits. For one, it
 makes short work of making all of your application domain model types
 serializable without having to implement
 <code>java.io.Serializable</code>.
 
-By default, [spring-data-gemfire-name] configures the
+By default, Spring Data for VMware GemFire configures the
 <code>MappingPdxSerializer</code> to serialize your application domain
 model types, which does not require any special configuration
 out-of-the-box to properly identify application domain objects
@@ -293,11 +293,11 @@ in _POJO Mapping_.
 
 See [@EnablePdx Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnablePdx.html).
 
-For more information, see [Configuring PDX](bootstrap-annotations.html#configuring-pdx) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring PDX](bootstrap-annotations.html#configuring-pdx) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-ssl"></a>Configure SSL
 
-To enable [vmware-gemfire-short-name] SSL, annotate your Spring, [vmware-gemfire-short-name]
+To enable GemFire SSL, annotate your Spring, GemFire
 client or server application class with `@EnableSsl`, as follows:
 
 ```highlight
@@ -312,26 +312,26 @@ public class ClientApplication {
 }
 ```
 
-Minimally, [vmware-gemfire-short-name] requires you to specify
+Minimally, GemFire requires you to specify
 a keystore and truststore using the appropriate configuration
 attributes or properties. Both keystore and truststore configuration
 attributes or properties may refer to the same <code>KeyStore</code>
 file. Additionally, you must specify a username and password to
 access the <code>KeyStore</code> file if the file has been secured.
 
-[vmware-gemfire-short-name] SSL allows you to configure the
+GemFire SSL allows you to configure the
 specific components of the system that require TLS, such as
 client/server, Locators, Gateways, etc. Optionally, you can specify that
-all components of [vmware-gemfire-short-name] use SSL with `ALL`.
+all components of GemFire use SSL with `ALL`.
 
 See [@EnableSsl Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableSsl.html).
 
-For more information, see [Configuring SSL](bootstrap-annotations.html#configuring-ssl) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring SSL](bootstrap-annotations.html#configuring-ssl) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-security"></a>Configure Security
 
-To enable [vmware-gemfire-short-name] security, annotate your Spring,
-[vmware-gemfire-short-name] client or server application class with
+To enable GemFire security, annotate your Spring,
+GemFire client or server application class with
 `@EnableSecurity`, as follows:
 
 ```highlight
@@ -347,20 +347,20 @@ public class ClientApplication {
 ```
 
 On the server, you must configure access to the auth
-credentials. You may either implement the [SecurityManager](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/SecurityManager.html) interface or declare one or more Apache Shiro <code>Realms</code>. For more details, see [Configuring Server Security](bootstrap-annotations.html#configuring-server-security) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+credentials. You may either implement the [SecurityManager](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/SecurityManager.html) interface or declare one or more Apache Shiro <code>Realms</code>. For more details, see [Configuring Server Security](bootstrap-annotations.html#configuring-server-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
-On the client, you must configure a username and password. For more details, see [Configuring Client Security](bootstrap-annotations.html#configuring-client-security) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+On the client, you must configure a username and password. For more details, see [Configuring Client Security](bootstrap-annotations.html#configuring-client-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 See [@EnableSecurity Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableSecurity.html).
 
 
-For more information, see [Configuring Security](bootstrap-annotations.html#configuring-security) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring Security](bootstrap-annotations.html#configuring-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
-## <a id="configure-gemfire-properties"></a>Configure [vmware-gemfire-short-name] Properties
+## <a id="configure-gemfire-properties"></a>Configure GemFire Properties
 
-To configure other, low-level [vmware-gemfire-short-name] properties not covered
-by the feature-oriented, [spring-data-gemfire-name] configuration annotations,
-annotate your Spring, [vmware-gemfire-short-name] client or server application
+To configure other, low-level GemFire properties not covered
+by the feature-oriented, Spring Data for VMware GemFire configuration annotations,
+annotate your Spring, GemFire client or server application
 class with `@GemFireProperties`, as follows:
 
 ```highlight
@@ -380,17 +380,17 @@ public class ServerApplication {
 }
 ```
 
-Some [vmware-gemfire-short-name] properties are client-side only while others are server-side only. For
-the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: [vmware-gemfire-short-name] Properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html) in the [vmware-gemfire-short-name] product documentation.
+Some GemFire properties are client-side only while others are server-side only. For
+the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: GemFire Properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html) in the GemFire product documentation.
 
 See [@EnableGemFireProperties Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableGemFireProperties.html).
 
-For more information, see [Configuring [vmware-gemfire-short-name] Properties](#configuring-gemfire-properties) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring GemFire Properties](#configuring-gemfire-properties) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-caching"></a>Configure Caching
 
-To use [vmware-gemfire-short-name] as a *caching provider* in Spring's [Cache Abstraction](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache) and have [spring-data-gemfire-name] automatically create [vmware-gemfire-short-name] Regions for the caches required by your application
-service components, annotate your Spring, [vmware-gemfire-short-name] client, or server application
+To use GemFire as a *caching provider* in Spring's [Cache Abstraction](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache) and have Spring Data for VMware GemFire automatically create GemFire Regions for the caches required by your application
+service components, annotate your Spring, GemFire client, or server application
 class with `@EnableGemfireCaching` and `@EnableCachingDefinedRegions`  as follows:
 
 ```highlight
@@ -425,11 +425,11 @@ See [@EnableCachingDefinedRegions Javadoc](https://docs.spring.io/spring-data/ge
 See
 [@EnableGemfireCaching Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/cache/config/EnableGemfireCaching.html).
 
-For more information, see [Configuring Spring's Cache Abstraction](bootstrap-annotations.html#configuring-springs-cache-abstraction) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+For more information, see [Configuring Spring's Cache Abstraction](bootstrap-annotations.html#configuring-springs-cache-abstraction) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-regions-etc"></a>Configure Regions, Indexes, Repositories, and Entities for Persistent Applications
 
-To quickly create Spring, [vmware-gemfire-short-name] persistent client, or server applications, annotate your application class with `@EnableEntityDefinedRegions`, `@EnableGemfireRepositories`, and
+To quickly create Spring, GemFire persistent client, or server applications, annotate your application class with `@EnableEntityDefinedRegions`, `@EnableGemfireRepositories`, and
 `@EnableIndexing`, as follows:
 
 ```highlight
@@ -446,7 +446,7 @@ public class ClientApplication {
 }
 ```
 
-<p classs="note"><strong>Note</strong>: The <code>@EnableEntityDefinedRegions</code> annotation is required when using the <code>@EnableIndexing</code> annotation. For more details, see <a href="bootstrap-annotations.html#configuring-indexes">Configuring Indexes</a> in <em>Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations</em>.</p>
+<p classs="note"><strong>Note</strong>: The <code>@EnableEntityDefinedRegions</code> annotation is required when using the <code>@EnableIndexing</code> annotation. For more details, see <a href="bootstrap-annotations.html#configuring-indexes">Configuring Indexes</a> in <em>Bootstrapping GemFire with the Spring Container Using Annotations</em>.</p>
 
 Next, define your entity class and use the `@Region` mapping annotation
 to specify the Region in which your entity will be stored. Use the
@@ -478,7 +478,7 @@ public class Book {
 
 <p class="note"><strong>Note</strong>: The <code>@Region("Books")</code> entity class
 annotation is used by the <code>@EnableEntityDefinedRegions</code> to determine the Regions required by the application. For additional details, see <a
-href="https://docs.spring.io/spring-data/geode/docs/current/reference/html/#bootstrap-annotation-config-region-types">Configuring Type-specific Regions</a> in the <em>[spring-data-gemfire-name] Reference Guide</em>
+href="https://docs.spring.io/spring-data/geode/docs/current/reference/html/#bootstrap-annotation-config-region-types">Configuring Type-specific Regions</a> in the <em>Spring Data for VMware GemFire Reference Guide</em>
 and <a href="mapping.html#object-mapping-fundamentals">Object Mapping Fundamentals</a> in <em>POJO Mapping</em>.</p>
 
 Finally, define your CRUD Repository with simple queries to persist and
@@ -495,7 +495,7 @@ public interface BookRepository extends CrudRepository {
 
 }
 ```
-For more information, see [[spring-data-gemfire-name] Repositories](repositories.html).
+For more information, see [Spring Data for VMware GemFire Repositories](repositories.html).
 
 See also the following: 
 
@@ -511,9 +511,9 @@ See also the following:
 
 * [@LuceneIndexed Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/mapping/annotation/LuceneIndexed.html)
 
-* [Configuring Regions](bootstrap-annotations.html#configuring-regions) in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_
+* [Configuring Regions](bootstrap-annotations.html#configuring-regions) in _Bootstrapping GemFire with the Spring Container Using Annotations_
 
-* [[spring-data-gemfire-name] Repositories](repositories.html)
+* [Spring Data for VMware GemFire Repositories](repositories.html)
 
 ## <a id="configure-client-regions"></a>Configure Client Regions from Cluster-defined Regions
 
@@ -537,11 +537,11 @@ public class ClientApplication {
 ```
 
 For more information, see [Configured Cluster-Defined Regions](bootstrap-annotations.html#configured-cluster-defined-regions)
-in _Bootstrapping [vmware-gemfire-short-name] with the Spring Container Using Annotations_.
+in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 ## <a id="configure-functions"></a>Configure Functions
 
-[vmware-gemfire-short-name] Functions are useful in distributed compute scenarios
+GemFire Functions are useful in distributed compute scenarios
 where a potentially expensive computation requiring data can be
 performed in parallel across the nodes in the cluster. In this case, it
 is more efficient to bring the logic to where the data is located
@@ -549,7 +549,7 @@ is more efficient to bring the logic to where the data is located
 the computation.
 
 Use the `@EnableGemfireFunctions` along with the `@GemfireFunction`
-annotation to enable [vmware-gemfire-short-name] Functions definitions implemented
+annotation to enable GemFire Functions definitions implemented
 as methods on POJOs, as follows:
 
 ```highlight
@@ -594,7 +594,7 @@ interface CustomerRewardsFunctions {
 
 Real-time, event stream processing is becoming an increasingly important
 task for data-intensive applications, primarily to respond to
-user requests in a timely manner. [vmware-gemfire-short-name] Continuous Query
+user requests in a timely manner. GemFire Continuous Query
 (CQ) will help you achieve this rather complex task quite easily.
 
 Enable CQ by annotating your application class with
@@ -629,21 +629,21 @@ Anytime an event occurs changing the `Customer` data to match the
 predicate in your continuous OQL query (CQ), the `process` method will
 be called.
 
-[vmware-gemfire-short-name] CQ is a client-side feature only.
+GemFire CQ is a client-side feature only.
 
 ## <a id="configure-cluster-configurations"></a>Configure Cluster Configuration
 
-When developing Spring Data applications using [vmware-gemfire-short-name] as
-[vmware-gemfire-short-name] `ClientCache` applications, it is useful during
+When developing Spring Data applications using GemFire as
+GemFire `ClientCache` applications, it is useful during
 development to configure the server to match the client in a
-client/server topology. In fact, [vmware-gemfire-short-name] expects that when you
+client/server topology. In fact, GemFire expects that when you
 have a "/Example" PROXY `Region` on the client, that a matching `Region`
 by name (i.e. "Example") exists in the server.
 
 You could use `gfsh` to create every Region and Index that your
 application requires, or, you could simply push the configuration
 meta-data already expressed when developing your Spring Data application
-using [vmware-gemfire-short-name] when you run it.
+using GemFire when you run it.
 
 This is as simple as annotation your main application class with
 `@EnableClusterConfiguration(..)`:
@@ -672,20 +672,20 @@ application classpath.</p>
 
 ## <a id="configure-gatewayreceivers"></a>Configure `GatewayReceivers`
 
-The replication of data between different [vmware-gemfire-short-name] clusters is
+The replication of data between different GemFire clusters is
 an increasingly important fault-tolerance and high-availability (HA)
-mechanism. [vmware-gemfire-short-name] WAN replication is a mechanism that allows
-one [vmware-gemfire-short-name] cluster to replicate its data to another
-[vmware-gemfire-short-name] cluster in a reliable and fault-tolerant manner.
+mechanism. GemFire WAN replication is a mechanism that allows
+one GemFire cluster to replicate its data to another
+GemFire cluster in a reliable and fault-tolerant manner.
 
-[vmware-gemfire-short-name] WAN replication requires two components to be
+GemFire WAN replication requires two components to be
 configured:
 
 - `GatewayReceiver`: The WAN replication component that receives data
-  from a remote [vmware-gemfire-short-name] cluster's `GatewaySender`.
+  from a remote GemFire cluster's `GatewaySender`.
 
 - `GatewaySender`: The WAN replication component that sends data to a
-  remote [vmware-gemfire-short-name] cluster's `GatewayReceiver`.
+  remote GemFire cluster's `GatewayReceiver`.
 
 To enable a `GatewayReceiver`, the application class must be
 annotated with `@EnableGatewayReceiver` as follows:
@@ -702,7 +702,7 @@ annotated with `@EnableGatewayReceiver` as follows:
 class MySpringApplication { .. }
 ```
 
-<p class="note"><strong>Note</strong>: [vmware-gemfire-short-name] <code>GatewayReceiver</code> is a
+<p class="note"><strong>Note</strong>: GemFire <code>GatewayReceiver</code> is a
 server-side feature only and can only be configured on a
 <code>CacheServer</code> or peer <code>Cache</code> node.</p>
 
@@ -733,7 +733,7 @@ class MySpringApplication { .. }
 }
 ```
 
-<p class="note"><strong>Note</strong>: [vmware-gemfire-short-name] <code>GatewaySender</code> is a
+<p class="note"><strong>Note</strong>: GemFire <code>GatewaySender</code> is a
 server-side feature only and can only be configured on a
 <code>CacheServer</code> or a peer <code>Cache</code> node.</p>
 

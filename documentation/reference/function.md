@@ -35,15 +35,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-[spring-data-gemfire-name] provides [annotation](function-annotations.html) support for
-implementing, registering and executing [vmware-gemfire-short-name] Functions.
+Spring Data for VMware GemFire provides [annotation](function-annotations.html) support for
+implementing, registering and executing GemFire Functions.
 
-[spring-data-gemfire-name] also provides XML namespace support for registering
-[vmware-gemfire-short-name] [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) for remote function execution.
+Spring Data for VMware GemFire also provides XML namespace support for registering
+GemFire [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) for remote function execution.
 
-For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html) in the [vmware-gemfire-short-name] product documentation.
+For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html) in the GemFire product documentation.
 
-[vmware-gemfire-short-name] Functions are declared as Spring beans and must
+GemFire Functions are declared as Spring beans and must
 implement the `org.apache.geode.cache.execute.Function` interface or
 extend `org.apache.geode.cache.execute.FunctionAdapter`.
 

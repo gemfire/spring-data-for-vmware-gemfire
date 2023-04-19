@@ -35,17 +35,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-WAN Gateways provides a way to synchronize [vmware-gemfire-short-name] Distributed
-Systems across geographic locations. [spring-data-gemfire-name] provides XML namespace
+WAN Gateways provides a way to synchronize GemFire Distributed
+Systems across geographic locations. Spring Data for VMware GemFire provides XML namespace
 support for configuring WAN Gateways as illustrated in the following
 examples.
 
-WAN Gateways provides a way to synchronize [vmware-gemfire-short-name] Distributed
-Systems across geographic locations. [spring-data-gemfire-name] provides XML namespace
+WAN Gateways provides a way to synchronize GemFire Distributed
+Systems across geographic locations. Spring Data for VMware GemFire provides XML namespace
 support for configuring WAN Gateways as illustrated in the following
 examples.
 
-## <a id="wan-gateway-configuration-7"></a>WAN Configuration in [vmware-gemfire-short-name] 7.0
+## <a id="wan-gateway-configuration-7"></a>WAN Configuration in GemFire 7.0
 
 In the following example, `GatewaySenders` are configured for a
 `PARTITION` Region by adding child elements (`gateway-sender` and
@@ -104,5 +104,5 @@ follows:
 </gfe:gateway-receiver>
 ```
 
-For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-multi_site_configuration-chapter_overview.html) in the [vmware-gemfire-short-name] product documentation.
+For a detailed explanation of the configuration options. see [Multi-site (WAN) Configuration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/topologies_and_comm-multi_site_configuration-chapter_overview.html) in the GemFire product documentation.
 

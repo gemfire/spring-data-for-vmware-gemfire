@@ -35,9 +35,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-To use [vmware-gemfire-short-name], you must either create a new cache or
+To use GemFire, you must either create a new cache or
 connect to an existing one. With the current version of
-[vmware-gemfire-short-name], you can have only one open cache per VM (more
+GemFire, you can have only one open cache per VM (more
 strictly speaking, per `ClassLoader`). In most cases, the cache should
 only be created once.
 
@@ -48,7 +48,7 @@ member can also be used in stand-alone applications and integration
 tests. However, in typical production systems, most application
 processes act as cache clients, creating a <code>ClientCache</code>
 instance instead. This is described in the <a
-href="#configuring-gemfire-clientcache">Configuring a [vmware-gemfire-short-name]
+href="#configuring-gemfire-clientcache">Configuring a GemFire
 ClientCache</a> and <a href="#client-region">Client Region</a>
 sections.</p>
 
@@ -62,15 +62,15 @@ following declaration:
 During Spring container initialization, any `ApplicationContext`
 containing this cache definition registers a `CacheFactoryBean` that
 creates a Spring bean named `gemfireCache`, which references a
-[vmware-gemfire-short-name] `Cache` instance. This bean refers to either an
+GemFire `Cache` instance. This bean refers to either an
 existing `Cache` or, if one does not already exist, a newly created one.
 Since no additional properties were specified, a newly created `Cache`
 applies the default cache configuration.
 
-All [spring-data-gemfire-name] components that depend on the `Cache` respect this naming
+All Spring Data for VMware GemFire components that depend on the `Cache` respect this naming
 convention, so you need not explicitly declare the `Cache` dependency.
 If you prefer, you can make the dependency explicit by using the
-`cache-ref` attribute provided by various [spring-data-gemfire-name] XML namespace
+`cache-ref` attribute provided by various Spring Data for VMware GemFire XML namespace
 elements. Also, you can override the cache's bean name using the `id`
 attribute, as follows:
 
@@ -78,11 +78,11 @@ attribute, as follows:
 <gfe:cache id="myCache"/>
 ```
 
-A [vmware-gemfire-short-name] `Cache` can be fully configured using Spring.
-However, [vmware-gemfire-short-name]'s native XML configuration file, `cache.xml`,
-is also supported. For situations where the [vmware-gemfire-short-name] cache
+A GemFire `Cache` can be fully configured using Spring.
+However, GemFire's native XML configuration file, `cache.xml`,
+is also supported. For situations where the GemFire cache
 must be configured natively, you can provide a reference to the
-[vmware-gemfire-short-name] XML configuration file by using the
+GemFire XML configuration file by using the
 `cache-xml-location` attribute, as follows:
 
 ```highlight
@@ -100,7 +100,7 @@ environment or the prefix specified (if any) in the resource
 location.</p>
 
 In addition to referencing an external XML configuration file, you can
-also specify [vmware-gemfire-short-name] System [properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html)
+also specify GemFire System [properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html)
 that use any of Spring's `Properties` support features.
 
 For example, you can use the `properties` element defined in the `util`
@@ -177,7 +177,7 @@ following listing shows:
 
 Comments:
 1. Attributes support various cache options. For further information
-    regarding anything shown in this example, see the [[vmware-gemfire-short-name]
+    regarding anything shown in this example, see the [GemFire
     product documentation](https://docs.vmware.com/en/VMware-GemFire/). The
     `close` attribute determines whether the cache should be closed when
     the Spring application context is closed. The default is `true`.
@@ -185,24 +185,24 @@ Comments:
     the cache (common in web applications), set this value to `false`.
 
 2. Setting the `enable-auto-reconnect` attribute to `true` (the default
-    is `false`) lets a disconnected [vmware-gemfire-short-name] member
-    automatically reconnect and rejoin the [vmware-gemfire-short-name] cluster.
-    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the [vmware-gemfire-short-name] product documentation.
+    is `false`) lets a disconnected GemFire member
+    automatically reconnect and rejoin the GemFire cluster.
+    For more details, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 3. Setting the `use-bean-factory-locator` attribute to `true` (it
     defaults to `false`) applies only when both Spring (XML)
-    configuration metadata and [vmware-gemfire-short-name] `cache.xml` is used to
-    configure the [vmware-gemfire-short-name] cache node (whether client or peer).
-    This option lets [vmware-gemfire-short-name] components (such as
+    configuration metadata and GemFire `cache.xml` is used to
+    configure the GemFire cache node (whether client or peer).
+    This option lets GemFire components (such as
     `CacheLoader`) expressed in `cache.xml` be auto-wired with beans
     (such as `DataSource`) defined in the Spring application context.
     This option is typically used in conjunction with
     `cache-xml-location`.
 
 4. Setting the `use-cluster-configuration` attribute to `true` (the
-    default is `false`) enables a [vmware-gemfire-short-name] member to retrieve
+    default is `false`) enables a GemFire member to retrieve
     the common, shared Cluster-based configuration from a Locator. For more details, see
-    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the [vmware-gemfire-short-name] product documentation.
+    [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
 5. Example of a `TransactionListener` callback declaration that uses a
     bean reference. The referenced bean must implement
@@ -223,18 +223,18 @@ Comments:
     Gateway. which provides a distributed Region creation service.
 
 8. Declares a JNDI binding to enlist an external DataSource in a
-    [vmware-gemfire-short-name] transaction.
+    GemFire transaction.
 
 ### <a id="enabling-pdx-serialization"></a>Enabling PDX Serialization
 
 The preceding example includes a number of attributes related to
-[vmware-gemfire-short-name]'s enhanced serialization framework, PDX. While a
+GemFire's enhanced serialization framework, PDX. While a
 complete discussion of PDX is beyond the scope of this reference guide,
 it is important to note that PDX is enabled by registering a
 `PdxSerializer`, which is specified by setting the `pdx-serializer`
 attribute.
 
-[vmware-gemfire-short-name] provides an implementing class
+GemFire provides an implementing class
 (`org.apache.geode.pdx.ReflectionBasedAutoSerializer`) that uses Java
 Reflection. However, it is common for developers to provide their own
 implementation. The value of the attribute is simply a reference to a
@@ -242,7 +242,7 @@ Spring bean that implements the `PdxSerializer` interface.
 
 For more information about serialization support, see
 [Wiring deserialized instances](serialization.html#wiring-deserialized-instances)
-in _Working with [vmware-gemfire-short-name] Serialization_.
+in _Working with GemFire Serialization_.
 
 ### <a id="enabling-auto-reconnect"></a>Enabling Auto-reconnect
 
@@ -250,13 +250,13 @@ You should be careful when setting the
 `<gfe:cache enable-auto-reconnect="[true|false*]">` attribute to `true`.
 
 Generally, `auto-reconnect` should only be enabled in cases where
-[spring-data-gemfire-name]'s XML namespace is used to configure and bootstrap a new,
-non-application [vmware-gemfire-short-name] server added to a cluster. 'auto-reconnect' should not be enabled when [spring-data-gemfire-name] is used to
-develop and build a [vmware-gemfire-short-name] application that also happens to
-be a peer `Cache` member of the [vmware-gemfire-short-name] cluster.
+Spring Data for VMware GemFire's XML namespace is used to configure and bootstrap a new,
+non-application GemFire server added to a cluster. 'auto-reconnect' should not be enabled when Spring Data for VMware GemFire is used to
+develop and build a GemFire application that also happens to
+be a peer `Cache` member of the GemFire cluster.
 
-The main reason for this restriction is that most [vmware-gemfire-short-name]
-applications use references to the [vmware-gemfire-short-name] `Cache` or Regions
+The main reason for this restriction is that most GemFire
+applications use references to the GemFire `Cache` or Regions
 to perform data access operations. These references are
 "injected" by the Spring container into application components (such as
 Repositories) for use by the application. When a peer member is
@@ -264,7 +264,7 @@ forcefully disconnected from the rest of the cluster, presumably because
 the peer member has become unresponsive or a network partition separates
 one or more peer members into a group too small to function as an
 independent distributed system, the peer member shuts down and all
-[vmware-gemfire-short-name] component references (caches, Regions, and others)
+GemFire component references (caches, Regions, and others)
 become invalid.
 
 Essentially, the current forced disconnect processing logic in each peer
@@ -278,15 +278,15 @@ enters a "reconnecting" state and periodically attempts to rejoin the
 distributed system. If the peer member succeeds in reconnecting, the
 member rebuilds its "view" of the distributed system from existing
 members and receives a new distributed system ID. Additionally, all
-caches, Regions, and other [vmware-gemfire-short-name] components are
+caches, Regions, and other GemFire components are
 reconstructed. Therefore, all old references, which may have been
 injected into application by the Spring container, are now stale and no
 longer valid.
 
-[vmware-gemfire-short-name] makes no guarantee (even when using the
-[vmware-gemfire-short-name] public Java API) that application cache, Regions, or
+GemFire makes no guarantee (even when using the
+GemFire public Java API) that application cache, Regions, or
 other component references are automatically refreshed by the reconnect
-operation. As such, [vmware-gemfire-short-name] applications must take care to
+operation. As such, GemFire applications must take care to
 refresh their own references.
 
 Unfortunately, there is no way to be notified of a disconnect event and,
@@ -294,29 +294,29 @@ subsequently, a reconnect event either. If that were the case, you would
 have a clean way to know when to call
 `ConfigurableApplicationContext.refresh()`, if it were even applicable
 for an application to do so, which is why this "feature" of
-[vmware-gemfire-short-name] is not recommended for peer `Cache` applications.
+GemFire is not recommended for peer `Cache` applications.
 
-For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the [vmware-gemfire-short-name] product documentation.
+For more information about `auto-reconnect`, see [Handling Forced Cache Disconnection Using Autoreconnect](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-member-reconnect.html) in the GemFire product documentation.
 
 ### <a id="using-cluster-based-configuration"></a>Using Cluster-based Configuration
 
-[vmware-gemfire-short-name]'s Cluster Configuration Service is a convenient way
+GemFire's Cluster Configuration Service is a convenient way
 for any peer member joining the cluster to get a "consistent view" of
 the cluster by using the shared, persistent configuration maintained by
 a Locator. Using the cluster-based configuration ensures the peer
-member's configuration is compatible with the [vmware-gemfire-short-name]
+member's configuration is compatible with the GemFire
 Distributed System when the member joins.
 
-This feature of [spring-data-gemfire-name] (setting the `use-cluster-configuration`
+This feature of Spring Data for VMware GemFire (setting the `use-cluster-configuration`
 attribute to `true`) works in the same way as the `cache-xml-location`
-attribute, except the source of the [vmware-gemfire-short-name] configuration
+attribute, except the source of the GemFire configuration
 meta-data comes from the network through a Locator, as opposed to a
 native `cache.xml` file residing in the local file system.
 
-All [vmware-gemfire-short-name] native configuration metadata, whether from
+All GemFire native configuration metadata, whether from
 `cache.xml` or from the Cluster Configuration Service, gets applied
 before any Spring (XML) configuration metadata. As a result, Spring's
-config serves to "augment" the native [vmware-gemfire-short-name] configuration
+config serves to "augment" the native GemFire configuration
 metadata and would most likely be specific to the application.
 
 To enable this feature, specify the following in the Spring XML
@@ -325,19 +325,19 @@ config:
 ```highlight
 <gfe:cache use-cluster-configuration="true"/>
 ```
-<p class="note"><strong>Note</strong>: While certain [vmware-gemfire-short-name] tools, such as
+<p class="note"><strong>Note</strong>: While certain GemFire tools, such as
 <code>gfsh</code>, have their actions "recorded" when schema-like changes
 are made (for example, <code>gfsh>create region --name=Example --type=PARTITION</code>),
-[spring-data-gemfire-name]'s configuration metadata is not recorded. The same is true
-when using [vmware-gemfire-short-name]'s public Java API directly. It, too, is not
+Spring Data for VMware GemFire's configuration metadata is not recorded. The same is true
+when using GemFire's public Java API directly. It, too, is not
 recorded.</p>
 
-For more information about [vmware-gemfire-short-name]'s Cluster Configuration
-Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the [vmware-gemfire-short-name] product documentation.
+For more information about GemFire's Cluster Configuration
+Service, see [Overview of the Cluster Configuration Service](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/configuring-cluster_config-gfsh_persist.html) in the GemFire product documentation.
 
-## <a id="configuring-gemfire-cacheserver"></a>Configuring a [vmware-gemfire-short-name] CacheServer
+## <a id="configuring-gemfire-cacheserver"></a>Configuring a GemFire CacheServer
 
-[spring-data-gemfire-name] includes dedicated support for configuring a
+Spring Data for VMware GemFire includes dedicated support for configuring a
 [CacheServer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/server/CacheServer.html). This allows complete configuration through the Spring container, as shown in the following example:
 
 ```highlight
@@ -354,7 +354,7 @@ Service, see [Overview of the Cluster Configuration Service](https://docs.vmware
   
   <gfe:cache/>
   
-  <!-- Example depicting several [vmware-gemfire-short-name] CacheServer configuration options -->
+  <!-- Example depicting several GemFire CacheServer configuration options -->
   <gfe:cache-server id="advanced-config" auto-startup="true"
        bind-address="localhost" host-name-for-clients="localhost" port="${gemfire.cache.server.port}"
        load-poll-interval="2000" max-connections="22" max-message-count="1000" max-threads="16"
@@ -389,7 +389,7 @@ properties from the main codebase, easing deployment across multiple
 machines.
 
 To avoid initialization problems, the
-<code>CacheServer</code> started by [spring-data-gemfire-name] starts
+<code>CacheServer</code> started by Spring Data for VMware GemFire starts
 <strong>after</strong> the Spring container has been fully initialized.
 Doing so lets potential Regions, listeners, writers or instantiators
 that are defined declaratively to be fully initialized and registered
@@ -398,18 +398,18 @@ programmatically configuring these elements, as the server might start
 before your components and thus not be seen by the clients connecting
 immediately.
 
-## <a id="configuring-gemfire-clientcache"></a>Configuring a [vmware-gemfire-short-name] ClientCache
+## <a id="configuring-gemfire-clientcache"></a>Configuring a GemFire ClientCache
 
-In addition to defining a [vmware-gemfire-short-name] peer
+In addition to defining a GemFire peer
 [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/Cache.html),
-[spring-data-gemfire-name] also supports the definition of a [vmware-gemfire-short-name]
+Spring Data for VMware GemFire also supports the definition of a GemFire
 [ClientCache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientCache.html)
 in a Spring container. A `ClientCache` definition is similar in
-configuration and use to the [vmware-gemfire-short-name] peer
+configuration and use to the GemFire peer
 [Cache](#configuring-cache) and is supported by the
 `org.springframework.data.gemfire.client.ClientCacheFactoryBean`.
 
-The simplest definition of a [vmware-gemfire-short-name] cache client using
+The simplest definition of a GemFire cache client using
 default configuration follows:
 
 ```highlight
@@ -452,9 +452,9 @@ a call to
 [Client Region](#client-region) describes client-side
 configuration in more detail.
 
-### <a id="default-pool"></a>[vmware-gemfire-short-name]'s DEFAULT Pool and [spring-data-gemfire-name] Pool Definitions
+### <a id="default-pool"></a>GemFire's DEFAULT Pool and Spring Data for VMware GemFire Pool Definitions
 
-If a [vmware-gemfire-short-name] `ClientCache` is local-only, then no Pool
+If a GemFire `ClientCache` is local-only, then no Pool
 definition is required. For instance, you can define the following:
 
 ```highlight
@@ -466,7 +466,7 @@ definition is required. For instance, you can define the following:
 In this case, the "Example" Region is `LOCAL` and no data is distributed
 between the client and a server. Therefore, no Pool is necessary. This
 is true for any client-side, local-only Region, as defined by the
-[vmware-gemfire-short-name]'s
+GemFire's
 [ClientRegionShortcut](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientRegionShortcut.html).
 
 However, if a client Region is a (caching) proxy to a server-side
@@ -474,7 +474,7 @@ Region, a Pool is required. In that case, there are several ways to
 define and use a Pool.
 
 When a `ClientCache`, a Pool, and a proxy-based Region are all defined
-but not explicitly identified, [spring-data-gemfire-name] resolves the references
+but not explicitly identified, Spring Data for VMware GemFire resolves the references
 automatically, as shown in the following example:
 
 ```highlight
@@ -489,11 +489,11 @@ automatically, as shown in the following example:
 
 In this example, the `ClientCache` is identified as
 `gemfireCache`, the Pool as `gemfirePool`, and the client Region as
-"Example". However, the `ClientCache` initializes [vmware-gemfire-short-name]'s
+"Example". However, the `ClientCache` initializes GemFire's
 `DEFAULT` Pool from `gemfirePool`, and the client Region uses the
 `gemfirePool` when distributing data between the client and the server.
 
-Basically, [spring-data-gemfire-name] resolves the preceding configuration to the
+Basically, Spring Data for VMware GemFire resolves the preceding configuration to the
 following:
 
 ```highlight
@@ -506,7 +506,7 @@ following:
 <gfe:client-region id="Example" cache-ref="gemfireCache" pool-name="gemfirePool" shortcut="PROXY"/>
 ```
 
-[vmware-gemfire-short-name] still creates a Pool named `DEFAULT`. [spring-data-gemfire-name]
+GemFire still creates a Pool named `DEFAULT`. Spring Data for VMware GemFire
 causes the `DEFAULT` Pool to be initialized from the `gemfirePool`.
 Doing so is useful in situations where multiple Pools are defined and
 client Regions are using separate Pools, or do not declare a Pool at
@@ -532,14 +532,14 @@ Consider the following:
 <gfe:client-region id="YetAnotherExample" shortcut="LOCAL"/>
 ```
 
-In this example, the [vmware-gemfire-short-name] `client-cache` `DEFAULT` pool is
+In this example, the GemFire `client-cache` `DEFAULT` pool is
 initialized from `locatorPool`, as specified by the `pool-name`
-attribute. There is no [spring-data-gemfire-name]-defined `gemfirePool`, since both
+attribute. There is no Spring Data for VMware GemFire-defined `gemfirePool`, since both
 Pools were explicitly identified (named) as `locatorPool` and
 `serverPool`, respectively.
 
 The "Example" Region explicitly refers to and exclusively uses the
-`serverPool`. The `AnotherExample` Region uses [vmware-gemfire-short-name]'s
+`serverPool`. The `AnotherExample` Region uses GemFire's
 `DEFAULT` Pool, which was configured from the `locatorPool`
 based on the client cache bean definition's `pool-name` attribute.
 

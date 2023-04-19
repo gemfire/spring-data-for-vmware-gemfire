@@ -35,17 +35,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-[spring-data-gemfire-name] provides support for using the Spring Data Repository
-abstraction to easily persist entities into [vmware-gemfire-short-name] along with
+Spring Data for VMware GemFire provides support for using the Spring Data Repository
+abstraction to easily persist entities into GemFire along with
 executing queries. For a general introduction to the Repository programming
 model, see [Working with Spring Data Repositories](https://docs.spring.io/spring-data/data-commons/docs/current/reference/html/#repositories) in the Spring Data Commons Reference Documentation.
 
 ## <a id="spring-xml-configuration"></a>Spring XML Configuration
 
 To bootstrap Spring Data Repositories, use the `<repositories/>` element
-from the [spring-data-gemfire-name] Data namespace, as the following example shows:
+from the Spring Data for VMware GemFire Data namespace, as the following example shows:
 
-**Example 1. Bootstrap [spring-data-gemfire-name] Repositories in XML**
+**Example 1. Bootstrap Spring Data for VMware GemFire Repositories in XML**
 
 ```highlight
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -73,10 +73,10 @@ interfaces backed by a
 You can also use Spring's Java-based container configuration. For more information about this configuration, see [Java-based Container Configuration](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-java) in _Core Technologies_ in the Spring product documentation.
 
 Using this approach, you can bootstrap Spring Data Repositories by using
-the [spring-data-gemfire-name] `@EnableGemfireRepositories` annotation, as the
+the Spring Data for VMware GemFire `@EnableGemfireRepositories` annotation, as the
 following example shows:
 
-**Example 2. Bootstrap [spring-data-gemfire-name] Repositories with `@EnableGemfireRepositories`**
+**Example 2. Bootstrap Spring Data for VMware GemFire Repositories with `@EnableGemfireRepositories`**
 
 ```highlight
 @SpringBootApplication
@@ -114,23 +114,23 @@ The `repositoryImplementationPostfix` attribute can be set to an
 alternate value (defaults to `Impl`) if your application requires one or
 more [custom repository implementations](https://docs.spring.io/spring-data/commons/docs/current/reference/html/#repositories.custom-implementations). This feature is commonly used to extend
 the Spring Data Repository infrastructure to implement a feature not
-provided by the data store (for example, [spring-data-gemfire-name]).
+provided by the data store (for example, Spring Data for VMware GemFire).
 
 One example of where custom repository implementations are needed with
-[vmware-gemfire-short-name] is when performing joins. Joins are not supported by
-[spring-data-gemfire-name] Repositories. With a [vmware-gemfire-short-name] `PARTITION` Region,
+GemFire is when performing joins. Joins are not supported by
+Spring Data for VMware GemFire Repositories. With a GemFire `PARTITION` Region,
 the join must be performed on collocated `PARTITION` Regions, since
-[vmware-gemfire-short-name] does not support "distributed" joins. In addition, the
-Equi-Join OQL Query must be performed inside a [vmware-gemfire-short-name]
-Function. For more information about [vmware-gemfire-short-name] Equi-Join Queries, see [Performing an Equi-Join Query on Partitioned Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-partitioned_regions-join_query_partitioned_regions.html) in the [vmware-gemfire-short-name] product documentation.
+GemFire does not support "distributed" joins. In addition, the
+Equi-Join OQL Query must be performed inside a GemFire
+Function. For more information about GemFire Equi-Join Queries, see [Performing an Equi-Join Query on Partitioned Regions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-partitioned_regions-join_query_partitioned_regions.html) in the GemFire product documentation.
 
-You can customize many other aspects of the [spring-data-gemfire-name]'s Repository infrastructure
+You can customize many other aspects of the Spring Data for VMware GemFire's Repository infrastructure
 extension. For details about all configuration settings, see [@EnableGemfireRepositories](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/repository/config/EnableGemfireRepositories.html).
 
 ## <a id="executing-oql-queries"></a>Executing OQL Queries
 
-[spring-data-gemfire-name] Repositories enable the definition of query methods to easily
-execute [vmware-gemfire-short-name] OQL queries against the Region the managed
+Spring Data for VMware GemFire Repositories enable the definition of query methods to easily
+execute GemFire OQL queries against the Region the managed
 entity maps to, as the following example shows:
 
 **Example 3. Sample Repository**
@@ -261,7 +261,7 @@ you can use in query methods:
 ## <a id="oql--query-extensions-using-annotations"></a>OQL Query Extensions Using Annotations
 
 
-Many query languages, such as [vmware-gemfire-short-name]'s OQL (Object Query
+Many query languages, such as GemFire's OQL (Object Query
 Language), have extensions that are not directly supported by Spring
 Data Commons' Repository infrastructure.
 
@@ -274,25 +274,25 @@ Commons within their applications by reusing their existing
 application-specific Repository interfaces — a convenient and powerful
 abstraction.
 
-To support [vmware-gemfire-short-name]'s OQL Query language extensions and
-preserve portability across different data stores, [spring-data-gemfire-name] adds
+To support GemFire's OQL Query language extensions and
+preserve portability across different data stores, Spring Data for VMware GemFire adds
 support for OQL Query extensions by using Java annotations. These
 annotations are ignored by other Spring Data Repository implementations
 (such as Spring Data JPA or Spring Data Redis) that do not have similar
 query language features.
 
 For example, many data stores most likely do not implement
-[vmware-gemfire-short-name]'s OQL `IMPORT` keyword. Implementing `IMPORT` as an
+GemFire's OQL `IMPORT` keyword. Implementing `IMPORT` as an
 annotation (that is, `@Import`) rather than as part of the query method
 signature (specifically, the method 'name') does not interfere with the
 parsing infrastructure when evaluating the query method name to
 construct another data store language appropriate query.
 
-The set of [vmware-gemfire-short-name] OQL Query language extensions that are supported by [spring-data-gemfire-name]
+The set of GemFire OQL Query language extensions that are supported by Spring Data for VMware GemFire
 include the following:
 
 <table>
-  <caption>Table 2. Supported [vmware-gemfire-short-name] OQL extensions for Repository query methods</caption>
+  <caption>Table 2. Supported GemFire OQL extensions for Repository query methods</caption>
   <colgroup>
     <col style="width: 11%" />
     <col style="width: 29%" />
@@ -336,7 +336,7 @@ include the following:
 </table>
 
 As an example, suppose you have a `Customers` application domain class
-and corresponding [vmware-gemfire-short-name] Region along with a
+and corresponding GemFire Region along with a
 `CustomerRepository` and a query method to lookup `Customers` by last
 name, as follows:
 
@@ -381,7 +381,7 @@ The preceding example results in the following OQL Query:
 
 `<TRACE> <HINT 'LastNameIdx'> IMPORT org.example.app.domain.Customer; SELECT * FROM /Customers x WHERE x.lastName = $1 LIMIT 10`
 
-[spring-data-gemfire-name]'s Repository extension is careful not to create conflicting
+Spring Data for VMware GemFire's Repository extension is careful not to create conflicting
 declarations when the OQL annotation extensions are used in combination
 with the `@Query` annotation.
 
@@ -430,7 +430,7 @@ and convenient. However, it is sometimes desirable to still want to
 inspect or even possibly modify the query generated from the Repository
 query method.
 
-Since 2.0.x, [spring-data-gemfire-name] includes the
+Since 2.0.x, Spring Data for VMware GemFire includes the
 `o.s.d.gemfire.repository.query.QueryPostProcessor` functional
 interface. The interface is loosely defined as follows:
 
@@ -470,7 +470,7 @@ to the type parameters, `T` and `QUERY`, respectively. Type `T` extends
 the Spring Data Commons marker interface,
 [org.springframework.data.repository.Repository](https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/Repository.html).
 We discuss this further later in this section. All `QUERY` type
-parameter arguments in [spring-data-gemfire-name]'s case are of type `java.lang.String`.
+parameter arguments in Spring Data for VMware GemFire's case are of type `java.lang.String`.
 
 <p class="note"><strong>Note</strong>: Note
 	It is useful to define the query as type
@@ -574,7 +574,7 @@ class OrderedLimitedCustomerByLastNameQueryPostProcessor implements QueryPostPro
 ```
 
 While the preceding example works, you can achieve the same effect by
-using the Spring Data Repository convention provided by [spring-data-gemfire-name]. For
+using the Spring Data Repository convention provided by Spring Data for VMware GemFire. For
 example, the same query could be defined as follows:
 
 **Example 11. CustomerRepository using the convention**

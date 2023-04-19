@@ -15,10 +15,10 @@
  the License.
 -->
 
-* [[spring-data-gemfire-name] Quick Start](spring_data_landing_page.html)
+* [Spring Data for VMware GemFire Quick Start](spring_data_landing_page.html)
 
 ---
 
-* [Spring Boot for [vmware-gemfire-short-name]](https://docs.vmware.com/en/Spring-Boot-for-VMware-GemFire/index.html)
+* [Spring Boot for GemFire](https://docs.vmware.com/en/Spring-Boot-for-VMware-GemFire/index.html)
 * [[spring-session-gemfire-name] Quick Start](https://docs.vmware.com/en/Spring-Session-for-VMware-GemFire/index.html)
 
