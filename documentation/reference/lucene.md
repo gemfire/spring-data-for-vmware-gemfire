@@ -79,7 +79,7 @@ element, as follows:
 
 
 Spring Data for VMware GemFire's `LuceneIndexFactoryBean` API and Spring Data for VMware GemFire's XML
-namespace also allows you to specify a [org.apache.geode.cache.lucene.LuceneSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/lucene/LuceneSerializer.html)
+namespace also allows you to specify a [org.apache.geode.cache.lucene.LuceneSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/lucene/LuceneSerializer.html)
 when you create the `LuceneIndex`. The `LuceneSerializer`
 allows you to configure the way objects are converted to Lucene documents for
 the index when the object is indexed.
@@ -179,7 +179,7 @@ to deal with.
 
 The `LuceneOperations` interface defines query operations by using
 GemFire
-[Lucene types](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/lucene/package-summary.html), which are defined in the following interface definition:
+[Lucene types](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/lucene/package-summary.html), which are defined in the following interface definition:
 
 ```highlight
 public interface LuceneOperations {
@@ -210,11 +210,11 @@ the <code>resultLimit</code> parameter is optional.
 
 
 The operations in the `LuceneOperations` interface match the operations
-provided by the [LuceneQuery](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/lucene/LuceneQuery.html)
+provided by the [LuceneQuery](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/lucene/LuceneQuery.html)
 interface. However, Spring Data for VMware GemFire has the added value of translating
 proprietary GemFire or Apache Lucene `Exceptions` into
 Spring's highly consistent and expressive DAO [exception
-hierarchy](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#dao-exceptions),
+hierarchy](https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#dao-exceptions),
 particularly as many modern data access operations involve more than one
 store or repository.
 

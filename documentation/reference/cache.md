@@ -93,7 +93,7 @@ In this example, if a cache must be created, it uses a file named
 `cache.xml` located in the classpath root to configure it.
 
 <p class="note"><strong>Note</strong>: The configuration makes use of Spring's <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#resources"><code>Resource</code></a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#resources"><code>Resource</code></a>
 abstraction to locate the file. The <code>Resource</code> abstraction
 lets various search patterns be used, depending on the runtime
 environment or the prefix specified (if any) in the resource
@@ -110,12 +110,12 @@ properties file, as follows:
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
     http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
 ">
   
@@ -206,18 +206,18 @@ Comments:
 
 5. Example of a `TransactionListener` callback declaration that uses a
     bean reference. The referenced bean must implement
-    [TransactionListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/TransactionListener.html).
+    [TransactionListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/TransactionListener.html).
     A `TransactionListener` can be implemented to handle transaction
     related events, such as afterCommit and afterRollback.
 
 6. Example of a `TransactionWriter` callback declaration using an inner
     bean declaration. The bean must implement
-    [TransactionWriter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/TransactionWriter.html).
+    [TransactionWriter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/TransactionWriter.html).
     The `TransactionWriter` is a callback that can veto a transaction.
 
 7. Example of a `GatewayConflictResolver` callback declaration using a
     bean reference. The referenced bean must implement
-    [GatewayConflictResolver](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/util/GatewayConflictResolver.html). A `GatewayConflictResolver` is a
+    [GatewayConflictResolver](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/util/GatewayConflictResolver.html). A `GatewayConflictResolver` is a
     `Cache`-level plugin that is called upon to decide what to do with
     events that originate in other systems and arrive through the WAN
     Gateway. which provides a distributed Region creation service.
@@ -338,18 +338,18 @@ Service, see [Overview of the Cluster Configuration Service](https://docs.vmware
 ## <a id="configuring-gemfire-cacheserver"></a>Configuring a GemFire CacheServer
 
 Spring Data for VMware GemFire includes dedicated support for configuring a
-[CacheServer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/server/CacheServer.html). This allows complete configuration through the Spring container, as shown in the following example:
+[CacheServer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/server/CacheServer.html). This allows complete configuration through the Spring container, as shown in the following example:
 
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
 ">
   
   <gfe:cache/>
@@ -374,16 +374,16 @@ many available options.
 
 Rather than hard-coding the port, this configuration
 uses Spring's <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#xsd-config-body-schemas-context">context</a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#core.appendix.xsd-schemas-context">context</a>
 namespace to declare a <code>property-placeholder</code>. A <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-factory-placeholderconfigurer">property
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-factory-placeholderconfigurer">property
 placeholder</a> reads one or more properties files and then replaces
 property placeholders with values at runtime. Doing so lets
 administrators change values without having to touch the main
 application configuration. Spring also provides <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#expressions">SpEL</a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions">SpEL</a>
 and an <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-environment">environment
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-environment">environment
 abstraction</a> to support externalization of environment-specific
 properties from the main codebase, easing deployment across multiple
 machines.
@@ -401,9 +401,9 @@ immediately.
 ## <a id="configuring-gemfire-clientcache"></a>Configuring a GemFire ClientCache
 
 In addition to defining a GemFire peer
-[Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/Cache.html),
+[Cache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/Cache.html),
 Spring Data for VMware GemFire also supports the definition of a GemFire
-[ClientCache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientCache.html)
+[ClientCache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientCache.html)
 in a Spring container. A `ClientCache` definition is similar in
 configuration and use to the GemFire peer
 [Cache](#configuring-cache) and is supported by the
@@ -447,7 +447,7 @@ definition, as the following example shows:
 The `<client-cache>` element also has a `ready-for-events` attribute. If
 the attribute is set to `true`, the client cache initialization includes
 a call to
-[ClientCache.readyForEvents()](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientCache.html#readyForEvents).
+[ClientCache.readyForEvents()](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientCache.html#readyForEvents).
 
 [Client Region](#client-region) describes client-side
 configuration in more detail.
@@ -467,7 +467,7 @@ In this case, the "Example" Region is `LOCAL` and no data is distributed
 between the client and a server. Therefore, no Pool is necessary. This
 is true for any client-side, local-only Region, as defined by the
 GemFire's
-[ClientRegionShortcut](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientRegionShortcut.html).
+[ClientRegionShortcut](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientRegionShortcut.html).
 
 However, if a client Region is a (caching) proxy to a server-side
 Region, a Pool is required. In that case, there are several ways to

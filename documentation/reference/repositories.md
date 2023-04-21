@@ -64,7 +64,7 @@ from the Spring Data for VMware GemFire Data namespace, as the following example
 The preceding configuration snippet looks for interfaces below the
 configured base package and creates Repository instances for those
 interfaces backed by a
-[SimpleGemFireRepository](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/repository/support/SimpleGemfireRepository.html).
+[SimpleGemFireRepository](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/repository/support/SimpleGemfireRepository.html).
 
 <p class="note"><strong>Note</strong>: The bootstrap process fails unless you have correctly mapped your application domain classes to configured Regions.</p>
 
@@ -309,25 +309,25 @@ include the following:
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_index-query_index_hints.html">HINT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-query_index-query_index_hints.html">HINT</a></td>
       <td><code>@Hint</code></td>
       <td>OQL query index hints</td>
       <td><code>String[]</code> (Example: @Hint({ "IdIdx", "TxDateIdx" }))</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_select-the_import_statement.html">IMPORT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-query_select-the_import_statement.html">IMPORT</a></td>
       <td><code>@Import</code></td>
       <td>Qualify application-specific types.</td>
       <td><code>String</code> (Example: @Import("org.example.app.domain.Type"))</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_select-the_select_statement.html#limit">LIMIT</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-query_select-the_select_statement.html#limit">LIMIT</a></td>
       <td><code>@Limit</code></td>
       <td>Limit the returned query result set.</td>
       <td><code>Integer</code> (Example: @Limit(10); default is Integer.MAX_VALUE)</td>
     </tr>
     <tr>
-      <td><a href="https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-query_additional-query_debugging.html">TRACE</a></td>
+      <td><a href="https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-query_additional-query_debugging.html">TRACE</a></td>
       <td><code>@Trace</code></td>
       <td>Enable OQL query-specific debugging.</td>
       <td>N/A</td>

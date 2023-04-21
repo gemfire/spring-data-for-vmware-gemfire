@@ -155,7 +155,7 @@ for the value to be updated, transactionally.
 For more information about the semantics and behavior of the underlying
 GemFire transaction manager, see:
 
-* [CacheTransactionManager Javadoc](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheTransactionManager.html)
+* [CacheTransactionManager Javadoc](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheTransactionManager.html)
 * [Transactions](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-transactions-chapter_overview.html) in the GemFire product documentation
 
 ## <a id="global-jta-transaction-management"></a>Global - JTA Transaction Management
@@ -195,7 +195,7 @@ successfully.
 
 2\. Referring to Step 5 in GemFire's [JTA Global Transactions with GemFire](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-archive_transactions-JTA_transactions.html),
 Spring Data for VMware GemFire's Annotation support will attempt to set the `GemFireCache`,
-[copyOnRead](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/GemFireCache.html#setCopyOnRead-boolean-)
+[copyOnRead](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/GemFireCache.html#setCopyOnRead-boolean-)
 property for you when using the `@EnableGemFireAsLastResource` annotation.f Spring Data for VMware GemFire's auto-configuration is unsuccessful in this regard,
 then you must explicitly set the `copy-on-read` attribute in the
 `<gfe:cache>` or `<gfe:client-cache>` XML element or set the
@@ -547,7 +547,7 @@ Spring Data for VMware GemFire CQ support. In a nutshell, class allows you to ex
 **any** implementing class as an EDP with minimal constraints.
 `ContinuousQueryListenerAdapter` implements the
 `ContinuousQueryListener` interface, a simple listener interface similar
-to [CqListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/CqListener.html).
+to [CqListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/CqListener.html).
 
 Consider the following interface definition. Notice the various event
 handling methods and their parameters:

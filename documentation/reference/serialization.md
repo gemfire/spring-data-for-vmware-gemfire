@@ -41,7 +41,7 @@ compact results over
 standard Java serialization in addition to working transparently across
 various language platforms (Java, C++, and .NET).
 
-For more details, see [PDX Serialization Features](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-data_serialization-gemfire_pdx_serialization.html).
+For more details, see [PDX Serialization Features](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-data_serialization-gemfire_pdx_serialization.html).
 
 This topic discusses the ways in which Spring Data for VMware GemFire simplifies
 and improves GemFire's custom serialization in Java.
@@ -54,7 +54,7 @@ lives at a certain point in time. For instance, a `DataSource` is
 environment specific. Serializing such information is useless and
 potentially even dangerous, since it is local to a certain VM or
 machine. For such cases, Spring Data for VMware GemFire offers a special
-[Instantiator](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/Instantiator.html)
+[Instantiator](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/Instantiator.html)
 that performs wiring for each new instance created by GemFire
 during deserialization.
 
@@ -62,7 +62,7 @@ Through such a mechanism, you can rely on the Spring container to inject
 and manage certain dependencies, making it easy to split transient from
 persistent data and have rich domain objects in a transparent manner.
 
-Spring users might find this approach similar to that of [@Configurable](https://docs.spring.io/spring/docs/current/spring-framework-reference/#aop-atconfigurable). The
+Spring users might find this approach similar to that of [@Configurable](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-atconfigurable). The
 `WiringInstantiator` works similarly to `WiringDeclarableSupport`,
 trying to first locate a bean definition as a wiring template and
 otherwise falling back to auto-wiring.

@@ -40,7 +40,7 @@ GemFire [Function execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/d
 
 
 Under the hood, the GemFire API provides classes to implement
-and register [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html)
+and register [Functions](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/Function.html)
 that are deployed on GemFire servers, which may then be
 invoked by other peer member applications or remotely from cache
 clients.
@@ -68,16 +68,16 @@ execution.
 
 The first is Function implementation (server-side), which must interact
 with the
-[FunctionContext](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/FunctionContext.html)
-to access the invocation arguments, [ResultsSender](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/ResultSender.html) to send results, and other execution context information. The Function
+[FunctionContext](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/FunctionContext.html)
+to access the invocation arguments, [ResultsSender](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/ResultSender.html) to send results, and other execution context information. The Function
 implementation typically accesses the cache and Regions and is registered with the
-[FunctionService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/FunctionService.html) under a unique ID.
+[FunctionService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/FunctionService.html) under a unique ID.
 
 A cache client application invoking a Function does not depend on the
-implementation. To invoke a Function, the application instantiates an [Execution](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/FunctionService.html) providing the Function ID, invocation arguments, and the Function
+implementation. To invoke a Function, the application instantiates an [Execution](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/FunctionService.html) providing the Function ID, invocation arguments, and the Function
 target, which defines its scope: Region, server, servers, member, or
 members. If the Function produces a result, the invoker uses a
-[ResultCollector](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/ResultCollector.html)
+[ResultCollector](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/ResultCollector.html)
 to aggregate and acquire the execution results. In certain cases, a
 custom `ResultCollector` implementation is required and may be
 registered with the `Execution`.
@@ -202,7 +202,7 @@ using the `id` attribute of the `@GemfireFunction` annotation.
 
 The `@GemfireFunction` annotation also provides other configuration
 attributes: `HA` and `optimizedForWrite`, which correspond to properties
-defined by the [Function](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) interface.
+defined by the [Function](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/Function.html) interface.
 
 
 If the POJO Function method's return type is `void`, then the
@@ -222,12 +222,12 @@ allowing you to modify the permissions as required by your application
 and/or Function UC. Each resource permission is expected to be in the
 following format: `<RESOURCE>:<OPERATION>:[Target]:[Key]`.
 
-* `RESOURCE` can be one of the [ResourcePermission.Resource](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/ResourcePermission.html) **Resource** enumerated values.
+* `RESOURCE` can be one of the [ResourcePermission.Resource](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/security/ResourcePermission.html) **Resource** enumerated values.
 
-* `OPERATION` can be one of the [ResourcePermission.Resource](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/ResourcePermission.html) **Operation** enumerated values.
+* `OPERATION` can be one of the [ResourcePermission.Resource](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/security/ResourcePermission.html) **Operation** enumerated values.
 
 * `Target` (optional) can be the name of a Region or one 
-of the [ResourcePermission.Resource](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/ResourcePermission.html) **Target** enumerated values.
+of the [ResourcePermission.Resource](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/security/ResourcePermission.html) **Target** enumerated values.
 
 * `Key` (optional) is a valid Key in the `Target` Region, if specified.
 
@@ -300,11 +300,11 @@ Function annotations are provided:
 * `@OnMembers`
 
 These annotations
-correspond to the `Execution` implementations provided by the [FunctionService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/FunctionService.html) class.
+correspond to the `Execution` implementations provided by the [FunctionService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/FunctionService.html) class.
 
 Each annotation exposes the appropriate attributes. These annotations
 also provide an optional `resultCollector` attribute whose value is the
-name of a Spring bean implementing the [ResultCollector](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/ResultCollector.html) interface to use for the execution.
+name of a Spring bean implementing the [ResultCollector](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/ResultCollector.html) interface to use for the execution.
 
 
 
@@ -347,7 +347,7 @@ The `function-executions` element is provided in the `gfe-data` XML
 namespace. The `base-package` attribute is required to avoid scanning
 the entire classpath. Additional filters can be provided as described in
 the Spring [reference
-documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-scanning-filters).
+documentation](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-scanning-filters).
 
 Optionally, you can annotate your Java configuration class as follows:
 
@@ -483,9 +483,9 @@ arguments.
 
 GemFire serializes only application domain object types that
 you have specifically configured (registered) either by using
-[ReflectionBasedAutoSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html),
+[ReflectionBasedAutoSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html),
 or specifically (and recommended) by using a "custom" GemFire
-[PdxSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxSerializer.html).
+[PdxSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxSerializer.html).
 If you use Spring Data for VMware GemFire's Repository extension, you might even want to
 consider using Spring Data for VMware GemFire's [MappingPdxSerializer](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/mapping/MappingPdxSerializer.html),
 which uses an entity's mapping metadata to determine data from the
@@ -518,7 +518,7 @@ process(regionData, order:PdxInstance, :PdxInstanceEnum, 400);
 ```
 
 The `Order` and `OrderSource` have been passed to the Function as
-[PDX instances](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxInstance.html). This all happens because `pdx-read-serialized` is
+[PDX instances](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxInstance.html). This all happens because `pdx-read-serialized` is
 set to `true`, which may be necessary in cases where the
 GemFire servers interact with multiple different clients (for
 example, a combination of Java clients and native clients, such as
@@ -544,7 +544,7 @@ following example shows:
 <gfe:cache pdx-serializer-ref="customPdxSerializeer" pdx-read-serialized="true"/>
 ```
 
-Alternatively, you can use GemFire's [ReflectionBasedAutoSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html) for convenience. We recommend that you use a
+Alternatively, you can use GemFire's [ReflectionBasedAutoSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html) for convenience. We recommend that you use a
 custom `PdxSerializer` to maintain finer-grained control over your
 serialization strategy when possible.
 

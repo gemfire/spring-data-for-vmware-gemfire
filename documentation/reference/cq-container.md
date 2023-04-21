@@ -100,7 +100,7 @@ Spring Data for VMware GemFire CQ support. In a nutshell, class allows you to ex
 **any** implementing class as an EDP with minimal constraints.
 `ContinuousQueryListenerAdapter` implements the
 `ContinuousQueryListener` interface, a simple listener interface similar
-to [CqListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/CqListener.html).
+to [CqListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/CqListener.html).
 
 Consider the following interface definition. Notice the various event
 handling methods and their parameters:

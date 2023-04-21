@@ -246,7 +246,7 @@ The following table lists the attributes available for all Region types:
     </tr>
     <tr>
       <td>data-policy</td>
-      <td>See <a href="https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/DataPolicy.html">DataPolicy</a>.</td>
+      <td>See <a href="https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/DataPolicy.html">DataPolicy</a>.</td>
       <td>The region's data policy. Not all data policies are supported for every Region type.</td>
     </tr>
     <tr>
@@ -311,7 +311,7 @@ The following table lists the attributes available for all Region types:
     </tr>
     <tr>
       <td>shortcut</td>
-      <td>See <a href="https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/RegionShortcut.html">RegionShortcut</a></td>
+      <td>See <a href="https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/RegionShortcut.html">RegionShortcut</a></td>
       <td>The <code>RegionShortcut</code> for this region. Allows easy initialization of the region based on pre-defined defaults.</td>
     </tr>
     <tr>
@@ -337,7 +337,7 @@ The following table lists the attributes available for all Region types:
 `CacheListener` instances are registered with a Region to handle Region
 events, such as when entries are created, updated, and destroyed.
 A `CacheListener` can be any bean that implements the
-[CacheListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheListener.html) interface. A Region may have multiple listeners, declared with the
+[CacheListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheListener.html) interface. A Region may have multiple listeners, declared with the
 `cache-listener` element nested in the containing `*-region` element.
 
 The following example has two declared `CacheListener's`. The first
@@ -428,7 +428,7 @@ The following example declares a Region with both a `CacheLoader` and a
 </beans>
 ```
 
-For more details, see [CacheLoader](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheLoader.html) and [CacheWriter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheWriter.html).
+For more details, see [CacheLoader](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheLoader.html) and [CacheWriter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheWriter.html).
 
 ## <a id="compression"></a>Compression
 
@@ -723,11 +723,11 @@ configuration metadata as follows:
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
 ">
   
   <gfe:cache cache-xml-location="classpath:cache.xml"/>
@@ -920,7 +920,7 @@ namespace, as follows:
 ```
 
 Spring Data for VMware GemFire's `@Expiration` annotation support is implemented with
-GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
+GemFire's [CustomExpiry](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
 
 The Spring Data for VMware GemFire `AnnotationBasedExpiration` class and `CustomExpiry`
 implementation is responsible for processing the Spring Data for VMware GemFire
@@ -1072,7 +1072,7 @@ shows:
 
 Persistence may also be configured by setting the `data-policy`
 attribute. To do so, set the attribute's value to one of
-the [DataPolicy](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/DataPolicy.html) settings, as the following example shows:
+the [DataPolicy](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/DataPolicy.html) settings, as the following example shows:
 
 ```highlight
 <gfe:partitioned-region id="anotherExamplePersistentPartitionRegion" data-policy="PERSISTENT_PARTITION"/>
@@ -1434,7 +1434,7 @@ GemFire has support for caching JSON documents in Regions,
 along with the ability to query stored JSON documents using the
 GemFire OQL (Object Query Language). JSON documents are stored
 internally as
-[PdxInstance](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxInstance.html) types by using the [JSONFormatter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/JSONFormatter.html) class to perform conversion to and from JSON documents (as a `String`).
+[PdxInstance](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxInstance.html) types by using the [JSONFormatter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/JSONFormatter.html) class to perform conversion to and from JSON documents (as a `String`).
 
 Spring Data for VMware GemFire provides the `<gfe-data:json-region-autoproxy/>` element to
 enable an [AOP](https://docs.spring.io/spring-framework/docs/current/reference/html/#aop-introduction) component to

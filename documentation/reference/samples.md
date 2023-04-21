@@ -44,8 +44,7 @@ are unfamiliar with the essential components or with Spring and
 GemFire concepts.
 
 The sample is bundled with the distribution and is Maven-based. You can
-import it into any Maven-aware IDE (such as the [Spring Tool
-Suite](https://spring.io/tools/sts)) or run them from the command-line.
+import it into any Maven-aware IDE or run them from the command-line.
 
 ## <a id="hello-world"></a>The "Hello World" Sample Application
 
@@ -60,9 +59,7 @@ user intervention.
 If you experience networking problems when starting GemFire or
 the samples, try adding the following system property
 <code>java.net.preferIPv4Stack=true</code> to the command line (for
-example, <code>-Djava.net.preferIPv4Stack=true</code>). For an
-alternative (global) fix (especially on Ubuntu), see <a
-href="https://jira.spring.io/browse/SGF-28">SGF-28</a>.</p>
+example, <code>-Djava.net.preferIPv4Stack=true</code>).</p>
 
 ### <a id="starting-and-stopping"></a>Starting and Stopping
 
@@ -143,9 +140,9 @@ The "Hello World" sample application uses both Spring XML and annotations for it
 configuration. The initial bootstrapping configuration is
 `app-context.xml`, which includes the cache configuration defined in the
 `cache-context.xml` file and performs classpath [component
-scanning](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-classpath-scanning)
+scanning](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-classpath-scanning)
 for Spring
-[components](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-annotation-config).
+[components](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-annotation-config).
 
 The cache configuration defines the GemFire cache, a region,
 and for illustrative purposes, a `CacheListener` that acts as a logger.

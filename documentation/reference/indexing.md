@@ -110,12 +110,12 @@ The `from` clause must refer to a valid, existing Region and is how an
 `Index` gets applied to a Region. This is not specific to Spring Data for VMware GemFire. It
 is a feature of GemFire.
 
-The `Index` `type` may be one of three enumerated values defined by the [IndexType](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/IndexType.html) enumeration: `FUNCTIONAL`, `HASH`, and `PRIMARY_KEY`.
+The `Index` `type` may be one of three enumerated values defined by the [IndexType](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/IndexType.html) enumeration: `FUNCTIONAL`, `HASH`, and `PRIMARY_KEY`.
 
 Each of the enumerated values corresponds to one of the
-[QueryService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html) `create[|Key|Hash]Index` methods invoked when the actual `Index` is to
+[QueryService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html) `create[|Key|Hash]Index` methods invoked when the actual `Index` is to
 be created or defined. For example, if the `IndexType` is `PRIMARY_KEY`,
-then the [QueryService.createKeyIndex(..)](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html#createKeyIndex-java.lang.String-java.lang.String-java.lang.String-)
+then the [QueryService.createKeyIndex(..)](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html#createKeyIndex-java.lang.String-java.lang.String-java.lang.String-)
 is invoked to create a `KEY` `Index`.
 
 The default is `FUNCTIONAL` and results in one of the
@@ -139,7 +139,7 @@ the `define` attribute, as follows:
 
 When `define` is set to `true`, it does not immediately create the `Index`. All "defined" Indexes are created at the same time when the Spring `ApplicationContext`. This occurs when a `ContextRefreshedEvent` is published by the Spring container. Spring Data for VMware GemFire registers itself as an `ApplicationListener` listening for the `ContextRefreshedEvent`. When
 fired, Spring Data for VMware GemFire calls
-[QueryService.createDefinedIndexes()](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html#createDefinedIndexes).
+[QueryService.createDefinedIndexes()](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html#createDefinedIndexes).
 
 Defining indexes and creating them at the same time boosts speed and
 efficiency when creating indexes.
@@ -162,10 +162,10 @@ exception is not thrown. These options are meant to specifically handle
 GemFire `IndexExistsException` and
 `IndexNameConflictException` instances, which can occur for various reasons. The exceptions have the following causes:
 
-* An [IndexExistsException](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/IndexExistsException.html) is thrown when there exists another `Index` with the same definition
+* An [IndexExistsException](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/IndexExistsException.html) is thrown when there exists another `Index` with the same definition
   but a different name when attempting to create an `Index`.
 
-* An [IndexNameConflictException](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/IndexNameConflictException.html) is thrown when there exists another `Index` with the same name but possibly different definition when attempting to create an `Index`.
+* An [IndexNameConflictException](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/IndexNameConflictException.html) is thrown when there exists another `Index` with the same name but possibly different definition when attempting to create an `Index`.
 
 Spring Data for VMware GemFire's default behavior is fail-fast strategy. Neither of the above `Index` exceptions are handled by default. These `Index` exceptions are wrapped in a Spring Data for VMware GemFire `GemfireIndexException` and rethrown. If you want Spring Data for VMware GemFire to handle them for you, you can set either of
 these `Index` bean definition options to `true`.

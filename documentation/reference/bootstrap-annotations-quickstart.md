@@ -65,7 +65,7 @@ public class ClientApplication {
 }
 ```
 
-See [@ClientCacheApplication Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/ClientCacheApplication.html).
+See [@ClientCacheApplication Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/ClientCacheApplication.html).
 
 For more information, see [Configuring GemFire Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
 in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -95,12 +95,12 @@ applications to connect to this server, replace the
 default <code>CacheServer</code> port of <code>40404</code>.
 
 
-See [@CacheServerApplication Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/CacheServerApplication.html).
+See [@CacheServerApplication Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/CacheServerApplication.html).
 
 
 
 See
-[@PeerCacheApplication Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/PeerCacheApplication.html).
+[@PeerCacheApplication Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/PeerCacheApplication.html).
 
 For more information, see [Configuring GemFire Applications with Spring](bootstrap-annotations.html#configuring-with-spring)
 in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -127,7 +127,7 @@ public class ServerApplication {
 <code>@EnableLocator</code> can only be used with GemFire server applications.
 
 See
-[@EnableLocator Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLocator.html).
+[@EnableLocator Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLocator.html).
 
 For more information, see [Configuring an Embedded Locator](bootstrap-annotations.html#configuring-an-embedded-locator) in
 __Bootstrapping GemFire with the Spring Container Using Annotations_._
@@ -153,7 +153,7 @@ public class ServerApplication {
 
 <code>@EnableManager</code> can only be used with GemFire server applications.
 
-See [@EnableManager Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableManager.html).
+See [@EnableManager Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableManager.html).
 
 For more information, see [Configuring an Embedded Manager](bootstrap-annotations.html#configuring-an-embedded-manager)
 in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -177,7 +177,7 @@ public class ServerApplication {
 ```
 @EnableHttpService</code> can only be used with GemFire server applications.
 
-See [@EnableHttpService Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableHttpService.html).
+See [@EnableHttpService Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableHttpService.html).
 
 For more information, see [Configuring the Embedded HTTP Server](bootstrap-annotations.html#configuring-the-embedded-http-server)
 in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -203,7 +203,7 @@ public class ServerApplication {
 
 <code>@EnableMemcachedServer</code> can only be used with GemFire server applications.
 
-See [@EnableMemcachedServer Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableMemcachedServer.html).
+See [@EnableMemcachedServer Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableMemcachedServer.html).
 
 For more information, see [Configuring the Embedded Memcached Server (Gemcached)](bootstrap-annotations.html#configuring-the-embedded-memcached-server)
 in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -229,7 +229,7 @@ public class ClientApplication {
 Default <code>log-level</code> is **config**. This annotation does not adjust log levels in your application and is only used for GemFire.
 
 See
-[@EnableLogging Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLogging.html).
+[@EnableLogging Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableLogging.html).
 
 For more information, see [Configuring Logging](bootstrap-annotations.html#configuring-logging)
 _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -252,7 +252,7 @@ public class ClientApplication {
 }
 ```
 
-See [@EnableStatistics Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableStatistics.html).
+See [@EnableStatistics Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableStatistics.html).
 
 For more information, see [Configuring Statistics](bootstrap-annotations.html#configuring-statistics)
 _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -291,7 +291,7 @@ mapping infrastructure.
 For more details, see [MappingPdxSerializer](mapping.html#mappingpdxserializer)
 in _POJO Mapping_.
 
-See [@EnablePdx Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnablePdx.html).
+See [@EnablePdx Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnablePdx.html).
 
 For more information, see [Configuring PDX](bootstrap-annotations.html#configuring-pdx) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
@@ -347,11 +347,11 @@ public class ClientApplication {
 ```
 
 On the server, you must configure access to the auth
-credentials. You may either implement the [SecurityManager](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/security/SecurityManager.html) interface or declare one or more Apache Shiro <code>Realms</code>. For more details, see [Configuring Server Security](bootstrap-annotations.html#configuring-server-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
+credentials. You may either implement the [SecurityManager](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/security/SecurityManager.html) interface or declare one or more Apache Shiro <code>Realms</code>. For more details, see [Configuring Server Security](bootstrap-annotations.html#configuring-server-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
 On the client, you must configure a username and password. For more details, see [Configuring Client Security](bootstrap-annotations.html#configuring-client-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
-See [@EnableSecurity Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableSecurity.html).
+See [@EnableSecurity Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableSecurity.html).
 
 
 For more information, see [Configuring Security](bootstrap-annotations.html#configuring-security) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
@@ -381,9 +381,9 @@ public class ServerApplication {
 ```
 
 Some GemFire properties are client-side only while others are server-side only. For
-the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: GemFire Properties](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/reference-topics-gemfire_properties.html) in the GemFire product documentation.
+the appropriate use of each property, see [gemfire.properties vars.and gfsecurity.properties: GemFire Properties](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/reference-topics-gemfire_properties.html) in the GemFire product documentation.
 
-See [@EnableGemFireProperties Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableGemFireProperties.html).
+See [@EnableGemFireProperties Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableGemFireProperties.html).
 
 For more information, see [Configuring GemFire Properties](#configuring-gemfire-properties) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
@@ -420,10 +420,10 @@ public class BookService {
 ```
 <code>@EnableCachingDefinedRegions</code> is optional. You can manually define your Regions instead.
 
-See [@EnableCachingDefinedRegions Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.html).
+See [@EnableCachingDefinedRegions Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.html).
 
 See
-[@EnableGemfireCaching Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/cache/config/EnableGemfireCaching.html).
+[@EnableGemfireCaching Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/cache/config/EnableGemfireCaching.html).
 
 For more information, see [Configuring Spring's Cache Abstraction](bootstrap-annotations.html#configuring-springs-cache-abstraction) in _Bootstrapping GemFire with the Spring Container Using Annotations_.
 
@@ -478,7 +478,7 @@ public class Book {
 
 <p class="note"><strong>Note</strong>: The <code>@Region("Books")</code> entity class
 annotation is used by the <code>@EnableEntityDefinedRegions</code> to determine the Regions required by the application. For additional details, see <a
-href="https://docs.spring.io/spring-data/geode/docs/current/reference/html/#bootstrap-annotation-config-region-types">Configuring Type-specific Regions</a> in the <em>Spring Data for VMware GemFire Reference Guide</em>
+href="[spring-data-gemfire-docs]/#bootstrap-annotation-config-region-types">Configuring Type-specific Regions</a> in the <em>Spring Data for VMware GemFire Reference Guide</em>
 and <a href="mapping.html#object-mapping-fundamentals">Object Mapping Fundamentals</a> in <em>POJO Mapping</em>.</p>
 
 Finally, define your CRUD Repository with simple queries to persist and
@@ -499,17 +499,17 @@ For more information, see [Spring Data for VMware GemFire Repositories](reposito
 
 See also the following: 
 
-* [@EnableEntityDefinedRegions Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.html)
+* [@EnableEntityDefinedRegions Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.html)
 
-* [@EnableGemfireRepositories Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/repository/config/EnableGemfireRepositories.html).
+* [@EnableGemfireRepositories Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/repository/config/EnableGemfireRepositories.html).
 
-* [@EnableIndexing Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableIndexing.html)
+* [@EnableIndexing Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/config/annotation/EnableIndexing.html)
 
-* [@Region Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/mapping/annotation/Region.html)
+* [@Region Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/mapping/annotation/Region.html)
 
-* [@Indexed Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/mapping/annotation/Indexed.html)
+* [@Indexed Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/mapping/annotation/Indexed.html)
 
-* [@LuceneIndexed Javadoc](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/mapping/annotation/LuceneIndexed.html)
+* [@LuceneIndexed Javadoc](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/mapping/annotation/LuceneIndexed.html)
 
 * [Configuring Regions](bootstrap-annotations.html#configuring-regions) in _Bootstrapping GemFire with the Spring Container Using Annotations_
 

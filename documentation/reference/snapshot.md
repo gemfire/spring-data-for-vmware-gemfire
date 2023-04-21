@@ -38,7 +38,7 @@ limitations under the License.
 
 Spring Data for VMware GemFire supports cache and Region snapshots by using
 GemFire's Snapshot Service. The out-of-the-box Snapshot Service support offers
-several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
+several convenient features to simplify the use of GemFire's [Cache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
 
 Snapshots let you save and subsequently reload
 the cached data later, which can be useful for moving data between
@@ -46,7 +46,7 @@ environments, such as from production to a staging or test environment
 to reproduce data-related issues in a controlled context. You
 can combine Spring Data for VMware GemFire's Snapshot Service support with [Spring's bean
 definition
-profiles](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-definition-profiles)
+profiles](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-definition-profiles)
 to load snapshot data specific to the environment as necessary.
 
 Spring Data for VMware GemFire's support for GemFire's Snapshot Service begins
@@ -101,7 +101,7 @@ specifying the `region-ref` attribute, as follows:
 When the `region-ref` attribute is specified, Spring Data for VMware GemFire's
 `SnapshotServiceFactoryBean` resolves the `region-ref` attribute value
 to a Region bean defined in the Spring container and creates a
-[RegionSnapshotService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html).
+[RegionSnapshotService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/RegionSnapshotService.html).
 The snapshot import and export definitions function the same way.
 However, the `location` must refer to a file on an export.
 
@@ -119,10 +119,10 @@ Region.
 
 ## <a id="snapshot-location"></a>Snapshot Location
 
-With the cache-based Snapshot Service (that is, a [CacheSnapshotService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html))
+With the cache-based Snapshot Service (that is, a [CacheSnapshotService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html))
 you would typically pass it a directory containing all the snapshot
 files to load rather than individual snapshot files, as the overloaded
-[load](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html#load-java.io.File-org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat)
+[load](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html#load-java.io.File-org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat)
 method in the `CacheSnapshotService` API indicates.
 
 You can also use the overloaded <code>load(:File[], :SnapshotFormat, :SnapshotOptions)</code> method to specify which snapshot files to load into the GemFire cache.
@@ -150,7 +150,7 @@ a directory import (load).
 
 The real power of defining multiple snapshot imports and exports is
 realized through the use of snapshot filters. Snapshot filters implement the 
-[SnapshotFilter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/SnapshotFilter.html)
+[SnapshotFilter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/SnapshotFilter.html)
 interface and are used to filter Region entries for inclusion into the
 Region on import and for inclusion into the snapshot on export.
 
@@ -183,7 +183,7 @@ the following example shows:
 
 Additionally, you can express more complex snapshot filters by using the
 `ComposableSnapshotFilter` class. This class implements
-the [SnapshotFilter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/SnapshotFilter.html)
+the [SnapshotFilter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/SnapshotFilter.html)
 interface as well as the
 [Composite](https://en.wikipedia.org/wiki/Composite_pattern) software
 design pattern.
@@ -306,6 +306,6 @@ of the application's working directory.
 
 Using the Spring application events and messaging subsystem is a good
 way to keep your application loosely coupled. You can also use Spring's
-[Scheduling](https://docs.spring.io/spring-framework/docs/current/reference/html/#scheduling-task-scheduler)
+[Scheduling](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling-task-scheduler)
 services to fire snapshot application events on a periodic basis.
 

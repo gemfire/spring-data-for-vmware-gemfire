@@ -48,10 +48,5 @@ While every effort has been made to ensure this documentation is
 comprehensive and complete without errors, some topics are beyond the
 scope of this document and may require more explanation (for example,
 data distribution management using partitioning with HA while still
-preserving consistency). Additionally, some typographical errors might
-have crept in. If you do spot mistakes or more serious errors,
-please bring these issues to the attention of the Spring Data team by
-raising an appropriate [issue in
-JIRA](https://jira.spring.io/browse/SGF).
-
+preserving consistency).
 

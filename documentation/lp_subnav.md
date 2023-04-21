@@ -20,5 +20,5 @@
 ---
 
 * [Spring Boot for GemFire](https://docs.vmware.com/en/Spring-Boot-for-VMware-GemFire/index.html)
-* [[spring-session-gemfire-name] Quick Start](https://docs.vmware.com/en/Spring-Session-for-VMware-GemFire/index.html)
+* [Spring Session for VMware GemFire Quick Start](https://docs.vmware.com/en/Spring-Session-for-VMware-GemFire/index.html)
 

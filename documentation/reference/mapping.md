@@ -624,7 +624,7 @@ transaction.
 
 
 Spring Data for VMware GemFire provides a custom
-[PdxSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxSerializer.html)
+[PdxSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxSerializer.html)
 implementation, called `MappingPdxSerializer`, that uses Spring Data
 mapping metadata to customize entity serialization.
 
@@ -638,7 +638,7 @@ explicitly annotated with `@PersistenceConstructor`.
 To provide arguments for constructor parameters, the serializer reads
 fields with the named constructor parameter, explicitly identified by
 using Spring's `@Value` annotation, from the supplied
-[PdxReader](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxReader.html),
+[PdxReader](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxReader.html),
 as shown in the following example:
 
 
@@ -660,7 +660,7 @@ the name "bean".
 
 In addition to the custom instantiation logic and strategy provided by
 `EntityInstantiators`, the `MappingPdxSerializer` also provides
-capabilities well beyond [ReflectionBasedAutoSerializer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html).
+capabilities well beyond [ReflectionBasedAutoSerializer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/ReflectionBasedAutoSerializer.html).
 
 While VMware GemFire's `ReflectionBasedAutoSerializer` conveniently uses
 Java Reflection to populate entities and uses regular expressions to
@@ -780,7 +780,7 @@ class Customer {
 
 In this case, the `Customer` `id` field is marked as the identifier
 field in the PDX type metadata by using
-[PdxWriter.markIdentifierField(:String)](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxWriter.html#markIdentityField-java.lang.String-)
+[PdxWriter.markIdentifierField(:String)](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxWriter.html#markIdentityField-java.lang.String-)
 when the `PdxSerializer.toData(..)` method is called during
 serialization.
 

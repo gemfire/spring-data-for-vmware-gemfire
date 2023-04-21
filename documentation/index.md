@@ -39,7 +39,7 @@ Spring Data for VMware GemFire focuses on integrating the Spring Framework's pow
 
 ## <a id="setup"></a>Setup
 
-Spring Data for VMware GemFire and [spring-boot-gemfire-name] are the Spring dependencies to use when developing applications for GemFire. This guide is intended to help you set up and start using Spring Data for VMware GemFire and [spring-boot-gemfire-name].
+Spring Data for VMware GemFire and Spring Boot for VMware GemFire are the Spring dependencies to use when developing applications for GemFire. This guide is intended to help you set up and start using Spring Data for VMware GemFire and Spring Boot for VMware GemFire.
 
 The Spring Data for VMware GemFire dependencies are available from the [Pivotal Commercial Maven Repository](https://commercial-repo.pivotal.io/login/auth). Access to the Pivotal Commercial Maven Repository requires a one-time registration step to create an account.
 
@@ -128,7 +128,7 @@ The Spring Data for VMware GemFire dependencies are available from the [Pivotal 
             implementation "com.vmware.gemfire:spring-data-gemfire:$springDataGemFireVersion"
             ```
 
-    * **[spring-boot-gemfire-name]**
+    * **Spring Boot for VMware GemFire**
 
         * **Maven**
 
@@ -150,4 +150,4 @@ Your application is now ready to connect with your GemFire instance.
 
 ## <a id="reference-guide"></a>Reference Guide
 
-All reference documentation currently corresponds with the reference documentation for [Spring Data for VMware GemFire](https://spring.io/projects/spring-data-geode#learn) and [[spring-boot-gemfire-name]](https://docs.spring.io/spring-boot-data-geode-build/current/reference/html5/).
+All reference documentation currently corresponds with the reference documentation for [Spring Data for VMware GemFire](https://spring.io/projects/spring-data-gemfire#learn) and [Spring Boot for VMware GemFire](https://docs.spring.io/spring-boot-data-geode-build/current/reference/html5/).

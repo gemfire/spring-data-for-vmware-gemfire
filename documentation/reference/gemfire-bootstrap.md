@@ -70,7 +70,7 @@ configured with component scanning (for example
 
 Fortunately, such an initializer is already conveniently provided by the
 framework: the
-[SpringContextBootstrappingInitializer](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/support/SpringContextBootstrappingInitializer.html).
+[SpringContextBootstrappingInitializer](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/support/SpringContextBootstrappingInitializer.html).
 
 The following example shows a typical, yet minimal, configuration for
 this class inside GemFire's `cache.xml` file:

@@ -39,9 +39,9 @@ Spring Data for VMware GemFire provides [annotation](function-annotations.html) 
 implementing, registering and executing GemFire Functions.
 
 Spring Data for VMware GemFire also provides XML namespace support for registering
-GemFire [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) for remote function execution.
+GemFire [Functions](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/Function.html) for remote function execution.
 
-For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html) in the GemFire product documentation.
+For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/10.0/gf/developing-function_exec-chapter_overview.html) in the GemFire product documentation.
 
 GemFire Functions are declared as Spring beans and must
 implement the `org.apache.geode.cache.execute.Function` interface or

@@ -90,7 +90,7 @@ All bean properties are exposed through the XML namespace, which minimizes the n
 raw bean definitions.
 
 For more information about XML Schema-based configuration in Spring, see the
-[Appendix](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#appendix) in the Spring Framework reference documentation.
+[Appendix](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#core.appendix) in the Spring Framework reference documentation.
 
 <p class="note"><strong>Note</strong>: Spring Data Repository support uses a separate XML
 namespace. For more information about configuring Spring Data for VMware GemFire Repositories, see
@@ -102,11 +102,11 @@ configuration meta-data, as the following example shows:
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:gfe="https://www.springframework.org/schema/geode" <!--SEE COMMENT 1--><!--SEE COMMENT 2-->
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/" <!--SEE COMMENT 1--><!--SEE COMMENT 2-->
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd <!--SEE COMMENT 3-->
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd <!--SEE COMMENT 3-->
 ">
   
   <bean id ... >
@@ -136,12 +136,12 @@ following example shows:</p>
 
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="https://www.springframework.org/schema/geode" <!--SEE COMMENT 1 -->
+<beans xmlns="https://www.springframework.org/schema/gemfire/" <!--SEE COMMENT 1 -->
        xmlns:beans="http://www.springframework.org/schema/beans" <!--SEE COMMENT 2-->
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
 ">
   
   <beans:bean id ... > <!--SEE COMMENT 3-->
@@ -267,7 +267,7 @@ In this example, if a cache must be created, it uses a file named
 `cache.xml` located in the classpath root to configure it.
 
 <p class="note"><strong>Note</strong>: The configuration makes use of Spring's <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#resources"><code>Resource</code></a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#resources"><code>Resource</code></a>
 abstraction to locate the file. The <code>Resource</code> abstraction
 lets various search patterns be used, depending on the runtime
 environment or the prefix specified (if any) in the resource
@@ -284,12 +284,12 @@ properties file, as follows:
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
     http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
 ">
   
@@ -380,18 +380,18 @@ Comments:
 
 5. Example of a `TransactionListener` callback declaration that uses a
     bean reference. The referenced bean must implement
-    [TransactionListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/TransactionListener.html).
+    [TransactionListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/TransactionListener.html).
     A `TransactionListener` can be implemented to handle transaction
     related events, such as afterCommit and afterRollback.
 
 6. Example of a `TransactionWriter` callback declaration using an inner
     bean declaration. The bean must implement
-    [TransactionWriter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/TransactionWriter.html).
+    [TransactionWriter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/TransactionWriter.html).
     The `TransactionWriter` is a callback that can veto a transaction.
 
 7. Example of a `GatewayConflictResolver` callback declaration using a
     bean reference. The referenced bean must implement
-    [GatewayConflictResolver](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/util/GatewayConflictResolver.html). A `GatewayConflictResolver` is a
+    [GatewayConflictResolver](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/util/GatewayConflictResolver.html). A `GatewayConflictResolver` is a
     `Cache`-level plugin that is called upon to decide what to do with
     events that originate in other systems and arrive through the WAN
     Gateway. which provides a distributed Region creation service.
@@ -512,18 +512,18 @@ Service, see [Overview of the Cluster Configuration Service](https://docs.vmware
 ### <a id="configuring-gemfire-cacheserver"></a>Configuring a GemFire CacheServer
 
 Spring Data for VMware GemFire includes dedicated support for configuring a
-[CacheServer](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/server/CacheServer.html). This allows complete configuration through the Spring container, as shown in the following example:
+[CacheServer](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/server/CacheServer.html). This allows complete configuration through the Spring container, as shown in the following example:
 
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
 ">
   
   <gfe:cache/>
@@ -548,16 +548,16 @@ many available options.
 
 Rather than hard-coding the port, this configuration
 uses Spring's <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#xsd-config-body-schemas-context">context</a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#core.appendix.xsd-schemas-context">context</a>
 namespace to declare a <code>property-placeholder</code>. A <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-factory-placeholderconfigurer">property
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-factory-placeholderconfigurer">property
 placeholder</a> reads one or more properties files and then replaces
 property placeholders with values at runtime. Doing so lets
 administrators change values without having to touch the main
 application configuration. Spring also provides <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#expressions">SpEL</a>
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions">SpEL</a>
 and an <a
-href="https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-environment">environment
+href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-environment">environment
 abstraction</a> to support externalization of environment-specific
 properties from the main codebase, easing deployment across multiple
 machines.
@@ -575,9 +575,9 @@ immediately.
 ### <a id="configuring-gemfire-clientcache"></a>Configuring a GemFire ClientCache
 
 In addition to defining a GemFire peer
-[Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/Cache.html),
+[Cache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/Cache.html),
 Spring Data for VMware GemFire also supports the definition of a GemFire
-[ClientCache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientCache.html)
+[ClientCache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientCache.html)
 in a Spring container. A `ClientCache` definition is similar in
 configuration and use to the GemFire peer
 [Cache](#configuring-cache) and is supported by the
@@ -621,7 +621,7 @@ definition, as the following example shows:
 The `<client-cache>` element also has a `ready-for-events` attribute. If
 the attribute is set to `true`, the client cache initialization includes
 a call to
-[ClientCache.readyForEvents()](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientCache.html#readyForEvents).
+[ClientCache.readyForEvents()](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientCache.html#readyForEvents).
 
 [Client Region](#client-region) describes client-side
 configuration in more detail.
@@ -641,7 +641,7 @@ In this case, the "Example" Region is `LOCAL` and no data is distributed
 between the client and a server. Therefore, no Pool is necessary. This
 is true for any client-side, local-only Region, as defined by the
 GemFire's
-[ClientRegionShortcut](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/client/ClientRegionShortcut.html).
+[ClientRegionShortcut](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/client/ClientRegionShortcut.html).
 
 However, if a client Region is a (caching) proxy to a server-side
 Region, a Pool is required. In that case, there are several ways to
@@ -943,7 +943,7 @@ The following table lists the attributes available for all Region types:
     </tr>
     <tr>
       <td>data-policy</td>
-      <td>See <a href="https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/DataPolicy.html">DataPolicy</a>.</td>
+      <td>See <a href="https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/DataPolicy.html">DataPolicy</a>.</td>
       <td>The region's data policy. Not all data policies are supported for every Region type.</td>
     </tr>
     <tr>
@@ -1008,7 +1008,7 @@ The following table lists the attributes available for all Region types:
     </tr>
     <tr>
       <td>shortcut</td>
-      <td>See <a href="https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/RegionShortcut.html">RegionShortcut</a></td>
+      <td>See <a href="https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/RegionShortcut.html">RegionShortcut</a></td>
       <td>The <code>RegionShortcut</code> for this region. Allows easy initialization of the region based on pre-defined defaults.</td>
     </tr>
     <tr>
@@ -1034,7 +1034,7 @@ The following table lists the attributes available for all Region types:
 `CacheListener` instances are registered with a Region to handle Region
 events, such as when entries are created, updated, destroyed, and so on.
 A `CacheListener` can be any bean that implements the
-[CacheListener](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheListener.html) interface. A Region may have multiple listeners, declared with the
+[CacheListener](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheListener.html) interface. A Region may have multiple listeners, declared with the
 `cache-listener` element nested in the containing `*-region` element.
 
 The following example has two declared `CacheListener's`. The first
@@ -1125,7 +1125,7 @@ The following example declares a Region with both a `CacheLoader` and a
 </beans>
 ```
 
-For more details, see [CacheLoader](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheLoader.html) and [CacheWriter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CacheWriter.html).
+For more details, see [CacheLoader](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheLoader.html) and [CacheWriter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CacheWriter.html).
 
 ### <a id="compression"></a>Compression
 
@@ -1420,11 +1420,11 @@ configuration metadata as follows:
 ```highlight
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:gfe="https://www.springframework.org/schema/geode"
+       xmlns:gfe="https://www.springframework.org/schema/gemfire/"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
     http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-    https://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+    https://www.springframework.org/schema/gemfire/ https://www.springframework.org/schema/gemfire/spring-gemfire.xsd
 ">
   
   <gfe:cache cache-xml-location="classpath:cache.xml"/>
@@ -1617,7 +1617,7 @@ namespace, as follows:
 ```
 
 Spring Data for VMware GemFire's `@Expiration` annotation support is implemented with
-GemFire's [CustomExpiry](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
+GemFire's [CustomExpiry](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/CustomExpiry.html) interface. For more information, see [Configure Data Expiration](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-expiration-configuring_data_expiration.html) in the GemFire product documentation.
 
 The Spring Data for VMware GemFire `AnnotationBasedExpiration` class and `CustomExpiry`
 implementation is responsible for processing the Spring Data for VMware GemFire
@@ -1769,7 +1769,7 @@ shows:
 
 Persistence may also be configured by setting the `data-policy`
 attribute. To do so, set the attribute's value to one of
-the [DataPolicy](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/DataPolicy.html) settings, as the following example shows:
+the [DataPolicy](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/DataPolicy.html) settings, as the following example shows:
 
 ```highlight
 <gfe:partitioned-region id="anotherExamplePersistentPartitionRegion" data-policy="PERSISTENT_PARTITION"/>
@@ -2131,7 +2131,7 @@ GemFire has support for caching JSON documents in Regions,
 along with the ability to query stored JSON documents using the
 GemFire OQL (Object Query Language). JSON documents are stored
 internally as
-[PdxInstance](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/PdxInstance.html) types by using the [JSONFormatter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/pdx/JSONFormatter.html) class to perform conversion to and from JSON documents (as a `String`).
+[PdxInstance](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/PdxInstance.html) types by using the [JSONFormatter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/pdx/JSONFormatter.html) class to perform conversion to and from JSON documents (as a `String`).
 
 Spring Data for VMware GemFire provides the `<gfe-data:json-region-autoproxy/>` element to
 enable an [AOP](https://docs.spring.io/spring-framework/docs/current/reference/html/#aop-introduction) component to
@@ -2249,12 +2249,12 @@ The `from` clause must refer to a valid, existing Region and is how an
 `Index` gets applied to a Region. This is not specific to Spring Data for VMware GemFire. It
 is a feature of GemFire.
 
-The `Index` `type` may be one of three enumerated values defined by the [IndexType](https://docs.spring.io/spring-data/geode/docs/current/api/org/springframework/data/gemfire/IndexType.html) enumeration: `FUNCTIONAL`, `HASH`, and `PRIMARY_KEY`.
+The `Index` `type` may be one of three enumerated values defined by the [IndexType](https://docs.spring.io/spring-data/gemfire/docs/current/api/org/springframework/data/gemfire/IndexType.html) enumeration: `FUNCTIONAL`, `HASH`, and `PRIMARY_KEY`.
 
 Each of the enumerated values corresponds to one of the
-[QueryService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html) `create[|Key|Hash]Index` methods invoked when the actual `Index` is to
+[QueryService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html) `create[|Key|Hash]Index` methods invoked when the actual `Index` is to
 be created or defined. For example, if the `IndexType` is `PRIMARY_KEY`,
-then the [QueryService.createKeyIndex(..)](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html#createKeyIndex-java.lang.String-java.lang.String-java.lang.String-)
+then the [QueryService.createKeyIndex(..)](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html#createKeyIndex-java.lang.String-java.lang.String-java.lang.String-)
 is invoked to create a `KEY` `Index`.
 
 The default is `FUNCTIONAL` and results in one of the
@@ -2278,7 +2278,7 @@ the `define` attribute, as follows:
 
 When `define` is set to `true`, it does not immediately create the `Index`. All "defined" Indexes are created at the same time when the Spring `ApplicationContext`. This occurs when a `ContextRefreshedEvent` is published by the Spring container. Spring Data for VMware GemFire registers itself as an `ApplicationListener` listening for the `ContextRefreshedEvent`. When
 fired, Spring Data for VMware GemFire calls
-[QueryService.createDefinedIndexes()](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/QueryService.html#createDefinedIndexes).
+[QueryService.createDefinedIndexes()](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/QueryService.html#createDefinedIndexes).
 
 Defining indexes and creating them at the same time boosts speed and
 efficiency when creating indexes.
@@ -2301,10 +2301,10 @@ exception is not thrown. These options are meant to specifically handle
 GemFire `IndexExistsException` and
 `IndexNameConflictException` instances, which can occur for various reasons. The exceptions have the following causes:
 
-* An [IndexExistsException](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/IndexExistsException.html) is thrown when there exists another `Index` with the same definition
+* An [IndexExistsException](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/IndexExistsException.html) is thrown when there exists another `Index` with the same definition
   but a different name when attempting to create an `Index`.
 
-* An [IndexNameConflictException](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/query/IndexNameConflictException.html) is thrown when there exists another `Index` with the same name but possibly different definition when attempting to create an `Index`.
+* An [IndexNameConflictException](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/query/IndexNameConflictException.html) is thrown when there exists another `Index` with the same name but possibly different definition when attempting to create an `Index`.
 
 Spring Data for VMware GemFire's default behavior is fail-fast strategy. Neither of the above `Index` exceptions are handled by default. These `Index` exceptions are wrapped in a Spring Data for VMware GemFire `GemfireIndexException` and rethrown. If you want Spring Data for VMware GemFire to handle them for you, you can set either of
 these `Index` bean definition options to `true`.
@@ -2451,7 +2451,7 @@ For an explanation of persistence, overflow, and configuration options on `DiskS
 
 Spring Data for VMware GemFire supports cache and Region snapshots by using
 GemFire's Snapshot Service. The out-of-the-box Snapshot Service support offers
-several convenient features to simplify the use of GemFire's [Cache](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
+several convenient features to simplify the use of GemFire's [Cache](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html) and [Region](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/RegionSnapshotService.html) Snapshot Service APIs. For more information about the Snapshot Service, see [Cache and Region Snapshots](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/managing-cache_snapshots-chapter_overview.html)  in the GemFire product documentation.
 
 Snapshots let you save and subsequently reload
 the cached data later, which can be useful for moving data between
@@ -2459,7 +2459,7 @@ environments, such as from production to a staging or test environment
 to reproduce data-related issues in a controlled context. You
 can combine Spring Data for VMware GemFire's Snapshot Service support with [Spring's bean
 definition
-profiles](https://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#beans-definition-profiles)
+profiles](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-definition-profiles)
 to load snapshot data specific to the environment as necessary.
 
 Spring Data for VMware GemFire's support for GemFire's Snapshot Service begins
@@ -2514,7 +2514,7 @@ specifying the `region-ref` attribute, as follows:
 When the `region-ref` attribute is specified, Spring Data for VMware GemFire's
 `SnapshotServiceFactoryBean` resolves the `region-ref` attribute value
 to a Region bean defined in the Spring container and creates a
-[RegionSnapshotService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/RegionSnapshotService.html).
+[RegionSnapshotService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/RegionSnapshotService.html).
 The snapshot import and export definitions function the same way.
 However, the `location` must refer to a file on an export.
 
@@ -2532,10 +2532,10 @@ Region.
 
 ### <a id="snapshot-location"></a>Snapshot Location
 
-With the cache-based Snapshot Service (that is, a [CacheSnapshotService](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html))
+With the cache-based Snapshot Service (that is, a [CacheSnapshotService](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html))
 you would typically pass it a directory containing all the snapshot
 files to load rather than individual snapshot files, as the overloaded
-[load](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/CacheSnapshotService.html#load-java.io.File-org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat)
+[load](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/CacheSnapshotService.html#load-java.io.File-org.apache.geode.cache.snapshot.SnapshotOptions.SnapshotFormat)
 method in the `CacheSnapshotService` API indicates.
 
 You can also use the overloaded <code>load(:File[], :SnapshotFormat, :SnapshotOptions)</code> method to specify which snapshot files to load into the GemFire cache.
@@ -2563,7 +2563,7 @@ a directory import (load).
 
 The real power of defining multiple snapshot imports and exports is
 realized through the use of snapshot filters. Snapshot filters implement the 
-[SnapshotFilter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/SnapshotFilter.html)
+[SnapshotFilter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/SnapshotFilter.html)
 interface and are used to filter Region entries for inclusion into the
 Region on import and for inclusion into the snapshot on export.
 
@@ -2596,7 +2596,7 @@ the following example shows:
 
 Additionally, you can express more complex snapshot filters by using the
 `ComposableSnapshotFilter` class. This class implements
-the [SnapshotFilter](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/snapshot/SnapshotFilter.html)
+the [SnapshotFilter](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/snapshot/SnapshotFilter.html)
 interface as well as the
 [Composite](https://en.wikipedia.org/wiki/Composite_pattern) software
 design pattern.
@@ -2719,7 +2719,7 @@ of the application's working directory.
 
 Using the Spring application events and messaging subsystem is a good
 way to keep your application loosely coupled. You can also use Spring's
-[Scheduling](https://docs.spring.io/spring-framework/docs/current/reference/html/#scheduling-task-scheduler) services to fire snapshot application events on a periodic basis.
+[Scheduling](https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling-task-scheduler) services to fire snapshot application events on a periodic basis.
 
 ## <a id="configuring-function-service"></a>Configuring the Function Service
 
@@ -2727,7 +2727,7 @@ Spring Data for VMware GemFire provides [annotation](#function-annotations.html)
 implementing, registering and executing GemFire Functions.
 
 Spring Data for VMware GemFire also provides XML namespace support for registering
-GemFire [Functions](https://geode.apache.org/releases/latest/javadoc/org/apache/geode/cache/execute/Function.html) for remote function execution.
+GemFire [Functions](https://gemfire.docs.pivotal.io/apidocs/gf-100/org/apache/geode/cache/execute/Function.html) for remote function execution.
 
 For more information about the Function execution framework, see [Function Execution](https://docs.vmware.com/en/VMware-GemFire/9.15/gf/developing-function_exec-chapter_overview.html) in the GemFire product documentation.
 
