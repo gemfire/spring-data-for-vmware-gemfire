@@ -7,6 +7,7 @@ package org.springframework.data.gemfire.config.annotation;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -72,7 +73,7 @@ public class ShiroSecuredClusteredLocatorApplicationIntegrationTests
 	public static void assertApacheShiroSecurityEnabled() {
 
 		String propertyName = ApacheShiroSecurityConfiguration.ApacheShiroPresentCondition
-			.SPRING_DATA_GEMFIRE_SECURITY_SHIRO_ENABLED;
+				.SPRING_DATA_GEMFIRE_SECURITY_SHIRO_ENABLED;
 
 		String apacheShiroEnabledValue = System.getProperty(propertyName, Boolean.TRUE.toString());
 
@@ -85,30 +86,35 @@ public class ShiroSecuredClusteredLocatorApplicationIntegrationTests
 	public static void startApacheGeodeCluster() throws IOException {
 
 		int locatorPort = findAndReserveAvailablePort();
+		int serverPort = findAndReserveAvailablePort();
 
 		String locatorBaseName = ShiroSecuredClusteredLocatorApplicationIntegrationTests.class.getSimpleName().concat("%s");
 		String locatorOneName = String.format(locatorBaseName, "LocatorOne");
 		String locatorTwoName = String.format(locatorBaseName, "LocatorTwo");
 
 		locatorProcessOne = run(createDirectory(locatorOneName), TestLocatorApplication.class,
-			"-Dspring.profiles.active=auth-server",
-			String.format("-Dspring.data.gemfire.locator.name=%s", locatorOneName),
-			String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
+				"-Dspring.profiles.active=auth-server",
+				String.format("-Dspring.data.gemfire.locator.name=%s", locatorOneName),
+				String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
 
 		waitForServerToStart("localhost", locatorPort);
 
 		locatorProcessTwo = run(createDirectory(locatorTwoName), TestLocatorApplication.class,
-			//String.format("-Dspring.data.gemfire.security.username=%s", CLUSTER_SECURITY_USERNAME),
-			//String.format("-Dspring.data.gemfire.security.password=%s", CLUSTER_SECURITY_PASSWORD),
-			String.format("-Dspring.data.gemfire.locator.name=%s", locatorTwoName),
-			String.format("-Dspring.data.gemfire.locators=localhost[%d]", locatorPort));
+				//String.format("-Dspring.data.gemfire.security.username=%s", CLUSTER_SECURITY_USERNAME),
+				//String.format("-Dspring.data.gemfire.security.password=%s", CLUSTER_SECURITY_PASSWORD),
+				String.format("-Dspring.data.gemfire.locator.name=%s", locatorTwoName),
+				String.format("-Dspring.data.gemfire.locators=localhost[%d]", locatorPort));
 
 		startGemFireServer(TestServerApplication.class,
-			//String.format("-Dspring.data.gemfire.security.username=%s", CLUSTER_SECURITY_USERNAME),
-			//String.format("-Dspring.data.gemfire.security.password=%s", CLUSTER_SECURITY_PASSWORD),
-			//String.format("-Dspring.data.gemfire.security.username=%s", "guest"),
-			//String.format("-Dspring.data.gemfire.security.password=%s", "guest"),
-			String.format("-Dspring.data.gemfire.locators=localhost[%d]", locatorPort));
+				//String.format("-Dspring.data.gemfire.security.username=%s", CLUSTER_SECURITY_USERNAME),
+				//String.format("-Dspring.data.gemfire.security.password=%s", CLUSTER_SECURITY_PASSWORD),
+				//String.format("-Dspring.data.gemfire.security.username=%s", "guest"),
+				//String.format("-Dspring.data.gemfire.security.password=%s", "guest"),
+				String.format("-Dspring.data.gemfire.locators=localhost[%d]", locatorPort),
+				String.format("-Dspring.data.gemfire.cache.server.port=%d", serverPort));
+
+		waitForServerToStart("localhost",serverPort, TimeUnit.SECONDS.toMillis(60));
+
 	}
 
 	@AfterClass
@@ -139,9 +145,9 @@ public class ShiroSecuredClusteredLocatorApplicationIntegrationTests
 
 	@Configuration
 	@EnableEntityDefinedRegions(
-		basePackageClasses = Customer.class,
-		serverRegionShortcut = RegionShortcut.LOCAL,
-		includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = Customer.class)
+			basePackageClasses = Customer.class,
+			serverRegionShortcut = RegionShortcut.LOCAL,
+			includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = Customer.class)
 	)
 	@EnablePdx(includeDomainTypes = Customer.class)
 	static class TestApplicationConfiguration { }
