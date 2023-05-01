@@ -37,7 +37,7 @@ Spring Data for VMware GemFire 1.1.0 is compatibile with the following:
 
 ### 1.0.0
 
-* Initial Spring Data For VMware GemFire for VMware GemFire, still dependent on Spring Data For Apache Geode
+* Initial Spring Data For VMware GemFire release, still dependent on Spring Data For Apache Geode
 
 ## Add Spring Data for VMware GemFire to a Project
 
