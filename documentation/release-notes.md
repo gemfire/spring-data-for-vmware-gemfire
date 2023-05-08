@@ -12,9 +12,9 @@ title: Release Notes
 
 ### 1.1.1
 
-* Update Spring Data 2.6 to Spring Data 2.6.14
+* Update Spring Data 2.6 to Spring Data 2.6.10
 * Update Spring Data 2.7 to Spring Data 2.7.10
-* Update Spring Data 3.0 to Spring Data 3.0.5
+* Update Spring Data 3.0 to Spring Data 3.0.4
 * Update all dependencies to latest patch version
 * Fixed an issue with querying a Region whose name contains a hyphen (`-`). 
 
