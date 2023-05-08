@@ -1,27 +1,24 @@
-# Spring Data for VMware GemFire Documentation
+#  Spring Data for VMware GemFire Documentation
+<!-- 
+ Copyright (c) VMware, Inc. 2022. All rights reserved.
+ Licensed to the Apache Software Foundation (ASF) under one or more contributor license
+ agreements. See the NOTICE file distributed with this work for additional information regarding
+ copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance with the License. You may obtain a
+ copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ or implied. See the License for the specific language governing permissions and limitations under
+ the License.
+-->
 
-*   [Version 2.7](landing-page.html)
-*   [Preface](preface.html)
-*   [Requirements](introduction/requirements.html)
-*   [Reference Documentation Structure](reference/introduction.html)
-    *   [Annotation-based Configuration Quick Start](reference/bootstrap-annotations-quickstart.html)
-    *   [Bootstrapping GemFire with the Spring Container](reference/bootstrap.html)
-    *   [Bootstrapping GemFire with the Spring Container Using Annotations](reference/bootstrap-annotations.html)
-    *   [Working with GemFire APIs](reference/data.html)
-    *   [Working with GemFire Serialization](reference/serialization.html)
-    *   [POJO Mapping](reference/mapping.html)
-    *   [Spring Data for VMware GemFire Repositories](reference/repositories.html)
-    *   [Annotation Support for Function Execution](reference/function-annotations.html)
-    *   [Apache Lucene Integration](reference/lucene.html)
-    *   [Bootstrapping a Spring ApplicationContext in GemFire](reference/gemfire-bootstrap.html)
-    *   [Sample Applications](reference/samples.html)
-    *   [Continuous Query (CQ)](reference/cq-container.html)
-    *   [Using the Data Access Namespace](reference/data-access.html)
-    *   [Configuring a DiskStore](reference/diskstore.html)
-    *   [Configuring the Function Service](reference/function.html)
-    *   [Configuring WAN Gateways](reference/gateway.html)
-    *   [Configuring an Index](reference/indexing.html)
-    *   [Configuring a Region](reference/region.html)
-    *   [Configuring the Snapshot Service](reference/snapshot.html)
-    *   [Spring Data for VMware GemFire Schema](appendix/appendix-schema.md)
 
+* [Spring Data for VMware GemFire](index.html)
+  * [Release Notes](release-notes.html)
+  * [Compatibility and Versions](compatibility-and-versions.html)
+  * [Getting Started](getting-started.html)
+
+  
