@@ -216,24 +216,6 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
         }
     }
 
-    private void waitForRegionEntryEvents() {
-
-        AtomicInteger counter = new AtomicInteger(0);
-
-        waitOn(() -> {
-
-            if (counter.incrementAndGet() % 3 == 0) {
-                //log("NOTIFIED!%n");
-                this.clientCache.readyForEvents();
-            }
-
-            //log("WAITING...%n");
-
-            return regionCacheListenerEventValues.size() < 2;
-
-        }, TimeUnit.SECONDS.toMillis(15L), 500L);
-    }
-
     @Test
     @DirtiesContext
     public void durableClientGetsInitializedWithDataOnServer() {
@@ -245,16 +227,23 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 
     @Test
     public void durableClientGetsUpdatesFromServerWhileClientWasOffline() {
-
         assumeTrue(isAfterDirtiesContext());
         assertThat(this.example.isEmpty()).isTrue();
 
-        waitForRegionEntryEvents();
+        Awaitility.await()
+                .pollDelay(500, TimeUnit.MILLISECONDS)
+                .pollInterval(200, TimeUnit.MILLISECONDS)
+                .timeout(4, TimeUnit.SECONDS)
+                .until(() -> {
+                            this.clientCache.readyForEvents();
+                            return regionCacheListenerEventValues.size() == 2;
+                        }
+                );
 
         Awaitility.await()
                 .timeout(4, TimeUnit.SECONDS)
                 .until(() -> regionCacheListenerEventValues.containsAll(
-						Arrays.asList(new Integer[]{4,5})));
+                        Arrays.asList(new Integer[]{4, 5})));
     }
 
     public static class ClientCacheBeanPostProcessor implements BeanPostProcessor {
