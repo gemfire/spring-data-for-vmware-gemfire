@@ -106,6 +106,7 @@ public class GemfireQueryMethodUnitTests {
 		doReturn(Person.class).when(this.repositoryMetadata).getDomainType();
 		doReturn(Person.class).when(this.repositoryMetadata).getReturnedDomainClass(any(Method.class));
 		doReturn(TypeInformation.of(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
+		doReturn(TypeInformation.of(Object.class)).when(this.repositoryMetadata).getDomainTypeInformation();
 	}
 
 	@Test
