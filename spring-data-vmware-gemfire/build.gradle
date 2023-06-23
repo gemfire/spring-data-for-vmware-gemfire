@@ -25,14 +25,14 @@ dependencies {
     compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
     implementation 'javax.cache:cache-api:1.1.1'
-    api 'org.springframework:spring-context-support:6.0.7'
-    api 'org.springframework:spring-tx:6.0.7'
-    api 'org.springframework:spring-web:6.0.7'
+    api "org.springframework:spring-context-support:$springFrameworkVersion"
+    api "org.springframework:spring-tx:$springFrameworkVersion"
+    api "org.springframework:spring-web:$springFrameworkVersion"
     api "org.springframework.data:spring-data-commons:$springDataVersion"
     api 'org.apache.shiro:shiro-spring:1.11.0'
     api 'org.aspectj:aspectjweaver:1.9.19'
-    api 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.14.3'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.14.3'
     runtimeOnly 'antlr:antlr:2.7.7'
     compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
         exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -47,11 +47,11 @@ dependencies {
     testImplementation "com.vmware.gemfire:geode-tcp-server:$gemfireVersion"
     testImplementation "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
-    testImplementation 'org.springframework:spring-test:6.0.7'
+    testImplementation 'org.springframework:spring-test:6.0.10'
     testImplementation 'org.apache.geronimo.specs:geronimo-jcdi_2.0_spec:1.0.1'
-    testImplementation 'javax.interceptor:javax.interceptor-api:1.2.1'
+    testImplementation 'javax.interceptor:javax.interceptor-api:1.2.2'
     testImplementation 'javax.el:el-api:2.2'
-    testImplementation 'ch.qos.logback:logback-classic:1.4.1'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.8'
     testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.19.0'
     testImplementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
     testImplementation 'org.apache.derby:derbyLocale_zh_TW:10.9.1.0'
@@ -60,7 +60,6 @@ dependencies {
     testImplementation 'org.apache.openwebbeans:openwebbeans-impl:2.0.27:jakarta'
     testImplementation 'org.assertj:assertj-core:3.21.0'
     testImplementation 'org.iq80.snappy:snappy:0.4'
-    testImplementation("com.vmware.gemfire:spring-test-gemfire-${gemfireBaseVersion}-3.0:1.0.0")
     testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
         exclude group: 'com.google.guava', module: 'guava'
     }
@@ -71,11 +70,11 @@ dependencies {
     testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
         exclude group: 'javax.annotation', module: 'jsr250-api'
     }
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 
-    testImplementation 'org.awaitility:awaitility:4.2.0'\
+    testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
