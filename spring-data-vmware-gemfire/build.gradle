@@ -8,6 +8,15 @@ plugins {
     id 'spring-java-jar'
 }
 
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
+javadoc{
+  failOnError=false
+}
+
 project.ext.set("pomProjectLongName","Spring Data VMware GemFire")
 project.ext.set("pomProjectArtifactName","spring-data-2.6-gemfire-${gemfireBaseVersion}")
 project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
