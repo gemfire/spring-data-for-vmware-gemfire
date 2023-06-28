@@ -15,6 +15,15 @@ project.ext.set("pomProjectLongName", "Spring Data VMware GemFire")
 project.ext.set("pomProjectArtifactName", "spring-data-3.1-gemfire-${gemfireBaseVersion}")
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
+javadoc{
+  failOnError=false
+}
+
 dependencies {
   compileOnly "com.vmware.gemfire:gemfire-core:$gemfireVersion"
   compileOnly "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
