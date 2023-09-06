@@ -19,7 +19,6 @@ import org.apache.geode.NoSystemException;
 import org.apache.geode.SystemConnectException;
 import org.apache.geode.SystemIsRunningException;
 import org.apache.geode.UnmodifiableException;
-import org.apache.geode.admin.AdminException;
 import org.apache.geode.cache.CacheException;
 import org.apache.geode.cache.CacheExistsException;
 import org.apache.geode.cache.CacheLoaderException;
@@ -252,10 +251,6 @@ public abstract class GemfireCacheUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	public static DataAccessException convertGemfireAccessException(GemFireCheckedException cause) {
-
-		if (cause instanceof AdminException) {
-			return new GemfireSystemException(cause);
-		}
 
 		if (cause instanceof QueryException) {
 			return new GemfireQueryException((QueryException) cause);
