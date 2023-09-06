@@ -69,6 +69,16 @@ public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
 	}
 
 	@Override
+	public int getMaxConnectionsPerServer() {
+		return PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
+	}
+
+	@Override
+	public int getMinConnectionsPerServer() {
+		return PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
+	}
+
+	@Override
 	public boolean getMultiuserAuthentication() {
 		return PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
 	}

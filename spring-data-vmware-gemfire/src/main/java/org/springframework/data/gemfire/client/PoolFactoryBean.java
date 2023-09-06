@@ -86,6 +86,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	private int loadConditioningInterval = PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
 	private int maxConnections = PoolFactory.DEFAULT_MAX_CONNECTIONS;
 	private int minConnections = PoolFactory.DEFAULT_MIN_CONNECTIONS;
+	private int maxConnectionsPerServer = PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
+	private int minConnectionsPerServer = PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
 	private int readTimeout = PoolFactory.DEFAULT_READ_TIMEOUT;
 	private int retryAttempts = PoolFactory.DEFAULT_RETRY_ATTEMPTS;
 	private int serverConnectionTimeout = PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
@@ -330,6 +332,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			it.setLoadConditioningInterval(this.loadConditioningInterval);
 			it.setMaxConnections(this.maxConnections);
 			it.setMinConnections(this.minConnections);
+			it.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
+			it.setMinConnectionsPerServer(this.minConnectionsPerServer);
 			it.setMultiuserAuthentication(this.multiUserAuthentication);
 			it.setPingInterval(this.pingInterval);
 			it.setPRSingleHopEnabled(this.prSingleHopEnabled);
@@ -547,6 +551,16 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			}
 
 			@Override
+			public int getMaxConnectionsPerServer() {
+				return PoolFactoryBean.this.maxConnectionsPerServer;
+			}
+
+			@Override
+			public int getMinConnectionsPerServer() {
+				return PoolFactoryBean.this.minConnectionsPerServer;
+			}
+
+			@Override
 			public boolean getMultiuserAuthentication() {
 				return PoolFactoryBean.this.multiUserAuthentication;
 			}
@@ -709,6 +723,14 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	public void setMinConnections(int minConnections) {
 		this.minConnections = minConnections;
+	}
+
+	public void setMaxConnectionsPerServer(int maxConnectionsPerServer) {
+		this.maxConnectionsPerServer = maxConnectionsPerServer;
+	}
+
+	public void setMinConnectionsPerServer(int minConnectionsPerServer) {
+		this.minConnectionsPerServer = minConnectionsPerServer;
 	}
 
 	public void setMultiUserAuthentication(boolean multiUserAuthentication) {
