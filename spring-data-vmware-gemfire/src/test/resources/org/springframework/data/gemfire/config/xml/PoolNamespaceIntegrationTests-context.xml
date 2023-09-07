@@ -34,7 +34,8 @@
 	<gfe:pool id="locator" locators="skullbox, ghostrider[12480]"/>
 
 	<gfe:pool id="server" free-connection-timeout="2000" idle-timeout="20000" load-conditioning-interval="10000"
-			  keep-alive="true" max-connections="100" min-connections="5" multi-user-authentication="true"
+			  keep-alive="true" max-connections="100" min-connections="5" max-connections-per-server="200"
+			  min-connections-per-server="2" multi-user-authentication="true"
 			  ping-interval="5000" pr-single-hop-enabled="false" read-timeout="500" retry-attempts="5"
 			  server-group="TestGroup" socket-buffer-size="65536" statistic-interval="250"
 			  subscription-ack-interval="250" subscription-enabled="true" subscription-message-tracking-timeout="30000"
