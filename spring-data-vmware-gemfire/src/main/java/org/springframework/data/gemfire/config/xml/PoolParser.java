@@ -92,6 +92,8 @@ class PoolParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, poolBuilder, "load-conditioning-interval");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "max-connections");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "min-connections");
+		ParsingUtils.setPropertyValue(element, poolBuilder, "max-connections-per-server");
+		ParsingUtils.setPropertyValue(element, poolBuilder, "min-connections-per-server");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "multi-user-authentication");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "ping-interval");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "pr-single-hop-enabled");
