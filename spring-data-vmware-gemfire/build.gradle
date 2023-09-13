@@ -20,7 +20,7 @@ javadoc{
 }
 
 project.ext.set("pomProjectLongName", "Spring Data VMware GemFire")
-project.ext.set("pomProjectArtifactName", "spring-data-3.0-gemfire-${gemfireBaseVersion}")
+project.ext.set("pomProjectArtifactName", "spring-data-3.0-gemfire-${getGemFireBaseVersion()}")
 project.ext.set("pomProjectDescription", "Spring Data For VMware GemFire")
 
 dependencies {
@@ -150,3 +150,10 @@ repositories {
   }
 }
 
+String getGemFireBaseVersion() {
+  def split = "${gemfireVersion}".split("\\.")
+  if (split.length < 2) {
+    throw new RuntimeException("gemfireVersion is malformed")
+  }
+  return "${split[0]}.${split[1]}"
+}
