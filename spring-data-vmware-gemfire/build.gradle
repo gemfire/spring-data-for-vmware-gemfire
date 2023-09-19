@@ -15,8 +15,9 @@ java {
     withSourcesJar()
 }
 
-javadoc{
-    failOnError=false
+javadoc {
+  title = "Spring Data for VMware GemFire Java API Reference"
+  failOnError=false
 }
 
 project.ext.set("pomProjectLongName", "Spring Data VMware GemFire")
