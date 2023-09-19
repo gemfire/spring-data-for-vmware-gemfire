@@ -13,7 +13,8 @@ java {
   withSourcesJar()
 }
 
-javadoc{
+javadoc {
+  title = "Spring Data for VMware GemFire Java API Reference"
   failOnError=false
 }
 
