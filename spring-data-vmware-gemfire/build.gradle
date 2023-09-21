@@ -21,7 +21,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 project.ext.set("pomProjectLongName","Spring Data VMware GemFire")
-project.ext.set("pomProjectArtifactName","spring-data-2.7-gemfire-${gemfireBaseVersion}")
+project.ext.set("pomProjectArtifactName","spring-data-2.7-gemfire-${getGemFireBaseVersion()}")
 project.ext.set("pomProjectDescription","Spring Data For VMware GemFire")
 
 dependencies {
@@ -113,4 +113,12 @@ repositories {
               });
     }
   }
+}
+
+String getGemFireBaseVersion() {
+  def split = "${gemfireVersion}".split("\\.")
+  if (split.length < 2) {
+    throw new RuntimeException("gemfireVersion is malformed")
+  }
+  return "${split[0]}.${split[1]}"
 }
