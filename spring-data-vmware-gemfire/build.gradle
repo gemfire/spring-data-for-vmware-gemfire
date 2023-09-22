@@ -69,7 +69,7 @@ dependencies {
     testImplementation 'org.apache.openwebbeans:openwebbeans-impl:2.0.27:jakarta'
     testImplementation 'org.assertj:assertj-core:3.21.0'
     testImplementation 'org.iq80.snappy:snappy:0.4'
-    testImplementation("com.vmware.gemfire:spring-test-gemfire-${gemfireBaseVersion}-3.0:1.0.0")
+    testImplementation("com.vmware.gemfire:spring-test-gemfire-${getGemFireBaseVersion()}-3.0:1.0.0")
     testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
         exclude group: 'com.google.guava', module: 'guava'
     }
