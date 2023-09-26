@@ -5,6 +5,8 @@
 
 package org.springframework.data.gemfire.listener.annotation;
 
+import org.springframework.data.gemfire.listener.CQEvent;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -30,6 +32,13 @@ import java.lang.annotation.Target;
 public @interface ContinuousQuery {
 
 	/**
+	 * Specifies event types to be excluded from the CQ.
+	 *
+	 * Defaults to empty.
+	 */
+	CQEvent[] excludedEvents() default {};
+
+	/**
 	 * Determines whether the CQ is durable.
 	 *
 	 * Defaults to {@literal false}.
@@ -47,5 +56,4 @@ public @interface ContinuousQuery {
 	 * Defines the OQL query used by the CQ to determine CQ events.
 	 */
 	String query();
-
 }
