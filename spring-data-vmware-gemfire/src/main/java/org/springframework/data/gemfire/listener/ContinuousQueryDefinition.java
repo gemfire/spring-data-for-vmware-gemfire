@@ -5,14 +5,18 @@
 package org.springframework.data.gemfire.listener;
 
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.apache.geode.cache.query.CqAttributes;
 import org.apache.geode.cache.query.CqAttributesFactory;
 import org.apache.geode.cache.query.CqListener;
 import org.apache.geode.cache.query.CqQuery;
 
+import org.apache.geode.cache.query.ExcludedEvent;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
@@ -36,6 +40,8 @@ public class ContinuousQueryDefinition implements InitializingBean {
 	private final String name;
 	private final String query;
 
+	private final Set<CQEvent> excludedEvents;
+
 	public static ContinuousQueryDefinition from(Object delegate, Method method) {
 
 		Assert.notNull(method, "Method must not be null");
@@ -57,27 +63,46 @@ public class ContinuousQueryDefinition implements InitializingBean {
 
 		boolean durable = continuousQuery.durable();
 
-		return new ContinuousQueryDefinition(name, query, listener, durable);
+		Set<CQEvent> excludedEvents = Set.of(continuousQuery.excludedEvents());
+
+		return new ContinuousQueryDefinition(name, query, listener, durable, excludedEvents);
 	}
 
 	public ContinuousQueryDefinition(String query, ContinuousQueryListener listener) {
-		this(query, listener, false);
+		this(query, listener, Collections.emptySet());
+	}
+
+	public ContinuousQueryDefinition(String query, ContinuousQueryListener listener, Set<CQEvent> excludedEvents) {
+		this(query, listener, false, excludedEvents);
 	}
 
 	public ContinuousQueryDefinition(String query, ContinuousQueryListener listener, boolean durable) {
-		this(null, query, listener, durable);
+		this(query, listener, durable, Collections.emptySet());
+	}
+
+	public ContinuousQueryDefinition(String query, ContinuousQueryListener listener, boolean durable, Set<CQEvent> excludedEvents) {
+		this(null, query, listener, durable, excludedEvents);
 	}
 
 	public ContinuousQueryDefinition(String name, String query, ContinuousQueryListener listener) {
-		this(name, query, listener, false);
+		this(name, query, listener, Collections.emptySet());
+	}
+
+	public ContinuousQueryDefinition(String name, String query, ContinuousQueryListener listener, Set<CQEvent> excludedEvents) {
+		this(name, query, listener, false, excludedEvents);
 	}
 
 	public ContinuousQueryDefinition(String name, String query, ContinuousQueryListener listener, boolean durable) {
+		this(name, query, listener, durable, Collections.emptySet());
+	}
+
+	public ContinuousQueryDefinition(String name, String query, ContinuousQueryListener listener, boolean durable, Set<CQEvent> excludedEvents) {
 
 		this.name = name;
 		this.query = query;
 		this.listener = listener;
 		this.durable = durable;
+		this.excludedEvents = excludedEvents;
 
 		afterPropertiesSet();
 	}
@@ -128,18 +153,37 @@ public class ContinuousQueryDefinition implements InitializingBean {
 		return this.query;
 	}
 
+	/**
+	 * Gets the {@link CQEvent}s to be excluded from the CQ.
+	 *
+	 * @return the {@link CQEvent}s excluded from the CQ.
+	 */
+	public Set<CQEvent> getExcludedEvents() {
+		return this.excludedEvents;
+	}
+
 	@Override
 	public void afterPropertiesSet() {
 		Assert.hasText(query, "Query is required");
 		Assert.notNull(listener, "Listener is required");
 	}
 
-	public CqAttributes toCqAttributes(Function<ContinuousQueryListener, CqListener> listenerFunction) {
+	public CqAttributes toCqAttributes(Function<ContinuousQueryListener, CqListener> listenerFunction, Set<CQEvent> excludedEvents) {
 
 		CqAttributesFactory attributesFactory = new CqAttributesFactory();
 
 		attributesFactory.addCqListener(listenerFunction.apply(getListener()));
+		attributesFactory.setExcludedEvents(excludedEvents.stream().map(this::mapCQEventToExcludedEvent).collect(Collectors.toSet()));
 
 		return attributesFactory.create();
+	}
+
+	private ExcludedEvent mapCQEventToExcludedEvent(CQEvent cqEvent) {
+        return switch (cqEvent) {
+            case UPDATE -> ExcludedEvent.UPDATE;
+            case CREATE -> ExcludedEvent.CREATE;
+            case INVALIDATE -> ExcludedEvent.INVALIDATE;
+            case DESTROY -> ExcludedEvent.DESTROY;
+        };
 	}
 }
