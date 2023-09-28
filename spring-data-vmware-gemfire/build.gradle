@@ -36,12 +36,12 @@ dependencies {
   compileOnly "com.vmware.gemfire:geode-deployment-legacy:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:5.3.28'
-  api 'org.springframework:spring-tx:5.3.28'
-  api 'org.springframework:spring-web:5.3.28'
+  api 'org.springframework:spring-context-support:5.3.30'
+  api 'org.springframework:spring-tx:5.3.30'
+  api 'org.springframework:spring-web:5.3.30'
   api "org.springframework.data:spring-data-commons:$springDataVersion"
-  implementation 'org.apache.shiro:shiro-spring:1.11.0'
-  implementation 'org.aspectj:aspectjweaver:1.9.19'
+  implementation 'org.apache.shiro:shiro-spring:1.12.0'
+  implementation 'org.aspectj:aspectjweaver:1.9.20.1'
   implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.3'
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.3'
   runtimeOnly 'antlr:antlr:2.7.7'
@@ -69,7 +69,7 @@ dependencies {
   testImplementation 'org.apache.openwebbeans:openwebbeans-se:2.0.27'
   testImplementation 'org.assertj:assertj-core:3.21.0'
   testImplementation 'org.iq80.snappy:snappy:0.4'
-  testImplementation 'org.springframework:spring-test:5.3.28'
+  testImplementation 'org.springframework:spring-test:5.3.30'
 
   testImplementation('com.vmware.gemfire:spring-test-gemfire-9.15-2.7:1.0.0')
   testImplementation('org.springframework.shell:spring-shell:1.2.0.RELEASE') {
