@@ -16,7 +16,7 @@ java {
 }
 
 javadoc {
-  title = "Spring Data for VMware GemFire Java API Reference"
+  title = "Spring Data ${getSpringDataBaseVersion()} for VMware GemFire ${getGemFireBaseVersion()} Java API Reference"
   failOnError=false
 }
 
@@ -151,9 +151,17 @@ repositories {
 }
 
 String getGemFireBaseVersion() {
-  def split = "${gemfireVersion}".split("\\.")
+  return getBaseVersion(gemfireVersion)
+}
+
+String getSpringDataBaseVersion() {
+  return getBaseVersion(springDataVersion)
+}
+
+static String getBaseVersion(String version) {
+  def split = "${version}".split("\\.")
   if (split.length < 2) {
-    throw new RuntimeException("gemfireVersion is malformed")
+    throw new RuntimeException("version '$version' is malformed")
   }
   return "${split[0]}.${split[1]}"
 }
