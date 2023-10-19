@@ -141,7 +141,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	 * @see MappingContext
 	 */
 	@Autowired(required = false)
-	public void setGemfireMappingContext(@Nullable MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext) {
+	public void setGemfireMappingContext(MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext) {
 		setMappingContext(mappingContext);
 		this.mappingContext = mappingContext;
 	}
