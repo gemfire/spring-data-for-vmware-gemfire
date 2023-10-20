@@ -25,6 +25,10 @@ javadoc {
   failOnError=false
 }
 
+tasks.withType(JavaCompile).configureEach {
+  options.compilerArgs << '-parameters'
+}
+
 dependencies {
   compileOnly "com.vmware.gemfire:gemfire-core:$gemfireVersion"
   compileOnly "com.vmware.gemfire:gemfire-logging:$gemfireVersion"
