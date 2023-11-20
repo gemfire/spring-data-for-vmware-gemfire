@@ -1,7 +1,17 @@
 import org.apache.tools.ant.taskdefs.condition.Os
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 // Copyright (c) VMware, Inc. 2022. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
+
+buildscript {
+  dependencies {
+    classpath 'com.google.cloud:google-cloud-storage:2.29.1'
+  }
+}
 
 plugins {
   id 'java-library'
@@ -164,4 +174,14 @@ static String getBaseVersion(String version) {
     throw new RuntimeException("version '$version' is malformed")
   }
   return "${split[0]}.${split[1]}"
+}
+
+tasks.register('copyJavadocsToBucket') {
+  dependsOn javadocJar
+  doLast {
+    Storage storage = StorageOptions.newBuilder().setProjectId(project.findProperty('docsGCSProject')).build().getService()
+    BlobId blobId = BlobId.of(project.findProperty("docsGCSBucket"), "${project.findProperty('pomProjectArtifactName')}/${project.version}/${javadocJar.outputs.files.singleFile.name}")
+    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build()
+    storage.createFrom(blobInfo, javadocJar.outputs.files.singleFile.toPath())
+  }
 }
