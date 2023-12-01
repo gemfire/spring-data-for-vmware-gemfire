@@ -6,14 +6,12 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -21,11 +19,13 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
+import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Integration Tests testing the contract and functionality of the {@link CacheServerApplication}
@@ -45,13 +45,27 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.9.0
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = ClientServerCacheApplicationIntegrationTests.GeodeClientTestConfiguration.class)
+@ContextConfiguration
 @SuppressWarnings("all")
-public class ClientServerCacheApplicationIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientServerCacheApplicationIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
-	public static void startGeodeServer() throws Exception {
-		startGemFireServer(GeodeServerTestConfiguration.class);
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfsh(false, "create region --name=Echo --type=PARTITION");
+		gemFireCluster.gfsh(false, "put --region=/Echo --key=Hello --value=Hello");
+		gemFireCluster.gfsh(false, "put --region=/Echo --key=Test --value=Test");
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -81,41 +95,12 @@ public class ClientServerCacheApplicationIntegrationTests extends ForkingClientS
 
 			return echoRegion;
 		}
-	}
 
-	@CacheServerApplication(name = "ClientServerCacheApplicationIntegrationTests")
-	public static class GeodeServerTestConfiguration {
-
-		public static void main(String[] args) {
-			runSpringApplication(GeodeServerTestConfiguration.class, args);
-		}
-
-		@Bean("Echo")
-		public PartitionedRegionFactoryBean<String, String> echoRegion(Cache gemfireCache) {
-
-			PartitionedRegionFactoryBean<String, String> echoRegion =
-				new PartitionedRegionFactoryBean<String, String>();
-
-			echoRegion.setCache(gemfireCache);
-			echoRegion.setCacheLoader(echoCacheLoader());
-			echoRegion.setClose(false);
-			echoRegion.setPersistent(false);
-
-			return echoRegion;
-		}
-
-		CacheLoader<String, String> echoCacheLoader() {
-
-			return new CacheLoader<String, String>() {
-				@Override
-				public String load(LoaderHelper<String, String> helper) throws CacheLoaderException {
-					return helper.getKey();
-				}
-
-				@Override
-				public void close() {
-				}
-			};
+		@Bean
+		ClientCacheConfigurer clientCacheConfigurer() {
+			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setLocators(
+					Collections.singletonList(
+							new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
 		}
 	}
 }

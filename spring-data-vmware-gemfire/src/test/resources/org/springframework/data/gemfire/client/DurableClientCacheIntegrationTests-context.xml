@@ -24,8 +24,6 @@
 		<prop key="gemfire.cache.client.interests.result-policy">
 			${org.springframework.data.gemfire.client.DurableClientCacheIntegrationTests.interests-result-policy:KEYS_VALUES}
 		</prop>
-		<prop key="gemfire.cache.server.host">localhost</prop>
-		<prop key="gemfire.cache.server.port">${spring.data.gemfire.cache.server.port:40404}</prop>
 	</util:properties>
 
 	<context:property-placeholder properties-ref="clientProperties"/>
@@ -44,7 +42,7 @@
 					  keep-alive="true" ready-for-events="true"/>
 
 	<gfe:pool id="gemfireServerPool" keep-alive="true" subscription-enabled="true">
-		<gfe:server host="${gemfire.cache.server.host}" port="${gemfire.cache.server.port}"/>
+		<gfe:locator host="localhost" port="${gemfire.locator.port}"/>
 	</gfe:pool>
 
 	<gfe:client-region id="Example" pool-name="gemfireServerPool" shortcut="CACHING_PROXY">

@@ -12,6 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.Declarable;
+import org.apache.geode.cache.execute.Function;
+import org.apache.geode.cache.execute.FunctionContext;
+import org.apache.geode.pdx.PdxReader;
+import org.apache.geode.pdx.PdxSerializer;
+import org.apache.geode.pdx.PdxWriter;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,22 +26,17 @@ import org.junit.runner.RunWith;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxInstance;
 import org.apache.geode.pdx.PdxInstanceFactory;
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
 import org.apache.geode.pdx.internal.PdxInstanceEnum;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.function.annotation.GemfireFunction;
 import org.springframework.data.gemfire.function.sample.ApplicationDomainFunctionExecutions;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for SDG's Function annotation support and interaction between an Apache Geode client
@@ -51,7 +53,6 @@ import org.springframework.util.ObjectUtils;
  * @see org.apache.geode.pdx.internal.PdxInstanceEnum
  * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @see org.springframework.data.gemfire.function.sample.ApplicationDomainFunctionExecutions
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.2
@@ -59,8 +60,9 @@ import org.springframework.util.ObjectUtils;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-// TODO: Convert to a ClientCache test.
-public class ClientCacheFunctionExecutionWithPdxIntegrationTest extends ForkingClientServerIntegrationTestsSupport {
+public class ClientCacheFunctionExecutionWithPdxIntegrationTest {
+
+	private static GemFireCluster gemFireCluster;
 
 	@Autowired
 	private ClientCache gemfireClientCache;
@@ -70,8 +72,16 @@ public class ClientCacheFunctionExecutionWithPdxIntegrationTest extends ForkingC
 
 	@BeforeClass
 	public static void startGemFireServer() throws Exception {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ClientCacheFunctionExecutionWithPdxIntegrationTest.class));
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withCacheXml(GemFireCluster.ALL_GLOB, "/client-cache-function-execution-with-pdx-cache.xml")
+				.withClasspath(GemFireCluster.ALL_GLOB, System.getProperty("TEST_JAR_PATH"))
+				.withPdx("org\\.springframework\\.data\\.gemfire\\.function\\..*", true)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(false, "deploy --jar=/testJar.jar");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));
 	}
 
 	private PdxInstance toPdxInstance(Map<String, Object> pdxData) {
@@ -84,22 +94,6 @@ public class ClientCacheFunctionExecutionWithPdxIntegrationTest extends ForkingC
 		}
 
 		return pdxInstanceFactory.create();
-	}
-
-	@Test
-	public void convertedFunctionArgumentTypes() {
-
-		Class<?>[] argumentTypes = this.functionExecutions
-			.captureConvertedArgumentTypes("test", 1, Boolean.TRUE, new Person("Jon", "Doe"),
-				Gender.MALE);
-
-		assertThat(argumentTypes).isNotNull();
-		assertThat(argumentTypes.length).isEqualTo(5);
-		assertThat(argumentTypes[0]).isEqualTo(String.class);
-		assertThat(argumentTypes[1]).isEqualTo(Integer.class);
-		assertThat(argumentTypes[2]).isEqualTo(Boolean.class);
-		assertThat(argumentTypes[3]).isEqualTo(Person.class);
-		assertThat(argumentTypes[4]).isEqualTo(Gender.class);
 	}
 
 	@Test
@@ -141,45 +135,76 @@ public class ClientCacheFunctionExecutionWithPdxIntegrationTest extends ForkingC
 		assertThat(value).isEqualTo(pdxData.get("integerField"));
 	}
 
-	public static class ApplicationDomainFunctions {
+	private static Class<?>[] getArgumentTypes(Object... arguments) {
 
-		private Class<?>[] getArgumentTypes(Object... arguments) {
+		List<Class<?>> argumentTypes = new ArrayList<>();
 
-			List<Class<?>> argumentTypes = new ArrayList<>();
-
-			for (Object argument : arguments) {
-				argumentTypes.add(argument.getClass());
-			}
-
-			return argumentTypes.toArray(new Class[0]);
+		for (Object argument : arguments) {
+			argumentTypes.add(argument.getClass());
 		}
 
-		@GemfireFunction
-		public Class<?>[] captureConvertedArgumentTypes(String stringValue, Integer integerValue, Boolean booleanValue,
-				Person person, Gender gender) {
+		return argumentTypes.toArray(new Class[0]);
+	}
 
-			return getArgumentTypes(stringValue, integerValue, booleanValue, person, gender);
+	public static class CaptureUnconvertedArgumentTypesFunction implements Function<Class<?>[]> {
+
+		@Override
+		public void execute(FunctionContext<Class<?>[]> context) {
+			Object[] args = context.getArguments();
+
+			String stringValue = (String) args[0];
+			Integer integerValue = (Integer) args[1];
+			Boolean booleanValue = (Boolean) args[2];
+			Object domainObject = args[3];
+			Object enumValue = args[4];
+
+
+			context.getResultSender().lastResult(getArgumentTypes(stringValue, integerValue, booleanValue, domainObject, enumValue));
 		}
 
-		@GemfireFunction
-		public Class<?>[] captureUnconvertedArgumentTypes(String stringValue, Integer integerValue, Boolean booleanValue,
-				Object domainObject, Object enumValue) {
+		@Override
+		public String getId() {
+			return "captureUnconvertedArgumentTypes";
+		}
+	}
 
-			return getArgumentTypes(stringValue, integerValue, booleanValue, domainObject, enumValue);
+
+	public static class DataFieldFunction implements Function<Object> {
+
+		@Override
+		public String getId() {
+			return "getDataField";
 		}
 
-		@GemfireFunction
-		public String getAddressField(PdxInstance address, String fieldName) {
+		@Override
+		public void execute(FunctionContext<Object> context) {
+			Object[] args = (Object[]) context.getArguments();
+
+			PdxInstance data = (PdxInstance) args[0];
+			String fieldName = (String) args[1];
+
+			context.getResultSender().lastResult(data.getField(fieldName));
+		}
+	}
+
+	public static class AddressFieldFunction implements Function<Object> {
+
+		@Override
+		public String getId() {
+			return "getAddressField";
+		}
+
+		@Override
+		public void execute(FunctionContext<Object> context) {
+			Object[] args = (Object[]) context.getArguments();
+
+			PdxInstance address = (PdxInstance) args[0];
+			String fieldName = (String) args[1];
 
 			Assert.isTrue(Address.class.getName().equals(address.getClassName()),
-				"Address is not the correct type");
+					"Address is not the correct type");
 
-			return String.valueOf(address.getField(fieldName));
-		}
-
-		@GemfireFunction
-		public Object getDataField(PdxInstance data, String fieldName) {
-			return data.getField(fieldName);
+			context.getResultSender().lastResult(String.valueOf(address.getField(fieldName)));
 		}
 	}
 
@@ -426,7 +451,7 @@ public class ClientCacheFunctionExecutionWithPdxIntegrationTest extends ForkingC
 		}
 	}
 
-	public static class PersonPdxSerializer implements PdxSerializer {
+	public static class PersonPdxSerializer implements PdxSerializer, Declarable {
 
 		@Override
 		public boolean toData(Object obj, PdxWriter out) {

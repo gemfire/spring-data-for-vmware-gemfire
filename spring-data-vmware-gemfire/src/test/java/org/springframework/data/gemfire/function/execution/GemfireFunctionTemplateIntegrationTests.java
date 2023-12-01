@@ -6,6 +6,7 @@ package org.springframework.data.gemfire.function.execution;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,8 +21,8 @@ import org.apache.geode.cache.client.Pool;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.PoolResolver;
 import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
-import org.springframework.data.gemfire.fork.FunctionCacheServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
+import org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for Apache Geode Function templates.
@@ -32,9 +33,10 @@ import org.springframework.data.gemfire.tests.integration.ForkingClientServerInt
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCacheFactory
  * @see org.apache.geode.cache.client.Pool
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  */
-public class GemfireFunctionTemplateIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class GemfireFunctionTemplateIntegrationTests extends ClientServerIntegrationTestsSupport {
+
+	private static GemFireCluster gemFireCluster;
 
 	private ClientCache gemfireCache = null;
 
@@ -46,7 +48,11 @@ public class GemfireFunctionTemplateIntegrationTests extends ForkingClientServer
 
 	@BeforeClass
 	public static void startGeodeServer() throws Exception {
-		startGemFireServer(FunctionCacheServerProcess.class);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(true, "deploy --jar=/testJar.jar", "create region --name=test-function --type=PARTITION");
+
+		gemFireCluster.acceptLicense().start();
 	}
 
 	@Before
@@ -56,7 +62,7 @@ public class GemfireFunctionTemplateIntegrationTests extends ForkingClientServer
 			.set("name", GemfireFunctionTemplateIntegrationTests.class.getSimpleName())
 			.set("log-level", "error")
 			.setPoolSubscriptionEnabled(true)
-			.addPoolServer("localhost", Integer.getInteger(GEMFIRE_CACHE_SERVER_PORT_PROPERTY))
+			.addPoolServer("localhost", gemFireCluster.getServerPorts().get(0))
 			.create();
 
 		assertThat(this.gemfireCache).isNotNull();

@@ -7,24 +7,20 @@ package org.springframework.data.gemfire.client;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -44,17 +40,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ClientCacheVariableLocatorsIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientCacheVariableLocatorsIntegrationTests {
 
+	private static GemFireCluster gemFireCluster;
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		final int locatorPort = findAndReserveAvailablePort();
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 3, 1);
 
-		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(locatorPort));
+		gemFireCluster.acceptLicense().start();
 
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ClientCacheVariableLocatorsIntegrationTests.class));
+		gemFireCluster.gfsh(false, "create region --name=Example --type=PARTITION");
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+
+		System.setProperty("spring.data.gemfire.locator.port.one", String.valueOf(gemFireCluster.getLocatorPorts().get(0)));
+		System.setProperty("spring.data.gemfire.locator.port.two", String.valueOf(gemFireCluster.getLocatorPorts().get(1)));
+		System.setProperty("spring.data.gemfire.locator.port.three", String.valueOf(gemFireCluster.getLocatorPorts().get(2)));
+
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -69,6 +78,10 @@ public class ClientCacheVariableLocatorsIntegrationTests extends ForkingClientSe
 		assertThat(this.example.getAttributes()).isNotNull();
 		assertThat(this.example.getAttributes().getPoolName()).isEqualTo("locatorPool");
 
+		this.example.put("one" ,1);
+		this.example.put("two" ,2);
+		this.example.put("three" ,3);
+
 		Pool locatorPool = PoolManager.find("locatorPool");
 
 		assertThat(locatorPool).isNotNull();
@@ -82,20 +95,5 @@ public class ClientCacheVariableLocatorsIntegrationTests extends ForkingClientSe
 		assertThat(example.get("one")).isEqualTo(1);
 		assertThat(example.get("two")).isEqualTo(2);
 		assertThat(example.get("three")).isEqualTo(3);
-	}
-
-	public static class CacheMissCounterCacheLoader implements CacheLoader<String, Integer> {
-
-		private static final AtomicInteger cacheMissCounter = new AtomicInteger(0);
-
-		@Override
-		public Integer load(final LoaderHelper<String, Integer> helper) throws CacheLoaderException {
-			return cacheMissCounter.incrementAndGet();
-		}
-
-		@Override
-		public void close() {
-			cacheMissCounter.set(0);
-		}
 	}
 }

@@ -4,27 +4,27 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.query.CqEvent;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.listener.CQEvent;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,16 +33,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTests.GemFireClientConfiguration.class)
-public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTests {
 
     private static final AtomicInteger updateOnlyFreezingTemperatureCounter = new AtomicInteger(0);
     private static final AtomicInteger excludeDestroyFreezingTemperatureCounter = new AtomicInteger(0);
     private static final AtomicInteger allFreezingTemperatureCounter = new AtomicInteger(0);
     private static final AtomicInteger excludeAllFreezingTemperatureCounter = new AtomicInteger(0);
 
+    private static GemFireCluster gemFireCluster;
+
     @BeforeClass
-    public static void startGeodeServer() throws Exception {
-        startGemFireServer(GeodeServerTestConfiguration.class);
+    public static void startGeodeServer() throws IOException {
+
+        gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+                .withGfsh(false, "create region --name=TemperatureReadings --type=PARTITION");
+
+        gemFireCluster.acceptLicense().start();
+
+        System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+    }
+
+    @AfterClass
+    public static void shutdown() {
+        gemFireCluster.close();
     }
 
     @Autowired
@@ -87,6 +100,7 @@ public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTe
     }
 
     @EnableContinuousQueries
+    @EnablePdx(includeDomainTypes = TemperatureReading.class)
     @ClientCacheApplication(subscriptionEnabled = true)
     static class GemFireClientConfiguration {
 
@@ -115,10 +129,9 @@ public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTe
         }
 
         @Bean
-        ClientCacheConfigurer clientCachePoolPortConfigurer(
-                @Value("${" + GEMFIRE_CACHE_SERVER_PORT_PROPERTY + ":40404}") int port) {
-            return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setServers(
-                    Collections.singletonList(new ConnectionEndpoint("localhost", port)));
+        ClientCacheConfigurer clientCachePoolPortConfigurer() {
+            return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setLocators(
+                    Collections.singletonList(new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
         }
 
         @Bean(name = "TemperatureReadings")
@@ -127,27 +140,6 @@ public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTe
             temperatureReadings.setCache(gemfireCache);
             temperatureReadings.setClose(false);
             temperatureReadings.setShortcut(ClientRegionShortcut.PROXY);
-            return temperatureReadings;
-        }
-    }
-
-    @CacheServerApplication
-    static class GeodeServerTestConfiguration {
-
-        public static void main(String[] args) {
-            runSpringApplication(GeodeServerTestConfiguration.class, args);
-        }
-
-        @Bean(name = "TemperatureReadings")
-        PartitionedRegionFactoryBean<Long, TemperatureReading> temperatureReadingsRegion(GemFireCache gemfireCache) {
-
-            PartitionedRegionFactoryBean<Long, TemperatureReading> temperatureReadings =
-                    new PartitionedRegionFactoryBean<>();
-
-            temperatureReadings.setCache(gemfireCache);
-            temperatureReadings.setClose(false);
-            temperatureReadings.setPersistent(false);
-
             return temperatureReadings;
         }
     }

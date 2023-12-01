@@ -4,30 +4,29 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.process.ProcessWrapper;
+import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
+
+import java.io.IOException;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration Tests for {@link EnableSsl} and {@link SslConfiguration}.
@@ -47,26 +46,41 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EnableSslConfigurationIntegrationTests.GeodeClientTestConfiguration.class)
 @SuppressWarnings("all")
-public class EnableSslConfigurationIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class EnableSslConfigurationIntegrationTests {
 
 	private static final String LOG_LEVEL = "error";
-
-	private static ProcessWrapper gemfireServer;
 
 	@Autowired
 	@Qualifier("Echo")
 	private Region<String, String> echo;
 
-	@BeforeClass
-	public static void startGeodeServer() throws Exception {
+	private static GemFireCluster gemFireCluster;
 
+	@BeforeClass
+	public static void startGeodeServer() throws IOException {
 		org.springframework.core.io.Resource trustedKeystore = new ClassPathResource("trusted.keystore");
 
-		startGemFireServer(GeodeServerTestConfiguration.class,
-			String.format("-Dgemfire.name=%s", asApplicationName(EnableSslConfigurationIntegrationTests.class).concat("Server")),
-			String.format("-Djavax.net.ssl.keyStore=%s", trustedKeystore.getFile().getAbsolutePath()));
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withCacheXml(GemFireCluster.ALL_GLOB, "/enable-ssl-configuration-integration-tests-cache.xml")
+				.withConfiguration(GemFireCluster.ALL_GLOB, container ->
+						container.withCopyFileToContainer(MountableFile.forClasspathResource("trusted.keystore"), "/trusted.keystore"))
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "javax.net.ssl.keyStore", "/trusted.keystore")
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "ssl-keystore", "/trusted.keystore")
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "ssl-keystore-password", "s3cr3t")
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "ssl-truststore", "/trusted.keystore")
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "ssl-truststore-password", "s3cr3t")
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "ssl-enabled-components", "all");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 
 		System.setProperty("javax.net.ssl.keyStore", trustedKeystore.getFile().getAbsolutePath());
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Test
@@ -88,6 +102,13 @@ public class EnableSslConfigurationIntegrationTests extends ForkingClientServerI
 			};
 		}
 
+		@Bean
+		ClientCacheConfigurer clientCachePortConfigurer() {
+			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean
+					.setServers(Collections.singletonList(
+							new ConnectionEndpoint("localhost", gemFireCluster.getServerPorts().get(0))));
+		}
+
 		@Bean("Echo")
 		ClientRegionFactoryBean<String, String> echoRegion(GemFireCache gemfireCache) {
 
@@ -98,53 +119,6 @@ public class EnableSslConfigurationIntegrationTests extends ForkingClientServerI
 			echoRegion.setShortcut(ClientRegionShortcut.PROXY);
 
 			return echoRegion;
-		}
-	}
-
-	@CacheServerApplication(name = "EnableSslConfigurationIntegrationTests", logLevel = LOG_LEVEL)
-	@EnableSsl(keystorePassword = "s3cr3t", truststorePassword = "s3cr3t")
-	static class GeodeServerTestConfiguration {
-
-		public static void main(String[] args) {
-			runSpringApplication(GeodeServerTestConfiguration.class, args);
-		}
-
-		@Bean
-		PeerCacheConfigurer cacheServerSslConfigurer(
-				@Value("${javax.net.ssl.keyStore:trusted.keystore}") String keystoreLocation) {
-
-			return (beanName, bean) -> {
-				bean.getProperties().setProperty("ssl-keystore", keystoreLocation);
-				bean.getProperties().setProperty("ssl-truststore", keystoreLocation);
-			};
-		}
-
-		@Bean("Echo")
-		PartitionedRegionFactoryBean<String, String> echoRegion(GemFireCache gemfireCache) {
-
-			PartitionedRegionFactoryBean<String, String> echoRegion = new PartitionedRegionFactoryBean<>();
-
-			echoRegion.setCache(gemfireCache);
-			echoRegion.setCacheLoader(echoCacheLoader());
-			echoRegion.setPersistent(false);
-
-			return echoRegion;
-		}
-
-		@Bean
-		CacheLoader<String, String> echoCacheLoader() {
-
-			return new CacheLoader<String, String>() {
-
-				@Override
-				public String load(LoaderHelper<String, String> helper) throws CacheLoaderException {
-					return helper.getKey();
-				}
-
-				@Override
-				public void close() { }
-
-			};
 		}
 	}
 }

@@ -28,7 +28,7 @@
 	<gfe:client-cache properties-ref="gemfireProperties" pool-name="clientPool"/>
 
 	<gfe:pool id="clientPool" subscription-enabled="true">
-		<gfe:server host="localhost" port="${spring.data.gemfire.cache.server.port:40404}"/>
+		<gfe:locator host="localhost" port="${gemfire.locator.port:40404}"/>
 	</gfe:pool>
 
 	<bean id="testErrorHandler" class="org.springframework.data.gemfire.listener.StubErrorHandler"/>

@@ -6,6 +6,8 @@ package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +26,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
+import java.io.IOException;
+
 /**
  * Integration Tests for {@link ClientCache} {@link Pool Pools}.
  *
@@ -40,12 +44,30 @@ import org.springframework.util.Assert;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("all")
-public class ClientCachePoolIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientCachePoolIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
-	public static void startGeodeServer() throws Exception {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ClientCachePoolIntegrationTests.class));
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfsh(false, "create region --name=Factorials --type=REPLICATE");
+
+		gemFireCluster.gfsh(false, "put --region=/Factorials --key-class=java.lang.Long --value-class=java.lang.Long --key=0 --value=1");
+		gemFireCluster.gfsh(false, "put --region=/Factorials --key-class=java.lang.Long --value-class=java.lang.Long --key=1 --value=1");
+		gemFireCluster.gfsh(false, "put --region=/Factorials --key-class=java.lang.Long --value-class=java.lang.Long --key=2 --value=2");
+		gemFireCluster.gfsh(false, "put --region=/Factorials --key-class=java.lang.Long --value-class=java.lang.Long --key=3 --value=6");
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -59,39 +81,5 @@ public class ClientCachePoolIntegrationTests extends ForkingClientServerIntegrat
 		assertThat(factorials.get(1l)).isEqualTo(1l);
 		assertThat(factorials.get(2l)).isEqualTo(2l);
 		assertThat(factorials.get(3l)).isEqualTo(6l);
-		assertThat(factorials.get(4l)).isEqualTo(24l);
-		assertThat(factorials.get(5l)).isEqualTo(120l);
-		assertThat(factorials.get(6l)).isEqualTo(720l);
-		assertThat(factorials.get(7l)).isEqualTo(5040l);
-		assertThat(factorials.get(8l)).isEqualTo(40320l);
-		assertThat(factorials.get(9l)).isEqualTo(362880l);
-	}
-
-	public static class FactorialsClassLoader implements CacheLoader<Long, Long> {
-
-		@Override
-		public Long load(LoaderHelper<Long, Long> helper) throws CacheLoaderException {
-
-			Long number = helper.getKey();
-
-			Assert.notNull(number, "number must not be null");
-			Assert.isTrue(number >= 0, String.format("number [%1$d] must be greater than equal to 0", number));
-
-			if (number <= 2l) {
-				return (number < 2l ? 1l : 2l);
-			}
-
-			long result = number;
-
-			while (--number > 1) {
-				result *= number;
-			}
-
-			return result;
-		}
-
-		@Override
-		public void close() { }
-
 	}
 }

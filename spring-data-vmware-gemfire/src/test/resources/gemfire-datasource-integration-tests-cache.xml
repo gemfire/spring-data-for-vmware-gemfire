@@ -9,10 +9,8 @@
 	   xsi:schemaLocation="http://geode.apache.org/schema/cache https://geode.apache.org/schema/cache/cache-1.0.xsd"
 	   version="1.0">
 
-	<cache-server hostname-for-clients="localhost" port="${CACHE_SERVER_PORT}"/>
-
-	<region name="ServerRegion" refid="PARTITION"/>
-
+	<region name="ServerOnlyRegion" refid="PARTITION"/>
 	<region name="AnotherServerRegion" refid="REPLICATE"/>
+	<region name="simple" refid="REPLICATE"/>
 
 </cache>

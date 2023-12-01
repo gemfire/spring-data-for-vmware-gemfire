@@ -99,7 +99,7 @@ public class FunctionCacheServerProcess {
 		scanner.nextLine();
 	}
 
-	static class EchoFunction implements Function<Object> {
+	public static class EchoFunction implements Function<Object> {
 
 		@Override
 		public String getId() {
@@ -124,7 +124,7 @@ public class FunctionCacheServerProcess {
 	}
 
 	@SuppressWarnings("unchecked")
-	static class ServerFunction implements Function<Object> {
+	public static class ServerFunction implements Function<Object> {
 
 		@Override
 		public String getId() {
