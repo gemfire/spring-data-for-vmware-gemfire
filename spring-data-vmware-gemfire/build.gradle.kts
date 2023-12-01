@@ -93,6 +93,7 @@ dependencies {
   testImplementation(libs.spring.test)
   testImplementation(libs.spring.boot)
   testImplementation(libs.awaitility)
+  testImplementation(libs.gemfire.testcontainers)
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
@@ -101,12 +102,14 @@ tasks {
   test {
     setForkEvery(1)
 //  maxParallelForks = 1
+    val springTestGemfireDockerImage: String by project
 
     systemProperty("java.util.logging.config.file", "${project.layout.buildDirectory}/test-classes/java-util-logging.properties")
     systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
     systemProperty("gemfire.disableShutdownHook", "true")
     systemProperty("logback.log.level", "error")
     systemProperty("spring.profiles.active", "apache-geode")
+    systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
 
     filter {
       includeTestsMatching("*.*Tests")

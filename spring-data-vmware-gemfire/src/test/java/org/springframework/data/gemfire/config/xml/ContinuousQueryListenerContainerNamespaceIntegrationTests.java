@@ -6,11 +6,14 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,12 +53,27 @@ import org.springframework.util.ErrorHandler;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ContinuousQueryListenerContainerNamespaceIntegrationTests
-		extends ForkingClientServerIntegrationTestsSupport {
+public class ContinuousQueryListenerContainerNamespaceIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
-	public static void startGemFireServer() throws Exception {
-		startGemFireServer(CqCacheServerProcess.class);
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=test-cq --type=REPLICATE",
+						"put --region=test-cq --key-class=java.lang.Integer --key=1 --value=one",
+						"put --region=test-cq --key-class=java.lang.Integer --key=2 --value=two",
+						"put --region=test-cq --key-class=java.lang.Integer --key=3 --value=three");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired

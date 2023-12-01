@@ -7,32 +7,34 @@ package org.springframework.data.gemfire.transaction;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import edu.umd.cs.mtc.MultithreadedTestCase;
 import edu.umd.cs.mtc.TestFramework;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientCache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.data.gemfire.config.annotation.CacheServerApplication;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
+import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnablePdx;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
 import org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
+import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -68,12 +70,24 @@ import lombok.Setter;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ConcurrentClientTransactionalDataAccessWithRollbackIntegrationTests.TestGeodeClientConfiguration.class)
 @SuppressWarnings("unused")
-public class ConcurrentClientTransactionalDataAccessWithRollbackIntegrationTests
-		extends ForkingClientServerIntegrationTestsSupport {
+public class ConcurrentClientTransactionalDataAccessWithRollbackIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
-		startGemFireServer(TestGeodeServerConfiguration.class);
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=Users --type=PARTITION");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -107,14 +121,12 @@ public class ConcurrentClientTransactionalDataAccessWithRollbackIntegrationTests
 		UserService userService(UserRepository userRepository) {
 			return new UserService(userRepository);
 		}
-	}
 
-	@CacheServerApplication(name = "ConcurrentClientTransactionsWithRollbackIntegrationTestsServer")
-	@EnableEntityDefinedRegions(basePackageClasses = User.class, serverRegionShortcut = RegionShortcut.REPLICATE)
-	static class TestGeodeServerConfiguration {
-
-		public static void main(String[] args) {
-			runSpringApplication(TestGeodeServerConfiguration.class, args);
+		@Bean
+		ClientCacheConfigurer clientCacheConfigurer() {
+			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setLocators(
+					Collections.singletonList(
+							new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
 		}
 	}
 

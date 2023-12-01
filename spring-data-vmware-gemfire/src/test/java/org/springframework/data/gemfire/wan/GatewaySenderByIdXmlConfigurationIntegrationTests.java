@@ -8,27 +8,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.wan.GatewaySender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
-import org.springframework.data.gemfire.config.annotation.EnableLocator;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.process.ProcessWrapper;
-import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -52,25 +44,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(locations = "GatewaySenderByIdXmlConfigurationIntegrationTests-context.xml")
 @SuppressWarnings("unused")
-public class GatewaySenderByIdXmlConfigurationIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class GatewaySenderByIdXmlConfigurationIntegrationTests {
 
-	private static ProcessWrapper geodeServer;
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		int port = findAvailablePort();
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false,
+						"create gateway-sender --id=TestGatewaySenderOne --remote-distributed-system-id=1",
+						"create gateway-sender --id=TestGatewaySenderTwo --remote-distributed-system-id=1",
+						"create region --name=Example --type=REPLICATE --gateway-sender-id=TestGatewaySenderOne,TestGatewaySenderTwo");
 
-		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(port));
+		gemFireCluster.acceptLicense().start();
 
-		geodeServer = run(GeodeServerApplication.class, "-Dspring.data.gemfire.locator.port=" + port);
-
-		waitForServerToStart("localhost", port);
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 	}
 
 	@AfterClass
-	public static void stopGeodeServer() {
-		stop(geodeServer);
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -89,51 +84,5 @@ public class GatewaySenderByIdXmlConfigurationIntegrationTests extends ForkingCl
 		assertThat(exampleAttributes.getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 		assertThat(exampleAttributes.getGatewaySenderIds())
 			.containsExactlyInAnyOrder("TestGatewaySenderOne", "TestGatewaySenderTwo");
-	}
-
-	@EnableLocator
-	@PeerCacheApplication(name = "GatewaySenderByIdXmlConfigurationIntegrationTestsServer")
-	static class GeodeServerApplication {
-
-		public static void main(String[] args) {
-
-			runSpringApplication(GeodeServerApplication.class, args);
-			block();
-		}
-
-		@Bean("TestGatewaySenderOne")
-		public GatewaySenderFactoryBean gatewaySenderOne(Cache cache) {
-
-			GatewaySenderFactoryBean gatewaySenderOne = new GatewaySenderFactoryBean(cache);
-
-			gatewaySenderOne.setRemoteDistributedSystemId(1);
-			gatewaySenderOne.setManualStart(true);
-
-			return gatewaySenderOne;
-		}
-
-		@Bean("TestGatewaySenderTwo")
-		public GatewaySenderFactoryBean gatewaySenderTwo(Cache cache) {
-
-			GatewaySenderFactoryBean gatewaySenderTwo = new GatewaySenderFactoryBean(cache);
-
-			gatewaySenderTwo.setRemoteDistributedSystemId(1);
-			gatewaySenderTwo.setManualStart(true);
-
-			return gatewaySenderTwo;
-		}
-
-		@Bean("Example")
-		public ReplicatedRegionFactoryBean<Object, Object> exampleRegion(GemFireCache gemfireCache,
-				@Qualifier("TestGatewaySenderOne") GatewaySender gatewaySenderOne,
-				@Qualifier("TestGatewaySenderTwo") GatewaySender gatewaySenderTwo) {
-
-			ReplicatedRegionFactoryBean<Object, Object> exampleRegion = new ReplicatedRegionFactoryBean<>();
-
-			exampleRegion.setCache(gemfireCache);
-			exampleRegion.setGatewaySenders(ArrayUtils.asArray(gatewaySenderOne, gatewaySenderTwo));
-
-			return exampleRegion;
-		}
 	}
 }

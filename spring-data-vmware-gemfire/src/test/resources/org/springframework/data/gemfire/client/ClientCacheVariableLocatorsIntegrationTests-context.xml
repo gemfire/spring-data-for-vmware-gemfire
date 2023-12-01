@@ -27,8 +27,8 @@
 					   key-constraint="java.lang.String" value-constraint="java.lang.Integer"/>
 
 	<!-- Keep the definition of this GemFire Pool bean after the Region (Example) that depends on it! -->
-	<gfe:pool id="locatorPool" locators="localhost[12345],localhost[9876]">
-		<gfe:locator host="${spring.data.gemfire.locator.host:localhost}" port="${spring.data.gemfire.locator.port}"/>
+	<gfe:pool id="locatorPool" locators="localhost[${spring.data.gemfire.locator.port.one}],localhost[${spring.data.gemfire.locator.port.two}]">
+		<gfe:locator host="${spring.data.gemfire.locator.host:localhost}" port="${spring.data.gemfire.locator.port.three}"/>
 	</gfe:pool>
 
 </beans>

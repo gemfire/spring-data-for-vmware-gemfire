@@ -9,6 +9,7 @@
 	   xmlns:gfe-data="http://www.springframework.org/schema/data/geode"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:repo="http://www.springframework.org/schema/p"
 	   xsi:schemaLocation="
 	   	http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 	   	http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
@@ -19,12 +20,13 @@
 	<context:property-placeholder/>
 
 	<gfe-data:datasource min-connections="1" max-connections="1">
-		<gfe-data:server host="${spring.data.gemfire.cache.server.host:localhost}"
-						 port="${spring.data.gemfire.cache.server.port:40404}"/>
+		<gfe-data:locator host="localhost" port="${gemfire.locator.port}"/>
 	</gfe-data:datasource>
 
 	<gfe:client-region id="ClientOnlyRegion" shortcut="LOCAL"/>
 
 	<gfe:client-region id="ClientServerRegion" shortcut="CACHING_PROXY"/>
+
+	<gfe:client-region id="ServerOnlyRegion" shortcut="PROXY"/>
 
 </beans>

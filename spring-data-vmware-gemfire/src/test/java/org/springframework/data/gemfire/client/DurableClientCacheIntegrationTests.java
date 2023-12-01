@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -19,8 +18,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.awaitility.Awaitility;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -42,13 +43,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
+import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.DistributedSystemUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 
 /**
  * Integration Tests to test Apache Geode durable clients.
@@ -69,7 +68,7 @@ import org.springframework.util.Assert;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @ContextConfiguration
 @SuppressWarnings("all")
-public class DurableClientCacheIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class DurableClientCacheIntegrationTests extends IntegrationTestsSupport {
 
     private static final boolean DEBUG = true;
 
@@ -84,12 +83,26 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
     private static final String DURABLE_CLIENT_TIMEOUT =
             DurableClientCacheIntegrationTests.class.getName().concat(".durable-client-timeout");
 
-    private static final String SERVER_HOST = "localhost";
+    private static GemFireCluster gemFireCluster;
 
     @BeforeClass
     public static void startGeodeServer() throws IOException {
-        startGemFireServer(ServerProcess.class,
-                getServerContextXmlFileLocation(DurableClientCacheIntegrationTests.class));
+
+        gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+        gemFireCluster.acceptLicense().start();
+
+        gemFireCluster.gfsh(false, "create region --name=Example --type=REPLICATE");
+        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=one --value=1");
+        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=two --value=2");
+        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=three --value=3");
+
+        System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+    }
+
+    @AfterClass
+    public static void shutdown() {
+        gemFireCluster.close();
     }
 
     private static boolean isAfterDirtiesContext() {
@@ -162,7 +175,7 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 
         try {
             clientCache = new ClientCacheFactory()
-                    .addPoolServer(SERVER_HOST, Integer.getInteger(GEMFIRE_CACHE_SERVER_PORT_PROPERTY))
+                    .addPoolLocator("localhost", Integer.getInteger("gemfire.locator.port"))
                     .set("name", "ClientCacheProducer")
                     .set("log-level", "error")
                     .create();
@@ -271,54 +284,6 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
                     // NOTE: The pending event count could be 3 because it should minimally include the 2 puts
                     // from the ClientCache producer and possibly a "marker" as well.
                     assertThat(gemfireServerPool.getPendingEventCount()).isGreaterThanOrEqualTo(2);
-                }
-            }
-
-            return bean;
-        }
-    }
-
-    public static class RegionDataLoadingBeanPostProcessor<K, V> implements BeanPostProcessor {
-
-        private Map<K, V> regionData;
-
-        private final String regionName;
-
-        public RegionDataLoadingBeanPostProcessor(String regionName) {
-
-            Assert.hasText(regionName, "Region name must be specified");
-
-            this.regionName = regionName;
-        }
-
-        public void setRegionData(Map<K, V> regionData) {
-            this.regionData = regionData;
-        }
-
-        protected Map<K, V> getRegionData() {
-
-            Assert.state(this.regionData != null, "Region data was not provided");
-
-            return this.regionData;
-        }
-
-        protected String getRegionName() {
-            return this.regionName;
-        }
-
-        protected void loadData(Region<K, V> region) {
-            region.putAll(getRegionData());
-        }
-
-        @Override
-        public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-
-            if (bean instanceof Region) {
-
-                Region<K, V> region = (Region) bean;
-
-                if (getRegionName().equals(region.getName())) {
-                    loadData(region);
                 }
             }
 

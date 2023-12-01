@@ -6,13 +6,16 @@ package org.springframework.data.gemfire.listener;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,17 +24,15 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.query.CqEvent;
 
-import org.springframework.data.gemfire.fork.CqCacheServerProcess;
 import org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.process.ProcessWrapper;
+import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.SpringExtensions;
 
 /**
  * @author Costin Leau
  * @author John Blum
  */
-public class ListenerContainerIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ListenerContainerIntegrationTests extends IntegrationTestsSupport {
 
 	private ClientCache gemfireCache = null;
 
@@ -47,9 +48,22 @@ public class ListenerContainerIntegrationTests extends ForkingClientServerIntegr
 
 	private final List<CqEvent> cqEvents = new CopyOnWriteArrayList<>();
 
+	private static GemFireCluster gemFireCluster;
+
 	@BeforeClass
-	public static void startGemFireServer() throws Exception {
-		startGemFireServer(CqCacheServerProcess.class);
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=test-cq --type=REPLICATE");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Before
@@ -59,7 +73,7 @@ public class ListenerContainerIntegrationTests extends ForkingClientServerIntegr
 			.set("name", "ListenerContainerIntegrationTests")
 			.set("log-level", "error")
 			.setPoolSubscriptionEnabled(true)
-			.addPoolServer(DEFAULT_HOSTNAME, Integer.getInteger(GEMFIRE_CACHE_SERVER_PORT_PROPERTY))
+			.addPoolLocator("localhost", gemFireCluster.getLocatorPort())
 			.create();
 
 		String query = "SELECT * from /test-cq";
@@ -76,13 +90,16 @@ public class ListenerContainerIntegrationTests extends ForkingClientServerIntegr
 	public void closeGemFireClient() {
 
 		Optional.ofNullable(this.gemfireCache)
-			.ifPresent(cache -> SpringExtensions.safeDoOperation(() -> cache.close()));
+			.ifPresent(cache -> SpringExtensions.safeDoOperation(cache::close));
 	}
 
 	@Test
 	public void testContainer() {
 
-		getGemFireServerProcess().ifPresent(ProcessWrapper::signal);
+		gemFireCluster.gfsh(false,
+				"put --region=test-cq --key-class=java.lang.Integer --key=1 --value=one",
+				"put --region=test-cq --key-class=java.lang.Integer --key=2 --value=two",
+				"put --region=test-cq --key-class=java.lang.Integer --key=3 --value=three");
 
 		waitOn(() -> this.cqEvents.size() == 3, TimeUnit.SECONDS.toMillis(5));
 

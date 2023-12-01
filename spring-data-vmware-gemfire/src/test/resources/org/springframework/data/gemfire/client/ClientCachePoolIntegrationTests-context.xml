@@ -26,7 +26,7 @@
 	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:pool id="serverConnectionPool">
-		<gfe:server host="localhost" port="${spring.data.gemfire.cache.server.port}"/>
+		<gfe:locator host="localhost" port="${gemfire.locator.port}"/>
 	</gfe:pool>
 
 	<gfe:client-region id="Factorials" pool-name="serverConnectionPool" shortcut="PROXY" close="true" destroy="true"/>

@@ -4,25 +4,23 @@
  */
 package org.springframework.data.gemfire.client;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.query.Index;
 import org.apache.geode.cache.query.IndexType;
 import org.apache.geode.cache.query.QueryService;
-
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration Tests for testing {@link ClientCache} {@link Index Indexes}.
@@ -41,7 +39,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ClientCacheIndexingIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientCacheIndexingIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@Autowired
 	private ClientCache clientCache;
@@ -51,8 +51,16 @@ public class ClientCacheIndexingIntegrationTests extends ForkingClientServerInte
 
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ClientCacheIndexingIntegrationTests.class));
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port",String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	private Index getIndex(GemFireCache gemfireCache, String indexName) {
