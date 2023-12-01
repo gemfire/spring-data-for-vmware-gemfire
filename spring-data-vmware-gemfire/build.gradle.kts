@@ -95,6 +95,7 @@ dependencies {
   testImplementation(libs.spring.test)
   testImplementation(libs.spring.boot)
   testImplementation(libs.awaitility)
+  testImplementation(libs.gemfire.testcontainers)
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
@@ -103,12 +104,14 @@ tasks {
   test {
     setForkEvery(1)
 //  maxParallelForks = 1
+    val springTestGemfireDockerImage: String by project
 
     systemProperty("java.util.logging.config.file", "${project.layout.buildDirectory}/test-classes/java-util-logging.properties")
     systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
     systemProperty("gemfire.disableShutdownHook", "true")
     systemProperty("logback.log.level", "error")
     systemProperty("spring.profiles.active", "apache-geode")
+    systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
 
     filter {
       includeTestsMatching("*.*Tests")
@@ -172,4 +175,16 @@ tasks.register("copyJavadocsToBucket") {
     val blobInfo = BlobInfo.newBuilder(blobId).build()
     storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
   }
+}
+
+tasks.register<Jar>("testJar") {
+  from(sourceSets.test.get().output)
+  from(sourceSets.main.get().output)
+  archiveFileName = "testJar.jar"
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.getByName<Test>("test") {
+  dependsOn("testJar")
+  systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
 }

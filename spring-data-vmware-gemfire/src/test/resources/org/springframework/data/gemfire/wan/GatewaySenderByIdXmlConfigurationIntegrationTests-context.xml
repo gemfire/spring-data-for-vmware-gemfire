@@ -21,11 +21,14 @@
 	<util:properties id="gemfireProperties">
 		<prop key="name">GatewaySenderByIdXmlConfigurationIntegrationTests</prop>
 		<prop key="log-level">error</prop>
-		<prop key="locators">localhost[${spring.data.gemfire.locator.port}]</prop>
 		<prop key="distributed-system-id">1</prop>
 	</util:properties>
 
 	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:pool id="connectionPool">
+		<gfe:locator host="localhost" port="${gemfire.locator.port}"/>
+	</gfe:pool>
 
 	<gfe:replicated-region id="Example" persistent="false"
    		gateway-sender-ids="TestGatewaySenderOne, TestGatewaySenderTwo"/>

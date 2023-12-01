@@ -6,6 +6,8 @@ package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ import org.springframework.data.gemfire.fork.ServerProcess;
 import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.io.IOException;
 
 /**
  * Integration Tests for client {@link Region sub-Region} configuration.
@@ -36,14 +40,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ClientSubRegionIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientSubRegionIntegrationTests {
 
+	private static GemFireCluster gemFireCluster;
 	@BeforeClass
-	public static void startGeodeServer() throws Exception {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ClientSubRegionIntegrationTests.class));
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfsh(false, "create region --name=Parent --type=REPLICATE");
+		gemFireCluster.gfsh(false, "create region --name=Parent/Child --type=REPLICATE");
+
+		System.setProperty("gemfire.locator.port",String.valueOf(gemFireCluster.getLocatorPort()));
+		System.setProperty("spring.data.gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 	}
 
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
+	}
 	@Autowired
 	private ClientCache clientCache;
 

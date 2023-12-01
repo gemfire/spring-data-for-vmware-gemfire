@@ -28,6 +28,7 @@ springDependencyManagementVersion = "1.1.4"
 lombokPluginVersion = "8.0.1"
 versionCatalogUpdateVersion = "0.8.4"
 versionsVersion = "0.50.0"
+gemFireTestContainersVersion = "2.0.0"
 
 [libraries]
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
@@ -69,6 +70,7 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombokVersion" }
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
+gemfire-testcontainers = { module = "com.vmware.gemfire:gemfire-testcontainers", version.ref = "gemFireTestContainersVersion" }
 google-cloud-storage = { module = "com.google.cloud:google-cloud-storage", version.ref = "googleCloudStorageVersion" }
 
 [plugins]

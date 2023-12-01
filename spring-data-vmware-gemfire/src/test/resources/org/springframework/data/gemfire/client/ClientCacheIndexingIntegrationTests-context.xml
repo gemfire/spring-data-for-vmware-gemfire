@@ -23,11 +23,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:client-cache properties-ref="gemfireProperties" pool-name="serverConnectionPool"/>
-
-	<gfe:pool id="serverConnectionPool">
-		<gfe:server host="localhost" port="${spring.data.gemfire.cache.server.port}"/>
-	</gfe:pool>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:client-region id="Example" shortcut="LOCAL"/>
 

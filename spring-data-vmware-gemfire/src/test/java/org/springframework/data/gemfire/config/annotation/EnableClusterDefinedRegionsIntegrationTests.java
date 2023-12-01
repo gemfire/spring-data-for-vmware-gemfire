@@ -6,21 +6,22 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.IOException;
 import java.util.Collections;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.gemfire.LocalRegionFactoryBean;
@@ -51,11 +52,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EnableClusterDefinedRegionsIntegrationTests.GeodeClientTestConfiguration.class)
 @SuppressWarnings("unused")
-public class EnableClusterDefinedRegionsIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class EnableClusterDefinedRegionsIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
-	public static void startGeodeServer() throws Exception {
-		startGemFireServer(GeodeServerTestConfiguration.class);
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+
+		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfsh(false, "create region --name=PartitionRegion --type=PARTITION",
+				"create region --name=ReplicateRegion --type=REPLICATE", "create region --name=LocalRegion --type=LOCAL");
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -107,60 +123,15 @@ public class EnableClusterDefinedRegionsIntegrationTests extends ForkingClientSe
 		}
 
 		@Bean
-		ClientCacheConfigurer clientCachePoolPortConfigurer(
-				@Value("${" + GEMFIRE_CACHE_SERVER_PORT_PROPERTY + ":40404}") int port) {
+		ClientCacheConfigurer clientCachePoolPortConfigurer() {
 
-			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setServers(
-				Collections.singletonList(new ConnectionEndpoint("localhost", port)));
+			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setLocators(
+				Collections.singletonList(new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
 		}
 
 		@Bean("TestBean")
 		Object testBean(@Qualifier("LocalRegion") Region<?, ?> localRegion) {
 			return "TEST";
-		}
-	}
-
-	@CacheServerApplication(name = "EnableClusterDefinedRegionsIntegrationTests")
-	static class GeodeServerTestConfiguration {
-
-		public static void main(String[] args) {
-			runSpringApplication(GeodeServerTestConfiguration.class, args);
-		}
-
-		@Bean("LocalRegion")
-		public LocalRegionFactoryBean<Object, Object> localRegion(GemFireCache gemfireCache) {
-
-			LocalRegionFactoryBean<Object, Object> localRegion = new LocalRegionFactoryBean<>();
-
-			localRegion.setCache(gemfireCache);
-			localRegion.setClose(false);
-			localRegion.setPersistent(false);
-
-			return localRegion;
-		}
-
-		@Bean("PartitionRegion")
-		public PartitionedRegionFactoryBean<Object, Object> partitionRegion(GemFireCache gemfireCache) {
-
-			PartitionedRegionFactoryBean<Object, Object> partitionRegion = new PartitionedRegionFactoryBean<>();
-
-			partitionRegion.setCache(gemfireCache);
-			partitionRegion.setClose(false);
-			partitionRegion.setPersistent(false);
-
-			return partitionRegion;
-		}
-
-		@Bean("ReplicateRegion")
-		public ReplicatedRegionFactoryBean<Object, Object> replicateRegion(GemFireCache gemfireCache) {
-
-			ReplicatedRegionFactoryBean<Object, Object> replicateRegion = new ReplicatedRegionFactoryBean<>();
-
-			replicateRegion.setCache(gemfireCache);
-			replicateRegion.setClose(false);
-			replicateRegion.setPersistent(false);
-
-			return replicateRegion;
 		}
 	}
 }

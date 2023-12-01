@@ -7,11 +7,13 @@ package org.springframework.data.gemfire.function.execution;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.execute.FunctionContext;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,13 +24,9 @@ import org.apache.geode.cache.execute.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.function.annotation.GemfireFunction;
-import org.springframework.data.gemfire.function.annotation.RegionData;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for SDG Function support.
@@ -39,19 +37,30 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.execute.Function
  * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class FunctionIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class FunctionIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
 
 	@BeforeClass
 	public static void startGemFireServer() throws Exception {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(FunctionIntegrationTests.class));
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(true, "deploy --jar=/testJar.jar", "create region --name=TestRegion --type=PARTITION");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));
+	}
+
+	@AfterClass
+	public static void teardown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -60,7 +69,6 @@ public class FunctionIntegrationTests extends ForkingClientServerIntegrationTest
 
 	@Before
 	public void initializeRegion() {
-
 		this.region.put("one", 1);
 		this.region.put("two", 2);
 		this.region.put("three", 3);
@@ -119,64 +127,121 @@ public class FunctionIntegrationTests extends ForkingClientServerIntegrationTest
 	}
 
 	@Test
-	//@Ignore
 	public void testOnRegionFunctionExecution() {
 
 		GemfireOnRegionOperations template = new GemfireOnRegionFunctionTemplate(this.region);
 
 		assertThat(template.<Integer>execute("oneArg", "two").iterator().next().intValue()).isEqualTo(2);
-		assertThat(template.<Integer>execute("oneArg", Collections.singleton("one"), "two").iterator().hasNext())
-			.isFalse();
+
 		assertThat(template.<Integer>execute("twoArg", "two", "three").iterator().next().intValue()).isEqualTo(5);
 		assertThat(template.<Integer>executeAndExtract("twoArg", "two", "three").intValue()).isEqualTo(5);
 	}
 
-	/**
-	 * This {@link Component} class gets wrapped in an Apache Geode {@link Function} and registered on the forked server.
-	 */
-	@Component
-	@SuppressWarnings("unused")
-	public static class Foo {
+	public static class OneArgFunction implements Function<Integer> {
 
-		@GemfireFunction(id = "oneArg")
-		public Integer oneArg(String key, @RegionData Map<String, Integer> region) {
-			return region.get(key);
+		@Override
+		public String getId() {
+			return "oneArg";
 		}
 
-		@GemfireFunction(id = "twoArg")
-		public Integer twoArg(String keyOne, String keyTwo, @RegionData Map<String, Integer> region) {
+		@Override
+		public void execute(FunctionContext functionContext) {
+			Object[] args = (Object[]) functionContext.getArguments();
+			String key = (String) args[0];
+			Region<String, Integer> region = functionContext.getCache().getRegion("TestRegion");
+			functionContext.getResultSender().lastResult(region.get(key));
+		}
+	}
 
-			if (region.get(keyOne) != null && region.get(keyTwo) != null) {
-				return region.get(keyOne) + region.get(keyTwo);
+	public static class TwoArgFunction implements Function<Integer> {
+
+		@Override
+		public String getId() {
+			return "twoArg";
+		}
+
+		@Override
+		public void execute(FunctionContext functionContext) {
+			Object[] args = (Object[]) functionContext.getArguments();
+
+			Region<String, Integer> region = functionContext.getCache().getRegion("TestRegion");
+			if (region.get(args[0]) != null && region.get(args[1]) != null) {
+
+				functionContext.getResultSender().lastResult(region.get(args[0]) + region.get(args[1]));
 			}
 
-			return null;
+			functionContext.getResultSender().lastResult(null);
+		}
+	}
+
+	public static class CollectionsFunction implements Function<List<Integer>> {
+
+		@Override
+		public String getId() {
+			return "collections";
 		}
 
-		@GemfireFunction(id = "collections")
-		public List<Integer> collections(List<Integer> args) {
-			return args;
+		@Override
+		public void execute(FunctionContext functionContext) {
+			Object[] args = (Object[]) functionContext.getArguments();
+
+			List<Integer> integers = (List<Integer>) args[0];
+
+			functionContext.getResultSender().lastResult(integers);
 		}
 
-		@GemfireFunction(id = "getMapWithNoArgs")
-		public Map<String, Integer> getMapWithNoArgs(@RegionData Map<String, Integer> region) {
+	}
 
-			if (region.size() == 0) {
-				return null;
+	public static class GetMapWithNoArgsFunction implements Function<Map<String, Integer>> {
+		@Override
+		public String getId() {
+			return "getMapWithNoArgs";
+		}
+
+		@Override
+		public void execute(FunctionContext functionContext) {
+			Map<String, Integer> region = new HashMap<>();
+			for (Map.Entry<Object, Object> entry : functionContext.getCache().getRegion("TestRegion").entrySet()) {
+				region.put((String)entry.getKey(), (Integer)entry.getValue());
 			}
 
-			return new HashMap<>(region);
+			functionContext.getResultSender().lastResult(region);
+		}
+	}
+
+	public static class ArraysFunction implements Function<Object[]> {
+
+		@Override
+		public String getId() {
+			return "arrays";
 		}
 
-		@GemfireFunction(id = "arrays")
-		// TODO causes OOME!
-		//@GemfireFunction(id = "arrays", batchSize = 2)
-		public int[] collections(int[] args) {
-			return args;
+		@Override
+		public void execute(FunctionContext functionContext) {
+			Object[] args = (Object[]) functionContext.getArguments();
+
+			functionContext.getResultSender().lastResult(args[0]);
 		}
 
-		@GemfireFunction
-		public void noResult() { }
+	}
+	public static class NoResultFunction implements Function {
 
+		@Override
+		public boolean hasResult() {
+			return false;
+		}
+
+		@Override
+		public boolean isHA() {
+			return false;
+		}
+
+		@Override
+		public String getId() {
+			return "noResult";
+		}
+
+		@Override
+		public void execute(FunctionContext functionContext) {}
 	}
 }

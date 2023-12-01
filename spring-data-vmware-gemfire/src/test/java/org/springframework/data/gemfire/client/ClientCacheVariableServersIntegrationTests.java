@@ -7,12 +7,8 @@ package org.springframework.data.gemfire.client;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -56,31 +52,29 @@ import org.slf4j.LoggerFactory;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ClientCacheVariableServersIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientCacheVariableServersIntegrationTests {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientCacheVariableServersIntegrationTests.class);
 
+	private static GemFireCluster gemFireCluster;
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		final int cacheServerPortOne = findAndReserveAvailablePort();
-		final int cacheServerPortTwo = findAndReserveAvailablePort();
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 3);
 
-		System.setProperty("test.cache.server.port.one", String.valueOf(cacheServerPortOne));
-		System.setProperty("test.cache.server.port.two", String.valueOf(cacheServerPortTwo));
+		gemFireCluster.acceptLicense().start();
 
-		List<String> arguments = new ArrayList<>();
+		gemFireCluster.gfsh(false, "create region --name=Example --type=REPLICATE");
 
-		arguments.add(String.format("-Dtest.cache.server.port.one=%d", cacheServerPortOne));
-		arguments.add(String.format("-Dtest.cache.server.port.two=%d", cacheServerPortTwo));
-		arguments.add(getServerContextXmlFileLocation(ClientCacheVariableServersIntegrationTests.class));
-
-		startGemFireServer(ServerProcess.class, arguments.toArray(new String[0]));
+		System.setProperty("gemfire.locator.port",String.valueOf(gemFireCluster.getLocatorPort()));
+		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));
+		System.setProperty("test.cache.server.port.one", String.valueOf(gemFireCluster.getServerPorts().get(1)));
+		System.setProperty("test.cache.server.port.two", String.valueOf(gemFireCluster.getServerPorts().get(2)));
 	}
 
 	@AfterClass
-	public static void cleanup() {
-		Arrays.asList("test.cache.server.port.one", "test.cache.server.port.two").forEach(System::clearProperty);
+	public static void shutdown() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -100,6 +94,10 @@ public class ClientCacheVariableServersIntegrationTests extends ForkingClientSer
 		assertThat(this.example.getName()).isEqualTo("Example");
 		assertThat(this.example.getAttributes()).isNotNull();
 		assertThat(this.example.getAttributes().getPoolName()).isEqualTo("serverPool");
+
+		example.put("one", 1);
+		example.put("two", 2);
+		example.put("three", 3);
 	}
 
 	@Test
@@ -108,38 +106,5 @@ public class ClientCacheVariableServersIntegrationTests extends ForkingClientSer
 		assertThat(example.get("one")).isEqualTo(1);
 		assertThat(example.get("two")).isEqualTo(2);
 		assertThat(example.get("three")).isEqualTo(3);
-	}
-
-	public static class CacheMissCounterCacheLoader implements CacheLoader<String, Integer> {
-
-		private static final AtomicInteger cacheMissCounter = new AtomicInteger(0);
-
-		@Override
-		public Integer load(LoaderHelper<String, Integer> helper) throws CacheLoaderException {
-			return cacheMissCounter.incrementAndGet();
-		}
-
-		@Override
-		public void close() {
-			cacheMissCounter.set(0);
-		}
-	}
-
-	public static final class CacheServerConfigurationApplicationListener
-			implements ApplicationListener<ContextRefreshedEvent> {
-
-		@Override
-		public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-
-			ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-
-			Map<String, CacheServer> cacheServers =
-				CollectionUtils.nullSafeMap(applicationContext.getBeansOfType(CacheServer.class));
-
-			assertThat(cacheServers).hasSize(3);
-
-			cacheServers.values().forEach(cacheServer -> logger.info("CacheServer host:port [{}:{}]%n",
-				cacheServer.getBindAddress(), cacheServer.getPort()));
-		}
 	}
 }

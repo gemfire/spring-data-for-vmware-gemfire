@@ -24,10 +24,6 @@ import org.springframework.data.gemfire.function.annotation.OnServer;
 @SuppressWarnings("unused")
 public interface ApplicationDomainFunctionExecutions {
 
-	Class<?>[] captureConvertedArgumentTypes(String stringValue, Integer integerValue, Boolean booleanValue,
-		ClientCacheFunctionExecutionWithPdxIntegrationTest.Person person,
-			ClientCacheFunctionExecutionWithPdxIntegrationTest.Gender gender);
-
 	Class<?>[] captureUnconvertedArgumentTypes(String stringValue, Integer integerValue, Boolean booleanValue,
 		Object person, Object gender);
 

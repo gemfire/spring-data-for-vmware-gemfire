@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.execute.FunctionContext;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,18 +19,15 @@ import org.junit.runner.RunWith;
 import org.apache.geode.cache.execute.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.config.annotation.CacheServerApplication;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
-import org.springframework.data.gemfire.function.annotation.GemfireFunction;
 import org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions;
-import org.springframework.data.gemfire.function.config.EnableGemfireFunctions;
 import org.springframework.data.gemfire.function.sample.AllServersAdminFunctions;
 import org.springframework.data.gemfire.function.sample.Metric;
 import org.springframework.data.gemfire.function.sample.SingleServerAdminFunctions;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.process.ProcessWrapper;
+import org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests testing the return values from {@link Function} executions.
@@ -37,22 +36,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.execute.Function
- * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions
- * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */
 @SuppressWarnings("unused")
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = FunctionsReturnResultsFromAllServersIntegrationTests.TestConfiguration.class)
-public class FunctionsReturnResultsFromAllServersIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class FunctionsReturnResultsFromAllServersIntegrationTests extends ClientServerIntegrationTestsSupport {
 
 	private static final int NUMBER_OF_METRICS = 10;
 
-	private static ProcessWrapper gemfireServer1;
-	private static ProcessWrapper gemfireServer2;
+	private static GemFireCluster gemFireCluster;
 
 	@Autowired
 	private AllServersAdminFunctions allServersAdminFunctions;
@@ -63,28 +58,20 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Forkin
 	@BeforeClass
 	public static void startGemFireServer() throws Exception {
 
-		final int port1 = findAndReserveAvailablePort();
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 2)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(false, "deploy --jar=/testJar.jar");
 
-		gemfireServer1 = run(MetricsFunctionServerConfiguration.class,
-				String.format("-D%s=%d", GEMFIRE_CACHE_SERVER_PORT_PROPERTY, port1));
-
-		waitForServerToStart(DEFAULT_HOSTNAME, port1);
-
-		final int port2 = findAndReserveAvailablePort();
-
-		gemfireServer2 = run(MetricsFunctionServerConfiguration.class,
-				String.format("-D%s=%d", GEMFIRE_CACHE_SERVER_PORT_PROPERTY, port2));
-
-		waitForServerToStart(DEFAULT_HOSTNAME, port2);
+		gemFireCluster.acceptLicense().start();
 
 		System.setProperty(GEMFIRE_POOL_SERVERS_PROPERTY,
-			String.format("%s[%d],%s[%d]", DEFAULT_HOSTNAME, port1, DEFAULT_HOSTNAME, port2));
+			String.format("%s[%d],%s[%d]", DEFAULT_HOSTNAME, gemFireCluster.getServerPorts().get(0),
+					DEFAULT_HOSTNAME, gemFireCluster.getServerPorts().get(1)));
 	}
 
 	@AfterClass
 	public static void stopGemFireServer() {
-		stop(gemfireServer1);
-		stop(gemfireServer2);
+		gemFireCluster.close();
 	}
 
 	@Test
@@ -109,17 +96,10 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Forkin
 	@EnableGemfireFunctionExecutions(basePackageClasses = AllServersAdminFunctions.class)
 	static class TestConfiguration { }
 
-	@CacheServerApplication
-	@EnableGemfireFunctions
-	public static class MetricsFunctionServerConfiguration {
+	public static class MetricsFunctionServerConfiguration implements Function<List<Metric>> {
 
-		public static void main(String[] args) {
-			runSpringApplication(MetricsFunctionServerConfiguration.class, args);
-		}
-
-		@GemfireFunction(id = "GetAllMetricsFunction", hasResult = true)
-		public List<Metric> getMetrics() {
-
+		@Override
+		public void execute(FunctionContext functionContext) {
 			List<Metric> allMetrics = new ArrayList<>();
 
 			for (int i = 0; i < NUMBER_OF_METRICS; i++) {
@@ -127,7 +107,12 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Forkin
 				allMetrics.add(metric);
 			}
 
-			return allMetrics;
+			functionContext.getResultSender().lastResult(allMetrics);
+		}
+
+		@Override
+		public String getId() {
+			return "GetAllMetricsFunction";
 		}
 	}
 }
