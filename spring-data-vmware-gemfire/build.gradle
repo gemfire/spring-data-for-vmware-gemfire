@@ -45,9 +45,9 @@ dependencies {
   compileOnly "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:6.0.12'
-  api 'org.springframework:spring-tx:6.0.12'
-  api 'org.springframework:spring-web:6.0.12'
+  api "org.springframework:spring-context-support:$springFrameworkVersion"
+  api "org.springframework:spring-tx:$springFrameworkVersion"
+  api "org.springframework:spring-web:$springFrameworkVersion"
   api "org.springframework.data:spring-data-commons:$springDataVersion"
   implementation 'org.apache.shiro:shiro-spring:1.12.0'
   implementation 'org.aspectj:aspectjweaver:1.9.20.1'
@@ -69,7 +69,7 @@ dependencies {
   testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
-  testImplementation 'org.springframework:spring-test:6.0.12'
+  testImplementation "org.springframework:spring-test:$springFrameworkVersion"
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.2'
   testImplementation 'ch.qos.logback:logback-classic:1.4.11'
   testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.19.0'
@@ -94,9 +94,9 @@ dependencies {
 
   testImplementation "junit:junit:4.13.2"
   testImplementation "org.mockito:mockito-core:4.8.1"
-  testImplementation "org.projectlombok:lombok:1.18.28"
-  testImplementation "org.springframework:spring-test:6.0.12"
-  testImplementation "org.springframework.boot:spring-boot:3.1.4"
+  testImplementation "org.projectlombok:lombok:1.18.30"
+  testImplementation "org.springframework:spring-test:$springFrameworkVersion"
+  testImplementation "org.springframework.boot:spring-boot:3.1.6"
   testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
