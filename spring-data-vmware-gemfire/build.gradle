@@ -49,14 +49,14 @@ dependencies {
   compileOnly "com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfireVersion"
 
   implementation 'javax.cache:cache-api:1.1.1'
-  api 'org.springframework:spring-context-support:6.1.0-RC1'
-  api 'org.springframework:spring-tx:6.1.0-RC1'
-  api 'org.springframework:spring-web:6.1.0-RC1'
+  api 'org.springframework:spring-context-support:6.1.2'
+  api 'org.springframework:spring-tx:6.1.2'
+  api 'org.springframework:spring-web:6.1.2'
   api "org.springframework.data:spring-data-commons:$springDataVersion"
-  implementation 'org.apache.shiro:shiro-spring:1.12.0'
+  implementation 'org.apache.shiro:shiro-spring:1.13.0'
   implementation 'org.aspectj:aspectjweaver:1.9.20.1'
-  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.16.0'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
   runtimeOnly 'antlr:antlr:2.7.7'
   compileOnly('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
@@ -74,7 +74,7 @@ dependencies {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
   testImplementation 'javax.interceptor:javax.interceptor-api:1.2.2'
-  testImplementation 'ch.qos.logback:logback-classic:1.4.11'
+  testImplementation 'ch.qos.logback:logback-classic:1.4.14'
   testImplementation 'org.apache.logging.log4j:log4j-to-slf4j:2.19.0'
   testImplementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
   testImplementation 'org.apache.derby:derbyLocale_zh_TW:10.9.1.0'
@@ -91,18 +91,20 @@ dependencies {
   testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1') {
     exclude group: 'javax.annotation', module: 'jsr250-api'
   }
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
-  testImplementation 'org.junit.vintage:junit-vintage-engine:5.9.3'
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+  testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
 
   testImplementation "junit:junit:4.13.2"
-  testImplementation "org.assertj:assertj-core:3.22.0"
-  testImplementation "org.mockito:mockito-core:4.8.1"
+  testImplementation "org.assertj:assertj-core:3.24.2"
+  testImplementation "org.mockito:mockito-core:4.11.0"
   testImplementation "org.projectlombok:lombok:1.18.30"
-  testImplementation "org.springframework:spring-test:6.1.0-RC1"
-  testImplementation "org.springframework.boot:spring-boot:3.2.0-M3"
+  testImplementation "org.springframework:spring-test:6.1.2"
+  testImplementation "org.springframework.boot:spring-boot:3.2.0"
   testImplementation 'org.awaitility:awaitility:4.2.0'
 }
+
+tasks.register('prepareKotlinBuildScriptModel') {}
 
 java.sourceCompatibility = JavaVersion.VERSION_17
 java.targetCompatibility = JavaVersion.VERSION_17
