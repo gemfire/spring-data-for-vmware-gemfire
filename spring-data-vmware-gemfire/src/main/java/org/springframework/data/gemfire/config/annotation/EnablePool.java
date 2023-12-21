@@ -103,7 +103,6 @@ public @interface EnablePool {
 
 	/**
 	 * Configures the max number of client to server connections that the pool will create.
-	 * Cannot be used with maxConnectionsPerServer set.
 	 *
 	 * Defaults to {@link PoolFactory#DEFAULT_MAX_CONNECTIONS}.
 	 *
@@ -115,7 +114,6 @@ public @interface EnablePool {
 
 	/**
 	 * Configures the minimum number of connections to keep available at all times.
-	 * Cannot be used with minConnectionsPerServer set.
 	 *
 	 * Defaults to {@link PoolFactory#DEFAULT_MIN_CONNECTIONS}.
 	 *
@@ -124,30 +122,6 @@ public @interface EnablePool {
 	 * in {@literal application.properties}.
 	 */
 	int minConnections() default PoolFactory.DEFAULT_MIN_CONNECTIONS;
-
-	/**
-	 * Configures the max number of client to server connections that the pool will create per server.
-	 * Cannot be used with maxConnections set.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MAX_CONNECTIONS_PER_SERVER}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.<poolName>.max-connections-per-server} property
-	 * or the {@literal spring.data.gemfire.pool.max-connections-per-server} property
-	 * in {@literal application.properties}.
-	 */
-	int maxConnectionsPerServer() default PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
-
-	/**
-	 * Configures the minimum number of connections to keep available per server at all times.
-	 * Cannot be used with minConnections set.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MIN_CONNECTIONS_PER_SERVER}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.<poolName>.min-connections-per-server} property
-	 * or the {@literal spring.data.gemfire.pool.min-connections-per-server} property
-	 * in {@literal application.properties}.
-	 */
-	int minConnectionsPerServer() default PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
 
 	/**
 	 * If set to true then the created pool can be used by multiple users.
