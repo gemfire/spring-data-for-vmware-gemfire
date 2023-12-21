@@ -121,10 +121,6 @@ Defines a connection from a Cache client to a set of GemFire Cache Servers.
 						   use="optional" />
 			<xsd:attribute name="min-connections" type="xsd:string"
 						   use="optional" />
-			<xsd:attribute name="max-connections-per-server" type="xsd:string"
-						   use="optional" />
-			<xsd:attribute name="min-connections-per-server" type="xsd:string"
-						   use="optional" />
 			<xsd:attribute name="multi-user-authentication"
 						   type="xsd:string" use="optional" />
 			<xsd:attribute name="ping-interval" type="xsd:string"

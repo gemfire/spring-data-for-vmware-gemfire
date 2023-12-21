@@ -129,8 +129,6 @@ public class PoolNamespaceIntegrationTests extends IntegrationTestsSupport {
 		assertThat(Boolean.TRUE.equals(TestUtils.readField("keepAlive", poolFactoryBean))).isTrue();
 		assertThat(pool.getMaxConnections()).isEqualTo(100);
 		assertThat(pool.getMinConnections()).isEqualTo(5);
-		assertThat(pool.getMaxConnectionsPerServer()).isEqualTo(200);
-		assertThat(pool.getMinConnectionsPerServer()).isEqualTo(2);
 		assertThat(pool.getMultiuserAuthentication()).isTrue();
 		assertThat(pool.getPingInterval()).isEqualTo(5000L);
 		assertThat(pool.getPRSingleHopEnabled()).isFalse();

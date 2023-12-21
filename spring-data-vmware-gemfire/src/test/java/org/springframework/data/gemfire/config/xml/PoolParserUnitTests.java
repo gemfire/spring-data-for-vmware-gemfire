@@ -109,8 +109,6 @@ public class PoolParserUnitTests {
 		when(mockPoolElement.getAttribute(eq("load-conditioning-interval"))).thenReturn("300000");
 		when(mockPoolElement.getAttribute(eq("max-connections"))).thenReturn("500");
 		when(mockPoolElement.getAttribute(eq("min-connections"))).thenReturn("50");
-		when(mockPoolElement.getAttribute(eq("max-connections-per-server"))).thenReturn("100");
-		when(mockPoolElement.getAttribute(eq("min-connections-per-server"))).thenReturn("10");
 		when(mockPoolElement.getAttribute(eq("multi-user-authentication"))).thenReturn("true");
 		when(mockPoolElement.getAttribute(eq("ping-interval"))).thenReturn("15000");
 		when(mockPoolElement.getAttribute(eq("pr-single-hop-enabled"))).thenReturn("true");
@@ -157,8 +155,6 @@ public class PoolParserUnitTests {
 		assertPropertyValue(poolDefinition, "loadConditioningInterval", "300000");
 		assertPropertyValue(poolDefinition, "maxConnections", "500");
 		assertPropertyValue(poolDefinition, "minConnections", "50");
-		assertPropertyValue(poolDefinition, "maxConnectionsPerServer", "100");
-		assertPropertyValue(poolDefinition, "minConnectionsPerServer", "10");
 		assertPropertyValue(poolDefinition, "multiUserAuthentication", "true");
 		assertPropertyValue(poolDefinition, "pingInterval", "15000");
 		assertPropertyValue(poolDefinition, "prSingleHopEnabled", "true");
@@ -195,8 +191,6 @@ public class PoolParserUnitTests {
 		verify(mockPoolElement, times(1)).getAttribute(eq("load-conditioning-interval"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("max-connections"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("min-connections"));
-		verify(mockPoolElement, times(1)).getAttribute(eq("max-connections-per-server"));
-		verify(mockPoolElement, times(1)).getAttribute(eq("min-connections-per-server"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("multi-user-authentication"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("ping-interval"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("pr-single-hop-enabled"));

@@ -112,16 +112,6 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 				resolveProperty(poolProperty("min-connections"),
 					enablePoolAttributes.<Integer>getNumber("minConnections"))));
 
-		poolFactoryBean.addPropertyValue("maxConnectionsPerServer",
-				resolveProperty(namedPoolProperty(poolName, "max-connections-per-server"),
-						resolveProperty(poolProperty("max-connections-per-server"),
-								enablePoolAttributes.<Integer>getNumber("maxConnectionsPerServer"))));
-
-		poolFactoryBean.addPropertyValue("minConnectionsPerServer",
-				resolveProperty(namedPoolProperty(poolName, "min-connections-per-server"),
-						resolveProperty(poolProperty("min-connections-per-server"),
-								enablePoolAttributes.<Integer>getNumber("minConnectionsPerServer"))));
-
 		poolFactoryBean.addPropertyValue("multiUserAuthentication",
 			resolveProperty(namedPoolProperty(poolName, "multi-user-authentication"),
 				resolveProperty(poolProperty("multi-user-authentication"),

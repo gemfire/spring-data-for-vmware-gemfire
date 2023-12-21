@@ -96,8 +96,6 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setLocators(Collections.singletonList(newConnectionEndpoint("localhost", 54321)));
 		poolFactoryBean.setMaxConnections(50);
 		poolFactoryBean.setMinConnections(5);
-		poolFactoryBean.setMaxConnectionsPerServer(10);
-		poolFactoryBean.setMinConnectionsPerServer(1);
 		poolFactoryBean.setMultiUserAuthentication(false);
 		poolFactoryBean.setPingInterval(5000L);
 		poolFactoryBean.setPoolResolver(mockPoolResolver);
@@ -127,8 +125,6 @@ public class PoolFactoryBeanUnitTests {
 		verify(mockPoolFactory, times(1)).setLoadConditioningInterval(eq(15000));
 		verify(mockPoolFactory, times(1)).setMaxConnections(eq(50));
 		verify(mockPoolFactory, times(1)).setMinConnections(eq(5));
-		verify(mockPoolFactory, times(1)).setMaxConnectionsPerServer(eq(10));
-		verify(mockPoolFactory, times(1)).setMinConnectionsPerServer(eq(1));
 		verify(mockPoolFactory, times(1)).setMultiuserAuthentication(eq(false));
 		verify(mockPoolFactory, times(1)).setPingInterval(eq(5000L));
 		verify(mockPoolFactory, times(1)).setPRSingleHopEnabled(eq(true));
@@ -369,8 +365,6 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setLocators(ArrayUtils.asArray(newConnectionEndpoint("skullbox", 11235)));
 		poolFactoryBean.setMaxConnections(500);
 		poolFactoryBean.setMinConnections(50);
-		poolFactoryBean.setMaxConnectionsPerServer(50);
-		poolFactoryBean.setMinConnectionsPerServer(5);
 		poolFactoryBean.setMultiUserAuthentication(true);
 		poolFactoryBean.setPingInterval(15000L);
 		poolFactoryBean.setPrSingleHopEnabled(true);
@@ -399,8 +393,6 @@ public class PoolFactoryBeanUnitTests {
 		assertThat(pool.getLocators()).isEqualTo(Collections.singletonList(newSocketAddress("skullbox", 11235)));
 		assertThat(pool.getMaxConnections()).isEqualTo(500);
 		assertThat(pool.getMinConnections()).isEqualTo(50);
-		assertThat(pool.getMaxConnectionsPerServer()).isEqualTo(50);
-		assertThat(pool.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(pool.getMultiuserAuthentication()).isTrue();
 		assertThat(pool.getName()).isNull();
 		assertThat(pool.getPingInterval()).isEqualTo(15000L);
