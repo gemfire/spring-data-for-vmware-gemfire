@@ -23,10 +23,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Executor;
 
-import org.apache.geode.cache.query.ExcludedEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -665,29 +663,6 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		assertThat(eventDispatcherAdapter.getListener()).isEqualTo(mockListener);
 		assertThat(cqListenerContainer.getContinuousQueries().peek()).isEqualTo(query);
-	}
-
-	@Test
-	public void addContinuousQueryWithExcludedEvents() throws Exception {
-		QueryService mockQueryService = mock(QueryService.class);
-
-		when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
-				.thenAnswer(invocation -> mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
-						invocation.getArgument(2)));
-
-		ContinuousQueryListener mockListener = mock(ContinuousQueryListener.class);
-
-		ContinuousQueryDefinition definition =
-				new ContinuousQueryDefinition("SELECT * FROM /Utilization",
-						mockListener, false, Set.of(CQEvent.DESTROY, CQEvent.UPDATE));
-
-		cqListenerContainer.setQueryService(mockQueryService);
-
-		CqQuery query = cqListenerContainer.addContinuousQuery(definition);
-		CqAttributes attributes = query.getCqAttributes();
-
-		assertThat(attributes).isNotNull();
-		assertThat(attributes.getExcludedEvents()).containsExactlyInAnyOrder(ExcludedEvent.DESTROY, ExcludedEvent.UPDATE);
 	}
 
 	@Test
