@@ -672,7 +672,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 
 		try {
 
-			CqAttributes attributes = definition.toCqAttributes(this::newCqListener, definition.getExcludedEvents());
+			CqAttributes attributes = definition.toCqAttributes(this::newCqListener);
 
 			CqQuery query = definition.isNamed()
 				? newNamedContinuousQuery(definition, attributes)
