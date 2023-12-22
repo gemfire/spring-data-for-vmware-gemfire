@@ -108,22 +108,6 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	}
 
 	@Override
-	public int getMaxConnectionsPerServer() {
-
-		return Optional.ofNullable(getDelegate())
-				.map(Pool::getMaxConnectionsPerServer)
-				.orElseGet(super::getMaxConnectionsPerServer);
-	}
-
-	@Override
-	public int getMinConnectionsPerServer() {
-
-		return Optional.ofNullable(getDelegate())
-				.map(Pool::getMinConnectionsPerServer)
-				.orElseGet(super::getMinConnectionsPerServer);
-	}
-
-	@Override
 	public boolean getMultiuserAuthentication() {
 
 		return Optional.ofNullable(getDelegate())
