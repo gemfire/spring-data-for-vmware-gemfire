@@ -1,0 +1,81 @@
+[versions]
+cacheApiVersion = "1.1.1"
+springFrameworkVersion = "6.0.15"
+springShiroVersion = "1.12.0"
+springShellVersion = "1.2.0.RELEASE"
+springBootVersion = "3.1.7"
+aspectJVersion = "1.9.20.1"
+jacksonVersion = "2.15.2"
+antlrVersion = "2.7.7"
+cdiApiVersion = "4.0.1"
+interceptorApiVersion = "1.2.2"
+logbackVersion = "1.4.14"
+log4JVersion = "2.19.0"
+annotationApiVersion = "2.1.1"
+derbyVersion = "10.9.1.0"
+openWebBeansVersion = "2.0.27"
+assertJVersion = "3.24.0"
+snappyVersion = "0.4"
+multithreadedTCVersion = "1.01"
+jUnitJupiterVersion = "5.9.3"
+jUnitVersion = "4.13.2"
+mockitoVersion = "4.8.1"
+lombokVersion = "1.18.30"
+awaitilityVersion = "4.2.0"
+googleCloudStorageVersion = "2.30.1"
+springDependencyManagementVersion = "1.1.0"
+lombokPluginVersion = "8.0.1"
+versionCatalogUpdateVersion = "0.8.3"
+versionsVersion = "0.50.0"
+
+[libraries]
+gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
+gemfire-logging = { module = "com.vmware.gemfire:gemfire-logging", version.ref = "gemfireVersion" }
+gemfire-cq = { module = "com.vmware.gemfire:gemfire-cq", version.ref = "gemfireVersion" }
+gemfire-wan = { module = "com.vmware.gemfire:gemfire-wan", version.ref = "gemfireVersion" }
+gemfire-gfsh = { module = "com.vmware.gemfire:gemfire-gfsh", version.ref = "gemfireVersion" }
+gemfire-tcp-server = { module = "com.vmware.gemfire:gemfire-tcp-server", version.ref = "gemfireVersion" }
+gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
+cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
+spring-context-support = { module = "org.springframework:spring-context-support", version.ref = "springFrameworkVersion" }
+spring-tx = { module = "org.springframework:spring-tx", version.ref = "springFrameworkVersion" }
+spring-web = { module = "org.springframework:spring-web", version.ref = "springFrameworkVersion" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "springFrameworkVersion" }
+spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataVersion" }
+spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
+spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
+spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
+aspectJ = { module = "org.aspectj:aspectjweaver", version.ref = "aspectJVersion" }
+jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
+antlr = { module = "antlr:antlr", version.ref = "antlrVersion" }
+cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
+interceptor-api = { module = "javax.interceptor:javax.interceptor-api", version.ref = "interceptorApiVersion" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
+log4J = { module = "org.apache.logging.log4j:log4j-to-slf4j", version.ref = "log4JVersion" }
+annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "annotationApiVersion" }
+derby = { module = "org.apache.derby:derbyLocale_zh_TW", version.ref = "derbyVersion" }
+openwebbeans-se = { module = "org.apache.openwebbeans:openwebbeans-se", version.ref = "openWebBeansVersion" }
+openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", version.ref = "openWebBeansVersion" }
+openwebbeans-impl = { module = "org.apache.openwebbeans:openwebbeans-impl", version.ref = "openWebBeansVersion" }
+snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
+multithreadedtc = { module = "edu.umd.cs.mtc:multithreadedtc", version.ref = "multithreadedTCVersion" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jUnitJupiterVersion" }
+junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
+junit = { module = "junit:junit", version.ref = "jUnitVersion" }
+assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" }
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombokVersion" }
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
+google-cloud-storage = { module = "com.google.cloud:google-cloud-storage", version.ref = "googleCloudStorageVersion" }
+
+[plugins]
+versions = { id = "com.github.ben-manes.versions", version.ref = "versionsVersion" }
+version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdateVersion" }
+lombok = { id = "io.freefair.lombok", version.ref = "lombokPluginVersion" }
+dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagementVersion" }
+
+[bundles]
+gemfire = ["gemfire-core", "gemfire-logging", "gemfire-cq", "gemfire-gfsh", "gemfire-wan", "gemfire-tcp-server", "gemfire-deployment-chained-classloader"]
+jackson = ["jackson-annotation", "jackson-databind"]
