@@ -1,15 +1,5 @@
 [versions]
 kotlinVersion = "1.9.21"
-ratVersion = "0.7.1"
-gradleVersionsPluginVersion = "0.42.0"
-sonarqubeVersion = "3.3"
-japicmpVersion = "0.3.0"
-spotlessVersion = "6.11.0"
 
 [libraries]
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinVersion" }
-rat = { module = "org.nosphere.apache:creadur-rat-gradle", version.ref = "ratVersion" }
-gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPluginVersion" }
-sonarqube = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarqubeVersion" }
-japicmp = { module = "me.champeau.gradle:japicmp-gradle-plugin", version.ref = "japicmpVersion" }
-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotlessVersion" }

@@ -12,9 +12,4 @@ repositories {
 
 dependencies {
   implementation(libs.kotlin)
-  implementation(libs.rat)
-  implementation(libs.gradle.versions.plugin)
-  implementation(libs.sonarqube)
-  implementation(libs.japicmp)
-  implementation(libs.spotless)
 }
