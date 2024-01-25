@@ -6,6 +6,7 @@ package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.ArgumentMatchers.same;
@@ -289,7 +290,7 @@ public class GemfireDataSourcePostProcessorTest {
 			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
 
 		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class));
+			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());
 	}
 
 	@Test
@@ -312,7 +313,7 @@ public class GemfireDataSourcePostProcessorTest {
 			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
 
 		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class));
+			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());
 	}
 
 	@Test
@@ -338,7 +339,7 @@ public class GemfireDataSourcePostProcessorTest {
 			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
 
 		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class));
+			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());
 
 		verify(postProcessor, times(1))
 			.logDebug(startsWith("Failed to determine the Regions available on the Server:"), any());

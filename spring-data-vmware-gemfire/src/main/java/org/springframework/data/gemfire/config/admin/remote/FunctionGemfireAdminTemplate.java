@@ -92,7 +92,7 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 		}
 		catch (Exception cause) {
 			try {
-				return Optional.ofNullable(execute(new GetRegionsFunction()))
+				return Optional.ofNullable(execute(new GetRegionsFunction(), false))
 					.filter(this::containsRegionInformation)
 					.map(regionInformationArray ->
 						stream(nullSafeArray((Object[]) regionInformationArray, Object.class))

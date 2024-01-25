@@ -343,7 +343,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 			assertThat(requestBody.getFirst("name")).isEqualTo(indexDefinition.getName());
 			assertThat(requestBody.getFirst("expression")).isEqualTo(indexDefinition.getExpression());
 			assertThat(requestBody.getFirst("region")).isEqualTo(indexDefinition.getFromClause());
-			assertThat(requestBody.getFirst("type")).isEqualTo(indexDefinition.getIndexType().toString());
+			assertThat(requestBody.getFirst("type")).isEqualTo(indexDefinition.getIndexType().getGemfireIndexType().getName());
 
 			return new ResponseEntity(HttpStatus.OK);
 		});

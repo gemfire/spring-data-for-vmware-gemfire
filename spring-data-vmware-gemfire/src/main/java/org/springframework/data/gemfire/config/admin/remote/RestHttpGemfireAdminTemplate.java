@@ -256,7 +256,7 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 		httpRequestParameters.add("name", indexDefinition.getName());
 		httpRequestParameters.add("expression", indexDefinition.getExpression());
 		httpRequestParameters.add("region", indexDefinition.getFromClause());
-		httpRequestParameters.add("type", indexDefinition.getIndexType().toString());
+		httpRequestParameters.add("type", indexDefinition.getIndexType().getGemfireIndexType().getName());
 
 		RequestEntity<MultiValueMap<String, Object>> requestEntity =
 			new RequestEntity<>(httpRequestParameters, httpHeaders, HttpMethod.POST, resolveCreateIndexUri());
