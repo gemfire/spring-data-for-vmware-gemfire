@@ -6,9 +6,9 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Collections;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,15 +19,12 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.gemfire.IndexFactoryBean;
 import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate;
@@ -67,9 +64,19 @@ public class EnableClusterConfigurationIntegrationTests extends ForkingClientSer
 
 	private GemfireAdminOperations adminOperations;
 
+	private static GemFireCluster gemFireCluster;
+
 	@BeforeClass
 	public static void startGemFireServer() throws Exception {
-		startGemFireServer(GeodeServerTestConfiguration.class);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=RegionTwo --type=REPLICATE",
+						"create region --name=RegionFour --type=PARTITION",
+						"create index --name=IndexTwo --region=RegionTwo --type=HASH --expression=name");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+		System.setProperty("spring.data.gemfire.management.http.port", String.valueOf(gemFireCluster.getHttpPorts().get(0)));
 	}
 
 	@Before
@@ -78,26 +85,25 @@ public class EnableClusterConfigurationIntegrationTests extends ForkingClientSer
 		this.adminOperations = new RestHttpGemfireAdminTemplate.Builder()
 			.with(this.gemfireCache)
 			.on("localhost")
-			.listenOn(Integer.getInteger(GEMFIRE_CACHE_SERVER_PORT_PROPERTY, 40404))
+			.listenOn(gemFireCluster.getServerPorts().get(0))
 			.build();
 	}
 
 	@Test
 	public void serverIndexesAreCorrect() {
-
-		assertThat(this.adminOperations.getAvailableServerRegionIndexes())
-			.containsAll(Arrays.asList("IndexOne", "IndexTwo"));
+		assertThat(gemFireCluster.gfsh(false, "list indexes"))
+			.contains("IndexOne", "IndexTwo");
 	}
 
 	@Test
 	public void serverRegionsAreCorrect() {
 
-		assertThat(this.adminOperations.getAvailableServerRegions())
-			.containsAll(Arrays.asList("RegionOne", "RegionTwo", "RegionThree", "RegionFour"));
+		assertThat(gemFireCluster.gfsh(false, "list regions"))
+			.contains("RegionOne", "RegionTwo", "RegionThree", "RegionFour");
 	}
 
 	@Configuration
-	@EnableClusterConfiguration
+	@EnableClusterConfiguration(useHttp = true, requireHttps = false)
 	@Import(GeodeClientTestConfiguration.class)
 	static class TestConfiguration { }
 
@@ -105,11 +111,10 @@ public class EnableClusterConfigurationIntegrationTests extends ForkingClientSer
 	static class GeodeClientTestConfiguration {
 
 		@Bean
-		ClientCacheConfigurer clientCachePoolPortConfigurer(
-				@Value("${" + GEMFIRE_CACHE_SERVER_PORT_PROPERTY + ":40404}") int port) {
+		ClientCacheConfigurer clientCachePoolPortConfigurer() {
 
 			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean
-				.setServers(Collections.singletonList(new ConnectionEndpoint("localhost", port)));
+				.setServers(Collections.singletonList(new ConnectionEndpoint("localhost", gemFireCluster.getServerPorts().get(0))));
 		}
 
 		@Bean("IndexOne")
@@ -160,59 +165,6 @@ public class EnableClusterConfigurationIntegrationTests extends ForkingClientSer
 			clientRegionFactory.setShortcut(ClientRegionShortcut.CACHING_PROXY);
 
 			return clientRegionFactory;
-		}
-	}
-
-	@CacheServerApplication(name = "EnableClusterConfigurationIntegrationTests")
-	static class GeodeServerTestConfiguration {
-
-		public static void main(String[] args) {
-			runSpringApplication(GeodeServerTestConfiguration.class, args);
-		}
-
-		@Bean
-		CacheServerConfigurer cacheServerPortConfigurer(
-				@Value("${" + GEMFIRE_CACHE_SERVER_PORT_PROPERTY + ":40404}") int port) {
-
-			return (bean, cacheServerFactoryBean) -> cacheServerFactoryBean.setPort(port);
-		}
-
-		@Bean("IndexTwo")
-		@DependsOn("RegionTwo")
-		IndexFactoryBean indexTwo(GemFireCache gemfireCache) {
-
-			IndexFactoryBean indexFactory = new IndexFactoryBean();
-
-			indexFactory.setCache(gemfireCache);
-			indexFactory.setExpression("name");
-			indexFactory.setFrom("/RegionTwo");
-			indexFactory.setType(IndexType.HASH);
-
-			return indexFactory;
-		}
-
-		@Bean("RegionTwo")
-		ReplicatedRegionFactoryBean<Object, Object> regionTwo(GemFireCache gemfireCache) {
-
-			ReplicatedRegionFactoryBean<Object, Object> regionFactoryBean = new ReplicatedRegionFactoryBean<>();
-
-			regionFactoryBean.setCache(gemfireCache);
-			regionFactoryBean.setClose(false);
-			regionFactoryBean.setPersistent(false);
-
-			return regionFactoryBean;
-		}
-
-		@Bean("RegionFour")
-		PartitionedRegionFactoryBean<Object, Object> regionFour(GemFireCache gemfireCache) {
-
-			PartitionedRegionFactoryBean<Object, Object> regionFactoryBean = new PartitionedRegionFactoryBean<>();
-
-			regionFactoryBean.setCache(gemfireCache);
-			regionFactoryBean.setClose(false);
-			regionFactoryBean.setPersistent(false);
-
-			return regionFactoryBean;
 		}
 	}
 }

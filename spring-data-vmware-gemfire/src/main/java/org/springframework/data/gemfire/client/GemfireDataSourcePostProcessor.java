@@ -159,7 +159,8 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 
 			try {
 
-				Object results = execute(clientCache, new GetRegionsFunction());
+				// adding false as an argument due to behavior change in GemFire 10.1
+				Object results = execute(clientCache, new GetRegionsFunction(), false);
 
 				List<String> regionNames = Collections.emptyList();
 

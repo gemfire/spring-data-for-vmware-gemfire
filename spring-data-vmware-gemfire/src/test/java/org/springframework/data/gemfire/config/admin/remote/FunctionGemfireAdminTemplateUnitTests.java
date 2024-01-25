@@ -7,6 +7,7 @@ package org.springframework.data.gemfire.config.admin.remote;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
@@ -150,8 +151,8 @@ public class FunctionGemfireAdminTemplateUnitTests {
 		Object[] regionInformation = asArray(newRegionInformation("MockRegionOne"),
 			newRegionInformation("MockRegionTwo"));
 
-		when(this.mockFunctionOperations.executeAndExtract(isA(GetRegionsFunction.class)))
-			.thenReturn(regionInformation);
+		when(this.mockFunctionOperations.executeAndExtract(isA(GetRegionsFunction.class), anyBoolean()))
+				.thenReturn(regionInformation);
 
 		Iterable<String> availableServerRegions = this.template.getAvailableServerRegions();
 
@@ -163,7 +164,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 			.executeAndExtract(isA(ListRegionsOnServerFunction.class));
 
 		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(isA(GetRegionsFunction.class));
+			.executeAndExtract(isA(GetRegionsFunction.class), eq(false));
 	}
 
 	@Test
