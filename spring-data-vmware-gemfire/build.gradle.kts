@@ -1,5 +1,7 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
+/*
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
@@ -103,7 +105,7 @@ tasks {
 }
 
 repositories {
-  val additionalMavenRepoURLs = project.ext.get("additionalMavenRepoURLs") as String
+  val additionalMavenRepoURLs: String by project
   if (additionalMavenRepoURLs.isNotEmpty() && additionalMavenRepoURLs.isNotBlank()) {
     additionalMavenRepoURLs.split(",").forEach {
       project.repositories.maven {
@@ -126,8 +128,8 @@ fun getGemFireBaseVersion(): String {
 tasks.register("copyJavadocsToBucket") {
   dependsOn(":javadocJar")
   doLast {
-    val storage = StorageOptions.newBuilder().setProjectId(property("docsGCSProject") as String).build().getService()
-    val blobId = BlobId.of(property("docsGCSBucket") as String, "${property("pomProjectArtifactName")}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
+    val storage = StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
+    val blobId = BlobId.of(project.properties["docsGCSBucket"].toString(), "${publishingDetails.artifactName.get()}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
     val blobInfo = BlobInfo.newBuilder(blobId).build()
     storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
   }
