@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) VMware, Inc. 2024. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import java.io.FileInputStream
 import java.util.*
 
@@ -31,6 +36,5 @@ private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBui
 
 private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
   versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
-  versionOverrideFromProperty(versionCatalogBuilder, "springDataGeodeVersion", properties)
 }
 

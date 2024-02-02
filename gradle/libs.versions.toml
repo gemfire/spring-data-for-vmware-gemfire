@@ -1,5 +1,6 @@
 [versions]
 cacheApiVersion = "1.1.1"
+springDataVersion= "2.7.18"
 springFrameworkVersion = "5.3.31"
 springShiroVersion = "1.12.0"
 springShellVersion = "1.2.0.RELEASE"
@@ -43,7 +44,7 @@ spring-context-support = { module = "org.springframework:spring-context-support"
 spring-tx = { module = "org.springframework:spring-tx", version.ref = "springFrameworkVersion" }
 spring-web = { module = "org.springframework:spring-web", version.ref = "springFrameworkVersion" }
 spring-test = { module = "org.springframework:spring-test", version.ref = "springFrameworkVersion" }
-spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataGeodeVersion" }
+spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
