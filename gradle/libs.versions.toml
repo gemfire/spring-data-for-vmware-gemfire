@@ -1,10 +1,11 @@
 [versions]
 cacheApiVersion = "1.1.1"
+springDataVersion = "3.0.12"
 springFrameworkVersion = "6.0.15"
 springShiroVersion = "1.12.0"
 springShellVersion = "1.2.0.RELEASE"
 springBootVersion = "3.0.13"
-springTestVersion = "1.0.0"
+springTestGemFireVersion = "1.0.0"
 aspectJVersion = "1.9.20.1"
 jacksonVersion = "2.14.3"
 antlrVersion = "2.7.7"
@@ -45,7 +46,7 @@ spring-data-commons = { module = "org.springframework.data:spring-data-commons",
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
-spring-test-gemfire = { module = "com.vmware.gemfire:spring-test-gemfire-9.15-3.0", version.ref = "springTestVersion" }
+spring-test-gemfire = { module = "com.vmware.gemfire:spring-test-gemfire-9.15-3.0", version.ref = "springTestGemFireVersion" }
 aspectJ = { module = "org.aspectj:aspectjweaver", version.ref = "aspectJVersion" }
 jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
