@@ -1,5 +1,7 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
+/*
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
@@ -60,13 +62,18 @@ fun isPatch(candidateVersion: String, currentVersion: String): Boolean {
   val candidateSplit = candidateVersion.split(".")
   val currentSplit = currentVersion.split(".")
 
-  if (candidateSplit.size == currentSplit.size && currentSplit.size == 3) {
-    if (candidateSplit[0] != currentSplit[0]) {
-      return false
+  if (currentSplit.size == 3) {
+    if (candidateSplit.size == currentSplit.size) {
+      if (candidateSplit[0] != currentSplit[0]) {
+        return false
+      }
+      if (candidateSplit[1] != currentSplit[1]) {
+        return false
+      }
+      return true
     }
-    if (candidateSplit[1] != currentSplit[1]) {
-      return false
-    }
+  } else {
+    return false
   }
-  return true
+  return false
 }
