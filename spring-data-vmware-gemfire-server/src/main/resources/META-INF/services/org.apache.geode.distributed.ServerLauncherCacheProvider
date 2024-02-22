@@ -1,0 +1,6 @@
+#
+# Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+org.springframework.data.gemfire.support.SpringServerLauncherCacheProvider
