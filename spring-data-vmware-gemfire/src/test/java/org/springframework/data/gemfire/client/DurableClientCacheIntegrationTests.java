@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.jupiter.api.Order;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
@@ -235,6 +236,7 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 
     @Test
     @DirtiesContext
+		@Order(1)
     public void durableClientGetsInitializedWithDataOnServer() {
 
         assumeTrue(isBeforeDirtiesContext());
@@ -243,6 +245,7 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
     }
 
     @Test
+		@Order(2)
     public void durableClientGetsUpdatesFromServerWhileClientWasOffline() {
 
         assumeTrue(isAfterDirtiesContext());
