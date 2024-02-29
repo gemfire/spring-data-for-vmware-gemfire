@@ -1,24 +1,30 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assume.assumeTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.DataPolicy;
+import org.apache.geode.cache.EntryEvent;
+import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.awaitility.Awaitility;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,26 +34,16 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EntryEvent;
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.util.CacheListenerAdapter;
-
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.DistributedSystemUtils;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
+
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 
 /**
  * Integration Tests to test Apache Geode durable clients.
@@ -64,238 +60,233 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3
  */
-@RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@ContextConfiguration
 @SuppressWarnings("all")
 public class DurableClientCacheIntegrationTests extends IntegrationTestsSupport {
 
-    private static final boolean DEBUG = true;
+	private static final boolean DEBUG = true;
 
-    private static AtomicBoolean dirtiesContext = new AtomicBoolean(false);
+	private static List<Integer> regionCacheListenerEventValues = Collections.synchronizedList(new ArrayList<Integer>());
 
-    private static List<Integer> regionCacheListenerEventValues =
-            Collections.synchronizedList(new ArrayList<Integer>());
+	private static final String CLIENT_CACHE_INTEREST_RESULT_POLICY = DurableClientCacheIntegrationTests.class.getName()
+			.concat(".interests-result-policy");
 
-    private static final String CLIENT_CACHE_INTEREST_RESULT_POLICY =
-            DurableClientCacheIntegrationTests.class.getName().concat(".interests-result-policy");
+	private static final String DURABLE_CLIENT_TIMEOUT = DurableClientCacheIntegrationTests.class.getName()
+			.concat(".durable-client-timeout");
 
-    private static final String DURABLE_CLIENT_TIMEOUT =
-            DurableClientCacheIntegrationTests.class.getName().concat(".durable-client-timeout");
+	private static final String SERVER_HOST = "localhost";
+	private static GemFireCluster gemFireCluster;
+	private ClassPathXmlApplicationContext applicationContext;
 
-    private static GemFireCluster gemFireCluster;
+	@BeforeClass
+	public static void startGeodeServer() throws IOException {
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
 
-    @BeforeClass
-    public static void startGeodeServer() throws IOException {
+		gemFireCluster.acceptLicense().start();
 
-        gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+		gemFireCluster.gfsh(false, "create region --name=Example --type=REPLICATE");
+		gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=one --value=1");
+		gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=two --value=2");
+		gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=three --value=3");
 
-        gemFireCluster.acceptLicense().start();
+		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
+	}
 
-        gemFireCluster.gfsh(false, "create region --name=Example --type=REPLICATE");
-        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=one --value=1");
-        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=two --value=2");
-        gemFireCluster.gfsh(false, "put --region=Example --value-class=java.lang.Integer --key=three --value=3");
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
+	}
 
-        System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
-    }
+	private ClientCache clientCache;
 
-    @AfterClass
-    public static void shutdown() {
-        gemFireCluster.close();
-    }
+	private Region<String, Integer> example;
 
-    private static boolean isAfterDirtiesContext() {
-        return dirtiesContext.get();
-    }
+	@Before
+	public void setup() {
+		initializeClientCache();
 
-    private static boolean isBeforeDirtiesContext() {
-        return !isAfterDirtiesContext();
-    }
+		Properties distributedSystemProperties = this.clientCache.getDistributedSystem().getProperties();
 
-    private boolean dirtiesContext() {
-        return !dirtiesContext.getAndSet(true);
-    }
+		assertThat(distributedSystemProperties).isNotNull();
 
-    private <T> T valueBeforeAndAfterDirtiesContext(T valueBefore, T valueAfter) {
-        return isBeforeDirtiesContext() ? valueBefore : valueAfter;
-    }
+		assertThat(distributedSystemProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_ID_PROPERTY_NAME))
+				.isEqualTo(DurableClientCacheIntegrationTests.class.getSimpleName());
+	}
 
-    @Autowired
-    private ClientCache clientCache;
+	private void initializeClientCache() {
+		applicationContext = new ClassPathXmlApplicationContext(
+				"org/springframework/data/gemfire/client/DurableClientCacheIntegrationTests-context.xml");
+		applicationContext.start();
+		this.clientCache = applicationContext.getBean(ClientCache.class);
+		this.example = applicationContext.getBean("Example", Region.class);
+	}
 
-    @Autowired
-    @Qualifier("Example")
-    private Region<String, Integer> example;
+	@After
+	public void tearDown() {
+		closeClientCache(this.clientCache, false);
+		applicationContext.close();
+		regionCacheListenerEventValues.clear();
+	}
 
-    @Before
-    public void setup() {
+	private void closeClientCache(ClientCache clientCache, boolean keepAlive) {
 
-        Properties distributedSystemProperties = this.clientCache.getDistributedSystem().getProperties();
+		Function<GemFireCache, GemFireCache> cacheClosingFunction = cacheToClose -> {
+			((ClientCache) cacheToClose).close(keepAlive);
+			return cacheToClose;
+		};
 
-        assertThat(distributedSystemProperties).isNotNull();
+		if (Objects.nonNull(clientCache)) {
+			closeGemFireCacheWaitOnCacheClosedEvent(() -> clientCache, cacheClosingFunction, TimeUnit.SECONDS.toMillis(5L));
+		}
+	}
 
-        assertThat(distributedSystemProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_ID_PROPERTY_NAME))
-                .isEqualTo(DurableClientCacheIntegrationTests.class.getSimpleName());
+	private void runClientCacheProducer() {
 
-        assertThat(distributedSystemProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_TIMEOUT_PROPERTY_NAME))
-                .isEqualTo(valueBeforeAndAfterDirtiesContext("300", "600"));
+		ClientCache clientCache = null;
 
-        assertRegion(this.example, "Example", DataPolicy.NORMAL);
-    }
+		try {
+			clientCache = new ClientCacheFactory().addPoolLocator("localhost", Integer.getInteger("gemfire.locator.port"))
+					.set("name", "ClientCacheProducer").set("log-level", "error").create();
 
-    @After
-    public void tearDown() {
+			Region<String, Integer> exampleRegion = clientCache
+					.<String, Integer> createClientRegionFactory(ClientRegionShortcut.PROXY).create("Example");
 
-        if (dirtiesContext()) {
-            closeClientCache(this.clientCache, true);
-            runClientCacheProducer();
-            setSystemProperties();
-        }
+			exampleRegion.put("four", 4);
+			exampleRegion.put("five", 5);
+		} finally {
+			closeClientCache(clientCache, false);
+		}
+	}
 
-        regionCacheListenerEventValues.clear();
-    }
+	private void setSystemProperties() {
 
-    private void closeClientCache(ClientCache clientCache, boolean keepAlive) {
+		System.setProperty(CLIENT_CACHE_INTEREST_RESULT_POLICY, InterestResultPolicyType.NONE.name());
+		System.setProperty(DURABLE_CLIENT_TIMEOUT, "600");
+	}
 
-        Function<GemFireCache, GemFireCache> cacheClosingFunction = cacheToClose -> {
-            ((ClientCache) cacheToClose).close(keepAlive);
-            return cacheToClose;
-        };
+	private void assertRegion(Region<?, ?> region, String expectedName, DataPolicy expectedDataPolicy) {
+		assertRegion(region, expectedName, Region.SEPARATOR + expectedName, expectedDataPolicy);
+	}
 
-        if (Objects.nonNull(clientCache)) {
-            closeGemFireCacheWaitOnCacheClosedEvent(() -> clientCache, cacheClosingFunction,
-                    TimeUnit.SECONDS.toMillis(5L));
-        }
-    }
+	private void assertRegion(Region<?, ?> region, String expectedName, String expectedPath,
+			DataPolicy expectedDataPolicy) {
 
-    private void runClientCacheProducer() {
+		assertThat(region).isNotNull();
+		assertThat(region.getName()).isEqualTo(expectedName);
+		assertThat(region.getFullPath()).isEqualTo(expectedPath);
+		assertThat(region.getAttributes()).isNotNull();
+		assertThat(region.getAttributes().getDataPolicy()).isEqualTo(expectedDataPolicy);
+	}
 
-        ClientCache clientCache = null;
+	private void assertRegionValues(Region<?, ?> region, Object... values) {
 
-        try {
-            clientCache = new ClientCacheFactory()
-                    .addPoolLocator("localhost", Integer.getInteger("gemfire.locator.port"))
-                    .set("name", "ClientCacheProducer")
-                    .set("log-level", "error")
-                    .create();
+		assertThat(region.size()).isEqualTo(values.length);
 
-            Region<String, Integer> exampleRegion =
-                    clientCache.<String, Integer>createClientRegionFactory(ClientRegionShortcut.PROXY)
-                            .create("Example");
+		for (Object value : values) {
+			assertThat(region.containsValue(value)).isTrue();
+		}
+	}
 
-            exampleRegion.put("four", 4);
-            exampleRegion.put("five", 5);
-        } finally {
-            closeClientCache(clientCache, false);
-        }
-    }
+	private void log(String message, Object... args) {
 
-    private void setSystemProperties() {
+		if (DEBUG) {
+			System.err.printf(message, args);
+			System.err.flush();
+		}
+	}
 
-        System.setProperty(CLIENT_CACHE_INTEREST_RESULT_POLICY, InterestResultPolicyType.NONE.name());
-        System.setProperty(DURABLE_CLIENT_TIMEOUT, "600");
-    }
+	private void waitForRegionEntryEvents() {
 
-    private void assertRegion(Region<?, ?> region, String expectedName, DataPolicy expectedDataPolicy) {
-        assertRegion(region, expectedName, Region.SEPARATOR + expectedName, expectedDataPolicy);
-    }
+		AtomicInteger counter = new AtomicInteger(0);
 
-    private void assertRegion(Region<?, ?> region, String expectedName, String expectedPath,
-                              DataPolicy expectedDataPolicy) {
+		waitOn(() -> {
 
-        assertThat(region).isNotNull();
-        assertThat(region.getName()).isEqualTo(expectedName);
-        assertThat(region.getFullPath()).isEqualTo(expectedPath);
-        assertThat(region.getAttributes()).isNotNull();
-        assertThat(region.getAttributes().getDataPolicy()).isEqualTo(expectedDataPolicy);
-    }
+			if (counter.incrementAndGet() % 3 == 0) {
+				// log("NOTIFIED!%n");
+				this.clientCache.readyForEvents();
+			}
 
-    private void assertRegionValues(Region<?, ?> region, Object... values) {
+			// log("WAITING...%n");
 
-        assertThat(region.size()).isEqualTo(values.length);
+			return regionCacheListenerEventValues.size() < 2;
 
-        for (Object value : values) {
-            assertThat(region.containsValue(value)).isTrue();
-        }
-    }
+		}, TimeUnit.SECONDS.toMillis(15L), 500L);
+	}
 
-    private void log(String message, Object... args) {
+	@Test
+	public void durableClientGetsInitializedWithDataOnServer() {
+		assertRegionValues(this.example, 1, 2, 3);
+		assertThat(regionCacheListenerEventValues.isEmpty()).isTrue();
+	}
 
-        if (DEBUG) {
-            System.err.printf(message, args);
-            System.err.flush();
-        }
-    }
+	@Test
+	public void durableClientGetsUpdatesFromServerWhileClientWasOffline() {
+		assertRegionValues(this.example, 1, 2, 3);
+		closeClientCache(this.clientCache, true);
+		applicationContext.close();
+		runClientCacheProducer();
 
-    private void waitForRegionEntryEvents() {
+		initializeClientCache();
 
-        AtomicInteger counter = new AtomicInteger(0);
+		waitForRegionEntryEvents();
 
-        waitOn(() -> {
+		Awaitility.await().timeout(4, TimeUnit.SECONDS)
+				.until(() -> regionCacheListenerEventValues.containsAll(List.of(4, 5)));
+	}
 
-            if (counter.incrementAndGet() % 3 == 0) {
-                //log("NOTIFIED!%n");
-                this.clientCache.readyForEvents();
-            }
+	public static class RegionDataLoadingBeanPostProcessor<K, V> implements BeanPostProcessor {
 
-            //log("WAITING...%n");
+		private Map<K, V> regionData;
 
-            return regionCacheListenerEventValues.size() < 2;
+		private final String regionName;
 
-        }, TimeUnit.SECONDS.toMillis(15L), 500L);
-    }
+		public RegionDataLoadingBeanPostProcessor(String regionName) {
 
-    @Test
-    @DirtiesContext
-    public void durableClientGetsInitializedWithDataOnServer() {
+			Assert.hasText(regionName, "Region name must be specified");
 
-        assumeTrue(isBeforeDirtiesContext());
-        assertRegionValues(this.example, 1, 2, 3);
-        assertThat(regionCacheListenerEventValues.isEmpty()).isTrue();
-    }
+			this.regionName = regionName;
+		}
 
-    @Test
-    public void durableClientGetsUpdatesFromServerWhileClientWasOffline() {
+		public void setRegionData(Map<K, V> regionData) {
+			this.regionData = regionData;
+		}
 
-        assumeTrue(isAfterDirtiesContext());
-        assertThat(this.example.isEmpty()).isTrue();
+		protected Map<K, V> getRegionData() {
 
-        waitForRegionEntryEvents();
+			Assert.state(this.regionData != null, "Region data was not provided");
 
-        Awaitility.await()
-                .timeout(4, TimeUnit.SECONDS)
-                .until(() -> regionCacheListenerEventValues.containsAll(List.of(4, 5)));
-    }
+			return this.regionData;
+		}
 
-    public static class ClientCacheBeanPostProcessor implements BeanPostProcessor {
+		protected String getRegionName() {
+			return this.regionName;
+		}
 
-        @Override
-        public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		protected void loadData(Region<K, V> region) {
+			region.putAll(getRegionData());
+		}
 
-            if (bean instanceof Pool && "gemfireServerPool".equals(beanName)) {
+		@Override
+		public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-                Pool gemfireServerPool = (Pool) bean;
+			if (bean instanceof Region) {
 
-                if (isBeforeDirtiesContext()) {
-                    // NOTE: A value of -2 indicates the client connected to the server for the first time.
-                    assertThat(gemfireServerPool.getPendingEventCount()).isEqualTo(-2);
-                } else {
-                    // NOTE: The pending event count could be 3 because it should minimally include the 2 puts
-                    // from the ClientCache producer and possibly a "marker" as well.
-                    assertThat(gemfireServerPool.getPendingEventCount()).isGreaterThanOrEqualTo(2);
-                }
-            }
+				Region<K, V> region = (Region) bean;
 
-            return bean;
-        }
-    }
+				if (getRegionName().equals(region.getName())) {
+					loadData(region);
+				}
+			}
 
-    public static class RegionEntryEventRecordingCacheListener extends CacheListenerAdapter<String, Integer> {
+			return bean;
+		}
+	}
 
-        @Override
-        public void afterCreate(EntryEvent<String, Integer> event) {
-            regionCacheListenerEventValues.add(event.getNewValue());
-        }
-    }
+	public static class RegionEntryEventRecordingCacheListener extends CacheListenerAdapter<String, Integer> {
+
+		@Override
+		public void afterCreate(EntryEvent<String, Integer> event) {
+			regionCacheListenerEventValues.add(event.getNewValue());
+		}
+	}
 }
