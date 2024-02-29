@@ -55,9 +55,7 @@ import org.springframework.util.Assert;
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3
  */
-//@RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//@ContextConfiguration
 @SuppressWarnings("all")
 public class DurableClientCacheIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
 
@@ -96,10 +94,11 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 	}
 
 	private void initializeClientCache() {
-		applicationContext = new ClassPathXmlApplicationContext("org/springframework/data/gemfire/client/DurableClientCacheIntegrationTests-context.xml");
+		applicationContext = new ClassPathXmlApplicationContext(
+				"org/springframework/data/gemfire/client/DurableClientCacheIntegrationTests-context.xml");
 		applicationContext.start();
 		this.clientCache = applicationContext.getBean(ClientCache.class);
-		this.example = applicationContext.getBean("Example",Region.class);
+		this.example = applicationContext.getBean("Example", Region.class);
 	}
 
 	@After
@@ -204,7 +203,7 @@ public class DurableClientCacheIntegrationTests extends ForkingClientServerInteg
 	@Test
 	public void durableClientGetsUpdatesFromServerWhileClientWasOffline() {
 		assertRegionValues(this.example, 1, 2, 3);
-		closeClientCache(this.clientCache,true);
+		closeClientCache(this.clientCache, true);
 		applicationContext.close();
 		runClientCacheProducer();
 
