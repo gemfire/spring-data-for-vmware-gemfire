@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -517,7 +517,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Index getObject() {
@@ -527,7 +527,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -36,7 +36,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -56,7 +56,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Type getType() {
@@ -64,7 +64,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setType(Type type) {

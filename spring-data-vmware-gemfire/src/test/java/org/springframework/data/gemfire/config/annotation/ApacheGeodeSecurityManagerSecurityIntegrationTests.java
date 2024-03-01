@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -98,7 +98,7 @@ public class ApacheGeodeSecurityManagerSecurityIntegrationTests extends Abstract
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Object authenticate(Properties credentials) throws AuthenticationFailedException {
@@ -116,7 +116,7 @@ public class ApacheGeodeSecurityManagerSecurityIntegrationTests extends Abstract
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean authorize(Object principal, ResourcePermission permission) {

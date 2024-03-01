@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -75,7 +75,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Set<T> asSet() {
@@ -83,7 +83,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> asList() {
@@ -91,7 +91,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<T> iterator() {
@@ -99,7 +99,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int size() {

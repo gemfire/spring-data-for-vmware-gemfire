@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.transaction.event;
@@ -78,7 +78,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void beforeCommit(TransactionEvent event) throws TransactionWriterException {
@@ -88,7 +88,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void close() {
@@ -98,7 +98,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void init(Properties properties) {
@@ -108,7 +108,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void initialize(Cache cache, Properties properties) {

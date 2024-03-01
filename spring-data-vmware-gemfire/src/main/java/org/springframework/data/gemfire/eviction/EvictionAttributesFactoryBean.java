@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -40,7 +40,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	private ObjectSizer objectSizer = null;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void afterPropertiesSet() {
 		evictionAttributes = createAttributes();
@@ -65,21 +65,21 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public EvictionAttributes getObject() {
 		return evictionAttributes;
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public Class<?> getObjectType() {
 		return (evictionAttributes != null ? evictionAttributes.getClass() : EvictionAttributes.class);
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public boolean isSingleton() {
 		return true;

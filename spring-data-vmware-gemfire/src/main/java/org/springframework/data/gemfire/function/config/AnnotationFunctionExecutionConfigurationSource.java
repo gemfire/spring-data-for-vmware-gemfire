@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function.config;
@@ -69,7 +69,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getSource() {
@@ -77,7 +77,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<String> getBasePackages() {
@@ -119,7 +119,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<TypeFilter> getIncludeFilters() {
@@ -127,7 +127,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
  	@Override
 	public Iterable<TypeFilter> getExcludeFilters() {

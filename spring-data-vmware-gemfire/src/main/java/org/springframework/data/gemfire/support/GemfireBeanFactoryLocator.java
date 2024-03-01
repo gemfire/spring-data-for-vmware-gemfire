@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -292,7 +292,7 @@ public class GemfireBeanFactoryLocator implements BeanFactoryAware, BeanNameAwar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) {
@@ -312,7 +312,7 @@ public class GemfireBeanFactoryLocator implements BeanFactoryAware, BeanNameAwar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanName(String name) {

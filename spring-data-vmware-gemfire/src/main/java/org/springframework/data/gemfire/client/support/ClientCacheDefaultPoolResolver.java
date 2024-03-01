@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -61,7 +61,7 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Nullable @Override
 	public Pool resolve(@Nullable String poolName) {

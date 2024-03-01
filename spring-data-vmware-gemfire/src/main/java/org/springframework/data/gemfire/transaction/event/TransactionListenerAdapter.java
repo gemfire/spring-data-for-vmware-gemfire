@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.transaction.event;
@@ -58,7 +58,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void beforeCommit(TransactionEvent event) {
@@ -72,7 +72,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterCommit(TransactionEvent event) {
@@ -80,13 +80,13 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterFailedCommit(TransactionEvent event) { }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterRollback(TransactionEvent event) {

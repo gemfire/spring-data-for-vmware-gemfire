@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -1128,7 +1128,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -1148,7 +1148,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void stop(Runnable callback) {
@@ -1157,7 +1157,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void stop() {
@@ -1172,7 +1172,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isRunning() {
@@ -1180,7 +1180,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getPhase() {
@@ -1188,7 +1188,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isAutoStartup() {

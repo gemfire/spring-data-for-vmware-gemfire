@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -32,7 +32,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	public static final EmptySlice<Object> EMPTY_SLICE = new EmptySlice<Object>() { };
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -40,7 +40,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasPrevious() {
@@ -48,7 +48,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> getContent() {
@@ -56,7 +56,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getNumber() {
@@ -64,7 +64,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Sort getSort() {
@@ -72,7 +72,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Pageable nextPageable() {
@@ -80,7 +80,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Pageable previousPageable() {
@@ -88,7 +88,7 @@ public abstract class EmptySlice<T> extends AbstractSliceSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -136,7 +136,7 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see BasicPersistentEntity#returnPropertyIfBetterIdPropertyCandidateOrNull(PersistentProperty)
 	 */
 	@Override

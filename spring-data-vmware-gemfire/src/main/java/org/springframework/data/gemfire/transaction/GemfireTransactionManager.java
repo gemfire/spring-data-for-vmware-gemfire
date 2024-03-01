@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.transaction;
@@ -95,7 +95,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -106,7 +106,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object doGetTransaction() throws TransactionException {
@@ -114,7 +114,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected boolean isExistingTransaction(Object transaction) throws TransactionException {
@@ -123,7 +123,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doBegin(Object transaction, TransactionDefinition definition) throws TransactionException {
@@ -158,7 +158,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doCommit(DefaultTransactionStatus status) throws TransactionException {
@@ -182,7 +182,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object doSuspend(Object transaction) throws TransactionException {
@@ -196,7 +196,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doResume(Object transaction, Object suspendedResources) throws TransactionException {
@@ -217,7 +217,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doRollback(DefaultTransactionStatus status) throws TransactionException {
@@ -239,7 +239,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doCleanupAfterCompletion(Object transaction) {
@@ -247,7 +247,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doSetRollbackOnly(DefaultTransactionStatus status) {
@@ -255,7 +255,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected final boolean useSavepointForNestedTransaction() {
@@ -342,7 +342,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getResourceFactory() {

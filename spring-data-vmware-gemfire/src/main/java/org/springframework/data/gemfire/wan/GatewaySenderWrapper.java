@@ -1,16 +1,18 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.wan;
 
 import java.util.List;
 
+import org.apache.geode.cache.wan.GatewayEventFailureListener;
 import org.apache.geode.cache.wan.GatewayEventFilter;
 import org.apache.geode.cache.wan.GatewayEventSubstitutionFilter;
 import org.apache.geode.cache.wan.GatewaySender;
 import org.apache.geode.cache.wan.GatewayTransportFilter;
 
+import org.apache.geode.internal.cache.wan.AbstractGatewaySender;
 import org.springframework.util.Assert;
 
 /**
@@ -40,7 +42,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isBatchConflationEnabled() {
@@ -48,7 +50,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isDiskSynchronous() {
@@ -56,7 +58,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isManualStart() {
@@ -64,7 +66,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isParallel() {
@@ -72,7 +74,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isPaused() {
@@ -80,7 +82,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isPersistenceEnabled() {
@@ -88,7 +90,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
     public boolean isRunning() {
@@ -96,7 +98,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getAlertThreshold() {
@@ -104,7 +106,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBatchSize() {
@@ -112,7 +114,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBatchTimeInterval() {
@@ -120,7 +122,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getDiskStoreName() {
@@ -128,7 +130,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getDispatcherThreads() {
@@ -136,15 +138,21 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean getEnforceThreadsConnectSameReceiver() {
 		return this.delegate.getEnforceThreadsConnectSameReceiver();
 	}
 
+	//A temporary fix to fix the build but requires the GemFire product to address this optional API https://jira-pivotal.atlassian.net/browse/GEM-7102
+	@Override
+	public GatewayEventFailureListener getGatewayEventFailureListener() {
+		return null;
+	}
+
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<GatewayEventFilter> getGatewayEventFilters() {
@@ -152,7 +160,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -161,7 +169,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<GatewayTransportFilter> getGatewayTransportFilters() {
@@ -169,7 +177,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public String getId() {
@@ -181,7 +189,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMaxParallelismForReplicatedRegion() {
@@ -189,7 +197,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMaximumQueueMemory() {
@@ -197,7 +205,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public OrderPolicy getOrderPolicy() {
@@ -205,7 +213,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getRemoteDSId() {
@@ -213,7 +221,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getSocketBufferSize() {
@@ -221,7 +229,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getSocketReadTimeout() {
@@ -229,7 +237,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addGatewayEventFilter(GatewayEventFilter filter) {
@@ -237,7 +245,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean mustGroupTransactionEvents() {
@@ -245,7 +253,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeGatewayEventFilter(GatewayEventFilter filter) {
@@ -253,7 +261,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void destroy() {
@@ -261,7 +269,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void pause() {
@@ -269,7 +277,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void rebalance() {
@@ -277,7 +285,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void resume() {
@@ -285,7 +293,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void start() {
@@ -293,13 +301,13 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void startWithCleanQueue() { }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void stop() {
@@ -307,7 +315,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

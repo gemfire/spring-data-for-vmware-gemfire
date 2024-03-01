@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.function;
@@ -51,7 +51,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getId() {
@@ -59,7 +59,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasResult() {
@@ -67,7 +67,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isHA() {
@@ -75,7 +75,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean optimizeForWrite() {

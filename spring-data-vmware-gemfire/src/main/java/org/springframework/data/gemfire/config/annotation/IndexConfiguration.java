@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -102,7 +102,7 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected GemfirePersistentEntity<?> postProcess(AnnotationMetadata importingClassMetadata,

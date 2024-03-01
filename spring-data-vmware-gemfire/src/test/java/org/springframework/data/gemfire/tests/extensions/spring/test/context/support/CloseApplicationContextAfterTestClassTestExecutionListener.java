@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.extensions.spring.test.context.support;
@@ -44,7 +44,7 @@ public class CloseApplicationContextAfterTestClassTestExecutionListener extends 
 	private final AtomicReference<Boolean> springTestContextCloseEnabled = new AtomicReference<>();
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getOrder() {

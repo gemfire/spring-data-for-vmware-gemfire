@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -47,7 +47,7 @@ public class PartitionAttributesFactoryBean<K, V> extends AbstractFactoryBeanSup
 	private final PartitionAttributesFactory<K, V> partitionAttributesFactory = new PartitionAttributesFactory<>();
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
 public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> implements Page<T> {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public long getTotalElements() {
@@ -36,7 +36,7 @@ public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getTotalPages() {
@@ -44,7 +44,7 @@ public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <S> Page<S> map(Function<? super T, ? extends S> converter) {

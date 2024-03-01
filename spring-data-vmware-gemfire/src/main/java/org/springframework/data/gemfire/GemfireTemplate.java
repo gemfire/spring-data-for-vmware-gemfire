@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -95,7 +95,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -550,7 +550,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 

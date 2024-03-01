@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.extensions.spring.test.context;
@@ -71,7 +71,7 @@ public class TestContextApplicationEventPublisherAdapter implements ApplicationE
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void publishEvent(@NonNull Object event) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function.execution;
@@ -72,7 +72,7 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull ClassLoader getBeanClassLoader() {
@@ -95,7 +95,7 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable Object invoke(@NonNull MethodInvocation invocation) {
@@ -161,7 +161,7 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getObject() throws Exception {
@@ -175,7 +175,7 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {

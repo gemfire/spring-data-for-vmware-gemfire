@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.expiration;
@@ -561,7 +561,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean equals(final Object obj) {
@@ -581,7 +581,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public int hashCode() {
@@ -595,7 +595,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
@@ -135,7 +135,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <U extends T> U save(@NonNull U entity) {
@@ -153,7 +153,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public T save(@NonNull Wrapper<T, ID> wrapper) {
@@ -171,7 +171,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <U extends T> Iterable<U> saveAll(@NonNull Iterable<U> entities) {
@@ -227,7 +227,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull Iterable<T> findAll() {
@@ -241,7 +241,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Page<T> findAll(@NonNull Pageable pageable) {
@@ -254,7 +254,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull Iterable<T> findAll(@NonNull Sort sort) {
@@ -269,7 +269,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull Iterable<T> findAllById(@NonNull Iterable<ID> ids) {
@@ -290,7 +290,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Optional<T> findById(@NonNull ID id) {
@@ -303,7 +303,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void delete(@NonNull T entity) {
@@ -311,7 +311,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void deleteAll() {
@@ -330,7 +330,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void deleteAll(@NonNull Iterable<? extends T> entities) {
@@ -338,7 +338,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void deleteAllById(@NonNull Iterable<? extends ID> ids) {
@@ -354,7 +354,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void deleteById(@NonNull ID id) {

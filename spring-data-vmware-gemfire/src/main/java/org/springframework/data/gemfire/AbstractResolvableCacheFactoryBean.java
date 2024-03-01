@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -34,7 +34,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	private volatile String cacheResolutionMessagePrefix;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected GemFireCache doGetObject() {
@@ -173,7 +173,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object initializeFactory(Object factory) {

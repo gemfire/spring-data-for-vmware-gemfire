@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.extensions.spring.context.annotation;
@@ -38,7 +38,7 @@ public class DependencyOfBeanFactoryPostProcessor implements BeanFactoryPostProc
 	protected static final String VALUE_ATTRIBUTE_NAME = "value";
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {

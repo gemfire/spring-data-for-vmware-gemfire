@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.mock.context.event;
@@ -111,7 +111,7 @@ public class DestroyGemFireMockObjectsApplicationListener implements Application
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void onApplicationEvent(@NonNull ApplicationEvent event) {

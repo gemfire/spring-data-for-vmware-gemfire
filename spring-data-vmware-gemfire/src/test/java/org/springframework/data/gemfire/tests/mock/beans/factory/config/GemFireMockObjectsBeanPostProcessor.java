@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.mock.beans.factory.config;
@@ -80,7 +80,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable Object postProcessBeforeInitialization(@Nullable Object bean, @NonNull String beanName)
@@ -93,7 +93,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable Object postProcessAfterInitialization(@Nullable Object bean, @NonNull String beanName)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -23,7 +23,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	INSTANCE;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?>[] getSpecificTargetClasses() {
@@ -31,7 +31,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean canRead(EvaluationContext evaluationContext, Object target, String name) {
@@ -39,7 +39,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public TypedValue read(EvaluationContext evaluationContext, Object target, String name) {
@@ -52,7 +52,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean canWrite(EvaluationContext evaluationContext, Object target, String name) {
@@ -60,7 +60,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void write(EvaluationContext evaluationContext, Object target, String name, Object newValue) {

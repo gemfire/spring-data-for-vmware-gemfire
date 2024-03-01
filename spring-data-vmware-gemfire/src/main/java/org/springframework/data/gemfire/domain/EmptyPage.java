@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -25,7 +25,7 @@ public final class EmptyPage<T> extends EmptySlice<T> implements Page<T> {
 	public static final EmptyPage<?> EMPTY_PAGE = new EmptyPage<>();
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getTotalPages() {
@@ -33,7 +33,7 @@ public final class EmptyPage<T> extends EmptySlice<T> implements Page<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public long getTotalElements() {
@@ -41,7 +41,7 @@ public final class EmptyPage<T> extends EmptySlice<T> implements Page<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")

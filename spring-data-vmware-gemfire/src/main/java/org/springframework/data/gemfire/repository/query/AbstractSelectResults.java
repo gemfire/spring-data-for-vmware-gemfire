@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -56,7 +56,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> asList() {
@@ -64,7 +64,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Set<T> asSet() {
@@ -72,7 +72,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public CollectionType getCollectionType() {
@@ -80,7 +80,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isModifiable() {
@@ -88,7 +88,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int occurrences(T result) {
@@ -96,7 +96,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setElementType(ObjectType objectType) {
@@ -106,7 +106,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	// java.util.Collection interface methods
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean add(T result) {
@@ -114,7 +114,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean addAll(Collection<? extends T> results) {
@@ -122,7 +122,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void clear() {
@@ -130,7 +130,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean contains(Object result) {
@@ -138,7 +138,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean containsAll(Collection<?> results) {
@@ -146,7 +146,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isEmpty() {
@@ -154,7 +154,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<T> iterator() {
@@ -162,7 +162,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean remove(Object result) {
@@ -170,7 +170,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean removeAll(Collection<?> results) {
@@ -178,7 +178,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean retainAll(Collection<?> results) {
@@ -186,7 +186,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int size() {
@@ -194,7 +194,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object[] toArray() {
@@ -202,7 +202,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("all")

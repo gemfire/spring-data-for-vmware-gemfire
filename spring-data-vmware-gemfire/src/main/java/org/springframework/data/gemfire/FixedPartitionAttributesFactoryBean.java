@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -32,7 +32,7 @@ public class FixedPartitionAttributesFactoryBean implements FactoryBean<FixedPar
 	private String partitionName;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -58,7 +58,7 @@ public class FixedPartitionAttributesFactoryBean implements FactoryBean<FixedPar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public FixedPartitionAttributes getObject() throws Exception {
@@ -66,7 +66,7 @@ public class FixedPartitionAttributesFactoryBean implements FactoryBean<FixedPar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {
@@ -75,7 +75,7 @@ public class FixedPartitionAttributesFactoryBean implements FactoryBean<FixedPar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isSingleton() {

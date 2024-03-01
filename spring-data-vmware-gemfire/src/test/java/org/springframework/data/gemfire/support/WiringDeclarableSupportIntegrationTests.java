@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -94,7 +94,7 @@ public class WiringDeclarableSupportIntegrationTests extends IntegrationTestsSup
 		private String propertyTwo;
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String load(LoaderHelper<String, String> helper) throws CacheLoaderException {

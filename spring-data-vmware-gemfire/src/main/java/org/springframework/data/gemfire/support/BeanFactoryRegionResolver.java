@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -70,7 +70,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Nullable @Override @SuppressWarnings("unchecked")
 	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {

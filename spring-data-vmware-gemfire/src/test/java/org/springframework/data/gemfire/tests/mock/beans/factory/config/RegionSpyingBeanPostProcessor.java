@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.mock.beans.factory.config;
@@ -61,7 +61,7 @@ public class RegionSpyingBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object postProcessAfterInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {

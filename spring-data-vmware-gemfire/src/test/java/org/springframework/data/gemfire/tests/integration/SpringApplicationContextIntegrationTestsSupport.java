@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2023-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.integration;
@@ -70,7 +70,7 @@ public abstract class SpringApplicationContextIntegrationTestsSupport extends In
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setApplicationEventPublisher(@NonNull ApplicationEventPublisher applicationEventPublisher) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -34,7 +34,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see AbstractMappingContext#createPersistentEntity(TypeInformation)
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see AbstractMappingContext#createPersistentProperty(Property, MutablePersistentEntity, SimpleTypeHolder)
 	 */
 	@Override
