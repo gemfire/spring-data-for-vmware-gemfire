@@ -1,0 +1,7 @@
+#
+# Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+http\://www.springframework.org/schema/gemfire=org.springframework.data.gemfire.config.xml.GemfireNamespaceHandler
+http\://www.springframework.org/schema/geode=org.springframework.data.gemfire.config.xml.GemfireNamespaceHandler

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<bean class="org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor"/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">AllowBeanDefinitionOverridesTest</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:replicated-region id="regionOne" name="AppDataRegion" persistent="false"
+						   multicast-enabled="true" scope="distributed-no-ack"
+						   initial-capacity="51" load-factor="0.90"
+						   cloning-enabled="false" concurrency-checks-enabled="false"
+						   key-constraint="java.lang.String" value-constraint="java.lang.Integer"/>
+
+	<gfe:replicated-region id="regionOne" name="AppDataRegion" persistent="true"
+						   multicast-enabled="false" scope="distributed-ack"
+						   initial-capacity="101" load-factor="0.85"
+						   cloning-enabled="true" concurrency-checks-enabled="true"
+						   key-constraint="java.lang.Integer" value-constraint="java.lang.String"/>
+
+</beans>
