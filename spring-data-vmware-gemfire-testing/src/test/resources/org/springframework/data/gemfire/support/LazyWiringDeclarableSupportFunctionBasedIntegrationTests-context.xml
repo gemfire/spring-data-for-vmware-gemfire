@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2024. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:gfe-data="http://www.springframework.org/schema/data/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/data/geode https://www.springframework.org/schema/data/geode/spring-data-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="helloProperties">
+		<prop key="hello.address.to">Spring</prop>
+		<prop key="hello.default.address.to">Universe</prop>
+	</util:properties>
+
+	<context:property-placeholder properties-ref="helloProperties"/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">LazyWiringDeclarableSupportFunctionBasedIntegrationTest</prop>
+		<prop key="log-level">error</prop>
+		<prop key="groups">HelloGroup</prop>
+	</util:properties>
+
+	<gfe:cache cache-xml-location="lazy-wiring-declarable-support-function-cache.xml" properties-ref="gemfireProperties"
+			   use-bean-factory-locator="true"/>
+
+	<gfe-data:function-executions base-package="org.springframework.data.gemfire.function.sample">
+		<gfe-data:include-filter type="assignable"
+								 expression="org.springframework.data.gemfire.function.sample.HelloFunctionExecution"/>
+	</gfe-data:function-executions>
+
+</beans>
