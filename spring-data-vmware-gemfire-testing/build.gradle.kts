@@ -12,41 +12,41 @@ repositories {
 }
 
 dependencies {
-    testImplementation(project(":spring-data-vmware-gemfire-server"))
-    testImplementation(project(":spring-data-vmware-gemfire-client"))
+    implementation(project(":spring-data-vmware-gemfire-server"))
+    implementation(project(":spring-data-vmware-gemfire-client"))
 
-    testImplementation(libs.bundles.gemfire)
+    implementation(libs.bundles.gemfire)
 
-    testImplementation(libs.cdi.api) {
+    implementation(libs.cdi.api) {
         exclude("javax.annotation", "jsr250-api")
     }
-    testImplementation(libs.interceptor.api)
-    testImplementation(libs.logback)
-    testImplementation(libs.log4J)
-    testImplementation(libs.annotation.api)
-    testImplementation(libs.derby)
-    testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta")})
-    testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta")})
-    testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta")})
-    testImplementation(libs.bundles.jackson)
-    testImplementation(libs.snappy)
-    testImplementation(libs.spring.shell) {
+    implementation(libs.interceptor.api)
+    implementation(libs.logback)
+    implementation(libs.log4J)
+    implementation(libs.annotation.api)
+    implementation(libs.derby)
+    implementation(variantOf(libs.openwebbeans.se) { classifier("jakarta")})
+    implementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta")})
+    implementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta")})
+    implementation(libs.bundles.jackson)
+    implementation(libs.snappy)
+    implementation(libs.spring.shell) {
         exclude("com.google.guava", "guava")
     }
-    testImplementation(libs.multithreadedtc)
-    testImplementation(libs.cache.api)
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.vintage.engine)
+    implementation(libs.multithreadedtc)
+    implementation(libs.cache.api)
+    implementation(libs.junit.jupiter.api)
+    implementation(libs.junit.vintage.engine)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
-    testImplementation(libs.junit)
-    testImplementation(libs.assertJ)
-    testImplementation(libs.mockito)
-    testImplementation(libs.lombok)
-    testImplementation(libs.spring.test)
-    testImplementation(libs.spring.boot)
-    testImplementation(libs.awaitility)
-    testImplementation(libs.gemfire.testcontainers)
+    implementation(libs.junit)
+    implementation(libs.assertJ)
+    implementation(libs.mockito)
+    implementation(libs.lombok)
+    implementation(libs.spring.test)
+    implementation(libs.spring.boot)
+    implementation(libs.awaitility)
+    implementation(libs.gemfire.testcontainers)
 }
 
 repositories {
