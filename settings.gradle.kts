@@ -17,9 +17,7 @@ pluginManagement {
   }
 }
 
-include("spring-data-vmware-gemfire-client")
-include("spring-data-vmware-gemfire-server")
-include("spring-data-vmware-gemfire-testing")
+include("spring-data-vmware-gemfire")
 
 dependencyResolutionManagement {
   versionCatalogs {
@@ -31,12 +29,12 @@ dependencyResolutionManagement {
   }
 }
 
-fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBuilder, propertyName: String, propertiesFile: Properties): String {
+private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBuilder, propertyName: String, propertiesFile: Properties): String {
   val propertyValue = providers.systemProperty(propertyName).getOrElse(propertiesFile.getProperty(propertyName))
   return versionCatalogBuilder.version(propertyName, propertyValue)
 }
 
-fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
+private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
   versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
 }
 

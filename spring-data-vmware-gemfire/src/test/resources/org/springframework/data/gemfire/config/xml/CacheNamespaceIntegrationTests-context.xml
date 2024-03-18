@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd"
+default-lazy-init="true">
+
+	<util:properties id="gemfireProperties">
+		<prop key="disable-tcp">false</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache/>
+
+	<gfe:cache id="cache-with-name"/>
+
+	<gfe:cache id="cache-with-xml-and-props" cache-xml-location="classpath:gemfire-cache.xml" properties-ref="gemfireProperties"
+			   pdx-read-serialized="true" pdx-ignore-unread-fields="false" pdx-persistent="true"/>
+
+	<gfe:cache id="cache-with-gateway-conflict-resolver" properties-ref="gemfireProperties">
+		<gfe:gateway-conflict-resolver>
+			<bean class="org.springframework.data.gemfire.config.xml.CacheNamespaceIntegrationTests.TestGatewayConflictResolver"/>
+		</gfe:gateway-conflict-resolver>
+	</gfe:cache>
+
+	<gfe:cache id="cache-with-auto-reconnect-disabled" properties-ref="gemfireProperties" enable-auto-reconnect="false"/>
+
+	<gfe:cache id="cache-with-auto-reconnect-enabled" properties-ref="gemfireProperties" enable-auto-reconnect="true"/>
+
+	<gfe:cache id="cache-with-no-bean-factory-locator" properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
+
+	<gfe:cache id="cache-with-use-cluster-configuration-disabled" use-cluster-configuration="false"/>
+
+	<gfe:cache id="cache-with-use-cluster-configuration-enabled" use-cluster-configuration="true"/>
+
+	<gfe:cache id="heap-tuned-cache" properties-ref="gemfireProperties" critical-heap-percentage="70.0" eviction-heap-percentage="60.0"/>
+
+	<gfe:cache id="off-heap-tuned-cache" properties-ref="gemfireProperties" critical-off-heap-percentage="90.0" eviction-off-heap-percentage="50.0"/>
+
+</beans>

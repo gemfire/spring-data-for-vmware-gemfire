@@ -1,0 +1,133 @@
+/*
+ * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package org.springframework.data.gemfire.config.annotation.support;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.core.OrderComparator;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
+/**
+ * Abstract base class for {@link Configurer} interface implementations, encapsulating logic and functionality
+ * common to all lazy resolving, composable {@link Configurer} implementations.
+ *
+ * @author John Blum
+ * @param <T> {@link Class} type of the configurable Spring component processed by this {@link Configurer}.
+ * @param <C> {@link Class sub-Class} type of {@link Configurer}.
+ * @see BeanFactory
+ * @see BeanFactoryAware
+ * @see OrderComparator
+ * @see Configurer
+ * @since 2.2.0
+ */
+public abstract class AbstractLazyResolvingComposableConfigurer<T, C extends Configurer<T>>
+		implements BeanFactoryAware, Configurer<T> {
+
+	private BeanFactory beanFactory;
+
+	private List<C> configurers = Collections.emptyList();
+
+	/**
+	 * Sets a reference to the configured Spring {@link BeanFactory}.
+	 *
+	 * @param beanFactory reference to the configured Spring {@link BeanFactory}.
+	 * @see BeanFactory
+	 */
+	@Override
+	public void setBeanFactory(@Nullable BeanFactory beanFactory) throws BeansException {
+		this.beanFactory = beanFactory;
+	}
+
+	/**
+	 * Returns a reference to the configured Spring {@link BeanFactory}.
+	 *
+	 * @return a reference to the configured Spring {@link BeanFactory}.
+	 * @see BeanFactory
+	 */
+	protected Optional<BeanFactory> getBeanFactory() {
+		return Optional.ofNullable(this.beanFactory);
+	}
+
+	/**
+	 * Returns the primary {@link Class} type of the {@link Configurer} composed by this {@link Configurer}.
+	 *
+	 * @return the primary {@link Class} type of the {@link Configurer} composed by this {@link Configurer}.
+	 * @see Class
+	 */
+	protected abstract @NonNull Class<C> getConfigurerType();
+
+	/**
+	 * Resolves the {@link Configurer Configurers} defined, declared and registered in the Spring application context.
+	 *
+	 * @return a {@link Stream} of {@link Configurer} objects defined, declared and registered in the Spring
+	 * application context.
+	 * @see Configurer
+	 * @see Stream
+	 */
+	protected @NonNull Stream<C> resolveConfigurers() {
+
+		return Optional.ofNullable(this.configurers)
+			.filter(it -> !it.isEmpty())
+			.orElseGet(() -> getBeanFactory()
+				.filter(ListableBeanFactory.class::isInstance)
+				.map(ListableBeanFactory.class::cast)
+				.map(beanFactory -> {
+
+					Map<String, C> beansOfType =
+						beanFactory.getBeansOfType(getConfigurerType(), true, false);
+
+					this.configurers = beansOfType.values().stream()
+						.sorted(new OrderComparator())
+						.collect(Collectors.toList());
+
+					return this.configurers;
+
+				})
+				.orElseGet(Collections::emptyList))
+			.stream();
+	}
+
+	/**
+	 * Applies the configuration from the composition of {@link Configurer Configurers} composed by
+	 * this {@link Configurer} to the given Spring component (bean).
+	 *
+	 * @param beanName {@link String} containing the name of the Spring bean.
+	 * @param bean Spring component used to construct, configure and initialize the {@link Object}.
+	 * @see #resolveConfigurers()
+	 */
+	@Override
+	public synchronized void configure(String beanName, T bean) {
+
+		resolveConfigurers().forEach(configurer ->
+			configurer.configure(beanName, bean));
+	}
+
+	/**
+	 * Configures the Spring {@link BeanFactory} used to resolve {@link Configurer Configurers} from the Spring context.
+	 *
+	 * @param <S> sub-class type of {@link Configurer}.
+	 * @param beanFactory reference to the Spring {@link BeanFactory}.
+	 * @return this {@link AbstractLazyResolvingComposableConfigurer}.
+	 * @see BeanFactory
+	 * @see #setBeanFactory(BeanFactory)
+	 */
+	@SuppressWarnings("unchecked")
+	public <S extends AbstractLazyResolvingComposableConfigurer<T, C>> S with(@Nullable BeanFactory beanFactory) {
+
+		setBeanFactory(beanFactory);
+
+		return (S) this;
+	}
+}

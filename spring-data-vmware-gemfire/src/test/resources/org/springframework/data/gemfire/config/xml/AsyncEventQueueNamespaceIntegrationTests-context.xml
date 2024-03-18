@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	   	http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+	   	http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">AsyncEventQueueNamespaceIntegrationTests</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<context:property-placeholder/>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:disk-store id="TestDiskStore">
+		<gfe:disk-dir location="${java.io.tmpdir}" max-size="100"/>
+	</gfe:disk-store>
+
+	<gfe:async-event-queue id="TestAsyncEventQueue"
+						   batch-conflation-enabled="true"
+						   batch-size="100"
+						   batch-time-interval="30"
+						   disk-store-ref="TestDiskStore"
+						   disk-synchronous="true"
+						   dispatcher-threads="4"
+						   forward-expiration-destroy="true"
+						   maximum-queue-memory="50"
+						   order-policy="KEY"
+						   parallel="false"
+						   pause-event-dispatching="false"
+						   persistent="true">
+		<gfe:async-event-listener>
+			<bean class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestAsyncEventListener" c:name="TestAeqListener"/>
+		</gfe:async-event-listener>
+	</gfe:async-event-queue>
+
+	<bean id="testListenerOne" class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestAsyncEventListener"
+		  c:name="TestListenerOne"/>
+
+	<gfe:async-event-queue id="TestAsyncEventQueueWithFilters">
+		<gfe:async-event-listener ref="testListenerOne"/>
+		<gfe:event-filter>
+			<bean class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestGatewayEventFilter" c:name="GatewayEventFilterOne"/>
+			<bean class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestGatewayEventFilter" c:name="GatewayEventFilterTwo"/>
+		</gfe:event-filter>
+		<gfe:event-substitution-filter>
+			<bean class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestGatewayEventSubstitutionFilter"
+				  c:name="GatewayEventSubstitutionFilterOne"/>
+		</gfe:event-substitution-filter>
+	</gfe:async-event-queue>
+
+	<gfe:async-event-queue id="TestPausedAsyncEventQueue" pause-event-dispatching="true">
+		<gfe:async-event-listener>
+			<bean class="org.springframework.data.gemfire.config.xml.AsyncEventQueueNamespaceIntegrationTests.TestAsyncEventListener" c:name="TestAeqListener"/>
+		</gfe:async-event-listener>
+	</gfe:async-event-queue>
+
+</beans>

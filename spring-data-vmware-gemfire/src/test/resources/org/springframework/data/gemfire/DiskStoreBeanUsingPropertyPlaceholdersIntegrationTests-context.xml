@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:map id="diskStoreConfiguration" key-type="java.lang.String">
+		<entry key="allowForceCompaction" value-type="java.lang.Boolean" value="false"/>
+		<entry key="autoCompact" value-type="java.lang.Boolean" value="true"/>
+		<entry key="compactionThreshold" value-type="java.lang.Integer" value="75"/>
+		<entry key="maxOplogSize" value-type="java.lang.Long" value="16384"/>
+		<entry key="queueSize" value-type="java.lang.Integer" value="8192"/>
+		<entry key="timeInterval" value-type="java.lang.Long" value="5000"/>
+		<entry key="writeBufferSize" value-type="java.lang.Integer" value="65536"/>
+	</util:map>
+
+	<context:property-placeholder properties-ref="diskStoreConfiguration"/>
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">DiskStoreUsingPropertyPlaceholdersTest</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:disk-store id="TestDataStore"
+					allow-force-compaction="${allowForceCompaction}"
+					auto-compact="${autoCompact}"
+					compaction-threshold="${compactionThreshold}"
+					max-oplog-size="${maxOplogSize}"
+					queue-size="${queueSize}"
+					time-interval="${timeInterval}"
+					write-buffer-size="${writeBufferSize}">
+	</gfe:disk-store>
+
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	   	http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+		http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">ClientCacheWithRegionUsingCacheLoaderWriterTest</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:client-cache properties-ref="gemfireProperties"/>
+
+	<bean id="localCacheLoader" class="org.springframework.data.gemfire.client.ClientRegionWithCacheLoaderCacheWriterIntegrationTests$LocalAppDataCacheLoader"/>
+	<bean id="localCacheWriter" class="org.springframework.data.gemfire.client.ClientRegionWithCacheLoaderCacheWriterIntegrationTests$LocalAppDataCacheWriter"/>
+
+	<gfe:client-region id="localAppDataRegion" name="LocalAppData" shortcut="LOCAL">
+		<gfe:cache-loader>
+			<ref bean="localCacheLoader"/>
+		</gfe:cache-loader>
+		<gfe:cache-writer>
+			<ref bean="localCacheWriter"/>
+		</gfe:cache-writer>
+	</gfe:client-region>
+
+</beans>

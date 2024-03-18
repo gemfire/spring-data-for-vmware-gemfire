@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:gfe="http://www.springframework.org/schema/geode"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+">
+
+	<util:properties id="gemfireProperties">
+		<prop key="name">CacheServerWithClientSubscriptionAndDiskStoreTest</prop>
+		<prop key="log-level">error</prop>
+	</util:properties>
+
+	<gfe:cache properties-ref="gemfireProperties"/>
+
+	<gfe:disk-store id="testSubscriptionDiskStore" auto-compact="true" compaction-threshold="75" queue-size="50" max-oplog-size="10" time-interval="600000">
+		<gfe:disk-dir location="./gemfire/subscription-disk-store" max-size="50"/>
+	</gfe:disk-store>
+
+	<!-- let the GemFire Cache Server port default to 40404 -->
+	<gfe:cache-server id="testCacheServer" auto-startup="true" bind-address="localhost" groups="test-server"
+					  max-connections="1">
+		<gfe:subscription-config eviction-type="ENTRY" disk-store="testSubscriptionDiskStore" capacity="512"/>
+	</gfe:cache-server>
+
+</beans>
