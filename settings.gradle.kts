@@ -20,7 +20,6 @@ pluginManagement {
 include("spring-data-vmware-gemfire-client")
 include("spring-data-vmware-gemfire-server")
 include("spring-data-vmware-gemfire-testing")
-include("spring-data-vmware-gemfire-acceptanceTests")
 
 dependencyResolutionManagement {
   versionCatalogs {
