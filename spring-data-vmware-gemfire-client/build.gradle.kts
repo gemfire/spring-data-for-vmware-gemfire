@@ -23,12 +23,12 @@ plugins {
     alias(libs.plugins.dependency.management)
 }
 
-
-group = "org.example"
-version = "1.0.1-build.9999"
-
 repositories {
     mavenCentral()
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("-parameters")
 }
 
 publishingDetails {
@@ -54,6 +54,8 @@ dependencies {
     compileOnly(libs.cdi.api) {
         exclude("javax.annotation", "jsr250-api")
     }
+
+    testImplementation(project(":spring-data-vmware-gemfire-testing"))
 
     testImplementation(libs.bundles.gemfire)
 
@@ -89,10 +91,23 @@ dependencies {
     testImplementation(libs.gemfire.testcontainers)
 }
 
+tasks {
+    test {
+        val springTestGemfireDockerImage: String by project
+
+        systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
+        systemProperty("java.util.logging.config.file", "${project.layout.buildDirectory}/test-classes/java-util-logging.properties")
+        systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
+        systemProperty("gemfire.disableShutdownHook", "true")
+        systemProperty("logback.log.level", "error")
+        systemProperty("spring.profiles.active", "apache-geode")
+    }
+}
+
 gradle.taskGraph.whenReady {
-    tasks.withType<Test>().forEach { test ->
-        tasks.named("check").get().dependsOn(test)
-        test.jvmArgs("-XX:+HeapDumpOnOutOfMemoryError", "-ea",
+    tasks.test {
+        tasks.named("check").get().dependsOn(this)
+        jvmArgs("-XX:+HeapDumpOnOutOfMemoryError", "-ea",
             // Product: BufferPool uses DirectBuffer
             "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
             // Tests: CertificateBuilder uses numerous types declared here
@@ -110,7 +125,7 @@ gradle.taskGraph.whenReady {
             "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED")
 
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
-            test.jvmArgs("-XX:+UseZGC")
+            jvmArgs("-XX:+UseZGC")
         }
     }
 }
@@ -146,14 +161,18 @@ tasks.register("copyJavadocsToBucket") {
     }
 }
 
-tasks.register<Jar>("testJar") {
-    from(sourceSets.test.get().output)
-    from(sourceSets.main.get().output)
-    archiveFileName = "testJar.jar"
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
+gradle.projectsEvaluated {
 
-tasks.getByName<Test>("test") {
-    dependsOn("testJar")
-    systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
+    tasks.register<Jar>("testJar") {
+        from(sourceSets.test.get().output)
+        from(sourceSets.main.get().output)
+        from(project(":spring-data-vmware-gemfire-testing").sourceSets.main.get().output)
+        archiveFileName = "testJar.jar"
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    tasks.getByName<Test>("test") {
+        dependsOn("testJar")
+        systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
+    }
 }

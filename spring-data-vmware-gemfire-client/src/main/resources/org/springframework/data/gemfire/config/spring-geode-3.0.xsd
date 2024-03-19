@@ -248,7 +248,7 @@ do not need to pay the cost of preserving the unread fields since you will never
 	<xsd:element name="cache">
 		<xsd:annotation>
 			<xsd:documentation
-				source="org.springframework.data.gemfire.CacheFactoryBean"><![CDATA[
+				source="org.springframework.data.gemfire.client.ClientCacheFactoryBean"><![CDATA[
 Defines a GemFire Cache instance used for creating or retrieving 'regions'.
 			]]></xsd:documentation>
 			<xsd:appinfo>
