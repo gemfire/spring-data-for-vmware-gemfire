@@ -5,12 +5,18 @@
 
 package org.springframework.data.gemfire.config.schema.definitions;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Optional;
 
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.RegionShortcut;
+import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
+import org.springframework.data.gemfire.config.schema.SchemaObjectType;
+import org.springframework.util.StringUtils;
 
 /**
  * {@link RegionDefinition} is an Abstract Data Type (ADT) encapsulating the configuration meta-data used to
@@ -19,9 +25,11 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
  * @author John Blum
  * @see Region
  * @see RegionShortcut
+ * @see SchemaObjectDefinition
+ * @see SchemaObjectType
  * @since 2.0.0
  */
-public class RegionDefinition {
+public class RegionDefinition extends SchemaObjectDefinition {
 
 	protected static final int ORDER = 1;
 
@@ -39,7 +47,7 @@ public class RegionDefinition {
 	 */
 	public static RegionDefinition from(Region<?, ?> region) {
 		return Optional.ofNullable(region).map(RegionDefinition::new)
-			.orElseThrow(() -> newIllegalArgumentException("Region is required"));
+				.orElseThrow(() -> newIllegalArgumentException("Region is required"));
 	}
 
 	private final transient Region<?, ?> region;
@@ -56,6 +64,10 @@ public class RegionDefinition {
 	 * @see Region
 	 */
 	protected RegionDefinition(Region<?, ?> region) {
+
+		super(Optional.ofNullable(region).map(Region::getName)
+				.orElseThrow(() -> newIllegalArgumentException("Region is required")));
+
 		this.region = region;
 	}
 
@@ -65,6 +77,7 @@ public class RegionDefinition {
 	 * @return the order value of this object.
 	 * @see org.springframework.core.Ordered
 	 */
+	@Override
 	public int getOrder() {
 		return ORDER;
 	}
@@ -79,13 +92,20 @@ public class RegionDefinition {
 		return this.region;
 	}
 
+	@Override
 	public String getName() {
-		return this.name;
+		return Optional.ofNullable(this.name).filter(StringUtils::hasText).orElseGet(super::getName);
 	}
 
 	public RegionShortcut getRegionShortcut() {
 		return Optional.ofNullable(this.regionShortcut).orElse(DEFAULT_REGION_SHORTCUT);
 	}
+
+	@Override
+	public SchemaObjectType getType() {
+		return SchemaObjectType.REGION;
+	}
+
 
 	public RegionDefinition having(RegionShortcut regionShortcut) {
 		this.regionShortcut = regionShortcut;
@@ -95,5 +115,15 @@ public class RegionDefinition {
 	public RegionDefinition with(String name) {
 		this.name = name;
 		return this;
+	}
+
+	private void writeObject(ObjectOutputStream outputStream) throws IOException {
+		outputStream.writeUTF(getName());
+		outputStream.writeObject(getRegionShortcut());
+	}
+
+	private void readObject(ObjectInputStream inputStream) throws ClassNotFoundException, IOException {
+		this.name = inputStream.readUTF();
+		this.regionShortcut = (RegionShortcut) inputStream.readObject();
 	}
 }

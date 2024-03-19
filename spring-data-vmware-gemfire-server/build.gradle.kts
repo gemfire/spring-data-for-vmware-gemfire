@@ -2,9 +2,6 @@
  * Copyright (c) VMware, Inc. 2024. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-import com.google.cloud.storage.BlobId
-import com.google.cloud.storage.BlobInfo
-import com.google.cloud.storage.StorageOptions
 import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
@@ -54,6 +51,7 @@ dependencies {
         exclude("javax.annotation", "jsr250-api")
     }
 
+    testImplementation(project(":spring-data-vmware-gemfire-testing"))
     testImplementation(libs.bundles.gemfire)
 
     testImplementation(libs.cdi.api) {
@@ -135,24 +133,24 @@ fun getGemFireBaseVersion(): String {
     return "${split[0]}.${split[1]}"
 }
 
-tasks.register("copyJavadocsToBucket") {
-    dependsOn(tasks.named("javadocJar"))
-    doLast {
-        val storage = StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
-        val blobId = BlobId.of(project.properties["docsGCSBucket"].toString(), "${publishingDetails.artifactName.get()}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
-        val blobInfo = BlobInfo.newBuilder(blobId).build()
-        storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
-    }
-}
+//tasks.register("copyJavadocsToBucket") {
+//    dependsOn(tasks.named("javadocJar"))
+//    doLast {
+//        val storage = StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
+//        val blobId = BlobId.of(project.properties["docsGCSBucket"].toString(), "${publishingDetails.artifactName.get()}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
+//        val blobInfo = BlobInfo.newBuilder(blobId).build()
+//        storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
+//    }
+//}
 
-tasks.register<Jar>("testJar") {
-    from(sourceSets.test.get().output)
-    from(sourceSets.main.get().output)
-    archiveFileName = "testJar.jar"
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.getByName<Test>("test") {
-    dependsOn("testJar")
-    systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
-}
+//tasks.register<Jar>("testJar") {
+//    from(sourceSets.test.get().output)
+//    from(sourceSets.main.get().output)
+//    archiveFileName = "testJar.jar"
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//}
+//
+//tasks.getByName<Test>("test") {
+//    dependsOn("testJar")
+//    systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
+//}

@@ -28,6 +28,8 @@ import org.apache.geode.cache.wan.GatewaySender;
  * @see Cache
  * @see DiskStore
  * @see Region
+ * @see ClientCache
+ * @see Pool
  * @see Function
  * @see Index
  * @see GatewayReceiver
@@ -39,13 +41,11 @@ public enum SchemaObjectType {
 
 	ASYNC_EVENT_QUEUE(AsyncEventQueue.class),
 	CACHE(Cache.class),
-	CLIENT_CACHE(ClientCache.class),
 	DISK_STORE(DiskStore.class),
 	FUNCTION(Function.class),
 	GATEWAY_RECEIVER(GatewayReceiver.class),
 	GATEWAY_SENDER(GatewaySender.class),
 	INDEX(Index.class),
-	POOL(Pool.class),
 	REGION(Region.class),
 	UNKNOWN(Void.class);
 

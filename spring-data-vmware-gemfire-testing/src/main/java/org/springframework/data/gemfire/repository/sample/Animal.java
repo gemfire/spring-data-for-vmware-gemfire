@@ -4,7 +4,6 @@
  */
 package org.springframework.data.gemfire.repository.sample;
 
-import org.apache.geode.lang.Identifiable;
 import org.springframework.data.annotation.Id;
 import org.springframework.util.ObjectUtils;
 
