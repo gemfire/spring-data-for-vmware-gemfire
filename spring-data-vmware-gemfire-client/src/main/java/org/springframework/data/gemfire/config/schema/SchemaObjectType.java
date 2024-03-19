@@ -28,6 +28,8 @@ import org.apache.geode.cache.wan.GatewaySender;
  * @see Cache
  * @see DiskStore
  * @see Region
+ * @see ClientCache
+ * @see Pool
  * @see Function
  * @see Index
  * @see GatewayReceiver
