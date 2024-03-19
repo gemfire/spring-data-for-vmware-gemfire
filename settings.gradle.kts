@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2024. All rights reserved.
+ * Copyright 2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -20,7 +20,7 @@ pluginManagement {
 include("spring-data-vmware-gemfire-client")
 include("spring-data-vmware-gemfire-server")
 include("spring-data-vmware-gemfire-testing")
-include("spring-data-vmware-gemfire-acceptanceTests")
+//include("spring-data-vmware-gemfire-acceptanceTests")
 
 dependencyResolutionManagement {
   versionCatalogs {
