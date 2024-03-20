@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2024. All rights reserved.
+ * Copyright 2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
