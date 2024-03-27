@@ -334,6 +334,12 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 			return collection.iterator().next();
 		}
 		else {
+			getLogger().error(String.format("""
+              Query: %s
+              Query method return type: %s
+              Result count: %s
+              Result container type: %s""",
+					query.toString(), queryMethod.getReturnedObjectType(), collection.size(), selectResults.getClass()));
 			throw newIllegalStateException("Unsupported query: %s", query.toString());
 		}
 	}
