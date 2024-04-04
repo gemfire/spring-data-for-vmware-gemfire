@@ -19,9 +19,11 @@ import org.apache.geode.security.ResourcePermission;
  *
  * @author David Turanski
  *
+ * @deprecated to be removed in 2.0 release
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
+@Deprecated(forRemoval = true)
 public @interface GemfireFunction {
 
 	String DEFAULT_RESOURCE_PERMISSION = "DATA:WRITE";

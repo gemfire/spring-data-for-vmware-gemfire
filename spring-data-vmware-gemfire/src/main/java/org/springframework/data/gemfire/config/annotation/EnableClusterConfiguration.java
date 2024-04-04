@@ -36,12 +36,14 @@ import org.springframework.web.client.RestTemplate;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
  * @since 2.0.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import(ClusterConfigurationConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableClusterConfiguration {
 

@@ -26,12 +26,14 @@ import org.springframework.context.annotation.Import;
  * @see org.apache.geode.cache.wan.GatewayTransportFilter
  * @see org.springframework.context.annotation.Import
  * @since 2.2.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import(GatewayReceiverConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableGatewayReceiver {
 
