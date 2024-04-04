@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(McastConfiguration.class)
 @UsesGemFireProperties
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableMcast {
 

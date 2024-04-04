@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Import;
 @Inherited
 @Documented
 @Import(GatewayReceiverConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableGatewayReceiver {
 

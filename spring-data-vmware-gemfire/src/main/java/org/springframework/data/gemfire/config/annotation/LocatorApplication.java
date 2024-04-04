@@ -43,7 +43,7 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
 @Documented
 @Configuration
 @Import(LocatorApplicationConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface LocatorApplication {
 

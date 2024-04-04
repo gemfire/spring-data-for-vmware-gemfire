@@ -35,7 +35,7 @@ import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings({ "unused" })
 public @interface Indexed {
 

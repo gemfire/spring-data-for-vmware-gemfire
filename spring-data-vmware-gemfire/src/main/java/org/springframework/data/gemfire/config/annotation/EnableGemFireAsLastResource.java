@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @EnableAspectJAutoProxy
 @Import(GemFireAsLastResourceConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableGemFireAsLastResource {
 
