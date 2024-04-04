@@ -29,12 +29,14 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @since 2.0.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import(BeanFactoryLocatorConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableBeanFactoryLocator {
 
