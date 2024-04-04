@@ -717,20 +717,8 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", propertyName("cache.compression."), propertyNameSuffix);
 	}
 
-	protected String cacheOffHeapProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("cache.off-heap."), propertyNameSuffix);
-	}
-
 	protected String cachePeerProperty(String propertyNameSuffix) {
 		return String.format("%1$s%2$s", propertyName("cache.peer."), propertyNameSuffix);
-	}
-
-	protected String cacheServerProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("cache.server."), propertyNameSuffix);
-	}
-
-	protected String namedCacheServerProperty(String name, String propertyNameSuffix) {
-		return String.format("%1$s%2$s.%3$s", propertyName("cache.server."), name, propertyNameSuffix);
 	}
 
 	protected String clusterProperty(String propertyNameSuffix) {
@@ -791,26 +779,6 @@ public abstract class AbstractAnnotationConfigSupport
 
 	protected String serviceProperty(String propertyNameSuffix) {
 		return String.format("%1$s%2$s", propertyName("service."), propertyNameSuffix);
-	}
-
-	protected String memcachedServiceProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", serviceProperty("memcached."), propertyNameSuffix);
-	}
-
-	protected String httpServiceProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", serviceProperty("http."), propertyNameSuffix);
-	}
-
-	protected String gatewayReceiverProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("gateway.receiver."), propertyNameSuffix);
-	}
-
-	protected String gatewaySenderProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("gateway.sender."), propertyNameSuffix);
-	}
-
-	protected String namedGatewaySenderProperty(String name, String propertyNameSuffix) {
-		return String.format("%1$s%2$s.%3$s", propertyName("gateway.sender."), name, propertyNameSuffix);
 	}
 
 	/**

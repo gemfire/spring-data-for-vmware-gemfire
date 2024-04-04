@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,13 +13,11 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.util.ObjectSizer;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -32,7 +29,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
@@ -61,7 +57,6 @@ import org.springframework.util.StringUtils;
  * @see Bean
  * @see Configuration
  * @see ImportAware
- * @see PeerRegionFactoryBean
  * @see ResolvableRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see AbstractAnnotationConfigSupport
@@ -135,7 +130,6 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 	 * @return a boolean value indicating whether the Spring bean is an instance of {@link EvictingRegionFactoryBean}.
 	 * @see EvictingRegionFactoryBean
 	 * @see ClientRegionFactoryBean
-	 * @see PeerRegionFactoryBean
 	 */
 	protected static boolean isRegionFactoryBean(Object bean) {
 		return bean instanceof EvictingRegionFactoryBean;
@@ -188,12 +182,12 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 
 		/**
 		 * Configure the Eviction policy on the given SDG {@link ClientRegionFactoryBean}
-		 * or {@link PeerRegionFactoryBean} used to create an Apache Geode {@link Region}.
+		 * or {@link ClientRegionFactoryBean} used to create an Apache Geode {@link Region}.
 		 *
-		 * @param regionBean {@link ClientRegionFactoryBean} or {@link PeerRegionFactoryBean} used to create
+		 * @param regionBean {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean} used to create
 		 * an Apache Geode {@link Region}.
 		 * @return the given {@code regionFactoryBean}.
-		 * @see PeerRegionFactoryBean
+		 * @see ClientRegionFactoryBean
 		 * @see ClientRegionFactoryBean
 		 */
 		Object configure(Object regionBean);
@@ -457,10 +451,10 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		/**
-		 * Sets the {@link EvictionAttributes} on the {@link PeerRegionFactoryBean} or {@link ClientRegionFactoryBean}
+		 * Sets the {@link EvictionAttributes} on the {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean}
 		 * used to create the targeted {@link Region}.
 		 *
-		 * @param regionFactoryBean {@link PeerRegionFactoryBean} or {@link ClientRegionFactoryBean} on which to
+		 * @param regionFactoryBean {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean} on which to
 		 * set the {@link EvictionAttributes} encapsulating the Eviction policy for the targeted {@link Region}.
 		 * @return the {@code regionFactoryBean}.
 		 * @see EvictingRegionFactoryBean#setEvictionAttributes(EvictionAttributes)

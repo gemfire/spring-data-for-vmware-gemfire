@@ -16,7 +16,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate.FollowRedirectsSimpleClientHttpRequestFactory;
 
 import java.lang.reflect.Field;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,22 +30,11 @@ import org.mockito.stubbing.Answer;
 
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.query.Index;
 
-import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
-import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.InterceptingClientHttpRequestFactory;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -78,9 +66,6 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 	private ClientCache mockClientCache;
 
 	@Mock
-	private Index mockIndex;
-
-	@Mock
 	private Region mockRegion;
 
 	private RestHttpGemfireAdminTemplate template;
@@ -102,12 +87,6 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 				return (T) mockRestOperations;
 			}
 		};
-
-		when(this.mockRegion.getName()).thenReturn("MockRegion");
-		when(this.mockIndex.getType()).thenReturn(IndexType.FUNCTIONAL.getGemfireIndexType());
-		when(this.mockIndex.getName()).thenReturn("MockIndex");
-		when(this.mockIndex.getIndexedExpression()).thenReturn("age");
-		when(this.mockIndex.getFromClause()).thenReturn("/Customers");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -312,85 +291,5 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		assertThat(this.template.resolveManagementRestApiUrl("http", "shoebox", 101123))
 			.isEqualTo(String.format(RestHttpGemfireAdminTemplate.MANAGEMENT_REST_API_NO_PORT_URL_TEMPLATE,
 				"http", "shoebox"));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createIndexCallsGemFireManagementRestApi() {
-
-		IndexDefinition indexDefinition = IndexDefinition.from(this.mockIndex);
-
-		when(this.mockRestOperations.exchange(any(RequestEntity.class), eq(String.class))).thenAnswer(invocation -> {
-
-			RequestEntity requestEntity = invocation.getArgument(0);
-
-			assertThat(requestEntity).isNotNull();
-			assertThat(requestEntity.getMethod()).isEqualTo(HttpMethod.POST);
-			assertThat(requestEntity.getUrl()).isEqualTo(URI.create("https://localhost/gemfire/v1/indexes"));
-
-			HttpHeaders headers = requestEntity.getHeaders();
-
-			assertThat(headers).isNotNull();
-			assertThat(headers.getContentType()).isEqualTo(MediaType.APPLICATION_FORM_URLENCODED);
-
-			Object body = requestEntity.getBody();
-
-			assertThat(body).isInstanceOf(MultiValueMap.class);
-
-			MultiValueMap<String, Object> requestBody = (MultiValueMap<String, Object>) body;
-
-			assertThat(requestBody).isNotNull();
-			assertThat(requestBody.getFirst("name")).isEqualTo(indexDefinition.getName());
-			assertThat(requestBody.getFirst("expression")).isEqualTo(indexDefinition.getExpression());
-			assertThat(requestBody.getFirst("region")).isEqualTo(indexDefinition.getFromClause());
-			assertThat(requestBody.getFirst("type")).isEqualTo(indexDefinition.getIndexType().getGemfireIndexType().getName());
-
-			return new ResponseEntity(HttpStatus.OK);
-		});
-
-		this.template.createIndex(indexDefinition);
-
-		verify(this.mockRestOperations, times(1))
-			.exchange(isA(RequestEntity.class), eq(String.class));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createRegionCallsGemFireManagementRestApi() {
-
-		RegionDefinition regionDefinition = RegionDefinition.from(this.mockRegion);
-
-		when(this.mockRestOperations.exchange(any(RequestEntity.class), eq(String.class))).thenAnswer(invocation -> {
-
-			RequestEntity requestEntity = invocation.getArgument(0);
-
-			assertThat(requestEntity).isNotNull();
-			assertThat(requestEntity.getMethod()).isEqualTo(HttpMethod.POST);
-			assertThat(requestEntity.getUrl()).isEqualTo(URI.create("https://localhost/gemfire/v1/regions"));
-
-			HttpHeaders headers = requestEntity.getHeaders();
-
-			assertThat(headers).isNotNull();
-			assertThat(headers.getContentType()).isEqualTo(MediaType.APPLICATION_FORM_URLENCODED);
-
-			Object body = requestEntity.getBody();
-
-			assertThat(body).isInstanceOf(MultiValueMap.class);
-
-			MultiValueMap<String, Object> requestBody = (MultiValueMap<String, Object>) body;
-
-			assertThat(requestBody).isNotNull();
-			assertThat(requestBody.getFirst("name")).isEqualTo(regionDefinition.getName());
-			assertThat(requestBody.getFirst("type")).isEqualTo(regionDefinition.getRegionShortcut().toString());
-			assertThat(requestBody.getFirst("skip-if-exists"))
-				.isEqualTo(String.valueOf(RestHttpGemfireAdminTemplate.DEFAULT_CREATE_REGION_SKIP_IF_EXISTS));
-
-			return new ResponseEntity(HttpStatus.OK);
-		});
-
-		this.template.createRegion(regionDefinition);
-
-		verify(this.mockRestOperations, times(1))
-			.exchange(isA(RequestEntity.class), eq(String.class));
 	}
 }

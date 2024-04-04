@@ -5,28 +5,23 @@
 package org.springframework.data.gemfire.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.Instant;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-
 import javax.sql.DataSource;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheLoaderException;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +40,6 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.CacheFactory
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
@@ -59,9 +53,6 @@ import org.springframework.util.Assert;
 public class SpringContextBootstrappingInitializerIntegrationTests extends IntegrationTestsSupport {
 
 	protected static final String GEMFIRE_LOG_LEVEL = "error";
-	protected static final String GEMFIRE_JMX_MANAGER = "true";
-	protected static final String GEMFIRE_JMX_MANAGER_PORT = "1199";
-	protected static final String GEMFIRE_JMX_MANAGER_START = "true";
 	protected static final String GEMFIRE_NAME = SpringContextBootstrappingInitializerIntegrationTests.class.getSimpleName();
 	protected static final String GEMFIRE_START_LOCATORS = "localhost[11235]";
 
@@ -84,22 +75,18 @@ public class SpringContextBootstrappingInitializerIntegrationTests extends Integ
 	@SuppressWarnings("all")
 	private void doSpringContextBootstrappingInitializationTest(String cacheXmlFile) {
 
-		Cache gemfireCache = new CacheFactory()
+		ClientCache gemfireCache = new ClientCacheFactory()
 			.set("name", GEMFIRE_NAME)
 			.set("log-level", GEMFIRE_LOG_LEVEL)
 			.set("cache-xml-file", cacheXmlFile)
-			//.set("start-locator", GEMFIRE_START_LOCATORS)
-			//.set("jmx-manager", GEMFIRE_JMX_MANAGER)
-			//.set("jmx-manager-port", GEMFIRE_JMX_MANAGER_PORT)
-			//.set("jmx-manager-start", GEMFIRE_JMX_MANAGER_START)
 			.create();
 
 		assertThat(gemfireCache)
-			.describedAs("GemFireCache was not properly created and initialized")
+			.describedAs("ClientCache was not properly created and initialized")
 			.isNotNull();
 
 		assertThat(gemfireCache.isClosed())
-			.describedAs("GemFireCache is closed")
+			.describedAs("ClientCache is closed")
 			.isFalse();
 
 		Set<Region<?, ?>> rootRegions = gemfireCache.rootRegions();

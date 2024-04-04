@@ -24,7 +24,6 @@ import org.junit.Test;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.util.GatewayConflictResolver;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
@@ -55,8 +54,6 @@ public class ClientCacheConfigurationUnitTests {
 
 		ClassLoader mockBeanClassLoader = mock(ClassLoader.class);
 
-		GatewayConflictResolver mockGatewayConflictResolver = mock(GatewayConflictResolver.class);
-
 		List<ConnectionEndpoint> poolLocators =
 			Collections.singletonList(new ConnectionEndpoint("localhost", 12345));
 
@@ -84,10 +81,7 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setClose(true);
 		configuration.setCopyOnRead(true);
 		configuration.setCriticalHeapPercentage(90.0f);
-		configuration.setCriticalOffHeapPercentage(95.0f);
 		configuration.setEvictionHeapPercentage(75.0f);
-		configuration.setEvictionOffHeapPercentage(90.0f);
-		configuration.setGatewayConflictResolver(mockGatewayConflictResolver);
 		configuration.setTransactionListeners(Collections.singletonList(mockTransactionListener));
 		configuration.setTransactionWriter(mockTransactionWriter);
 		configuration.setUseBeanFactoryLocator(true);
@@ -125,10 +119,7 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setClose(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setCopyOnRead(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setCriticalHeapPercentage(eq(90.0f));
-		verify(clientCacheFactoryBean, times(1)).setCriticalOffHeapPercentage(eq(95.0f));
 		verify(clientCacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(75.0f));
-		verify(clientCacheFactoryBean, times(1)).setEvictionOffHeapPercentage(eq(90.0f));
-		verify(clientCacheFactoryBean, times(1)).setGatewayConflictResolver(eq(mockGatewayConflictResolver));
 		verify(clientCacheFactoryBean, times(1)).setJndiDataSources(eq(Collections.emptyList()));
 		verify(clientCacheFactoryBean, times(1)).setTransactionListeners(eq(Collections.singletonList(mockTransactionListener)));
 		verify(clientCacheFactoryBean, times(1)).setTransactionWriter(eq(mockTransactionWriter));

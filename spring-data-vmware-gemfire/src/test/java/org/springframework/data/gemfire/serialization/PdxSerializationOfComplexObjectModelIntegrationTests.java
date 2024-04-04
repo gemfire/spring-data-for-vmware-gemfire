@@ -10,7 +10,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,19 +21,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.RegionService;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxInstance;
 import org.apache.geode.pdx.PdxSerializer;
 import org.apache.geode.pdx.PdxWriter;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
-
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
@@ -42,37 +48,31 @@ import org.springframework.data.annotation.AccessType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
+import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnablePdx;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
 import org.springframework.data.gemfire.mapping.MappingPdxSerializer;
 import org.springframework.data.gemfire.mapping.annotation.Region;
+import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * Integration Tests testing and asserting the de/serialization of a complex application domain object model
  * using Apache Geode PDX serialization.
  *
  * @author John Blum
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.pdx.PdxInstance
  * @see org.apache.geode.pdx.PdxSerializer
  * @see org.springframework.data.gemfire.GemfireTemplate
  * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
  * @see org.springframework.data.gemfire.config.annotation.EnablePdx
- * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
  * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
  * @see org.springframework.test.context.ActiveProfiles
  * @see org.springframework.test.context.ContextConfiguration
@@ -85,6 +85,22 @@ import lombok.ToString;
 //@ActiveProfiles("ReflectionBasedAutoSerializer")
 @SuppressWarnings("unused")
 public class PdxSerializationOfComplexObjectModelIntegrationTests {
+
+	private static GemFireCluster gemFireCluster;
+
+	@BeforeClass
+	public static void startGeodeServer() throws IOException {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=Orders --type=PARTITION");
+
+		gemFireCluster.acceptLicense().start();
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
+	}
 
 	@Autowired
 	private Environment environment;
@@ -103,18 +119,18 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 		assertThat(orders).isNotNull();
 		assertThat(orders.getName()).isEqualTo("Orders");
 		assertThat(orders.getAttributes()).isNotNull();
-		assertThat(orders.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(orders.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.EMPTY);
 
 		RegionService regionService = orders.getRegionService();
 
-		assertThat(regionService).isInstanceOf(GemFireCache.class);
+		assertThat(regionService).isInstanceOf(ClientCache.class);
 
 		Class<? extends PdxSerializer> expectedPdxSerializerType =
 			Arrays.asList(this.environment.getActiveProfiles()).contains("MappingPdxSerializer")
 				? MappingPdxSerializer.class
 				: ReflectionBasedAutoSerializer.class;
 
-		GemFireCache cache = (GemFireCache) regionService;
+		ClientCache cache = (ClientCache) regionService;
 
 		assertThat(cache).isNotNull();
 		assertThat(cache.getPdxSerializer()).isInstanceOf(expectedPdxSerializerType);
@@ -144,7 +160,7 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 
 		// Store (save) the Order in the Apache Geode cache "Orders" Region;
 		// The Order should be stored as PDX using the SDG MappingPdxSerializer since the "Orders" Region
-		// is a PARTITION Region and the cache was configured with SDG's MappingPdxSerializer.
+		// is a REPLICATE Region and the cache was configured with SDG's MappingPdxSerializer.
 		this.ordersTemplate.put(order.getNumber(), order);
 
 		// Get (load) the Order from the Apache Geode cache "Orders" Region;
@@ -194,9 +210,9 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 		PdxSerializer pdxSerializer = Optional.ofNullable(this.ordersTemplate)
 			.map(GemfireTemplate::getRegion)
 			.map(org.apache.geode.cache.Region::getRegionService)
-			.filter(GemFireCache.class::isInstance)
-			.map(GemFireCache.class::cast)
-			.map(GemFireCache::getPdxSerializer)
+			.filter(ClientCache.class::isInstance)
+			.map(ClientCache.class::cast)
+			.map(ClientCache::getPdxSerializer)
 			.orElse(null);
 
 		assertThat(pdxSerializer).isNotNull();
@@ -209,7 +225,7 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 		verify(pdxSerializer, atLeastOnce()).toData(eq(productTwo), any(PdxWriter.class));
 	}
 
-	@PeerCacheApplication(name = "PdxSerializationOfComplexObjectModelIntegrationTests", copyOnRead = true)
+	@ClientCacheApplication(name = "PdxSerializationOfComplexObjectModelIntegrationTests", copyOnRead = true)
 	@EnableEntityDefinedRegions(basePackageClasses = Order.class)
 	@EnablePdx(serializerBeanName = "OrderPdxSerializer", readSerialized = true)
 	static class TestConfiguration {
@@ -235,9 +251,14 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 
 		@Bean
 		@DependsOn("Orders")
-		GemfireTemplate ordersTemplate(GemFireCache cache) {
+		GemfireTemplate ordersTemplate(ClientCache cache) {
 			return new GemfireTemplate(cache.getRegion("/Orders"));
 		}
+
+		@Bean
+		ClientCacheConfigurer configurer() {
+			return (beanName, bean) -> bean.addLocators(new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort()));
+    }
 	}
 
 	@Getter

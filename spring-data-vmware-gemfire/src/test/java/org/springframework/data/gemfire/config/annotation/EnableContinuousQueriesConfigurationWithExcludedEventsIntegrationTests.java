@@ -4,9 +4,14 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import com.vmware.gemfire.testcontainers.GemFireCluster;
-import org.apache.geode.cache.GemFireCache;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.query.CqEvent;
 import org.junit.AfterClass;
@@ -23,13 +28,6 @@ import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTests.GemFireClientConfiguration.class)
@@ -135,7 +133,7 @@ public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTe
         }
 
         @Bean(name = "TemperatureReadings")
-        ClientRegionFactoryBean<Long, TemperatureReading> temperatureReadingsRegion(GemFireCache gemfireCache) {
+        ClientRegionFactoryBean<Long, TemperatureReading> temperatureReadingsRegion(ClientCache gemfireCache) {
             ClientRegionFactoryBean<Long, TemperatureReading> temperatureReadings = new ClientRegionFactoryBean<>();
             temperatureReadings.setCache(gemfireCache);
             temperatureReadings.setClose(false);

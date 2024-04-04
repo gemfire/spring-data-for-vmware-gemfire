@@ -7,23 +7,16 @@ package org.springframework.data.gemfire.config.annotation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.CompressionConfiguration.SNAPPY_COMPRESSOR_BEAN_NAME;
-
 import java.util.Arrays;
-
-import org.junit.After;
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.compression.Compressor;
 import org.apache.geode.compression.SnappyCompressor;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.GemfireUtils;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
@@ -34,7 +27,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.config.annotation.CompressionConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableCompression
@@ -69,7 +62,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 
 		assertThat(compressor).isInstanceOf(SnappyCompressor.class);
 
-		Arrays.asList("People", "ExampleLocalRegion", "ExamplePartitionRegion", "ExampleReplicateRegion")
+		Arrays.asList("People", "ExampleLocalRegion")
 			.forEach(regionName -> {
 				assertThat(containsBean(regionName)).isTrue();
 				assertRegionCompressor(getBean(regionName, Region.class), regionName, compressor);
@@ -94,7 +87,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 		});
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = Person.class)
 	@EnableCompression
@@ -102,36 +95,14 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForAllRegionsConfiguration {
 
 		@Bean("ExampleLocalRegion")
-		public LocalRegionFactoryBean<Object, Object> localRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> localRegion(ClientCache gemfireCache) {
 
-			LocalRegionFactoryBean<Object, Object> localRegion = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> localRegion = new ClientRegionFactoryBean<>();
 
 			localRegion.setCache(gemfireCache);
 			localRegion.setPersistent(false);
 
 			return localRegion;
-		}
-
-		@Bean("ExamplePartitionRegion")
-		public PartitionedRegionFactoryBean<Object, Object> partitionRegion(GemFireCache gemfireCache) {
-
-			PartitionedRegionFactoryBean<Object, Object> partitionRegion = new PartitionedRegionFactoryBean<>();
-
-			partitionRegion.setCache(gemfireCache);
-			partitionRegion.setPersistent(false);
-
-			return partitionRegion;
-		}
-
-		@Bean("ExampleReplicateRegion")
-		public ReplicatedRegionFactoryBean<Object, Object> replicateRegion(GemFireCache gemfireCache) {
-
-			ReplicatedRegionFactoryBean<Object, Object> replicateRegion = new ReplicatedRegionFactoryBean<>();
-
-			replicateRegion.setCache(gemfireCache);
-			replicateRegion.setPersistent(false);
-
-			return replicateRegion;
 		}
 	}
 
@@ -143,7 +114,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForSelectRegionsConfiguration {
 
 		@Bean("ExampleClientRegion")
-		public ClientRegionFactoryBean<Object, Object> clientRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> clientRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegion = new ClientRegionFactoryBean<>();
 

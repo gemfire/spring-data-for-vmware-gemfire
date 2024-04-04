@@ -6,18 +6,21 @@ package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.io.Serializable;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
-import org.springframework.data.gemfire.mapping.annotation.Region;
+import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.transaction.event.TransactionApplicationEvent;
@@ -25,12 +28,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 /**
  * {@link AbstractTransactionalEventListenerIntegrationTests} is an abstract base class for writing transactional,
@@ -97,7 +94,7 @@ public abstract class AbstractTransactionalEventListenerIntegrationTests extends
 
 	@Data
 	@EqualsAndHashCode
-	@Region("Customers")
+	@ClientRegion(value = "Customers", shortcut = ClientRegionShortcut.LOCAL)
 	@ToString(of = "name")
 	@RequiredArgsConstructor(staticName = "newCustomer")
 	static class Customer implements Serializable {

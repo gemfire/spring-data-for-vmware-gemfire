@@ -39,7 +39,7 @@ public class TemplateRegionDefinitionOrderErrorNamespaceIntegrationTests extends
 		catch (BeanDefinitionParsingException expected) {
 
 			assertThat(expected).hasMessageContaining("The Region template [RegionTemplate] must be defined before"
-				+ " the Region [TemplateBasedPartitionRegion] referring to the template");
+				+ " the Region [TemplateBasedLocalRegion] referring to the template");
 
 			assertThat(expected).hasNoCause();
 

@@ -8,7 +8,6 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -21,13 +20,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
-
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +59,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see Annotation
  * @see AnnotatedElement
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see RegionShortcut
  * @see ClientRegionShortcut
@@ -111,7 +108,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	@Autowired(required = false)
 	private final List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
-	private RegionShortcut serverRegionShortcut = RegionShortcut.PARTITION;
+	private RegionShortcut serverRegionShortcut = RegionShortcut.REPLICATE;
 
 	private String poolName = ClientRegionFactoryBean.DEFAULT_POOL_NAME;
 
@@ -244,15 +241,15 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 	/**
 	 * Resolves the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#PARTITION}.
+	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
 	 *
 	 * @return the resolved {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#PARTITION}.
+	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
 	 * @see RegionShortcut
 	 * @see #getServerRegionShortcut()
 	 */
 	protected RegionShortcut resolveServerRegionShortcut() {
-		return getServerRegionShortcut().orElse(RegionShortcut.PARTITION);
+		return getServerRegionShortcut().orElse(RegionShortcut.REPLICATE);
 	}
 
 	@Override
@@ -296,7 +293,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 					CacheTypeAwareRegionFactoryBean<?, ?> regionFactoryBean = new CacheTypeAwareRegionFactoryBean<>();
 
-					GemFireCache gemfireCache = beanFactory.getBean(GemFireCache.class);
+					ClientCache gemfireCache = beanFactory.getBean(ClientCache.class);
 
 					regionFactoryBean.setBeanFactory(beanFactory);
 					regionFactoryBean.setCache(gemfireCache);

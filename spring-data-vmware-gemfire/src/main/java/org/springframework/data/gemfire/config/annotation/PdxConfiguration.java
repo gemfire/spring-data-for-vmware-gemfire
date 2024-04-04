@@ -8,10 +8,8 @@ import java.lang.annotation.Annotation;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -21,7 +19,7 @@ import org.springframework.context.annotation.ImportAware;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
@@ -33,10 +31,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link PdxConfiguration} class is a Spring {@link Configuration} class that configures PDX
- * on a {@link GemFireCache} instance.
+ * on a {@link ClientCache} instance.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see PdxSerializer
  * @see BeanFactory
  * @see BeanFactoryPostProcessor
@@ -46,7 +44,7 @@ import org.springframework.util.StringUtils;
  * @see ImportAware
  * @see AnnotationAttributes
  * @see AnnotationMetadata
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see AbstractAnnotationConfigSupport
  * @see PdxDiskStoreAwareBeanFactoryPostProcessor
  * @see GemfireMappingContext
@@ -181,20 +179,15 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 		return (beanName, clientCacheFactoryBean) -> configurePdx(clientCacheFactoryBean);
 	}
 
-	@Bean
-	PeerCacheConfigurer peerCachePdxConfigurer() {
-		return (beanName, cacheFactoryBean) -> configurePdx(cacheFactoryBean);
-	}
-
 	/**
 	 * Configures Pivotal GemFire/Apache Geode cache PDX Serialization.
 	 *
-	 * @param cacheFactoryBean {@link CacheFactoryBean} instance on which to configure PDX.
+	 * @param cacheFactoryBean {@link ClientCacheFactoryBean} instance on which to configure PDX.
 	 * with PDX de/serialization capabilities.
-	 * @see CacheFactoryBean
+	 * @see ClientCacheFactoryBean
 	 * @see <a href="https://geode.apache.org/docs/guide/113/developing/data_serialization/gemfire_pdx_serialization.html">Geode PDX Serialization</a>
 	 */
-	protected void configurePdx(@NonNull CacheFactoryBean cacheFactoryBean) {
+	protected void configurePdx(@NonNull ClientCacheFactoryBean cacheFactoryBean) {
 
 		getDiskStoreName().ifPresent(cacheFactoryBean::setPdxDiskStoreName);
 

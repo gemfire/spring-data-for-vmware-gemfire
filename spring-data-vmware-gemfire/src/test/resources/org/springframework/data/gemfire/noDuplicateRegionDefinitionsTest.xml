@@ -21,10 +21,10 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="regionOne" name="AppDataRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="regionOne" name="AppDataRegion" persistent="false"/>
 
-	<gfe:replicated-region id="regionTwo" name="AppDataRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="regionTwo" name="AppDataRegion" persistent="false"/>
 
 </beans>

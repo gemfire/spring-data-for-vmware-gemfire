@@ -9,18 +9,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationPolicy;
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType;
-
-import org.junit.After;
-import org.junit.Test;
-
 import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.expiration.ExpirationActionType;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
@@ -34,7 +31,7 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.CustomExpiry
  * @see org.apache.geode.cache.ExpirationAttributes
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
@@ -212,15 +209,15 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 		return mockRegionEntry;
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@SuppressWarnings("unused")
 	static class RegionConfiguration {
 
 		@Bean("One")
-		public LocalRegionFactoryBean<Object, Object> regionOne(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> regionOne(ClientCache gemfireCache) {
 
-			LocalRegionFactoryBean<Object, Object> regionOne = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> regionOne = new ClientRegionFactoryBean<>();
 
 			regionOne.setCache(gemfireCache);
 			regionOne.setClose(false);
@@ -230,9 +227,9 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 		}
 
 		@Bean("Two")
-		public LocalRegionFactoryBean<Object, Object> regionTwo(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> regionTwo(ClientCache gemfireCache) {
 
-			LocalRegionFactoryBean<Object, Object> regionTwo = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> regionTwo = new ClientRegionFactoryBean<>();
 
 			regionTwo.setCache(gemfireCache);
 			regionTwo.setClose(false);

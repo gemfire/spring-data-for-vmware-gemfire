@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -6,15 +11,12 @@ package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-
-import org.junit.After;
-import org.junit.Test;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionExistsException;
 import org.apache.geode.cache.Scope;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -85,8 +87,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(appDataRegion.getFullPath()).isEqualTo("/AppDataRegion");
 			assertThat(appDataRegion.getAttributes()).isNotNull();
 			assertThat(appDataRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
-			assertThat(appDataRegion.getAttributes().getMulticastEnabled()).isFalse();
-			assertThat(appDataRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
 			assertThat(appDataRegion.getAttributes().getInitialCapacity()).isEqualTo(101);
 			assertThat(appDataRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 			assertThat(appDataRegion.getAttributes().getCloningEnabled()).isTrue();
@@ -117,16 +117,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 	@Test(expected = RegionExistsException.class)
 	public void noLocalRegionLookups() {
 		assertNoRegionLookup("/org/springframework/data/gemfire/noLocalRegionLookupTest.xml");
-	}
-
-	@Test(expected = RegionExistsException.class)
-	public void noPartitionRegionLookups() {
-		assertNoRegionLookup("/org/springframework/data/gemfire/noPartitionRegionLookupTest.xml");
-	}
-
-	@Test(expected = RegionExistsException.class)
-	public void noReplicateRegionLookups() {
-		assertNoRegionLookup("/org/springframework/data/gemfire/noReplicateRegionLookupTest.xml");
 	}
 
 	@Test(expected = RegionExistsException.class)
@@ -185,11 +175,10 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 
 			assertThat(applicationContext).isNotNull();
 			assertThat(applicationContext.containsBean("NativeLocalRegion")).isTrue();
-			assertThat(applicationContext.containsBean("NativePartitionRegion")).isTrue();
 			assertThat(applicationContext.containsBean("NativeReplicateRegion")).isTrue();
 			assertThat(applicationContext.containsBean("NativeParentRegion")).isTrue();
 			assertThat(applicationContext.containsBean("/NativeParentRegion/NativeChildRegion")).isTrue();
-			assertThat(applicationContext.containsBean("SpringReplicateRegion")).isTrue();
+			assertThat(applicationContext.containsBean("SpringLocalRegion")).isTrue();
 
 			Region<?, ?> nativeLocalRegion = applicationContext.getBean("NativeLocalRegion", Region.class);
 
@@ -206,23 +195,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeLocalRegion.getAttributes().getLoadFactor()).isEqualTo(0.95f);
 			assertThat(nativeLocalRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
-			Region<?, ?> nativePartitionRegion = applicationContext.getBean("NativePartitionRegion", Region.class);
-
-			assertThat(nativePartitionRegion).isNotNull();
-			assertThat(nativePartitionRegion.getName()).isEqualTo("NativePartitionRegion");
-			assertThat(nativePartitionRegion.getFullPath()).isEqualTo("/NativePartitionRegion");
-			assertThat(nativePartitionRegion.getAttributes()).isNotNull();
-			assertThat(nativePartitionRegion.getAttributes().getDataPolicy())
-				.isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-			assertThat(nativePartitionRegion.getAttributes().getCloningEnabled()).isTrue();
-			assertThat(nativePartitionRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-			assertThat(nativePartitionRegion.getAttributes().getConcurrencyLevel()).isEqualTo(40);
-			assertThat(nativePartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
-			assertThat(nativePartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(nativePartitionRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
-			assertThat(nativePartitionRegion.getAttributes().getMulticastEnabled()).isFalse();
-			assertThat(nativePartitionRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
-
 			Region<?, ?> nativeReplicateRegion = applicationContext.getBean("NativeReplicateRegion", Region.class);
 
 			assertThat(nativeReplicateRegion).isNotNull();
@@ -236,7 +208,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(23);
 			assertThat(nativeReplicateRegion.getAttributes().getLoadFactor()).isEqualTo(0.75f);
 			assertThat(nativeReplicateRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(nativeReplicateRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(nativeReplicateRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
 			assertThat(nativeReplicateRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
@@ -247,15 +218,15 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeChildRegion.getName()).isEqualTo("NativeChildRegion");
 			assertThat(nativeChildRegion.getFullPath()).isEqualTo("/NativeParentRegion/NativeChildRegion");
 			assertThat(nativeChildRegion.getAttributes()).isNotNull();
-			assertThat(nativeChildRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+			assertThat(nativeChildRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 
-			Region<?, ?> springReplicateRegion = applicationContext.getBean("SpringReplicateRegion", Region.class);
+			Region<?, ?> springLocalRegion = applicationContext.getBean("SpringLocalRegion", Region.class);
 
-			assertThat(springReplicateRegion).isNotNull();
-			assertThat(springReplicateRegion.getName()).isEqualTo("SpringReplicateRegion");
-			assertThat(springReplicateRegion.getFullPath()).isEqualTo("/SpringReplicateRegion");
-			assertThat(springReplicateRegion.getAttributes()).isNotNull();
-			assertThat(springReplicateRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+			assertThat(springLocalRegion).isNotNull();
+			assertThat(springLocalRegion.getName()).isEqualTo("SpringLocalRegion");
+			assertThat(springLocalRegion.getFullPath()).isEqualTo("/SpringLocalRegion");
+			assertThat(springLocalRegion.getAttributes()).isNotNull();
+			assertThat(springLocalRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		}
 		finally {
 			closeApplicationContext(applicationContext);

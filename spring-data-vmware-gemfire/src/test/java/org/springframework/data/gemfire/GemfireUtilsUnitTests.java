@@ -9,16 +9,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
 import java.util.Properties;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.distributed.DistributedSystem;
+import org.junit.Test;
 
 /**
  * Unit Tests for {@link GemfireUtils}.
@@ -29,26 +24,6 @@ import org.apache.geode.distributed.DistributedSystem;
  * @since 1.3.3
  */
 public class GemfireUtilsUnitTests {
-
-	@Test
-	public void isClientWithClientIsTrue() {
-
-		ClientCache mockClient = mock(ClientCache.class);
-
-		assertThat(GemfireUtils.isClient(mockClient)).isTrue();
-
-		verifyNoInteractions(mockClient);
-	}
-
-	@Test
-	public void isClientWithNonClientIsFalse() {
-
-		Cache mockCache = mock(Cache.class);
-
-		assertThat(GemfireUtils.isClient(mockCache)).isFalse();
-
-		verifyNoInteractions(mockCache);
-	}
 
 	@Test
 	public void isDurableWithDurableClientIsTrue() {
@@ -109,25 +84,5 @@ public class GemfireUtilsUnitTests {
 		verify(mockClientCache, times(1)).getDistributedSystem();
 		verify(mockDistributedSystem, times(1)).isConnected();
 		verify(mockDistributedSystem, never()).getProperties();
-	}
-
-	@Test
-	public void isPeerWithPeerIsTrue() {
-
-		Cache mockCache = mock(Cache.class);
-
-		assertThat(GemfireUtils.isPeer(mockCache)).isTrue();
-
-		verifyNoInteractions(mockCache);
-	}
-
-	@Test
-	public void isPeerWithNonPeerIsFalse() {
-
-		ClientCache mockClientCache = mock(ClientCache.class);
-
-		assertThat(GemfireUtils.isPeer(mockClientCache)).isFalse();
-
-		verifyNoInteractions(mockClientCache);
 	}
 }

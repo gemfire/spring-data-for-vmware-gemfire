@@ -42,24 +42,7 @@ public class SubRegionWithInvalidDataPolicyTest extends IntegrationTestsSupport 
 		catch (XmlBeanDefinitionStoreException expected) {
 
 			assertThat(expected.getCause()).isInstanceOf(SAXParseException.class);
-			assertThat(expected.getCause().getMessage().contains("PERSISTENT_PARTITION")).isTrue();
-
-			throw expected;
-		}
-	}
-
-	@Test(expected = BeanCreationException.class)
-	public void subRegionBeanDefinitionWithInvalidDataPolicyAndPersistentSettingsThrowsException() {
-
-		try {
-			new ClassPathXmlApplicationContext(
-				"/org/springframework/data/gemfire/config/xml/subregion-with-inconsistent-datapolicy-persistent-settings.xml");
-		}
-		catch (BeanCreationException expected) {
-
-			assertThat(expected).hasMessageContaining("Error creating bean with name '/Parent/Child'");
-			assertThat(expected).hasCauseInstanceOf(IllegalArgumentException.class);
-			assertThat(expected.getCause()).hasMessage("Data Policy [REPLICATE] is not valid when persistent is true");
+			assertThat(expected.getCause().getMessage().contains("EMPTY")).isTrue();
 
 			throw expected;
 		}

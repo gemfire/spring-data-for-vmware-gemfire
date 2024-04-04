@@ -7,19 +7,13 @@ package org.springframework.data.gemfire.config.support;
 
 import java.util.Optional;
 import java.util.function.Predicate;
-
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.query.Index;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.core.type.MethodMetadata;
-import org.springframework.data.gemfire.GenericRegionFactoryBean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
@@ -94,13 +88,6 @@ public abstract class AbstractDependencyStructuringBeanFactoryPostProcessor impl
 	}
 
 	protected Predicate<String> isRegionBeanType() {
-
-		Predicate<String> genericRegionBeanType =
-			typeName -> GenericRegionFactoryBean.class.getName().equals(typeName);
-
-		return genericRegionBeanType.or(typeName -> ClientRegionFactoryBean.class.getName().equals(typeName))
-			.or(typeName -> LocalRegionFactoryBean.class.getName().equals(typeName))
-			.or(typeName -> PartitionedRegionFactoryBean.class.getName().equals(typeName))
-			.or(typeName -> ReplicatedRegionFactoryBean.class.getName().equals(typeName));
+		return typeName -> ClientRegionFactoryBean.class.getName().equals(typeName);
 	}
 }

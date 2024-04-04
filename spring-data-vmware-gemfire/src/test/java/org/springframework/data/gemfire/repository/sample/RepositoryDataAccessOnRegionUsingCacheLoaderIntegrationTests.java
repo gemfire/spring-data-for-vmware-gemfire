@@ -5,22 +5,18 @@
 package org.springframework.data.gemfire.repository.sample;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
 import java.util.Optional;
-
+import org.apache.geode.cache.CacheLoader;
+import org.apache.geode.cache.CacheLoaderException;
+import org.apache.geode.cache.LoaderHelper;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +36,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.CacheLoader
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.repository.support.GemfireRepositoryFactoryBean
@@ -101,7 +97,7 @@ public class RepositoryDataAccessOnRegionUsingCacheLoaderIntegrationTests extend
 	static class TestConfiguration {
 
 		@Bean("simple")
-		ClientRegionFactoryBean<Long, Person> peopleRegion(GemFireCache cache) {
+		ClientRegionFactoryBean<Long, Person> peopleRegion(ClientCache cache) {
 
 			ClientRegionFactoryBean<Long, Person> people = new ClientRegionFactoryBean<>();
 
@@ -113,7 +109,7 @@ public class RepositoryDataAccessOnRegionUsingCacheLoaderIntegrationTests extend
 		}
 
 		@Bean
-		GemfireRepositoryFactoryBean<PersonRepository, Person, Long> personRepository(GemFireCache cache) {
+		GemfireRepositoryFactoryBean<PersonRepository, Person, Long> personRepository(ClientCache cache) {
 
 			GemfireRepositoryFactoryBean<PersonRepository, Person, Long> personRepository =
 				new GemfireRepositoryFactoryBean<>(PersonRepository.class);

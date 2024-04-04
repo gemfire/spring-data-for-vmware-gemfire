@@ -7,9 +7,7 @@ package org.springframework.data.gemfire.config.schema;
 
 import java.util.Collections;
 import java.util.Set;
-
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -20,7 +18,7 @@ import org.springframework.context.ApplicationContext;
  * to the schema object instances of a particular type.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see ApplicationContext
  * @since 2.0.0
  */
@@ -41,15 +39,15 @@ public interface SchemaObjectCollector<T> {
 	}
 
 	/**
-	 * Collects all schema objects of type {@link T} defined in the {@link GemFireCache}.
+	 * Collects all schema objects of type {@link T} defined in the {@link ClientCache}.
 	 *
-	 * @param gemfireCache {@link GemFireCache} from which to collect schema objects of type {@link T}.
-	 * @return a {@link Set} of all schema objects of type {@link T} defined in the {@link GemFireCache};
+	 * @param gemfireCache {@link ClientCache} from which to collect schema objects of type {@link T}.
+	 * @return a {@link Set} of all schema objects of type {@link T} defined in the {@link ClientCache};
 	 * returns an empty {@link Set} if no schema object of type {@link T} could be found.
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see Iterable
 	 */
-	default Iterable<T> collectFrom(GemFireCache gemfireCache) {
+	default Iterable<T> collectFrom(ClientCache gemfireCache) {
 		return Collections.emptySet();
 	}
 }

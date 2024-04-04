@@ -31,16 +31,9 @@ import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.query.Index;
 import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
-import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
-import org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction;
-import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.admin.functions.ListIndexesFunction;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
-import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 
 /**
@@ -65,9 +58,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 	private GemfireFunctionOperations mockFunctionOperations;
 
 	@Mock
-	private Index mockIndex;
-
-	@Mock
 	private Region mockRegion;
 
 	@Before
@@ -77,9 +67,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 
 		doReturn(this.mockFunctionOperations).when(this.template)
 			.newGemfireFunctionOperations(any(ClientCache.class));
-
-		when(this.mockIndex.getName()).thenReturn("MockIndex");
-		when(this.mockRegion.getName()).thenReturn("MockRegion");
 	}
 
 	private Region mockRegion(String name) {
@@ -91,7 +78,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class,
 			String.format("Mock%sRegionAttributes", name));
 
-		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.PARTITION);
+		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.REPLICATE);
 		when(mockRegionAttributes.getScope()).thenReturn(Scope.DISTRIBUTED_ACK);
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 
@@ -127,26 +114,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 	}
 
 	@Test
-	public void getAvailableServerRegionsExecutesListRegionsOnServerFunction() {
-
-		when(this.mockFunctionOperations.executeAndExtract(any(Function.class)))
-			.thenReturn(asSet("RegionOne", "RegionTwo"));
-
-		Iterable<String> availableServerRegions = this.template.getAvailableServerRegions();
-
-		assertThat(availableServerRegions).isNotNull();
-		assertThat(availableServerRegions).hasSize(2);
-		assertThat(availableServerRegions).contains("RegionOne", "RegionTwo");
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(isA(ListRegionsOnServerFunction.class));
-	}
-
-	@Test
 	public void getAvailableServerRegionsExecutesGetRegionsFunction() {
-
-		when(this.mockFunctionOperations.executeAndExtract(isA(ListRegionsOnServerFunction.class)))
-			.thenThrow(new RuntimeException("TEST"));
 
 		Object[] regionInformation = asArray(newRegionInformation("MockRegionOne"),
 			newRegionInformation("MockRegionTwo"));
@@ -161,41 +129,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 		assertThat(availableServerRegions).contains("MockRegionOne", "MockRegionTwo");
 
 		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(isA(ListRegionsOnServerFunction.class));
-
-		verify(this.mockFunctionOperations, times(1))
 			.executeAndExtract(isA(GetRegionsFunction.class), eq(false));
-	}
-
-	@Test
-	public void getAvailableServerRegionIndexesCallsExecuteWithListIndexesFunctionId() {
-
-		this.template.getAvailableServerRegionIndexes();
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(eq(ListIndexesFunction.LIST_INDEXES_FUNCTION_ID));
-	}
-
-	@Test
-	public void createRegionCallsExecuteWithCreateRegionFunctionIdAndRegionDefinition() {
-
-		RegionDefinition regionDefinition = RegionDefinition.from(this.mockRegion);
-
-		this.template.createRegion(regionDefinition);
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(eq(CreateRegionFunction.CREATE_REGION_FUNCTION_ID), eq(regionDefinition));
-	}
-
-	@Test
-	public void createIndexCallsExecuteWithCreateIndexFunctionIdAndIndexDefinition() {
-
-		IndexDefinition indexDefinition = IndexDefinition.from(this.mockIndex);
-
-		this.template.createIndex(indexDefinition);
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(eq(CreateIndexFunction.CREATE_INDEX_FUNCTION_ID), eq(indexDefinition));
 	}
 
 	@Test

@@ -5,18 +5,15 @@
 package org.springframework.data.gemfire.transaction.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.transaction.GemfireTransactionManager;
 import org.springframework.stereotype.Service;
@@ -30,10 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.annotation.Bean
- * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
  * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
  * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
  * @see org.springframework.data.gemfire.transaction.config.GemfireCacheTransactionsConfiguration
@@ -48,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EnableGemfireCacheTransactionsIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	@Autowired
 	private GemfireTransactionManager transactionManager;
@@ -103,13 +99,13 @@ public class EnableGemfireCacheTransactionsIntegrationTests extends IntegrationT
 
 	@SuppressWarnings("unused")
 	@EnableGemfireCacheTransactions
-	@PeerCacheApplication(name = "EnableGemfireCacheTransactionsIntegrationTests")
+	@ClientCacheApplication(name = "EnableGemfireCacheTransactionsIntegrationTests")
 	static class TestConfiguration {
 
 		@Bean("Example")
-		public LocalRegionFactoryBean<Object, Object> exampleRegion(GemFireCache gemFireCache) {
+		public ClientRegionFactoryBean<Object, Object> exampleRegion(ClientCache gemFireCache) {
 
-			LocalRegionFactoryBean<Object, Object> example = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> example = new ClientRegionFactoryBean<>();
 
 			example.setCache(gemFireCache);
 			example.setPersistent(false);

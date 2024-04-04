@@ -5,30 +5,17 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
-import org.springframework.data.gemfire.config.annotation.test.entities.CollocatedPartitionRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.NonEntity;
-import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
-import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.PartitionRegion;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.util.ReflectionUtils;
@@ -38,9 +25,9 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
- * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.RegionConfigurer
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
@@ -98,28 +85,6 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 				RegionConfigurer.class)), "GenericRegionEntity", "Sessions");
 	}
 
-	@Test
-	public void peerRegionConfigurersCalledSuccessfully() {
-
-		newApplicationContext(PeerTestConfiguration.class);
-
-		assertThat(containsBean("Test")).isTrue();
-		assertThat(containsBean("GenericRegionEntity")).isTrue();
-		assertThat(containsBean("Customers")).isTrue();
-		assertThat(containsBean("testRegionConfigurerOne")).isTrue();
-		assertThat(containsBean("testRegionConfigurerTwo")).isTrue();
-		assertThat(containsBean("testRegionConfigurerThree")).isTrue();
-
-		assertRegionConfigurerInvocations(getBean("testRegionConfigurerOne", TestRegionConfigurer.class),
-			"Customers", "GenericRegionEntity");
-
-		assertRegionConfigurerInvocations(getBean("testRegionConfigurerTwo", TestRegionConfigurer.class),
-			"Customers", "GenericRegionEntity");
-
-		assertRegionConfigurerInvocations(resolveBeanNames(getBean("testRegionConfigurerThree",
-				RegionConfigurer.class)),"Customers", "GenericRegionEntity");
-	}
-
 	@SuppressWarnings("unused")
 	static class AbstractTestConfiguration {
 
@@ -144,11 +109,6 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 				public void configure(String beanName, ClientRegionFactoryBean<?, ?> bean) {
 					this.beanNames.add(beanName);
 				}
-
-				@Override
-				public void configure(String beanName, PeerRegionFactoryBean<?, ?> bean) {
-					this.beanNames.add(beanName);
-				}
 			};
 		}
 
@@ -160,42 +120,14 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
-		excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
-			classes = { LocalRegion.class, PartitionRegion.class, ReplicateRegion.class
-		})
-	)
+	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class)
 	@SuppressWarnings("unused")
 	static class ClientTestConfiguration extends AbstractTestConfiguration {
 
 		@Bean(name = "Test")
-		ClientRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> testRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> testRegionFactory = new ClientRegionFactoryBean<>();
-
-			testRegionFactory.setCache(gemfireCache);
-
-			return testRegionFactory;
-		}
-	}
-
-	@PeerCacheApplication
-	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
-		excludeFilters = {
-			@ComponentScan.Filter(type = FilterType.ANNOTATION,
-				classes = { ClientRegion.class, LocalRegion.class, ReplicateRegion.class }),
-			@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
-				classes = CollocatedPartitionRegionEntity.class)
-		}
-	)
-	@SuppressWarnings("unused")
-	static class PeerTestConfiguration extends AbstractTestConfiguration {
-
-		@Bean(name = "Test")
-		PartitionedRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
-
-			PartitionedRegionFactoryBean<Object, Object> testRegionFactory = new PartitionedRegionFactoryBean<>();
 
 			testRegionFactory.setCache(gemfireCache);
 
@@ -209,11 +141,6 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 
 		@Override
 		public void configure(String beanName, ClientRegionFactoryBean<?, ?> bean) {
-			this.beanNames.add(beanName);
-		}
-
-		@Override
-		public void configure(String beanName, PeerRegionFactoryBean<?, ?> bean) {
 			this.beanNames.add(beanName);
 		}
 

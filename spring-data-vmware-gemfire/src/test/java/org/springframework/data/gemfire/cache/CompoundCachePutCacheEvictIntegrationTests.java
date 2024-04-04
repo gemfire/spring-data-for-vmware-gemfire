@@ -5,18 +5,17 @@
 package org.springframework.data.gemfire.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
@@ -41,10 +40,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Integration Tests testing the contractual behavior and combination of using Spring'a {@link CachePut} annotation
@@ -153,7 +148,7 @@ public class CompoundCachePutCacheEvictIntegrationTests extends IntegrationTests
 	static class Sgf539WorkaroundConfiguration {
 
 		@Bean
-		GemfireCacheManager cacheManager(GemFireCache gemfireCache) {
+		GemfireCacheManager cacheManager(ClientCache gemfireCache) {
 
 			GemfireCacheManager cacheManager = new GemfireCacheManager() {
 

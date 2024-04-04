@@ -6,21 +6,15 @@
 package org.springframework.data.gemfire.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Map;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-
+import java.util.Map;
+import org.apache.geode.cache.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
@@ -41,7 +35,6 @@ import org.springframework.util.Assert;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration
-@ActiveProfiles("replica")
 @SuppressWarnings("unused")
 public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport {
 

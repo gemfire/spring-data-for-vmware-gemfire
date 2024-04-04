@@ -39,12 +39,12 @@ public class AutoRegionLookupIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testAutoRegionLookup() {
 
-		assertThat(this.applicationContext.containsBean("SpringPartitionedRegion")).isTrue();
-		assertThat(this.applicationContext.containsBean("SpringReplicateParent")).isTrue();
-		assertThat(this.applicationContext.containsBean("/SpringReplicateParent/SpringReplicateChild")).isTrue();
-		assertThat(this.applicationContext.containsBean("NativePartitionedRegion")).isTrue();
-		assertThat(this.applicationContext.containsBean("NativeReplicateParent")).isTrue();
-		assertThat(this.applicationContext.containsBean("/NativeReplicateParent/NativeReplicateChild")).isTrue();
-		assertThat(this.applicationContext.containsBean("/NativeReplicateParent/NativeReplicateChild/NativeReplicateGrandchild")).isTrue();
+		assertThat(this.applicationContext.containsBean("SpringClientRegion")).isTrue();
+		assertThat(this.applicationContext.containsBean("SpringClientParent")).isTrue();
+		assertThat(this.applicationContext.containsBean("/SpringClientParent/SpringClientChild")).isTrue();
+		assertThat(this.applicationContext.containsBean("NativeClientRegion")).isTrue();
+		assertThat(this.applicationContext.containsBean("NativeClientParent")).isTrue();
+		assertThat(this.applicationContext.containsBean("/NativeClientParent/NativeClientChild")).isTrue();
+		assertThat(this.applicationContext.containsBean("/NativeClientParent/NativeClientChild/NativeClientGrandchild")).isTrue();
 	}
 }

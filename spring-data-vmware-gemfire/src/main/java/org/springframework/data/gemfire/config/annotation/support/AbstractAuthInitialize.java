@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Properties;
 
 import org.apache.geode.LogWriter;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.distributed.DistributedMember;
 import org.apache.geode.security.AuthInitialize;
 import org.apache.geode.security.AuthenticationFailedException;
@@ -24,7 +23,6 @@ import org.springframework.lang.Nullable;
  *
  * @author John Blum
  * @see Properties
- * @see Cache
  * @see DistributedMember
  * @see AuthInitialize
  * @see EnvironmentAware

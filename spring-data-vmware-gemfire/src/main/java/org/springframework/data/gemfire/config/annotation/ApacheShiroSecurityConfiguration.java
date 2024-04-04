@@ -5,21 +5,17 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -46,7 +42,7 @@ import org.springframework.util.ObjectUtils;
  * administrative and data access operations.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see org.apache.geode.internal.security.SecurityService
  * @see DefaultSecurityManager
  * @see Realm
@@ -116,10 +112,6 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 				SpringExtensions.addDependsOn(configurableListableBeanFactory.getBeanDefinition("gemfireCache"),
 					"shiroSecurityManager");
 			}
-			else if (configurableListableBeanFactory.containsBean("locatorApplication")) {
-				SpringExtensions.addDependsOn(configurableListableBeanFactory.getBeanDefinition("locatorApplication"),
-					"shiroSecurityManager");
-			}
 		};
 	}
 
@@ -145,7 +137,7 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 * to secure Apache Geode, which is determined by the presence of Apache Shiro {@link Realm Realms}
 	 * declared in the Spring {@link org.springframework.context.ApplicationContext}.
 	 *
-	 * This {@link Bean} definition declares a dependency on the Apache Geode {@link GemFireCache} instance
+	 * This {@link Bean} definition declares a dependency on the Apache Geode {@link ClientCache} instance
 	 * in order to ensure the Geode cache is created and initialized first.  This ensures that any internal Geode
 	 * security configuration logic is evaluated and processed before SDG attempts to configure Apache Shiro
 	 * as Apache Geode's security provider.

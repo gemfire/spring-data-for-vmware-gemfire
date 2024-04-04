@@ -9,17 +9,13 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.function.Supplier;
-
+import org.apache.geode.cache.CacheClosedException;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.data.gemfire.CacheResolver;
 
 /**
@@ -30,7 +26,7 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.support.ComposableCacheResolver
  * @since 2.3.0
  */
@@ -39,7 +35,7 @@ import org.springframework.data.gemfire.CacheResolver;
 public class ComposableCacheResolverUnitTests {
 
 	@Mock
-	private GemFireCache mockCache;
+	private ClientCache mockCache;
 
 	@Mock(name = "CacheResolverOne")
 	private CacheResolver mockCacheResolverOne;

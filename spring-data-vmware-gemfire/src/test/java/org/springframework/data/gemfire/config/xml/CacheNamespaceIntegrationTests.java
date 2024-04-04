@@ -7,36 +7,27 @@ package org.springframework.data.gemfire.config.xml;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Offset.offset;
 import static org.springframework.data.gemfire.support.GemfireBeanFactoryLocator.newBeanFactoryLocator;
-
 import java.util.Properties;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.util.GatewayConflictHelper;
-import org.apache.geode.cache.util.GatewayConflictResolver;
-import org.apache.geode.cache.util.TimestampedEntryEvent;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Integration Tests for {@link CacheParser} and {@link CacheFactoryBean}.
+ * Integration Tests for {@link ClientCacheFactoryBean}.
  *
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
- * @see org.springframework.data.gemfire.CacheFactoryBean
- * @see org.springframework.data.gemfire.config.xml.CacheParser
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
@@ -62,32 +53,16 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 		assertThat(applicationContext.containsBean("gemfireCache")).isTrue();
 		assertThat(applicationContext.containsBean("gemfire-cache")).isTrue();
 
-		CacheFactoryBean cacheFactoryBean = applicationContext.getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean = applicationContext.getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(cacheFactoryBean.getBeanName()).isEqualTo("gemfireCache");
 		assertThat(cacheFactoryBean.getCacheXml()).isNull();
 
-		Properties gemfireProperties = cacheFactoryBean.getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isFalse();
-		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireProperties.getProperty("disable-auto-reconnect"))).isTrue();
-		assertThat(cacheFactoryBean.getUseClusterConfiguration()).isFalse();
-		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireProperties.getProperty("use-cluster-configuration"))).isFalse();
-
-		Cache gemfireCache = applicationContext.getBean("gemfireCache", Cache.class);
+		ClientCache gemfireCache = applicationContext.getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem().getProperties()).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem().getProperties().containsKey("disable-auto-reconnect")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("disable-auto-reconnect"))).isTrue();
-		assertThat(gemfireCache.getDistributedSystem().getProperties().containsKey("use-cluster-configuration")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("use-cluster-configuration"))).isFalse();
 	}
 
 	@Test
@@ -95,23 +70,13 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 
 		assertThat(applicationContext.containsBean("cache-with-name")).isTrue();
 
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-name", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean =
+			applicationContext.getBean("&cache-with-name", ClientCacheFactoryBean.class);
 
 		assertThat(cacheFactoryBean.getBeanName()).isEqualTo("cache-with-name");
 		assertThat(cacheFactoryBean.getCacheXml()).isNull();
 
-		Properties gemfireProperties = cacheFactoryBean.getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isFalse();
-		assertThat(gemfireProperties.containsKey("disable-auto-reconnect")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireProperties.getProperty("disable-auto-reconnect"))).isTrue();
-		assertThat(cacheFactoryBean.getUseClusterConfiguration()).isFalse();
-		assertThat(gemfireProperties.containsKey("use-cluster-configuration")).isTrue();
-		assertThat(Boolean.parseBoolean(gemfireProperties.getProperty("use-cluster-configuration"))).isFalse();
-
-		Cache gemfireCache = applicationContext.getBean("cache-with-name", Cache.class);
+		ClientCache gemfireCache = applicationContext.getBean("cache-with-name", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -119,48 +84,7 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 		Properties distributedSystemProperties = gemfireCache.getDistributedSystem().getProperties();
 
 		assertThat(distributedSystemProperties).isNotNull();
-		assertThat(Boolean.parseBoolean(distributedSystemProperties.getProperty("disable-auto-reconnect"))).isTrue();
 		assertThat(Boolean.parseBoolean(distributedSystemProperties.getProperty("use-cluster-configuration"))).isFalse();
-	}
-
-	@Test
-	public void cacheWithAutoReconnectDisabledIsCorrect() {
-
-		assertThat(applicationContext.containsBean("cache-with-auto-reconnect-disabled")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-auto-reconnect-disabled", CacheFactoryBean.class);
-
-		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isFalse();
-
-		Cache gemfireCache = applicationContext.getBean("cache-with-auto-reconnect-disabled", Cache.class);
-
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("disable-auto-reconnect"))).isTrue();
-	}
-
-	@Test
-	public void cacheWithAutoReconnectEnabledIsCorrect() {
-
-		assertThat(applicationContext.containsBean("cache-with-auto-reconnect-enabled")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-auto-reconnect-enabled", CacheFactoryBean.class);
-
-		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isTrue();
-
-		Cache gemfireCache = applicationContext.getBean("cache-with-auto-reconnect-enabled", Cache.class);
-
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("disable-auto-reconnect"))).isFalse();
-	}
-
-	@Test
-	public void cacheWithGatewayConflictResolverIsCorrect() {
-
-		Cache cache = applicationContext.getBean("cache-with-gateway-conflict-resolver", Cache.class);
-
-		assertThat(cache.getGatewayConflictResolver()).isInstanceOf(TestGatewayConflictResolver.class);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -168,8 +92,8 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 
 		assertThat(applicationContext.containsBean("cache-with-no-bean-factory-locator")).isTrue();
 
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-no-bean-factory-locator", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean =
+			applicationContext.getBean("&cache-with-no-bean-factory-locator", ClientCacheFactoryBean.class);
 
 		assertThat(cacheFactoryBean.getBeanFactoryLocator()).isNull();
 
@@ -177,46 +101,12 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 	}
 
 	@Test
-	public void cacheWithUseClusterConfigurationDisabledIsCorrect() {
-
-		assertThat(applicationContext.containsBean("cache-with-use-cluster-configuration-disabled")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-use-cluster-configuration-disabled", CacheFactoryBean.class);
-
-		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isFalse();
-
-		Cache gemfireCache =
-			applicationContext.getBean("cache-with-use-cluster-configuration-disabled", Cache.class);
-
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("use-cluster-configuration"))).isFalse();
-	}
-
-	@Test
-	public void cacheWithUseClusterConfigurationEnabledIsCorrect() {
-
-		assertThat(applicationContext.containsBean("cache-with-use-cluster-configuration-enabled")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-use-cluster-configuration-enabled", CacheFactoryBean.class);
-
-		assertThat(cacheFactoryBean.getUseClusterConfiguration()).isTrue();
-
-		Cache gemfireCache =
-			applicationContext.getBean("cache-with-use-cluster-configuration-enabled", Cache.class);
-
-		assertThat(Boolean.parseBoolean(gemfireCache.getDistributedSystem().getProperties()
-			.getProperty("use-cluster-configuration"))).isTrue();
-	}
-
-	@Test
 	public void cacheWithXmlAndPropertiesConfigurationIsCorrect() throws Exception {
 
 		assertThat(applicationContext.containsBean("cache-with-xml-and-props")).isTrue();
 
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&cache-with-xml-and-props", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean =
+			applicationContext.getBean("&cache-with-xml-and-props", ClientCacheFactoryBean.class);
 
 		Resource cacheXmlResource = cacheFactoryBean.getCacheXml();
 
@@ -234,36 +124,13 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 
 		assertThat(applicationContext.containsBean("heap-tuned-cache")).isTrue();
 
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&heap-tuned-cache", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean =
+			applicationContext.getBean("&heap-tuned-cache", ClientCacheFactoryBean.class);
 
 		Float criticalHeapPercentage = cacheFactoryBean.getCriticalHeapPercentage();
 		Float evictionHeapPercentage = cacheFactoryBean.getEvictionHeapPercentage();
 
 		assertThat(criticalHeapPercentage).isCloseTo(70.0f, offset(0.0001f));
 		assertThat(evictionHeapPercentage).isCloseTo(60.0f, offset(0.0001f));
-	}
-
-	@Test
-	public void offHeapTunedCacheIsCorrect() {
-
-		assertThat(applicationContext.containsBean("off-heap-tuned-cache")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&off-heap-tuned-cache", CacheFactoryBean.class);
-
-		Float criticalOffHeapPercentage = cacheFactoryBean.getCriticalOffHeapPercentage();
-		Float evictionOffHeapPercentage = cacheFactoryBean.getEvictionOffHeapPercentage();
-
-		assertThat(criticalOffHeapPercentage).isCloseTo(90.0f, offset(0.0001f));
-		assertThat(evictionOffHeapPercentage).isCloseTo(50.0f, offset(0.0001f));
-	}
-
-	public static class TestGatewayConflictResolver implements GatewayConflictResolver {
-
-		@Override
-		public void onEvent(TimestampedEntryEvent event, GatewayConflictHelper helper) {
-			throw new UnsupportedOperationException("Not Implemented");
-		}
 	}
 }

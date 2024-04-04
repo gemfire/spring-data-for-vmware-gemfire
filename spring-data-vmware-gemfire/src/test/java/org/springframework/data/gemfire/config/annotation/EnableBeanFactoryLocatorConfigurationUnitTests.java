@@ -5,19 +5,10 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
-
 import org.junit.Test;
-
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.data.gemfire.CacheFactoryBean;
-import org.springframework.data.gemfire.LocatorFactoryBean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 
 /**
@@ -25,7 +16,7 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.BeanFactoryLocatorConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
@@ -47,7 +38,7 @@ public class EnableBeanFactoryLocatorConfigurationUnitTests {
 	@Test
 	public void useBeanFactoryLocatorBeanPostProcessorProcessesCacheFactoryBean() {
 
-		CacheFactoryBean cacheFactoryBean = new CacheFactoryBean();
+		ClientCacheFactoryBean cacheFactoryBean = new ClientCacheFactoryBean();
 
 		assertThat(cacheFactoryBean.isUseBeanFactoryLocator()).isFalse();
 
@@ -69,18 +60,6 @@ public class EnableBeanFactoryLocatorConfigurationUnitTests {
 	}
 
 	@Test
-	public void useBeanFactoryLocatorBeanPostProcessorProcessesLocatorFactoryBean() {
-
-		LocatorFactoryBean locatorFactoryBean = new LocatorFactoryBean();
-
-		assertThat(locatorFactoryBean.isUseBeanFactoryLocator()).isFalse();
-
-		testUseBeanFactoryLocatorBeanPostProcessorProcessesBean(locatorFactoryBean);
-
-		assertThat(locatorFactoryBean.isUseBeanFactoryLocator()).isTrue();
-	}
-
-	@Test
 	public void useBeanFactoryLocatorBeanPostProcessorWillNotProcessObject() {
 
 		Object mockObject = mock(Object.class);
@@ -98,36 +77,6 @@ public class EnableBeanFactoryLocatorConfigurationUnitTests {
 		assertThat(factoryBean.isUseBeanFactoryLocator()).isFalse();
 
 		factoryBean.setClientCacheConfigurers(this.configuration.useBeanFactoryLocatorClientCacheConfigurer());
-		factoryBean.afterPropertiesSet();
-
-		assertThat(factoryBean.isUseBeanFactoryLocator()).isTrue();
-	}
-
-	@Test
-	public void useBeanFactoryLocatorLocatorConfigurerIsCorrect() throws Exception {
-
-		LocatorFactoryBean factoryBean = spy(new LocatorFactoryBean());
-
-		doNothing().when(factoryBean).init();
-
-		assertThat(factoryBean.isUseBeanFactoryLocator()).isFalse();
-
-		factoryBean.setLocatorConfigurers(this.configuration.useBeanFactoryLocatorLocatorConfigurer());
-		factoryBean.afterPropertiesSet();
-
-		assertThat(factoryBean.isUseBeanFactoryLocator()).isTrue();
-
-		verify(factoryBean, times(1)).setUseBeanFactoryLocator(eq(true));
-	}
-
-	@Test
-	public void useBeanFactoryLocatorPeerCacheConfigurerIsCorrect() throws Exception {
-
-		CacheFactoryBean factoryBean = new CacheFactoryBean();
-
-		assertThat(factoryBean.isUseBeanFactoryLocator()).isFalse();
-
-		factoryBean.setPeerCacheConfigurers(this.configuration.useBeanFactoryLocatorPeerCacheConfigurer());
 		factoryBean.afterPropertiesSet();
 
 		assertThat(factoryBean.isUseBeanFactoryLocator()).isTrue();

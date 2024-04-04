@@ -23,9 +23,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Algorithms" persistent="false" key-constraint="java.lang.String"
+	<gfe:client-region shortcut="LOCAL" id="Algorithms" persistent="false" key-constraint="java.lang.String"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Algorithm"/>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">

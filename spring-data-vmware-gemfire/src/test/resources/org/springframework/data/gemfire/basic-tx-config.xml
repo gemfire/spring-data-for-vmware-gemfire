@@ -18,13 +18,13 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<bean id="cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="cache" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="properties" ref="gemfireProperties"/>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.data.gemfire.transaction.GemfireTransactionManager" p:cache-ref="cache"/>
 
-	<bean id="rollback-region" class="org.springframework.data.gemfire.LocalRegionFactoryBean" p:name="r-region" p:cache-ref="cache" p:close="false"/>
-	<bean id="commit-region" class="org.springframework.data.gemfire.LocalRegionFactoryBean" p:name="c-region" p:cache-ref="cache" p:close="false"/>
+	<bean id="rollback-region" class="org.springframework.data.gemfire.client.ClientRegionFactoryBean" p:name="r-region" p:cache-ref="cache" p:close="false"/>
+	<bean id="commit-region" class="org.springframework.data.gemfire.client.ClientRegionFactoryBean" p:name="c-region" p:cache-ref="cache" p:close="false"/>
 
 </beans>

@@ -4,8 +4,7 @@
  */
 package org.springframework.data.gemfire.cache.config;
 
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +23,7 @@ import org.springframework.data.gemfire.cache.GemfireCacheManager;
  * the SDG provided {@link EnableGemfireCaching} annotation.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see EnableCaching
  * @see Bean
  * @see Configuration
@@ -46,10 +45,10 @@ public class GemfireCachingConfiguration {
 	 *
 	 * @return an instance of {@link GemfireCacheManager}.
 	 * @see GemfireCacheManager
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
 	@Bean
-	public GemfireCacheManager cacheManager(GemFireCache gemfireCache) {
+	public GemfireCacheManager cacheManager(ClientCache gemfireCache) {
 
 		GemfireCacheManager gemfireCacheManager = new GemfireCacheManager();
 

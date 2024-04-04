@@ -46,7 +46,7 @@
 
 	<context:property-placeholder properties-ref="jndi-binding-settings"/>
 
-	<gfe:cache properties-ref="gemfireProperties">
+	<gfe:client-cache properties-ref="gemfireProperties">
 		<gfe:jndi-binding jndi-name="${jndi.binding.name}"
 						  type="${jndi.binding.type}"
 						  blocking-timeout-seconds="${jndi.binding.blocking.timeout.seconds}"
@@ -68,6 +68,6 @@
 			<gfe:jndi-prop key="email">${jndi.prop.email}</gfe:jndi-prop>
 			<gfe:jndi-prop key="phone">${jndi.prop.phone}</gfe:jndi-prop>
 		</gfe:jndi-binding>
-	</gfe:cache>
+	</gfe:client-cache>
 
 </beans>

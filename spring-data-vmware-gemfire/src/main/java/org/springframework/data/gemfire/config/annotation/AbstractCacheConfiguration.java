@@ -1,25 +1,25 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.springframework.data.gemfire.CacheFactoryBean.JndiDataSource;
+import static org.springframework.data.gemfire.client.ClientCacheFactoryBean.JndiDataSource;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
-import org.apache.geode.cache.util.GatewayConflictResolver;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.ImportAware;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.Resource;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.config.support.DefinedIndexesApplicationListener;
@@ -47,8 +47,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see Annotation
  * @see Properties
- * @see Cache
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see ClientCache
  * @see CacheServer
  * @see org.springframework.beans.factory.BeanFactory
@@ -61,7 +60,7 @@ import org.springframework.util.StringUtils;
  * @see AnnotationAttributes
  * @see Resource
  * @see AnnotationMetadata
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see AbstractAnnotationConfigSupport
  * @see CustomEditorBeanFactoryPostProcessor
@@ -87,8 +86,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	protected static final boolean DEFAULT_COPY_ON_READ = false;
 	protected static final boolean DEFAULT_USE_BEAN_FACTORY_LOCATOR = false;
 
-	protected static final int DEFAULT_MCAST_PORT = 0;
-
 	protected static final String DEFAULT_LOCATORS = "";
 	protected static final String DEFAULT_LOG_LEVEL = "config";
 	protected static final String DEFAULT_NAME = "SpringDataGemFireApplication";
@@ -97,14 +94,9 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private boolean copyOnRead = DEFAULT_COPY_ON_READ;
 	private boolean useBeanFactoryLocator = DEFAULT_USE_BEAN_FACTORY_LOCATOR;
 
-	private Integer mcastPort = DEFAULT_MCAST_PORT;
 
 	private Float criticalHeapPercentage;
-	private Float criticalOffHeapPercentage;
 	private Float evictionHeapPercentage;
-	private Float evictionOffHeapPercentage;
-
-	private GatewayConflictResolver gatewayConflictResolver;
 
 	private List<JndiDataSource> jndiDataSources;
 	private List<TransactionListener> transactionListeners;
@@ -116,7 +108,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private String locators = DEFAULT_LOCATORS;
 	private String logLevel = DEFAULT_LOG_LEVEL;
 	private String name;
-	private String startLocator;
 
 	private TransactionWriter transactionWriter;
 
@@ -127,10 +118,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * The {@literal name} of the Pivotal GemFire/Apache Geode member/node in the cluster is set to a default,
 	 * pre-defined and descriptive value depending on the type of configuration meta-data applied.
 	 *
-	 * {@literal mcast-port} is set to {@literal 0} and {@literal locators} is set to an {@link String empty String},
-	 * which is necessary for {@link ClientCache cache client}-based applications.  These values can be changed
-	 * and set accordingly for {@link Cache peer cache} and {@link CacheServer cache server} applications.
-	 *
 	 * Finally, the {@literal log-level} property defaults to {@literal config}.
 	 *
 	 * @return a {@link Properties} object containing Pivotal GemFire/Apache Geode properties used to configure
@@ -139,9 +126,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * @see Properties
 	 * @see #locators()
 	 * @see #logLevel()
-	 * @see #mcastPort()
 	 * @see #name()
-	 * @see #startLocator()
 	 */
 	@Bean
 	protected Properties gemfireProperties() {
@@ -149,10 +134,8 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		PropertiesBuilder gemfireProperties = PropertiesBuilder.create();
 
 		gemfireProperties.setProperty("name", name());
-		gemfireProperties.setProperty("mcast-port", mcastPort());
 		gemfireProperties.setProperty("log-level", logLevel());
 		gemfireProperties.setProperty("locators", locators());
-		gemfireProperties.setProperty("start-locator", startLocator());
 		gemfireProperties.add(this.customGemFireProperties);
 
 		return gemfireProperties.build();
@@ -216,7 +199,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 */
 	protected void configureCache(AnnotationMetadata importMetadata) {
 
-		if (isClientPeerOrServerCacheApplication(importMetadata)) {
+		if (isClientCacheApplication(importMetadata)) {
 
 			AnnotationAttributes cacheMetadataAttributes = getAnnotationAttributes(importMetadata);
 
@@ -231,14 +214,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 				.filter(AbstractAnnotationConfigSupport::hasValue)
 				.ifPresent(this::setCriticalHeapPercentage);
 
-			Optional.ofNullable(resolveProperty(cacheProperty("critical-off-heap-percentage"), (Float) null))
-				.ifPresent(this::setCriticalOffHeapPercentage);
-
-			Optional.ofNullable((Float) cacheMetadataAttributes.get("criticalOffHeapPercentage"))
-				.filter(it -> getCriticalOffHeapPercentage() == null)
-				.filter(AbstractAnnotationConfigSupport::hasValue)
-				.ifPresent(this::setCriticalOffHeapPercentage);
-
 			Optional.ofNullable(resolveProperty(cacheProperty("eviction-heap-percentage"), (Float) null))
 				.ifPresent(this::setEvictionHeapPercentage);
 
@@ -246,14 +221,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 				.filter(it -> getEvictionHeapPercentage() == null)
 				.filter(AbstractAnnotationConfigSupport::hasValue)
 				.ifPresent(this::setEvictionHeapPercentage);
-
-			Optional.ofNullable(resolveProperty(cacheProperty("eviction-off-heap-percentage"), (Float) null))
-				.ifPresent(this::setEvictionOffHeapPercentage);
-
-			Optional.ofNullable((Float) cacheMetadataAttributes.get("evictionOffHeapPercentage"))
-				.filter(it -> getEvictionOffHeapPercentage() == null)
-				.filter(AbstractAnnotationConfigSupport::hasValue)
-				.ifPresent(this::setEvictionOffHeapPercentage);
 
 			setLogLevel(resolveProperty(cacheProperty("log-level"),
 				(String) cacheMetadataAttributes.get("logLevel")));
@@ -276,53 +243,48 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	protected void configureOptional(AnnotationMetadata importMetadata) { }
 
 	/**
-	 * Constructs a new, initialized instance of {@link CacheFactoryBean} based on the Spring application's
+	 * Constructs a new, initialized instance of {@link ClientCacheFactoryBean} based on the Spring application's
 	 * cache type preference (i.e. client or peer), which is expressed via the appropriate annotation.
 	 *
 	 * Use the {@link ClientCacheApplication} Annotation to construct a {@link ClientCache cache client} application.
 	 *
-	 * Use the {@link PeerCacheApplication} Annotation to construct a {@link Cache peer cache} application.
-	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @return a new instance of the appropriate {@link CacheFactoryBean} given the Spring application's
-	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
-	 * or {@link PeerCacheApplication}).
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @return a new instance of the appropriate {@link ClientCacheFactoryBean} given the Spring application's
+	 * cache type preference.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
-	 * @see #configureCacheFactoryBean(CacheFactoryBean)
+	 * @see ClientCacheFactoryBean
+	 * @see #configureCacheFactoryBean(ClientCacheFactoryBean)
 	 * @see #newCacheFactoryBean()
 	 */
-	protected <T extends CacheFactoryBean> T constructCacheFactoryBean() {
+	protected <T extends ClientCacheFactoryBean> T constructCacheFactoryBean() {
 		return configureCacheFactoryBean(newCacheFactoryBean());
 	}
 
 	/**
-	 * Constructs a new, uninitialized instance of {@link CacheFactoryBean} based on the Spring application's
+	 * Constructs a new, uninitialized instance of {@link ClientCacheFactoryBean} based on the Spring application's
 	 * cache type preference (i.e. client or peer), which is expressed via the appropriate annotation.
 	 *
 	 * Use the {@link ClientCacheApplication} Annotation to construct a {@link ClientCache cache client} application.
 	 *
-	 * Use the {@link PeerCacheApplication} Annotation to construct a {@link Cache peer cache} application.
 	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @return a new instance of the appropriate {@link CacheFactoryBean} given the Spring application's
-	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
-	 * or {@link PeerCacheApplication}).
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @return a new instance of the appropriate {@link ClientCacheFactoryBean} given the Spring application's
+	 * cache type preference.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see ClientCacheFactoryBean
 	 */
-	protected abstract <T extends CacheFactoryBean> T newCacheFactoryBean();
+	protected abstract <T extends ClientCacheFactoryBean> T newCacheFactoryBean();
 
 	/**
-	 * Configures the {@link CacheFactoryBean} with common cache configuration settings.
+	 * Configures the {@link ClientCacheFactoryBean} with common cache configuration settings.
 	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @param gemfireCache {@link CacheFactoryBean} to configure.
-	 * @return the given {@link CacheFactoryBean} with common cache configuration settings applied.
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @param gemfireCache {@link ClientCacheFactoryBean} to configure.
+	 * @return the given {@link ClientCacheFactoryBean} with common cache configuration settings applied.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see ClientCacheFactoryBean
 	 */
-	protected <T extends CacheFactoryBean> T configureCacheFactoryBean(T gemfireCache) {
+	protected <T extends ClientCacheFactoryBean> T configureCacheFactoryBean(T gemfireCache) {
 
 		gemfireCache.setBeanClassLoader(getBeanClassLoader());
 		gemfireCache.setBeanFactory(getBeanFactory());
@@ -330,10 +292,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireCache.setClose(isClose());
 		gemfireCache.setCopyOnRead(getCopyOnRead());
 		gemfireCache.setCriticalHeapPercentage(getCriticalHeapPercentage());
-		gemfireCache.setCriticalOffHeapPercentage(getCriticalOffHeapPercentage());
 		gemfireCache.setEvictionHeapPercentage(getEvictionHeapPercentage());
-		gemfireCache.setEvictionOffHeapPercentage(getEvictionOffHeapPercentage());
-		gemfireCache.setGatewayConflictResolver(getGatewayConflictResolver());
 		gemfireCache.setJndiDataSources(getJndiDataSources());
 		gemfireCache.setProperties(gemfireProperties());
 		gemfireCache.setTransactionListeners(getTransactionListeners());
@@ -341,23 +300,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireCache.setUseBeanFactoryLocator(useBeanFactoryLocator());
 
 		return gemfireCache;
-	}
-
-	// TODO: Review Javadoc from here
-
-	/**
-	 * Determines whether this is a GemFire {@link CacheServer} application,
-	 * which is indicated by the presence of the {@link CacheServerApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server application.
-	 * @see CacheServerApplication
-	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
-	 */
-	protected boolean isCacheServerApplication(AnnotationMetadata importMetadata) {
-		return isTypedCacheApplication(CacheServerApplication.class, importMetadata);
 	}
 
 	/**
@@ -373,21 +315,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 */
 	protected boolean isClientCacheApplication(AnnotationMetadata importMetadata) {
 		return isTypedCacheApplication(ClientCacheApplication.class, importMetadata);
-	}
-
-	/**
-	 * Determines whether this is a GemFire peer {@link Cache} application,
-	 * which is indicated by the presence of the {@link PeerCacheApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire peer cache application.
-	 * @see PeerCacheApplication
-	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
-	 */
-	protected boolean isPeerCacheApplication(AnnotationMetadata importMetadata) {
-		return isTypedCacheApplication(PeerCacheApplication.class, importMetadata);
 	}
 
 	/**
@@ -407,44 +334,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 			AnnotationMetadata importMetadata) {
 
 		return annotationType.equals(getAnnotationType()) && importMetadata.hasAnnotation(getAnnotationTypeName());
-	}
-
-	/**
-	 * Determines whether this is a GemFire {@link CacheServer} or
-	 * {@link Cache peer cache} application, which is indicated by the presence
-	 * of either the {@link CacheServerApplication} annotation or the {@link PeerCacheApplication} annotation
-	 * on a Spring application {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server or peer cache application.
-	 * @see AnnotationMetadata
-	 * @see CacheServerApplication
-	 * @see PeerCacheApplication
-	 * @see #isCacheServerApplication(AnnotationMetadata)
-	 * @see #isPeerCacheApplication(AnnotationMetadata)
-	 */
-	protected boolean isCacheServerOrPeerCacheApplication(AnnotationMetadata importMetadata) {
-		return isCacheServerApplication(importMetadata) || isPeerCacheApplication(importMetadata);
-	}
-
-	/**
-	 * Determine whether this Spring application is a {@link CacheServer},
-	 * {@link ClientCache} or a {@link Cache} application.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the class type-level annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server, client cache or peer cache
-	 * Spring application.
-	 * @see #isCacheServerApplication(AnnotationMetadata)
-	 * @see #isClientCacheApplication(AnnotationMetadata)
-	 * @see #isPeerCacheApplication(AnnotationMetadata)
-	 */
-	protected boolean isClientPeerOrServerCacheApplication(AnnotationMetadata importMetadata) {
-
-		return isCacheServerApplication(importMetadata)
-			|| isClientCacheApplication(importMetadata)
-			|| isPeerCacheApplication(importMetadata);
 	}
 
 	void setCacheXml(Resource cacheXml) {
@@ -479,36 +368,12 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		return this.criticalHeapPercentage;
 	}
 
-	void setCriticalOffHeapPercentage(Float criticalOffHeapPercentage) {
-		this.criticalOffHeapPercentage = criticalOffHeapPercentage;
-	}
-
-	protected Float getCriticalOffHeapPercentage() {
-		return this.criticalOffHeapPercentage;
-	}
-
 	void setEvictionHeapPercentage(Float evictionHeapPercentage) {
 		this.evictionHeapPercentage = evictionHeapPercentage;
 	}
 
 	protected Float getEvictionHeapPercentage() {
 		return this.evictionHeapPercentage;
-	}
-
-	void setEvictionOffHeapPercentage(Float evictionOffHeapPercentage) {
-		this.evictionOffHeapPercentage = evictionOffHeapPercentage;
-	}
-
-	protected Float getEvictionOffHeapPercentage() {
-		return this.evictionOffHeapPercentage;
-	}
-
-	void setGatewayConflictResolver(GatewayConflictResolver gatewayConflictResolver) {
-		this.gatewayConflictResolver = gatewayConflictResolver;
-	}
-
-	protected GatewayConflictResolver getGatewayConflictResolver() {
-		return this.gatewayConflictResolver;
 	}
 
 	void setJndiDataSources(List<JndiDataSource> jndiDataSources) {
@@ -521,7 +386,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	void setLocators(String locators) {
 		this.locators = locators;
-		this.mcastPort = DEFAULT_MCAST_PORT;
 	}
 
 	protected String locators() {
@@ -536,29 +400,12 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		return Optional.ofNullable(this.logLevel).orElse(DEFAULT_LOG_LEVEL);
 	}
 
-	void setMcastPort(Integer mcastPort) {
-		this.mcastPort = mcastPort;
-		this.locators = DEFAULT_LOCATORS;
-	}
-
-	protected Integer mcastPort() {
-		return Optional.ofNullable(mcastPort).orElse(DEFAULT_MCAST_PORT);
-	}
-
 	void setName(String name) {
 		this.name = name;
 	}
 
 	protected String name() {
 		return Optional.ofNullable(this.name).filter(StringUtils::hasText).orElseGet(this::toString);
-	}
-
-	void setStartLocator(String startLocator) {
-		this.startLocator = startLocator;
-	}
-
-	protected String startLocator() {
-		return this.startLocator;
 	}
 
 	void setTransactionListeners(List<TransactionListener> transactionListeners) {

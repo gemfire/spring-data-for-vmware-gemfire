@@ -5,10 +5,8 @@
 package org.springframework.data.gemfire.cache;
 
 import java.util.concurrent.Callable;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.util.Assert;
@@ -19,7 +17,6 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author John Blum
  * @author Oliver Gierke
- * @see Cache
  * @see Region
  */
 @SuppressWarnings("rawtypes")
@@ -42,7 +39,7 @@ public class GemfireCache implements Cache {
 	}
 
 	/**
-	 * Constructs an instance of {@link GemFireCache} initialized with the given GemFire {@link Region}.
+	 * Constructs an instance of {@link ClientCache} initialized with the given GemFire {@link Region}.
 	 * The {@link Region} will function as the backing store and implementation for
 	 * the Spring {@link Cache} interface.
 	 *

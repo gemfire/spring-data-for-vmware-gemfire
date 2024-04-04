@@ -5,29 +5,22 @@
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.internal.cache.GemFireCacheImpl;
-
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
  * {@link CacheUtils} is an abstract utility class encapsulating common operations for working with
- * {@link Cache} and {@link ClientCache} instances.
+ * {@link ClientCache} instances.
  *
  * @author John Blum
- * @see Cache
- * @see CacheFactory
- * @see GemFireCache
+ * @see ClientCache
  * @see org.apache.geode.cache.Region
  * @see ClientCache
  * @see ClientCacheFactory
@@ -40,17 +33,6 @@ import org.springframework.util.StringUtils;
 public abstract class CacheUtils extends DistributedSystemUtils {
 
 	public static final String DEFAULT_POOL_NAME = "DEFAULT";
-
-	public static boolean isClient(@Nullable GemFireCache cache) {
-
-		boolean client = cache instanceof ClientCache;
-
-		if (cache instanceof GemFireCacheImpl) {
-			client &= ((GemFireCacheImpl) cache).isClient();
-		}
-
-		return client;
-	}
 
 	public static boolean isDefaultPool(@Nullable Pool pool) {
 
@@ -86,26 +68,19 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 			.isPresent();
 	}
 
-	public static boolean isPeer(@Nullable GemFireCache cache) {
-
-		boolean peer = cache instanceof Cache;
-
-		if (cache instanceof GemFireCacheImpl) {
-			peer &= !((GemFireCacheImpl) cache).isClient();
-		}
-
-		return peer;
-	}
-
 	public static boolean close() {
-		return close(resolveGemFireCache());
+		ClientCache clientCache = getClientCache();
+		if (clientCache != null) {
+			return close(clientCache);
+		}
+		return true;
 	}
 
-	public static boolean close(@NonNull GemFireCache gemfireCache) {
+	public static boolean close(@NonNull ClientCache gemfireCache) {
 		return close(gemfireCache, () -> {});
 	}
 
-	public static boolean close(@NonNull GemFireCache gemfireCache, @Nullable Runnable shutdownHook) {
+	public static boolean close(@NonNull ClientCache gemfireCache, @Nullable Runnable shutdownHook) {
 
 		try {
 			gemfireCache.close();
@@ -122,7 +97,7 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	public static boolean closeCache() {
 
 		try {
-			CacheFactory.getAnyInstance().close();
+			ClientCacheFactory.getAnyInstance().close();
 			return true;
 		}
 		catch (Exception ignore) {
@@ -141,16 +116,6 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 		}
 	}
 
-	public static Cache getCache() {
-
-		try {
-			return CacheFactory.getAnyInstance();
-		}
-		catch (CacheClosedException ignore) {
-			return null;
-		}
-	}
-
 	public static ClientCache getClientCache() {
 
 		try {
@@ -161,7 +126,7 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 		}
 	}
 
-	public static GemFireCache resolveGemFireCache() {
-		return Optional.<GemFireCache>ofNullable(getClientCache()).orElseGet(CacheUtils::getCache);
+	public static ClientCache resolveGemFireCache() {
+		return getClientCache();
 	}
 }

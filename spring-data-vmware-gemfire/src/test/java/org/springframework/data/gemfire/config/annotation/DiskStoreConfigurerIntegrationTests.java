@@ -5,15 +5,12 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.DiskStore
  * @see org.apache.geode.cache.DiskStoreFactory
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.annotation.Configuration
  * @see org.springframework.data.gemfire.DiskStoreFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
@@ -74,7 +71,7 @@ public class DiskStoreConfigurerIntegrationTests extends IntegrationTestsSupport
 		assertDiskStoreConfigurerCalled(this.configurerTwo, "cd", "floppy", "tape");
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableDiskStores(diskStores = {
 		@EnableDiskStore(name = "cd"),
 		@EnableDiskStore(name = "floppy"),

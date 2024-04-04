@@ -23,11 +23,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Users" persistent="false"/>
-
-	<gfe:index id="UsernameIdx" expression="username" from="/Users" type="PRIMARY_KEY"/>
+	<gfe:client-region shortcut="LOCAL" id="Users" persistent="false"/>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable" expression="org.springframework.data.gemfire.repository.sample.UsingQueryAnnotationExtensionsInUserRepository"/>

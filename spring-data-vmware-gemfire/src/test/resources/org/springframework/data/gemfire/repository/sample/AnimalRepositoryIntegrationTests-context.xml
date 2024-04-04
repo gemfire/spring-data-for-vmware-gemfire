@@ -23,13 +23,13 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Cats" persistent="false"
+	<gfe:client-region shortcut="LOCAL" id="Cats" persistent="false"
 		key-constraint="java.lang.Long"
 		value-constraint="org.springframework.data.gemfire.repository.sample.Animal"/>
 
-	<gfe:replicated-region id="Dogs" persistent="false"
+	<gfe:client-region shortcut="LOCAL" id="Dogs" persistent="false"
 		key-constraint="java.lang.Long"
 		value-constraint="org.springframework.data.gemfire.repository.sample.Animal"/>
 

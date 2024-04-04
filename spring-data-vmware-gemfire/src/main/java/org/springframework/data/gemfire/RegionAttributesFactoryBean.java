@@ -56,24 +56,4 @@ public class RegionAttributesFactoryBean<K, V> extends AttributesFactory<K, V>
 	public boolean isSingleton() {
 		return true;
 	}
-
-	public void setAsyncEventQueueIds(@NonNull String[] asyncEventQueueIds) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(asyncEventQueueIds, String.class))
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.forEach(this::addAsyncEventQueueId);
-	}
-
-	public void setIndexUpdateType(@NonNull IndexMaintenancePolicyType indexUpdateType) {
-		indexUpdateType.setIndexMaintenance(this);
-	}
-
-	public void setGatewaySenderIds(@NonNull String[] gatewaySenderIds) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(gatewaySenderIds, String.class))
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.forEach(this::addGatewaySenderId);
-	}
 }

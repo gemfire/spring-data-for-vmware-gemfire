@@ -32,16 +32,14 @@ import java.io.IOException;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see org.springframework.data.gemfire.fork.ServerProcess
  * @see org.springframework.data.gemfire.repository.GemfireRepository
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(locations = "ClientRegionNamespaceRepositoryIntegrationTests-context.xml")
 @SuppressWarnings("unused")
-public class ClientRegionNamespaceRepositoryIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ClientRegionNamespaceRepositoryIntegrationTests {
 
 	@Autowired
 	private PersonRepository repository;

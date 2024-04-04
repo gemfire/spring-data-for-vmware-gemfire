@@ -14,7 +14,6 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.gemfire.mapping.annotation.Indexed;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.data.gemfire.tests.support.IdentifierSequence;
 import org.springframework.data.gemfire.util.SpringExtensions;
@@ -31,8 +30,6 @@ import org.springframework.util.ObjectUtils;
  * @see org.springframework.data.annotation.Id
  * @see org.springframework.data.annotation.PersistenceConstructor
  * @see org.springframework.data.gemfire.mapping.annotation.Region
- * @see org.springframework.data.gemfire.mapping.annotation.Indexed
- * @see org.springframework.data.gemfire.test.support.IdentifierSequence
  * @since 2.0.0
  */
 @Region("People")
@@ -53,7 +50,6 @@ public class Person implements Comparable<Person>, Serializable {
 
 	private final String firstName;
 
-	@Indexed
 	private final String lastName;
 
 	public static Date newBirthDate(int year, int month, int dayOfMonth) {

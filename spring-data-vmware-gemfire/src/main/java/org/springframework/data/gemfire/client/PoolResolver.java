@@ -54,7 +54,7 @@ public interface PoolResolver {
 	 * If the {@link Region} is a {@literal client} {@link Region} but does not explicitly configure
 	 * a specific {@link Pool} reference, then the {@literal DEFAULT} {@link Pool} is returned.
 	 *
-	 * If the {@link Region} is {@literal local} or a {@literal peer} {@link Region}, then {@literal null}
+	 * If the {@link Region} is {@literal local} or a {@link Region}, then {@literal null}
 	 * is returned.
 	 *
  	 * @param region {@link Region} from which to resolve the associated {@link Pool}.

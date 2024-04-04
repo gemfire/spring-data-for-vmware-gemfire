@@ -12,14 +12,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
-
 import java.lang.reflect.Proxy;
 import java.util.concurrent.Executor;
-
-import org.junit.After;
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
+import lombok.Data;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.client.ClientCache;
@@ -28,7 +23,8 @@ import org.apache.geode.cache.query.CqAttributes;
 import org.apache.geode.cache.query.CqEvent;
 import org.apache.geode.cache.query.CqQuery;
 import org.apache.geode.cache.query.QueryService;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,8 +52,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ErrorHandler;
 
-import lombok.Data;
-
 /**
  * Unit Tests for {@link EnableContinuousQueries}, {@link ContinuousQueryConfiguration}, {@link ContinuousQuery}
  * and {@link ContinuousQueryListenerContainer}.
@@ -66,7 +60,7 @@ import lombok.Data;
  * @see java.lang.reflect.Proxy
  * @see java.util.concurrent.Executor
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.query.CqEvent
@@ -123,7 +117,7 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 			assertThat(applicationContext).isNotNull();
 			assertThat(applicationContext.containsBean("DEFAULT")).isTrue();
 
-			GemFireCache gemfireCache = applicationContext.getBean(ClientCache.class);
+			ClientCache gemfireCache = applicationContext.getBean(ClientCache.class);
 
 			assertThat(gemfireCache).isNotNull();
 
@@ -243,7 +237,7 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean("People")
-		Region<Long, Person> mockPeopleRegion(GemFireCache gemfireCache,
+		Region<Long, Person> mockPeopleRegion(ClientCache gemfireCache,
 				@Qualifier("peopleRegionAttributes") RegionAttributes<Long, Person> peopleRegionAttributes) {
 
 			return GemFireMockObjectsSupport.mockRegion(gemfireCache, "People", peopleRegionAttributes);
@@ -262,7 +256,7 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean("Examples")
-		Region<Long, Example> mockExamplesRegion(GemFireCache gemfireCache,
+		Region<Long, Example> mockExamplesRegion(ClientCache gemfireCache,
 				@Qualifier("examplesRegionAttributes") RegionAttributes<Long, Example> mockExamplesRegionAttributes) {
 
 			return GemFireMockObjectsSupport.mockRegion(gemfireCache, "Examples",

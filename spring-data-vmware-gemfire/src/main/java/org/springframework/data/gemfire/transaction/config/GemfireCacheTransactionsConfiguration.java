@@ -7,11 +7,9 @@ package org.springframework.data.gemfire.transaction.config;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +18,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
-import org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.transaction.GemfireTransactionManager;
 import org.springframework.data.gemfire.transaction.event.ComposableTransactionWriter;
@@ -35,7 +32,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * to manage local, cache transactions for either Pivotal GemFire or Apache Geode.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see TransactionListener
  * @see TransactionWriter
  * @see ApplicationEventPublisher
@@ -44,9 +41,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @see ImportAware
  * @see AnnotationAttributes
  * @see org.springframework.core.type.AnnotatedTypeMetadata
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see ClientCacheConfigurer
- * @see PeerCacheConfigurer
+ * @see ClientCacheConfigurer
  * @see AbstractAnnotationConfigSupport
  * @see GemfireTransactionManager
  * @see ComposableTransactionWriter
@@ -82,13 +79,13 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	 * Declares and registers SDG's {@link GemfireTransactionManager} as the {@literal transactionManager}
 	 * in Spring's Transaction Management infrastructure to manage local, GemFire/Geode cache transactions.
 	 *
-	 * @param gemfireCache reference to the {@link GemFireCache}.
-	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link GemFireCache}.
+	 * @param gemfireCache reference to the {@link ClientCache}.
+	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link ClientCache}.
 	 * @see GemfireTransactionManager
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
 	@Bean
-	public GemfireTransactionManager transactionManager(GemFireCache gemfireCache) {
+	public GemfireTransactionManager transactionManager(ClientCache gemfireCache) {
 		return new GemfireTransactionManager(gemfireCache);
 	}
 
@@ -105,27 +102,14 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 		};
 	}
 
-	@Bean
-	@Order(Ordered.LOWEST_PRECEDENCE)
-	public PeerCacheConfigurer registerTransactionListenerAdapterPeerCacheConfigurer(
-		ApplicationEventPublisher applicationEventPublisher) {
-
-		return (beanName, bean) -> {
-
-			TransactionListenerAdapter transactionListener = newTransactionListenerAdapter(applicationEventPublisher);
-
-			registerGemFireCacheTransactionEventHandlers(bean, transactionListener);
-		};
-	}
-
 	private TransactionListenerAdapter newTransactionListenerAdapter(
 			ApplicationEventPublisher applicationEventPublisher) {
 
 		return new TransactionListenerAdapter(applicationEventPublisher);
 	}
 
-	protected void registerGemFireCacheTransactionEventHandlers(CacheFactoryBean cacheFactoryBean,
-			TransactionListenerAdapter transactionListener) {
+	protected void registerGemFireCacheTransactionEventHandlers(ClientCacheFactoryBean cacheFactoryBean,
+																															TransactionListenerAdapter transactionListener) {
 
 		if (this.enableAutoTransactionEventPublishing) {
 			registerGemFireCacheTransactionListener(cacheFactoryBean, transactionListener);
@@ -133,7 +117,7 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 		}
 	}
 
-	private void registerGemFireCacheTransactionListener(CacheFactoryBean bean,
+	private void registerGemFireCacheTransactionListener(ClientCacheFactoryBean bean,
 			TransactionListener transactionListener) {
 
 		List<TransactionListener> transactionListeners = new ArrayList<>(bean.getTransactionListeners());
@@ -143,7 +127,7 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 		bean.setTransactionListeners(transactionListeners);
 	}
 
-	private void registerGemFireCacheTransactionWriter(CacheFactoryBean bean,
+	private void registerGemFireCacheTransactionWriter(ClientCacheFactoryBean bean,
 			TransactionWriter transactionWriter) {
 
 		TransactionWriter existingTransactionWriter = bean.getTransactionWriter();

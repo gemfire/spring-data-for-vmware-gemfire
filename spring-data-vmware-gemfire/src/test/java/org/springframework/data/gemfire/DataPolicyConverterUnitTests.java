@@ -28,7 +28,7 @@ public class DataPolicyConverterUnitTests {
 
 		for (byte ordinal = 0; ordinal < Byte.MAX_VALUE; ordinal++) {
 			try {
-				if (DataPolicy.fromOrdinal(ordinal) != null) {
+				if (DataPolicy.fromOrdinal(ordinal) != null && !DataPolicy.fromOrdinal(ordinal).withPartitioning()) {
 					count++;
 				}
 			}
@@ -45,14 +45,10 @@ public class DataPolicyConverterUnitTests {
 	@Test
 	public void policyToDataPolicyConversion() {
 
-		assertThat(DataPolicyConverter.Policy.values().length - 1).isEqualTo(getDataPolicyEnumerationSize());
+		assertThat(DataPolicyConverter.Policy.values().length).isEqualTo(getDataPolicyEnumerationSize() - 1);
 		assertThat(DataPolicyConverter.Policy.EMPTY.toDataPolicy()).isEqualTo(DataPolicy.EMPTY);
 		assertThat(DataPolicyConverter.Policy.NORMAL.toDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(DataPolicyConverter.Policy.PRELOADED.toDataPolicy()).isEqualTo(DataPolicy.PRELOADED);
-		assertThat(DataPolicyConverter.Policy.PARTITION.toDataPolicy()).isEqualTo(DataPolicy.PARTITION);
-		assertThat(DataPolicyConverter.Policy.PERSISTENT_PARTITION.toDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-		assertThat(DataPolicyConverter.Policy.REPLICATE.toDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-		assertThat(DataPolicyConverter.Policy.PERSISTENT_REPLICATE.toDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(DataPolicyConverter.Policy.DEFAULT.toDataPolicy()).isEqualTo(DataPolicy.DEFAULT);
 	}
 
@@ -60,8 +56,6 @@ public class DataPolicyConverterUnitTests {
 	public void convertDataPolicyStrings() {
 
 		assertThat(converter.convert("empty")).isEqualTo(DataPolicy.EMPTY);
-		assertThat(converter.convert("Partition")).isEqualTo(DataPolicy.PARTITION);
-		assertThat(converter.convert("PERSISTENT_REPLICATE")).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(converter.convert("invalid")).isNull();
 		assertThat(converter.convert(null)).isNull();
 	}

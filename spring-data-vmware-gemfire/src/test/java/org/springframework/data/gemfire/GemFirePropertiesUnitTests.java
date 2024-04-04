@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,8 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,14 +35,31 @@ import org.springframework.util.ReflectionUtils;
  */
 public class GemFirePropertiesUnitTests {
 
-    private static final Set<String> deprecatedGemFireProperties = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    private static final Set<String> unsupportedGemFireProperties = Set.of(
+        "memcached-bind-address",
+        "memcached-port",
+        "memcached-protocol",
+        "async-distribution-timeout",
+        "async-max-queue-size",
+        "async-queue-timeout",
+        "enable-management-rest-service",
+        "http-service-bind-address",
+        "http-service-port",
+        "start-dev-rest-api",
+        "jmx-manager",
+        "jmx-manager-access-file",
+        "jmx-manager-bind-address",
+        "jmx-manager-hostname-for-clients",
+        "jmx-manager-password-file",
+        "jmx-manager-port",
+        "jmx-manager-start",
+        "jmx-manager-update-rate",
+        "disable-jmx",
+        "ssl-jmx-alias"
+    );
+
+    private static final Set<String> deprecatedGemFireProperties = Set.of(
             "disable-tcp",
-            "mcast-address",
-            "mcast-flow-control",
-            "mcast-port",
-            "mcast-recv-buffer-size",
-            "mcast-send-buffer-size",
-            "mcast-ttl",
             "security-udp-dhalgo",
             "udp-fragment-size",
             "udp-recv-buffer-size",
@@ -60,7 +80,7 @@ public class GemFirePropertiesUnitTests {
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
             "security-peer-authenticator" // replaced by SecurityManager
-    )));
+    );
 
     private Set<String> resolveActualGemFirePropertyNames() {
 
@@ -91,6 +111,7 @@ public class GemFirePropertiesUnitTests {
         Set<String> missingGemFireProperties = new TreeSet<>(expectedGemFireProperties);
 
         missingGemFireProperties.removeAll(actualGemFireProperties);
+        missingGemFireProperties.removeAll(unsupportedGemFireProperties);
 
         assertThat(missingGemFireProperties)
                 .describedAs("Expected properties in [%s] not in [%s] include (%s)",

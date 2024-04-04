@@ -10,10 +10,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
 
 /**
  * Unit Tests for {@link CacheResolver}.
@@ -21,7 +19,7 @@ import org.apache.geode.cache.GemFireCache;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.CacheResolver
  * @since 2.3.0
  */
@@ -31,7 +29,7 @@ public class CacheResolverUnitTests {
 	@SuppressWarnings("rawtypes")
 	public void getCallsResolve() {
 
-		GemFireCache mockCache = mock(GemFireCache.class);
+		ClientCache mockCache = mock(ClientCache.class);
 
 		CacheResolver mockCacheResolver = mock(CacheResolver.class);
 

@@ -22,9 +22,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Customers" persistent="false" key-constraint="java.lang.Long"
+	<gfe:client-region shortcut="LOCAL" id="Customers" persistent="false" key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Customer"/>
 
 	<context:annotation-config/>

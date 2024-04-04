@@ -8,15 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,7 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.client.support.ClientCacheFactoryCacheResolver
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
@@ -43,12 +39,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ClientCacheFactoryCacheResolverIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private GemFireCache clientCache;
+	private ClientCache clientCache;
 
 	@Before
 	public void setup() {
 		assertThat(this.clientCache).isNotNull();
-		assertThat(GemfireUtils.isClient(this.clientCache)).isTrue();
 	}
 
 	@Test

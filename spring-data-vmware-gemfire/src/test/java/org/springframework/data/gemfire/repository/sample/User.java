@@ -4,6 +4,7 @@
  */
 package org.springframework.data.gemfire.repository.sample;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Objects;
@@ -25,7 +26,7 @@ import org.springframework.util.ObjectUtils;
  */
 @Region("Users")
 @SuppressWarnings("unused")
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
 
 	private Boolean active = true;
 
