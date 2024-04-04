@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Import;
  * @see <a href="https://geode.apache.org/docs/guide/113/managing/security/authentication_overview.html">Authentication</a>
  * @see <a href="https://geode.apache.org/docs/guide/113/managing/security/authorization_overview.html">Authorization</a>
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(AuthConfiguration.class)
 @UsesGemFireProperties
+@Deprecated(forRemoval = true)
 @SuppressWarnings({ "deprecation", "unused" })
 public @interface EnableAuth {
 

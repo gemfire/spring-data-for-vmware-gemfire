@@ -38,6 +38,7 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
  * @see EnableCacheServers
  * @see EnableCacheServer
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -45,6 +46,7 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 @Documented
 @Configuration
 @Import(CacheServerConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface CacheServerApplication {
 
