@@ -21,12 +21,15 @@ import org.springframework.context.annotation.Import;
  * and register them with the cache.
  *
  * @author David Turanski
+ *
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import(GemfireFunctionBeanPostProcessorRegistrar.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableGemfireFunctions {
 

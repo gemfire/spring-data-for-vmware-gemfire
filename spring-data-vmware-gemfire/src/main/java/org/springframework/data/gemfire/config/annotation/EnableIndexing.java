@@ -28,11 +28,13 @@ import org.springframework.context.annotation.Configuration;
  * @see IndexConfiguration
  * @see IndexConfigurer
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
+@Deprecated(forRemoval = true)
 @SuppressWarnings({ "unused" })
 public @interface EnableIndexing {
 

@@ -30,6 +30,7 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
  * @see PeerCacheConfiguration
  * @see GemfireBeanFactoryLocator
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target({ ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -37,6 +38,7 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
 @Documented
 @Configuration
 @Import(PeerCacheConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface PeerCacheApplication {
 
