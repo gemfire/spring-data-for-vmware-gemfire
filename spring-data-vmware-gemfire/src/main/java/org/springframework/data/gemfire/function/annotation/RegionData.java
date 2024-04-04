@@ -22,6 +22,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
-@Deprecated(forRemoval = true)
+@Deprecated
 public @interface RegionData {
 }

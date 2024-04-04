@@ -39,7 +39,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(LocatorConfiguration.class)
 @UsesGemFireProperties
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableLocator {
 

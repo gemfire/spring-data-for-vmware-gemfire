@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Import;
 @Inherited
 @Documented
 @Import(GemfireFunctionBeanPostProcessorRegistrar.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableGemfireFunctions {
 

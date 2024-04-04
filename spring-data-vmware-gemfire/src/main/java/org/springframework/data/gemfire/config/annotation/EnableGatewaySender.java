@@ -52,7 +52,7 @@ import org.springframework.data.gemfire.wan.OrderPolicyType;
 @Inherited
 @Documented
 @Import({ GatewaySenderBeanFactoryPostProcessor.class, GatewaySenderConfiguration.class })
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableGatewaySender {
 

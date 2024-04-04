@@ -43,7 +43,7 @@ import org.springframework.web.client.RestTemplate;
 @Inherited
 @Documented
 @Import(ClusterConfigurationConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableClusterConfiguration {
 

@@ -42,7 +42,7 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 @Inherited
 @Documented
 @Import(AddCacheServerConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableCacheServer {
 

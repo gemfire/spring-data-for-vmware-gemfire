@@ -31,7 +31,7 @@ import org.springframework.core.annotation.AliasFor;
 @Inherited
 @Documented
 @Region
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface LocalRegion {
 

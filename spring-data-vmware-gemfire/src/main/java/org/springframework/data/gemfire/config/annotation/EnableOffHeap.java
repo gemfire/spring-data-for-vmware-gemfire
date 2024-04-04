@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(OffHeapConfiguration.class)
 @UsesGemFireProperties
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableOffHeap {
 
