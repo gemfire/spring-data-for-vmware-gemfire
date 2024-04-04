@@ -28,12 +28,14 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.data.gemfire.ResolvableRegionFactoryBean#setLookupEnabled(Boolean)
  * @see AutoRegionLookupConfiguration
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import(AutoRegionLookupConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableAutoRegionLookup {
 
