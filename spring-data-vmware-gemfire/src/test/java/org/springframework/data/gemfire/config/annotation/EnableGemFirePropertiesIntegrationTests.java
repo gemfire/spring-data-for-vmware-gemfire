@@ -28,7 +28,7 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
 
 /**
- * Integration tests for {@link EnableAuth}, {@link EnableGemFireProperties}, {@link EnableHttpService},
+ * Integration tests for {@link EnableGemFireProperties}, {@link EnableHttpService},
  * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
  * {@link EnableOffHeap},, {@link EnableSecurity}, {@link EnableSsl},
  * {@link EnableStatistics}.
@@ -69,47 +69,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 				: Function.identity();
 
 		return newApplicationContext(applicationContextInitializer, annotatedClasses);
-	}
-
-	@Test
-	public void authGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.security.client.accessor", "example.client.AccessController")
-			.withProperty("spring.data.gemfire.security.client.accessor-post-processor", "example.client.AccessControllerPostProcessor")
-			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.client.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.client.authenticator", "example.client.Authenticator")
-			.withProperty("spring.data.gemfire.security.client.diffie-hellman-algorithm", "SHA1")
-			.withProperty("spring.data.gemfire.security.peer.authentication-initializer", "example.peer.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.peer.authenticator", "example.peer.Authenticator")
-			.withProperty("spring.data.gemfire.security.peer.verify-member-timeout", 120L)
-			.withProperty("spring.data.gemfire.security.log.file", "/path/to/security.log")
-			.withProperty("spring.data.gemfire.security.log.level", "info")
-			.withProperty("spring.data.gemfire.security.properties-file", "/path/to/security.properties");
-
-		newApplicationContext(testPropertySource, TestAuthGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("gemfireSecurityPropertyFile")).isEqualTo("/path/to/security.properties");
-		assertThat(gemfireProperties.getProperty("security-client-accessor")).isEqualTo("example.client.AccessController");
-		assertThat(gemfireProperties.getProperty("security-client-accessor-pp")).isEqualTo("example.client.AccessControllerPostProcessor");
-		assertThat(gemfireProperties.getProperty("security-client-auth-init")).isEqualTo("example.client.AuthenticationInitializer");
-		assertThat(gemfireProperties.getProperty("security-client-authenticator")).isEqualTo("example.client.Authenticator");
-		assertThat(gemfireProperties.getProperty("security-client-dhalgo")).isEqualTo("SHA1");
-		assertThat(gemfireProperties.getProperty("security-peer-auth-init")).isEqualTo("example.peer.AuthenticationInitializer");
-		assertThat(gemfireProperties.getProperty("security-peer-authenticator")).isEqualTo("example.peer.Authenticator");
-		assertThat(gemfireProperties.getProperty("security-peer-verifymember-timeout")).isEqualTo("120");
-		assertThat(gemfireProperties.getProperty("security-log-file")).isEqualTo("/path/to/security.log");
-		assertThat(gemfireProperties.getProperty("security-log-level")).isEqualTo("info");
 	}
 
 	@Test
@@ -445,7 +404,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication
-	@EnableAuth
 	@EnableGemFireProperties
 	static class TestAuthGemFirePropertiesConfiguration { }
 
