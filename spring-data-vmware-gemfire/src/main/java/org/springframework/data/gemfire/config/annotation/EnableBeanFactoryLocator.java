@@ -36,7 +36,7 @@ import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
 @Inherited
 @Documented
 @Import(BeanFactoryLocatorConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableBeanFactoryLocator {
 

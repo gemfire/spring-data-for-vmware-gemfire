@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings({ "unused" })
 public @interface EnableIndexing {
 
