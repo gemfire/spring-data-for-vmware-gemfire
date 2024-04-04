@@ -76,17 +76,6 @@ public @interface ClientCacheApplication {
 	float criticalHeapPercentage() default ResourceManager.DEFAULT_CRITICAL_PERCENTAGE;
 
 	/**
-	 * Configures the percentage of off-heap at or above which the cache is considered to be in danger
-	 * of becoming inoperable.
-	 *
-	 * Defaults to {@literal 0.0}.
-	 *
-	 * Use {@literal spring.data.gemfire.cache.critical-off-heap-percentage} property
-	 * in {@literal application.properties}.
-	 */
-	float criticalOffHeapPercentage() default 0.0f;
-
-	/**
 	 * Configures the ID for a durable client in a client/server topology.
 	 *
 	 * If set, the durable client ID indicates a client is durable so messages persist while the client is offline.
@@ -117,17 +106,6 @@ public @interface ClientCacheApplication {
 	 * Use {@literal spring.data.gemfire.cache.eviction-heap-percentage} property in {@literal application.properties}.
 	 */
 	float evictionHeapPercentage() default ResourceManager.DEFAULT_EVICTION_PERCENTAGE;
-
-	/**
-	 * Configures the percentage of off-heap at or above which eviction should begin on Regions configured
-	 * for {@literal Heap LRU eviction}.
-	 *
-	 * Defaults to {@literal 0.0}.
-	 *
-	 * Use {@literal spring.data.gemfire.cache.eviction-off-heap-percentage} property
-	 * in {@literal application.properties}.
-	 */
-	float evictionOffHeapPercentage() default 0.0f;
 
 	/**
 	 * Configures the free connection timeout for the {@literal DEFAULT} {@link Pool}.

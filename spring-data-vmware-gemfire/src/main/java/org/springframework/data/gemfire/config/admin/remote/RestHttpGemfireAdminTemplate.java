@@ -18,8 +18,6 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.execute.Function;
 
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
-import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
@@ -241,61 +239,6 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	@SuppressWarnings("unchecked")
 	protected <T extends RestOperations> T getRestOperations() {
 		return (T) this.restTemplate;
-	}
-
-	@Override
-	public void createIndex(IndexDefinition indexDefinition) {
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-
-		httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		// HTTP Message Body
-		MultiValueMap<String, Object> httpRequestParameters = new LinkedMultiValueMap<>();
-
-		httpRequestParameters.add("name", indexDefinition.getName());
-		httpRequestParameters.add("expression", indexDefinition.getExpression());
-		httpRequestParameters.add("region", indexDefinition.getFromClause());
-		httpRequestParameters.add("type", indexDefinition.getIndexType().getGemfireIndexType().getName());
-
-		RequestEntity<MultiValueMap<String, Object>> requestEntity =
-			new RequestEntity<>(httpRequestParameters, httpHeaders, HttpMethod.POST, resolveCreateIndexUri());
-
-		ResponseEntity<String> response = getRestOperations().exchange(requestEntity, String.class);
-
-		// TODO do something with the result; e.g. log when failure (or when not "OK")
-		HttpStatus.OK.equals(response.getStatusCode());
-	}
-
-	protected URI resolveCreateIndexUri() {
-		return URI.create(getManagementRestApiUrl().concat("/indexes"));
-	}
-
-	@Override
-	public void createRegion(RegionDefinition regionDefinition) {
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-
-		httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		// HTTP Message Body
-		MultiValueMap<String, Object> httpRequestParameters = new LinkedMultiValueMap<>();
-
-		httpRequestParameters.add("name", regionDefinition.getName());
-		httpRequestParameters.add("type", regionDefinition.getRegionShortcut().toString());
-		httpRequestParameters.add("skip-if-exists", String.valueOf(DEFAULT_CREATE_REGION_SKIP_IF_EXISTS));
-
-		RequestEntity<MultiValueMap<String, Object>> requestEntity =
-			new RequestEntity<>(httpRequestParameters, httpHeaders, HttpMethod.POST, resolveCreateRegionUri());
-
-		ResponseEntity<String> response = getRestOperations().exchange(requestEntity, String.class);
-
-		// TODO do something with the result; e.g. log when failure (or when not "OK")
-		HttpStatus.OK.equals(response.getStatusCode());
-	}
-
-	protected URI resolveCreateRegionUri() {
-		return URI.create(getManagementRestApiUrl().concat("/regions"));
 	}
 
 	public static class Builder {

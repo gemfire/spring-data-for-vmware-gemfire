@@ -6,23 +6,23 @@ package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
+import edu.umd.cs.mtc.MultithreadedTestCase;
+import edu.umd.cs.mtc.TestFramework;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.function.Function;
-
-import edu.umd.cs.mtc.MultithreadedTestCase;
-import edu.umd.cs.mtc.TestFramework;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.apache.geode.cache.CacheTransactionManager;
 import org.apache.geode.cache.CommitConflictException;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
@@ -42,14 +42,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
 /**
- * Integration Tests asserting the proper configuration and behavior of Apache Geode {@link GemFireCache} Transactions
+ * Integration Tests asserting the proper configuration and behavior of Apache Geode {@link ClientCache} Transactions
  * within the context of the Spring container when using SDG to configure the {@link CacheTransactionManager}.
  *
  * Specifically, this test asserts that 2 concurrent threads modifying the same entity inside a cache transaction
@@ -62,7 +56,7 @@ import lombok.ToString;
  * @see org.junit.Test
  * @see org.apache.geode.cache.CacheTransactionManager
  * @see org.apache.geode.cache.CommitConflictException
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
@@ -82,7 +76,7 @@ import lombok.ToString;
 public class CommitConflictExceptionTransactionalIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	@Autowired
 	private AutomatedTellerMachine atm;

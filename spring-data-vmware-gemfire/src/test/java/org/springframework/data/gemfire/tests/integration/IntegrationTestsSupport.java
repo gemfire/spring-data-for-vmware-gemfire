@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.tests.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -28,13 +27,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import org.junit.AfterClass;
-import org.junit.Before;
-
 import org.apache.geode.DataSerializer;
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.execute.FunctionService;
 import org.apache.geode.distributed.Locator;
@@ -44,9 +38,9 @@ import org.apache.geode.internal.cache.GemFireCacheImpl;
 import org.apache.geode.internal.cache.InternalCache;
 import org.apache.geode.internal.net.SSLConfigurationFactory;
 import org.apache.geode.internal.net.SocketCreatorFactory;
-
 import org.apache.shiro.util.StringUtils;
-
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -76,7 +70,6 @@ import org.springframework.util.ReflectionUtils;
  * @author John Blum
  * @see File
  * @see DataSerializer
- * @see GemFireCache
  * @see ClientCache
  * @see FunctionService
  * @see Locator
@@ -268,9 +261,9 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	/**
-	 * Closes any Apache Geode {@link GemFireCache} after test (class/suite) execution.
+	 * Closes any Apache Geode {@link ClientCache} after test (class/suite) execution.
 	 *
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
 	@AfterClass
 	public static void closeAnyGemFireCache() {
@@ -409,30 +402,25 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	public static void closeGemFireCacheWaitOnCacheClosedEvent(long duration) {
-		closeGemFireCacheWaitOnCacheClosedEvent(GemfireUtils::resolveGemFireCache, duration);
+		closeGemFireCacheWaitOnCacheClosedEvent(GemfireUtils::getClientCache, duration);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GemFireCache> cacheSupplier) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier) {
 		closeGemFireCacheWaitOnCacheClosedEvent(cacheSupplier, DEFAULT_WAIT_DURATION);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GemFireCache> cacheSupplier,
-			@NonNull Function<GemFireCache, GemFireCache> cacheClosingFunction) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
+			@NonNull Function<ClientCache, ClientCache> cacheClosingFunction) {
 
 		closeGemFireCacheWaitOnCacheClosedEvent(cacheSupplier, cacheClosingFunction, DEFAULT_WAIT_DURATION);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GemFireCache> cacheSupplier,
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
 			long duration) {
 
-		Function<GemFireCache, GemFireCache> cacheClosingFunction = cacheToClose -> {
+		Function<ClientCache, ClientCache> cacheClosingFunction = cacheToClose -> {
 
-			if (GemfireUtils.isClient(cacheToClose)) {
-				((ClientCache) cacheToClose).close(false);
-			}
-			else {
-				cacheToClose.close();
-			}
+			((ClientCache) cacheToClose).close(false);
 
 			return cacheToClose;
 		};
@@ -441,8 +429,8 @@ public abstract class IntegrationTestsSupport {
 
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GemFireCache> cacheSupplier,
-			@NonNull Function<GemFireCache, GemFireCache> cacheClosingFunction, long duration) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
+			@NonNull Function<ClientCache, ClientCache> cacheClosingFunction, long duration) {
 
 		AtomicBoolean closed = new AtomicBoolean(false);
 
@@ -653,7 +641,7 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	protected static abstract class AbstractApplicationEventPublisherCacheLifecycleListenerAdapter
-			implements ApplicationEventPublisherAware, CacheLifecycleListener {
+			implements ApplicationEventPublisherAware {
 
 		private ApplicationEventPublisher applicationEventPublisher;
 
@@ -667,24 +655,6 @@ public abstract class IntegrationTestsSupport {
 
 		protected Optional<ApplicationEventPublisher> getApplicationEventPublisher() {
 			return Optional.ofNullable(this.applicationEventPublisher);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void cacheCreated(InternalCache cache) {
-			getApplicationEventPublisher().ifPresent(eventPublisher ->
-				eventPublisher.publishEvent(new CacheCreatedEvent(cache)));
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void cacheClosed(InternalCache cache) {
-			getApplicationEventPublisher().ifPresent(eventPublisher ->
-				eventPublisher.publishEvent(new CacheClosedEvent(cache)));
 		}
 	}
 
@@ -700,52 +670,23 @@ public abstract class IntegrationTestsSupport {
 		}
 
 		private static TestContextCacheLifecycleListenerAdapter newTestContextCacheLifecycleListenerAdapter() {
-			return registerCacheLifecycleListener(new TestContextCacheLifecycleListenerAdapter());
+			return new TestContextCacheLifecycleListenerAdapter();
 		}
 
-		private static @NonNull <T extends CacheLifecycleListener> T registerCacheLifecycleListener(@NonNull T listener) {
-			GemFireCacheImpl.addCacheLifecycleListener(listener);
-			return listener;
-		}
-
-		private final Map<GemFireCache, Object> cacheInstances = Collections.synchronizedMap(new WeakHashMap<>());
+		private final Map<ClientCache, Object> cacheInstances = Collections.synchronizedMap(new WeakHashMap<>());
 
 		private TestContextCacheLifecycleListenerAdapter() { }
 
-		public boolean isClosed(@Nullable GemFireCache cache) {
+		public boolean isClosed(@Nullable ClientCache cache) {
 			return cache == null || (cache.isClosed() && isCacheClosed(cache));
 		}
 
-		private boolean isCacheClosed(@Nullable GemFireCache cache) {
+		private boolean isCacheClosed(@Nullable ClientCache cache) {
 			return !isOpen(cache);
 		}
 
-		public boolean isOpen(@Nullable GemFireCache cache) {
+		public boolean isOpen(@Nullable ClientCache cache) {
 			return this.cacheInstances.containsKey(cache);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void cacheCreated(@NonNull InternalCache cache) {
-
-			if (cache != null) {
-				this.cacheInstances.put(cache, this);
-				super.cacheCreated(cache);
-			}
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void cacheClosed(@NonNull InternalCache cache) {
-
-			if (cache != null) {
-				this.cacheInstances.remove(cache, this);
-				super.cacheClosed(cache);
-			}
 		}
 	}
 
@@ -756,25 +697,25 @@ public abstract class IntegrationTestsSupport {
 			return target;
 		}
 
-		protected AbstractCacheEvent(@NonNull GemFireCache cache) {
-			super(requireNonNull(cache, "GemFireCache must not be null"));
+		protected AbstractCacheEvent(@NonNull ClientCache cache) {
+			super(requireNonNull(cache, "ClientCache must not be null"));
 		}
 
-		public @NonNull GemFireCache getCache() {
-			return (GemFireCache) getSource();
+		public @NonNull ClientCache getCache() {
+			return (ClientCache) getSource();
 		}
 	}
 
 	public static class CacheCreatedEvent extends AbstractCacheEvent {
 
-		public CacheCreatedEvent(@NonNull GemFireCache cache) {
+		public CacheCreatedEvent(@NonNull ClientCache cache) {
 			super(cache);
 		}
 	}
 
 	public static class CacheClosedEvent extends AbstractCacheEvent {
 
-		public CacheClosedEvent(@NonNull GemFireCache cache) {
+		public CacheClosedEvent(@NonNull ClientCache cache) {
 			super(cache);
 		}
 	}

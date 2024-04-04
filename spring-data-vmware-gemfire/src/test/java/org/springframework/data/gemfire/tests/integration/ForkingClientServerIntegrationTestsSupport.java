@@ -19,7 +19,6 @@ import java.util.function.Function;
 
 import org.junit.AfterClass;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.client.ClientCache;
 
 import org.springframework.context.ApplicationContext;
@@ -28,7 +27,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.gemfire.config.annotation.CacheServerApplication;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.config.annotation.EnablePdx;
 import org.springframework.data.gemfire.tests.integration.config.ClientServerIntegrationTestsConfiguration;
@@ -40,7 +38,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Abstract base class used to bootstrap Apache Geode {@link Cache} and/or {@link ClientCache} applications
+ * Abstract base class used to bootstrap Apache Geode {@link ClientCache} applications
  * as independent (forked), {@link Process child processes}.
  *
  * @author John Blum
@@ -48,14 +46,12 @@ import org.springframework.lang.Nullable;
  * @see InetAddress
  * @see Executors
  * @see ThreadFactory
- * @see Cache
  * @see ClientCache
  * @see ApplicationContext
  * @see Bean
  * @see Configuration
  * @see ContextRefreshedEvent
  * @see EventListener
- * @see CacheServerApplication
  * @see ClientCacheApplication
  * @see ClientServerIntegrationTestsSupport
  * @see ClientServerIntegrationTestsConfiguration
@@ -256,7 +252,6 @@ public abstract class ForkingClientServerIntegrationTestsSupport extends ClientS
 	public static class BaseGemFireClientConfiguration extends ClientServerIntegrationTestsConfiguration { }
 
 	@EnablePdx
-	@CacheServerApplication(name = "ForkingClientServerIntegrationTestsSupport", logLevel = GEMFIRE_LOG_LEVEL)
 	public static class BaseGemFireServerConfiguration extends ClientServerIntegrationTestsConfiguration {
 
 		public static void main(String[] args) {

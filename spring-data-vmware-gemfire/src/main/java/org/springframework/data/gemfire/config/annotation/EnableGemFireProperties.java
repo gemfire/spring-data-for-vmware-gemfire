@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -11,7 +16,6 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import org.springframework.context.annotation.Import;
 
 /**
@@ -50,44 +54,6 @@ public @interface EnableGemFireProperties {
 	 * Defaults to {@literal 15} seconds.
 	 */
 	int ackWaitThreshold() default GemFirePropertiesConfiguration.DEFAULT_ACK_WAIT_THRESHOLD;
-
-	/**
-	 * The number of milliseconds a process that is publishing to this process should attempt to distribute
-	 * a cache operation before switching over to asynchronous messaging for this process. The switch to
-	 * asynchronous messaging lasts until this process catches up, departs, or some specified limit is reached,
-	 * such as async-queue-timeout or async-max-queue-size.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 0} milliseconds.
-	 */
-	long asyncDistributionTimeout() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_DISTRIBUTION_TIMEOUT;
-
-	/**
-	 * Affects non-conflated asynchronous queues for members that publish to this member. This is the maximum size
-	 * the queue can reach (in megabytes) before the publisher asks this member to leave the distributed system.
-	 *
-	 * Valid values are in the range 0..1024.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 8} MB.
-	 */
-	int asyncMaxQueueSize() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_MAX_QUEUE_SIZE;
-
-	/**
-	 * Affects asynchronous queues for members that publish to this member. This is the maximum milliseconds
-	 * the publisher should wait with no distribution to this member before it asks this member to leave
-	 * the distributed system. Used for handling slow receivers.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 60000} milliseconds.
-	 */
-	long asyncQueueTimeout() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_QUEUE_TIMEOUT;
 
 	/**
 	 * Relevant only for multi-homed hosts - machines with multiple network interface cards (NICs).
@@ -196,16 +162,6 @@ public @interface EnableGemFireProperties {
 		default GemFirePropertiesConfiguration.DEFAULT_ENABLE_NETWORK_PARTITION_DETECTION;
 
 	/**
-	 * Whether partitioned regions will put redundant copies of the same data in different members
-	 * running on the same physical machine. By default, GemFire tries to put redundant copies on different machines,
-	 * but it will put them on the same machine if no other machines are available. Setting this property
-	 * to {@literal true} prevents this and requires different machines for redundant copies.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean enforceUniqueHost() default GemFirePropertiesConfiguration.DEFAULT_ENFORCE_UNIQUE_HOST;
-
-	/**
 	 * Defines the list of groups that this member belongs to. Use commas to separate group names.
 	 * Note that anything defined by the {@literal roles} gemfire property will also be considered
 	 * a group.
@@ -235,7 +191,7 @@ public @interface EnableGemFireProperties {
 	long locatorWaitTimeout() default GemFirePropertiesConfiguration.DEFAULT_LOCATOR_WAIT_TIME;
 
 	/**
-	 * When true, locks heap and off-heap memory into RAM to prevent the operating system from paging the memory
+	 * When true, locks heap memory into RAM to prevent the operating system from paging the memory
 	 * out to disk.
 	 *
 	 * Defaults to {@literal false}.
@@ -244,9 +200,6 @@ public @interface EnableGemFireProperties {
 
 	/**
 	 * Maximum number of milliseconds to wait for the distributed system to reconnect on each reconnect attempt.
-	 *
-	 * {@link PeerCacheApplication#enableAutoReconnect()} or {@link CacheServerApplication#enableAutoReconnect()}
-	 * must be set to {@literal true} for this property to have any effect.
 	 *
 	 * Defaults to {@literal 60000} milliseconds.
 	 */
@@ -299,17 +252,6 @@ public @interface EnableGemFireProperties {
 	 * Defaults to unset.
 	 */
 	String name() default GemFirePropertiesConfiguration.DEFAULT_NAME;
-
-	/**
-	 * Defines this member’s redundancy zone. Used to separate member’s into different groups for satisfying
-	 * Partitioned Region redundancy. If this property is set, GemFire will not put redundant copies of data
-	 * in members with the same redundancy zone setting.
-	 *
-	 * Defaults to unset.
-	 *
-	 * @see <a href="https://geode.apache.org/docs/guide/113/developing/partitioned_regions/overview_how_pr_ha_works.html">Configure High Availability for a Partitioned Region</a>
-	 */
-	String redundancyZone() default GemFirePropertiesConfiguration.DEFAULT_REDUNDANCY_ZONE;
 
 	/**
 	 * Used to configure the Locators that a cluster will use in order to connect to a remote site in a multi-site
@@ -403,12 +345,9 @@ public @interface EnableGemFireProperties {
 	int tombstoneGcThreshold() default GemFirePropertiesConfiguration.DEFAULT_TOMBSTONE_THRESHOLD;
 
 	/**
-	 * Maximum fragment size, in bytes, for transmission over UDP unicast or multicast sockets. Smaller messages
-	 * are combined, if possible, for transmission up to the fragment size setting.
-	 *
-	 * Valid values are in the range 1000..60000.
-	 *
-	 * Defaults to {@literal 60000} bytes.
+	 * Maximum fragment size, in bytes, for transmission over UDP unicast. Smaller messages are combined, if possible, for
+	 * transmission up to the fragment size setting. Valid values are in the range 1000..60000. Defaults to
+	 * {@literal 60000} bytes.
 	 */
 	int udpFragmentSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_FRAGMENT_SIZE;
 

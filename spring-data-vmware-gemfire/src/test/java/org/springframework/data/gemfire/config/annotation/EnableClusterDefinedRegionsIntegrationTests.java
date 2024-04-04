@@ -5,31 +5,22 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.io.IOException;
 import java.util.Collections;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.DataPolicy;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -39,12 +30,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.config.annotation.ClusterDefinedRegionsConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableClusterDefinedRegions
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
@@ -59,12 +49,11 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=PartitionRegion --type=PARTITION",
+						"create region --name=ReplicateRegion --type=REPLICATE", "create region --name=LocalRegion --type=LOCAL");
 
 		gemFireCluster.acceptLicense().start();
-
-		gemFireCluster.gfsh(false, "create region --name=PartitionRegion --type=PARTITION",
-				"create region --name=ReplicateRegion --type=REPLICATE", "create region --name=LocalRegion --type=LOCAL");
 
 		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 	}
@@ -102,7 +91,6 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	public void setup() {
 
 		assertThat(this.cache).isNotNull();
-		assertThat(CacheUtils.isClient(this.cache));
 	}
 
 	@Test

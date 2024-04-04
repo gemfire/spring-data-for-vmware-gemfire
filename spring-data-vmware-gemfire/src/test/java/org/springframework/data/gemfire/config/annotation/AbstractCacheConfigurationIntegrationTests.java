@@ -5,16 +5,10 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Optional;
 import java.util.function.Function;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
@@ -27,8 +21,7 @@ import org.springframework.mock.env.MockPropertySource;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.core.env.PropertySource
@@ -39,7 +32,7 @@ import org.springframework.mock.env.MockPropertySource;
  */
 public class AbstractCacheConfigurationIntegrationTests extends SpringApplicationContextIntegrationTestsSupport {
 
-	private void assertName(GemFireCache gemfireCache, String name) {
+	private void assertName(ClientCache gemfireCache, String name) {
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -76,7 +69,7 @@ public class AbstractCacheConfigurationIntegrationTests extends SpringApplicatio
 
 		newApplicationContext(TestClientCacheConfiguration.class);
 
-		GemFireCache peerCache = getBean("gemfireCache", ClientCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertName(peerCache, ClientCacheConfiguration.DEFAULT_NAME);
 	}
@@ -89,40 +82,13 @@ public class AbstractCacheConfigurationIntegrationTests extends SpringApplicatio
 
 		newApplicationContext(testPropertySource, TestClientCacheConfiguration.class);
 
-		GemFireCache peerCache = getBean("gemfireCache", ClientCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertName(peerCache, "TestClient");
-	}
-
-	@Test
-	public void peerCacheNameUsesAnnotationNameAttributeConfiguredValue() {
-
-		newApplicationContext(TestPeerCacheConfiguration.class);
-
-		GemFireCache peerCache = getBean("gemfireCache", Cache.class);
-
-		assertName(peerCache, "TestPeerCacheApp");
-	}
-
-	@Test
-	public void peerCacheNameUsesSpringDataGemFireCacheNameProperty() {
-
-		MockPropertySource testPropertySource = new MockPropertySource()
-			.withProperty("spring.data.gemfire.cache.name", "TestPeer");
-
-		newApplicationContext(testPropertySource, TestPeerCacheConfiguration.class);
-
-		GemFireCache peerCache = getBean("gemfireCache", Cache.class);
-
-		assertName(peerCache, "TestPeer");
 	}
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	static class TestClientCacheConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication(name = "TestPeerCacheApp")
-	static class TestPeerCacheConfiguration { }
 
 }

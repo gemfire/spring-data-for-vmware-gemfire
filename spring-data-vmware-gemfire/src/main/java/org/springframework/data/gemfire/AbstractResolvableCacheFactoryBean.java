@@ -7,23 +7,20 @@ package org.springframework.data.gemfire;
 import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeProductName;
 import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeVersion;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
-
 import java.util.Optional;
 import java.util.Properties;
-
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.distributed.DistributedSystem;
-
 import org.springframework.lang.NonNull;
 
 /**
- * Abstract base class encapsulating logic to resolve or create a {@link GemFireCache} instance.
+ * Abstract base class encapsulating logic to resolve or create a {@link ClientCache} instance.
  *
  * @author John Blum
  * @see Optional
  * @see Properties
- * @see GemFireCache
+ * @see ClientCache
  * @see org.apache.geode.distributed.DistributedMember
  * @see DistributedSystem
  * @see AbstractConfigurableCacheFactoryBean
@@ -37,20 +34,20 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected GemFireCache doGetObject() {
+	protected ClientCache doGetObject() {
 		return init();
 	}
 
 	/**
-	 * Initializes a {@link GemFireCache}.
+	 * Initializes a {@link ClientCache}.
 	 *
-	 * @return a reference to the initialized {@link GemFireCache}.
-	 * @see GemFireCache
-	 * @see #setCache(GemFireCache)
+	 * @return a reference to the initialized {@link ClientCache}.
+	 * @see ClientCache
+	 * @see #setCache(ClientCache)
 	 * @see #resolveCache()
 	 * @see #getCache()
 	 */
-	protected GemFireCache init() {
+	protected ClientCache init() {
 
 		ClassLoader currentThreadContextClassLoader = Thread.currentThread().getContextClassLoader();
 
@@ -97,15 +94,14 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Resolves a {@link GemFireCache} by attempting to lookup an existing {@link GemFireCache} instance in the JVM,
-	 * first. If an existing {@link GemFireCache} could not be found, then this method proceeds in attempting to
-	 * create a new {@link GemFireCache} instance.
+	 * Resolves a {@link ClientCache} by attempting to lookup an existing {@link ClientCache} instance in the JVM,
+	 * first. If an existing {@link ClientCache} could not be found, then this method proceeds in attempting to
+	 * create a new {@link ClientCache} instance.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link GemFireCache}.
-	 * @return the resolved {@link GemFireCache}.
+	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
+	 * @return the resolved {@link ClientCache}.
 	 * @see org.apache.geode.cache.client.ClientCache
-	 * @see GemFireCache
-	 * @see org.apache.geode.cache.Cache
+	 * @see ClientCache
 	 * @see #fetchCache()
 	 * @see #resolveProperties()
 	 * @see #createFactory(Properties)
@@ -113,9 +109,9 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	 * @see #configureFactory(Object)
 	 * @see #postProcess(Object)
 	 * @see #createCache(Object)
-	 * @see #postProcess(GemFireCache)
+	 * @see #postProcess(ClientCache)
 	 */
-	protected <T extends GemFireCache> T resolveCache() {
+	protected <T extends ClientCache> T resolveCache() {
 
 		try {
 
@@ -149,20 +145,19 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 
 	/**
 	 * Constructs a new cache factory initialized with the given Apache Geode {@link Properties}
-	 * used to construct, configure and initialize a new {@link GemFireCache}.
+	 * used to construct, configure and initialize a new {@link ClientCache}.
 	 *
-	 * @param gemfireProperties {@link Properties} used by the cache factory to configure the {@link GemFireCache};
+	 * @param gemfireProperties {@link Properties} used by the cache factory to configure the {@link ClientCache};
 	 * must not be {@literal null}
 	 * @return a new cache factory initialized with the given Apache Geode {@link Properties}.
 	 * @see org.apache.geode.cache.client.ClientCacheFactory
-	 * @see org.apache.geode.cache.CacheFactory
 	 * @see Properties
 	 * @see #resolveProperties()
 	 */
 	protected abstract @NonNull Object createFactory(@NonNull Properties gemfireProperties);
 
 	/**
-	 * Configures the cache factory used to create the {@link GemFireCache}.
+	 * Configures the cache factory used to create the {@link ClientCache}.
 	 *
 	 * @param factory cache factory to configure; must not be {@literal null}.
 	 * @return the given cache factory.
@@ -181,12 +176,11 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Post process the cache factory used to create the {@link GemFireCache}.
+	 * Post process the cache factory used to create the {@link ClientCache}.
 	 *
 	 * @param factory cache factory to post process; must not be {@literal null}.
 	 * @return the post processed cache factory.
 	 * @see org.apache.geode.cache.client.ClientCacheFactory
-	 * @see org.apache.geode.cache.CacheFactory
 	 * @see #createFactory(Properties)
 	 */
 	protected @NonNull Object postProcess(@NonNull Object factory) {
@@ -194,42 +188,36 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Creates a new {@link GemFireCache} instance using the provided {@link Object factory}.
+	 * Creates a new {@link ClientCache} instance using the provided {@link Object factory}.
 	 *
-	 * @param <T> {@link Class Subtype} of {@link GemFireCache}.
-	 * @param factory factory used to create the {@link GemFireCache}.
-	 * @return a new instance of {@link GemFireCache} created by the provided {@link Object factory}.
+	 * @param <T> {@link Class Subtype} of {@link ClientCache}.
+	 * @param factory factory used to create the {@link ClientCache}.
+	 * @return a new instance of {@link ClientCache} created by the provided {@link Object factory}.
 	 * @see org.apache.geode.cache.client.ClientCacheFactory#create()
-	 * @see org.apache.geode.cache.CacheFactory#create()
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
-	protected abstract @NonNull <T extends GemFireCache> T createCache(@NonNull Object factory);
+	protected abstract @NonNull <T extends ClientCache> T createCache(@NonNull Object factory);
 
 	/**
-	 * Post process the {@link GemFireCache} by loading any {@literal cache.xml} file, applying custom settings
+	 * Post process the {@link ClientCache} by loading any {@literal cache.xml} file, applying custom settings
 	 * specified in SDG XML configuration metadata, and registering appropriate Transaction Listeners, Writer
 	 * and JVM Heap configuration.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link GemFireCache}.
-	 * @param cache {@link GemFireCache} to post process.
-	 * @return the given {@link GemFireCache}.
-	 * @see #loadCacheXml(GemFireCache)
-	 * @see org.apache.geode.cache.Cache#loadCacheXml(java.io.InputStream)
-	 * @see #configureHeapPercentages(GemFireCache)
-	 * @see #configureOffHeapPercentages(GemFireCache)
-	 * @see #registerTransactionListeners(GemFireCache)
-	 * @see #registerTransactionWriter(GemFireCache)
+	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
+	 * @param cache {@link ClientCache} to post process.
+	 * @return the given {@link ClientCache}.
+	 * @see #loadCacheXml(ClientCache)
+	 * @see #configureHeapPercentages(ClientCache)
+	 * @see #registerTransactionListeners(ClientCache)
 	 */
-	protected @NonNull <T extends GemFireCache> T postProcess(@NonNull T cache) {
+	protected @NonNull <T extends ClientCache> T postProcess(@NonNull T cache) {
 
 		loadCacheXml(cache);
 
 		Optional.ofNullable(getCopyOnRead()).ifPresent(cache::setCopyOnRead);
 
 		configureHeapPercentages(cache);
-		configureOffHeapPercentages(cache);
 		registerTransactionListeners(cache);
-		registerTransactionWriter(cache);
 
 		return cache;
 	}

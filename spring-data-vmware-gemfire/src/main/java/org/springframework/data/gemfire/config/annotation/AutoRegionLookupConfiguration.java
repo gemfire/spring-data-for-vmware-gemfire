@@ -29,7 +29,6 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.expression.spel.support.StandardTypeConverter;
 import org.springframework.expression.spel.support.StandardTypeLocator;
-import org.springframework.util.StringUtils;
 
 /**
  * The {@link AutoRegionLookupConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} that enables
@@ -61,9 +60,9 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 
 	private static final AtomicBoolean AUTO_REGION_LOOKUP_BEAN_POST_PROCESSOR_REGISTERED = new AtomicBoolean(false);
 
-	private ExpressionParser spelParser = new SpelExpressionParser();
+	private final ExpressionParser spelParser = new SpelExpressionParser();
 
-	private StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
+	private final StandardEvaluationContext evaluationContext = new StandardEvaluationContext();
 
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -80,11 +79,9 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 
 		this.evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
 
-		if (beanFactory instanceof ConfigurableBeanFactory) {
+		if (beanFactory instanceof ConfigurableBeanFactory configurableBeanFactory) {
 
-			ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory) beanFactory;
-
-			this.evaluationContext.setTypeLocator(new StandardTypeLocator(configurableBeanFactory.getBeanClassLoader()));
+      this.evaluationContext.setTypeLocator(new StandardTypeLocator(configurableBeanFactory.getBeanClassLoader()));
 
 			Optional.ofNullable(configurableBeanFactory.getConversionService())
 				.ifPresent(conversionService ->
@@ -117,7 +114,7 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 	@SuppressWarnings("unused")
 	private boolean isEnabled(String enabled) {
 
-		enabled = StringUtils.trimWhitespace(enabled);
+		enabled = enabled.strip();
 
 		if (!Boolean.parseBoolean(enabled)) {
 			try {

@@ -58,7 +58,6 @@ import org.slf4j.LoggerFactory;
  * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @see org.springframework.core.io.ClassPathResource
  * @see org.springframework.data.gemfire.fork.LocatorProcess
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @since 1.5.0
  */
 @SuppressWarnings("unused")
@@ -235,13 +234,10 @@ public class CacheClusterConfigurationIntegrationTests extends ForkingClientServ
 			newApplicationContext(getLocation("cacheUsingClusterConfigurationIntegrationTest.xml"));
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "ClusterConfigRegion"), "ClusterConfigRegion"),
-			DataPolicy.PARTITION, Scope.DISTRIBUTED_NO_ACK);
+			DataPolicy.REPLICATE, Scope.DISTRIBUTED_NO_ACK);
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeLocalRegion"), "NativeLocalRegion"),
 			DataPolicy.NORMAL, Scope.LOCAL);
-
-		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativePartitionRegion"), "NativePartitionRegion"),
-			DataPolicy.PARTITION, Scope.DISTRIBUTED_NO_ACK);
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeReplicateRegion"), "NativeReplicateRegion"),
 			DataPolicy.REPLICATE, Scope.DISTRIBUTED_ACK);

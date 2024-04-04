@@ -4,9 +4,12 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import com.vmware.gemfire.testcontainers.GemFireCluster;
-import org.apache.geode.cache.GemFireCache;
+import java.io.IOException;
+import java.util.Collections;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -23,22 +26,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.utility.MountableFile;
 
-import java.io.IOException;
-import java.util.Collections;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * Integration Tests for {@link EnableSsl} and {@link SslConfiguration}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.config.annotation.EnableSsl
  * @see org.springframework.data.gemfire.config.annotation.SslConfiguration
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0
@@ -110,7 +107,7 @@ public class EnableSslConfigurationIntegrationTests {
 		}
 
 		@Bean("Echo")
-		ClientRegionFactoryBean<String, String> echoRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<String, String> echoRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<String, String> echoRegion = new ClientRegionFactoryBean<>();
 

@@ -18,8 +18,6 @@ import org.apache.geode.cache.CacheWriter;
 import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.wan.GatewaySender;
 
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -35,8 +33,6 @@ import org.springframework.util.StringUtils;
  */
 @SuppressWarnings("unused")
 public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K, V> {
-
-	private AsyncEventQueue[] asyncEventQueues;
 
 	private Boolean cloningEnabled;
 	private Boolean enableStatistics;
@@ -55,12 +51,7 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 	private ExpirationAttributes regionIdleTimeout;
 	private ExpirationAttributes regionTimeToLive;
 
-	private GatewaySender[] gatewaySenders;
-
 	private Integer evictionMaximum;
-
-	private String[] asyncEventQueueIds;
-	private String[] gatewaySenderIds;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -68,9 +59,6 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 		super.afterPropertiesSet();
 
 		Optional.ofNullable(getRegion().getAttributesMutator()).ifPresent(attributesMutator -> {
-
-			// AsyncEventQueues (AEQ)
-			getConfiguredAsyncEventQueueIds().forEach(attributesMutator::addAsyncEventQueueId);
 
 			// CacheListeners
 			Arrays.stream(nullSafeArray(this.cacheListeners, CacheListener.class))
@@ -97,55 +85,12 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 				Optional.ofNullable(this.regionIdleTimeout).ifPresent(attributesMutator::setRegionIdleTimeout);
 				Optional.ofNullable(this.regionTimeToLive).ifPresent(attributesMutator::setRegionTimeToLive);
 			}
-
-			// GatewaySenders
-			getConfiguredGatewaySenderIds().forEach(attributesMutator::addGatewaySenderId);
 		});
-	}
-
-	private Set<String> getConfiguredAsyncEventQueueIds() {
-
-		Set<String> asyncEventQueueIds = new HashSet<>();
-
-		Arrays.stream(nullSafeArray(this.asyncEventQueues, AsyncEventQueue.class))
-			.map(AsyncEventQueue::getId)
-			.collect(Collectors.toCollection(() -> asyncEventQueueIds));
-
-		Arrays.stream(nullSafeArray(this.asyncEventQueueIds, String.class))
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.collect(Collectors.toCollection(() -> asyncEventQueueIds));
-
-		return asyncEventQueueIds;
-	}
-
-	private Set<String> getConfiguredGatewaySenderIds() {
-
-		Set<String> gatewaySenderIds = new HashSet<>();
-
-		Arrays.stream(nullSafeArray(this.gatewaySenders, GatewaySender.class))
-			.map(GatewaySender::getId)
-			.collect(Collectors.toCollection(() -> gatewaySenderIds));
-
-		Arrays.stream(nullSafeArray(this.gatewaySenderIds, String.class))
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.collect(Collectors.toCollection(() -> gatewaySenderIds));
-
-		return gatewaySenderIds;
 	}
 
 	@Override
 	public final boolean isLookupEnabled() {
 		return true;
-	}
-
-	public void setAsyncEventQueues(AsyncEventQueue[] asyncEventQueues) {
-		this.asyncEventQueues = asyncEventQueues;
-	}
-
-	public void setAsyncEventQueueIds(String[] asyncEventQueueIds) {
-		this.asyncEventQueueIds = asyncEventQueueIds;
 	}
 
 	public void setCacheListeners(CacheListener<K, V>[] cacheListeners) {
@@ -186,14 +131,6 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 
 	public void setEvictionMaximum(final Integer evictionMaximum) {
 		this.evictionMaximum = evictionMaximum;
-	}
-
-	public void setGatewaySenders(GatewaySender[] gatewaySenders) {
-		this.gatewaySenders = gatewaySenders;
-	}
-
-	public void setGatewaySenderIds(String[] gatewaySenderIds) {
-		this.gatewaySenderIds = gatewaySenderIds;
 	}
 
 	public void setRegionIdleTimeout(ExpirationAttributes regionIdleTimeout) {

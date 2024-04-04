@@ -11,9 +11,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import org.apache.geode.cache.DiskStore;
-
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.event.AfterTestClassEvent;
@@ -28,7 +26,7 @@ import org.springframework.test.context.event.AfterTestClassEvent;
  * @see Inherited
  * @see Retention
  * @see Target
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see Import
  * @since 0.0.17
  */

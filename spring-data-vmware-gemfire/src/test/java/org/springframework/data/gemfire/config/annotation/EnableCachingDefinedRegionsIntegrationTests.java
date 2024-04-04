@@ -5,20 +5,15 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -33,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Integration Tests for {@link EnableCachingDefinedRegions} and {@link CachingDefinedRegionsConfiguration}.
  *
  * @author John Blum
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.config.annotation.CachingDefinedRegionsConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
@@ -57,7 +52,7 @@ public class EnableCachingDefinedRegionsIntegrationTests extends IntegrationTest
 	private SpringCacheableEchoService springEchoService;
 
 	@Autowired
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	@Before
 	public void setup() {

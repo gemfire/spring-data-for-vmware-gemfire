@@ -5,16 +5,12 @@
 package org.springframework.data.gemfire.repository.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.function.Supplier;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
+import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,7 +33,7 @@ import org.springframework.data.repository.Repository;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
@@ -98,7 +94,7 @@ public class IncompatibleRegionKeyRepositoryIdAndEntityIdRepositoryIntegrationTe
 	static class TestIncompatibleRegionKeyRepositoryIdTypeConfiguration {
 
 		@Bean("Rabbits")
-		public ClientRegionFactoryBean<String, Animal> clientRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<String, Animal> clientRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<String, Animal> clientRegion = new ClientRegionFactoryBean<>();
 
@@ -119,7 +115,7 @@ public class IncompatibleRegionKeyRepositoryIdAndEntityIdRepositoryIntegrationTe
 	static class TestIncompatibleRepositoryIdEntityIdTypeConfiguration {
 
 		@Bean("Plants")
-		public ClientRegionFactoryBean<Object, Object> clientRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> clientRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegion = new ClientRegionFactoryBean<>();
 

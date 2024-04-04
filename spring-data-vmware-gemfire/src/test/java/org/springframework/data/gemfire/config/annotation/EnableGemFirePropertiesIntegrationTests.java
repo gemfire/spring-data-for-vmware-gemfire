@@ -6,21 +6,17 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.data.gemfire.util.ArrayUtils;
@@ -28,15 +24,13 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
 
 /**
- * Integration tests for {@link EnableAuth}, {@link EnableGemFireProperties}, {@link EnableHttpService},
- * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
- * {@link EnableOffHeap},, {@link EnableSecurity}, {@link EnableSsl},
- * {@link EnableStatistics}.
+ * Integration tests for {@link EnableGemFireProperties}, {@link EnableLogging},
+ * {@link EnableSecurity}, {@link EnableSsl}, {@link EnableStatistics}.
  *
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @see org.springframework.core.env.PropertySource
@@ -53,128 +47,38 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	private ConfigurableApplicationContext newApplicationContext(PropertySource<?> testPropertySource,
-		Class<?>... annotatedClasses) {
+																															 Class<?>... annotatedClasses) {
 
 		Function<ConfigurableApplicationContext, ConfigurableApplicationContext> applicationContextInitializer =
-			testPropertySource != null ? applicationContext -> {
-				Optional.ofNullable(testPropertySource).ifPresent(it -> {
+				testPropertySource != null ? applicationContext -> {
+					Optional.ofNullable(testPropertySource).ifPresent(it -> {
 
-					MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
+						MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
 
-					propertySources.addFirst(testPropertySource);
-				});
+						propertySources.addFirst(testPropertySource);
+					});
 
-				return applicationContext;
-			}
-				: Function.identity();
+					return applicationContext;
+				}
+						: Function.identity();
 
 		return newApplicationContext(applicationContextInitializer, annotatedClasses);
-	}
-
-	@Test
-	public void authGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.security.client.accessor", "example.client.AccessController")
-			.withProperty("spring.data.gemfire.security.client.accessor-post-processor", "example.client.AccessControllerPostProcessor")
-			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.client.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.client.authenticator", "example.client.Authenticator")
-			.withProperty("spring.data.gemfire.security.client.diffie-hellman-algorithm", "SHA1")
-			.withProperty("spring.data.gemfire.security.peer.authentication-initializer", "example.peer.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.peer.authenticator", "example.peer.Authenticator")
-			.withProperty("spring.data.gemfire.security.peer.verify-member-timeout", 120L)
-			.withProperty("spring.data.gemfire.security.log.file", "/path/to/security.log")
-			.withProperty("spring.data.gemfire.security.log.level", "info")
-			.withProperty("spring.data.gemfire.security.properties-file", "/path/to/security.properties");
-
-		newApplicationContext(testPropertySource, TestAuthGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("gemfireSecurityPropertyFile")).isEqualTo("/path/to/security.properties");
-		assertThat(gemfireProperties.getProperty("security-client-accessor")).isEqualTo("example.client.AccessController");
-		assertThat(gemfireProperties.getProperty("security-client-accessor-pp")).isEqualTo("example.client.AccessControllerPostProcessor");
-		assertThat(gemfireProperties.getProperty("security-client-auth-init")).isEqualTo("example.client.AuthenticationInitializer");
-		assertThat(gemfireProperties.getProperty("security-client-authenticator")).isEqualTo("example.client.Authenticator");
-		assertThat(gemfireProperties.getProperty("security-client-dhalgo")).isEqualTo("SHA1");
-		assertThat(gemfireProperties.getProperty("security-peer-auth-init")).isEqualTo("example.peer.AuthenticationInitializer");
-		assertThat(gemfireProperties.getProperty("security-peer-authenticator")).isEqualTo("example.peer.Authenticator");
-		assertThat(gemfireProperties.getProperty("security-peer-verifymember-timeout")).isEqualTo("120");
-		assertThat(gemfireProperties.getProperty("security-log-file")).isEqualTo("/path/to/security.log");
-		assertThat(gemfireProperties.getProperty("security-log-level")).isEqualTo("info");
-	}
-
-	@Test
-	public void httpGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.service.http.bind-address", "10.128.64.32")
-			.withProperty("spring.data.gemfire.service.http.port", "8181")
-			.withProperty("spring.data.gemfire.service.http.ssl-require-authentication", "true")
-			.withProperty("spring.data.gemfire.service.http.dev-rest-api.start", "true");
-
-		newApplicationContext(testPropertySource, TestHttpGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("http-service-bind-address")).isEqualTo("10.128.64.32");
-		assertThat(gemfireProperties.getProperty("http-service-port")).isEqualTo("8181");
-		assertThat(gemfireProperties.getProperty("http-service-ssl-require-authentication")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("start-dev-rest-api")).isEqualTo("true");
-	}
-
-	@Test
-	public void locatorGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.locator.host", "10.64.32.16")
-			.withProperty("spring.data.gemfire.locator.port", "11235");
-
-		newApplicationContext(testPropertySource, TestLocatorGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("start-locator")).isEqualTo("10.64.32.16[11235]");
 	}
 
 	@Test
 	public void loggingGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.logging.log-disk-space-limit", "100")
-			.withProperty("spring.data.gemfire.logging.log-file", "/path/to/file.log")
-			.withProperty("spring.data.gemfire.logging.log-file-size-limit", "10")
-			.withProperty("spring.data.gemfire.logging.level", "info");
+				.withProperty("spring.data.gemfire.logging.log-disk-space-limit", "100")
+				.withProperty("spring.data.gemfire.logging.log-file", "/path/to/file.log")
+				.withProperty("spring.data.gemfire.logging.log-file-size-limit", "10")
+				.withProperty("spring.data.gemfire.logging.level", "info");
 
 		newApplicationContext(testPropertySource, TestLoggingGemFirePropertiesConfiguration.class);
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -189,63 +93,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@Test
-	public void managerGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.manager.access-file", "/path/to/access.control")
-			.withProperty("spring.data.gemfire.manager.bind-address", "10.32.16.8")
-			.withProperty("spring.data.gemfire.manager.hostname-for-clients", "skullbox")
-			.withProperty("spring.data.gemfire.manager.password-file", "/path/to/password.dat")
-			.withProperty("spring.data.gemfire.manager.port", "1199")
-			.withProperty("spring.data.gemfire.manager.start", "true")
-			.withProperty("spring.data.gemfire.manager.update-rate", "1000");
-
-		newApplicationContext(testPropertySource, TestManagerGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("jmx-manager")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("jmx-manager-access-file")).isEqualTo("/path/to/access.control");
-		assertThat(gemfireProperties.getProperty("jmx-manager-bind-address")).isEqualTo("10.32.16.8");
-		assertThat(gemfireProperties.getProperty("jmx-manager-hostname-for-clients")).isEqualTo("skullbox");
-		assertThat(gemfireProperties.getProperty("jmx-manager-password-file")).isEqualTo("/path/to/password.dat");
-		assertThat(gemfireProperties.getProperty("jmx-manager-port")).isEqualTo("1199");
-		assertThat(gemfireProperties.getProperty("jmx-manager-start")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("jmx-manager-update-rate")).isEqualTo("1000");
-	}
-
-	@Test
-	public void memcachedServerGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.service.memcached.port", "2468")
-			.withProperty("spring.data.gemfire.service.memcached.protocol", "BINARY");
-
-		newApplicationContext(testPropertySource, TestMemcachedServerGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("memcached-port")).isEqualTo("2468");
-		assertThat(gemfireProperties.getProperty("memcached-protocol")).isEqualTo("BINARY");
-	}
-
-	@Test
 	public void nameAndGroupsAnnotationBasedGemFirePropertiesConfiguration() {
 
 		newApplicationContext(TestNameAndGroupsAnnotationBasedGemFirePropertiesConfiguration.class);
@@ -255,7 +102,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		//Properties gemfireProperties = this.applicationContext.getBean("gemfireProperties", Properties.class);
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -267,27 +114,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("name")).isEqualTo("TestName");
 		assertThat(gemfireProperties.containsKey("groups")).isTrue();
 		assertThat(gemfireProperties.getProperty("groups")).isEqualTo("TestGroupOne,TestGroupTwo");
-	}
-
-	@Test
-	public void offHeapGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.cache.off-heap.memory-size", "1024g");
-
-		newApplicationContext(testPropertySource, TestOffHeapGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("off-heap-memory-size")).isEqualTo("1024g");
 	}
 
 	@Test
@@ -305,7 +131,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(containsBean("gemfireCache")).isTrue();
 		assertThat(containsBean("mockPdxSerializer")).isTrue();
 
-		CacheFactoryBean gemfireCache = getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean gemfireCache = getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getPdxDiskStoreName()).isEqualTo("TestDiskStore");
@@ -333,7 +159,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -386,7 +212,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(containsBean("gemfireCache")).isTrue();
 		assertThat(containsBean("gemfireProperties")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -401,7 +227,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(gemfireProperties).isNotNull();
 		assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("DSA, RSA");
-		assertThat(sslEnabledComponents).isEqualTo("cluster,gateway,jmx,locator,server,web");
+		assertThat(sslEnabledComponents).isEqualTo("cluster,gateway,locator,server,web");
 		assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("TestCert");
 		assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("/path/to/keystore");
 		assertThat(gemfireProperties.getProperty("ssl-keystore-password")).isEqualTo("p@55w0rd");
@@ -427,7 +253,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -444,54 +270,23 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableAuth
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	static class TestAuthGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableHttpService
-	static class TestHttpGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableLocator
-	static class TestLocatorGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableLogging
 	static class TestLoggingGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableManager
-	static class TestManagerGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableMemcachedServer
-	static class TestMemcachedServerGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties(name = "TestName", groups = { "TestGroupOne", "TestGroupTwo" })
 	static class TestNameAndGroupsAnnotationBasedGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableOffHeap(memorySize = "64g")
-	static class TestOffHeapGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnablePdx
 	@SuppressWarnings("unused")
 	static class TestPdxGemFirePropertiesConfiguration {
@@ -503,22 +298,22 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableSecurity
 	static class TestSecurityGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties(serializableObjectFilter = { "example.app.model.TypeOne", "example.app.model.TypeTwo" },
 		validateSerializableObjects = true)
 	static class TestSerializableObjectFilterAndValidateSerializableObjectsGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableSsl(ciphers = "FISH", components = {
-		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY, EnableSsl.Component.JMX,
+		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY,
 		EnableSsl.Component.LOCATOR, EnableSsl.Component.SERVER, EnableSsl.Component.WEB
 	}, componentCertificateAliases = {
 		@EnableSsl.ComponentAlias(component = EnableSsl.Component.GATEWAY, alias = "WanCert"),
@@ -527,7 +322,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	static class TestSslGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableStatistics
 	static class TestStatisticsGemFirePropertiesConfiguration { }

@@ -64,32 +64,32 @@ public class AutoRegionLookupWithAutowiringIntegrationTests extends IntegrationT
 	@Test
 	public void testAutowiredNativeRegions() {
 
-		assertRegionMetaData(testComponent.nativePartitionedRegion, "NativePartitionedRegion", DataPolicy.PARTITION);
-		assertRegionMetaData(testComponent.nativeReplicateParent, "NativeReplicateParent", DataPolicy.REPLICATE);
-		assertRegionMetaData(testComponent.nativeReplicateChild, "NativeReplicateChild",
-			"/NativeReplicateParent/NativeReplicateChild", DataPolicy.REPLICATE);
-		assertRegionMetaData(testComponent.nativeReplicateGrandchild, "NativeReplicateGrandchild",
-			"/NativeReplicateParent/NativeReplicateChild/NativeReplicateGrandchild", DataPolicy.REPLICATE);
+		assertRegionMetaData(testComponent.nativeClientRegion, "NativeClientRegion", DataPolicy.NORMAL);
+		assertRegionMetaData(testComponent.nativeClientParent, "NativeClientParent", DataPolicy.NORMAL);
+		assertRegionMetaData(testComponent.nativeClientChild, "NativeClientChild",
+			"/NativeClientParent/NativeClientChild", DataPolicy.NORMAL);
+		assertRegionMetaData(testComponent.nativeClientGrandchild, "NativeClientGrandchild",
+			"/NativeClientParent/NativeClientChild/NativeClientGrandchild", DataPolicy.NORMAL);
 	}
 
 	@Component
 	public static final class TestComponent {
 
 		@Autowired
-		@Qualifier("NativePartitionedRegion")
-		Region<?, ?> nativePartitionedRegion;
+		@Qualifier("NativeClientRegion")
+		Region<?, ?> nativeClientRegion;
 
 		@Autowired
-		@Qualifier("NativeReplicateParent")
-		Region<?, ?> nativeReplicateParent;
+		@Qualifier("NativeClientParent")
+		Region<?, ?> nativeClientParent;
 
 		@Autowired
-		@Qualifier("/NativeReplicateParent/NativeReplicateChild")
-		Region<?, ?> nativeReplicateChild;
+		@Qualifier("/NativeClientParent/NativeClientChild")
+		Region<?, ?> nativeClientChild;
 
 		@Autowired
-		@Qualifier("/NativeReplicateParent/NativeReplicateChild/NativeReplicateGrandchild")
-		Region<?, ?> nativeReplicateGrandchild;
+		@Qualifier("/NativeClientParent/NativeClientChild/NativeClientGrandchild")
+		Region<?, ?> nativeClientGrandchild;
 
 	}
 }

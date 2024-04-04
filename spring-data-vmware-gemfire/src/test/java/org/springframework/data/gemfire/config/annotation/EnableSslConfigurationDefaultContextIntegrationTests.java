@@ -5,17 +5,11 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
@@ -27,15 +21,14 @@ import org.springframework.util.StringUtils;
 /**
  * Integration tests for {@link EnableSsl} and {@link SslConfiguration}.
  *
- * Integration tests in this class create a {@link ClientCache} or peer {@link Cache} and query Apache Geode
+ * Integration tests in this class create a {@link ClientCache} and query Apache Geode
  * to see if the GemFire properties set with spring-data-geode are correctly set in Apache Geode.
  *
  * @author Srikanth Manvi
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.core.env.PropertySource
@@ -115,7 +108,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache clientCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache clientCache = getBean("gemfireCache", ClientCache.class);
 
 		//Get Properties from GemFire
 		Properties gemfireProperties = clientCache.getDistributedSystem().getProperties();
@@ -135,7 +128,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache clientCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache clientCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(clientCache).isNotNull();
 
@@ -175,7 +168,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache peerCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(peerCache).isNotNull();
 
@@ -194,7 +187,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache peerCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(peerCache).isNotNull();
 
@@ -249,7 +242,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	@EnableSsl
 	static class SslPropertyBasedClientConfiguration { }
 
-	@PeerCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
+	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl(
 		ciphers = { "FISH", "Scream", "SEAL", "SNOW" },
 		components = { EnableSsl.Component.SERVER, EnableSsl.Component.GATEWAY },
@@ -269,7 +262,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	)
 	static class SslAnnotationBasedPeerConfiguration { }
 
-	@PeerCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
+	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl
 	static class SslPropertyBasedPeerConfiguration { }
 

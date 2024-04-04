@@ -4,18 +4,17 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import static com.vmware.gemfire.testcontainers.GemFireCluster.ALL_GLOB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.config.annotation.TestSecurityManager.SECURITY_PASSWORD;
 import static org.springframework.data.gemfire.config.annotation.TestSecurityManager.SECURITY_USERNAME;
-
 import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.util.Collections;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.GemfireTemplate;
@@ -25,14 +24,12 @@ import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
-
 /**
  * Integration Tests for {@link AutoConfiguredAuthenticationConfiguration}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.GemfireTemplate
  * @see org.springframework.data.gemfire.config.annotation.AutoConfiguredAuthenticationConfiguration
  * @see org.springframework.test.context.ContextConfiguration
@@ -51,8 +48,12 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 	@BeforeClass
 	public static void setupGemFireServer() {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-manager", TestSecurityManager.class.getName())
 				.withClasspath(GemFireCluster.ALL_GLOB, System.getProperty("TEST_JAR_PATH"))
-				.withGfsh(false, "create region --name=Echo --type=LOCAL",
+				.withGemFireProperty(ALL_GLOB, "security-username", SECURITY_USERNAME)
+				.withGemFireProperty(ALL_GLOB, "security-password", SECURITY_PASSWORD)
+				.withGfsh(false, String.format("connect --jmx-manager=localhost[1099] --username=%s --password=%s", SECURITY_USERNAME, SECURITY_PASSWORD),
+						"create region --name=Echo --type=LOCAL",
 						"put --region=/Echo --key=Hello --value=Hello",
 						"put --region=/Echo --key=TEST --value=TEST",
 						"put --region=/Echo --key=Good-Bye --value=Good-Bye");
@@ -76,7 +77,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 	static class TestGemFireClientConfiguration {
 
 		@Bean("Echo")
-		ClientRegionFactoryBean<Object, Object> echoRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> echoRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> echoRegion = new ClientRegionFactoryBean<>();
 
@@ -87,7 +88,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 		}
 
 		@Bean
-		GemfireTemplate echoTemplate(GemFireCache cache) {
+		GemfireTemplate echoTemplate(ClientCache cache) {
 			return new GemfireTemplate(cache.getRegion(GemfireUtils.toRegionPath("Echo")));
 		}
 

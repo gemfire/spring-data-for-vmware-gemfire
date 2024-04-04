@@ -21,10 +21,10 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Parent" persistent="false" destroy="true">
-		<gfe:replicated-region name="Child" data-policy="PERSISTENT_PARTITION"/>
-	</gfe:replicated-region>
+	<gfe:client-region id="Parent" persistent="false" destroy="true">
+		<gfe:client-region name="Child" data-policy="PERSISTENT_PARTITION"/>
+	</gfe:client-region>
 
 </beans>

@@ -30,7 +30,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<bean id="defaultExpirationAttributes" class="org.apache.geode.cache.ExpirationAttributes">
 		<constructor-arg value="600"/>
@@ -47,9 +47,9 @@
 		<constructor-arg ref="defaultExpirationAttributes"/>
 	</bean>
 
-	<gfe:partitioned-region id="Example" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="Example" persistent="false">
 		<gfe:custom-entry-ttl ref="ttlExpiration"/>
 		<gfe:custom-entry-tti ref="ttiExpiration"/>
-	</gfe:partitioned-region>
+	</gfe:client-region>
 
 </beans>

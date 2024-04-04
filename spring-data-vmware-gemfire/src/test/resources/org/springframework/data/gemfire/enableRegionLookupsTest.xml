@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  ~ Copyright 2024 Broadcom. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!--
   ~ Copyright 2022-2024 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
@@ -19,9 +24,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="NativeLocalRegion" ignore-if-exists="true"
+	<gfe:client-region shortcut="LOCAL" id="NativeLocalRegion" ignore-if-exists="true"
 		cloning-enabled="true"
 		concurrency-checks-enabled="true"
 		concurrency-level="5"
@@ -31,34 +36,22 @@
 		persistent="true"
 		value-constraint="java.util.Date"/>
 
-	<gfe:partitioned-region id="NativePartitionRegion" ignore-if-exists="true"
-		cloning-enabled="false"
-		concurrency-checks-enabled="false"
-		initial-capacity="11"
-		key-constraint="java.lang.String"
-		load-factor="0.50"
-		multicast-enabled="true"
-		persistent="false"
-		value-constraint="java.util.Date"/>
-
-	<gfe:replicated-region id="NativeReplicateRegion" ignore-if-exists="true"
+	<gfe:client-region shortcut="LOCAL" id="NativeReplicateRegion" ignore-if-exists="true"
 		cloning-enabled="true"
 		concurrency-checks-enabled="false"
 		concurrency-level="15"
 		initial-capacity="21"
 		key-constraint="java.lang.String"
 		load-factor="0.25"
-		multicast-enabled="true"
 		persistent="false"
-		scope="distributed-ack"
 		value-constraint="java.util.Date"/>
 
-	<gfe:replicated-region id="NativeParentRegion" ignore-if-exists="true">
-		<gfe:replicated-region name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
-	</gfe:replicated-region>
+	<gfe:client-region shortcut="LOCAL" id="NativeParentRegion" ignore-if-exists="true">
+		<gfe:client-region shortcut="LOCAL" name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
+	</gfe:client-region>
 
-	<gfe:replicated-region id="regionOne" name="SpringReplicateRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="regionOne" name="SpringLocalRegion" persistent="false"/>
 
-	<gfe:replicated-region id="regionTwo" name="SpringReplicateRegion" ignore-if-exists="true" persistent="true"/>
+	<gfe:client-region shortcut="LOCAL" id="regionTwo" name="SpringLocalRegion" ignore-if-exists="true" persistent="true"/>
 
 </beans>

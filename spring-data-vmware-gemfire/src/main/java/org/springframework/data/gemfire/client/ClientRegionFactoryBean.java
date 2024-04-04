@@ -7,10 +7,8 @@ package org.springframework.data.gemfire.client;
 import static java.util.Arrays.stream;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheWriter;
@@ -18,7 +16,6 @@ import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.client.ClientCache;
@@ -26,7 +23,6 @@ import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.compression.Compressor;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.data.gemfire.ConfigurableRegionFactoryBean;
@@ -58,7 +54,7 @@ import org.springframework.util.StringUtils;
  * @see DataPolicy
  * @see EvictionAttributes
  * @see ExpirationAttributes
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see RegionAttributes
  * @see ClientCache
@@ -160,16 +156,16 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	/**
 	 * Creates a new {@link Region} with the given {@link String name}.
 	 *
-	 * @param gemfireCache reference to the {@link GemFireCache}.
+	 * @param gemfireCache reference to the {@link ClientCache}.
 	 * @param regionName {@link String name} of the new {@link Region}.
 	 * @return a new {@link Region} with the given {@link String name}.
 	 * @see #createClientRegionFactory(ClientCache, ClientRegionShortcut)
 	 * @see #newRegion(ClientRegionFactory, Region, String)
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see Region
 	 */
 	@Override
-	protected Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) {
+	protected Region<K, V> createRegion(ClientCache gemfireCache, String regionName) {
 
 		ClientCache clientCache = resolveCache(gemfireCache);
 
@@ -209,10 +205,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		}
 	}
 
-	private ClientCache resolveCache(GemFireCache gemfireCache) {
+	private ClientCache resolveCache(ClientCache gemfireCache) {
 
 		return Optional.ofNullable(gemfireCache)
-			.filter(GemfireUtils::isClient)
 			.map(ClientCache.class::cast)
 			.orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
 	}

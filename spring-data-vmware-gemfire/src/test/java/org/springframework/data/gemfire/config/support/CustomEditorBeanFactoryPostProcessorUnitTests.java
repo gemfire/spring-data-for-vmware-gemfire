@@ -19,13 +19,8 @@ import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.InterestResultPolicy;
 import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.wan.GatewaySender;
 
 import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.data.gemfire.IndexMaintenancePolicyConverter;
-import org.springframework.data.gemfire.IndexMaintenancePolicyType;
-import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.IndexTypeConverter;
 import org.springframework.data.gemfire.InterestPolicyConverter;
 import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
@@ -37,7 +32,6 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 import org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConverter;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
-import org.springframework.data.gemfire.wan.OrderPolicyConverter;
 import org.springframework.util.StringUtils;
 
 /**
@@ -74,17 +68,11 @@ public class CustomEditorBeanFactoryPostProcessorUnitTests {
 			isA(EvictionPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(ExpirationAction.class),
 			isA(ExpirationActionConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(IndexMaintenancePolicyType.class),
-			isA(IndexMaintenancePolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(IndexType.class),
-			isA(IndexTypeConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestPolicy.class),
 			isA(InterestPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestResultPolicy.class),
 			isA(InterestResultPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(GatewaySender.OrderPolicy.class),
-			isA(OrderPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(SubscriptionEvictionPolicy.class),
 			isA(SubscriptionEvictionPolicyConverter.class));

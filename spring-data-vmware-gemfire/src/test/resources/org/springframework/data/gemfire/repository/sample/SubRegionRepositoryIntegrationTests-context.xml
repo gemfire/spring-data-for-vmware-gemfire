@@ -23,20 +23,20 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Users" persistent="false">
-		<gfe:replicated-region name="Programmers" persistent="false"/>
-	</gfe:replicated-region>
+	<gfe:client-region shortcut="LOCAL" id="Users" persistent="false">
+		<gfe:client-region shortcut="LOCAL" name="Programmers" persistent="false"/>
+	</gfe:client-region>
 
-	<gfe:replicated-region id="Local" persistent="false">
-		<gfe:replicated-region name="Admin" persistent="false">
-			<gfe:replicated-region name="Users" persistent="false"/>
-		</gfe:replicated-region>
-		<gfe:replicated-region name="Guest" persistent="false">
-			<gfe:replicated-region name="Users" persistent="false"/>
-		</gfe:replicated-region>
-	</gfe:replicated-region>
+	<gfe:client-region shortcut="LOCAL" id="Local" persistent="false">
+		<gfe:client-region shortcut="LOCAL" name="Admin" persistent="false">
+			<gfe:client-region shortcut="LOCAL" name="Users" persistent="false"/>
+		</gfe:client-region>
+		<gfe:client-region shortcut="LOCAL" name="Guest" persistent="false">
+			<gfe:client-region shortcut="LOCAL" name="Users" persistent="false"/>
+		</gfe:client-region>
+	</gfe:client-region>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable"

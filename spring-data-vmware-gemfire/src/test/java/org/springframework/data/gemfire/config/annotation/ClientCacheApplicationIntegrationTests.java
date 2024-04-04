@@ -5,17 +5,14 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
@@ -60,7 +57,7 @@ public class ClientCacheApplicationIntegrationTests extends IntegrationTestsSupp
 	static class TestConfiguration {
 
 		@Bean("Echo")
-		public ClientRegionFactoryBean<String, String> echoRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<String, String> echoRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<String, String> echoRegion = new ClientRegionFactoryBean<>();
 

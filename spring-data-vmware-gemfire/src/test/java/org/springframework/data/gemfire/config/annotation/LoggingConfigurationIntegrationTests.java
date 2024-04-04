@@ -5,20 +5,16 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.data.gemfire.GemFireProperties;
@@ -33,7 +29,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @see org.springframework.core.env.PropertiesPropertySource
@@ -55,7 +51,7 @@ public class LoggingConfigurationIntegrationTests extends SpringApplicationConte
 
 	private void assertGemFireCacheLogLevelAndLogFile(String logLevel, String logFile) {
 
-		GemFireCache gemfireCache = getBean(GemFireCache.class);
+		ClientCache gemfireCache = getBean(ClientCache.class);
 
 		logFile = StringUtils.hasText(logFile) ? logFile : "";
 

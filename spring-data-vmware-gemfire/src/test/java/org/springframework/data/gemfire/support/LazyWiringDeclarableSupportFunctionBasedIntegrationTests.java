@@ -5,16 +5,12 @@
 package org.springframework.data.gemfire.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Properties;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.cache.execute.FunctionContext;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.gemfire.function.sample.HelloFunctionExecution;
@@ -31,7 +27,7 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.execute.Function
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
@@ -44,7 +40,8 @@ import org.springframework.util.StringUtils;
 public class LazyWiringDeclarableSupportFunctionBasedIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private Cache gemfireCache;
+	private ClientCache
+			gemfireCache;
 
 	@Autowired
 	private HelloFunctionExecution helloFunctionExecution;

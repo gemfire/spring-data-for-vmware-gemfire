@@ -5,9 +5,7 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.cache.Region;
-
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.Configurer;
 
@@ -18,7 +16,6 @@ import org.springframework.data.gemfire.config.annotation.support.Configurer;
  *
  * @author John Blum
  * @see Region
- * @see PeerRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see EnableCachingDefinedRegions
  * @see EnableEntityDefinedRegions
@@ -37,15 +34,4 @@ public interface RegionConfigurer extends Configurer<ClientRegionFactoryBean<?, 
 	 * @see ClientRegionFactoryBean
 	 */
 	default void configure(String beanName, ClientRegionFactoryBean<?, ?> bean) { }
-
-	/**
-	 * Configuration callback method providing a reference to a {@link PeerRegionFactoryBean} used to construct,
-	 * configure and initialize an instance of a peer {@link Region}.
-	 *
-	 * @param beanName name of {@link Region} bean declared in the Spring application context.
-	 * @param bean reference to the {@link PeerRegionFactoryBean} used to create the peer {@link Region}.
-	 * @see PeerRegionFactoryBean
-	 */
-	default void configure(String beanName, PeerRegionFactoryBean<?, ?> bean) { }
-
 }

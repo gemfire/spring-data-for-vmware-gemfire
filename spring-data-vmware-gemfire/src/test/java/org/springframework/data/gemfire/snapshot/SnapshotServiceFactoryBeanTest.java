@@ -28,12 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.snapshot.CacheSnapshotService;
 import org.apache.geode.cache.snapshot.RegionSnapshotService;
@@ -199,7 +199,7 @@ public class SnapshotServiceFactoryBeanTest {
 	@Test
 	public void setAndGetCacheSuccessfully() {
 
-		Cache mockCache = mock(Cache.class, "MockCache");
+		ClientCache mockCache = mock(ClientCache.class, "MockCache");
 
 		SnapshotServiceFactoryBean factoryBean = new SnapshotServiceFactoryBean();
 
@@ -337,26 +337,6 @@ public class SnapshotServiceFactoryBeanTest {
 		assertThat(factoryBean.getSuppressImportOnInit()).isTrue();
 
 		verify(mockSnapshotService, never()).doImport(any(SnapshotMetadata[].class));
-	}
-
-	@Test
-	public void createCacheSnapshotService() {
-
-		Cache mockCache = mock(Cache.class, "MockCache");
-
-		CacheSnapshotService mockCacheSnapshotService = mock(CacheSnapshotService.class, "MockCacheSnapshotService");
-
-		when(mockCache.getSnapshotService()).thenReturn(mockCacheSnapshotService);
-
-		SnapshotServiceFactoryBean factoryBean = new SnapshotServiceFactoryBean();
-
-		factoryBean.setCache(mockCache);
-
-		SnapshotServiceAdapter adapter = factoryBean.create();
-
-		assertThat(adapter).isInstanceOf(CacheSnapshotServiceAdapter.class);
-
-		verify(mockCache, times(1)).getSnapshotService();
 	}
 
 	@Test
@@ -712,70 +692,10 @@ public class SnapshotServiceFactoryBeanTest {
 	}
 
 	@Test
-	public void importCacheSnapshotOnInitialization() throws Exception {
-
-		Cache mockCache = mock(Cache.class, "MockCache");
-
-		CacheSnapshotService mockCacheSnapshotService =
-			mock(CacheSnapshotService.class, "MockCacheSnapshotService");
-
-		SnapshotFilter mockSnapshotFilterOne = mock(SnapshotFilter.class, "MockSnapshotFilterOne");
-		SnapshotFilter mockSnapshotFilterTwo = mock(SnapshotFilter.class, "MockSnapshotFilterTwo");
-
-		SnapshotOptions mockSnapshotOptionsOne = mock(SnapshotOptions.class, "MockSnapshotOptionsOne");
-		SnapshotOptions mockSnapshotOptionsTwo = mock(SnapshotOptions.class, "MockSnapshotOptionsTwo");
-
-		when(mockCache.getSnapshotService()).thenReturn(mockCacheSnapshotService);
-		when(mockCacheSnapshotService.createOptions()).thenReturn(mockSnapshotOptionsOne).thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsOne.invokeCallbacks(anyBoolean())).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsOne.setFilter(eq(mockSnapshotFilterOne))).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsOne.setParallelMode(anyBoolean())).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsTwo.invokeCallbacks(anyBoolean())).thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsTwo.setFilter(eq(mockSnapshotFilterTwo))).thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsTwo.setParallelMode(anyBoolean())).thenReturn(mockSnapshotOptionsTwo);
-
-		SnapshotMetadata[] expectedImports = toArray(
-			newSnapshotMetadata(FileSystemUtils.TEMPORARY_DIRECTORY, mockSnapshotFilterOne, false, true),
-			newSnapshotMetadata(mockSnapshotFilterTwo, true, false)
-		);
-
-		SnapshotServiceFactoryBean factoryBean = new SnapshotServiceFactoryBean();
-
-		factoryBean.setCache(mockCache);
-		factoryBean.setExports(null);
-		factoryBean.setImports(expectedImports);
-		factoryBean.setRegion(null);
-
-		assertThat(factoryBean.getObject()).isNull();
-		assertThat((Class<SnapshotServiceAdapter>) factoryBean.getObjectType()).isEqualTo(SnapshotServiceAdapter.class);
-
-		factoryBean.afterPropertiesSet();
-
-		assertThat(factoryBean.getObject()).isInstanceOf(CacheSnapshotServiceAdapter.class);
-		assertThat((Class<CacheSnapshotServiceAdapter>) factoryBean.getObjectType())
-			.isEqualTo(CacheSnapshotServiceAdapter.class);
-
-		verify(mockCache, times(1)).getSnapshotService();
-		verify(mockCacheSnapshotService, times(2)).createOptions();
-		verify(mockCacheSnapshotService, times(1))
-			.load(eq(FileSystemUtils.safeListFiles(FileSystemUtils.TEMPORARY_DIRECTORY, FileSystemUtils.FileOnlyFilter.INSTANCE)),
-				eq(SnapshotFormat.GEMFIRE), eq(mockSnapshotOptionsOne));
-		verify(mockCacheSnapshotService, times(1))
-			.load(eq(FileSystemUtils.safeListFiles(FileSystemUtils.WORKING_DIRECTORY, FileSystemUtils.FileOnlyFilter.INSTANCE)),
-				eq(SnapshotFormat.GEMFIRE), eq(mockSnapshotOptionsTwo));
-		verify(mockSnapshotOptionsOne, times(1)).invokeCallbacks(eq(false));
-		verify(mockSnapshotOptionsOne, times(1)).setFilter(eq(mockSnapshotFilterOne));
-		verify(mockSnapshotOptionsOne, times(1)).setParallelMode(eq(true));
-		verify(mockSnapshotOptionsTwo, times(1)).invokeCallbacks(eq(true));
-		verify(mockSnapshotOptionsTwo, times(1)).setFilter(eq(mockSnapshotFilterTwo));
-		verify(mockSnapshotOptionsTwo, times(1)).setParallelMode(eq(false));
-	}
-
-	@Test
 	@SuppressWarnings("unchecked")
 	public void importRegionSnapshotOnInitialization() throws Exception {
 
-		Cache mockCache = mock(Cache.class, "MockCache");
+		ClientCache mockCache = mock(ClientCache.class, "MockCache");
 
 		Region mockRegion = mock(Region.class, "MockRegion");
 
@@ -788,7 +708,6 @@ public class SnapshotServiceFactoryBeanTest {
 		SnapshotOptions mockSnapshotOptionsOne = mock(SnapshotOptions.class, "MockSnapshotOptionsOne");
 		SnapshotOptions mockSnapshotOptionsTwo = mock(SnapshotOptions.class, "MockSnapshotOptionsTwo");
 
-		when(mockCache.getSnapshotService()).thenThrow(new UnsupportedOperationException("operation not supported"));
 		when(mockRegion.getSnapshotService()).thenReturn(mockRegionSnapshotService);
 		when(mockRegionSnapshotService.createOptions()).thenReturn(mockSnapshotOptionsOne)
 			.thenReturn(mockSnapshotOptionsTwo);
@@ -822,7 +741,6 @@ public class SnapshotServiceFactoryBeanTest {
 		assertThat((Class<RegionSnapshotServiceAdapter>) factoryBean.getObjectType())
 			.isEqualTo(RegionSnapshotServiceAdapter.class);
 
-		verify(mockCache, never()).getSnapshotService();
 		verify(mockRegion, times(1)).getSnapshotService();
 		verify(mockRegionSnapshotService, times(2)).createOptions();
 		verify(mockRegionSnapshotService, times(1))
@@ -838,63 +756,9 @@ public class SnapshotServiceFactoryBeanTest {
 	}
 
 	@Test
-	public void exportCacheSnapshotOnDestroy() throws Exception {
-
-		Cache mockCache = mock(Cache.class, "MockCache");
-
-		CacheSnapshotService mockCacheSnapshotService =
-			mock(CacheSnapshotService.class, "MockCacheSnapshotService");
-
-		SnapshotFilter mockSnapshotFilterOne = mock(SnapshotFilter.class, "MockSnapshotFilterOne");
-		SnapshotFilter mockSnapshotFilterTwo = mock(SnapshotFilter.class, "MockSnapshotFilterTwo");
-
-		SnapshotOptions mockSnapshotOptionsOne = mock(SnapshotOptions.class, "MockSnapshotOptionsOne");
-		SnapshotOptions mockSnapshotOptionsTwo = mock(SnapshotOptions.class, "MockSnapshotOptionsTwo");
-
-		when(mockCache.getSnapshotService()).thenReturn(mockCacheSnapshotService);
-		when(mockCacheSnapshotService.createOptions()).thenReturn(mockSnapshotOptionsOne)
-			.thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsOne.invokeCallbacks(anyBoolean())).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsOne.setFilter(eq(mockSnapshotFilterOne))).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsOne.setParallelMode(anyBoolean())).thenReturn(mockSnapshotOptionsOne);
-		when(mockSnapshotOptionsTwo.invokeCallbacks(anyBoolean())).thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsTwo.setFilter(eq(mockSnapshotFilterTwo))).thenReturn(mockSnapshotOptionsTwo);
-		when(mockSnapshotOptionsTwo.setParallelMode(anyBoolean())).thenReturn(mockSnapshotOptionsTwo);
-
-		SnapshotMetadata[] expectedExports = toArray(
-			newSnapshotMetadata(mockSnapshotFilterOne, false, true),
-			newSnapshotMetadata(mockSnapshotFilterTwo, true, false)
-		);
-
-		SnapshotServiceFactoryBean factoryBean = new SnapshotServiceFactoryBean();
-
-		factoryBean.setCache(mockCache);
-		factoryBean.setExports(expectedExports);
-		factoryBean.setImports(null);
-		factoryBean.setRegion(null);
-		factoryBean.afterPropertiesSet();
-		factoryBean.destroy();
-
-		assertThat(factoryBean.getObject()).isInstanceOf(CacheSnapshotServiceAdapter.class);
-
-		verify(mockCache, times(1)).getSnapshotService();
-		verify(mockCacheSnapshotService, times(2)).createOptions();
-		verify(mockCacheSnapshotService, times(1)).save(eq(expectedExports[0].getLocation()),
-			eq(expectedExports[0].getFormat()), eq(mockSnapshotOptionsOne));
-		verify(mockCacheSnapshotService, times(1)).save(eq(expectedExports[1].getLocation()),
-			eq(expectedExports[1].getFormat()), eq(mockSnapshotOptionsTwo));
-		verify(mockSnapshotOptionsOne, times(1)).invokeCallbacks(eq(false));
-		verify(mockSnapshotOptionsOne, times(1)).setFilter(eq(mockSnapshotFilterOne));
-		verify(mockSnapshotOptionsOne, times(1)).setParallelMode(eq(true));
-		verify(mockSnapshotOptionsTwo, times(1)).invokeCallbacks(eq(true));
-		verify(mockSnapshotOptionsTwo, times(1)).setFilter(eq(mockSnapshotFilterTwo));
-		verify(mockSnapshotOptionsTwo, times(1)).setParallelMode(eq(false));
-	}
-
-	@Test
 	public void exportRegionSnapshotOnDestroy() throws Exception {
 
-		Cache mockCache = mock(Cache.class, "MockCache");
+		ClientCache mockCache = mock(ClientCache.class, "MockCache");
 
 		Region mockRegion = mock(Region.class, "MockRegion");
 
@@ -907,7 +771,6 @@ public class SnapshotServiceFactoryBeanTest {
 		SnapshotOptions mockSnapshotOptionsOne = mock(SnapshotOptions.class, "MockSnapshotOptionsOne");
 		SnapshotOptions mockSnapshotOptionsTwo = mock(SnapshotOptions.class, "MockSnapshotOptionsTwo");
 
-		when(mockCache.getSnapshotService()).thenThrow(new UnsupportedOperationException("operation not supported"));
 		when(mockRegion.getSnapshotService()).thenReturn(mockRegionSnapshotService);
 		when(mockRegionSnapshotService.createOptions()).thenReturn(mockSnapshotOptionsOne)
 			.thenReturn(mockSnapshotOptionsTwo);
@@ -934,7 +797,6 @@ public class SnapshotServiceFactoryBeanTest {
 
 		assertThat(factoryBean.getObject()).isInstanceOf(RegionSnapshotServiceAdapter.class);
 
-		verify(mockCache, never()).getSnapshotService();
 		verify(mockRegion, times(1)).getSnapshotService();
 		verify(mockRegionSnapshotService, times(2)).createOptions();
 		verify(mockRegionSnapshotService, times(1)).save(eq(expectedExports[0].getLocation()),

@@ -7,7 +7,6 @@ package org.springframework.data.gemfire.mapping;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
-
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -96,9 +95,6 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	 * @return the {@link Region} {@link Annotation} used to annotate this {@link PersistentEntity} or {@literal null}
 	 * if this {@link PersistentEntity} was not annotated with a {@link Region} {@link Annotation}.
 	 * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
-	 * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
-	 * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
-	 * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
 	 * @see Region
 	 * @see Annotation
 	 */

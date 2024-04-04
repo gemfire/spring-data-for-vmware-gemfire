@@ -9,24 +9,17 @@ import static java.util.Arrays.stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.cache.query.Index;
-import org.apache.geode.cache.wan.GatewayReceiver;
-import org.apache.geode.cache.wan.GatewaySender;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * Unit tests for {@link SchemaObjectType}.
@@ -44,8 +37,8 @@ public class SchemaObjectTypeUnitTests {
 	@Test
 	public void objectTypesAreSetAndCorrect() {
 
-		Set<Class<?>> expectedSchemaObjectTypes = asSet(AsyncEventQueue.class, Cache.class, ClientCache.class,
-			DiskStore.class, Function.class, GatewayReceiver.class, GatewaySender.class, Index.class,
+		Set<Class<?>> expectedSchemaObjectTypes = asSet(ClientCache.class,
+			DiskStore.class, Function.class, Index.class,
 			Pool.class, Region.class, Void.class);
 
 		Set<Class<?>> actualSchemaObjectTypes = stream(SchemaObjectType.values())

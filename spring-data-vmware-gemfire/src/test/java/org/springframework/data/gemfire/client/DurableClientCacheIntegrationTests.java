@@ -5,7 +5,7 @@
 package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,10 +16,8 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EntryEvent;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -32,18 +30,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.DistributedSystemUtils;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
 
 /**
  * Integration Tests to test Apache Geode durable clients.
@@ -55,7 +48,6 @@ import com.vmware.gemfire.testcontainers.GemFireCluster;
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCacheFactory
  * @see org.apache.geode.cache.client.Pool
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3
@@ -130,7 +122,7 @@ public class DurableClientCacheIntegrationTests extends IntegrationTestsSupport 
 
 	private void closeClientCache(ClientCache clientCache, boolean keepAlive) {
 
-		Function<GemFireCache, GemFireCache> cacheClosingFunction = cacheToClose -> {
+		Function<ClientCache, ClientCache> cacheClosingFunction = cacheToClose -> {
 			((ClientCache) cacheToClose).close(keepAlive);
 			return cacheToClose;
 		};

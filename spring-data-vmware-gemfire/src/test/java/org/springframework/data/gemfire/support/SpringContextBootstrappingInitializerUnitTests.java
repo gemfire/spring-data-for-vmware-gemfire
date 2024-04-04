@@ -17,15 +17,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
 import java.util.Arrays;
 import java.util.Properties;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
-
+import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -39,8 +36,6 @@ import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.util.ObjectUtils;
-
-import org.slf4j.Logger;
 
 /**
  * Unit Tests for {@link SpringContextBootstrappingInitializer}.
@@ -73,7 +68,7 @@ public class SpringContextBootstrappingInitializerUnitTests {
 		return parameters;
 	}
 
-	private final Cache mockCache = mock(Cache.class);
+	private final ClientCache mockCache = mock(ClientCache.class);
 
 	@After
 	public void tearDown() {

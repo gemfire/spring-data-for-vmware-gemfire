@@ -5,26 +5,21 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.SpringExtensions;
 
 /**
- * Integration Tests for multiple Apache Geode {@link GemFireCache caches}.
+ * Integration Tests for multiple Apache Geode {@link ClientCache caches}.
  *
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.support.ClassPathXmlApplicationContext
@@ -46,8 +41,8 @@ public class MultipleCacheIntegrationTests extends IntegrationTestsSupport {
 			applicationContextOne = new ClassPathXmlApplicationContext(configLocation);
 			applicationContextTwo = new ClassPathXmlApplicationContext(configLocation);
 
-			Cache cacheOne = applicationContextOne.getBean(Cache.class);
-			Cache cacheTwo = applicationContextTwo.getBean(Cache.class);
+			ClientCache cacheOne = applicationContextOne.getBean(ClientCache.class);
+			ClientCache cacheTwo = applicationContextTwo.getBean(ClientCache.class);
 
 			assertThat(cacheOne).isNotNull();
 			assertThat(cacheTwo).isSameAs(cacheOne);

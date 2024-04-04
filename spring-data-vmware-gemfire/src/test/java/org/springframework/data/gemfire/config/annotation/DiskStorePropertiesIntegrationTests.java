@@ -5,14 +5,10 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.function.Function;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.DiskStoreFactory;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
@@ -145,7 +141,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 			512, 250L, 65535, 3);
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableDiskStore(name = "TestDiskStore", allowForceCompaction = true, compactionThreshold = 65,
 		diskUsageCriticalPercentage = 95.0f, diskUsageWarningPercentage = 75.0f, maxOplogSize = 2048L)
@@ -163,7 +159,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 		}
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableDiskStores(diskStores = {
 		@EnableDiskStore(name = "TestDiskStoreOne"), @EnableDiskStore(name = "TestDiskStoreTwo")

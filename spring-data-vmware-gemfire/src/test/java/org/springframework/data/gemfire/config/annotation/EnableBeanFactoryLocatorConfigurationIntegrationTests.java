@@ -5,11 +5,9 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.After;
 import org.junit.Test;
-
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 
@@ -18,7 +16,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.BeanFactoryLocatorConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
@@ -33,14 +31,14 @@ public class EnableBeanFactoryLocatorConfigurationIntegrationTests
 		closeAllBeanFactoryLocators();
 	}
 
-	private <T extends CacheFactoryBean> void testGemFireCacheBeanFactoryLocator(Class<?> configuration,
+	private <T extends ClientCacheFactoryBean> void testGemFireCacheBeanFactoryLocator(Class<?> configuration,
 			Class<T> cacheFactoryBeanType, boolean beanFactoryLocatorEnabled) {
 
 		newApplicationContext(configuration);
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		CacheFactoryBean gemfireCache = getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean gemfireCache = getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache).isInstanceOf(cacheFactoryBeanType);
@@ -50,25 +48,25 @@ public class EnableBeanFactoryLocatorConfigurationIntegrationTests
 	@Test
 	public void gemfireClientCacheBeanFactoryLocatorIsDisabled() {
 		testGemFireCacheBeanFactoryLocator(TestClientCacheBeanFactoryLocatorDisabledConfiguration.class,
-			CacheFactoryBean.class, false);
+			ClientCacheFactoryBean.class, false);
 	}
 
 	@Test
 	public void gemfireClientCacheBeanFactoryLocatorIsEnabled() {
 		testGemFireCacheBeanFactoryLocator(TestClientCacheBeanFactoryLocatorEnabledConfiguration.class,
-			CacheFactoryBean.class, true);
+			ClientCacheFactoryBean.class, true);
 	}
 
 	@Test
 	public void gemfirePeerCacheBeanFactoryLocatorIsDisabled() {
 		testGemFireCacheBeanFactoryLocator(TestPeerCacheBeanFactoryLocatorDisabledConfiguration.class,
-			CacheFactoryBean.class, false);
+			ClientCacheFactoryBean.class, false);
 	}
 
 	@Test
 	public void gemfirePeerCacheBeanFactoryLocatorIsEnabled() {
 		testGemFireCacheBeanFactoryLocator(TestPeerCacheBeanFactoryLocatorEnabledConfiguration.class,
-			CacheFactoryBean.class, true);
+			ClientCacheFactoryBean.class, true);
 	}
 
 	@ClientCacheApplication
@@ -81,12 +79,12 @@ public class EnableBeanFactoryLocatorConfigurationIntegrationTests
 	static class TestClientCacheBeanFactoryLocatorEnabledConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	static class TestPeerCacheBeanFactoryLocatorDisabledConfiguration { }
 
 	@EnableGemFireMockObjects
 	@EnableBeanFactoryLocator
-	@PeerCacheApplication
+	@ClientCacheApplication
 	static class TestPeerCacheBeanFactoryLocatorEnabledConfiguration { }
 
 }

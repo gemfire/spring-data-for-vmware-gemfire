@@ -5,15 +5,12 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.Region;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -62,10 +59,10 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 			.isNotNull();
 
 		assertThat(notPersistentNoOverflowRegion.getAttributes()).isNotNull();
-		assertThat(notPersistentNoOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(notPersistentNoOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(notPersistentNoOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(notPersistentNoOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.NONE);
-		assertThat(notPersistentNoOverflowRegion.getAttributes().getDiskStoreName()).isNull();
+		assertThat(notPersistentNoOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");
 	}
 
 	@Test
@@ -76,7 +73,7 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 			.isNotNull();
 
 		assertThat(notPersistentOverflowRegion.getAttributes()).isNotNull();
-		assertThat(notPersistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(notPersistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(notPersistentOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(notPersistentOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(notPersistentOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");
@@ -90,7 +87,7 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 			.isNotNull();
 
 		assertThat(persistentNoOverflowRegion.getAttributes()).isNotNull();
-		assertThat(persistentNoOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
+		assertThat(persistentNoOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(persistentNoOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(persistentNoOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
 		assertThat(persistentNoOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");
@@ -104,7 +101,7 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 			.isNotNull();
 
 		assertThat(persistentOverflowRegion.getAttributes()).isNotNull();
-		assertThat(persistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
+		assertThat(persistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(persistentOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(persistentOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(persistentOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");

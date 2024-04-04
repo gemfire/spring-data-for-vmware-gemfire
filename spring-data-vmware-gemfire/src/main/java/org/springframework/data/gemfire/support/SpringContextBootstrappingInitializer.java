@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.Declarable;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -32,19 +32,15 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The {@link SpringContextBootstrappingInitializer} class is a GemFire configuration initializer used to bootstrap
  * a Spring {@link ApplicationContext} inside a GemFire Server JVM-based process.  This enables a GemFire Server
- * resource to be mostly configured with Spring Data GemFire's configuration meta-data.  The GemFire {@link Cache}
+ * resource to be mostly configured with Spring Data GemFire's configuration meta-data.  The GemFire Cache
  * itself is the only resource that cannot be configured and initialized in a Spring context since the initializer
- * is not invoked until after GemFire creates and initializes the GemFire {@link Cache} for use.
+ * is not invoked until after GemFire creates and initializes the GemFire {@link ClientCache} for use.
  *
  * @author John Blum
  * @see Properties
- * @see Cache
  * @see Declarable
  * @see ApplicationContext
  * @see ApplicationListener
@@ -402,7 +398,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	@Override
 	@SuppressWarnings("deprecation")
 	public void init(Properties parameters) {
-		init(CacheUtils.getCache(), parameters);
+		init(CacheUtils.getClientCache(), parameters);
 	}
 
 	/**
@@ -412,7 +408,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @param parameters {@link Properties} object containing the configuration parameters and settings defined in the
 	 * Apache Geode/Pivotal GemFire {@literal cache.xml} &lt;initializer&gt; block for the declared
 	 * {@link SpringContextBootstrappingInitializer} Apache Geode/Pivotal GemFire {@link Declarable} object.
-	 * @param cache reference to the peer {@link Cache}.
+	 * @param cache reference to the {@link ClientCache}.
 	 * @throws ApplicationContextException if the Spring {@link ApplicationContext}
 	 * could not be successfully constructed, configured and initialized.
 	 * @see #createApplicationContext(String[], String[])
@@ -420,7 +416,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @see #refreshApplicationContext(ConfigurableApplicationContext)
 	 * @see Properties
 	 */
-	public void init(Cache cache, Properties parameters) {
+	public void init(ClientCache cache, Properties parameters) {
 
 		try {
 			synchronized (SpringContextBootstrappingInitializer.class) {

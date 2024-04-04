@@ -6,13 +6,10 @@
 package org.springframework.data.gemfire.repository.sample;
 
 import java.util.Objects;
-
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.Region;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.util.ObjectUtils;
-
-import lombok.Data;
 
 /**
  * The Customer class is a class abstraction modeling a Customer.
@@ -23,7 +20,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-@ReplicateRegion("Customers")
+@Region("Customers")
 @SuppressWarnings("unused")
 public class Customer {
 

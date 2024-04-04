@@ -10,11 +10,10 @@ import java.net.PasswordAuthentication;
 import java.net.URI;
 import java.util.Optional;
 import java.util.Properties;
-
 import org.apache.geode.security.AuthInitialize;
-
 import org.apache.shiro.util.Assert;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ConditionContext;
@@ -35,9 +34,6 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The {@link AutoConfiguredAuthenticationConfiguration} class is a Spring {@link Configuration} class
@@ -215,22 +211,6 @@ public class AutoConfiguredAuthenticationConfiguration {
 
 		return (beanName, clientCacheFactoryBean) ->
 			initializeMemberAuthentication(clientCacheFactoryBean.getProperties(), authentication);
-	}
-
-	@Bean
-	public LocatorConfigurer authenticationInitializingLocatorConfigurer(
-			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
-
-		return (beanName, locatorFactoryBean) ->
-			initializeMemberAuthentication(locatorFactoryBean.getGemFireProperties(), authentication);
-	}
-
-	@Bean
-	public PeerCacheConfigurer authenticationInitializingPeerCacheConfigurer(
-			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
-
-		return (beanName, cacheFactoryBean) ->
-			initializeMemberAuthentication(cacheFactoryBean.getProperties(), authentication);
 	}
 
 	private void initializeMemberAuthentication(Properties gemfireProperties,

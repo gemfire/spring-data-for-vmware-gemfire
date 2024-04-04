@@ -5,17 +5,13 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.Properties;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.distributed.DistributedSystem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.distributed.DistributedSystem;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -38,7 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see java.util.Properties
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.distributed.DistributedSystem
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @see org.springframework.context.ApplicationContextInitializer
@@ -61,7 +57,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UsingAnnotationConfigWithBeanDefinitionOverridingDisabledIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	@Before
 	public void assertApplicationContextBeanDefinitionOverridingIsDisabled() {

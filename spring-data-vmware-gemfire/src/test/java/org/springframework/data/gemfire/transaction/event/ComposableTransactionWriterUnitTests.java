@@ -8,22 +8,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import java.util.Properties;
-
+import org.apache.geode.cache.TransactionEvent;
+import org.apache.geode.cache.TransactionWriter;
+import org.apache.geode.cache.TransactionWriterException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.TransactionEvent;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.TransactionWriterException;
 
 /**
  * Unit Tests for {@link ComposableTransactionWriter}.
@@ -140,20 +135,4 @@ public class ComposableTransactionWriterUnitTests {
 		verify(this.mockTransactionWriterTwo, times(1)).init(eq(testProperties));
 	}
 
-	@Test
-	public void initializeCallsComposedTransactionWritersInitializeMethod() {
-
-		Cache mockCache = mock(Cache.class);
-
-		Properties testProperties = new Properties();
-
-		ComposableTransactionWriter.compose(this.mockTransactionWriterOne, this.mockTransactionWriterTwo)
-			.initialize(mockCache, testProperties);
-
-		verify(this.mockTransactionWriterOne, times(1))
-			.initialize(eq(mockCache), eq(testProperties));
-
-		verify(this.mockTransactionWriterTwo, times(1))
-			.initialize(eq(mockCache), eq(testProperties));
-	}
 }

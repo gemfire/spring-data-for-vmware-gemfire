@@ -27,7 +27,6 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
@@ -47,9 +46,7 @@ import org.springframework.util.ObjectUtils;
  * @see GetRegionsFunction
  * @see BeanFactoryPostProcessor
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see ListRegionsOnServerFunction
  * @see GemfireOnServersFunctionTemplate
- * @see ListRegionsOnServerFunction
  * @since 1.2.0
  */
 public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPostProcessor {
@@ -151,36 +148,29 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 
 	// TODO: remove this logic and delegate to o.s.d.g.config.remote.GemfireAdminOperations
 	Iterable<String> regionNames(ClientCache clientCache) {
-
 		try {
-			return execute(clientCache, new ListRegionsOnServerFunction());
-		}
-		catch (Exception ignore) {
 
-			try {
+			// adding false as an argument due to behavior change in GemFire 10.1
+			Object results = execute(clientCache, new GetRegionsFunction(), false);
 
-				// adding false as an argument due to behavior change in GemFire 10.1
-				Object results = execute(clientCache, new GetRegionsFunction(), false);
+			List<String> regionNames = Collections.emptyList();
 
-				List<String> regionNames = Collections.emptyList();
+			if (containsRegionInformation(results)) {
 
-				if (containsRegionInformation(results)) {
+				Object[] resultsArray = (Object[]) results;
 
-					Object[] resultsArray = (Object[]) results;
+				regionNames = new ArrayList<>(resultsArray.length);
 
-					regionNames = new ArrayList<>(resultsArray.length);
-
-					for (Object result : resultsArray) {
-						regionNames.add(((RegionInformation) result).getName());
-					}
+				for (Object result : resultsArray) {
+					regionNames.add(((RegionInformation) result).getName());
 				}
+			}
 
-				return regionNames;
-			}
-			catch (Exception cause) {
-				logDebug("Failed to determine the Regions available on the Server: %n%s", cause);
-				return Collections.emptyList();
-			}
+			return regionNames;
+		}
+		catch (Exception cause) {
+			logDebug("Failed to determine the Regions available on the Server: %n%s", cause);
+			return Collections.emptyList();
 		}
 	}
 

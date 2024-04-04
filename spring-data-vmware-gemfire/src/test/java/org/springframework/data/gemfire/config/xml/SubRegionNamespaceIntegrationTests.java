@@ -5,16 +5,13 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.Region;
-
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,7 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
@@ -40,7 +36,7 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
     @Test
     public void testNestedRegionsCreated() {
 
-        Cache cache = requireApplicationContext().getBean(Cache.class);
+        ClientCache cache = requireApplicationContext().getBean(ClientCache.class);
 
         assertThat(cache.getRegion("parent")).isNotNull();
         assertThat(cache.getRegion("/parent/child")).isNotNull();
@@ -63,22 +59,6 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
 		assertThat(grandchild.getName()).isEqualTo("grandchild");
 		assertThat(grandchild.getFullPath()).isEqualTo("/parent/child/grandchild");
 		assertThat(child.getSubregion("grandchild")).isSameAs(grandchild);
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void testMixedNestedRegions() {
-
-		Region parent = requireApplicationContext().getBean("replicatedParent", Region.class);
-		Region child = requireApplicationContext().getBean("/replicatedParent/replicatedChild", Region.class);
-		Region grandchild = requireApplicationContext().getBean("/replicatedParent/replicatedChild/partitionedGrandchild", Region.class);
-
-		assertThat(child).isNotNull();
-		assertThat(child.getFullPath()).isEqualTo("/replicatedParent/replicatedChild");
-		assertThat(parent.getSubregion("replicatedChild")).isEqualTo(child);
-		assertThat(grandchild).isNotNull();
-		assertThat(grandchild.getFullPath()).isEqualTo("/replicatedParent/replicatedChild/partitionedGrandchild");
-		assertThat(child.getSubregion("partitionedGrandchild")).isSameAs(grandchild);
 	}
 
 	@Test
@@ -110,9 +90,9 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
 		Region child2 = requireApplicationContext().getBean("/complexNested/child2", Region.class);
 		Region grandchild11 = requireApplicationContext().getBean("/complexNested/child1/grandChild11", Region.class);
 
-		ReplicatedRegionFactoryBean grandchild11FactoryBean =
+		ClientRegionFactoryBean grandchild11FactoryBean =
 			requireApplicationContext().getBean("&/complexNested/child1/grandChild11",
-				ReplicatedRegionFactoryBean.class);
+				ClientRegionFactoryBean.class);
 
 		assertThat(grandchild11FactoryBean).isNotNull();
 

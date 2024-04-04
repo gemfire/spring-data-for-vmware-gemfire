@@ -6,19 +6,15 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
@@ -65,9 +61,7 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 
 		MockPropertySource testPropertySource = new MockPropertySource()
 			.withProperty("spring.data.gemfire.cache.critical-heap-percentage", 90.0f)
-			.withProperty("spring.data.gemfire.cache.critical-off-heap-percentage", 95.0f)
 			.withProperty("spring.data.gemfire.cache.eviction-heap-percentage", 85.0f)
-			.withProperty("spring.data.gemfire.cache.eviction-off-heap-percentage", 80.0f)
 			.withProperty("spring.data.gemfire.pdx.ignore-unread-fields", false)
 			.withProperty("spring.data.gemfire.pdx.persistent", true)
 			.withProperty("spring.data.gemfire.pool.free-connection-timeout", 20000L)
@@ -135,9 +129,7 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 
 		assertThat(resourceManager).isNotNull();
 		assertThat(resourceManager.getCriticalHeapPercentage()).isEqualTo(90.0f);
-		assertThat(resourceManager.getCriticalOffHeapPercentage()).isEqualTo(95.0f);
 		assertThat(resourceManager.getEvictionHeapPercentage()).isEqualTo(90.0f);
-		assertThat(resourceManager.getEvictionOffHeapPercentage()).isEqualTo(80.0f);
 	}
 
 	@Test
@@ -200,7 +192,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		assertThat(mockSocketFactory).isNotNull();
 		assertThat(clientCacheFactoryBean.getDurableClientId()).isEqualTo("123");
 		assertThat(clientCacheFactoryBean.getDurableClientTimeout()).isEqualTo(600);
-		assertThat(clientCacheFactoryBean.getUseClusterConfiguration()).isFalse();
 		assertThat(clientCacheFactoryBean.isKeepAlive()).isTrue();
 		assertThat(clientCacheFactoryBean.isReadyForEvents()).isTrue();
 		assertThat(clientCacheFactoryBean.isUseBeanFactoryLocator()).isTrue();

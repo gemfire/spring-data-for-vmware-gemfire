@@ -19,16 +19,16 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="LocalDestroy" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="LocalDestroy" persistent="false">
 		<gfe:eviction action="LOCAL_DESTROY"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="None" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="None" persistent="false"/>
 
-	<gfe:local-region id="Overflow" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="Overflow" persistent="false">
 		<gfe:eviction action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
 </beans>

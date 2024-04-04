@@ -5,24 +5,20 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.client.Pool;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -54,11 +50,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.GemfireTemplate
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/SGF-555">Repository queries on client Regions associated with a Pool configured with a specified server group can lead to a RegionNotFoundException.</a>
@@ -200,7 +194,7 @@ public class GemfireTemplateQueriesOnGroupedPooledClientCacheRegionsIntegrationT
 		}
 
 		@Bean(name = "Cats")
-		ClientRegionFactoryBean<String, String> catsRegion(GemFireCache gemfireCache,
+		ClientRegionFactoryBean<String, String> catsRegion(ClientCache gemfireCache,
 				@Qualifier("ServerOnePool") Pool serverOnePool) {
 
 			ClientRegionFactoryBean<String, String> catsRegion = new ClientRegionFactoryBean<>();
@@ -213,7 +207,7 @@ public class GemfireTemplateQueriesOnGroupedPooledClientCacheRegionsIntegrationT
 		}
 
 		@Bean(name = "Dogs")
-		ClientRegionFactoryBean<String, String> dogsRegion(GemFireCache gemfireCache,
+		ClientRegionFactoryBean<String, String> dogsRegion(ClientCache gemfireCache,
 				@Qualifier("ServerTwoPool") Pool serverTwoPool) {
 
 			ClientRegionFactoryBean<String, String> dogsRegion = new ClientRegionFactoryBean<>();
@@ -227,13 +221,13 @@ public class GemfireTemplateQueriesOnGroupedPooledClientCacheRegionsIntegrationT
 
 		@Bean
 		@DependsOn("Cats")
-		GemfireTemplate catsTemplate(GemFireCache gemfireCache) {
+		GemfireTemplate catsTemplate(ClientCache gemfireCache) {
 			return new GemfireTemplate(gemfireCache.getRegion("Cats"));
 		}
 
 		@Bean
 		@DependsOn("Dogs")
-		GemfireTemplate dogsTemplate(GemFireCache gemfireCache) {
+		GemfireTemplate dogsTemplate(ClientCache gemfireCache) {
 			return new GemfireTemplate(gemfireCache.getRegion("Dogs"));
 		}
 	}

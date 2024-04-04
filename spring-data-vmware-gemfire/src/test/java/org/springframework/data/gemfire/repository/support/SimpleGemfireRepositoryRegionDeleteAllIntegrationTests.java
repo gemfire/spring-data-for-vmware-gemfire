@@ -5,21 +5,19 @@
 package org.springframework.data.gemfire.repository.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import example.app.model.User;
+import example.app.repo.UserRepository;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.DataPolicy;
+import org.apache.geode.cache.Region;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -33,22 +31,17 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import example.app.model.User;
-import example.app.repo.UserRepository;
-
 /**
  * Integration Tests asserting the correct function of the {@link CrudRepository#deleteAll()} method
  * as implemented by the {@link SimpleGemfireRepository} class in an Apache Geode client/server topology.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
- * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
  * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.data.repository.CrudRepository
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner

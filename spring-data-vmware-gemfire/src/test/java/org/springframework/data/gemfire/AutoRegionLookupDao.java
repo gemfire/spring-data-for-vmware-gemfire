@@ -36,20 +36,20 @@ import org.springframework.stereotype.Repository;
 public class AutoRegionLookupDao extends DaoSupport {
 
 	@Autowired
-	@Qualifier("NativePartitionedRegion")
-	private Region<?, ?> nativePartitionedRegion;
+	@Qualifier("NativeClientRegion")
+	private Region<?, ?> nativeClientRegion;
 
 	@Autowired
-	@Qualifier("NativeReplicateParent")
-	private Region<?, ?> nativeReplicateParent;
+	@Qualifier("NativeClientParent")
+	private Region<?, ?> nativeClientParent;
 
 	@Autowired
-	@Qualifier("/NativeReplicateParent/NativeReplicateChild")
-	private Region<?, ?> nativeReplicateChild;
+	@Qualifier("/NativeClientParent/NativeClientChild")
+	private Region<?, ?> nativeClientChild;
 
 	@Autowired
-	@Qualifier("/NativeReplicateParent/NativeReplicateChild/NativeReplicateGrandchild")
-	private Region<?, ?> nativeReplicateGrandchild;
+	@Qualifier("/NativeClientParent/NativeClientChild/NativeClientGrandchild")
+	private Region<?, ?> nativeClientGrandchild;
 
 	protected static void assertRegionMetaData(Region<?, ?> region, String expectedName, DataPolicy expectedDataPolicy) {
 		assertRegionMetaData(region, expectedName, Region.SEPARATOR + expectedName, expectedDataPolicy);
@@ -76,11 +76,11 @@ public class AutoRegionLookupDao extends DaoSupport {
 	@Override
 	protected void checkDaoConfig() throws IllegalArgumentException {
 
-		assertRegionMetaData(nativePartitionedRegion, "NativePartitionedRegion", DataPolicy.PARTITION);
-		assertRegionMetaData(nativeReplicateParent, "NativeReplicateParent", DataPolicy.REPLICATE);
-		assertRegionMetaData(nativeReplicateChild, "NativeReplicateChild",
-			"/NativeReplicateParent/NativeReplicateChild", DataPolicy.REPLICATE);
-		assertRegionMetaData(nativeReplicateGrandchild, "NativeReplicateGrandchild",
-			"/NativeReplicateParent/NativeReplicateChild/NativeReplicateGrandchild", DataPolicy.REPLICATE);
+		assertRegionMetaData(nativeClientRegion, "NativeClientRegion", DataPolicy.NORMAL);
+		assertRegionMetaData(nativeClientParent, "NativeClientParent", DataPolicy.NORMAL);
+		assertRegionMetaData(nativeClientChild, "NativeClientChild",
+			"/NativeClientParent/NativeClientChild", DataPolicy.NORMAL);
+		assertRegionMetaData(nativeClientGrandchild, "NativeClientGrandchild",
+			"/NativeClientParent/NativeClientChild/NativeClientGrandchild", DataPolicy.NORMAL);
 	}
 }

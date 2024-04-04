@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
-
 import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.RegionConfigurer;
@@ -40,12 +38,6 @@ public abstract class ConfigurableRegionFactoryBean<K, V> extends ResolvableRegi
 
 		@Override
 		public void configure(String beanName, ClientRegionFactoryBean<?, ?> bean) {
-			CollectionUtils.nullSafeCollection(regionConfigurers)
-				.forEach(regionConfigurer -> regionConfigurer.configure(beanName, bean));
-		}
-
-		@Override
-		public void configure(String beanName, PeerRegionFactoryBean<?, ?> bean) {
 			CollectionUtils.nullSafeCollection(regionConfigurers)
 				.forEach(regionConfigurer -> regionConfigurer.configure(beanName, bean));
 		}
@@ -145,9 +137,9 @@ public abstract class ConfigurableRegionFactoryBean<K, V> extends ResolvableRegi
 			StreamSupport.stream(CollectionUtils.nullSafeIterable(regionConfigurers).spliterator(), false)
 				.forEach(regionConfigurer -> regionConfigurer.configure(regionName, (ClientRegionFactoryBean<K, V>) this));
 		}
-		else if (this instanceof PeerRegionFactoryBean) {
+		else if (this instanceof ClientRegionFactoryBean) {
 			StreamSupport.stream(CollectionUtils.nullSafeIterable(regionConfigurers).spliterator(), false)
-				.forEach(regionConfigurer -> regionConfigurer.configure(regionName, (PeerRegionFactoryBean<K, V>) this));
+				.forEach(regionConfigurer -> regionConfigurer.configure(regionName, (ClientRegionFactoryBean<K, V>) this));
 		}
 	}
 }

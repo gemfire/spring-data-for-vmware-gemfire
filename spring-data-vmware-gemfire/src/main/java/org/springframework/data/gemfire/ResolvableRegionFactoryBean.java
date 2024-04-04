@@ -5,14 +5,11 @@
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
-
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.function.Function;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,12 +27,11 @@ import org.springframework.util.StringUtils;
  * Spring {@link FactoryBean} used to look up or create {@link Region Regions}.
  *
  * For declaring and configuring new {@literal client} {@link Region Regions}, see {@link ClientRegionFactoryBean}.
- * For declaring and configuring new {@literal peer} {@link Region Regions}, see {@link PeerRegionFactoryBean}
  * and {@link Class subclasses}.
  *
  * @author Costin Leau
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see FactoryBean
  * @see InitializingBean
@@ -51,7 +47,7 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 
 	private Boolean lookupEnabled = false;
 
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	private Region<?, ?> parent;
 
@@ -67,13 +63,13 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	 *
 	 * @throws Exception if initialization fails.
 	 * @see InitializingBean#afterPropertiesSet()
-	 * @see #createRegion(GemFireCache, String)
+	 * @see #createRegion(ClientCache, String)
 	 */
 	@Override
 	@SuppressWarnings("all")
 	public void afterPropertiesSet() throws Exception {
 
-		GemFireCache cache = requireCache();
+		ClientCache cache = requireCache();
 
 		String regionName = requireRegionName();
 
@@ -91,9 +87,9 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 		}
 	}
 
-	private @NonNull GemFireCache requireCache() {
+	private @NonNull ClientCache requireCache() {
 
-		GemFireCache cache = getCache();
+		ClientCache cache = getCache();
 
 		Assert.notNull(cache, "Cache is required");
 
@@ -109,7 +105,7 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 		return regionName;
 	}
 
-	private @Nullable Region<K, V> resolveRegion(@NonNull GemFireCache cache, @NonNull String regionName) {
+	private @Nullable Region<K, V> resolveRegion(@NonNull ClientCache cache, @NonNull String regionName) {
 
 		return isLookupEnabled()
 			? Optional.ofNullable(getParent())
@@ -141,14 +137,14 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	 * By default, this method implementation throws a {@link BeanInitializationException} and it is expected
 	 * that {@link Class subclasses} will override this method.
 	 *
-	 * @param cache reference to the {@link GemFireCache}.
+	 * @param cache reference to the {@link ClientCache}.
 	 * @param regionName {@link String name} of the new {@link Region}.
 	 * @return a new {@link Region} with the given {@link String name}.
 	 * @throws BeanInitializationException by default unless a {@link Class subclass} overrides this method.
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see Region
 	 */
-	protected Region<K, V> createRegion(GemFireCache cache, String regionName) throws Exception {
+	protected Region<K, V> createRegion(ClientCache cache, String regionName) throws Exception {
 		throw new BeanInitializationException(String.format(REGION_NOT_FOUND_ERROR_MESSAGE, regionName, cache));
 	}
 
@@ -180,7 +176,7 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	}
 
 	/**
-	 * Post-process the {@link Region} created by this {@link PeerRegionFactoryBean}.
+	 * Post-process the {@link Region} created by this {@link ClientRegionFactoryBean}.
 	 *
 	 * @param region {@link Region} to process.
 	 * @see Region
@@ -217,22 +213,22 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	}
 
 	/**
-	 * Returns a reference to the {@link GemFireCache} used to create the {@link Region}.
+	 * Returns a reference to the {@link ClientCache} used to create the {@link Region}.
 	 *
-	 * @return a reference to the {@link GemFireCache} used to create the {@link Region}.
-	 * @see GemFireCache
+	 * @return a reference to the {@link ClientCache} used to create the {@link Region}.
+	 * @see ClientCache
 	 */
-	public GemFireCache getCache() {
+	public ClientCache getCache() {
 		return this.cache;
 	}
 
 	/**
-	 * Sets a reference to the {@link GemFireCache} used to create the {@link Region}.
+	 * Sets a reference to the {@link ClientCache} used to create the {@link Region}.
 	 *
-	 * @param cache reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @param cache reference to the {@link ClientCache}.
+	 * @see ClientCache
 	 */
-	public void setCache(GemFireCache cache) {
+	public void setCache(ClientCache cache) {
 		this.cache = cache;
 	}
 

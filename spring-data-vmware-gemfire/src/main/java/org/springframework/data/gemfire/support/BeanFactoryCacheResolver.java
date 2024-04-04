@@ -5,9 +5,7 @@
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
-
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -17,18 +15,18 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Cacheable {@link CacheResolver} implementation capable of resolving a {@link GemFireCache} instance
+ * Cacheable {@link CacheResolver} implementation capable of resolving a {@link ClientCache} instance
  * from the Spring {@link BeanFactory}.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see BeanFactory
  * @see BeanFactoryAware
  * @see CacheResolver
  * @see AbstractCachingCacheResolver
  * @since 2.3.0
  */
-public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFireCache> implements BeanFactoryAware {
+public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<ClientCache> implements BeanFactoryAware {
 
 	private BeanFactory beanFactory;
 
@@ -38,7 +36,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	 * Constructs a new instance of {@link BeanFactoryCacheResolver} initialized with the given, required
 	 * Spring {@link BeanFactory}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GemFireCache}.
+	 * @param beanFactory {@link BeanFactory} used to resolve the {@link ClientCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @see BeanFactory
 	 */
@@ -47,9 +45,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 	}
 
 	/**
-	 * Sets a reference to the {@link BeanFactory} used to resolve the {@link GemFireCache}.
+	 * Sets a reference to the {@link BeanFactory} used to resolve the {@link ClientCache}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GemFireCache}.
+	 * @param beanFactory {@link BeanFactory} used to resolve the {@link ClientCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @throws BeansException if configuration of the {@link BeanFactory} fails.
 	 * @see BeanFactory
@@ -64,7 +62,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 
 	/**
 	 * Returns the configured reference to the Spring {@link BeanFactory} used to resolve the single instance
-	 * of the {@link GemFireCache}.
+	 * of the {@link ClientCache}.
 	 *
 	 * @return a reference to the configured Spring {@link BeanFactory}.
 	 * @see BeanFactory
@@ -75,9 +73,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 
 	/**
 	 * Sets (configures) the {@link String bean name} used to further qualify the resolution of
-	 * the {@link GemFireCache} object reference in a Spring context.
+	 * the {@link ClientCache} object reference in a Spring context.
 	 *
-	 * @param cacheBeanName {@link String name} of the {@link GemFireCache} bean in the Spring context.
+	 * @param cacheBeanName {@link String name} of the {@link ClientCache} bean in the Spring context.
 	 */
 	public void setCacheBeanName(String cacheBeanName) {
 		this.cacheBeanName = cacheBeanName;
@@ -85,9 +83,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 
 	/**
 	 * Returns the optionally configured {@link String bean name} used to further qualify the resolution of
-	 * the {@link GemFireCache} object reference in a Spring context.
+	 * the {@link ClientCache} object reference in a Spring context.
 	 *
-	 * @return the configured {@link String name} of the {@link GemFireCache} bean in the Spring context.
+	 * @return the configured {@link String name} of the {@link ClientCache} bean in the Spring context.
 	 */
 	public Optional<String> getCacheBeanName() {
 
@@ -97,18 +95,18 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GemFi
 
 	/**
 	 * Uses the configured Spring {@link BeanFactory} to resolve a reference to
-	 * the single {@link GemFireCache} instance.
+	 * the single {@link ClientCache} instance.
 	 *
-	 * @return a reference to the {@link GemFireCache} bean.
+	 * @return a reference to the {@link ClientCache} bean.
 	 * @see BeanFactory#getBean(Class)
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see #getBeanFactory()
 	 */
 	@Override
-	protected GemFireCache doResolve() {
+	protected ClientCache doResolve() {
 
 		return getCacheBeanName()
-			.map(cacheBeanName -> getBeanFactory().getBean(cacheBeanName, GemFireCache.class))
-			.orElse(getBeanFactory().getBean(GemFireCache.class));
+			.map(cacheBeanName -> getBeanFactory().getBean(cacheBeanName, ClientCache.class))
+			.orElse(getBeanFactory().getBean(ClientCache.class));
 	}
 }
