@@ -38,11 +38,9 @@ import org.springframework.util.StringUtils;
  * @see BeanDefinitionRegistry
  * @see ImportBeanDefinitionRegistrar
  * @see AnnotationMetadata
- * @see AddCacheServersConfiguration
  * @see CacheServerApplication
  * @see CacheServerConfiguration
  * @see CacheServerConfigurer
- * @see EnableCacheServers
  * @see EnableCacheServer
  * @see AbstractAnnotationConfigSupport
  * @see CacheServerFactoryBean
