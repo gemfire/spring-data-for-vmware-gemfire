@@ -17,8 +17,11 @@ import java.lang.annotation.Target;
  * and any filters configured for the function context.
  *
  * @author David Turanski
+ *
+ * @deprecated to be removed in 2.0 release
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
+@Deprecated(forRemoval = true)
 public @interface RegionData {
 }
