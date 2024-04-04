@@ -25,15 +25,9 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
  * This annotation is used in conjunction with the {@link CacheServerApplication}, or {@link PeerCacheApplication}
  * annotations to add an additional {@link CacheServer CacheServers} to a GemFire peer cache application
  * configured with Spring (Data GemFire).
- *
- * To add more than 1 {@link CacheServer} to your application, this annotation can be nested in
- * the {@link EnableCacheServers} annotation.
-
  * @author John Blum
  * @see CacheServer
- * @see AddCacheServerConfiguration
  * @see CacheServerConfigurer
- * @see EnableCacheServers
  * @since 1.9.0
  * @deprecated to be removed in 2.0 release
  */

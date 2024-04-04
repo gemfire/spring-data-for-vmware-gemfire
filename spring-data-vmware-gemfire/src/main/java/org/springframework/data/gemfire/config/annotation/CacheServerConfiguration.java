@@ -39,11 +39,8 @@ import org.springframework.util.StringUtils;
  * @see CacheServer
  * @see Bean
  * @see Configuration
- * @see AddCacheServerConfiguration
- * @see AddCacheServersConfiguration
  * @see CacheServerConfigurer
  * @see EnableCacheServer
- * @see EnableCacheServers
  * @see PeerCacheConfiguration
  * @see CacheServerFactoryBean
  * @since 1.9.0
