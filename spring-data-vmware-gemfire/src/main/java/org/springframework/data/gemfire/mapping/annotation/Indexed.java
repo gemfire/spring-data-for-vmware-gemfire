@@ -28,11 +28,14 @@ import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
  * @see org.apache.geode.cache.Region
  * @see Index
  * @since 1.9.0
+ *
+ * @deprecated to be removed in 2.0 release
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
+@Deprecated(forRemoval = true)
 @SuppressWarnings({ "unused" })
 public @interface Indexed {
 
