@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.config.annotation.McastConfiguration
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(McastConfiguration.class)
 @UsesGemFireProperties
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableMcast {
 

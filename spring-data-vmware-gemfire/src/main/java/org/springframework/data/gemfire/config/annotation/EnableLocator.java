@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.config.annotation.LocatorConfiguration
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -38,6 +39,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(LocatorConfiguration.class)
 @UsesGemFireProperties
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableLocator {
 

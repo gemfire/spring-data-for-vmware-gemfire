@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.data.gemfire.config.annotation.HttpServiceConfiguration
  * @see <a href="https://geode.apache.org/docs/guide/113/rest_apps/book_intro.html">Developing REST Applications for Apache Geode</a>
  * @since 1.9.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import(HttpServiceConfiguration.class)
 @UsesGemFireProperties
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableHttpService {
 
