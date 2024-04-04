@@ -35,7 +35,6 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
  * @see Configuration
  * @see Import
  * @see CacheServerConfiguration
- * @see EnableCacheServer
  * @since 1.9.0
  * @deprecated to be removed in 2.0 release
  */
