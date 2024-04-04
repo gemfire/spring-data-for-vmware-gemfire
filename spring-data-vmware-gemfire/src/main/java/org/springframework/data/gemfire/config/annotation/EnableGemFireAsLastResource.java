@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Import;
  * @see org.springframework.context.annotation.Import
  * @see org.springframework.data.gemfire.config.annotation.GemFireAsLastResourceConfiguration
  * @since 2.0.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.Import;
 @Documented
 @EnableAspectJAutoProxy
 @Import(GemFireAsLastResourceConfiguration.class)
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableGemFireAsLastResource {
 

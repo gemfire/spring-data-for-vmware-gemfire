@@ -23,12 +23,15 @@ import org.springframework.core.annotation.AliasFor;
  * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
+ *
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Region
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface LocalRegion {
 

@@ -45,12 +45,14 @@ import org.springframework.data.gemfire.wan.OrderPolicyType;
  * @see org.apache.geode.cache.wan.GatewayTransportFilter
  * @see org.springframework.data.gemfire.config.annotation.EnableGatewaySenders
  * @since 2.2.0
+ * @deprecated to be removed in 2.0 release
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @Import({ GatewaySenderBeanFactoryPostProcessor.class, GatewaySenderConfiguration.class })
+@Deprecated(forRemoval = true)
 @SuppressWarnings("unused")
 public @interface EnableGatewaySender {
 
