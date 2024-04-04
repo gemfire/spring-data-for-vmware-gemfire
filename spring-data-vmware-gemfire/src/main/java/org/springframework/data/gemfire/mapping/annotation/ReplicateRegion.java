@@ -31,7 +31,7 @@ import org.springframework.data.gemfire.ScopeType;
 @Inherited
 @Documented
 @Region
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface ReplicateRegion {
 

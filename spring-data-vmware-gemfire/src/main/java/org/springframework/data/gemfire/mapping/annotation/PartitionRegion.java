@@ -31,7 +31,7 @@ import org.springframework.core.annotation.AliasFor;
 @Inherited
 @Documented
 @Region
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface PartitionRegion {
 
@@ -156,7 +156,7 @@ public @interface PartitionRegion {
 	 * @see org.apache.geode.cache.FixedPartitionAttributes
 	 * @deprecated to be removed in 2.0 release
 	 */
-	@Deprecated(forRemoval = true)
+	@Deprecated
 	@interface FixedPartition {
 
 		/**

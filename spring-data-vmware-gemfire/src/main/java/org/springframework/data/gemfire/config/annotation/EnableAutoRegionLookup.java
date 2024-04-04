@@ -35,7 +35,7 @@ import org.springframework.context.annotation.Import;
 @Inherited
 @Documented
 @Import(AutoRegionLookupConfiguration.class)
-@Deprecated(forRemoval = true)
+@Deprecated
 @SuppressWarnings("unused")
 public @interface EnableAutoRegionLookup {
 
