@@ -32,11 +32,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.server.CacheServer
  * @see org.springframework.context.annotation.Configuration
- * @see org.springframework.data.gemfire.config.annotation.AddCacheServerConfiguration
- * @see org.springframework.data.gemfire.config.annotation.AddCacheServersConfiguration
  * @see org.springframework.data.gemfire.config.annotation.CacheServerConfigurer
  * @see org.springframework.data.gemfire.config.annotation.EnableCacheServer
- * @see org.springframework.data.gemfire.config.annotation.EnableCacheServers
  * @see org.springframework.data.gemfire.server.CacheServerFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
@@ -68,22 +65,18 @@ public class CacheServerConfigurerIntegrationTests extends IntegrationTestsSuppo
 	@Test
 	public void cacheServerConfigurerOneCalledSuccessfully() {
 		assertCacheServerConfigurerCalled(this.configurerOne,
-			"gemfireCacheServer", "marsServer", "saturnServer", "venusServer");
+			"gemfireCacheServer", "marsServer");
 	}
 
 	@Test
 	public void cacheServerConfigurerTwoCalledSuccessfully() {
 		assertCacheServerConfigurerCalled(this.configurerTwo,
-			"gemfireCacheServer", "marsServer", "saturnServer", "venusServer");
+			"gemfireCacheServer", "marsServer");
 	}
 
 	@Configuration
 	@CacheServerApplication
-	@EnableCacheServers(servers = {
-		@EnableCacheServer(name = "marsServer"),
-		@EnableCacheServer(name = "saturnServer"),
-		@EnableCacheServer(name = "venusServer"),
-	})
+	@EnableCacheServer(name = "marsServer")
 	static class TestConfiguration {
 
 		@Bean
