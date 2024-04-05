@@ -80,9 +80,7 @@ class CacheParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "close");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "copy-on-read");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "critical-heap-percentage");
-		ParsingUtils.setPropertyValue(element, cacheBuilder, "critical-off-heap-percentage");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "eviction-heap-percentage");
-		ParsingUtils.setPropertyValue(element, cacheBuilder, "eviction-off-heap-percentage");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "enable-auto-reconnect");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "lock-lease");
 		ParsingUtils.setPropertyValue(element, cacheBuilder, "lock-timeout");

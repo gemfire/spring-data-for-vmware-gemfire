@@ -244,21 +244,6 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 		assertThat(evictionHeapPercentage).isCloseTo(60.0f, offset(0.0001f));
 	}
 
-	@Test
-	public void offHeapTunedCacheIsCorrect() {
-
-		assertThat(applicationContext.containsBean("off-heap-tuned-cache")).isTrue();
-
-		CacheFactoryBean cacheFactoryBean =
-			applicationContext.getBean("&off-heap-tuned-cache", CacheFactoryBean.class);
-
-		Float criticalOffHeapPercentage = cacheFactoryBean.getCriticalOffHeapPercentage();
-		Float evictionOffHeapPercentage = cacheFactoryBean.getEvictionOffHeapPercentage();
-
-		assertThat(criticalOffHeapPercentage).isCloseTo(90.0f, offset(0.0001f));
-		assertThat(evictionOffHeapPercentage).isCloseTo(50.0f, offset(0.0001f));
-	}
-
 	public static class TestGatewayConflictResolver implements GatewayConflictResolver {
 
 		@Override

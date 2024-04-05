@@ -230,7 +230,6 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 * @see #loadCacheXml(GemFireCache)
 	 * @see Cache#loadCacheXml(java.io.InputStream)
 	 * @see #configureHeapPercentages(GemFireCache)
-	 * @see #configureOffHeapPercentages(GemFireCache)
 	 * @see #registerJndiDataSources(GemFireCache)
 	 * @see #registerTransactionListeners(GemFireCache)
 	 * @see #registerTransactionWriter(GemFireCache)

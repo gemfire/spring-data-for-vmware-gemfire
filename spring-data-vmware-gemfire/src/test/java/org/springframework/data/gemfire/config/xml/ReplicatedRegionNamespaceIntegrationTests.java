@@ -144,7 +144,6 @@ public class ReplicatedRegionNamespaceIntegrationTests extends IntegrationTestsS
 		assertThat(regionAttributes.getLoadFactor()).isCloseTo(0.50f, offset(0.001f));
 		assertThat(regionAttributes.isLockGrantor()).isTrue();
 		assertThat(regionAttributes.getMulticastEnabled()).isTrue();
-		assertThat(regionAttributes.getOffHeap()).isTrue();
 		assertThat(regionAttributes.getScope()).isEqualTo(Scope.GLOBAL);
 		assertThat(regionAttributes.getValueConstraint()).isEqualTo(String.class);
 	}

@@ -79,7 +79,6 @@ public class PartitionedRegionNamespaceIntegrationTests extends IntegrationTests
 		assertThat(options).isNotNull();
 		assertThat(options.getName()).isEqualTo("redundant");
 		assertThat(options.getAttributes()).isNotNull();
-		assertThat(options.getAttributes().getOffHeap()).isTrue();
 
 		PeerRegionFactoryBean optionsRegionFactoryBean =
 			requireApplicationContext().getBean("&options", PeerRegionFactoryBean.class);
@@ -92,7 +91,6 @@ public class PartitionedRegionNamespaceIntegrationTests extends IntegrationTests
 		RegionAttributes optionsRegionAttributes = optionsRegionFactoryBean.getAttributes();
 
 		assertThat(optionsRegionAttributes).isNotNull();
-		assertThat(optionsRegionAttributes.getOffHeap()).isTrue();
 		assertThat(optionsRegionAttributes.getStatisticsEnabled()).isTrue();
 
 		PartitionAttributes optionsRegionPartitionAttributes = optionsRegionAttributes.getPartitionAttributes();
