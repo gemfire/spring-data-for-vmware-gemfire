@@ -98,9 +98,7 @@ public class AbstractCacheConfigurationUnitTests {
 		this.cacheConfiguration.setClose(false);
 		this.cacheConfiguration.setCopyOnRead(true);
 		this.cacheConfiguration.setCriticalHeapPercentage(0.90f);
-		this.cacheConfiguration.setCriticalOffHeapPercentage(0.85f);
 		this.cacheConfiguration.setEvictionHeapPercentage(0.75f);
-		this.cacheConfiguration.setEvictionOffHeapPercentage(0.55f);
 		this.cacheConfiguration.setGatewayConflictResolver(mockGatewayConflictResolver);
 		this.cacheConfiguration.setJndiDataSources(jndiDataSources);
 		this.cacheConfiguration.setTransactionListeners(transactionListeners);
@@ -114,9 +112,7 @@ public class AbstractCacheConfigurationUnitTests {
 		verify(cacheFactoryBean, times(1)).setClose(eq(false));
 		verify(cacheFactoryBean, times(1)).setCopyOnRead(eq(true));
 		verify(cacheFactoryBean, times(1)).setCriticalHeapPercentage(eq(0.90f));
-		verify(cacheFactoryBean, times(1)).setCriticalOffHeapPercentage(eq(0.85f));
 		verify(cacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(0.75f));
-		verify(cacheFactoryBean, times(1)).setEvictionOffHeapPercentage(eq(0.55f));
 		verify(cacheFactoryBean, times(1)).setGatewayConflictResolver(eq(mockGatewayConflictResolver));
 		verify(cacheFactoryBean, times(1)).setJndiDataSources(eq(jndiDataSources));
 		verify(cacheFactoryBean, times(1)).setTransactionListeners(eq(transactionListeners));

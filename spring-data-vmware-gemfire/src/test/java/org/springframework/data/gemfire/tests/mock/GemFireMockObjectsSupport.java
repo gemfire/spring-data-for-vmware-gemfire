@@ -2612,7 +2612,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
 		when(mockRegionAttributes.getMulticastEnabled()).thenAnswer(newGetter(baseRegionAttributes::getMulticastEnabled));
-		when(mockRegionAttributes.getOffHeap()).thenAnswer(newGetter(baseRegionAttributes::getOffHeap));
 		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(baseRegionAttributes::getPartitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(baseRegionAttributes::getPoolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
@@ -3009,10 +3008,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::getMulticastEnabled)
 			.orElse(false));
 
-		AtomicBoolean offHeap = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getOffHeap)
-			.orElse(false));
-
 		AtomicBoolean statisticsEnabled = new AtomicBoolean(optionalRegionAttributes
 			.map(RegionAttributes::getStatisticsEnabled)
 			.orElse(false));
@@ -3200,8 +3195,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionFactory.setMulticastEnabled(anyBoolean()))
 			.thenAnswer(newSetter(multicastEnabled, mockRegionFactory));
 
-		when(mockRegionFactory.setOffHeap(anyBoolean())).thenAnswer(newSetter(offHeap, mockRegionFactory));
-
 		when(mockRegionFactory.setPartitionAttributes(any(PartitionAttributes.class)))
 			.thenAnswer(newSetter(partitionAttributes, () -> mockRegionFactory));
 
@@ -3257,7 +3250,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(lockGrantor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(membershipAttributes));
 		when(mockRegionAttributes.getMulticastEnabled()).thenAnswer(newGetter(multicastEnabled));
-		when(mockRegionAttributes.getOffHeap()).thenAnswer(newGetter(offHeap));
 		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(partitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
@@ -3283,29 +3275,17 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicReference<Float> criticalHeapPercentage =
 			new AtomicReference<>(ResourceManager.DEFAULT_CRITICAL_PERCENTAGE);
 
-		AtomicReference<Float> criticalOffHeapPercentage = new AtomicReference<>(0.0f);
-
 		AtomicReference<Float> evictionHeapPercentage =
 			new AtomicReference<>(ResourceManager.DEFAULT_EVICTION_PERCENTAGE);
-
-		AtomicReference<Float> evictionOffHeapPercentage = new AtomicReference<>(0.0f);
 
 		doAnswer(newSetter(criticalHeapPercentage, () -> null))
 			.when(mockResourceManager).setCriticalHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(criticalOffHeapPercentage, () -> null))
-			.when(mockResourceManager).setCriticalOffHeapPercentage(anyFloat());
-
 		doAnswer(newSetter(evictionHeapPercentage, () -> null))
 			.when(mockResourceManager).setEvictionHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(evictionOffHeapPercentage, () -> null))
-			.when(mockResourceManager).setEvictionOffHeapPercentage(anyFloat());
-
 		when(mockResourceManager.getCriticalHeapPercentage()).thenAnswer(newGetter(criticalHeapPercentage));
-		when(mockResourceManager.getCriticalOffHeapPercentage()).thenAnswer(newGetter(criticalOffHeapPercentage));
 		when(mockResourceManager.getEvictionHeapPercentage()).thenAnswer(newGetter(evictionHeapPercentage));
-		when(mockResourceManager.getEvictionOffHeapPercentage()).thenAnswer(newGetter(evictionOffHeapPercentage));
 		when(mockResourceManager.getRebalanceOperations()).thenReturn(Collections.emptySet());
 
 		return mockResourceManager;

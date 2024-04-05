@@ -80,7 +80,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private GemFireCache gemfireCache;
 
 	private Boolean close = false;
-	private Boolean offHeap = false;
 	private Boolean statisticsEnabled = false;
 
 	private Class<K> keyConstraint;
@@ -212,7 +211,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		serverRegionFactory.setDiskStoreName(getDiskStoreName());
 		serverRegionFactory.setKeyConstraint(getKeyConstraint());
 		serverRegionFactory.setLookupEnabled(getLookupEnabled());
-		serverRegionFactory.setOffHeap(getOffHeap());
 		serverRegionFactory.setRegionConfigurers(this.regionConfigurers);
 		serverRegionFactory.setRegionName(regionName);
 		serverRegionFactory.setShortcut(getServerRegionShortcut());
@@ -397,25 +395,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 
 	protected Class<K> getKeyConstraint() {
 		return this.keyConstraint;
-	}
-
-	/**
-	 * Configure the {@link Region} to manage data in Off-Heap Memory.
-	 *
-	 * @param offHeap boolean value indicating whether the {@link Region Region's} data
-	 * will be managed in Off-Heap Memory.
-	 */
-	public void setOffHeap(Boolean offHeap) {
-		this.offHeap = offHeap;
-	}
-
-	/**
-	 * Return the configuration setting for whether the {@link Region Region's} data will be managed in Off-Heap Memory.
-	 *
-	 * @return a boolean value indicating whether the {@link Region Region's} data will be managed in Off-Heap Memory.
-	 */
-	protected Boolean getOffHeap() {
-		return this.offHeap;
 	}
 
 	public void setPoolName(String poolName) {

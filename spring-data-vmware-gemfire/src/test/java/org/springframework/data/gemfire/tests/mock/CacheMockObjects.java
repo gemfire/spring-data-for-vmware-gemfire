@@ -96,15 +96,12 @@ public abstract class CacheMockObjects {
 
 	}
 
-	public static ResourceManager mockResourceManager(float criticalHeapPercentage, float criticalOffHeapPercentage,
-			float evictionHeapPercentage, float evictionOffHeapPercentage) {
+	public static ResourceManager mockResourceManager(float criticalHeapPercentage, float evictionHeapPercentage) {
 
 		ResourceManager mockResourceManager = mock(ResourceManager.class, withSettings().lenient());
 
 		when(mockResourceManager.getCriticalHeapPercentage()).thenReturn(criticalHeapPercentage);
-		when(mockResourceManager.getCriticalOffHeapPercentage()).thenReturn(criticalOffHeapPercentage);
 		when(mockResourceManager.getEvictionHeapPercentage()).thenReturn(evictionHeapPercentage);
-		when(mockResourceManager.getEvictionOffHeapPercentage()).thenReturn(evictionOffHeapPercentage);
 
 		return mockResourceManager;
 	}

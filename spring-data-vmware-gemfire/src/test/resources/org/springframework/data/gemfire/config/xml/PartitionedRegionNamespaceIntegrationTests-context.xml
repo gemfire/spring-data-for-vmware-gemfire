@@ -20,12 +20,10 @@
 	<util:properties id="gemfireProperties">
 		<prop key="name">PartitionedRegionNamespaceIntegrationTests</prop>
 		<prop key="log-level">error</prop>
-		<prop key="off-heap-memory-size">64m</prop>
 	</util:properties>
 
 	<util:properties id="props">
 		<prop key="copies">1</prop>
-		<prop key="off-heap">true</prop>
 		<prop key="totalBuckets">4</prop>
 	</util:properties>
 
@@ -35,7 +33,7 @@
 
 	<gfe:partitioned-region id="simple"/>
 
-	<gfe:partitioned-region id="options" name="redundant" copies="${copies}" off-heap="${off-heap}" statistics="true"
+	<gfe:partitioned-region id="options" name="redundant" copies="${copies}" statistics="true"
 							total-buckets="${totalBuckets}" close="true" destroy="false">
 		<gfe:partition-resolver>
 			<bean class="org.springframework.data.gemfire.SimplePartitionResolver"/>

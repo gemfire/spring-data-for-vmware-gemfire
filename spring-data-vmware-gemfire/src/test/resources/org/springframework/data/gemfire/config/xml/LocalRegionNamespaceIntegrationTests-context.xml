@@ -18,7 +18,6 @@
 	<util:properties id="gemfireProperties">
 		<prop key="name">LocalRegionNamespaceIntegrationTests</prop>
 		<prop key="log-level">error</prop>
-		<prop key="off-heap-memory-size">64m</prop>
 	</util:properties>
 
 	<gfe:cache properties-ref="gemfireProperties"/>
@@ -46,7 +45,6 @@
 					  initial-capacity="10"
 					  key-constraint="java.lang.String"
 					  load-factor="0.90"
-					  off-heap="true"
 					  value-constraint="java.lang.String"
 	/>
 
