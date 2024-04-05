@@ -84,9 +84,7 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setClose(true);
 		configuration.setCopyOnRead(true);
 		configuration.setCriticalHeapPercentage(90.0f);
-		configuration.setCriticalOffHeapPercentage(95.0f);
 		configuration.setEvictionHeapPercentage(75.0f);
-		configuration.setEvictionOffHeapPercentage(90.0f);
 		configuration.setGatewayConflictResolver(mockGatewayConflictResolver);
 		configuration.setTransactionListeners(Collections.singletonList(mockTransactionListener));
 		configuration.setTransactionWriter(mockTransactionWriter);
@@ -125,9 +123,7 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setClose(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setCopyOnRead(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setCriticalHeapPercentage(eq(90.0f));
-		verify(clientCacheFactoryBean, times(1)).setCriticalOffHeapPercentage(eq(95.0f));
 		verify(clientCacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(75.0f));
-		verify(clientCacheFactoryBean, times(1)).setEvictionOffHeapPercentage(eq(90.0f));
 		verify(clientCacheFactoryBean, times(1)).setGatewayConflictResolver(eq(mockGatewayConflictResolver));
 		verify(clientCacheFactoryBean, times(1)).setJndiDataSources(eq(Collections.emptyList()));
 		verify(clientCacheFactoryBean, times(1)).setTransactionListeners(eq(Collections.singletonList(mockTransactionListener)));

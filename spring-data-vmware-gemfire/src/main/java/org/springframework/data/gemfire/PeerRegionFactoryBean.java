@@ -101,7 +101,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	private boolean destroy = false;
 	private boolean running = false;
 
-	private Boolean offHeap;
 	private Boolean persistent;
 	private Boolean statisticsEnabled;
 
@@ -291,8 +290,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 
 		Optional.ofNullable(this.keyConstraint).ifPresent(regionFactory::setKeyConstraint);
 
-		Optional.ofNullable(this.offHeap).ifPresent(regionFactory::setOffHeap);
-
 		Optional.ofNullable(this.regionIdleTimeout).ifPresent(regionFactory::setRegionIdleTimeout);
 
 		Optional.ofNullable(this.regionTimeToLive).ifPresent(regionFactory::setRegionTimeToLive);
@@ -448,7 +445,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			regionFactory.setLockGrantor(regionAttributes.isLockGrantor());
 			regionFactory.setMembershipAttributes(regionAttributes.getMembershipAttributes());
 			regionFactory.setMulticastEnabled(regionAttributes.getMulticastEnabled());
-			regionFactory.setOffHeap(regionAttributes.getOffHeap());
 
 			mergePartitionAttributes(regionFactory, regionAttributes);
 
@@ -975,41 +971,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 		Arrays.stream(ArrayUtils.nullSafeArray(gatewaySenderIds, String.class))
 			.filter(StringUtils::hasText)
 			.forEach(this.gatewaySenderIds::add);
-	}
-
-	/**
-	 * Configures this {@link Region} with the capability to store data in {@literal off-heap memory}.
-	 *
-	 * @param offHeap {@link Boolean} value indicating whether to enable the use of {@literal off-heap memory}
-	 * for this {@link Region}.
-	 * @see RegionFactory#setOffHeap(boolean)
-	 */
-	public void setOffHeap(Boolean offHeap) {
-		this.offHeap = offHeap;
-	}
-
-	/**
-	 * Returns a {@link Boolean} value indicating whether {@literal off-heap memory} was enabled for this {@link Region}.
-	 *
-	 * {@literal Off-heap memory} will be enabled for this {@link Region} if this method returns a {@literal non-null},
-	 * {@link Boolean} value evaluating to {@literal true}.
-	 *
-	 * @return a {@link Boolean} value indicating whether {@literal off-heap memory} use is enabled for
-	 * this {@link Region}.
-	 */
-	public Boolean getOffHeap() {
-		return this.offHeap;
-	}
-
-	/**
-	 * Returns a boolean value indicating whether {@literal off-heap memory} use was enabled for this {@link Region}.
-	 *
-	 * @return a {@literal boolean} value indicating whether {@literal off-heap memory} use was enabled for
-	 * this {@link Region}.
-	 * @see #getOffHeap()
-	 */
-	public boolean isOffHeap() {
-		return Boolean.TRUE.equals(getOffHeap());
 	}
 
 	/**

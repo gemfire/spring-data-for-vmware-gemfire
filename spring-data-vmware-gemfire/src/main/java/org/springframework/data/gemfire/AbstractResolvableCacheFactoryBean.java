@@ -216,7 +216,6 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	 * @see #loadCacheXml(GemFireCache)
 	 * @see org.apache.geode.cache.Cache#loadCacheXml(java.io.InputStream)
 	 * @see #configureHeapPercentages(GemFireCache)
-	 * @see #configureOffHeapPercentages(GemFireCache)
 	 * @see #registerTransactionListeners(GemFireCache)
 	 * @see #registerTransactionWriter(GemFireCache)
 	 */
@@ -227,7 +226,6 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 		Optional.ofNullable(getCopyOnRead()).ifPresent(cache::setCopyOnRead);
 
 		configureHeapPercentages(cache);
-		configureOffHeapPercentages(cache);
 		registerTransactionListeners(cache);
 		registerTransactionWriter(cache);
 

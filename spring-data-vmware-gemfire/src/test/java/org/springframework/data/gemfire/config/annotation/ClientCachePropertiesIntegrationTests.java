@@ -65,9 +65,7 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 
 		MockPropertySource testPropertySource = new MockPropertySource()
 			.withProperty("spring.data.gemfire.cache.critical-heap-percentage", 90.0f)
-			.withProperty("spring.data.gemfire.cache.critical-off-heap-percentage", 95.0f)
 			.withProperty("spring.data.gemfire.cache.eviction-heap-percentage", 85.0f)
-			.withProperty("spring.data.gemfire.cache.eviction-off-heap-percentage", 80.0f)
 			.withProperty("spring.data.gemfire.pdx.ignore-unread-fields", false)
 			.withProperty("spring.data.gemfire.pdx.persistent", true)
 			.withProperty("spring.data.gemfire.pool.free-connection-timeout", 20000L)
@@ -135,9 +133,7 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 
 		assertThat(resourceManager).isNotNull();
 		assertThat(resourceManager.getCriticalHeapPercentage()).isEqualTo(90.0f);
-		assertThat(resourceManager.getCriticalOffHeapPercentage()).isEqualTo(95.0f);
 		assertThat(resourceManager.getEvictionHeapPercentage()).isEqualTo(90.0f);
-		assertThat(resourceManager.getEvictionOffHeapPercentage()).isEqualTo(80.0f);
 	}
 
 	@Test

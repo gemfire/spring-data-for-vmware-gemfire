@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
 /**
  * Integration tests for {@link EnableGemFireProperties}, {@link EnableHttpService},
  * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
- * {@link EnableOffHeap},, {@link EnableSecurity}, {@link EnableSsl},
+ * {@link EnableSecurity}, {@link EnableSsl},
  * {@link EnableStatistics}.
  *
  * @author John Blum
@@ -229,27 +229,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@Test
-	public void offHeapGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.cache.off-heap.memory-size", "1024g");
-
-		newApplicationContext(testPropertySource, TestOffHeapGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("off-heap-memory-size")).isEqualTo("1024g");
-	}
-
-	@Test
 	public void pdxGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
@@ -441,12 +420,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@PeerCacheApplication
 	@EnableGemFireProperties(name = "TestName", groups = { "TestGroupOne", "TestGroupTwo" })
 	static class TestNameAndGroupsAnnotationBasedGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableOffHeap(memorySize = "64g")
-	static class TestOffHeapGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication

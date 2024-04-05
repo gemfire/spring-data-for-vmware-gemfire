@@ -114,9 +114,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	private CacheFactoryInitializer<?> cacheFactoryInitializer;
 
 	private Float criticalHeapPercentage;
-	private Float criticalOffHeapPercentage;
 	private Float evictionHeapPercentage;
-	private Float evictionOffHeapPercentage;
 
 	private volatile GemFireCache cache;
 
@@ -265,26 +263,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Set the {@link GemFireCache} critical off-heap percentage property.
-	 *
-	 * @param criticalOffHeapPercentage {@link Float} value specifying the configuration for the {@link GemFireCache}
-	 * critical off-heap percentage.
-	 */
-	public void setCriticalOffHeapPercentage(@Nullable Float criticalOffHeapPercentage) {
-		this.criticalOffHeapPercentage = criticalOffHeapPercentage;
-	}
-
-	/**
-	 * Gets the configuration of the {@link GemFireCache} critical off-heap percentage property.
-	 *
-	 * @return a {@link Float} value specifying the configuration for the {@link GemFireCache} critical off-heap
-	 * percentage.
-	 */
-	public Float getCriticalOffHeapPercentage() {
-		return this.criticalOffHeapPercentage;
-	}
-
-	/**
 	 * Set the {@link GemFireCache} eviction heap percentage property.
 	 *
 	 * @param evictionHeapPercentage {@link Float} value specifying the configuration for the {@link GemFireCache}
@@ -301,26 +279,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 */
 	public Float getEvictionHeapPercentage() {
 		return this.evictionHeapPercentage;
-	}
-
-	/**
-	 * Set the {@link GemFireCache} eviction off-heap percentage property.
-	 *
-	 * @param evictionOffHeapPercentage {@link Float} value specifying the configuration for the {@link GemFireCache}
-	 * eviction off-heap percentage.
-	 */
-	public void setEvictionOffHeapPercentage(Float evictionOffHeapPercentage) {
-		this.evictionOffHeapPercentage = evictionOffHeapPercentage;
-	}
-
-	/**
-	 * Gets the configuration of the {@link GemFireCache} eviction off-heap percentage property.
-	 *
-	 * @return a {@link Float} value specifying the configuration for the {@link GemFireCache} eviction off-heap
-	 * percentage.
-	 */
-	public Float getEvictionOffHeapPercentage() {
-		return this.evictionOffHeapPercentage;
 	}
 
 	/**
@@ -663,42 +621,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 					evictionHeapPercentage));
 
 			cache.getResourceManager().setEvictionHeapPercentage(evictionHeapPercentage);
-		});
-
-		return cache;
-	}
-
-	/**
-	 * Configures the {@link GemFireCache} critical and eviction off-heap thresholds as percentages.
-	 *
-	 * @param cache {@link GemFireCache} to configure the critical and eviction off-heap thresholds;
-	 * must not be {@literal null}.
-	 * @return the given {@link GemFireCache}.
-	 * @throws IllegalArgumentException if the critical or eviction off-heap thresholds are not valid percentages.
-	 * @see org.apache.geode.cache.control.ResourceManager#setCriticalOffHeapPercentage(float)
-	 * @see org.apache.geode.cache.control.ResourceManager#setEvictionOffHeapPercentage(float)
-	 * @see org.apache.geode.cache.control.ResourceManager
-	 * @see GemFireCache#getResourceManager()
-	 * @see GemFireCache
-	 */
-	protected @NonNull GemFireCache configureOffHeapPercentages(@NonNull GemFireCache cache) {
-
-		Optional.ofNullable(getCriticalOffHeapPercentage()).ifPresent(criticalOffHeapPercentage -> {
-
-			Assert.isTrue(isHeapPercentageValid(criticalOffHeapPercentage),
-				() -> String.format("criticalOffHeapPercentage [%s] is not valid; must be >= 0.0 and <= 100.0",
-					criticalOffHeapPercentage));
-
-			cache.getResourceManager().setCriticalOffHeapPercentage(criticalOffHeapPercentage);
-		});
-
-		Optional.ofNullable(getEvictionOffHeapPercentage()).ifPresent(evictionOffHeapPercentage -> {
-
-			Assert.isTrue(isHeapPercentageValid(evictionOffHeapPercentage),
-				() -> String.format("evictionOffHeapPercentage [%s] is not valid; must be >= 0.0 and <= 100.0",
-					evictionOffHeapPercentage));
-
-			cache.getResourceManager().setEvictionOffHeapPercentage(evictionOffHeapPercentage);
 		});
 
 		return cache;

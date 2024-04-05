@@ -136,7 +136,6 @@ public class LocalRegionNamespaceIntegrationTests extends IntegrationTestsSuppor
 		assertThat(localRegionAttributes.getInitialCapacity()).isEqualTo(10);
 		assertThat(localRegionAttributes.getKeyConstraint()).isEqualTo(String.class);
 		assertThat(String.valueOf(localRegionAttributes.getLoadFactor())).isEqualTo("0.9");
-		assertThat(localRegionAttributes.getOffHeap()).isTrue();
 		assertThat(localRegionAttributes.getValueConstraint()).isEqualTo(String.class);
 	}
 

@@ -235,7 +235,7 @@ public @interface EnableGemFireProperties {
 	long locatorWaitTimeout() default GemFirePropertiesConfiguration.DEFAULT_LOCATOR_WAIT_TIME;
 
 	/**
-	 * When true, locks heap and off-heap memory into RAM to prevent the operating system from paging the memory
+	 * When true, locks heap memory into RAM to prevent the operating system from paging the memory
 	 * out to disk.
 	 *
 	 * Defaults to {@literal false}.
