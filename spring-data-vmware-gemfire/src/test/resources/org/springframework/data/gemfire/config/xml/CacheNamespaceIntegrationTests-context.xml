@@ -44,6 +44,4 @@ default-lazy-init="true">
 
 	<gfe:cache id="heap-tuned-cache" properties-ref="gemfireProperties" critical-heap-percentage="70.0" eviction-heap-percentage="60.0"/>
 
-	<gfe:cache id="off-heap-tuned-cache" properties-ref="gemfireProperties" critical-off-heap-percentage="90.0" eviction-off-heap-percentage="50.0"/>
-
 </beans>

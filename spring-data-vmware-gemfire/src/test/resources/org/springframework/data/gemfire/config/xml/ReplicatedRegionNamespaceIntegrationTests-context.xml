@@ -20,7 +20,6 @@
 	<util:properties id="gemfireProperties">
 		<prop key="name">ReplicatedNamespaceConfig</prop>
 		<prop key="log-level">error</prop>
-		<prop key="off-heap-memory-size">64m</prop>
 	</util:properties>
 
 	<gfe:cache properties-ref="gemfireProperties"/>
@@ -55,7 +54,6 @@
 						   key-constraint="java.lang.String"
 						   load-factor="0.5"
 						   multicast-enabled="true"
-						   off-heap="true"
 						   scope="global"
 						   value-constraint="java.lang.String"/>
 

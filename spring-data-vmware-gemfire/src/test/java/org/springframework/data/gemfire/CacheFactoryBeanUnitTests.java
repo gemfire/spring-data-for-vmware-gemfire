@@ -297,10 +297,8 @@ public class CacheFactoryBeanUnitTests {
 		cacheFactoryBean.setCacheXml(mockCacheXml);
 		cacheFactoryBean.setCopyOnRead(true);
 		cacheFactoryBean.setCriticalHeapPercentage(0.90f);
-		cacheFactoryBean.setCriticalOffHeapPercentage(0.95f);
 		cacheFactoryBean.setEnableAutoReconnect(false);
 		cacheFactoryBean.setEvictionHeapPercentage(0.75f);
-		cacheFactoryBean.setEvictionOffHeapPercentage(0.90f);
 		cacheFactoryBean.setGatewayConflictResolver(mockGatewayConflictResolver);
 		cacheFactoryBean.setJndiDataSources(null);
 		cacheFactoryBean.setLockLease(15000);
@@ -344,14 +342,12 @@ public class CacheFactoryBeanUnitTests {
 		verify(mockCache, times(1)).setLockLease(eq(15000));
 		verify(mockCache, times(1)).setLockTimeout(eq(5000));
 		verify(mockCache, times(1)).setMessageSyncInterval(eq(20000));
-		verify(mockCache, times(4)).getResourceManager();
+		verify(mockCache, times(2)).getResourceManager();
 		verify(mockCache, times(1)).setSearchTimeout(eq(45000));
 		verify(mockCacheTransactionManager, times(1)).addListener(same(mockTransactionLister));
 		verify(mockCacheTransactionManager, times(1)).setWriter(same(mockTransactionWriter));
 		verify(mockResourceManager, times(1)).setCriticalHeapPercentage(eq(0.90f));
-		verify(mockResourceManager, times(1)).setCriticalOffHeapPercentage(eq(0.95f));
 		verify(mockResourceManager, times(1)).setEvictionHeapPercentage(eq(0.75f));
-		verify(mockResourceManager, times(1)).setEvictionOffHeapPercentage(eq(0.90f));
 	}
 
 	@Test
@@ -617,28 +613,6 @@ public class CacheFactoryBeanUnitTests {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void postProcessCacheWithInvalidCriticalOffHeapPercentage() {
-
-		try {
-
-			CacheFactoryBean cacheFactoryBean = new CacheFactoryBean();
-
-			cacheFactoryBean.setCriticalOffHeapPercentage(200.0f);
-			cacheFactoryBean.postProcess(this.mockCache);
-		}
-		catch (IllegalArgumentException expected) {
-
-			assertThat(expected).hasMessage("criticalOffHeapPercentage [200.0] is not valid; must be >= 0.0 and <= 100.0");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
-		finally {
-			verifyNoInteractions(this.mockCache);
-		}
-	}
-
-	@Test(expected = IllegalArgumentException.class)
 	public void postProcessCacheWithInvalidEvictionHeapPercentage() {
 
 		try {
@@ -651,28 +625,6 @@ public class CacheFactoryBeanUnitTests {
 		catch (IllegalArgumentException expected) {
 
 			assertThat(expected).hasMessage("evictionHeapPercentage [-75.0] is not valid; must be >= 0.0 and <= 100.0");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
-		finally {
-			verifyNoInteractions(this.mockCache);
-		}
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void postProcessCacheWithInvalidEvictionOffHeapPercentage() {
-
-		try {
-
-			CacheFactoryBean cacheFactoryBean = new CacheFactoryBean();
-
-			cacheFactoryBean.setEvictionOffHeapPercentage(-75.0f);
-			cacheFactoryBean.postProcess(this.mockCache);
-		}
-		catch (IllegalArgumentException expected) {
-
-			assertThat(expected).hasMessage("evictionOffHeapPercentage [-75.0] is not valid; must be >= 0.0 and <= 100.0");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -821,9 +773,7 @@ public class CacheFactoryBeanUnitTests {
 		cacheFactoryBean.setCopyOnRead(true);
 		cacheFactoryBean.setEnableAutoReconnect(true);
 		cacheFactoryBean.setCriticalHeapPercentage(0.95f);
-		cacheFactoryBean.setCriticalOffHeapPercentage(0.99f);
 		cacheFactoryBean.setEvictionHeapPercentage(0.70f);
-		cacheFactoryBean.setEvictionOffHeapPercentage(0.80f);
 		cacheFactoryBean.setGatewayConflictResolver(mockGatewayConflictResolver);
 		cacheFactoryBean.setJndiDataSources(Collections.singletonList(new CacheFactoryBean.JndiDataSource()));
 		cacheFactoryBean.setLockLease(15000);
@@ -849,10 +799,8 @@ public class CacheFactoryBeanUnitTests {
 		assertThat(Boolean.FALSE.equals(TestUtils.readField("close", cacheFactoryBean))).isTrue();
 		assertThat(cacheFactoryBean.getCopyOnRead()).isTrue();
 		assertThat(cacheFactoryBean.getCriticalHeapPercentage()).isCloseTo(0.95f, offset(0.0f));
-		assertThat(cacheFactoryBean.getCriticalOffHeapPercentage()).isCloseTo(0.99f, offset(0.0f));
 		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isTrue();
 		assertThat(cacheFactoryBean.getEvictionHeapPercentage()).isCloseTo(0.70f, offset(0.0f));
-		assertThat(cacheFactoryBean.getEvictionOffHeapPercentage()).isCloseTo(0.80f, offset(0.0f));
 		assertThat(cacheFactoryBean.getGatewayConflictResolver()).isSameAs(mockGatewayConflictResolver);
 		assertThat(cacheFactoryBean.getJndiDataSources()).isNotNull();
 		assertThat(cacheFactoryBean.getJndiDataSources().size()).isEqualTo(1);

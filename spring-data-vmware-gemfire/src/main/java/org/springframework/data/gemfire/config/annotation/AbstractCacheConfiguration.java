@@ -100,10 +100,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private Integer mcastPort = DEFAULT_MCAST_PORT;
 
 	private Float criticalHeapPercentage;
-	private Float criticalOffHeapPercentage;
 	private Float evictionHeapPercentage;
-	private Float evictionOffHeapPercentage;
-
 	private GatewayConflictResolver gatewayConflictResolver;
 
 	private List<JndiDataSource> jndiDataSources;
@@ -231,14 +228,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 				.filter(AbstractAnnotationConfigSupport::hasValue)
 				.ifPresent(this::setCriticalHeapPercentage);
 
-			Optional.ofNullable(resolveProperty(cacheProperty("critical-off-heap-percentage"), (Float) null))
-				.ifPresent(this::setCriticalOffHeapPercentage);
-
-			Optional.ofNullable((Float) cacheMetadataAttributes.get("criticalOffHeapPercentage"))
-				.filter(it -> getCriticalOffHeapPercentage() == null)
-				.filter(AbstractAnnotationConfigSupport::hasValue)
-				.ifPresent(this::setCriticalOffHeapPercentage);
-
 			Optional.ofNullable(resolveProperty(cacheProperty("eviction-heap-percentage"), (Float) null))
 				.ifPresent(this::setEvictionHeapPercentage);
 
@@ -246,14 +235,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 				.filter(it -> getEvictionHeapPercentage() == null)
 				.filter(AbstractAnnotationConfigSupport::hasValue)
 				.ifPresent(this::setEvictionHeapPercentage);
-
-			Optional.ofNullable(resolveProperty(cacheProperty("eviction-off-heap-percentage"), (Float) null))
-				.ifPresent(this::setEvictionOffHeapPercentage);
-
-			Optional.ofNullable((Float) cacheMetadataAttributes.get("evictionOffHeapPercentage"))
-				.filter(it -> getEvictionOffHeapPercentage() == null)
-				.filter(AbstractAnnotationConfigSupport::hasValue)
-				.ifPresent(this::setEvictionOffHeapPercentage);
 
 			setLogLevel(resolveProperty(cacheProperty("log-level"),
 				(String) cacheMetadataAttributes.get("logLevel")));
@@ -330,9 +311,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireCache.setClose(isClose());
 		gemfireCache.setCopyOnRead(getCopyOnRead());
 		gemfireCache.setCriticalHeapPercentage(getCriticalHeapPercentage());
-		gemfireCache.setCriticalOffHeapPercentage(getCriticalOffHeapPercentage());
 		gemfireCache.setEvictionHeapPercentage(getEvictionHeapPercentage());
-		gemfireCache.setEvictionOffHeapPercentage(getEvictionOffHeapPercentage());
 		gemfireCache.setGatewayConflictResolver(getGatewayConflictResolver());
 		gemfireCache.setJndiDataSources(getJndiDataSources());
 		gemfireCache.setProperties(gemfireProperties());
@@ -479,28 +458,12 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		return this.criticalHeapPercentage;
 	}
 
-	void setCriticalOffHeapPercentage(Float criticalOffHeapPercentage) {
-		this.criticalOffHeapPercentage = criticalOffHeapPercentage;
-	}
-
-	protected Float getCriticalOffHeapPercentage() {
-		return this.criticalOffHeapPercentage;
-	}
-
 	void setEvictionHeapPercentage(Float evictionHeapPercentage) {
 		this.evictionHeapPercentage = evictionHeapPercentage;
 	}
 
 	protected Float getEvictionHeapPercentage() {
 		return this.evictionHeapPercentage;
-	}
-
-	void setEvictionOffHeapPercentage(Float evictionOffHeapPercentage) {
-		this.evictionOffHeapPercentage = evictionOffHeapPercentage;
-	}
-
-	protected Float getEvictionOffHeapPercentage() {
-		return this.evictionOffHeapPercentage;
 	}
 
 	void setGatewayConflictResolver(GatewayConflictResolver gatewayConflictResolver) {

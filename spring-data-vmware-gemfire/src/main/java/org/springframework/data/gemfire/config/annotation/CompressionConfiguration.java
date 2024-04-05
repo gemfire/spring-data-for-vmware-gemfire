@@ -63,7 +63,6 @@ public class CompressionConfiguration extends AbstractAnnotationConfigSupport im
 	 * Returns the {@link EnableCompression} {@link Annotation} {@link Class} type.
 	 *
 	 * @return the {@link EnableCompression} {@link Annotation} {@link Class} type.
-	 * @see EnableOffHeap
 	 * @see Annotation
 	 */
 	@Override

@@ -717,10 +717,6 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", propertyName("cache.compression."), propertyNameSuffix);
 	}
 
-	protected String cacheOffHeapProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("cache.off-heap."), propertyNameSuffix);
-	}
-
 	protected String cachePeerProperty(String propertyNameSuffix) {
 		return String.format("%1$s%2$s", propertyName("cache.peer."), propertyNameSuffix);
 	}

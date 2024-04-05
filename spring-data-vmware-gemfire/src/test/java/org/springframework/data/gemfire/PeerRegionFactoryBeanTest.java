@@ -304,7 +304,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.isLockGrantor()).thenReturn(true);
 		when(mockRegionAttributes.getMembershipAttributes()).thenReturn(testMembershipAttributes);
 		when(mockRegionAttributes.getMulticastEnabled()).thenReturn(false);
-		when(mockRegionAttributes.getOffHeap()).thenReturn(true);
 		when(mockRegionAttributes.getPartitionAttributes()).thenReturn(testPartitionAttributes);
 		when(mockRegionAttributes.getPoolName()).thenReturn("swimming");
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(testExpirationAttributes);
@@ -346,7 +345,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setLockGrantor(eq(true));
 		verify(mockRegionFactory).setMembershipAttributes(same(testMembershipAttributes));
 		verify(mockRegionFactory).setMulticastEnabled(eq(false));
-		verify(mockRegionFactory).setOffHeap(eq(true));
 		verify(mockRegionFactory).setPartitionAttributes(eq(testPartitionAttributes));
 		verify(mockRegionFactory).setPoolName(eq("swimming"));
 		verify(mockRegionFactory).setRegionIdleTimeout(same(testExpirationAttributes));
@@ -381,7 +379,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory, never()).setLockGrantor(anyBoolean());
 		verify(mockRegionFactory, never()).setMembershipAttributes(any(MembershipAttributes.class));
 		verify(mockRegionFactory, never()).setMulticastEnabled(anyBoolean());
-		verify(mockRegionFactory, never()).setOffHeap(anyBoolean());
 		verify(mockRegionFactory, never()).setPartitionAttributes(any(PartitionAttributes.class));
 		verify(mockRegionFactory, never()).setPoolName(any(String.class));
 		verify(mockRegionFactory, never()).setRegionIdleTimeout(any(ExpirationAttributes.class));
@@ -418,7 +415,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.isLockGrantor()).thenReturn(false);
 		when(mockRegionAttributes.getMembershipAttributes()).thenReturn(null);
 		when(mockRegionAttributes.getMulticastEnabled()).thenReturn(true);
-		when(mockRegionAttributes.getOffHeap()).thenReturn(true);
 		when(mockRegionAttributes.getPartitionAttributes()).thenReturn(null);
 		when(mockRegionAttributes.getPoolName()).thenReturn("swimming");
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(testExpirationAttributes);
@@ -460,7 +456,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setLockGrantor(eq(false));
 		verify(mockRegionFactory).setMembershipAttributes(null);
 		verify(mockRegionFactory).setMulticastEnabled(eq(true));
-		verify(mockRegionFactory).setOffHeap(eq(true));
 		verify(mockRegionFactory, never()).setPartitionAttributes(any(PartitionAttributes.class));
 		verify(mockRegionFactory).setPoolName(eq("swimming"));
 		verify(mockRegionFactory).setRegionIdleTimeout(same(testExpirationAttributes));
