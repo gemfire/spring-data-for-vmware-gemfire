@@ -36,7 +36,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 	public static final int DEFAULT_ACK_SEVERE_ALERT_THRESHOLD = 0;
 	public static final int DEFAULT_ACK_WAIT_THRESHOLD = 15;
-	public static final int DEFAULT_ASYNC_MAX_QUEUE_SIZE = 8;
 	public static final int DEFAULT_DISTRIBUTED_SYSTEM_ID = -1;
 	public static final int DEFAULT_SOCKET_BUFFER_SIZE = 32768;
 	public static final int DEFAULT_TCP_PORT = 0;
@@ -45,8 +44,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 	public static final int DEFAULT_UDP_RECEIVE_BUFFER_SIZE = 1048576;
 	public static final int DEFAULT_UDP_SEND_BUFFER_SIZE = 65535;
 
-	public static final long DEFAULT_ASYNC_DISTRIBUTION_TIMEOUT = 0L;
-	public static final long DEFAULT_ASYNC_QUEUE_TIMEOUT = 60000L;
 	public static final long DEFAULT_LOCATOR_WAIT_TIME = 0L;
 	public static final long DEFAULT_MAX_WAIT_TIME_RECONNECT = 60000L;
 	public static final long DEFAULT_MEMBER_TIMEOUT = 5000L;
@@ -87,15 +84,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 		gemfireProperties.setPropertyIfNotDefault("ack-wait-threshold",
 			annotationAttributes.get("ackWaitThreshold"), DEFAULT_ACK_WAIT_THRESHOLD);
-
-		gemfireProperties.setPropertyIfNotDefault("async-distribution-timeout",
-			annotationAttributes.get("asyncDistributionTimeout"), DEFAULT_ASYNC_DISTRIBUTION_TIMEOUT);
-
-		gemfireProperties.setPropertyIfNotDefault("async-max-queue-size",
-			annotationAttributes.get("asyncMaxQueueSize"), DEFAULT_ASYNC_MAX_QUEUE_SIZE);
-
-		gemfireProperties.setPropertyIfNotDefault("async-queue-timeout",
-			annotationAttributes.get("asyncQueueTimeout"), DEFAULT_ASYNC_QUEUE_TIMEOUT);
 
 		gemfireProperties.setProperty("bind-address", annotationAttributes.get("bindAddress"));
 

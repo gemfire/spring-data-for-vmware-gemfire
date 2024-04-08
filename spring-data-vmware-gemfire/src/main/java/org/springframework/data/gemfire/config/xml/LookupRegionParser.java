@@ -4,9 +4,6 @@
  */
 package org.springframework.data.gemfire.config.xml;
 
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.wan.GatewaySender;
-
 import org.w3c.dom.Element;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -20,8 +17,6 @@ import org.springframework.util.xml.DomUtils;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see AsyncEventQueue
- * @see GatewaySender
  * @see BeanDefinitionBuilder
  * @see ParserContext
  * @see LookupRegionFactoryBean
@@ -52,19 +47,11 @@ class LookupRegionParser extends AbstractRegionParser {
 
 		builder.addPropertyReference("cache", resolvedCacheRef);
 
-		ParsingUtils.setPropertyValue(element, builder, "async-event-queue-ids");
 		ParsingUtils.setPropertyValue(element, builder, "cloning-enabled");
 		ParsingUtils.setPropertyValue(element, builder, "eviction-maximum");
-		ParsingUtils.setPropertyValue(element, builder, "gateway-sender-ids");
 		ParsingUtils.setPropertyValue(element, builder, "name");
 
 		ParsingUtils.parseExpiration(element, parserContext, builder);
-
-		parseCollectionOfCustomSubElements(element, parserContext, builder, AsyncEventQueue.class.getName(),
-			"async-event-queue", "asyncEventQueues");
-
-		parseCollectionOfCustomSubElements(element, parserContext, builder, GatewaySender.class.getName(),
-			"gateway-sender", "gatewaySenders");
 
 		Element cacheListenerElement = DomUtils.getChildElementByTagName(element, "cache-listener");
 

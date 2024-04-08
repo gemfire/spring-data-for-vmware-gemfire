@@ -5,8 +5,6 @@
 package org.springframework.data.gemfire.config.xml;
 
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.wan.GatewaySender;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -18,8 +16,6 @@ import org.w3c.dom.Element;
  *
  * @author John Blum
  * @see Region
- * @see AsyncEventQueue
- * @see GatewaySender
  * @see BeanDefinitionBuilder
  * @see ParserContext
  * @see AbstractRegionParser
@@ -36,14 +32,5 @@ public abstract class AbstractPeerRegionParser extends AbstractRegionParser {
 			BeanDefinitionBuilder regionBuilder, BeanDefinitionBuilder regionAttributesBuilder, boolean subRegion) {
 
 		super.doParseRegionConfiguration(element, parserContext, regionBuilder, regionAttributesBuilder, subRegion);
-
-		ParsingUtils.setPropertyValue(element, regionBuilder, "async-event-queue-ids");
-		ParsingUtils.setPropertyValue(element, regionBuilder, "gateway-sender-ids");
-
-		parseCollectionOfCustomSubElements(element, parserContext, regionBuilder, AsyncEventQueue.class.getName(),
-			"async-event-queue", "asyncEventQueues");
-
-		parseCollectionOfCustomSubElements(element, parserContext, regionBuilder, GatewaySender.class.getName(),
-			"gateway-sender", "gatewaySenders");
 	}
 }

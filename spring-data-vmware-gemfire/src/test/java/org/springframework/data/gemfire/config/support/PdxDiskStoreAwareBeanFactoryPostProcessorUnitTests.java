@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
 import org.apache.geode.internal.cache.PartitionedRegion;
 
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -132,10 +131,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		return newBeanDefinitionBuilder(CacheFactoryBean.class).getBeanDefinition();
 	}
 
-	protected BeanDefinition defineAsyncEventQueue(String... dependencies) {
-		return newBeanDefinitionBuilder(AsyncEventQueue.class, dependencies).getBeanDefinition();
-	}
-
 	protected BeanDefinition defineDiskStore(String... dependencies) {
 		return newBeanDefinitionBuilder(DiskStore.class, dependencies).getBeanDefinition();
 	}
@@ -187,7 +182,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		beanDefinitions.put("gemfireCache", defineCache());
 		beanDefinitions.put("pdxDiskStore", defineDiskStore());
 		beanDefinitions.put("someOtherBean", defineBean("org.company.app.domain.SomeOtherBean"));
-		beanDefinitions.put("queue1", defineAsyncEventQueue("someOtherBean"));
 		beanDefinitions.put("overflowDiskStore", defineDiskStore());
 		beanDefinitions.put("region1", defineReplicatedRegion("overflowDiskStore"));
 		beanDefinitions.put("region2DiskStore", defineDiskStore("someBean"));
@@ -196,9 +190,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		beanDefinitions.put("residentRegionDiskStore", defineDiskStore("someBean", "yetAnotherBean"));
 		beanDefinitions.put("residentRegion", definePartitionedRegion("residentRegionDiskStore"));
 		beanDefinitions.put("yetAnotherBean", defineBean("org.company.app.domain.YetAnotherBean", "someBean"));
-		beanDefinitions.put("queue2", defineAsyncEventQueue());
 		beanDefinitions.put("region3", definePartitionedRegion());
-		beanDefinitions.put("region4", definePartitionedRegion("queue2"));
 
 		ConfigurableListableBeanFactory mockBeanFactory = mockBeanFactory(beanDefinitions);
 
@@ -211,7 +203,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		assertThat(ArrayUtils.isEmpty(beanDefinitions.get("gemfireCache").getDependsOn())).isTrue();
 		assertThat(ArrayUtils.isEmpty(beanDefinitions.get("pdxDiskStore").getDependsOn())).isTrue();
 		assertThat(ArrayUtils.isEmpty(beanDefinitions.get("someOtherBean").getDependsOn())).isTrue();
-		assertDependencies(beanDefinitions.get("queue1"), "pdxDiskStore", "someOtherBean");
 		assertDependencies(beanDefinitions.get("overflowDiskStore"), "pdxDiskStore");
 		assertDependencies(beanDefinitions.get("region1"), "pdxDiskStore", "overflowDiskStore");
 		assertDependencies(beanDefinitions.get("region2DiskStore"), "pdxDiskStore", "someBean");
@@ -220,8 +211,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		assertDependencies(beanDefinitions.get("residentRegionDiskStore"), "pdxDiskStore", "someBean", "yetAnotherBean");
 		assertDependencies(beanDefinitions.get("residentRegion"), "pdxDiskStore", "residentRegionDiskStore");
 		assertDependencies(beanDefinitions.get("yetAnotherBean"), "someBean");
-		assertDependencies(beanDefinitions.get("queue2"), "pdxDiskStore");
 		assertDependencies(beanDefinitions.get("region3"), "pdxDiskStore");
-		assertDependencies(beanDefinitions.get("region4"), "pdxDiskStore", "queue2");
 	}
 }

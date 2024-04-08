@@ -12,7 +12,6 @@ import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.InterestResultPolicy;
 import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.wan.GatewaySender;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyEditorRegistrar;
@@ -37,7 +36,6 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConvert
 import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
-import org.springframework.data.gemfire.wan.OrderPolicyConverter;
 
 /**
  * {@link CustomEditorBeanFactoryPostProcessor} is a Spring {@link BeanFactoryPostProcessor} implementation
@@ -87,7 +85,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			beanFactory.registerCustomEditor(IndexType.class, IndexTypeConverter.class);
 			beanFactory.registerCustomEditor(InterestPolicy.class, InterestPolicyConverter.class);
 			beanFactory.registerCustomEditor(InterestResultPolicy.class, InterestResultPolicyConverter.class);
-			beanFactory.registerCustomEditor(GatewaySender.OrderPolicy.class, OrderPolicyConverter.class);
 			beanFactory.registerCustomEditor(Scope.class, ScopeConverter.class);
 			beanFactory.registerCustomEditor(SubscriptionEvictionPolicy.class, SubscriptionEvictionPolicyConverter.class);
 		}
@@ -109,7 +106,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 				registry.registerCustomEditor(IndexType.class, new IndexTypeConverter());
 				registry.registerCustomEditor(InterestPolicy.class, new InterestPolicyConverter());
 				registry.registerCustomEditor(InterestResultPolicy.class, new InterestResultPolicyConverter());
-				registry.registerCustomEditor(GatewaySender.OrderPolicy.class, new OrderPolicyConverter());
 				registry.registerCustomEditor(Scope.class, new ScopeConverter());
 				registry.registerCustomEditor(SubscriptionEvictionPolicy.class, new SubscriptionEvictionPolicyConverter());
 			}

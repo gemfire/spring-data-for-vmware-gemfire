@@ -43,7 +43,6 @@ import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.control.ResourceManager;
-import org.apache.geode.cache.util.GatewayConflictResolver;
 import org.apache.geode.pdx.PdxSerializer;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -254,8 +253,6 @@ public class CacheFactoryBeanUnitTests {
 
 		CacheTransactionManager mockCacheTransactionManager = mock(CacheTransactionManager.class);
 
-		GatewayConflictResolver mockGatewayConflictResolver = mock(GatewayConflictResolver.class);
-
 		PdxSerializer mockPdxSerializer = mock(PdxSerializer.class);
 
 		Resource mockCacheXml = mock(Resource.class);
@@ -299,7 +296,6 @@ public class CacheFactoryBeanUnitTests {
 		cacheFactoryBean.setCriticalHeapPercentage(0.90f);
 		cacheFactoryBean.setEnableAutoReconnect(false);
 		cacheFactoryBean.setEvictionHeapPercentage(0.75f);
-		cacheFactoryBean.setGatewayConflictResolver(mockGatewayConflictResolver);
 		cacheFactoryBean.setJndiDataSources(null);
 		cacheFactoryBean.setLockLease(15000);
 		cacheFactoryBean.setLockTimeout(5000);
@@ -338,7 +334,6 @@ public class CacheFactoryBeanUnitTests {
 		verify(mockCache, times(2)).getCacheTransactionManager();
 		verify(mockCache, times(1)).loadCacheXml(any(InputStream.class));
 		verify(mockCache, times(1)).setCopyOnRead(eq(true));
-		verify(mockCache, times(1)).setGatewayConflictResolver(same(mockGatewayConflictResolver));
 		verify(mockCache, times(1)).setLockLease(eq(15000));
 		verify(mockCache, times(1)).setLockTimeout(eq(5000));
 		verify(mockCache, times(1)).setMessageSyncInterval(eq(20000));
@@ -745,9 +740,6 @@ public class CacheFactoryBeanUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class, "SpringBeanFactory");
 
-		GatewayConflictResolver mockGatewayConflictResolver =
-			mock(GatewayConflictResolver.class, "GemFireGatewayConflictResolver");
-
 		PdxSerializer mockPdxSerializer =
 			mock(PdxSerializer.class, "GemFirePdxSerializer");
 
@@ -774,7 +766,6 @@ public class CacheFactoryBeanUnitTests {
 		cacheFactoryBean.setEnableAutoReconnect(true);
 		cacheFactoryBean.setCriticalHeapPercentage(0.95f);
 		cacheFactoryBean.setEvictionHeapPercentage(0.70f);
-		cacheFactoryBean.setGatewayConflictResolver(mockGatewayConflictResolver);
 		cacheFactoryBean.setJndiDataSources(Collections.singletonList(new CacheFactoryBean.JndiDataSource()));
 		cacheFactoryBean.setLockLease(15000);
 		cacheFactoryBean.setLockTimeout(5000);
@@ -801,7 +792,6 @@ public class CacheFactoryBeanUnitTests {
 		assertThat(cacheFactoryBean.getCriticalHeapPercentage()).isCloseTo(0.95f, offset(0.0f));
 		assertThat(cacheFactoryBean.getEnableAutoReconnect()).isTrue();
 		assertThat(cacheFactoryBean.getEvictionHeapPercentage()).isCloseTo(0.70f, offset(0.0f));
-		assertThat(cacheFactoryBean.getGatewayConflictResolver()).isSameAs(mockGatewayConflictResolver);
 		assertThat(cacheFactoryBean.getJndiDataSources()).isNotNull();
 		assertThat(cacheFactoryBean.getJndiDataSources().size()).isEqualTo(1);
 		assertThat(cacheFactoryBean.getLockLease().intValue()).isEqualTo(15000);

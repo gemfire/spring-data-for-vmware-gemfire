@@ -22,14 +22,7 @@
 	<gfe:cache properties-ref="gemfireProperties"/>
 
 	<gfe:replicated-region id="Parent" persistent="false">
-		<gfe:replicated-region name="Child" persistent="false">
-			<gfe:async-event-queue name="testQueue" maximum-queue-memory="50" parallel="false" dispatcher-threads="4"
-								   order-policy="KEY">
-				<gfe:async-event-listener>
-					<bean class="org.springframework.data.gemfire.config.xml.SubRegionSubElementNamespaceIntegrationTests.TestNoOpAsyncEventListener"/>
-				</gfe:async-event-listener>
-			</gfe:async-event-queue>
-		</gfe:replicated-region>
+		<gfe:replicated-region name="Child" persistent="false"/>
 	</gfe:replicated-region>
 
 	<gfe:replicated-region id="Customers" persistent="false">
@@ -41,10 +34,7 @@
 	</gfe:replicated-region>
 
 	<gfe:replicated-region id="Orders" persistent="false">
-		<gfe:replicated-region name="Items" persistent="false">
-			<gfe:gateway-sender remote-distributed-system-id="21" name="testSender" parallel="false"
-								manual-start="true"/>
-		</gfe:replicated-region>
+		<gfe:replicated-region name="Items" persistent="false"/>
 	</gfe:replicated-region>
 
 </beans>

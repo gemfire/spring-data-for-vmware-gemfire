@@ -45,7 +45,6 @@
 						   cloning-enabled="false"
 						   concurrency-level="10"
 						   disk-synchronous="true"
-						   enable-async-conflation="true"
 						   enable-subscription-conflation="true"
 						   ignore-jta="true"
 						   index-update-type="asynchronous"

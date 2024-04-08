@@ -33,8 +33,6 @@ import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionEvent;
-import org.apache.geode.cache.asyncqueue.AsyncEvent;
-import org.apache.geode.cache.asyncqueue.AsyncEventListener;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 
 import org.springframework.beans.factory.BeanNameAware;
@@ -95,14 +93,6 @@ public class LookupPartitionRegionMutationIntegrationTests extends IntegrationTe
 		assertEquals(expectedTimeout, expirationAttributes.getTimeout());
 	}
 
-	private void assertGatewaySenders(Region<?, ?> region, List<String> expectedGatewaySenderIds) {
-
-		assertNotNull(region.getAttributes());
-		assertNotNull(region.getAttributes().getGatewaySenderIds());
-		assertEquals(expectedGatewaySenderIds.size(), region.getAttributes().getGatewaySenderIds().size());
-		assertTrue(expectedGatewaySenderIds.containsAll(region.getAttributes().getGatewaySenderIds()));
-	}
-
 	private void assertGemFireComponent(Object gemfireComponent, String expectedName) {
 
 		assertNotNull("The GemFire component must not be null", gemfireComponent);
@@ -151,10 +141,6 @@ public class LookupPartitionRegionMutationIntegrationTests extends IntegrationTe
 		assertEvictionAttributes(example.getAttributes().getEvictionAttributes(), EvictionAction.OVERFLOW_TO_DISK,
 			EvictionAlgorithm.LRU_ENTRY, 1000);
 		assertGemFireComponent(example.getAttributes().getCustomEntryIdleTimeout(), "E");
-		assertNotNull(example.getAttributes().getAsyncEventQueueIds());
-		assertEquals(1, example.getAttributes().getAsyncEventQueueIds().size());
-		assertEquals("AEQ", example.getAttributes().getAsyncEventQueueIds().iterator().next());
-		assertGatewaySenders(example, Collections.singletonList("GWS"));
 	}
 
 	interface Nameable extends BeanNameAware {
@@ -188,18 +174,6 @@ public class LookupPartitionRegionMutationIntegrationTests extends IntegrationTe
 		public String toString() {
 			return getName();
 		}
-	}
-
-	public static final class TestAsyncEventListener extends AbstractNameable implements AsyncEventListener {
-
-		@Override
-		public boolean processEvents(List<AsyncEvent> events) {
-			throw new UnsupportedOperationException("Not Implemented");
-		}
-
-		@Override
-		public void close() { }
-
 	}
 
 	public static final class TestCacheListener<K, V> extends CacheListenerAdapter<K, V> implements Nameable {
