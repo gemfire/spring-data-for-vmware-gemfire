@@ -88,7 +88,10 @@ public class GemFirePropertiesUnitTests {
     public void enumeratedGemFirePropertiesContainAllConfigurationProperties() {
 
         Set<String> actualGemFireProperties = resolveActualGemFirePropertyNames();
-        Set<String> unsupportedGemFireProperties = Set.of("async-distribution-timeout", "async-max-queue-size", "async-queue-timeout");
+        Set<String> unsupportedGemFireProperties = Set.of(
+            "async-distribution-timeout", "async-max-queue-size", "async-queue-timeout",
+            "enable-management-rest-service", "http-service-bind-address",
+            "http-service-port", "start-dev-rest-api");
         Set<String> expectedGemFireProperties = resolveExpectedNonDeprecatedGemFirePropertyNames();
         Set<String> missingGemFireProperties = new TreeSet<>(expectedGemFireProperties);
 
