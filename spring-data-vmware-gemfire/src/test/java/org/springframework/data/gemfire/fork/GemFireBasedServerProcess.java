@@ -22,7 +22,6 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
  */
 public class GemFireBasedServerProcess {
 
-	private static final String GEMFIRE_HTTP_SERVICE_PORT = "0";
 	private static final String GEMFIRE_LOG_LEVEL = "error";
 	private static final String GEMIRE_NAME = "SpringDataGemFireServer";
 	private static final String GEMFIRE_USE_CLUSTER_CONFIGURATION = "false";
@@ -56,8 +55,6 @@ public class GemFireBasedServerProcess {
 			.setCommand(ServerLauncher.Command.START)
 			.setDisableDefaultServer(true)
 			.setRedirectOutput(false)
-			.set(GemFireProperties.HTTP_SERVICE_PORT.getName(),
-				getProperty("spring.data.gemfire.http-service-port", GEMFIRE_HTTP_SERVICE_PORT))
 			.set(GemFireProperties.JMX_MANAGER.getName(), Boolean.TRUE.toString())
 			.set(GemFireProperties.JMX_MANAGER_START.getName(), Boolean.FALSE.toString())
 			.set(GemFireProperties.LOG_LEVEL.getName(), getProperty("spring.data.gemfire.log-level", GEMFIRE_LOG_LEVEL))
