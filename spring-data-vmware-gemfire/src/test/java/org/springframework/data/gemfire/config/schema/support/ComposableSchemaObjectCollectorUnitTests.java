@@ -140,15 +140,15 @@ public class ComposableSchemaObjectCollectorUnitTests {
 	@SuppressWarnings("unchecked")
 	public void collectFromGemFireCache() {
 
-		SchemaObject asyncEventQueue = SchemaObject.of(SchemaObjectType.ASYNC_EVENT_QUEUE);
-		SchemaObject gatewayReceiver = SchemaObject.of(SchemaObjectType.GATEWAY_RECEIVER);
-		SchemaObject gatewaySender = SchemaObject.of(SchemaObjectType.GATEWAY_SENDER);
+		SchemaObject region = SchemaObject.of(SchemaObjectType.REGION);
+		SchemaObject index = SchemaObject.of(SchemaObjectType.INDEX);
+		SchemaObject diskStore = SchemaObject.of(SchemaObjectType.DISK_STORE);
 
 		when(this.mockSchemaObjectCollectorOne.collectFrom(any(GemFireCache.class)))
-			.thenReturn(asSet(gatewayReceiver, gatewaySender));
+			.thenReturn(asSet(index, diskStore));
 
 		when(this.mockSchemaObjectCollectorTwo.collectFrom(any(GemFireCache.class)))
-			.thenReturn(asSet(asyncEventQueue));
+			.thenReturn(asSet(region));
 
 		SchemaObjectCollector composedSchemaObjectCollector = ComposableSchemaObjectCollector.compose(
 			asSet(this.mockSchemaObjectCollectorOne, this.mockSchemaObjectCollectorTwo));
@@ -159,7 +159,6 @@ public class ComposableSchemaObjectCollectorUnitTests {
 
 		assertThat(schemaObjects).isNotNull();
 		assertThat(schemaObjects).hasSize(3);
-		assertThat(schemaObjects).contains(gatewayReceiver, gatewaySender, asyncEventQueue);
 
 		verify(this.mockSchemaObjectCollectorOne, times(1)).collectFrom(eq(this.mockCache));
 

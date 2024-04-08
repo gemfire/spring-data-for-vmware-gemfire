@@ -18,7 +18,6 @@ import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
-import org.apache.geode.cache.util.GatewayConflictResolver;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -101,7 +100,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	private Float criticalHeapPercentage;
 	private Float evictionHeapPercentage;
-	private GatewayConflictResolver gatewayConflictResolver;
 
 	private List<JndiDataSource> jndiDataSources;
 	private List<TransactionListener> transactionListeners;
@@ -312,7 +310,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireCache.setCopyOnRead(getCopyOnRead());
 		gemfireCache.setCriticalHeapPercentage(getCriticalHeapPercentage());
 		gemfireCache.setEvictionHeapPercentage(getEvictionHeapPercentage());
-		gemfireCache.setGatewayConflictResolver(getGatewayConflictResolver());
 		gemfireCache.setJndiDataSources(getJndiDataSources());
 		gemfireCache.setProperties(gemfireProperties());
 		gemfireCache.setTransactionListeners(getTransactionListeners());
@@ -464,14 +461,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	protected Float getEvictionHeapPercentage() {
 		return this.evictionHeapPercentage;
-	}
-
-	void setGatewayConflictResolver(GatewayConflictResolver gatewayConflictResolver) {
-		this.gatewayConflictResolver = gatewayConflictResolver;
-	}
-
-	protected GatewayConflictResolver getGatewayConflictResolver() {
-		return this.gatewayConflictResolver;
 	}
 
 	void setJndiDataSources(List<JndiDataSource> jndiDataSources) {

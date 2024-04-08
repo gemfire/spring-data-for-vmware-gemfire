@@ -22,7 +22,6 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 	public void init() {
 
 		registerBeanDefinitionParser("annotation-driven", new AnnotationDrivenParser());
-		registerBeanDefinitionParser("async-event-queue", new AsyncEventQueueParser());
 		registerBeanDefinitionParser("auto-region-lookup", new AutoRegionLookupParser());
 		registerBeanDefinitionParser("cache", new CacheParser());
 		registerBeanDefinitionParser("cache-server", new CacheServerParser());
@@ -32,8 +31,6 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser("cq-listener-container", new GemfireListenerContainerParser());
 		registerBeanDefinitionParser("disk-store", new DiskStoreParser());
 		registerBeanDefinitionParser("function-service", new FunctionServiceParser());
-		registerBeanDefinitionParser("gateway-receiver", new GatewayReceiverParser());
-		registerBeanDefinitionParser("gateway-sender", new GatewaySenderParser());
 		registerBeanDefinitionParser("index", new IndexParser());
 		registerBeanDefinitionParser("local-region", new LocalRegionParser());
 		registerBeanDefinitionParser("local-region-template", new LocalRegionParser());

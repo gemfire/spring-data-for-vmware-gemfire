@@ -15,9 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.util.GatewayConflictHelper;
-import org.apache.geode.cache.util.GatewayConflictResolver;
-import org.apache.geode.cache.util.TimestampedEntryEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -155,14 +152,6 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 			.getProperty("disable-auto-reconnect"))).isFalse();
 	}
 
-	@Test
-	public void cacheWithGatewayConflictResolverIsCorrect() {
-
-		Cache cache = applicationContext.getBean("cache-with-gateway-conflict-resolver", Cache.class);
-
-		assertThat(cache.getGatewayConflictResolver()).isInstanceOf(TestGatewayConflictResolver.class);
-	}
-
 	@Test(expected = IllegalStateException.class)
 	public void cacheWithNoBeanFactoryLocatorIsCorrect() {
 
@@ -242,13 +231,5 @@ public class CacheNamespaceIntegrationTests extends IntegrationTestsSupport {
 
 		assertThat(criticalHeapPercentage).isCloseTo(70.0f, offset(0.0001f));
 		assertThat(evictionHeapPercentage).isCloseTo(60.0f, offset(0.0001f));
-	}
-
-	public static class TestGatewayConflictResolver implements GatewayConflictResolver {
-
-		@Override
-		public void onEvent(TimestampedEntryEvent event, GatewayConflictHelper helper) {
-			throw new UnsupportedOperationException("Not Implemented");
-		}
 	}
 }

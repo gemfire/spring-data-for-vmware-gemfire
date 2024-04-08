@@ -6,15 +6,11 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEvent;
-import org.apache.geode.cache.asyncqueue.AsyncEventListener;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,37 +65,5 @@ public class SubRegionSubElementNamespaceIntegrationTests extends IntegrationTes
 				TestNoOpCacheListener.class.getName(), customersAccountsRegion.getName())).isTrue();
 	}
 
-	@Test
-	public void testOrderItemsSubRegionGatewaySender() {
-
-		Region<?, ?> orderItemsRegion = requireApplicationContext().getBean("/Orders/Items", Region.class);
-
-		assertThat(orderItemsRegion).isNotNull();
-		assertThat(orderItemsRegion.getAttributes()).isNotNull();
-		assertThat(orderItemsRegion.getAttributes().getGatewaySenderIds()).isNotNull();
-		assertThat(orderItemsRegion.getAttributes().getGatewaySenderIds().contains("testSender")).isTrue();
-	}
-
-	@Test
-	public void testParentChildSubRegionAsyncEventQueue() {
-
-		assertThat(parentChildRegion).isNotNull();
-		assertThat(parentChildRegion.getAttributes()).isNotNull();
-		assertThat(parentChildRegion.getAttributes().getAsyncEventQueueIds()).isNotNull();
-		assertThat(parentChildRegion.getAttributes().getAsyncEventQueueIds().contains("testQueue")).isTrue();
-	}
-
 	public static final class TestNoOpCacheListener extends CacheListenerAdapter<Object, Object> { }
-
-	public static final class TestNoOpAsyncEventListener implements AsyncEventListener {
-
-		@Override
-		public boolean processEvents(final List<AsyncEvent> events) {
-			throw new UnsupportedOperationException("Not Implemented");
-		}
-
-		@Override
-		public void close() { }
-
-	}
 }

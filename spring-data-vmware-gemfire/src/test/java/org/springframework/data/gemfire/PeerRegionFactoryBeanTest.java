@@ -291,7 +291,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenReturn(null);
 		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenReturn(null);
 		when(mockRegionAttributes.isDiskSynchronous()).thenReturn(true);
-		when(mockRegionAttributes.getEnableAsyncConflation()).thenReturn(false);
 		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenReturn(false);
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenReturn(testExpirationAttributes);
 		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(testExpirationAttributes);
@@ -332,7 +331,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setCustomEntryIdleTimeout(null);
 		verify(mockRegionFactory).setCustomEntryTimeToLive(null);
 		verify(mockRegionFactory).setDiskSynchronous(eq(true));
-		verify(mockRegionFactory).setEnableAsyncConflation(eq(false));
 		verify(mockRegionFactory).setEnableSubscriptionConflation(eq(false));
 		verify(mockRegionFactory).setEntryIdleTimeout(same(testExpirationAttributes));
 		verify(mockRegionFactory).setEntryTimeToLive(same(testExpirationAttributes));
@@ -366,7 +364,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory, never()).setCustomEntryIdleTimeout(any(CustomExpiry.class));
 		verify(mockRegionFactory, never()).setCustomEntryTimeToLive(any(CustomExpiry.class));
 		verify(mockRegionFactory, never()).setDiskSynchronous(anyBoolean());
-		verify(mockRegionFactory, never()).setEnableAsyncConflation(anyBoolean());
 		verify(mockRegionFactory, never()).setEnableSubscriptionConflation(anyBoolean());
 		verify(mockRegionFactory, never()).setEntryIdleTimeout(any(ExpirationAttributes.class));
 		verify(mockRegionFactory, never()).setEntryTimeToLive(any(ExpirationAttributes.class));
@@ -402,7 +399,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenReturn(null);
 		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenReturn(null);
 		when(mockRegionAttributes.isDiskSynchronous()).thenReturn(false);
-		when(mockRegionAttributes.getEnableAsyncConflation()).thenReturn(true);
 		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenReturn(true);
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenReturn(testExpirationAttributes);
 		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(testExpirationAttributes);
@@ -443,7 +439,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setCustomEntryIdleTimeout(null);
 		verify(mockRegionFactory).setCustomEntryTimeToLive(null);
 		verify(mockRegionFactory).setDiskSynchronous(eq(false));
-		verify(mockRegionFactory).setEnableAsyncConflation(eq(true));
 		verify(mockRegionFactory).setEnableSubscriptionConflation(eq(true));
 		verify(mockRegionFactory).setEntryIdleTimeout(same(testExpirationAttributes));
 		verify(mockRegionFactory).setEntryTimeToLive(same(testExpirationAttributes));

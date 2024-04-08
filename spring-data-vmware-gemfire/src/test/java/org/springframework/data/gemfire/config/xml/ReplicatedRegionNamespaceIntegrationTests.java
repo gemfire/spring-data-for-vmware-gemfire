@@ -135,7 +135,6 @@ public class ReplicatedRegionNamespaceIntegrationTests extends IntegrationTestsS
 		assertThat(regionAttributes.getCloningEnabled()).isFalse();
 		assertThat(regionAttributes.getConcurrencyLevel()).isEqualTo(10);
 		assertThat(regionAttributes.isDiskSynchronous()).isTrue();
-		assertThat(regionAttributes.getEnableAsyncConflation()).isTrue();
 		assertThat(regionAttributes.getEnableSubscriptionConflation()).isTrue();
 		assertThat(regionAttributes.getIgnoreJTA()).isTrue();
 		assertThat(regionAttributes.getInitialCapacity()).isEqualTo(10);

@@ -797,18 +797,6 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", serviceProperty("http."), propertyNameSuffix);
 	}
 
-	protected String gatewayReceiverProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("gateway.receiver."), propertyNameSuffix);
-	}
-
-	protected String gatewaySenderProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("gateway.sender."), propertyNameSuffix);
-	}
-
-	protected String namedGatewaySenderProperty(String name, String propertyNameSuffix) {
-		return String.format("%1$s%2$s.%3$s", propertyName("gateway.sender."), name, propertyNameSuffix);
-	}
-
 	/**
 	 * Returns the fully-qualified {@link String property name}.
 	 *
