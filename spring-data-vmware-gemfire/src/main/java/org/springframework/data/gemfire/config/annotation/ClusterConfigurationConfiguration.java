@@ -87,7 +87,7 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	protected static final boolean DEFAULT_MANAGEMENT_USE_HTTP = false;
 	protected static final boolean DEFAULT_MANAGEMENT_REQUIRE_HTTPS = true;
 
-	protected static final int DEFAULT_MANAGEMENT_HTTP_PORT = HttpServiceConfiguration.DEFAULT_HTTP_SERVICE_PORT;
+	protected static final int DEFAULT_MANAGEMENT_HTTP_PORT = 7070;
 
 	protected static final String DEFAULT_MANAGEMENT_HTTP_HOST = "localhost";
 	protected static final String HTTP_FOLLOW_REDIRECTS_PROPERTY = "spring.data.gemfire.management.http.follow-redirects";
