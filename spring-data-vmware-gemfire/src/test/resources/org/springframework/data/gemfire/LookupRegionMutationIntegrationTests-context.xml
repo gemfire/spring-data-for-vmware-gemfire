@@ -45,14 +45,6 @@
 			<bean class="org.springframework.data.gemfire.LookupRegionMutationIntegrationTests$TestCustomExpiry"
 				  p:name="E"/>
 		</gfe:custom-entry-tti>
-		<gfe:gateway-sender name="GWS" remote-distributed-system-id="123" manual-start="true"/>
-		<gfe:async-event-queue name="AEQ" persistent="false" parallel="false">
-			<gfe:async-event-listener>
-				<bean
-					class="org.springframework.data.gemfire.LookupRegionMutationIntegrationTests$TestAsyncEventListener"
-					p:name="F"/>
-			</gfe:async-event-listener>
-		</gfe:async-event-queue>
 	</gfe:lookup-region>
 
 </beans>

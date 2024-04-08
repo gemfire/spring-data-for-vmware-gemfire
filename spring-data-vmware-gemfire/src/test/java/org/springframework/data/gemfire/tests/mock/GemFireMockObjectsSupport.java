@@ -101,9 +101,6 @@ import org.apache.geode.cache.SubscriptionAttributes;
 import org.apache.geode.cache.TransactionId;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.asyncqueue.AsyncEventListener;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionFactory;
@@ -128,14 +125,6 @@ import org.apache.geode.cache.query.types.ObjectType;
 import org.apache.geode.cache.server.CacheServer;
 import org.apache.geode.cache.server.ClientSubscriptionConfig;
 import org.apache.geode.cache.server.ServerLoadProbe;
-import org.apache.geode.cache.util.GatewayConflictResolver;
-import org.apache.geode.cache.wan.GatewayEventFilter;
-import org.apache.geode.cache.wan.GatewayEventSubstitutionFilter;
-import org.apache.geode.cache.wan.GatewayReceiver;
-import org.apache.geode.cache.wan.GatewayReceiverFactory;
-import org.apache.geode.cache.wan.GatewaySender;
-import org.apache.geode.cache.wan.GatewaySenderFactory;
-import org.apache.geode.cache.wan.GatewayTransportFilter;
 import org.apache.geode.compression.Compressor;
 import org.apache.geode.distributed.DistributedMember;
 import org.apache.geode.distributed.DistributedSystem;
@@ -198,9 +187,6 @@ import org.springframework.util.StringUtils;
  * @see RegionService
  * @see Scope
  * @see SubscriptionAttributes
- * @see AsyncEventListener
- * @see AsyncEventQueue
- * @see AsyncEventQueueFactory
  * @see ClientCache
  * @see ClientCacheFactory
  * @see ClientRegionFactory
@@ -220,13 +206,6 @@ import org.springframework.util.StringUtils;
  * @see CacheServer
  * @see ClientSubscriptionConfig
  * @see ServerLoadProbe
- * @see GatewayEventFilter
- * @see GatewayEventSubstitutionFilter
- * @see GatewayReceiver
- * @see GatewayReceiverFactory
- * @see GatewaySender
- * @see GatewaySenderFactory
- * @see GatewayTransportFilter
  * @see Compressor
  * @see DistributedMember
  * @see DistributedSystem
@@ -248,17 +227,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 	private static final List<Object> cachedGemFireObjects = Collections.synchronizedList(new ArrayList<>());
 
-	private static final Map<String, AsyncEventQueue> asyncEventQueues = new ConcurrentHashMap<>();
-
 	private static final Map<String, DiskStore> diskStores = new ConcurrentHashMap<>();
-
-	private static final Map<String, GatewaySender> gatewaySenders = new ConcurrentHashMap<>();
 
 	private static final Map<String, Region<Object, Object>> regions = new ConcurrentHashMap<>();
 
 	private static final Map<String, RegionAttributes<Object, Object>> regionAttributes = new ConcurrentHashMap<>();
-
-	private static final Set<GatewayReceiver> gatewayReceivers = Collections.synchronizedSet(new HashSet<>());
 
 	private static final Set<String> registeredPoolNames = new ConcurrentSkipListSet<>();
 
@@ -290,10 +263,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		cacheReference.set(null);
 		singletonCache.set(null);
 		gemfireProperties.set(new Properties());
-		asyncEventQueues.clear();
 		diskStores.clear();
-		gatewayReceivers.clear();
-		gatewaySenders.clear();
 		regions.clear();
 		regionAttributes.clear();
 
@@ -927,8 +897,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicInteger messageSyncInterval = new AtomicInteger();
 		AtomicInteger searchTimeout = new AtomicInteger();
 
-		AtomicReference<GatewayConflictResolver> gatewayConflictResolver = new AtomicReference<>();
-
 		List<CacheServer> cacheServers = new ArrayList<>();
 
 		when(mockCache.addCacheServer()).thenAnswer(invocation -> {
@@ -940,22 +908,13 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return mockCacheServer;
 		});
 
-		doAnswer(newSetter(gatewayConflictResolver, () -> null))
-			.when(mockCache).setGatewayConflictResolver(any(GatewayConflictResolver.class));
-
 		doAnswer(newSetter(lockLease, null)).when(mockCache).setLockLease(anyInt());
 		doAnswer(newSetter(lockTimeout, null)).when(mockCache).setLockTimeout(anyInt());
 		doAnswer(newSetter(messageSyncInterval, null)).when(mockCache).setMessageSyncInterval(anyInt());
 		doAnswer(newSetter(searchTimeout, null)).when(mockCache).setSearchTimeout(anyInt());
 
 		when(mockCache.isServer()).thenReturn(true);
-		when(mockCache.getAsyncEventQueues())
-			.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(asyncEventQueues.values())));
 		when(mockCache.getCacheServers()).thenAnswer(invocation -> Collections.unmodifiableList(cacheServers));
-		when(mockCache.getGatewayConflictResolver()).thenAnswer(newGetter(gatewayConflictResolver));
-		when(mockCache.getGatewayReceivers()).thenAnswer(invocation -> Collections.unmodifiableSet(gatewayReceivers));
-		when(mockCache.getGatewaySenders())
-			.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(gatewaySenders.values())));
 		when(mockCache.getLockLease()).thenAnswer(newGetter(lockLease));
 		when(mockCache.getLockTimeout()).thenAnswer(newGetter(lockTimeout));
 		when(mockCache.getMessageSyncInterval()).thenAnswer(newGetter(messageSyncInterval));
@@ -973,151 +932,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockCache.createRegionFactory(anyString())).thenAnswer(invocation ->
 			mockRegionFactory(mockCache, invocation.<String>getArgument(0)));
 
-		doAnswer(invocation -> {
-
-			String asyncEventQueueId = invocation.getArgument(0);
-
-			return asyncEventQueues.get(asyncEventQueueId);
-
-		}).when(mockCache).getAsyncEventQueue(anyString());
-
-		doAnswer(invocation -> {
-
-			String gatewaySenderId = invocation.getArgument(0);
-
-			return gatewaySenders.get(gatewaySenderId);
-
-		}).when(mockCache).getGatewaySender(anyString());
-
 		return referTo(
-			mockQueryService(
-				mockGatewaySenderFactory(
-					mockGatewayReceiverFactory(
-						mockAsyncEventQueueFactory(
-							mockCacheApi(mockCache))))));
-	}
-
-	public static Cache mockAsyncEventQueueFactory(Cache mockCache) {
-
-		when(mockCache.createAsyncEventQueueFactory()).thenAnswer(invocation -> mockAsyncEventQueueFactory());
-
-		return mockCache;
-	}
-
-	public static AsyncEventQueueFactory mockAsyncEventQueueFactory() {
-
-		AsyncEventQueueFactory mockAsyncEventQueueFactory = mock(AsyncEventQueueFactory.class);
-
-		AtomicBoolean batchConflationEnabled = new AtomicBoolean(false);
-		AtomicBoolean diskSynchronous = new AtomicBoolean(true);
-		AtomicBoolean forwardExpirationDestroy = new AtomicBoolean(false);
-		AtomicBoolean parallel = new AtomicBoolean(false);
-		AtomicBoolean pauseEventDispatching = new AtomicBoolean(false);
-		AtomicBoolean persistent = new AtomicBoolean(false);
-
-		AtomicInteger batchSize = new AtomicInteger(100);
-		AtomicInteger batchTimeInterval = new AtomicInteger(5);
-		AtomicInteger dispatcherThreads = new AtomicInteger(5);
-		AtomicInteger maximumQueueMemory = new AtomicInteger(100);
-
-		AtomicReference<String> diskStoreName = new AtomicReference<>(null);
-		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter =
-			new AtomicReference<>(null);
-		AtomicReference<GatewaySender.OrderPolicy> orderPolicy = new AtomicReference<>(GatewaySender.OrderPolicy.KEY);
-
-		CopyOnWriteArrayList<GatewayEventFilter> gatewayEventFilters = new CopyOnWriteArrayList<>();
-
-		when(mockAsyncEventQueueFactory.setBatchConflationEnabled(anyBoolean()))
-			.thenAnswer(newSetter(batchConflationEnabled, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setBatchSize(anyInt()))
-			.thenAnswer(newSetter(batchSize, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setBatchTimeInterval(anyInt()))
-			.thenAnswer(newSetter(batchTimeInterval, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setDispatcherThreads(anyInt()))
-			.thenAnswer(newSetter(dispatcherThreads, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setForwardExpirationDestroy(anyBoolean()))
-			.thenAnswer(newSetter(forwardExpirationDestroy, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setGatewayEventSubstitutionListener(any(GatewayEventSubstitutionFilter.class)))
-			.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setMaximumQueueMemory(anyInt()))
-			.thenAnswer(newSetter(maximumQueueMemory, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setOrderPolicy(any(GatewaySender.OrderPolicy.class)))
-			.thenAnswer(newSetter(orderPolicy, () -> mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setParallel(anyBoolean()))
-			.thenAnswer(newSetter(parallel, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.setPersistent(anyBoolean()))
-			.thenAnswer(newSetter(persistent, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.addGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
-
-			gatewayEventFilters.add(invocation.getArgument(0));
-
-			return mockAsyncEventQueueFactory;
-		});
-
-		when(mockAsyncEventQueueFactory.pauseEventDispatching())
-			.thenAnswer(newSetter(pauseEventDispatching, true, mockAsyncEventQueueFactory));
-
-		when(mockAsyncEventQueueFactory.removeGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
-
-			gatewayEventFilters.remove(invocation.<GatewayEventFilter>getArgument(0));
-
-			return mockAsyncEventQueueFactory;
-		});
-
-		when(mockAsyncEventQueueFactory.create(anyString(), any(AsyncEventListener.class))).thenAnswer(invocation -> {
-
-			String asyncEventQueueId = invocation.getArgument(0);
-
-			AsyncEventListener listener = invocation.getArgument(1);
-
-			AsyncEventQueue mockAsyncEventQueue = mock(AsyncEventQueue.class);
-
-			when(mockAsyncEventQueue.isBatchConflationEnabled()).thenAnswer(newGetter(batchConflationEnabled));
-			when(mockAsyncEventQueue.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
-			when(mockAsyncEventQueue.isDispatchingPaused()).thenAnswer(newGetter(pauseEventDispatching));
-			when(mockAsyncEventQueue.isForwardExpirationDestroy()).thenAnswer(newGetter(forwardExpirationDestroy));
-			when(mockAsyncEventQueue.isParallel()).thenAnswer(newGetter(parallel));
-			when(mockAsyncEventQueue.isPersistent()).thenAnswer(newGetter(persistent));
-			when(mockAsyncEventQueue.isPrimary()).thenReturn(false);
-
-			when(mockAsyncEventQueue.getAsyncEventListener()).thenReturn(listener);
-			when(mockAsyncEventQueue.getBatchSize()).thenAnswer(newGetter(batchSize));
-			when(mockAsyncEventQueue.getBatchTimeInterval()).thenAnswer(newGetter(batchTimeInterval));
-			when(mockAsyncEventQueue.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
-			when(mockAsyncEventQueue.getDispatcherThreads()).thenAnswer(newGetter(dispatcherThreads));
-			when(mockAsyncEventQueue.getGatewayEventFilters()).thenReturn(gatewayEventFilters);
-			when(mockAsyncEventQueue.getGatewayEventSubstitutionFilter()).thenAnswer(newGetter(gatewayEventSubstitutionFilter));
-			when(mockAsyncEventQueue.getId()).thenReturn(asyncEventQueueId);
-			when(mockAsyncEventQueue.getMaximumQueueMemory()).thenAnswer(newGetter(maximumQueueMemory));
-			when(mockAsyncEventQueue.getOrderPolicy()).thenAnswer(newGetter(orderPolicy));
-
-			doAnswer(newSetter(pauseEventDispatching, false, null))
-				.when(mockAsyncEventQueue).resumeEventDispatching();
-
-			when(mockAsyncEventQueue.size()).thenReturn(0);
-
-			asyncEventQueues.put(asyncEventQueueId, mockAsyncEventQueue);
-
-			return mockAsyncEventQueue;
-		});
-
-		return mockAsyncEventQueueFactory;
+			mockQueryService(mockCacheApi(mockCache)));
 	}
 
 	public static CacheServer mockCacheServer() {
@@ -1617,272 +1433,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockDistributedSystem.getReconnectedSystem()).thenAnswer(invocation -> mockDistributedSystem());
 
 		return mockDistributedSystem;
-	}
-
-	public static Cache mockGatewayReceiverFactory(Cache mockCache) {
-
-		when(mockCache.createGatewayReceiverFactory()).thenAnswer(invocation -> mockGatewayReceiverFactory());
-
-		return mockCache;
-	}
-
-	public static GatewayReceiverFactory mockGatewayReceiverFactory() {
-
-		GatewayReceiverFactory mockGatewayReceiverFactory = mock(GatewayReceiverFactory.class);
-
-		AtomicBoolean manualStart = new AtomicBoolean(GatewayReceiver.DEFAULT_MANUAL_START);
-
-		AtomicInteger endPort = new AtomicInteger(GatewayReceiver.DEFAULT_END_PORT);
-		AtomicInteger maximumTimeBetweenPings = new AtomicInteger(GatewayReceiver.DEFAULT_MAXIMUM_TIME_BETWEEN_PINGS);
-		AtomicInteger socketBufferSize = new AtomicInteger(GatewayReceiver.DEFAULT_SOCKET_BUFFER_SIZE);
-		AtomicInteger startPort = new AtomicInteger(GatewayReceiver.DEFAULT_START_PORT);
-
-		AtomicReference<String> bindAddress = new AtomicReference<>(GatewayReceiver.DEFAULT_BIND_ADDRESS);
-		AtomicReference<String> hostnameForSenders = new AtomicReference<>(GatewayReceiver.DEFAULT_HOSTNAME_FOR_SENDERS);
-
-		CopyOnWriteArrayList<GatewayTransportFilter> gatewayTransportFilters = new CopyOnWriteArrayList<>();
-
-		when(mockGatewayReceiverFactory.setBindAddress(anyString()))
-			.thenAnswer(newSetter(bindAddress, () -> mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setEndPort(anyInt()))
-			.thenAnswer(newSetter(endPort, mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setHostnameForSenders(anyString()))
-			.thenAnswer(newSetter(hostnameForSenders, () -> mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setManualStart(anyBoolean()))
-			.thenAnswer(newSetter(manualStart, mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setMaximumTimeBetweenPings(anyInt()))
-			.thenAnswer(newSetter(maximumTimeBetweenPings, mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setSocketBufferSize(anyInt()))
-			.thenAnswer(newSetter(socketBufferSize, mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.setStartPort(anyInt()))
-			.thenAnswer(newSetter(startPort, mockGatewayReceiverFactory));
-
-		when(mockGatewayReceiverFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
-
-			gatewayTransportFilters.add(invocation.getArgument(0));
-
-			return mockGatewayReceiverFactory;
-		});
-
-		when(mockGatewayReceiverFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
-
-			gatewayTransportFilters.remove(invocation.<GatewayTransportFilter>getArgument(0));
-
-			return mockGatewayReceiverFactory;
-		});
-
-		when(mockGatewayReceiverFactory.create()).thenAnswer(invocation -> {
-
-			AtomicBoolean running = new AtomicBoolean(!manualStart.get());
-
-			GatewayReceiver mockGatewayReceiver = mock(GatewayReceiver.class);
-
-			when(mockGatewayReceiver.isManualStart()).thenAnswer(newGetter(manualStart));
-			when(mockGatewayReceiver.isRunning()).thenAnswer(newGetter(running));
-
-			when(mockGatewayReceiver.getBindAddress()).thenAnswer(newGetter(bindAddress));
-			when(mockGatewayReceiver.getEndPort()).thenAnswer(newGetter(endPort));
-			when(mockGatewayReceiver.getGatewayTransportFilters()).thenReturn(gatewayTransportFilters);
-			when(mockGatewayReceiver.getHost()).thenAnswer(newGetter(hostnameForSenders));
-			when(mockGatewayReceiver.getHostnameForSenders()).thenAnswer(newGetter(hostnameForSenders));
-			when(mockGatewayReceiver.getMaximumTimeBetweenPings()).thenAnswer(newGetter(maximumTimeBetweenPings));
-
-			when(mockGatewayReceiver.getPort()).thenAnswer(portInvocation -> {
-
-				Random randomPort = new Random(System.currentTimeMillis());
-
-				int port = startPort.get() + randomPort.nextInt(endPort.get() - startPort.get());;
-
-				return port;
-			});
-
-			when(mockGatewayReceiver.getSocketBufferSize()).thenAnswer(newGetter(socketBufferSize));
-			when(mockGatewayReceiver.getStartPort()).thenAnswer(newGetter(startPort));
-
-			doAnswer(newSetter(running, true, null)).when(mockGatewayReceiver).start();
-			doAnswer(newSetter(running, false, null)).when(mockGatewayReceiver).stop();
-
-			gatewayReceivers.add(mockGatewayReceiver);
-
-			return mockGatewayReceiver;
-		});
-
-		return mockGatewayReceiverFactory;
-	}
-
-	public static Cache mockGatewaySenderFactory(Cache mockCache) {
-
-		when(mockCache.createGatewaySenderFactory()).thenAnswer(invocation -> mockGatewaySenderFactory());
-
-		return mockCache;
-	}
-
-	public static GatewaySenderFactory mockGatewaySenderFactory() {
-
-		GatewaySenderFactory mockGatewaySenderFactory = mock(GatewaySenderFactory.class);
-
-		AtomicBoolean batchConflationEnabled = new AtomicBoolean(GatewaySender.DEFAULT_BATCH_CONFLATION);
-		AtomicBoolean diskSynchronous = new AtomicBoolean(GatewaySender.DEFAULT_DISK_SYNCHRONOUS);
-		AtomicBoolean parallel = new AtomicBoolean(GatewaySender.DEFAULT_IS_PARALLEL);
-		AtomicBoolean persistenceEnabled = new AtomicBoolean(GatewaySender.DEFAULT_PERSISTENCE_ENABLED);
-
-		AtomicInteger alertThreshold = new AtomicInteger(GatewaySender.DEFAULT_ALERT_THRESHOLD);
-		AtomicInteger batchSize = new AtomicInteger(GatewaySender.DEFAULT_BATCH_SIZE);
-		AtomicInteger batchTimeInterval = new AtomicInteger(GatewaySender.DEFAULT_BATCH_TIME_INTERVAL);
-		AtomicInteger dispatcherThreads = new AtomicInteger(GatewaySender.DEFAULT_DISPATCHER_THREADS);
-		AtomicInteger maximumQueueMemory = new AtomicInteger(GatewaySender.DEFAULT_MAXIMUM_QUEUE_MEMORY);
-		AtomicInteger parallelFactorForReplicatedRegion =
-			new AtomicInteger(GatewaySender.DEFAULT_PARALLELISM_REPLICATED_REGION);
-		AtomicInteger socketBufferSize = new AtomicInteger(GatewaySender.DEFAULT_SOCKET_BUFFER_SIZE);
-		AtomicInteger socketReadTimeout = new AtomicInteger(GatewaySender.DEFAULT_SOCKET_READ_TIMEOUT);
-
-		AtomicReference<String> diskStoreName = new AtomicReference<>(null);
-		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter =
-			new AtomicReference<>(null);
-		AtomicReference<GatewaySender.OrderPolicy> orderPolicy = new AtomicReference<>(GatewaySender.DEFAULT_ORDER_POLICY);
-
-		CopyOnWriteArrayList<GatewayEventFilter> gatewayEventFilters = new CopyOnWriteArrayList<>();
-		CopyOnWriteArrayList<GatewayTransportFilter> gatewayTransportFilters = new CopyOnWriteArrayList<>();
-
-		when(mockGatewaySenderFactory.setAlertThreshold(anyInt()))
-			.thenAnswer(newSetter(alertThreshold, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setBatchConflationEnabled(anyBoolean()))
-			.thenAnswer(newSetter(batchConflationEnabled, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setBatchSize(anyInt())).thenAnswer(newSetter(batchSize, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setBatchTimeInterval(anyInt()))
-			.thenAnswer(newSetter(batchTimeInterval, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setDispatcherThreads(anyInt()))
-			.thenAnswer(newSetter(dispatcherThreads, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setGatewayEventSubstitutionFilter(any(GatewayEventSubstitutionFilter.class)))
-			.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setMaximumQueueMemory(anyInt()))
-			.thenAnswer(newSetter(maximumQueueMemory, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setOrderPolicy(any(GatewaySender.OrderPolicy.class)))
-			.thenAnswer(newSetter(orderPolicy, () -> mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setParallel(anyBoolean())).thenAnswer(newSetter(parallel, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setParallelFactorForReplicatedRegion(anyInt()))
-			.thenAnswer(newSetter(parallelFactorForReplicatedRegion, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setPersistenceEnabled(anyBoolean()))
-			.thenAnswer(newSetter(persistenceEnabled, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setSocketBufferSize(anyInt()))
-			.thenAnswer(newSetter(socketBufferSize, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.setSocketReadTimeout(anyInt()))
-			.thenAnswer(newSetter(socketReadTimeout, mockGatewaySenderFactory));
-
-		when(mockGatewaySenderFactory.addGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
-
-			gatewayEventFilters.add(invocation.getArgument(0));
-
-			return mockGatewaySenderFactory;
-		});
-
-		when(mockGatewaySenderFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
-
-			gatewayTransportFilters.add(invocation.getArgument(0));
-
-			return mockGatewaySenderFactory;
-		});
-
-		when(mockGatewaySenderFactory.removeGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
-
-			gatewayEventFilters.remove(invocation.<GatewayEventFilter>getArgument(0));
-
-			return mockGatewaySenderFactory;
-		});
-
-		when(mockGatewaySenderFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
-
-			gatewayTransportFilters.remove(invocation.<GatewayTransportFilter>getArgument(0));
-
-			return mockGatewaySenderFactory;
-		});
-
-		when(mockGatewaySenderFactory.create(anyString(), anyInt())).thenAnswer(invocation -> {
-
-			GatewaySender mockGatewaySender = mock(GatewaySender.class);
-
-			AtomicBoolean destroyed = new AtomicBoolean(false);
-			AtomicBoolean running = new AtomicBoolean(false);
-
-			Integer remoteDistributedSystemId = invocation.getArgument(1);
-
-			String gatewaySenderId = invocation.getArgument(0);
-
-			when(mockGatewaySender.isBatchConflationEnabled()).thenAnswer(newGetter(batchConflationEnabled));
-			when(mockGatewaySender.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
-			when(mockGatewaySender.isParallel()).thenAnswer(newGetter(parallel));
-			when(mockGatewaySender.isPaused()).thenAnswer(newGetter(running));
-			when(mockGatewaySender.isPersistenceEnabled()).thenAnswer(newGetter(persistenceEnabled));
-			when(mockGatewaySender.isRunning()).thenAnswer(newGetter(running));
-
-			when(mockGatewaySender.getAlertThreshold()).thenAnswer(newGetter(alertThreshold));
-			when(mockGatewaySender.getBatchSize()).thenAnswer(newGetter(batchSize));
-			when(mockGatewaySender.getBatchTimeInterval()).thenAnswer(newGetter(batchTimeInterval));
-			when(mockGatewaySender.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
-			when(mockGatewaySender.getDispatcherThreads()).thenAnswer(newGetter(dispatcherThreads));
-			when(mockGatewaySender.getGatewayEventFilters()).thenReturn(gatewayEventFilters);
-			when(mockGatewaySender.getGatewayEventSubstitutionFilter()).thenAnswer(newGetter(gatewayEventSubstitutionFilter));
-			when(mockGatewaySender.getGatewayTransportFilters()).thenReturn(gatewayTransportFilters);
-			when(mockGatewaySender.getId()).thenReturn(gatewaySenderId);
-			when(mockGatewaySender.getMaximumQueueMemory()).thenAnswer(newGetter(maximumQueueMemory));
-			when(mockGatewaySender.getMaxParallelismForReplicatedRegion()).thenAnswer(newGetter(parallelFactorForReplicatedRegion));
-			when(mockGatewaySender.getOrderPolicy()).thenAnswer(newGetter(orderPolicy));
-			when(mockGatewaySender.getRemoteDSId()).thenReturn(remoteDistributedSystemId);
-			when(mockGatewaySender.getSocketBufferSize()).thenAnswer(newGetter(socketBufferSize));
-			when(mockGatewaySender.getSocketReadTimeout()).thenAnswer(newGetter(socketReadTimeout));
-
-			doAnswer(it -> {
-
-				gatewayEventFilters.add(it.getArgument(0));
-
-				return null;
-
-			}).when(mockGatewaySender).addGatewayEventFilter(any(GatewayEventFilter.class));
-
-			doAnswer(newSetter(destroyed, null)).when(mockGatewaySender).destroy();
-			doAnswer(newSetter(running, false, null)).when(mockGatewaySender).pause();
-			doAnswer(newSetter(running, true, null)).when(mockGatewaySender).resume();
-			doAnswer(newSetter(running, true, null)).when(mockGatewaySender).start();
-			doAnswer(newSetter(running, false, null)).when(mockGatewaySender).stop();
-
-			doAnswer(it -> {
-
-				gatewayEventFilters.remove(it.<GatewayEventFilter>getArgument(0));
-
-				return null;
-
-			}).when(mockGatewaySender).removeGatewayEventFilter(any(GatewayEventFilter.class));
-
-			gatewaySenders.put(gatewaySenderId, mockGatewaySender);
-
-			return mockGatewaySender;
-		});
-
-		return mockGatewaySenderFactory;
 	}
 
 	public static PoolFactory mockPoolFactory() {
@@ -2491,24 +2041,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicReference<ExpirationAttributes> regionTimeToLive =
 			new AtomicReference<>(baseRegionAttributes.getRegionTimeToLive());
 
-		List<String> asyncEventQueueIds =
-			new CopyOnWriteArrayList<>(nullSafeSet(baseRegionAttributes.getAsyncEventQueueIds()));
-
 		List<CacheListener<K, V>> cacheListeners =
 			new CopyOnWriteArrayList<>(nullSafeArray(baseRegionAttributes.getCacheListeners(), CacheListener.class));
 
-		List<String> gatewaySenderIds =
-			new CopyOnWriteArrayList<>(nullSafeSet(baseRegionAttributes.getGatewaySenderIds()));
-
-		// Mock AttributesMutator
-		doAnswer(newAdder(asyncEventQueueIds, null))
-			.when(mockAttributesMutator).addAsyncEventQueueId(anyString());
-
 		doAnswer(newAdder(cacheListeners, null))
 			.when(mockAttributesMutator).addCacheListener(any(CacheListener.class));
-
-		doAnswer(newAdder(gatewaySenderIds, null)).
-			when(mockAttributesMutator).addGatewaySenderId(anyString());
 
 		when(mockAttributesMutator.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
 
@@ -2527,14 +2064,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		}).when(mockAttributesMutator).initCacheListeners(any(CacheListener[].class));
 
-		doAnswer(invocation -> asyncEventQueueIds.remove(invocation.getArgument(0)))
-			.when(mockAttributesMutator).removeAsyncEventQueueId(anyString());
-
 		doAnswer(invocation -> cacheListeners.remove(invocation.getArgument(0)))
 			.when(mockAttributesMutator).removeCacheListener(any(CacheListener.class));
-
-		doAnswer(invocation -> gatewaySenderIds.remove(invocation.getArgument(0)))
-			.when(mockAttributesMutator).removeGatewaySenderId(anyString());
 
 		doAnswer(newSetter(cacheLoader))
 			.when(mockAttributesMutator).setCacheLoader(any(CacheLoader.class));
@@ -2568,9 +2099,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.when(mockEvictionAttributesMutator).setMaximum(anyInt());
 
 		// Mock RegionAttributes
-		when(mockRegionAttributes.getAsyncEventQueueIds())
-			.thenAnswer(invocation -> asSet(asyncEventQueueIds.toArray(new String[asyncEventQueueIds.size()])));
-
 		when(mockRegionAttributes.getCacheListeners())
 			.thenAnswer(invocation -> cacheListeners.toArray(new CacheListener[cacheListeners.size()]));
 
@@ -2584,7 +2112,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive::get));
 		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(baseRegionAttributes::getDataPolicy));
 		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(baseRegionAttributes::getDiskStoreName));
-		when(mockRegionAttributes.getEnableAsyncConflation()).thenAnswer(newGetter(baseRegionAttributes::getEnableAsyncConflation));
 		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenAnswer(newGetter(baseRegionAttributes::getEnableSubscriptionConflation));
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout::get));
 		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive::get));
@@ -2601,9 +2128,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			return mockEvictionAttibutes;
 		});
-
-		when(mockRegionAttributes.getGatewaySenderIds())
-			.thenAnswer(invocation -> asSet(gatewaySenderIds.toArray(new String[gatewaySenderIds.size()])));
 
 		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(baseRegionAttributes::getIgnoreJTA));
 		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenAnswer(newGetter(baseRegionAttributes::getIndexMaintenanceSynchronous));
@@ -2984,10 +2508,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::isDiskSynchronous)
 			.orElse(true));
 
-		AtomicBoolean enableAsyncConflation = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getEnableAsyncConflation)
-			.orElse(false));
-
 		AtomicBoolean enableSubscriptionConflation = new AtomicBoolean(optionalRegionAttributes
 			.map(RegionAttributes::getEnableSubscriptionConflation)
 			.orElse(false));
@@ -3104,22 +2624,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::getCacheListeners)
 			.orElse(null), CacheListener.class)));
 
-		Set<String> asyncEventQueueIds = new HashSet<>(nullSafeSet(optionalRegionAttributes
-			.map(RegionAttributes::getAsyncEventQueueIds)
-			.orElse(null)));
-
-		Set<String> gatewaySenderIds = new HashSet<>(nullSafeSet(optionalRegionAttributes
-			.map(RegionAttributes::getGatewaySenderIds)
-			.orElse(null)));
-
-		when(mockRegionFactory.addAsyncEventQueueId(anyString()))
-			.thenAnswer(newAdder(asyncEventQueueIds, mockRegionFactory));
-
 		when(mockRegionFactory.addCacheListener(any(CacheListener.class)))
 			.thenAnswer(newAdder(cacheListeners, mockRegionFactory));
-
-		when(mockRegionFactory.addGatewaySenderId(anyString()))
-			.thenAnswer(newAdder(gatewaySenderIds, mockRegionFactory));
 
 		when(mockRegionFactory.initCacheListeners(any(CacheListener[].class))).thenAnswer(invocation -> {
 			cacheListeners.clear();
@@ -3159,9 +2665,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		when(mockRegionFactory.setDiskSynchronous(anyBoolean()))
 			.thenAnswer(newSetter(diskSynchronous, mockRegionFactory));
-
-		when(mockRegionFactory.setEnableAsyncConflation(anyBoolean()))
-			.thenAnswer(newSetter(enableAsyncConflation, mockRegionFactory));
 
 		when(mockRegionFactory.setEnableSubscriptionConflation(anyBoolean()))
 			.thenAnswer(newSetter(enableSubscriptionConflation, mockRegionFactory));
@@ -3220,8 +2723,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		RegionAttributes<K, V> mockRegionAttributes =
 			mock(RegionAttributes.class, mockObjectIdentifier("MockRegionAttributes"));
 
-		when(mockRegionAttributes.getAsyncEventQueueIds()).thenReturn(asyncEventQueueIds);
-
 		when(mockRegionAttributes.getCacheListeners())
 			.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
 
@@ -3236,12 +2737,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(dataPolicy));
 		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
 		when(mockRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
-		when(mockRegionAttributes.getEnableAsyncConflation()).thenAnswer(newGetter(enableAsyncConflation));
 		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenAnswer(newGetter(enableSubscriptionConflation));
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
 		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
 		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
-		when(mockRegionAttributes.getGatewaySenderIds()).thenReturn(gatewaySenderIds);
 		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(ignoreJta));
 		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenAnswer(newGetter(indexMaintenanceSynchronous));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));

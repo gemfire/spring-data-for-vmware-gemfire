@@ -11,7 +11,6 @@ import java.util.Arrays;
 
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -23,7 +22,7 @@ import org.springframework.util.Assert;
 
 /**
  * {@link PdxDiskStoreAwareBeanFactoryPostProcessor} is a Spring {@link BeanFactoryPostProcessor} that modifies
- * all GemFire Async Event Queue, Region and Disk Store beans in the Spring container to form a dependency on
+ * all GemFire Region and Disk Store beans in the Spring container to form a dependency on
  * the Cache's PDX {@link DiskStore} bean.
  *
  * A persistent Region may contain PDX typed data, in which case, the PDX type meta-data stored to disk needs to be
@@ -34,7 +33,6 @@ import org.springframework.util.Assert;
  * @see ConfigurableListableBeanFactory
  * @see DiskStore
  * @see Region
- * @see AsyncEventQueue
  * @since 1.3.3
  */
 public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
@@ -72,7 +70,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	@Override
 	@SuppressWarnings("all")
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		postProcessPdxDiskStoreDependencies(beanFactory, AsyncEventQueue.class, DiskStore.class, Region.class);
+		postProcessPdxDiskStoreDependencies(beanFactory, DiskStore.class, Region.class);
 	}
 
 	/**
@@ -96,9 +94,9 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 					BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanName);
 
 					// NOTE for simplicity sake, we add a bean dependency to any bean definition for a bean
-					// (Async Event Queue, Disk Store, Region, or otherwise) that may potentially require
+					// (Disk Store, Region, or otherwise) that may potentially require
 					// the PDX Disk Store to exist.
-					// NOTE this logic could be optimized to include Disk Store, persistent Async Event Queues
+					// NOTE this logic could be optimized to include Disk Store
 					// and persistent Regions (either by way of 'persistent' attribute, Data Policy
 					// or [Client]RegionShortcut) that also does not have an explicit Disk Store reference.
 					addPdxDiskStoreDependency(beanDefinition);

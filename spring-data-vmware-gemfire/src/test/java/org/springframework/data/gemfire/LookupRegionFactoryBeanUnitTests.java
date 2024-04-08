@@ -26,8 +26,6 @@ import org.apache.geode.cache.EvictionAttributesMutator;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.wan.GatewaySender;
 
 /**
  * Unit Tests for {@link LookupRegionFactoryBean}.
@@ -44,24 +42,6 @@ import org.apache.geode.cache.wan.GatewaySender;
  */
 @SuppressWarnings("rawtypes")
 public class LookupRegionFactoryBeanUnitTests {
-
-	private AsyncEventQueue mockAsyncEventQueue(String id) {
-
-		AsyncEventQueue mockQueue = mock(AsyncEventQueue.class, String.format("MockAsyncEventQueue.%1$s", id));
-
-		when(mockQueue.getId()).thenReturn(id);
-
-		return mockQueue;
-	}
-
-	private GatewaySender mockGatewaySender(String id) {
-
-		GatewaySender mockGatewaySender = mock(GatewaySender.class, String.format("MockGatewaySender.%1$s", id));
-
-		when(mockGatewaySender.getId()).thenReturn(id);
-
-		return mockGatewaySender;
-	}
 
 	@Test
 	@SuppressWarnings("unchecked")
@@ -88,9 +68,6 @@ public class LookupRegionFactoryBeanUnitTests {
 		when(mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
 		when(mockAttributesMutator.getEvictionAttributesMutator()).thenReturn(mockEvictionAttributesMutator);
 
-		AsyncEventQueue mockAsyncEventQueueOne = mockAsyncEventQueue("AEQ1");
-		AsyncEventQueue mockAsyncEventQueueTwo = mockAsyncEventQueue("AEQ2");
-
 		CacheListener mockCacheListenerZero = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.0");
 		CacheListener mockCacheListenerOne = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.1");
 		CacheListener mockCacheListenerTwo = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.2");
@@ -111,11 +88,8 @@ public class LookupRegionFactoryBeanUnitTests {
 		ExpirationAttributes mockExpirationAttributesRegionTtl = mock(ExpirationAttributes.class,
 			"testAfterPropertiesSet.MockExpirationAttributes.Region.TTL");
 
-		GatewaySender mockGatewaySender = mockGatewaySender("GWS1");
-
 		LookupRegionFactoryBean factoryBean = new LookupRegionFactoryBean();
 
-		factoryBean.setAsyncEventQueues(new AsyncEventQueue[] { mockAsyncEventQueueOne, mockAsyncEventQueueTwo });
 		factoryBean.setBeanName("Example");
 		factoryBean.setCache(mockCache);
 		factoryBean.setCacheLoader(mockCacheLoader);
@@ -125,7 +99,6 @@ public class LookupRegionFactoryBeanUnitTests {
 		factoryBean.setCustomEntryTimeToLive(mockCustomExpiryTtl);
 		factoryBean.setEntryIdleTimeout(mockExpirationAttributesEntryTti);
 		factoryBean.setEntryTimeToLive(mockExpirationAttributesEntryTtl);
-		factoryBean.setGatewaySenders(new GatewaySender[] { mockGatewaySender });
 		factoryBean.setEvictionMaximum(1000);
 		factoryBean.setRegionIdleTimeout(mockExpirationAttributesRegionTti);
 		factoryBean.setRegionTimeToLive(mockExpirationAttributesRegionTtl);
@@ -137,8 +110,6 @@ public class LookupRegionFactoryBeanUnitTests {
 
 		factoryBean.afterPropertiesSet();
 
-		verify(mockAttributesMutator, times(1)).addAsyncEventQueueId(eq("AEQ1"));
-		verify(mockAttributesMutator, times(1)).addAsyncEventQueueId(eq("AEQ2"));
 		verify(mockAttributesMutator, times(1)).addCacheListener(same(mockCacheListenerZero));
 		verify(mockAttributesMutator, times(1)).addCacheListener(same(mockCacheListenerOne));
 		verify(mockAttributesMutator, times(1)).addCacheListener(same(mockCacheListenerTwo));
@@ -149,7 +120,6 @@ public class LookupRegionFactoryBeanUnitTests {
 		verify(mockAttributesMutator, times(1)).setCustomEntryTimeToLive(same(mockCustomExpiryTtl));
 		verify(mockAttributesMutator, times(1)).setEntryIdleTimeout(same(mockExpirationAttributesEntryTti));
 		verify(mockAttributesMutator, times(1)).setEntryTimeToLive(same(mockExpirationAttributesEntryTtl));
-		verify(mockAttributesMutator, times(1)).addGatewaySenderId(eq("GWS1"));
 		verify(mockEvictionAttributesMutator, times(1)).setMaximum(eq(1000));
 		verify(mockAttributesMutator, times(1)).setRegionIdleTimeout(same(mockExpirationAttributesRegionTti));
 		verify(mockAttributesMutator, times(1)).setRegionTimeToLive(same(mockExpirationAttributesRegionTtl));

@@ -14,7 +14,6 @@ package org.springframework.data.gemfire.config.support;
 @SuppressWarnings("unused")
 public enum GemfireFeature {
 
-	AEQ,
 	BACKUP,
 	CACHING,
 	CLIENT_SERVER,
@@ -43,7 +42,6 @@ public enum GemfireFeature {
 	SERIALIZATION,
 	STATISTICS,
 	TRANSACTIONS,
-	TUNING,
-	WAN
+	TUNING
 
 }

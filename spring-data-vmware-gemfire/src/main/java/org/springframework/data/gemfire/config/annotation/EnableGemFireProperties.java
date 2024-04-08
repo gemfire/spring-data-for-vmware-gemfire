@@ -52,44 +52,6 @@ public @interface EnableGemFireProperties {
 	int ackWaitThreshold() default GemFirePropertiesConfiguration.DEFAULT_ACK_WAIT_THRESHOLD;
 
 	/**
-	 * The number of milliseconds a process that is publishing to this process should attempt to distribute
-	 * a cache operation before switching over to asynchronous messaging for this process. The switch to
-	 * asynchronous messaging lasts until this process catches up, departs, or some specified limit is reached,
-	 * such as async-queue-timeout or async-max-queue-size.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 0} milliseconds.
-	 */
-	long asyncDistributionTimeout() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_DISTRIBUTION_TIMEOUT;
-
-	/**
-	 * Affects non-conflated asynchronous queues for members that publish to this member. This is the maximum size
-	 * the queue can reach (in megabytes) before the publisher asks this member to leave the distributed system.
-	 *
-	 * Valid values are in the range 0..1024.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 8} MB.
-	 */
-	int asyncMaxQueueSize() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_MAX_QUEUE_SIZE;
-
-	/**
-	 * Affects asynchronous queues for members that publish to this member. This is the maximum milliseconds
-	 * the publisher should wait with no distribution to this member before it asks this member to leave
-	 * the distributed system. Used for handling slow receivers.
-	 *
-	 * This setting controls only peer-to-peer communication and does not apply to client/server
-	 * or multi-site communication.
-	 *
-	 * Defaults to {@literal 60000} milliseconds.
-	 */
-	long asyncQueueTimeout() default GemFirePropertiesConfiguration.DEFAULT_ASYNC_QUEUE_TIMEOUT;
-
-	/**
 	 * Relevant only for multi-homed hosts - machines with multiple network interface cards (NICs).
 	 * Specifies the adapter card the cache binds to for peer-to-peer (P2P) communication. Also specifies
 	 * the default location for GemFire Servers to listen on, which is used unless overridden by

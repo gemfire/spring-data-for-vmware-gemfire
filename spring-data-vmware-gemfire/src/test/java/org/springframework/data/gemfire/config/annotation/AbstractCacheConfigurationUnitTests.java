@@ -23,7 +23,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.util.GatewayConflictResolver;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
@@ -79,8 +78,6 @@ public class AbstractCacheConfigurationUnitTests {
 
 		ClassLoader testBeanClassLoader = Thread.currentThread().getContextClassLoader();
 
-		GatewayConflictResolver mockGatewayConflictResolver = mock(GatewayConflictResolver.class);
-
 		List<CacheFactoryBean.JndiDataSource> jndiDataSources = Collections.emptyList();
 		List<TransactionListener> transactionListeners = Collections.singletonList(mock(TransactionListener.class));
 
@@ -99,7 +96,6 @@ public class AbstractCacheConfigurationUnitTests {
 		this.cacheConfiguration.setCopyOnRead(true);
 		this.cacheConfiguration.setCriticalHeapPercentage(0.90f);
 		this.cacheConfiguration.setEvictionHeapPercentage(0.75f);
-		this.cacheConfiguration.setGatewayConflictResolver(mockGatewayConflictResolver);
 		this.cacheConfiguration.setJndiDataSources(jndiDataSources);
 		this.cacheConfiguration.setTransactionListeners(transactionListeners);
 		this.cacheConfiguration.setTransactionWriter(mockTransactionWriter);
@@ -113,7 +109,6 @@ public class AbstractCacheConfigurationUnitTests {
 		verify(cacheFactoryBean, times(1)).setCopyOnRead(eq(true));
 		verify(cacheFactoryBean, times(1)).setCriticalHeapPercentage(eq(0.90f));
 		verify(cacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(0.75f));
-		verify(cacheFactoryBean, times(1)).setGatewayConflictResolver(eq(mockGatewayConflictResolver));
 		verify(cacheFactoryBean, times(1)).setJndiDataSources(eq(jndiDataSources));
 		verify(cacheFactoryBean, times(1)).setTransactionListeners(eq(transactionListeners));
 		verify(cacheFactoryBean, times(1)).setTransactionWriter(eq(mockTransactionWriter));
