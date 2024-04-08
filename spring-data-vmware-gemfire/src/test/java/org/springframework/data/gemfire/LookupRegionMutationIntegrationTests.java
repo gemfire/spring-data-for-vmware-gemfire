@@ -32,8 +32,6 @@ import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionEvent;
-import org.apache.geode.cache.asyncqueue.AsyncEvent;
-import org.apache.geode.cache.asyncqueue.AsyncEventListener;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 
 import org.springframework.beans.factory.BeanNameAware;
@@ -95,14 +93,6 @@ public class LookupRegionMutationIntegrationTests extends IntegrationTestsSuppor
 		assertThat(expirationAttributes.getTimeout()).isEqualTo(expectedTimeout);
 	}
 
-	private void assertGatewaySenders(Region<?, ?> region, List<String> expectedGatewaySenderIds) {
-
-		assertThat(region.getAttributes()).isNotNull();
-		assertThat(region.getAttributes().getGatewaySenderIds()).isNotNull();
-		assertThat(region.getAttributes().getGatewaySenderIds().size()).isEqualTo(expectedGatewaySenderIds.size());
-		assertThat(expectedGatewaySenderIds.containsAll(region.getAttributes().getGatewaySenderIds())).isTrue();
-	}
-
 	private void assertGemFireComponent(Object gemfireComponent, String expectedName) {
 
 		assertThat(gemfireComponent).as("The GemFire component must not be null").isNotNull();
@@ -157,10 +147,6 @@ public class LookupRegionMutationIntegrationTests extends IntegrationTestsSuppor
 		assertExpirationAttributes(example.getAttributes().getEntryTimeToLive(), "Entry TTL",
 			30, ExpirationAction.DESTROY);
 		assertGemFireComponent(example.getAttributes().getCustomEntryIdleTimeout(), "E");
-		assertThat(example.getAttributes().getAsyncEventQueueIds()).isNotNull();
-		assertThat(example.getAttributes().getAsyncEventQueueIds().size()).isEqualTo(1);
-		assertThat(example.getAttributes().getAsyncEventQueueIds().iterator().next()).isEqualTo("AEQ");
-		assertGatewaySenders(example, Collections.singletonList("GWS"));
 	}
 
 	interface Nameable extends BeanNameAware {
@@ -191,18 +177,6 @@ public class LookupRegionMutationIntegrationTests extends IntegrationTestsSuppor
 		public String toString() {
 			return getName();
 		}
-	}
-
-	public static final class TestAsyncEventListener extends AbstractNameable implements AsyncEventListener {
-
-		@Override
-		public boolean processEvents(List<AsyncEvent> events) {
-			throw new UnsupportedOperationException("Not Implemented");
-		}
-
-		@Override
-		public void close() { }
-
 	}
 
 	public static final class TestCacheListener<K, V> extends CacheListenerAdapter<K, V> implements Nameable {

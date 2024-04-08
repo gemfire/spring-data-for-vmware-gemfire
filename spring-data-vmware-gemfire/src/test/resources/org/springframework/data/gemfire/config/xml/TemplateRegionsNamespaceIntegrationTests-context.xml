@@ -22,13 +22,6 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:async-event-queue id="TestAsyncEventQueue" persistent="true" parallel="true" dispatcher-threads="4">
-		<gfe:async-event-listener>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestAsyncEventListener"
-				  p:name="AEL"/>
-		</gfe:async-event-listener>
-	</gfe:async-event-queue>
-
 	<!-- Template Regions -->
 	<gfe:region-template id="BaseRegionTemplate" cloning-enabled="true" concurrency-checks-enabled="false"
 						 disk-synchronous="false" ignore-jta="true" initial-capacity="51" key-constraint="java.lang.Long"
@@ -83,7 +76,7 @@
 		<gfe:cache-writer>
 			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheWriter" p:name="dbWriter"/>
 		</gfe:cache-writer>
-		<gfe:replicated-region name="TemplateBasedReplicateSubRegion" enable-async-conflation="true" load-factor="0.95"
+		<gfe:replicated-region name="TemplateBasedReplicateSubRegion" load-factor="0.95"
 							   template="ExtendedRegionTemplate">
 			<gfe:cache-listener>
 				<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheListener" p:name="testListener"/>
@@ -104,16 +97,11 @@
 	<!-- PARTITION Regions -->
 	<gfe:partitioned-region id="Neighbor" persistent="true" copies="2" total-buckets="91"/>
 
-	<gfe:gateway-sender id="TestGatewaySender" remote-distributed-system-id="123" manual-start="true"
-						persistent="false" parallel="true" dispatcher-threads="8"/>
-
 	<gfe:partitioned-region-template id="PartitionRegionTemplate" copies="1" local-max-memory="1024"
 									 total-max-memory="16384" recovery-delay="60000" startup-recovery-delay="15000"
-									 enable-async-conflation="false" enable-subscription-conflation="true"
+									 enable-subscription-conflation="true"
 									 load-factor="0.70" value-constraint="java.lang.Object"
 									 template="ExtendedRegionTemplate">
-		<gfe:gateway-sender-ref bean="TestGatewaySender"/>
-		<gfe:async-event-queue-ref bean="TestAsyncEventQueue"/>
 		<gfe:partition-resolver>
 			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestPartitionResolver" p:name="testResolver"/>
 		</gfe:partition-resolver>
@@ -121,7 +109,7 @@
 	</gfe:partitioned-region-template>
 
 	<gfe:partitioned-region id="TemplateBasedPartitionRegion" colocated-with="Neighbor" copies="2" local-max-memory="8192"
-							total-buckets="91" disk-synchronous="true" enable-async-conflation="true" ignore-jta="false"
+							total-buckets="91" disk-synchronous="true" ignore-jta="false"
 							key-constraint="java.util.Date" persistent="true" template="PartitionRegionTemplate">
 		<gfe:cache-writer>
 			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheWriter" p:name="dbWriter"/>

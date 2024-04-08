@@ -34,8 +34,6 @@ import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionFactory;
 import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
-import org.apache.geode.cache.wan.GatewaySender;
 import org.apache.geode.compression.Compressor;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -81,8 +79,6 @@ import org.springframework.util.StringUtils;
  * @see RegionFactory
  * @see RegionShortcut
  * @see Scope
- * @see AsyncEventQueue
- * @see GatewaySender
  * @see Compressor
  * @see DisposableBean
  * @see SmartLifecycle
@@ -126,11 +122,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	private ExpirationAttributes entryTimeToLive;
 	private ExpirationAttributes regionIdleTimeout;
 	private ExpirationAttributes regionTimeToLive;
-
-	private final List<AsyncEventQueue> asyncEventQueues = new ArrayList<>();
-	private final List<GatewaySender> gatewaySenders = new ArrayList<>();
-	private final List<String> asyncEventQueueIds = new ArrayList<>();
-	private final List<String> gatewaySenderIds = new ArrayList<>();
 
 	private RegionAttributes<K, V> attributes;
 
@@ -259,8 +250,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 
 		regionFactory.setStatisticsEnabled(resolveStatisticsEnabled());
 
-		getConfiguredAsyncEventQueueIds().forEach(regionFactory::addAsyncEventQueueId);
-
 		Arrays.stream(ArrayUtils.nullSafeArray(this.cacheListeners, CacheListener.class))
 			.forEach(regionFactory::addCacheListener);
 
@@ -285,8 +274,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 		Optional.ofNullable(this.entryTimeToLive).ifPresent(regionFactory::setEntryTimeToLive);
 
 		Optional.ofNullable(this.evictionAttributes).ifPresent(regionFactory::setEvictionAttributes);
-
-		getConfiguredGatewaySenderIds().forEach(regionFactory::addGatewaySenderId);
 
 		Optional.ofNullable(this.keyConstraint).ifPresent(regionFactory::setKeyConstraint);
 
@@ -314,40 +301,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 */
 	protected RegionFactory<K, V> postProcess(RegionFactory<K, V> regionFactory) {
 		return regionFactory;
-	}
-
-	private Set<String> getConfiguredAsyncEventQueueIds() {
-
-		Set<String> asyncEventQueueIds = new HashSet<>();
-
-		CollectionUtils.nullSafeList(this.asyncEventQueues).stream()
-			.filter(Objects::nonNull)
-			.map(AsyncEventQueue::getId)
-			.collect(Collectors.toCollection(() -> asyncEventQueueIds));
-
-		CollectionUtils.nullSafeList(this.asyncEventQueueIds).stream()
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.collect(Collectors.toCollection(() -> asyncEventQueueIds));
-
-		return asyncEventQueueIds;
-	}
-
-	private Set<String> getConfiguredGatewaySenderIds() {
-
-		Set<String> gatewaySenderIds = new HashSet<>();
-
-		CollectionUtils.nullSafeList(this.gatewaySenders).stream()
-			.filter(Objects::nonNull)
-			.map(GatewaySender::getId)
-			.collect(Collectors.toCollection(() -> gatewaySenderIds));
-
-		CollectionUtils.nullSafeList(this.gatewaySenderIds).stream()
-			.filter(StringUtils::hasText)
-			.map(String::trim)
-			.collect(Collectors.toCollection(() -> gatewaySenderIds));
-
-		return gatewaySenderIds;
 	}
 
 	/*
@@ -412,10 +365,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			// NOTE: this validation may not be strictly necessary depending on how the RegionAttributes were "created".
 			validateRegionAttributes(regionAttributes);
 
-			CollectionUtils.nullSafeSet(regionAttributes.getAsyncEventQueueIds()).stream()
-				.filter(StringUtils::hasText)
-				.forEach(regionFactory::addAsyncEventQueueId);
-
 			regionFactory.setCloningEnabled(regionAttributes.getCloningEnabled());
 			regionFactory.setCompressor(regionAttributes.getCompressor());
 			regionFactory.setConcurrencyChecksEnabled(regionAttributes.getConcurrencyChecksEnabled());
@@ -423,7 +372,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			regionFactory.setCustomEntryIdleTimeout(regionAttributes.getCustomEntryIdleTimeout());
 			regionFactory.setCustomEntryTimeToLive(regionAttributes.getCustomEntryTimeToLive());
 			regionFactory.setDiskSynchronous(regionAttributes.isDiskSynchronous());
-			regionFactory.setEnableAsyncConflation(regionAttributes.getEnableAsyncConflation());
 			regionFactory.setEnableSubscriptionConflation(regionAttributes.getEnableSubscriptionConflation());
 			regionFactory.setEntryIdleTimeout(regionAttributes.getEntryIdleTimeout());
 			regionFactory.setEntryTimeToLive(regionAttributes.getEntryTimeToLive());
@@ -432,10 +380,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			if (isUserSpecifiedEvictionAttributes(regionAttributes)) {
 				regionFactory.setEvictionAttributes(regionAttributes.getEvictionAttributes());
 			}
-
-			CollectionUtils.nullSafeSet(regionAttributes.getGatewaySenderIds()).stream()
-				.filter(StringUtils::hasText)
-				.forEach(regionFactory::addGatewaySenderId);
 
 			regionFactory.setIgnoreJTA(regionAttributes.getIgnoreJTA());
 			regionFactory.setIndexMaintenanceSynchronous(regionAttributes.getIndexMaintenanceSynchronous());
@@ -661,79 +605,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * Configures an array of {@link AsyncEventQueue AsyncEventQueues} for this {@link Region}, which are used
-	 * to perform asynchronous data access operations, e.g. {@literal asynchronous, write-behind operations}.
-	 *
-	 * This method clears any existing, registered {@link AsyncEventQueue AsyncEventQueues} (AEQ) already associated
-	 * with this {@link Region}. Use {@link #addAsyncEventQueues(AsyncEventQueue[])}
-	 * or {@link #addAsyncEventQueueIds(String[])} to append to the existing AEQs already registered instead.
-	 *
-	 * @param asyncEventQueues array of {@link AsyncEventQueue AsyncEventQueues} registered with and used by
-	 * this {@link Region} to perform asynchronous data access operations.
-	 * @see AsyncEventQueue
-	 * @see #addAsyncEventQueues(AsyncEventQueue[])
-	 * @see #addAsyncEventQueueIds(String[])
-	 * @see #setAsyncEventQueueIds(String[])
-	 */
-	public void setAsyncEventQueues(@NonNull AsyncEventQueue[] asyncEventQueues) {
-		this.asyncEventQueues.clear();
-		addAsyncEventQueues(asyncEventQueues);
-	}
-
-	/**
-	 * Configures an array of {@link AsyncEventQueue AsyncEventQueues} (AEQ) for this {@link Region}
-	 * by {@link String AEQ ID}.
-	 *
-	 * This method clears any existing, registered {@link AsyncEventQueue AsyncEventQueues} (AEQ) already associated
-	 * with this {@link Region} by {@literal AEQ ID}. Use {@link #addAsyncEventQueues(AsyncEventQueue[])}
-	 * or {@link #addAsyncEventQueueIds(String[])} to append to the existing AEQs already registered instead.
-	 *
-	 * or {@link #addAsyncEventQueueIds(String[])} to append to the existing AEQs already registered instead.
-	 * @param asyncEventQueueIds array of {@link String Strings} specifying {@link String AEQ IDs} to be registered
-	 * with this {@link Region}.
-	 * @see #addAsyncEventQueues(AsyncEventQueue[])
-	 * @see #setAsyncEventQueues(AsyncEventQueue[])
-	 * @see #setAsyncEventQueueIds(String[])
-	 */
-	public void setAsyncEventQueueIds(@NonNull String[] asyncEventQueueIds) {
-		this.asyncEventQueueIds.clear();
-		addAsyncEventQueueIds(asyncEventQueueIds);
-	}
-
-	/**
-	 * Registers the array of {@link AsyncEventQueue AsyncEventQueues} (AEQ) with this {@link Region} by appending to
-	 * the already existing, registered AEQs for this {@link Region}.
-	 *
-	 * @param asyncEventQueues array of {@link AsyncEventQueue AsyncEventQueues} to register with this {@link Region}.
-	 * @see #addAsyncEventQueueIds(String[])
-	 * @see #setAsyncEventQueues(AsyncEventQueue[])
-	 * @see #setAsyncEventQueueIds(String[])
-	 */
-	public void addAsyncEventQueues(@NonNull AsyncEventQueue[] asyncEventQueues) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(asyncEventQueues, AsyncEventQueue.class))
-			.filter(Objects::nonNull)
-			.forEach(this.asyncEventQueues::add);
-	}
-
-	/**
-	 * Registers the array of {@link AsyncEventQueue AsyncEventQueues} (AEQ) with this {@link Region}
-	 * by {@link String ID} by appending to the already existing, registered AEQs for this {@link Region}.
-	 *
-	 * @param asyncEventQueueIds array of {@link AsyncEventQueue AsyncEventQueue} {@link String IDs} to register with
-	 * this {@link Region}.
-	 * @see #addAsyncEventQueues(AsyncEventQueue[])
-	 * @see #setAsyncEventQueues(AsyncEventQueue[])
-	 * @see #setAsyncEventQueueIds(String[])
-	 */
-	public void addAsyncEventQueueIds(@NonNull String[] asyncEventQueueIds) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(asyncEventQueueIds, String.class))
-			.filter(StringUtils::hasText)
-			.forEach(this.asyncEventQueueIds::add);
-	}
-
-	/**
 	 * Sets the {@link RegionAttributes} used to configure this {@link Region}.
 	 *
 	 * Specifying {@link RegionAttributes} allows full control in configuring various {@link Region} settings.
@@ -899,81 +770,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	}
 
 	/**
-	 * Configures the {@link GatewaySender GatewaySenders} used to send data and events from this {@link Region}
-	 * to a matching {@link Region} in a remote cluster.
-	 *
-	 * This method clears all existing, registered {@link GatewaySender GatewaySenders} already associated with
-	 * this {@link Region}. Use {@link #addGatewaySenders(GatewaySender[])}
-	 * or {@link #addGatewaySendersIds(String[])} to append to the existing, registered
-	 * {@link GatewaySender GatewaySenders} for this {@link Region}.
-	 *
-	 * @param gatewaySenders {@link GatewaySender GatewaySenders} used to send data and events from this {@link Region}
-	 * to a matching {@link Region} in a remote cluster.
-	 * @see GatewaySender
-	 * @see #addGatewaySenders(GatewaySender[])
-	 * @see #addGatewaySendersIds(String[])
-	 * @see #setGatewaySenderIds(String[])
-	 */
-	public void setGatewaySenders(@NonNull GatewaySender[] gatewaySenders) {
-		this.gatewaySenders.clear();
-		addGatewaySenders(gatewaySenders);
-	}
-
-	/**
-	 * Configures the {@link GatewaySender GatewaySenders} by {@link String ID} used to send data and events from
-	 * this {@link Region} to a matching {@link Region} in a remote cluster.
-	 *
-	 * This method clears all existing, registered {@link GatewaySender GatewaySenders} already associated with
-	 * this {@link Region}. Use {@link #addGatewaySenders(GatewaySender[])}
-	 * or {@link #addGatewaySendersIds(String[])} to append to the existing, registered
-	 * {@link GatewaySender GatewaySenders} for this {@link Region}.
-	 *
-	 * @param gatewaySenderIds {@link String} array containing {@link GatewaySender} {@link String IDs} to register
-	 * with this {@link Region}.
-	 * @see #addGatewaySenders(GatewaySender[])
-	 * @see #addGatewaySendersIds(String[])
-	 * @see #setGatewaySenders(GatewaySender[])
-	 */
-	public void setGatewaySenderIds(@NonNull String[] gatewaySenderIds) {
-		this.gatewaySenderIds.clear();
-		addGatewaySendersIds(gatewaySenderIds);
-	}
-
-	/**
-	 * Registers the array of {@link GatewaySender GatewaySenders} with this {@link Region} by appending to the already
-	 * existing, registered {@link GatewaySender GatewaySenders} for this {@link Region}.
-	 *
-	 * @param gatewaySenders array of {@link GatewaySender GatewaySenders} to register with this {@link Region}.
-	 * @see GatewaySender
-	 * @see #addGatewaySendersIds(String[])
-	 * @see #setGatewaySenders(GatewaySender[])
-	 * @see #setGatewaySenderIds(String[])
-	 */
-	public void addGatewaySenders(@NonNull GatewaySender[] gatewaySenders) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(gatewaySenders, GatewaySender.class))
-			.filter(Objects::nonNull)
-			.forEach(this.gatewaySenders::add);
-	}
-
-	/**
-	 * Registers the array of {@link GatewaySender} {@link String IDs} with this {@link Region} by appending to
-	 * the already existing, registered {@link GatewaySender GatewaySenders} for this {@link Region}.
-	 *
-	 * @param gatewaySenderIds array of {@link GatewaySender} {@link String IDs} to register with this {@link Region}.
-	 * @see GatewaySender
-	 * @see #addGatewaySenders(GatewaySender[])
-	 * @see #setGatewaySenders(GatewaySender[])
-	 * @see #setGatewaySenderIds(String[])
-	 */
-	public void addGatewaySendersIds(@NonNull String[] gatewaySenderIds) {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(gatewaySenderIds, String.class))
-			.filter(StringUtils::hasText)
-			.forEach(this.gatewaySenderIds::add);
-	}
-
-	/**
 	 * Configures the {@link Class key constraint} used to enforce key {@link Class types} for this {@link Region}.
 	 *
 	 * @param keyConstraint {@link Class} specifying the key type constraint for this {@link Region}.
@@ -1094,17 +890,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	@Override
 	@SuppressWarnings("all")
 	public void start() {
-
-		if (!this.gatewaySenders.isEmpty()) {
-			synchronized(this.gatewaySenders) {
-				this.gatewaySenders.stream()
-					.filter(Objects::nonNull)
-					.filter(gatewaySender -> !gatewaySender.isManualStart())
-					.filter(gatewaySender -> !gatewaySender.isRunning())
-					.forEach(GatewaySender::start);
-			}
-		}
-
 		this.running = true;
 	}
 
@@ -1122,13 +907,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 	 */
 	@Override
 	public void stop() {
-
-		if (!this.gatewaySenders.isEmpty()) {
-			synchronized (this.gatewaySenders) {
-				this.gatewaySenders.forEach(GatewaySender::stop);
-			}
-		}
-
 		this.running = false;
 	}
 

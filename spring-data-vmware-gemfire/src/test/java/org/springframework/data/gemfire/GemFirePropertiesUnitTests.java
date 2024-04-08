@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.apache.geode.distributed.ConfigurationProperties;
 
 import org.springframework.util.ReflectionUtils;
+import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 /**
  * Unit Tests for {@link GemFireProperties}.
@@ -87,10 +88,12 @@ public class GemFirePropertiesUnitTests {
     public void enumeratedGemFirePropertiesContainAllConfigurationProperties() {
 
         Set<String> actualGemFireProperties = resolveActualGemFirePropertyNames();
+        Set<String> unsupportedGemFireProperties = Set.of("async-distribution-timeout", "async-max-queue-size", "async-queue-timeout");
         Set<String> expectedGemFireProperties = resolveExpectedNonDeprecatedGemFirePropertyNames();
         Set<String> missingGemFireProperties = new TreeSet<>(expectedGemFireProperties);
 
         missingGemFireProperties.removeAll(actualGemFireProperties);
+        missingGemFireProperties.removeAll(unsupportedGemFireProperties);
 
         assertThat(missingGemFireProperties)
                 .describedAs("Expected properties in [%s] not in [%s] include (%s)",

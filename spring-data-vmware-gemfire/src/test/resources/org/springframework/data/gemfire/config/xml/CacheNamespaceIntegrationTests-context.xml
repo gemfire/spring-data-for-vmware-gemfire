@@ -26,12 +26,6 @@ default-lazy-init="true">
 	<gfe:cache id="cache-with-xml-and-props" cache-xml-location="classpath:gemfire-cache.xml" properties-ref="gemfireProperties"
 			   pdx-read-serialized="true" pdx-ignore-unread-fields="false" pdx-persistent="true"/>
 
-	<gfe:cache id="cache-with-gateway-conflict-resolver" properties-ref="gemfireProperties">
-		<gfe:gateway-conflict-resolver>
-			<bean class="org.springframework.data.gemfire.config.xml.CacheNamespaceIntegrationTests.TestGatewayConflictResolver"/>
-		</gfe:gateway-conflict-resolver>
-	</gfe:cache>
-
 	<gfe:cache id="cache-with-auto-reconnect-disabled" properties-ref="gemfireProperties" enable-auto-reconnect="false"/>
 
 	<gfe:cache id="cache-with-auto-reconnect-enabled" properties-ref="gemfireProperties" enable-auto-reconnect="true"/>

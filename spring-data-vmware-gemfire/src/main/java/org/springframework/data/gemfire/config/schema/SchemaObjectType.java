@@ -10,13 +10,10 @@ import static java.util.Arrays.stream;
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.asyncqueue.AsyncEventQueue;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.cache.query.Index;
-import org.apache.geode.cache.wan.GatewayReceiver;
-import org.apache.geode.cache.wan.GatewaySender;
 
 /**
  * {@link SchemaObjectType} defines an enumeration of all the types of Apache Geode or Pivotal GemFire schema objects
@@ -24,7 +21,6 @@ import org.apache.geode.cache.wan.GatewaySender;
  * and that can be created remotely, from a client application.
  *
  * @author John Blum
- * @see AsyncEventQueue
  * @see Cache
  * @see DiskStore
  * @see Region
@@ -32,20 +28,15 @@ import org.apache.geode.cache.wan.GatewaySender;
  * @see Pool
  * @see Function
  * @see Index
- * @see GatewayReceiver
- * @see GatewaySender
  * @see SchemaObjectDefinition
  * @since 2.0.0
  */
 public enum SchemaObjectType {
 
-	ASYNC_EVENT_QUEUE(AsyncEventQueue.class),
 	CACHE(Cache.class),
 	CLIENT_CACHE(ClientCache.class),
 	DISK_STORE(DiskStore.class),
 	FUNCTION(Function.class),
-	GATEWAY_RECEIVER(GatewayReceiver.class),
-	GATEWAY_SENDER(GatewaySender.class),
 	INDEX(Index.class),
 	POOL(Pool.class),
 	REGION(Region.class),

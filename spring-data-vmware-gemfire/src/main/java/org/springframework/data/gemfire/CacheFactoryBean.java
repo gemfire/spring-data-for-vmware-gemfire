@@ -17,7 +17,6 @@ import java.util.stream.StreamSupport;
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.util.GatewayConflictResolver;
 import org.apache.geode.internal.datasource.ConfigProperty;
 import org.apache.geode.internal.jndi.JNDIInvoker;
 import org.apache.geode.pdx.PdxSerializer;
@@ -57,8 +56,6 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	private Boolean enableAutoReconnect;
 	private Boolean useClusterConfiguration;
 	private Boolean useUDPMembershipMessenger;
-
-	private GatewayConflictResolver gatewayConflictResolver;
 
 	private Integer lockLease;
 	private Integer lockTimeout;
@@ -243,7 +240,6 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 
 			Cache peerCache = (Cache) cache;
 
-			Optional.ofNullable(getGatewayConflictResolver()).ifPresent(peerCache::setGatewayConflictResolver);
 			Optional.ofNullable(getLockLease()).ifPresent(peerCache::setLockLease);
 			Optional.ofNullable(getLockTimeout()).ifPresent(peerCache::setLockTimeout);
 			Optional.ofNullable(getMessageSyncInterval()).ifPresent(peerCache::setMessageSyncInterval);
@@ -305,23 +301,6 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	 */
 	public @Nullable Boolean getEnableAutoReconnect() {
 		return this.enableAutoReconnect;
-	}
-
-	/**
-	 * Requires GemFire 7.0 or higher
-	 * @param gatewayConflictResolver defined as Object in the signature for backward
-	 * compatibility with Gemfire 6 compatibility. This must be an instance of
-	 * {@link GatewayConflictResolver}
-	 */
-	public void setGatewayConflictResolver(@Nullable GatewayConflictResolver gatewayConflictResolver) {
-		this.gatewayConflictResolver = gatewayConflictResolver;
-	}
-
-	/**
-	 * @return the gatewayConflictResolver
-	 */
-	public @Nullable GatewayConflictResolver getGatewayConflictResolver() {
-		return this.gatewayConflictResolver;
 	}
 
 	/**

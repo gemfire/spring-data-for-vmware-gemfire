@@ -26,14 +26,8 @@ public abstract class GemfireUtils extends RegionUtils {
 	public final static String GEMFIRE_VERSION = apacheGeodeVersion();
 	public final static String UNKNOWN = "unknown";
 
-	private static final String ASYNC_EVENT_QUEUE_ELEMENT_NAME = "async-event-queue";
-	private static final String ASYNC_EVENT_QUEUE_TYPE_NAME = "org.apache.geode.cache.asyncqueue.AsyncEventQueue";
 	private static final String CQ_ELEMENT_NAME = "cq-listener-container";
 	private static final String CQ_TYPE_NAME = "org.apache.geode.cache.query.CqQuery";
-	private static final String GATEWAY_RECEIVER_ELEMENT_NAME = "gateway-receiver";
-	private static final String GATEWAY_RECEIVER_TYPE_NAME = "org.apache.geode.cache.wan.GatewayReceiverFactory";
-	private static final String GATEWAY_SENDER_ELEMENT_NAME = "gateway-sender";
-	private static final String GATEWAY_SENDER_TYPE_NAME = "org.apache.geode.cache.wan.GatewaySenderFactory";
 	public static final String GEMFIRE_PRODUCT_NAME = "VMware GemFire";
 
 	public static String apacheGeodeProductName() {
@@ -56,22 +50,11 @@ public abstract class GemfireUtils extends RegionUtils {
 
 	public static boolean isGemfireFeatureAvailable(GemfireFeature feature) {
 
-		boolean featureAvailable = (!GemfireFeature.AEQ.equals(feature) || isAsyncEventQueueAvailable());
-
-		featureAvailable &= (!GemfireFeature.CONTINUOUS_QUERY.equals(feature) || isContinuousQueryAvailable());
-		featureAvailable &= (!GemfireFeature.WAN.equals(feature) || isGatewayAvailable());
-
-		return featureAvailable;
+    return (!GemfireFeature.CONTINUOUS_QUERY.equals(feature) || isContinuousQueryAvailable());
 	}
 
 	public static boolean isGemfireFeatureAvailable(Element element) {
-
-		boolean featureAvailable = (!isAsyncEventQueue(element) || isAsyncEventQueueAvailable());
-
-		featureAvailable &= (!isContinuousQuery(element) || isContinuousQueryAvailable());
-		featureAvailable &= (!isGateway(element) || isGatewayAvailable());
-
-		return featureAvailable;
+		return (!isContinuousQuery(element) || isContinuousQueryAvailable());
 	}
 
 	public static boolean isGemfireFeatureUnavailable(GemfireFeature feature) {
@@ -82,32 +65,12 @@ public abstract class GemfireUtils extends RegionUtils {
 		return !isGemfireFeatureAvailable(element);
 	}
 
-	private static boolean isAsyncEventQueue(Element element) {
-		return ASYNC_EVENT_QUEUE_ELEMENT_NAME.equals(element.getLocalName());
-	}
-
-	private static boolean isAsyncEventQueueAvailable() {
-		return isClassAvailable(ASYNC_EVENT_QUEUE_TYPE_NAME);
-	}
-
 	private static boolean isContinuousQuery(Element element) {
 		return CQ_ELEMENT_NAME.equals(element.getLocalName());
 	}
 
 	private static boolean isContinuousQueryAvailable() {
 		return isClassAvailable(CQ_TYPE_NAME);
-	}
-
-	private static boolean isGateway(Element element) {
-
-		String elementLocalName = element.getLocalName();
-
-		return (GATEWAY_RECEIVER_ELEMENT_NAME.equals(elementLocalName)
-			|| GATEWAY_SENDER_ELEMENT_NAME.equals(elementLocalName));
-	}
-
-	private static boolean isGatewayAvailable() {
-		return isClassAvailable(GATEWAY_SENDER_TYPE_NAME);
 	}
 
 	public static void main(final String... args) {

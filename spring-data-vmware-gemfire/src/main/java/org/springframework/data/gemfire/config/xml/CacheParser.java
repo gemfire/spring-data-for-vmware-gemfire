@@ -95,18 +95,6 @@ class CacheParser extends AbstractSingleBeanDefinitionParser {
 		parsePdxDiskStore(element, parserContext, cacheBuilder);
 		parseJndiBindings(element, parserContext, cacheBuilder);
 
-		Element gatewayConflictResolver =
-			DomUtils.getChildElementByTagName(element, "gateway-conflict-resolver");
-
-		if (gatewayConflictResolver != null) {
-
-			ParsingUtils.throwExceptionWhenGemFireFeatureUnavailable(GemfireFeature.WAN, element.getLocalName(),
-				"gateway-conflict-resolver", parserContext);
-
-			cacheBuilder.addPropertyValue("gatewayConflictResolver", ParsingUtils.parseRefOrSingleNestedBeanDeclaration(
-				gatewayConflictResolver, parserContext, cacheBuilder));
-		}
-
 		List<Element> transactionListeners =
 			DomUtils.getChildElementsByTagName(element, "transaction-listener");
 
