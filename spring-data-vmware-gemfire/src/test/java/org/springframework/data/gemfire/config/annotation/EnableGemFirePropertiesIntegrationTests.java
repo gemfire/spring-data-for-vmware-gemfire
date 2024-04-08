@@ -28,7 +28,7 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
 
 /**
- * Integration tests for {@link EnableGemFireProperties}, {@link EnableHttpService},
+ * Integration tests for {@link EnableGemFireProperties},
  * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
  * {@link EnableSecurity}, {@link EnableSsl},
  * {@link EnableStatistics}.
@@ -69,33 +69,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 				: Function.identity();
 
 		return newApplicationContext(applicationContextInitializer, annotatedClasses);
-	}
-
-	@Test
-	public void httpGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.service.http.bind-address", "10.128.64.32")
-			.withProperty("spring.data.gemfire.service.http.port", "8181")
-			.withProperty("spring.data.gemfire.service.http.ssl-require-authentication", "true")
-			.withProperty("spring.data.gemfire.service.http.dev-rest-api.start", "true");
-
-		newApplicationContext(testPropertySource, TestHttpGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("http-service-bind-address")).isEqualTo("10.128.64.32");
-		assertThat(gemfireProperties.getProperty("http-service-port")).isEqualTo("8181");
-		assertThat(gemfireProperties.getProperty("http-service-ssl-require-authentication")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("start-dev-rest-api")).isEqualTo("true");
 	}
 
 	@Test
@@ -385,12 +358,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@PeerCacheApplication
 	@EnableGemFireProperties
 	static class TestAuthGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableHttpService
-	static class TestHttpGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication

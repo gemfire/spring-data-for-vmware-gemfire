@@ -37,7 +37,6 @@ public class LocatorProcess {
 	private static final String GEMFIRE_NAME = "SpringDataGemFireLocator";
 	private static final String GEMFIRE_LOG_LEVEL = "config";
 	private static final String HOSTNAME_FOR_CLIENTS = "localhost";
-	private static final String HTTP_SERVICE_PORT = "0";
 
 	public static void main(String... args) throws IOException {
 
@@ -73,8 +72,6 @@ public class LocatorProcess {
 
 		distributedSystemProperties.setProperty(GemFireProperties.ENABLE_CLUSTER_CONFIGURATION.getName(),
 			String.valueOf(Boolean.getBoolean("spring.data.gemfire.enable-cluster-configuration")));
-		distributedSystemProperties.setProperty(GemFireProperties.HTTP_SERVICE_PORT.getName(),
-			System.getProperty("spring.data.gemfire.http-service-port", HTTP_SERVICE_PORT));
 		distributedSystemProperties.setProperty(GemFireProperties.JMX_MANAGER.getName(),
 			System.getProperty("spring.data.gemfire.jmx-manager", Boolean.TRUE.toString()));
 		distributedSystemProperties.setProperty(GemFireProperties.JMX_MANAGER_START.getName(),
@@ -108,8 +105,6 @@ public class LocatorProcess {
 			.setRedirectOutput(false)
 			.set(GemFireProperties.ENABLE_CLUSTER_CONFIGURATION.getName(),
 				String.valueOf(getBoolean("spring.data.gemfire.enable-cluster-configuration")))
-			.set(GemFireProperties.HTTP_SERVICE_PORT.getName(),
-				getProperty("spring.data.gemfire.http-service-port", HTTP_SERVICE_PORT))
 			.set(GemFireProperties.JMX_MANAGER.getName(), Boolean.TRUE.toString())
 			.set(GemFireProperties.JMX_MANAGER_START.getName(), Boolean.FALSE.toString())
 			.set(GemFireProperties.LOAD_CLUSTER_CONFIGURATION_FROM_DIR.getName(),

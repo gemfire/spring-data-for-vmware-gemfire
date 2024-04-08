@@ -793,10 +793,6 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", serviceProperty("memcached."), propertyNameSuffix);
 	}
 
-	protected String httpServiceProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", serviceProperty("http."), propertyNameSuffix);
-	}
-
 	/**
 	 * Returns the fully-qualified {@link String property name}.
 	 *
