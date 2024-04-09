@@ -241,7 +241,6 @@ public @interface EnableSsl {
 		ALL(SecurableCommunicationChannels.ALL),
 		CLUSTER(SecurableCommunicationChannels.CLUSTER),
 		GATEWAY(SecurableCommunicationChannels.GATEWAY),
-		JMX(SecurableCommunicationChannels.JMX),
 		LOCATOR(SecurableCommunicationChannels.LOCATOR),
 		SERVER(SecurableCommunicationChannels.SERVER),
 		WEB(SecurableCommunicationChannels.WEB);

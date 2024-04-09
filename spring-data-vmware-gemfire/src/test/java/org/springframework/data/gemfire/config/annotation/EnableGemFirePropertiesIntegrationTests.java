@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * Integration tests for {@link EnableGemFireProperties},
- * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager},
+ * {@link EnableLocator}, {@link EnableLogging},
  * {@link EnableSecurity}, {@link EnableSsl}, {@link EnableStatistics}.
  *
  * @author John Blum
@@ -52,20 +52,20 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	private ConfigurableApplicationContext newApplicationContext(PropertySource<?> testPropertySource,
-		Class<?>... annotatedClasses) {
+																															 Class<?>... annotatedClasses) {
 
 		Function<ConfigurableApplicationContext, ConfigurableApplicationContext> applicationContextInitializer =
-			testPropertySource != null ? applicationContext -> {
-				Optional.ofNullable(testPropertySource).ifPresent(it -> {
+				testPropertySource != null ? applicationContext -> {
+					Optional.ofNullable(testPropertySource).ifPresent(it -> {
 
-					MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
+						MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
 
-					propertySources.addFirst(testPropertySource);
-				});
+						propertySources.addFirst(testPropertySource);
+					});
 
-				return applicationContext;
-			}
-				: Function.identity();
+					return applicationContext;
+				}
+						: Function.identity();
 
 		return newApplicationContext(applicationContextInitializer, annotatedClasses);
 	}
@@ -74,8 +74,8 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	public void locatorGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.locator.host", "10.64.32.16")
-			.withProperty("spring.data.gemfire.locator.port", "11235");
+				.withProperty("spring.data.gemfire.locator.host", "10.64.32.16")
+				.withProperty("spring.data.gemfire.locator.port", "11235");
 
 		newApplicationContext(testPropertySource, TestLocatorGemFirePropertiesConfiguration.class);
 
@@ -96,10 +96,10 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	public void loggingGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.logging.log-disk-space-limit", "100")
-			.withProperty("spring.data.gemfire.logging.log-file", "/path/to/file.log")
-			.withProperty("spring.data.gemfire.logging.log-file-size-limit", "10")
-			.withProperty("spring.data.gemfire.logging.level", "info");
+				.withProperty("spring.data.gemfire.logging.log-disk-space-limit", "100")
+				.withProperty("spring.data.gemfire.logging.log-file", "/path/to/file.log")
+				.withProperty("spring.data.gemfire.logging.log-file-size-limit", "10")
+				.withProperty("spring.data.gemfire.logging.level", "info");
 
 		newApplicationContext(testPropertySource, TestLoggingGemFirePropertiesConfiguration.class);
 
@@ -117,40 +117,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("log-file")).isEqualTo("/path/to/file.log");
 		assertThat(gemfireProperties.getProperty("log-file-size-limit")).isEqualTo("10");
 		assertThat(gemfireProperties.getProperty("log-level")).isEqualTo("info");
-	}
-
-	@Test
-	public void managerGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.manager.access-file", "/path/to/access.control")
-			.withProperty("spring.data.gemfire.manager.bind-address", "10.32.16.8")
-			.withProperty("spring.data.gemfire.manager.hostname-for-clients", "skullbox")
-			.withProperty("spring.data.gemfire.manager.password-file", "/path/to/password.dat")
-			.withProperty("spring.data.gemfire.manager.port", "1199")
-			.withProperty("spring.data.gemfire.manager.start", "true")
-			.withProperty("spring.data.gemfire.manager.update-rate", "1000");
-
-		newApplicationContext(testPropertySource, TestManagerGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("jmx-manager")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("jmx-manager-access-file")).isEqualTo("/path/to/access.control");
-		assertThat(gemfireProperties.getProperty("jmx-manager-bind-address")).isEqualTo("10.32.16.8");
-		assertThat(gemfireProperties.getProperty("jmx-manager-hostname-for-clients")).isEqualTo("skullbox");
-		assertThat(gemfireProperties.getProperty("jmx-manager-password-file")).isEqualTo("/path/to/password.dat");
-		assertThat(gemfireProperties.getProperty("jmx-manager-port")).isEqualTo("1199");
-		assertThat(gemfireProperties.getProperty("jmx-manager-start")).isEqualTo("true");
-		assertThat(gemfireProperties.getProperty("jmx-manager-update-rate")).isEqualTo("1000");
 	}
 
 	@Test
@@ -288,7 +254,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(gemfireProperties).isNotNull();
 		assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("DSA, RSA");
-		assertThat(sslEnabledComponents).isEqualTo("cluster,gateway,jmx,locator,server,web");
+		assertThat(sslEnabledComponents).isEqualTo("cluster,gateway,locator,server,web");
 		assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("TestCert");
 		assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("/path/to/keystore");
 		assertThat(gemfireProperties.getProperty("ssl-keystore-password")).isEqualTo("p@55w0rd");
@@ -349,12 +315,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableManager
-	static class TestManagerGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
 	@EnableGemFireProperties(name = "TestName", groups = { "TestGroupOne", "TestGroupTwo" })
 	static class TestNameAndGroupsAnnotationBasedGemFirePropertiesConfiguration { }
 
@@ -386,7 +346,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@PeerCacheApplication
 	@EnableGemFireProperties
 	@EnableSsl(ciphers = "FISH", components = {
-		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY, EnableSsl.Component.JMX,
+		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY,
 		EnableSsl.Component.LOCATOR, EnableSsl.Component.SERVER, EnableSsl.Component.WEB
 	}, componentCertificateAliases = {
 		@EnableSsl.ComponentAlias(component = EnableSsl.Component.GATEWAY, alias = "WanCert"),
