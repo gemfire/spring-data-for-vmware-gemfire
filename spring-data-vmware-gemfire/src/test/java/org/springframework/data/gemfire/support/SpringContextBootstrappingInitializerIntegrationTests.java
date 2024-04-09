@@ -59,9 +59,6 @@ import org.springframework.util.Assert;
 public class SpringContextBootstrappingInitializerIntegrationTests extends IntegrationTestsSupport {
 
 	protected static final String GEMFIRE_LOG_LEVEL = "error";
-	protected static final String GEMFIRE_JMX_MANAGER = "true";
-	protected static final String GEMFIRE_JMX_MANAGER_PORT = "1199";
-	protected static final String GEMFIRE_JMX_MANAGER_START = "true";
 	protected static final String GEMFIRE_NAME = SpringContextBootstrappingInitializerIntegrationTests.class.getSimpleName();
 	protected static final String GEMFIRE_START_LOCATORS = "localhost[11235]";
 
@@ -88,10 +85,6 @@ public class SpringContextBootstrappingInitializerIntegrationTests extends Integ
 			.set("name", GEMFIRE_NAME)
 			.set("log-level", GEMFIRE_LOG_LEVEL)
 			.set("cache-xml-file", cacheXmlFile)
-			//.set("start-locator", GEMFIRE_START_LOCATORS)
-			//.set("jmx-manager", GEMFIRE_JMX_MANAGER)
-			//.set("jmx-manager-port", GEMFIRE_JMX_MANAGER_PORT)
-			//.set("jmx-manager-start", GEMFIRE_JMX_MANAGER_START)
 			.create();
 
 		assertThat(gemfireCache)

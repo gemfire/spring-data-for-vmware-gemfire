@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,7 +18,6 @@ import org.junit.Test;
 import org.apache.geode.distributed.ConfigurationProperties;
 
 import org.springframework.util.ReflectionUtils;
-import org.testcontainers.shaded.com.google.common.collect.Lists;
 
 /**
  * Unit Tests for {@link GemFireProperties}.
@@ -33,7 +30,30 @@ import org.testcontainers.shaded.com.google.common.collect.Lists;
  */
 public class GemFirePropertiesUnitTests {
 
-    private static final Set<String> deprecatedGemFireProperties = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+    private static final Set<String> unsupportedGemFireProperties = Set.of(
+        "memcached-bind-address",
+        "memcached-port",
+        "memcached-protocol",
+        "async-distribution-timeout",
+        "async-max-queue-size",
+        "async-queue-timeout",
+        "enable-management-rest-service",
+        "http-service-bind-address",
+        "http-service-port",
+        "start-dev-rest-api",
+        "jmx-manager",
+        "jmx-manager-access-file",
+        "jmx-manager-bind-address",
+        "jmx-manager-hostname-for-clients",
+        "jmx-manager-password-file",
+        "jmx-manager-port",
+        "jmx-manager-start",
+        "jmx-manager-update-rate",
+        "disable-jmx",
+        "ssl-jmx-alias"
+    );
+
+    private static final Set<String> deprecatedGemFireProperties = Set.of(
             "disable-tcp",
             "mcast-address",
             "mcast-flow-control",
@@ -61,7 +81,7 @@ public class GemFirePropertiesUnitTests {
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
             "security-peer-authenticator" // replaced by SecurityManager
-    )));
+    );
 
     private Set<String> resolveActualGemFirePropertyNames() {
 
@@ -88,10 +108,6 @@ public class GemFirePropertiesUnitTests {
     public void enumeratedGemFirePropertiesContainAllConfigurationProperties() {
 
         Set<String> actualGemFireProperties = resolveActualGemFirePropertyNames();
-        Set<String> unsupportedGemFireProperties = Set.of(
-            "async-distribution-timeout", "async-max-queue-size", "async-queue-timeout",
-            "enable-management-rest-service", "http-service-bind-address", "http-service-port", "start-dev-rest-api",
-            "memcached-bind-address", "memcached-port", "memcached-protocol");
         Set<String> expectedGemFireProperties = resolveExpectedNonDeprecatedGemFirePropertyNames();
         Set<String> missingGemFireProperties = new TreeSet<>(expectedGemFireProperties);
 
