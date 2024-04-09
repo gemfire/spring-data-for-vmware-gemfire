@@ -26,7 +26,6 @@ import org.springframework.data.gemfire.config.annotation.CacheServerConfigurer;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.EnableLocator;
 import org.springframework.data.gemfire.config.annotation.EnableLogging;
-import org.springframework.data.gemfire.config.annotation.EnableManager;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.util.ClassUtils;
 
@@ -53,7 +52,6 @@ import org.slf4j.LoggerFactory;
  * @see CacheServerConfigurer
  * @see ClientCacheConfigurer
  * @see EnableLocator
- * @see EnableManager
  * @since 1.0.0
  */
 @Configuration
@@ -100,19 +98,6 @@ public class ClientServerIntegrationTestsConfiguration {
 	@EnableLogging
 	@Profile("locator")
 	static class LocatorConfiguration { }
-
-	@Configuration
-	@EnableLocator
-	@EnableLogging
-	@EnableManager(start = true)
-	@Profile("locator-manager")
-	static class LocatorManagerConfiguration { }
-
-	@Configuration
-	@EnableLogging
-	@EnableManager(start = true)
-	@Profile("manager")
-	static class ManagerConfiguration { }
 
 	public static class SpringBootIsAbsentCondition implements Condition {
 

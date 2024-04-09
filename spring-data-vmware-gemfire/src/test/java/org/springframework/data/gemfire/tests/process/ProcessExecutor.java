@@ -169,7 +169,6 @@ public abstract class ProcessExecutor {
 			command.add("java.base/java.util=ALL-UNNAMED");
 			command.add("--add-exports=java.base/sun.nio.ch=ALL-UNNAMED");
 			command.add("--add-exports=java.base/sun.security.x509=ALL-UNNAMED");
-			command.add("--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED");
 			command.add("--add-opens=java.base/java.lang=ALL-UNNAMED");
 			command.add("--add-opens=java.base/java.nio=ALL-UNNAMED");
 			command.add("--add-opens=java.base/java.util=ALL-UNNAMED");

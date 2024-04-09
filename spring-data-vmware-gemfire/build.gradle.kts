@@ -128,8 +128,6 @@ gradle.taskGraph.whenReady {
     "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
     // Tests: CertificateBuilder uses numerous types declared here
     "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
-    // Product: ManagementAgent"s custom MBean servers extend types declared here
-    "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
     // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
     "--add-opens=java.base/java.lang=ALL-UNNAMED",
     // Product: AddressableMemoryManager accesses DirectByteBuffer constructor

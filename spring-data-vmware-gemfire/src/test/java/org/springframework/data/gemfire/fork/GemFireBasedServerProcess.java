@@ -55,8 +55,6 @@ public class GemFireBasedServerProcess {
 			.setCommand(ServerLauncher.Command.START)
 			.setDisableDefaultServer(true)
 			.setRedirectOutput(false)
-			.set(GemFireProperties.JMX_MANAGER.getName(), Boolean.TRUE.toString())
-			.set(GemFireProperties.JMX_MANAGER_START.getName(), Boolean.FALSE.toString())
 			.set(GemFireProperties.LOG_LEVEL.getName(), getProperty("spring.data.gemfire.log-level", GEMFIRE_LOG_LEVEL))
 			.set(GemFireProperties.USE_CLUSTER_CONFIGURATION.getName(), getProperty("spring.data.gemfire.use-cluster-configuration", GEMFIRE_USE_CLUSTER_CONFIGURATION))
 			.build();
