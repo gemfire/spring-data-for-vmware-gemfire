@@ -29,9 +29,8 @@ import org.springframework.util.StringUtils;
 
 /**
  * Integration tests for {@link EnableGemFireProperties},
- * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager}, {@link EnableMemcachedServer},
- * {@link EnableSecurity}, {@link EnableSsl},
- * {@link EnableStatistics}.
+ * {@link EnableLocator}, {@link EnableLogging}, {@link EnableManager},
+ * {@link EnableSecurity}, {@link EnableSsl}, {@link EnableStatistics}.
  *
  * @author John Blum
  * @see java.util.Properties
@@ -152,29 +151,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(gemfireProperties.getProperty("jmx-manager-port")).isEqualTo("1199");
 		assertThat(gemfireProperties.getProperty("jmx-manager-start")).isEqualTo("true");
 		assertThat(gemfireProperties.getProperty("jmx-manager-update-rate")).isEqualTo("1000");
-	}
-
-	@Test
-	public void memcachedServerGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.service.memcached.port", "2468")
-			.withProperty("spring.data.gemfire.service.memcached.protocol", "BINARY");
-
-		newApplicationContext(testPropertySource, TestMemcachedServerGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("memcached-port")).isEqualTo("2468");
-		assertThat(gemfireProperties.getProperty("memcached-protocol")).isEqualTo("BINARY");
 	}
 
 	@Test
@@ -376,12 +352,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@EnableGemFireProperties
 	@EnableManager
 	static class TestManagerGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableMemcachedServer
-	static class TestMemcachedServerGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication
