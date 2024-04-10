@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2023-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -10,7 +15,6 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -21,7 +25,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 import static org.springframework.data.gemfire.tests.util.IOUtils.doSafeIo;
-import static org.springframework.data.gemfire.tests.util.ObjectUtils.rethrowAsRuntimeException;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeSet;
@@ -53,7 +56,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -62,9 +64,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import org.mockito.ArgumentMatchers;
-import org.mockito.stubbing.Answer;
 
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.Cache;
@@ -142,7 +141,9 @@ import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.distributed.internal.DistributionConfig;
 import org.apache.geode.internal.cache.PoolManagerImpl;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.apache.xbean.asm9.tree.analysis.Analyzer;
+import org.mockito.ArgumentMatchers;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.IndexType;
@@ -163,8 +164,8 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link GemFireMockObjectsSupport} class is an abstract base class encapsulating factory methods for creating
- * Apache Geode or VMware (Pivotal) GemFire Mock Objects (e.g. {@link Cache}, {@link ClientCache}, {@link Region},
- * and so on).
+ * Apache Geode or VMware (Pivotal) GemFire Mock Objects (e.g. {@link Cache}, {@link ClientCache}, {@link Region}, and
+ * so on).
  *
  * @author John Blum
  * @see File
@@ -272,15 +273,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	private static final String USE_SINGLETON_CACHE_PROPERTY = "spring.data.gemfire.test.cache.singleton";
 	private static final String WHERE_KEYWORD = "WHERE";
 
-	private static final String[] GEMFIRE_OBJECT_BASED_PROPERTIES = {
-		"security-client-auth-init",
-		"security-manager",
-		"security-post-processor",
-	};
+	private static final String[] GEMFIRE_OBJECT_BASED_PROPERTIES = { "security-client-auth-init", "security-manager",
+			"security-post-processor", };
 
-	private static final String[] SPRING_DATA_GEODE_TEST_PROPERTIES = {
-		USE_SINGLETON_CACHE_PROPERTY,
-	};
+	private static final String[] SPRING_DATA_GEODE_TEST_PROPERTIES = { USE_SINGLETON_CACHE_PROPERTY, };
 
 	/**
 	 * Destroys all mock object state.
@@ -311,7 +307,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	static void clearSpringDataGeodeTestProperties() {
 		Arrays.stream(ArrayUtils.nullSafeArray(SPRING_DATA_GEODE_TEST_PROPERTIES, String.class))
-			.forEach(System::clearProperty);
+				.forEach(System::clearProperty);
 	}
 
 	/**
@@ -336,15 +332,13 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	static synchronized void destroyGemFireObjects() {
 
-		cachedGemFireObjects.stream()
-			.filter(gemfireObject -> gemfireObject instanceof DisposableBean)
-			.map(gemfireObject -> (DisposableBean) gemfireObject)
-			.forEach(disposableBean -> {
-				ObjectUtils.doOperationSafely(() -> {
-					disposableBean.destroy();
-					return null;
+		cachedGemFireObjects.stream().filter(gemfireObject -> gemfireObject instanceof DisposableBean)
+				.map(gemfireObject -> (DisposableBean) gemfireObject).forEach(disposableBean -> {
+					ObjectUtils.doOperationSafely(() -> {
+						disposableBean.destroy();
+						return null;
+					});
 				});
-			});
 
 		cachedGemFireObjects.clear();
 	}
@@ -358,7 +352,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	static synchronized void unregisterFunctions() {
 
 		CollectionUtils.nullSafeMap(FunctionService.getRegisteredFunctions())
-			.forEach((functionId, function) -> FunctionService.unregisterFunction(functionId));
+				.forEach((functionId, function) -> FunctionService.unregisterFunction(functionId));
 	}
 
 	/**
@@ -369,10 +363,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	static synchronized void unregisterManagedPools() {
 
-		CollectionUtils.nullSafeMap(PoolManager.getAll()).values().stream()
-			.filter(Objects::nonNull)
-			.filter(pool -> registeredPoolNames.contains(pool.getName()))
-			.forEach(GemFireMockObjectsSupport::unregister);
+		CollectionUtils.nullSafeMap(PoolManager.getAll()).values().stream().filter(Objects::nonNull)
+				.filter(pool -> registeredPoolNames.contains(pool.getName())).forEach(GemFireMockObjectsSupport::unregister);
 
 		registeredPoolNames.clear();
 	}
@@ -384,13 +376,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	private static synchronized void cacheGemFireObject(Object gemfireObject) {
 
-		Optional.ofNullable(gemfireObject).
-			ifPresent(cachedGemFireObjects::add);
+		Optional.ofNullable(gemfireObject).ifPresent(cachedGemFireObjects::add);
 	}
 
 	/**
-	 * Instantiates all Apache Geode/VMware GemFire objects which have been declared
-	 * via {@link System#getProperties() System properties}.
+	 * Instantiates all Apache Geode/VMware GemFire objects which have been declared via {@link System#getProperties()
+	 * System properties}.
 	 *
 	 * @param <T> {@link Class type} of the {@link GemFireCache}.
 	 * @param gemfireCache reference to the {@link GemFireCache} instance.
@@ -401,12 +392,9 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		Properties localGemfireProperties = gemfireProperties.get();
 
-		Arrays.stream(GEMFIRE_OBJECT_BASED_PROPERTIES)
-			.map(localGemfireProperties::getProperty)
-			.filter(StringUtils::hasText)
-			.filter(className -> ClassUtils.isPresent(className, ClassUtils.getDefaultClassLoader()))
-			.forEach(className ->
-				cacheGemFireObject(ReflectionUtils.createInstanceIfPresent(className, null)));
+		Arrays.stream(GEMFIRE_OBJECT_BASED_PROPERTIES).map(localGemfireProperties::getProperty).filter(StringUtils::hasText)
+				.filter(className -> ClassUtils.isPresent(className, ClassUtils.getDefaultClassLoader()))
+				.forEach(className -> cacheGemFireObject(ReflectionUtils.createInstanceIfPresent(className, null)));
 
 		return gemfireCache;
 	}
@@ -422,25 +410,24 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@SuppressWarnings("unchecked")
 	private static DataPolicy convert(ClientRegionShortcut clientRegionShortcut) {
 
-		return Optional.ofNullable(clientRegionShortcut)
-			.map(shortcut -> {
+		return Optional.ofNullable(clientRegionShortcut).map(shortcut -> {
 
-				switch(shortcut) {
-					case CACHING_PROXY:
-					case CACHING_PROXY_HEAP_LRU:
-					case CACHING_PROXY_OVERFLOW:
-					case LOCAL:
-					case LOCAL_HEAP_LRU:
-					case LOCAL_OVERFLOW:
-						return DataPolicy.NORMAL;
-					case LOCAL_PERSISTENT:
-					case LOCAL_PERSISTENT_OVERFLOW:
-						return DataPolicy.PERSISTENT_REPLICATE;
-					case PROXY:
-						return DataPolicy.EMPTY;
-					default:
-						return null;
-				}
+			switch (shortcut) {
+				case CACHING_PROXY:
+				case CACHING_PROXY_HEAP_LRU:
+				case CACHING_PROXY_OVERFLOW:
+				case LOCAL:
+				case LOCAL_HEAP_LRU:
+				case LOCAL_OVERFLOW:
+					return DataPolicy.NORMAL;
+				case LOCAL_PERSISTENT:
+				case LOCAL_PERSISTENT_OVERFLOW:
+					return DataPolicy.PERSISTENT_REPLICATE;
+				case PROXY:
+					return DataPolicy.EMPTY;
+				default:
+					return null;
+			}
 
 		}).orElse(DataPolicy.DEFAULT);
 	}
@@ -456,42 +443,41 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@SuppressWarnings("unchecked")
 	private static DataPolicy convert(RegionShortcut regionShortcut) {
 
-		return Optional.ofNullable(regionShortcut)
-			.map(shortcut -> {
+		return Optional.ofNullable(regionShortcut).map(shortcut -> {
 
-				switch (shortcut) {
-					case LOCAL:
-					case LOCAL_HEAP_LRU:
-					case LOCAL_OVERFLOW:
-						return DataPolicy.NORMAL;
-					case PARTITION:
-					case PARTITION_HEAP_LRU:
-					case PARTITION_OVERFLOW:
-					case PARTITION_PROXY:
-					case PARTITION_PROXY_REDUNDANT:
-					case PARTITION_REDUNDANT:
-					case PARTITION_REDUNDANT_HEAP_LRU:
-					case PARTITION_REDUNDANT_OVERFLOW:
-						return DataPolicy.PARTITION;
-					case PARTITION_PERSISTENT:
-					case PARTITION_PERSISTENT_OVERFLOW:
-					case PARTITION_REDUNDANT_PERSISTENT:
-					case PARTITION_REDUNDANT_PERSISTENT_OVERFLOW:
-						return DataPolicy.PERSISTENT_PARTITION;
-					case REPLICATE:
-					case REPLICATE_HEAP_LRU:
-					case REPLICATE_OVERFLOW:
-						return DataPolicy.REPLICATE;
-					case LOCAL_PERSISTENT:
-					case LOCAL_PERSISTENT_OVERFLOW:
-					case REPLICATE_PERSISTENT:
-					case REPLICATE_PERSISTENT_OVERFLOW:
-						return DataPolicy.PERSISTENT_REPLICATE;
-					case REPLICATE_PROXY:
-						return DataPolicy.EMPTY;
-					default:
-						return null;
-				}
+			switch (shortcut) {
+				case LOCAL:
+				case LOCAL_HEAP_LRU:
+				case LOCAL_OVERFLOW:
+					return DataPolicy.NORMAL;
+				case PARTITION:
+				case PARTITION_HEAP_LRU:
+				case PARTITION_OVERFLOW:
+				case PARTITION_PROXY:
+				case PARTITION_PROXY_REDUNDANT:
+				case PARTITION_REDUNDANT:
+				case PARTITION_REDUNDANT_HEAP_LRU:
+				case PARTITION_REDUNDANT_OVERFLOW:
+					return DataPolicy.PARTITION;
+				case PARTITION_PERSISTENT:
+				case PARTITION_PERSISTENT_OVERFLOW:
+				case PARTITION_REDUNDANT_PERSISTENT:
+				case PARTITION_REDUNDANT_PERSISTENT_OVERFLOW:
+					return DataPolicy.PERSISTENT_PARTITION;
+				case REPLICATE:
+				case REPLICATE_HEAP_LRU:
+				case REPLICATE_OVERFLOW:
+					return DataPolicy.REPLICATE;
+				case LOCAL_PERSISTENT:
+				case LOCAL_PERSISTENT_OVERFLOW:
+				case REPLICATE_PERSISTENT:
+				case REPLICATE_PERSISTENT_OVERFLOW:
+					return DataPolicy.PERSISTENT_REPLICATE;
+				case REPLICATE_PROXY:
+					return DataPolicy.EMPTY;
+				default:
+					return null;
+			}
 
 		}).orElse(DataPolicy.DEFAULT);
 	}
@@ -512,28 +498,27 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * Determines whether the {@link Region} identified by the given {@link String path} is a root {@link Region}.
 	 *
 	 * @param regionPath {@link String path} identifying the {@link Region} to evaluate.
-	 * @return a boolean value indicating whether the {@link Region} identified by the given {@link String path}
-	 * is a root {@link Region}.
+	 * @return a boolean value indicating whether the {@link Region} identified by the given {@link String path} is a root
+	 *         {@link Region}.
 	 */
 	private static boolean isRootRegion(String regionPath) {
 		return regionPath.lastIndexOf(Region.SEPARATOR) <= 0;
 	}
 
 	/**
-	 * Normalizes the {@link String name} of the Apache Geode/VMware GemFire System property by stripping off
-	 * the {@literal gemfire.} prefix.
+	 * Normalizes the {@link String name} of the Apache Geode/VMware GemFire System property by stripping off the
+	 * {@literal gemfire.} prefix.
 	 *
 	 * @param propertyName {@link String name} of the property to normalize.
 	 * @return the {@link String normalized form} of the Apache Geode/VMware GemFire System property.
-	 * @see <a href="https://geode.apache.org/docs/guide/16/reference/topics/gemfire_properties.html">GemFire Properties</a>
+	 * @see <a href="https://geode.apache.org/docs/guide/16/reference/topics/gemfire_properties.html">GemFire
+	 *      Properties</a>
 	 */
 	private static String normalizeGemFirePropertyName(String propertyName) {
 
-		return Optional.ofNullable(propertyName)
-			.filter(StringUtils::hasText)
-			.filter(it -> it.startsWith(GEMFIRE_SYSTEM_PROPERTY_PREFIX))
-			.map(it -> it.substring(GEMFIRE_SYSTEM_PROPERTY_PREFIX.length()))
-			.orElse(propertyName);
+		return Optional.ofNullable(propertyName).filter(StringUtils::hasText)
+				.filter(it -> it.startsWith(GEMFIRE_SYSTEM_PROPERTY_PREFIX))
+				.map(it -> it.substring(GEMFIRE_SYSTEM_PROPERTY_PREFIX.length())).orElse(propertyName);
 	}
 
 	/**
@@ -548,9 +533,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		regionPath = regionPath.replaceAll(REPEATING_REGION_SEPARATOR, Region.SEPARATOR);
 
-		regionPath = regionPath.endsWith(Region.SEPARATOR)
-			? regionPath.substring(0, regionPath.length() - 1)
-			: regionPath;
+		regionPath = regionPath.endsWith(Region.SEPARATOR) ? regionPath.substring(0, regionPath.length() - 1) : regionPath;
 
 		return regionPath;
 	}
@@ -564,7 +547,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * @see GemFireCache
 	 */
 	@SuppressWarnings("unchecked")
-	private static @Nullable  <T extends GemFireCache> T referTo(@Nullable T gemfireCache) {
+	private static @Nullable <T extends GemFireCache> T referTo(@Nullable T gemfireCache) {
 		return (T) cacheReference.updateAndGet(currentCacheReference -> gemfireCache);
 	}
 
@@ -581,16 +564,14 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	private static <T extends GemFireCache> T rememberMockedGemFireCache(T mockedGemFireCache,
 			boolean useSingletonCache) {
 
-		return Optional.ofNullable(mockedGemFireCache)
-			.map(it -> {
+		return Optional.ofNullable(mockedGemFireCache).map(it -> {
 
-				if (useSingletonCache) {
-					singletonCache.compareAndSet(null, it);
-				}
+			if (useSingletonCache) {
+				singletonCache.compareAndSet(null, it);
+			}
 
-				return it;
-			})
-			.orElseThrow(() -> newIllegalArgumentException("GemFireCache is required"));
+			return it;
+		}).orElseThrow(() -> newIllegalArgumentException("GemFireCache is required"));
 	}
 
 	/**
@@ -607,9 +588,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@SuppressWarnings("unchecked")
 	private static <K, V> Region<K, V> rememberMockedRegion(Region<K, V> mockRegion) {
 
-		String mockRegionPath = Optional.ofNullable(mockRegion)
-			.map(Region::getFullPath)
-			.orElseThrow(() -> newIllegalArgumentException("Region is required"));
+		String mockRegionPath = Optional.ofNullable(mockRegion).map(Region::getFullPath)
+				.orElseThrow(() -> newIllegalArgumentException("Region is required"));
 
 		if (regions.putIfAbsent(mockRegionPath, (Region) mockRegion) != null) {
 			throw new RegionExistsException(mockRegion);
@@ -622,7 +602,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 	/**
 	 * Resolves any {@link GemFireCache} object created by the Spring Test for Apache Geode mock objects test framework.
-	 *
 	 * If {@literal Singleton} caches are not used (default is {@literal false}), then the reference will store the last
 	 * mock {@link GemFireCache} object created by the Apache Geode mock objects test framework.
 	 *
@@ -646,8 +625,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@SuppressWarnings("unchecked")
 	private static <T extends GemFireCache> Optional<T> resolveMockedGemFireCache(boolean useSingletonCache) {
 
-		return Optional.ofNullable((T) singletonCache.get())
-			.filter(it -> useSingletonCache);
+		return Optional.ofNullable((T) singletonCache.get()).filter(it -> useSingletonCache);
 	}
 
 	/**
@@ -664,9 +642,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@NonNull
 	private static <K, V> RegionAttributes<K, V> resolveRegionAttributes(String regionAttributesId) {
 
-		return (RegionAttributes<K, V>) Optional.ofNullable(regionAttributes.get(regionAttributesId))
-			.orElseThrow(() -> newIllegalStateException("RegionAttributes with ID [%s] cannot be found",
-				regionAttributesId));
+		return (RegionAttributes<K, V>) Optional.ofNullable(regionAttributes.get(regionAttributesId)).orElseThrow(
+				() -> newIllegalStateException("RegionAttributes with ID [%s] cannot be found", regionAttributesId));
 	}
 
 	/**
@@ -675,9 +652,9 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * @param <K> {@link Class type} of the {@link Region} key.
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to construct, configure and initialize
-	 * {@link RegionAttributes}.
-	 * @return a {@link RegionAttributes} object created from the given {@link ClientRegionShortcut}
-	 * or {@literal null} if the {@link ClientRegionShortcut} is {@literal null}.
+	 *          {@link RegionAttributes}.
+	 * @return a {@link RegionAttributes} object created from the given {@link ClientRegionShortcut} or {@literal null} if
+	 *         the {@link ClientRegionShortcut} is {@literal null}.
 	 * @see ClientRegionShortcut
 	 * @see RegionAttributes
 	 */
@@ -689,20 +666,18 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		if (clientRegionShortcut != null) {
 
-			ClientRegionShortcutWrapper clientRegionShortcutWrapper =
-				ClientRegionShortcutWrapper.valueOf(clientRegionShortcut);
+			ClientRegionShortcutWrapper clientRegionShortcutWrapper = ClientRegionShortcutWrapper
+					.valueOf(clientRegionShortcut);
 
 			mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
 
 			doReturn(convert(clientRegionShortcut)).when(mockRegionAttributes).getDataPolicy();
 
 			if (clientRegionShortcutWrapper.isHeapLru()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes())
-					.when(mockRegionAttributes).getEvictionAttributes();
-			}
-			else if (clientRegionShortcutWrapper.isOverflow()) {
+				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();
+			} else if (clientRegionShortcutWrapper.isOverflow()) {
 				doReturn(EvictionAttributes.createLRUHeapAttributes(null, EvictionAction.OVERFLOW_TO_DISK))
-					.when(mockRegionAttributes).getEvictionAttributes();
+						.when(mockRegionAttributes).getEvictionAttributes();
 			}
 		}
 
@@ -715,8 +690,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * @param <K> {@link Class type} of the {@link Region} key.
 	 * @param <V> {@link Class type} of the {@link Region} value.
 	 * @param regionShortcut {@link RegionShortcut} used to construct, configure and initialize {@link RegionAttributes}.
-	 * @return a {@link RegionAttributes} object created from the given {@link RegionShortcut} or {@literal null}
-	 * if the {@link RegionShortcut} is {@literal null}.
+	 * @return a {@link RegionAttributes} object created from the given {@link RegionShortcut} or {@literal null} if the
+	 *         {@link RegionShortcut} is {@literal null}.
 	 * @see RegionAttributes
 	 * @see RegionShortcut
 	 */
@@ -736,12 +711,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			doReturn(convert(regionShortcut)).when(mockRegionAttributes).getDataPolicy();
 
 			if (regionShortcutWrapper.isHeapLru()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes())
-					.when(mockRegionAttributes).getEvictionAttributes();
-			}
-			else if (regionShortcutWrapper.isOverflow()) {
+				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();
+			} else if (regionShortcutWrapper.isOverflow()) {
 				doReturn(EvictionAttributes.createLRUHeapAttributes(null, EvictionAction.OVERFLOW_TO_DISK))
-					.when(mockRegionAttributes).getEvictionAttributes();
+						.when(mockRegionAttributes).getEvictionAttributes();
 			}
 
 			if (regionShortcutWrapper.isLocal()) {
@@ -750,8 +723,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			if (regionShortcutWrapper.isPartition()) {
 
-				PartitionAttributes<K, V> mockPartitionAttributes =
-					mock(PartitionAttributes.class, withSettings().lenient());
+				PartitionAttributes<K, V> mockPartitionAttributes = mock(PartitionAttributes.class, withSettings().lenient());
 
 				if (regionShortcut.isProxy()) {
 					doReturn(0).when(mockPartitionAttributes).getLocalMaxMemory();
@@ -777,22 +749,19 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 *
 	 * @param regionName {@link String Region name} to evaluate.
 	 * @return a proper {@link Region#getName() Region name} from the given {@link String Region name}.
-	 * @throws IllegalArgumentException if {@link String Region name} is {@literal null}
-	 * or {@link String#isEmpty() empty}.
+	 * @throws IllegalArgumentException if {@link String Region name} is {@literal null} or {@link String#isEmpty()
+	 *           empty}.
 	 * @see String
 	 */
 	private static String toRegionName(String regionName) {
 
-		return Optional.ofNullable(regionName)
-			.map(String::trim)
-			.map(it -> {
+		return Optional.ofNullable(regionName).map(String::trim).map(it -> {
 
-				int lastIndexOfRegionSeparator = it.lastIndexOf(Region.SEPARATOR);
+			int lastIndexOfRegionSeparator = it.lastIndexOf(Region.SEPARATOR);
 
-				return lastIndexOfRegionSeparator < 0 ? it : it.substring(lastIndexOfRegionSeparator + 1);
-			})
-			.filter(it -> !it.isEmpty())
-			.orElseThrow(() -> newIllegalArgumentException("Region name [%s] is required", regionName));
+			return lastIndexOfRegionSeparator < 0 ? it : it.substring(lastIndexOfRegionSeparator + 1);
+		}).filter(it -> !it.isEmpty())
+				.orElseThrow(() -> newIllegalArgumentException("Region name [%s] is required", regionName));
 	}
 
 	/**
@@ -800,18 +769,16 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 *
 	 * @param regionPath {@link String Region path} to evaluate.
 	 * @return a proper {@link Region#getFullPath() Region path} from the given {@link String Region path}.
-	 * @throws IllegalArgumentException if {@link String Region path} is {@literal null}
-	 * or {@link String#isEmpty() empty}.
+	 * @throws IllegalArgumentException if {@link String Region path} is {@literal null} or {@link String#isEmpty()
+	 *           empty}.
 	 * @see String
 	 */
 	private static String toRegionPath(String regionPath) {
 
-		return Optional.ofNullable(regionPath)
-			.map(String::trim)
-			.map(it -> it.startsWith(Region.SEPARATOR) ? it : String.format("%1$s%2$s", Region.SEPARATOR, it))
-			.map(GemFireMockObjectsSupport::normalizeRegionPath)
-			.filter(it -> !it.isEmpty())
-			.orElseThrow(() -> newIllegalArgumentException("Region path [%s] is required", regionPath));
+		return Optional.ofNullable(regionPath).map(String::trim)
+				.map(it -> it.startsWith(Region.SEPARATOR) ? it : String.format("%1$s%2$s", Region.SEPARATOR, it))
+				.map(GemFireMockObjectsSupport::normalizeRegionPath).filter(it -> !it.isEmpty())
+				.orElseThrow(() -> newIllegalArgumentException("Region path [%s] is required", regionPath));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -827,8 +794,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		doAnswer(newSetter(copyOnRead, null)).when(mockGemFireCache).setCopyOnRead(anyBoolean());
 
-		doAnswer(newSetter(regionAttributes, null))
-			.when(mockGemFireCache).setRegionAttributes(anyString(), any(RegionAttributes.class));
+		doAnswer(newSetter(regionAttributes, null)).when(mockGemFireCache).setRegionAttributes(anyString(),
+				any(RegionAttributes.class));
 
 		when(mockGemFireCache.getCacheTransactionManager()).thenReturn(mockCacheTransactionManager);
 
@@ -837,25 +804,23 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockGemFireCache.getDistributedSystem()).thenReturn(mockDistributedSystem);
 
 		when(mockGemFireCache.getName()).thenAnswer(invocation -> Optional.ofNullable(gemfireProperties)
-			.map(AtomicReference::get)
-			.map(properties -> properties.getProperty(DistributionConfig.NAME_NAME))
-			.filter(StringUtils::hasText)
-			.orElse(null));
+				.map(AtomicReference::get).map(properties -> properties.getProperty(DistributionConfig.NAME_NAME))
+				.filter(StringUtils::hasText).orElse(null));
 
 		when(mockGemFireCache.getRegionAttributes(anyString()))
-			.thenAnswer(invocation -> regionAttributes.get(invocation.<String>getArgument(0)));
+				.thenAnswer(invocation -> regionAttributes.get(invocation.<String> getArgument(0)));
 
 		when(mockGemFireCache.getResourceManager()).thenReturn(mockResourceManager);
 
 		when(mockGemFireCache.createDiskStoreFactory()).thenAnswer(invocation -> mockDiskStoreFactory());
 
 		when(mockGemFireCache.findDiskStore(anyString()))
-			.thenAnswer(invocation -> diskStores.get(invocation.<String>getArgument(0)));
+				.thenAnswer(invocation -> diskStores.get(invocation.<String> getArgument(0)));
 
 		when(mockGemFireCache.listRegionAttributes()).thenReturn(Collections.unmodifiableMap(regionAttributes));
 
-		doThrow(newUnsupportedOperationException(NOT_SUPPORTED))
-			.when(mockGemFireCache).loadCacheXml(any(InputStream.class));
+		doThrow(newUnsupportedOperationException(NOT_SUPPORTED)).when(mockGemFireCache)
+				.loadCacheXml(any(InputStream.class));
 
 		return mockRegionServiceApi(mockGemFireCache);
 	}
@@ -874,23 +839,21 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			String regionPath = invocation.getArgument(0);
 
-			String resolvedRegionPath = Optional.ofNullable(regionPath)
-				.map(String::trim)
-				.filter(it -> !it.isEmpty())
-				.map(GemFireMockObjectsSupport::toRegionPath)
-				.orElseThrow(() -> newIllegalArgumentException("Region path [%s] is not valid", regionPath));
+			String resolvedRegionPath = Optional.ofNullable(regionPath).map(String::trim).filter(it -> !it.isEmpty())
+					.map(GemFireMockObjectsSupport::toRegionPath)
+					.orElseThrow(() -> newIllegalArgumentException("Region path [%s] is not valid", regionPath));
 
 			return regions.get(resolvedRegionPath);
 		});
 
 		when(mockRegionService.createPdxEnum(anyString(), anyString(), anyInt()))
-			.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
+				.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 
 		when(mockRegionService.createPdxInstanceFactory(anyString()))
-			.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
+				.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 
-		when(mockRegionService.rootRegions()).thenAnswer(invocation ->
-			regions.values().stream().filter(GemFireMockObjectsSupport::isRootRegion).collect(Collectors.toSet()));
+		when(mockRegionService.rootRegions()).thenAnswer(invocation -> regions.values().stream()
+				.filter(GemFireMockObjectsSupport::isRootRegion).collect(Collectors.toSet()));
 
 		return mockRegionService;
 	}
@@ -901,11 +864,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		doAnswer(newVoidAnswer(invocation -> mockClientCache.close())).when(mockClientCache).close(anyBoolean());
 
-		when(mockClientCache.createClientRegionFactory(any(ClientRegionShortcut.class))).thenAnswer(invocation ->
-			mockClientRegionFactory(mockClientCache, invocation.<ClientRegionShortcut>getArgument(0)));
+		when(mockClientCache.createClientRegionFactory(any(ClientRegionShortcut.class))).thenAnswer(
+				invocation -> mockClientRegionFactory(mockClientCache, invocation.<ClientRegionShortcut> getArgument(0)));
 
-		when(mockClientCache.createClientRegionFactory(anyString())).thenAnswer(invocation ->
-			mockClientRegionFactory(mockClientCache, invocation.<String>getArgument(0)));
+		when(mockClientCache.createClientRegionFactory(anyString()))
+				.thenAnswer(invocation -> mockClientRegionFactory(mockClientCache, invocation.<String> getArgument(0)));
 
 		return referTo(mockQueryService(mockCacheApi(mockClientCache)));
 	}
@@ -940,8 +903,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return mockCacheServer;
 		});
 
-		doAnswer(newSetter(gatewayConflictResolver, () -> null))
-			.when(mockCache).setGatewayConflictResolver(any(GatewayConflictResolver.class));
+		doAnswer(newSetter(gatewayConflictResolver, () -> null)).when(mockCache)
+				.setGatewayConflictResolver(any(GatewayConflictResolver.class));
 
 		doAnswer(newSetter(lockLease, null)).when(mockCache).setLockLease(anyInt());
 		doAnswer(newSetter(lockTimeout, null)).when(mockCache).setLockTimeout(anyInt());
@@ -950,12 +913,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		when(mockCache.isServer()).thenReturn(true);
 		when(mockCache.getAsyncEventQueues())
-			.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(asyncEventQueues.values())));
+				.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(asyncEventQueues.values())));
 		when(mockCache.getCacheServers()).thenAnswer(invocation -> Collections.unmodifiableList(cacheServers));
 		when(mockCache.getGatewayConflictResolver()).thenAnswer(newGetter(gatewayConflictResolver));
 		when(mockCache.getGatewayReceivers()).thenAnswer(invocation -> Collections.unmodifiableSet(gatewayReceivers));
 		when(mockCache.getGatewaySenders())
-			.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(gatewaySenders.values())));
+				.thenAnswer(invocation -> Collections.unmodifiableSet(new HashSet<>(gatewaySenders.values())));
 		when(mockCache.getLockLease()).thenAnswer(newGetter(lockLease));
 		when(mockCache.getLockTimeout()).thenAnswer(newGetter(lockTimeout));
 		when(mockCache.getMessageSyncInterval()).thenAnswer(newGetter(messageSyncInterval));
@@ -964,14 +927,14 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		when(mockCache.createRegionFactory()).thenAnswer(invocation -> mockRegionFactory(mockCache));
 
-		when(mockCache.createRegionFactory(any(RegionAttributes.class))).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<RegionAttributes<?, ?>>getArgument(0)));
+		when(mockCache.createRegionFactory(any(RegionAttributes.class)))
+				.thenAnswer(invocation -> mockRegionFactory(mockCache, invocation.<RegionAttributes<?, ?>> getArgument(0)));
 
-		when(mockCache.createRegionFactory(any(RegionShortcut.class))).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<RegionShortcut>getArgument(0)));
+		when(mockCache.createRegionFactory(any(RegionShortcut.class)))
+				.thenAnswer(invocation -> mockRegionFactory(mockCache, invocation.<RegionShortcut> getArgument(0)));
 
-		when(mockCache.createRegionFactory(anyString())).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<String>getArgument(0)));
+		when(mockCache.createRegionFactory(anyString()))
+				.thenAnswer(invocation -> mockRegionFactory(mockCache, invocation.<String> getArgument(0)));
 
 		doAnswer(invocation -> {
 
@@ -989,12 +952,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		}).when(mockCache).getGatewaySender(anyString());
 
-		return referTo(
-			mockQueryService(
-				mockGatewaySenderFactory(
-					mockGatewayReceiverFactory(
-						mockAsyncEventQueueFactory(
-							mockCacheApi(mockCache))))));
+		return referTo(mockQueryService(
+				mockGatewaySenderFactory(mockGatewayReceiverFactory(mockAsyncEventQueueFactory(mockCacheApi(mockCache))))));
 	}
 
 	public static Cache mockAsyncEventQueueFactory(Cache mockCache) {
@@ -1021,47 +980,46 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicInteger maximumQueueMemory = new AtomicInteger(100);
 
 		AtomicReference<String> diskStoreName = new AtomicReference<>(null);
-		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter =
-			new AtomicReference<>(null);
+		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter = new AtomicReference<>(null);
 		AtomicReference<GatewaySender.OrderPolicy> orderPolicy = new AtomicReference<>(GatewaySender.OrderPolicy.KEY);
 
 		CopyOnWriteArrayList<GatewayEventFilter> gatewayEventFilters = new CopyOnWriteArrayList<>();
 
 		when(mockAsyncEventQueueFactory.setBatchConflationEnabled(anyBoolean()))
-			.thenAnswer(newSetter(batchConflationEnabled, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(batchConflationEnabled, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setBatchSize(anyInt()))
-			.thenAnswer(newSetter(batchSize, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(batchSize, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setBatchTimeInterval(anyInt()))
-			.thenAnswer(newSetter(batchTimeInterval, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(batchTimeInterval, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(diskStoreName, () -> mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(diskSynchronous, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setDispatcherThreads(anyInt()))
-			.thenAnswer(newSetter(dispatcherThreads, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(dispatcherThreads, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setForwardExpirationDestroy(anyBoolean()))
-			.thenAnswer(newSetter(forwardExpirationDestroy, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(forwardExpirationDestroy, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setGatewayEventSubstitutionListener(any(GatewayEventSubstitutionFilter.class)))
-			.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setMaximumQueueMemory(anyInt()))
-			.thenAnswer(newSetter(maximumQueueMemory, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(maximumQueueMemory, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setOrderPolicy(any(GatewaySender.OrderPolicy.class)))
-			.thenAnswer(newSetter(orderPolicy, () -> mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(orderPolicy, () -> mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setParallel(anyBoolean()))
-			.thenAnswer(newSetter(parallel, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(parallel, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.setPersistent(anyBoolean()))
-			.thenAnswer(newSetter(persistent, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(persistent, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.addGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
 
@@ -1071,11 +1029,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockAsyncEventQueueFactory.pauseEventDispatching())
-			.thenAnswer(newSetter(pauseEventDispatching, true, mockAsyncEventQueueFactory));
+				.thenAnswer(newSetter(pauseEventDispatching, true, mockAsyncEventQueueFactory));
 
 		when(mockAsyncEventQueueFactory.removeGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
 
-			gatewayEventFilters.remove(invocation.<GatewayEventFilter>getArgument(0));
+			gatewayEventFilters.remove(invocation.<GatewayEventFilter> getArgument(0));
 
 			return mockAsyncEventQueueFactory;
 		});
@@ -1102,13 +1060,13 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(mockAsyncEventQueue.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
 			when(mockAsyncEventQueue.getDispatcherThreads()).thenAnswer(newGetter(dispatcherThreads));
 			when(mockAsyncEventQueue.getGatewayEventFilters()).thenReturn(gatewayEventFilters);
-			when(mockAsyncEventQueue.getGatewayEventSubstitutionFilter()).thenAnswer(newGetter(gatewayEventSubstitutionFilter));
+			when(mockAsyncEventQueue.getGatewayEventSubstitutionFilter())
+					.thenAnswer(newGetter(gatewayEventSubstitutionFilter));
 			when(mockAsyncEventQueue.getId()).thenReturn(asyncEventQueueId);
 			when(mockAsyncEventQueue.getMaximumQueueMemory()).thenAnswer(newGetter(maximumQueueMemory));
 			when(mockAsyncEventQueue.getOrderPolicy()).thenAnswer(newGetter(orderPolicy));
 
-			doAnswer(newSetter(pauseEventDispatching, false, null))
-				.when(mockAsyncEventQueue).resumeEventDispatching();
+			doAnswer(newSetter(pauseEventDispatching, false, null)).when(mockAsyncEventQueue).resumeEventDispatching();
 
 			when(mockAsyncEventQueue.size()).thenReturn(0);
 
@@ -1143,50 +1101,37 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		AtomicReference<String[]> groups = new AtomicReference<>(CacheServer.DEFAULT_GROUPS);
 
-		doAnswer(newSetter(bindAddress, () -> null))
-			.when(mockCacheServer).setBindAddress(anyString());
+		doAnswer(newSetter(bindAddress, () -> null)).when(mockCacheServer).setBindAddress(anyString());
 
-		doAnswer(newSetter(groups, () -> null))
-			.when(mockCacheServer).setGroups(any(String[].class));
+		doAnswer(newSetter(groups, () -> null)).when(mockCacheServer).setGroups(any(String[].class));
 
-		doAnswer(newSetter(hostnameForClients, () -> null))
-			.when(mockCacheServer).setHostnameForClients(anyString());
+		doAnswer(newSetter(hostnameForClients, () -> null)).when(mockCacheServer).setHostnameForClients(anyString());
 
-		doAnswer(newSetter(loadPollInterval, null))
-			.when(mockCacheServer).setLoadPollInterval(anyLong());
+		doAnswer(newSetter(loadPollInterval, null)).when(mockCacheServer).setLoadPollInterval(anyLong());
 
-		doAnswer(newSetter(maxConnections, null))
-			.when(mockCacheServer).setMaxConnections(anyInt());
+		doAnswer(newSetter(maxConnections, null)).when(mockCacheServer).setMaxConnections(anyInt());
 
-		doAnswer(newSetter(maxMessageCount, null))
-			.when(mockCacheServer).setMaximumMessageCount(anyInt());
+		doAnswer(newSetter(maxMessageCount, null)).when(mockCacheServer).setMaximumMessageCount(anyInt());
 
-		doAnswer(newSetter(maxThreads, null))
-			.when(mockCacheServer).setMaxThreads(anyInt());
+		doAnswer(newSetter(maxThreads, null)).when(mockCacheServer).setMaxThreads(anyInt());
 
-		doAnswer(newSetter(maxTimeBetweenPings, null))
-			.when(mockCacheServer).setMaximumTimeBetweenPings(anyInt());
+		doAnswer(newSetter(maxTimeBetweenPings, null)).when(mockCacheServer).setMaximumTimeBetweenPings(anyInt());
 
-		doAnswer(newSetter(messageTimeToLive, null))
-			.when(mockCacheServer).setMessageTimeToLive(anyInt());
+		doAnswer(newSetter(messageTimeToLive, null)).when(mockCacheServer).setMessageTimeToLive(anyInt());
 
-		doAnswer(newSetter(port, null))
-			.when(mockCacheServer).setPort(anyInt());
+		doAnswer(newSetter(port, null)).when(mockCacheServer).setPort(anyInt());
 
-		doAnswer(newSetter(serverLoadProbe, () -> null))
-			.when(mockCacheServer).setLoadProbe(any(ServerLoadProbe.class));
+		doAnswer(newSetter(serverLoadProbe, () -> null)).when(mockCacheServer).setLoadProbe(any(ServerLoadProbe.class));
 
-		doAnswer(newSetter(socketBufferSize, null))
-			.when(mockCacheServer).setSocketBufferSize(anyInt());
+		doAnswer(newSetter(socketBufferSize, null)).when(mockCacheServer).setSocketBufferSize(anyInt());
 
-		doAnswer(newSetter(tcpNoDelay, null))
-			.when(mockCacheServer).setTcpNoDelay(anyBoolean());
+		doAnswer(newSetter(tcpNoDelay, null)).when(mockCacheServer).setTcpNoDelay(anyBoolean());
 
 		when(mockCacheServer.isRunning()).thenAnswer(newGetter(running));
 		when(mockCacheServer.getAllClientSessions()).thenReturn(Collections.emptySet());
 		when(mockCacheServer.getBindAddress()).thenAnswer(newGetter(bindAddress));
 		when(mockCacheServer.getClientSession(any(DistributedMember.class)))
-			.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
+				.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 		when(mockCacheServer.getClientSession(anyString())).thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 		when(mockCacheServer.getGroups()).thenAnswer(newGetter(groups));
 		when(mockCacheServer.getHostnameForClients()).thenAnswer(newGetter(hostnameForClients));
@@ -1227,11 +1172,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		doAnswer(newGetter(distributed)).when(mockCacheTransactionManager).isDistributed();
 		doReturn(false).when(mockCacheTransactionManager).isSuspended(any(TransactionId.class));
 
-		doAnswer(invocation -> transactionListeners.add(invocation.getArgument(0)))
-			.when(mockCacheTransactionManager).addListener(any(TransactionListener.class));
+		doAnswer(invocation -> transactionListeners.add(invocation.getArgument(0))).when(mockCacheTransactionManager)
+				.addListener(any(TransactionListener.class));
 
-		doAnswer(invocation -> transactionListeners.toArray(new TransactionListener[0]))
-			.when(mockCacheTransactionManager).getListeners();
+		doAnswer(invocation -> transactionListeners.toArray(new TransactionListener[0])).when(mockCacheTransactionManager)
+				.getListeners();
 
 		doAnswer(newGetter(transactionWriter)).when(mockCacheTransactionManager).getWriter();
 
@@ -1248,8 +1193,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		}).when(mockCacheTransactionManager).initListeners(any(TransactionListener[].class));
 
-		doAnswer(invocation -> transactionListeners.remove(invocation.getArgument(0)))
-			.when(mockCacheTransactionManager).removeListener(any(TransactionListener.class));
+		doAnswer(invocation -> transactionListeners.remove(invocation.getArgument(0))).when(mockCacheTransactionManager)
+				.removeListener(any(TransactionListener.class));
 
 		doAnswer(newSetter(distributed, null)).when(mockCacheTransactionManager).setDistributed(anyBoolean());
 
@@ -1262,94 +1207,91 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			ClientRegionShortcut clientRegionShortcut) {
 
 		return mockClientRegionFactory(mockClientCache,
-			resolveRegionAttributesFromClientRegionShortcut(clientRegionShortcut),
-				clientRegionShortcut);
+				resolveRegionAttributesFromClientRegionShortcut(clientRegionShortcut), clientRegionShortcut);
 	}
 
 	public static <K, V> ClientRegionFactory<K, V> mockClientRegionFactory(ClientCache mockClientCache,
 			String regionAttributesId) {
 
-		return mockClientRegionFactory(mockClientCache, resolveRegionAttributes(regionAttributesId),
-			null);
+		return mockClientRegionFactory(mockClientCache, resolveRegionAttributes(regionAttributesId), null);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <K, V> ClientRegionFactory<K, V> mockClientRegionFactory(ClientCache mockClientCache,
 			RegionAttributes<K, V> regionAttributes, ClientRegionShortcut clientRegionShortcut) {
 
-		ClientRegionFactory<K, V> mockClientRegionFactory =
-			mock(ClientRegionFactory.class, mockObjectIdentifier("MockClientRegionFactory"));
+		ClientRegionFactory<K, V> mockClientRegionFactory = mock(ClientRegionFactory.class,
+				mockObjectIdentifier("MockClientRegionFactory"));
 
-		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES =
-			new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
+		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
 
 		Optional<RegionAttributes<K, V>> optionalRegionAttributes = Optional.ofNullable(regionAttributes);
 
-		AtomicBoolean cloningEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getCloningEnabled).orElse(false));
+		AtomicBoolean cloningEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getCloningEnabled).orElse(false));
 
-		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getConcurrencyChecksEnabled).orElse(false));
+		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getConcurrencyChecksEnabled).orElse(false));
 
-		AtomicBoolean diskSynchronous = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::isDiskSynchronous).orElse(true));
+		AtomicBoolean diskSynchronous = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::isDiskSynchronous).orElse(true));
 
-		AtomicBoolean statisticsEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getStatisticsEnabled).orElse(false));
+		AtomicBoolean statisticsEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getStatisticsEnabled).orElse(false));
 
-		AtomicInteger concurrencyLevel = new AtomicInteger(optionalRegionAttributes
-			.map(RegionAttributes::getConcurrencyLevel).orElse(16));
+		AtomicInteger concurrencyLevel = new AtomicInteger(
+				optionalRegionAttributes.map(RegionAttributes::getConcurrencyLevel).orElse(16));
 
-		AtomicInteger initialCapacity = new AtomicInteger(optionalRegionAttributes
-			.map(RegionAttributes::getInitialCapacity).orElse(16));
+		AtomicInteger initialCapacity = new AtomicInteger(
+				optionalRegionAttributes.map(RegionAttributes::getInitialCapacity).orElse(16));
 
-		AtomicReference<Compressor> compressor = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCompressor).orElse(null));
+		AtomicReference<Compressor> compressor = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCompressor).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCustomEntryIdleTimeout).orElse(null));
+		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCustomEntryIdleTimeout).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCustomEntryTimeToLive).orElse(null));
+		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCustomEntryTimeToLive).orElse(null));
 
-		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getDataPolicy).orElseGet(() -> convert(clientRegionShortcut)));
+		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getDataPolicy).orElseGet(() -> convert(clientRegionShortcut)));
 
-		AtomicReference<String> diskStoreName = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getDiskStoreName).orElse(null));
+		AtomicReference<String> diskStoreName = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getDiskStoreName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
 		AtomicReference<EvictionAttributes> evictionAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEvictionAttributes).orElseGet(EvictionAttributes::createLRUEntryAttributes));
+				.map(RegionAttributes::getEvictionAttributes).orElseGet(EvictionAttributes::createLRUEntryAttributes));
 
-		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getKeyConstraint).orElse(null));
+		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getKeyConstraint).orElse(null));
 
-		AtomicReference<Float> loadFactor = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getLoadFactor).orElse(0.75f));
+		AtomicReference<Float> loadFactor = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getLoadFactor).orElse(0.75f));
 
-		AtomicReference<String> poolName = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getPoolName).orElse(null));
+		AtomicReference<String> poolName = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getPoolName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getValueConstraint).orElse(null));
+		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getValueConstraint).orElse(null));
 
-		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(optionalRegionAttributes
-			.map(RegionAttributes::getCacheListeners).orElse(null), CacheListener.class)));
+		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
+				optionalRegionAttributes.map(RegionAttributes::getCacheListeners).orElse(null), CacheListener.class)));
 
 		when(mockClientRegionFactory.addCacheListener(any(CacheListener.class)))
-			.thenAnswer(newAdder(cacheListeners, mockClientRegionFactory));
+				.thenAnswer(newAdder(cacheListeners, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.initCacheListeners(any(CacheListener[].class))).thenAnswer(invocation -> {
 			cacheListeners.clear();
@@ -1358,67 +1300,67 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockClientRegionFactory.setCloningEnabled(anyBoolean()))
-			.thenAnswer(newSetter(cloningEnabled, mockClientRegionFactory));
+				.thenAnswer(newSetter(cloningEnabled, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setCompressor(any(Compressor.class)))
-			.thenAnswer(newSetter(compressor, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(compressor, () -> mockClientRegionFactory));
 
-		doAnswer(newSetter(concurrencyChecksEnabled, mockClientRegionFactory))
-			.when(mockClientRegionFactory).setConcurrencyChecksEnabled(anyBoolean());
+		doAnswer(newSetter(concurrencyChecksEnabled, mockClientRegionFactory)).when(mockClientRegionFactory)
+				.setConcurrencyChecksEnabled(anyBoolean());
 
 		when(mockClientRegionFactory.setConcurrencyLevel(anyInt()))
-			.thenAnswer(newSetter(concurrencyLevel, mockClientRegionFactory));
+				.thenAnswer(newSetter(concurrencyLevel, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setCustomEntryIdleTimeout(any(CustomExpiry.class)))
-			.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setCustomEntryTimeToLive(any(CustomExpiry.class)))
-			.thenAnswer(newSetter(customEntryTimeToLive, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(diskStoreName, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockClientRegionFactory));
+				.thenAnswer(newSetter(diskSynchronous, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setEntryIdleTimeout(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(entryIdleTimeout, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(entryIdleTimeout, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setEntryTimeToLive(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(entryTimeToLive, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(entryTimeToLive, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setEvictionAttributes(any(EvictionAttributes.class)))
-			.thenAnswer(newSetter(evictionAttributes, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(evictionAttributes, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setInitialCapacity(anyInt()))
-			.thenAnswer(newSetter(initialCapacity, mockClientRegionFactory));
+				.thenAnswer(newSetter(initialCapacity, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setKeyConstraint(any(Class.class)))
-			.thenAnswer(newSetter(keyConstraint, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(keyConstraint, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setLoadFactor(anyFloat()))
-			.thenAnswer(newSetter(loadFactor, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(loadFactor, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setPoolName(anyString()))
-			.thenAnswer(newSetter(poolName, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(poolName, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setRegionIdleTimeout(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(regionIdleTimeout, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(regionIdleTimeout, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setRegionTimeToLive(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(regionTimeToLive, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(regionTimeToLive, () -> mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setStatisticsEnabled(anyBoolean()))
-			.thenAnswer(newSetter(statisticsEnabled, mockClientRegionFactory));
+				.thenAnswer(newSetter(statisticsEnabled, mockClientRegionFactory));
 
 		when(mockClientRegionFactory.setValueConstraint(any(Class.class)))
-			.thenAnswer(newSetter(valueConstraint, () -> mockClientRegionFactory));
+				.thenAnswer(newSetter(valueConstraint, () -> mockClientRegionFactory));
 
-		RegionAttributes<K, V> mockRegionAttributes =
-			mock(RegionAttributes.class, mockObjectIdentifier("MockRegionAttributes"));
+		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class,
+				mockObjectIdentifier("MockRegionAttributes"));
 
 		when(mockRegionAttributes.getCacheListeners())
-			.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
+				.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
 
 		when(mockRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled));
 		when(mockRegionAttributes.getCompressor()).thenAnswer(newGetter(compressor));
@@ -1441,11 +1383,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(statisticsEnabled));
 		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
 
-		when(mockClientRegionFactory.create(anyString())).thenAnswer(invocation ->
-			mockRegion(mockClientCache, invocation.getArgument(0), mockRegionAttributes));
+		when(mockClientRegionFactory.create(anyString()))
+				.thenAnswer(invocation -> mockRegion(mockClientCache, invocation.getArgument(0), mockRegionAttributes));
 
-		when(mockClientRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(invocation ->
-			mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
+		when(mockClientRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(
+				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
 
 		return mockClientRegionFactory;
 	}
@@ -1458,28 +1400,27 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		AtomicReference<String> subscriptionDiskStoreName = new AtomicReference<>("");
 
-		AtomicReference<SubscriptionEvictionPolicy> subscriptionEvictionPolicy =
-			new AtomicReference<>(SubscriptionEvictionPolicy.DEFAULT);
+		AtomicReference<SubscriptionEvictionPolicy> subscriptionEvictionPolicy = new AtomicReference<>(
+				SubscriptionEvictionPolicy.DEFAULT);
 
-		Function<String, SubscriptionEvictionPolicy> stringToSubscriptionEvictionPolicyConverter =
-			arg -> SubscriptionEvictionPolicy.valueOfIgnoreCase(String.valueOf(arg));
+		Function<String, SubscriptionEvictionPolicy> stringToSubscriptionEvictionPolicyConverter = arg -> SubscriptionEvictionPolicy
+				.valueOfIgnoreCase(String.valueOf(arg));
 
-		Function<SubscriptionEvictionPolicy, String> subscriptionEvictionPolicyToStringConverter =
-			arg -> Optional.ofNullable(arg).map(Object::toString).map(String::toLowerCase).orElse(null);
+		Function<SubscriptionEvictionPolicy, String> subscriptionEvictionPolicyToStringConverter = arg -> Optional
+				.ofNullable(arg).map(Object::toString).map(String::toLowerCase).orElse(null);
 
-		doAnswer(newSetter(subscriptionCapacity, null))
-			.when(mockClientSubscriptionConfig).setCapacity(anyInt());
+		doAnswer(newSetter(subscriptionCapacity, null)).when(mockClientSubscriptionConfig).setCapacity(anyInt());
 
-		doAnswer(newSetter(subscriptionDiskStoreName, () -> null))
-			.when(mockClientSubscriptionConfig).setDiskStoreName(anyString());
+		doAnswer(newSetter(subscriptionDiskStoreName, () -> null)).when(mockClientSubscriptionConfig)
+				.setDiskStoreName(anyString());
 
 		doAnswer(newSetter(subscriptionEvictionPolicy, stringToSubscriptionEvictionPolicyConverter, () -> null))
-			.when(mockClientSubscriptionConfig).setEvictionPolicy(anyString());
+				.when(mockClientSubscriptionConfig).setEvictionPolicy(anyString());
 
 		when(mockClientSubscriptionConfig.getCapacity()).thenAnswer(newGetter(subscriptionCapacity));
 		when(mockClientSubscriptionConfig.getDiskStoreName()).thenAnswer(newGetter(subscriptionDiskStoreName));
-		when(mockClientSubscriptionConfig.getEvictionPolicy()).thenAnswer(newGetter(subscriptionEvictionPolicy,
-			subscriptionEvictionPolicyToStringConverter));
+		when(mockClientSubscriptionConfig.getEvictionPolicy())
+				.thenAnswer(newGetter(subscriptionEvictionPolicy, subscriptionEvictionPolicyToStringConverter));
 
 		return mockClientSubscriptionConfig;
 	}
@@ -1498,25 +1439,23 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicLong maxOplogSize = new AtomicLong(DiskStoreFactory.DEFAULT_MAX_OPLOG_SIZE);
 		AtomicLong timeInterval = new AtomicLong(DiskStoreFactory.DEFAULT_TIME_INTERVAL);
 
-		AtomicReference<File[]> diskDirectories =
-			new AtomicReference<>(new File[] { FileSystemUtils.WORKING_DIRECTORY });
+		AtomicReference<File[]> diskDirectories = new AtomicReference<>(new File[] { FileSystemUtils.WORKING_DIRECTORY });
 
 		AtomicReference<int[]> diskDiretorySizes = new AtomicReference<>(new int[0]);
 
-		AtomicReference<Float> diskUsageCriticalPercentage =
-			new AtomicReference<>(DiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE);
+		AtomicReference<Float> diskUsageCriticalPercentage = new AtomicReference<>(
+				DiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE);
 
-		AtomicReference<Float> diskUsageWarningPercentage =
-			new AtomicReference<>(DiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE);
+		AtomicReference<Float> diskUsageWarningPercentage = new AtomicReference<>(
+				DiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE);
 
 		when(mockDiskStoreFactory.setAllowForceCompaction(anyBoolean()))
-			.thenAnswer(newSetter(allowForceCompaction, mockDiskStoreFactory));
+				.thenAnswer(newSetter(allowForceCompaction, mockDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setAutoCompact(anyBoolean()))
-			.thenAnswer(newSetter(autoCompact, mockDiskStoreFactory));
+		when(mockDiskStoreFactory.setAutoCompact(anyBoolean())).thenAnswer(newSetter(autoCompact, mockDiskStoreFactory));
 
 		when(mockDiskStoreFactory.setCompactionThreshold(anyInt()))
-			.thenAnswer(newSetter(compactionThreshold, mockDiskStoreFactory));
+				.thenAnswer(newSetter(compactionThreshold, mockDiskStoreFactory));
 
 		when(mockDiskStoreFactory.setDiskDirs(any(File[].class))).thenAnswer(invocation -> {
 
@@ -1541,22 +1480,19 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockDiskStoreFactory.setDiskUsageCriticalPercentage(anyFloat()))
-			.thenAnswer(newSetter(diskUsageCriticalPercentage, () -> mockDiskStoreFactory));
+				.thenAnswer(newSetter(diskUsageCriticalPercentage, () -> mockDiskStoreFactory));
 
 		when(mockDiskStoreFactory.setDiskUsageWarningPercentage(anyFloat()))
-			.thenAnswer(newSetter(diskUsageWarningPercentage, () -> mockDiskStoreFactory));
+				.thenAnswer(newSetter(diskUsageWarningPercentage, () -> mockDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setMaxOplogSize(anyLong()))
-			.thenAnswer(newSetter(maxOplogSize, mockDiskStoreFactory));
+		when(mockDiskStoreFactory.setMaxOplogSize(anyLong())).thenAnswer(newSetter(maxOplogSize, mockDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setQueueSize(anyInt()))
-			.thenAnswer(newSetter(queueSize, mockDiskStoreFactory));
+		when(mockDiskStoreFactory.setQueueSize(anyInt())).thenAnswer(newSetter(queueSize, mockDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setTimeInterval(anyLong()))
-			.thenAnswer(newSetter(timeInterval, mockDiskStoreFactory));
+		when(mockDiskStoreFactory.setTimeInterval(anyLong())).thenAnswer(newSetter(timeInterval, mockDiskStoreFactory));
 
 		when(mockDiskStoreFactory.setWriteBufferSize(anyInt()))
-			.thenAnswer(newSetter(writeBufferSize, mockDiskStoreFactory));
+				.thenAnswer(newSetter(writeBufferSize, mockDiskStoreFactory));
 
 		when(mockDiskStoreFactory.create(anyString())).thenAnswer(invocation -> {
 
@@ -1590,15 +1526,14 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		DistributedMember mockDistributedMember = mock(DistributedMember.class);
 
-		when(mockDistributedMember.getGroups()).thenAnswer(invocation ->
-			new ArrayList<>(StringUtils.commaDelimitedListToSet(gemfireProperties.get()
-				.getProperty(DistributionConfig.GROUPS_NAME))));
+		when(mockDistributedMember.getGroups()).thenAnswer(invocation -> new ArrayList<>(
+				StringUtils.commaDelimitedListToSet(gemfireProperties.get().getProperty(DistributionConfig.GROUPS_NAME))));
 
 		when(mockDistributedMember.getHost())
-			.thenReturn(ObjectUtils.doOperationSafely(() -> InetAddress.getLocalHost().getHostName(), null));
+				.thenReturn(ObjectUtils.doOperationSafely(() -> InetAddress.getLocalHost().getHostName(), null));
 
-		when(mockDistributedMember.getName()).thenAnswer(invocation -> gemfireProperties.get()
-			.getProperty(DistributionConfig.NAME_NAME));
+		when(mockDistributedMember.getName())
+				.thenAnswer(invocation -> gemfireProperties.get().getProperty(DistributionConfig.NAME_NAME));
 
 		return mockDistributedMember;
 	}
@@ -1610,7 +1545,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
 
 		doAnswer(invocation -> gemfireProperties.get().getProperty(DistributionConfig.NAME_NAME))
-			.when(mockDistributedSystem).getName();
+				.when(mockDistributedSystem).getName();
 
 		when(mockDistributedSystem.getDistributedMember()).thenReturn(mockDistributedMember);
 		when(mockDistributedSystem.getProperties()).thenAnswer(invocation -> gemfireProperties.get());
@@ -1643,39 +1578,40 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		CopyOnWriteArrayList<GatewayTransportFilter> gatewayTransportFilters = new CopyOnWriteArrayList<>();
 
 		when(mockGatewayReceiverFactory.setBindAddress(anyString()))
-			.thenAnswer(newSetter(bindAddress, () -> mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(bindAddress, () -> mockGatewayReceiverFactory));
 
-		when(mockGatewayReceiverFactory.setEndPort(anyInt()))
-			.thenAnswer(newSetter(endPort, mockGatewayReceiverFactory));
+		when(mockGatewayReceiverFactory.setEndPort(anyInt())).thenAnswer(newSetter(endPort, mockGatewayReceiverFactory));
 
 		when(mockGatewayReceiverFactory.setHostnameForSenders(anyString()))
-			.thenAnswer(newSetter(hostnameForSenders, () -> mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(hostnameForSenders, () -> mockGatewayReceiverFactory));
 
 		when(mockGatewayReceiverFactory.setManualStart(anyBoolean()))
-			.thenAnswer(newSetter(manualStart, mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(manualStart, mockGatewayReceiverFactory));
 
 		when(mockGatewayReceiverFactory.setMaximumTimeBetweenPings(anyInt()))
-			.thenAnswer(newSetter(maximumTimeBetweenPings, mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(maximumTimeBetweenPings, mockGatewayReceiverFactory));
 
 		when(mockGatewayReceiverFactory.setSocketBufferSize(anyInt()))
-			.thenAnswer(newSetter(socketBufferSize, mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(socketBufferSize, mockGatewayReceiverFactory));
 
 		when(mockGatewayReceiverFactory.setStartPort(anyInt()))
-			.thenAnswer(newSetter(startPort, mockGatewayReceiverFactory));
+				.thenAnswer(newSetter(startPort, mockGatewayReceiverFactory));
 
-		when(mockGatewayReceiverFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
+		when(mockGatewayReceiverFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class)))
+				.thenAnswer(invocation -> {
 
-			gatewayTransportFilters.add(invocation.getArgument(0));
+					gatewayTransportFilters.add(invocation.getArgument(0));
 
-			return mockGatewayReceiverFactory;
-		});
+					return mockGatewayReceiverFactory;
+				});
 
-		when(mockGatewayReceiverFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
+		when(mockGatewayReceiverFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class)))
+				.thenAnswer(invocation -> {
 
-			gatewayTransportFilters.remove(invocation.<GatewayTransportFilter>getArgument(0));
+					gatewayTransportFilters.remove(invocation.<GatewayTransportFilter> getArgument(0));
 
-			return mockGatewayReceiverFactory;
-		});
+					return mockGatewayReceiverFactory;
+				});
 
 		when(mockGatewayReceiverFactory.create()).thenAnswer(invocation -> {
 
@@ -1697,7 +1633,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				Random randomPort = new Random(System.currentTimeMillis());
 
-				int port = startPort.get() + randomPort.nextInt(endPort.get() - startPort.get());;
+				int port = startPort.get() + randomPort.nextInt(endPort.get() - startPort.get());
+				;
 
 				return port;
 			});
@@ -1737,61 +1674,60 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicInteger batchTimeInterval = new AtomicInteger(GatewaySender.DEFAULT_BATCH_TIME_INTERVAL);
 		AtomicInteger dispatcherThreads = new AtomicInteger(GatewaySender.DEFAULT_DISPATCHER_THREADS);
 		AtomicInteger maximumQueueMemory = new AtomicInteger(GatewaySender.DEFAULT_MAXIMUM_QUEUE_MEMORY);
-		AtomicInteger parallelFactorForReplicatedRegion =
-			new AtomicInteger(GatewaySender.DEFAULT_PARALLELISM_REPLICATED_REGION);
+		AtomicInteger parallelFactorForReplicatedRegion = new AtomicInteger(
+				GatewaySender.DEFAULT_PARALLELISM_REPLICATED_REGION);
 		AtomicInteger socketBufferSize = new AtomicInteger(GatewaySender.DEFAULT_SOCKET_BUFFER_SIZE);
 		AtomicInteger socketReadTimeout = new AtomicInteger(GatewaySender.DEFAULT_SOCKET_READ_TIMEOUT);
 
 		AtomicReference<String> diskStoreName = new AtomicReference<>(null);
-		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter =
-			new AtomicReference<>(null);
+		AtomicReference<GatewayEventSubstitutionFilter> gatewayEventSubstitutionFilter = new AtomicReference<>(null);
 		AtomicReference<GatewaySender.OrderPolicy> orderPolicy = new AtomicReference<>(GatewaySender.DEFAULT_ORDER_POLICY);
 
 		CopyOnWriteArrayList<GatewayEventFilter> gatewayEventFilters = new CopyOnWriteArrayList<>();
 		CopyOnWriteArrayList<GatewayTransportFilter> gatewayTransportFilters = new CopyOnWriteArrayList<>();
 
 		when(mockGatewaySenderFactory.setAlertThreshold(anyInt()))
-			.thenAnswer(newSetter(alertThreshold, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(alertThreshold, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setBatchConflationEnabled(anyBoolean()))
-			.thenAnswer(newSetter(batchConflationEnabled, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(batchConflationEnabled, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setBatchSize(anyInt())).thenAnswer(newSetter(batchSize, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setBatchTimeInterval(anyInt()))
-			.thenAnswer(newSetter(batchTimeInterval, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(batchTimeInterval, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockGatewaySenderFactory));
+				.thenAnswer(newSetter(diskStoreName, () -> mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(diskSynchronous, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setDispatcherThreads(anyInt()))
-			.thenAnswer(newSetter(dispatcherThreads, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(dispatcherThreads, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setGatewayEventSubstitutionFilter(any(GatewayEventSubstitutionFilter.class)))
-			.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockGatewaySenderFactory));
+				.thenAnswer(newSetter(gatewayEventSubstitutionFilter, () -> mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setMaximumQueueMemory(anyInt()))
-			.thenAnswer(newSetter(maximumQueueMemory, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(maximumQueueMemory, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setOrderPolicy(any(GatewaySender.OrderPolicy.class)))
-			.thenAnswer(newSetter(orderPolicy, () -> mockGatewaySenderFactory));
+				.thenAnswer(newSetter(orderPolicy, () -> mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setParallel(anyBoolean())).thenAnswer(newSetter(parallel, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setParallelFactorForReplicatedRegion(anyInt()))
-			.thenAnswer(newSetter(parallelFactorForReplicatedRegion, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(parallelFactorForReplicatedRegion, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setPersistenceEnabled(anyBoolean()))
-			.thenAnswer(newSetter(persistenceEnabled, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(persistenceEnabled, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setSocketBufferSize(anyInt()))
-			.thenAnswer(newSetter(socketBufferSize, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(socketBufferSize, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.setSocketReadTimeout(anyInt()))
-			.thenAnswer(newSetter(socketReadTimeout, mockGatewaySenderFactory));
+				.thenAnswer(newSetter(socketReadTimeout, mockGatewaySenderFactory));
 
 		when(mockGatewaySenderFactory.addGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
 
@@ -1800,26 +1736,28 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return mockGatewaySenderFactory;
 		});
 
-		when(mockGatewaySenderFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
+		when(mockGatewaySenderFactory.addGatewayTransportFilter(any(GatewayTransportFilter.class)))
+				.thenAnswer(invocation -> {
 
-			gatewayTransportFilters.add(invocation.getArgument(0));
+					gatewayTransportFilters.add(invocation.getArgument(0));
 
-			return mockGatewaySenderFactory;
-		});
+					return mockGatewaySenderFactory;
+				});
 
 		when(mockGatewaySenderFactory.removeGatewayEventFilter(any(GatewayEventFilter.class))).thenAnswer(invocation -> {
 
-			gatewayEventFilters.remove(invocation.<GatewayEventFilter>getArgument(0));
+			gatewayEventFilters.remove(invocation.<GatewayEventFilter> getArgument(0));
 
 			return mockGatewaySenderFactory;
 		});
 
-		when(mockGatewaySenderFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class))).thenAnswer(invocation -> {
+		when(mockGatewaySenderFactory.removeGatewayTransportFilter(any(GatewayTransportFilter.class)))
+				.thenAnswer(invocation -> {
 
-			gatewayTransportFilters.remove(invocation.<GatewayTransportFilter>getArgument(0));
+					gatewayTransportFilters.remove(invocation.<GatewayTransportFilter> getArgument(0));
 
-			return mockGatewaySenderFactory;
-		});
+					return mockGatewaySenderFactory;
+				});
 
 		when(mockGatewaySenderFactory.create(anyString(), anyInt())).thenAnswer(invocation -> {
 
@@ -1849,7 +1787,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(mockGatewaySender.getGatewayTransportFilters()).thenReturn(gatewayTransportFilters);
 			when(mockGatewaySender.getId()).thenReturn(gatewaySenderId);
 			when(mockGatewaySender.getMaximumQueueMemory()).thenAnswer(newGetter(maximumQueueMemory));
-			when(mockGatewaySender.getMaxParallelismForReplicatedRegion()).thenAnswer(newGetter(parallelFactorForReplicatedRegion));
+			when(mockGatewaySender.getMaxParallelismForReplicatedRegion())
+					.thenAnswer(newGetter(parallelFactorForReplicatedRegion));
 			when(mockGatewaySender.getOrderPolicy()).thenAnswer(newGetter(orderPolicy));
 			when(mockGatewaySender.getRemoteDSId()).thenReturn(remoteDistributedSystemId);
 			when(mockGatewaySender.getSocketBufferSize()).thenAnswer(newGetter(socketBufferSize));
@@ -1871,7 +1810,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			doAnswer(it -> {
 
-				gatewayEventFilters.remove(it.<GatewayEventFilter>getArgument(0));
+				gatewayEventFilters.remove(it.<GatewayEventFilter> getArgument(0));
 
 				return null;
 
@@ -1892,7 +1831,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicBoolean multiuserAuthentication = new AtomicBoolean(PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION);
 		AtomicBoolean prSingleHopEnabled = new AtomicBoolean(PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED);
 		AtomicBoolean subscriptionEnabled = new AtomicBoolean(PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED);
-//		AtomicBoolean threadLocalConnections = new AtomicBoolean(PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
+		// AtomicBoolean threadLocalConnections = new AtomicBoolean(PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
 
 		AtomicInteger freeConnectionTimeout = new AtomicInteger(PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT);
 		AtomicInteger loadConditioningInterval = new AtomicInteger(PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL);
@@ -1907,7 +1846,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicInteger socketConnectTimeout = new AtomicInteger(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
 		AtomicInteger statisticInterval = new AtomicInteger(PoolFactory.DEFAULT_STATISTIC_INTERVAL);
 		AtomicInteger subscriptionAckInterval = new AtomicInteger(PoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL);
-		AtomicInteger subscriptionMessageTrackingTimeout = new AtomicInteger(PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
+		AtomicInteger subscriptionMessageTrackingTimeout = new AtomicInteger(
+				PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
 		AtomicInteger subscriptionRedundancy = new AtomicInteger(PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
 
 		AtomicLong idleTimeout = new AtomicLong(PoolFactory.DEFAULT_IDLE_TIMEOUT);
@@ -1920,29 +1860,26 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		List<InetSocketAddress> servers = new ArrayList<>();
 
 		when(mockPoolFactory.addLocator(anyString(), anyInt())).thenAnswer(invocation -> {
-			locators.add(new InetSocketAddress(invocation.<String>getArgument(0), invocation.getArgument(1)));
+			locators.add(new InetSocketAddress(invocation.<String> getArgument(0), invocation.getArgument(1)));
 			return mockPoolFactory;
 		});
 
 		when(mockPoolFactory.addServer(anyString(), anyInt())).thenAnswer(invocation -> {
-			servers.add(new InetSocketAddress(invocation.<String>getArgument(0), invocation.getArgument(1)));
+			servers.add(new InetSocketAddress(invocation.<String> getArgument(0), invocation.getArgument(1)));
 			return mockPoolFactory;
 		});
 
 		when(mockPoolFactory.setFreeConnectionTimeout(anyInt()))
-			.thenAnswer(newSetter(freeConnectionTimeout, mockPoolFactory));
+				.thenAnswer(newSetter(freeConnectionTimeout, mockPoolFactory));
 
-		when(mockPoolFactory.setIdleTimeout(anyLong()))
-			.thenAnswer(newSetter(idleTimeout, mockPoolFactory));
+		when(mockPoolFactory.setIdleTimeout(anyLong())).thenAnswer(newSetter(idleTimeout, mockPoolFactory));
 
 		when(mockPoolFactory.setLoadConditioningInterval(anyInt()))
-			.thenAnswer(newSetter(loadConditioningInterval, mockPoolFactory));
+				.thenAnswer(newSetter(loadConditioningInterval, mockPoolFactory));
 
-		when(mockPoolFactory.setMaxConnections(anyInt()))
-			.thenAnswer(newSetter(maxConnections, mockPoolFactory));
+		when(mockPoolFactory.setMaxConnections(anyInt())).thenAnswer(newSetter(maxConnections, mockPoolFactory));
 
-		when(mockPoolFactory.setMinConnections(anyInt()))
-			.thenAnswer(newSetter(minConnections, mockPoolFactory));
+		when(mockPoolFactory.setMinConnections(anyInt())).thenAnswer(newSetter(minConnections, mockPoolFactory));
 
 		when(mockPoolFactory.setMaxConnectionsPerServer(anyInt()))
 				.thenAnswer(newSetter(maxConnectionsPerServer, mockPoolFactory));
@@ -1951,52 +1888,46 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				.thenAnswer(newSetter(minConnectionsPerServer, mockPoolFactory));
 
 		when(mockPoolFactory.setMultiuserAuthentication(anyBoolean()))
-			.thenAnswer(newSetter(multiuserAuthentication, mockPoolFactory));
+				.thenAnswer(newSetter(multiuserAuthentication, mockPoolFactory));
 
-		when(mockPoolFactory.setPingInterval(anyLong()))
-			.thenAnswer(newSetter(pingInterval, mockPoolFactory));
+		when(mockPoolFactory.setPingInterval(anyLong())).thenAnswer(newSetter(pingInterval, mockPoolFactory));
 
 		when(mockPoolFactory.setPRSingleHopEnabled(anyBoolean()))
-			.thenAnswer(newSetter(prSingleHopEnabled, mockPoolFactory));
+				.thenAnswer(newSetter(prSingleHopEnabled, mockPoolFactory));
 
-		when(mockPoolFactory.setReadTimeout(anyInt()))
-			.thenAnswer(newSetter(readTimeout, mockPoolFactory));
+		when(mockPoolFactory.setReadTimeout(anyInt())).thenAnswer(newSetter(readTimeout, mockPoolFactory));
 
-		when(mockPoolFactory.setRetryAttempts(anyInt()))
-			.thenAnswer(newSetter(retryAttempts, mockPoolFactory));
+		when(mockPoolFactory.setRetryAttempts(anyInt())).thenAnswer(newSetter(retryAttempts, mockPoolFactory));
 
 		when(mockPoolFactory.setServerConnectionTimeout(anyInt()))
-			.thenAnswer(newSetter(serverConnectionTimeout, mockPoolFactory));
+				.thenAnswer(newSetter(serverConnectionTimeout, mockPoolFactory));
 
-		when(mockPoolFactory.setServerGroup(anyString()))
-			.thenAnswer(newSetter(serverGroup, () -> mockPoolFactory));
+		when(mockPoolFactory.setServerGroup(anyString())).thenAnswer(newSetter(serverGroup, () -> mockPoolFactory));
 
-		when(mockPoolFactory.setSocketBufferSize(anyInt()))
-			.thenAnswer(newSetter(socketBufferSize, mockPoolFactory));
+		when(mockPoolFactory.setSocketBufferSize(anyInt())).thenAnswer(newSetter(socketBufferSize, mockPoolFactory));
 
 		when(mockPoolFactory.setSocketConnectTimeout(anyInt()))
-			.thenAnswer(newSetter(socketConnectTimeout, mockPoolFactory));
+				.thenAnswer(newSetter(socketConnectTimeout, mockPoolFactory));
 
 		when(mockPoolFactory.setSocketFactory(any(SocketFactory.class)))
-			.thenAnswer(newSetter(socketFactory, () -> mockPoolFactory));
+				.thenAnswer(newSetter(socketFactory, () -> mockPoolFactory));
 
-		when(mockPoolFactory.setStatisticInterval(anyInt()))
-			.thenAnswer(newSetter(statisticInterval, mockPoolFactory));
+		when(mockPoolFactory.setStatisticInterval(anyInt())).thenAnswer(newSetter(statisticInterval, mockPoolFactory));
 
 		when(mockPoolFactory.setSubscriptionAckInterval(anyInt()))
-			.thenAnswer(newSetter(subscriptionAckInterval, mockPoolFactory));
+				.thenAnswer(newSetter(subscriptionAckInterval, mockPoolFactory));
 
 		when(mockPoolFactory.setSubscriptionEnabled(anyBoolean()))
-			.thenAnswer(newSetter(subscriptionEnabled, mockPoolFactory));
+				.thenAnswer(newSetter(subscriptionEnabled, mockPoolFactory));
 
 		when(mockPoolFactory.setSubscriptionMessageTrackingTimeout(anyInt()))
-			.thenAnswer(newSetter(subscriptionMessageTrackingTimeout, mockPoolFactory));
+				.thenAnswer(newSetter(subscriptionMessageTrackingTimeout, mockPoolFactory));
 
 		when(mockPoolFactory.setSubscriptionRedundancy(anyInt()))
-			.thenAnswer(newSetter(subscriptionRedundancy, mockPoolFactory));
+				.thenAnswer(newSetter(subscriptionRedundancy, mockPoolFactory));
 
-//		when(mockPoolFactory.setThreadLocalConnections(anyBoolean()))
-//			.thenAnswer(newSetter(threadLocalConnections, mockPoolFactory));
+		// when(mockPoolFactory.setThreadLocalConnections(anyBoolean()))
+		// .thenAnswer(newSetter(threadLocalConnections, mockPoolFactory));
 
 		when(mockPoolFactory.create(anyString())).thenAnswer(invocation -> {
 
@@ -2044,13 +1975,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(mockPool.getSubscriptionEnabled()).thenReturn(subscriptionEnabled.get());
 			when(mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(subscriptionMessageTrackingTimeout.get());
 			when(mockPool.getSubscriptionRedundancy()).thenReturn(subscriptionRedundancy.get());
-//			when(mockPool.getThreadLocalConnections()).thenReturn(threadLocalConnections.get());
+			// when(mockPool.getThreadLocalConnections()).thenReturn(threadLocalConnections.get());
 
-			doAnswer(getQueryServiceInvocation ->
-				resolveAnyGemFireCache()
-					.map(GemFireCache::getQueryService)
-					.orElseGet(() -> queryService.updateAndGet(it -> it != null ? it : mockQueryService()))
-			).when(mockPool).getQueryService();
+			doAnswer(getQueryServiceInvocation -> resolveAnyGemFireCache().map(GemFireCache::getQueryService)
+					.orElseGet(() -> queryService.updateAndGet(it -> it != null ? it : mockQueryService()))).when(mockPool)
+					.getQueryService();
 
 			register(mockPool);
 
@@ -2109,9 +2038,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		try {
 
-			when(mockQueryService.getCq(anyString())).thenAnswer(invocation ->
-				cqQueries.stream().filter(cqQuery -> invocation.getArgument(0).equals(cqQuery.getName()))
-					.findFirst().orElse(null));
+			when(mockQueryService.getCq(anyString())).thenAnswer(invocation -> cqQueries.stream()
+					.filter(cqQuery -> invocation.getArgument(0).equals(cqQuery.getName())).findFirst().orElse(null));
 
 			when(mockQueryService.getCqs()).thenAnswer(invocation -> cqQueries.toArray(new CqQuery[cqQueries.size()]));
 
@@ -2124,8 +2052,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 					int indexOfFromClause = queryString.indexOf(FROM_KEYWORD);
 					int indexOfWhereClause = queryString.indexOf(WHERE_KEYWORD);
 
-					queryString = (indexOfFromClause > -1
-						? queryString.substring(indexOfFromClause + FROM_KEYWORD.length()) : queryString);
+					queryString = (indexOfFromClause > -1 ? queryString.substring(indexOfFromClause + FROM_KEYWORD.length())
+							: queryString);
 
 					queryString = (indexOfWhereClause > 0 ? queryString.substring(0, indexOfWhereClause) : queryString);
 
@@ -2146,9 +2074,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				Collection<Index> indexesForRegion = mockQueryService.getIndexes(region);
 
-				return indexesForRegion.stream()
-					.filter(index -> index.getName().equals(indexName))
-					.findFirst().orElse(null);
+				return indexesForRegion.stream().filter(index -> index.getName().equals(indexName)).findFirst().orElse(null);
 
 			});
 
@@ -2158,48 +2084,43 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				Region<?, ?> region = invocation.getArgument(0);
 
-				return indexes.stream()
-					.filter(index -> index.getRegion().equals(region))
-					.collect(Collectors.toList());
+				return indexes.stream().filter(index -> index.getRegion().equals(region)).collect(Collectors.toList());
 
 			});
 
 			when(mockQueryService.createIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
+					.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
 
 			when(mockQueryService.createIndex(anyString(), anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
+					.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
 
 			when(mockQueryService.createHashIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
+					.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
 
 			when(mockQueryService.createHashIndex(anyString(), anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
+					.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
 
 			when(mockQueryService.createKeyIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.KEY));
+					.thenAnswer(createIndexAnswer(indexes, IndexType.KEY));
 
-			when(mockQueryService.newCq(anyString(), any(CqAttributes.class))).thenAnswer(invocation ->
-				add(cqQueries, mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
-					false)));
+			when(mockQueryService.newCq(anyString(), any(CqAttributes.class))).thenAnswer(
+					invocation -> add(cqQueries, mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), false)));
 
-			when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean())).thenAnswer(invocation ->
-				add(cqQueries, mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
-					invocation.getArgument(2))));
+			when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
+					.thenAnswer(invocation -> add(cqQueries,
+							mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2))));
 
-			when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class))).thenAnswer(invocation ->
-				add(cqQueries, mockCqQuery(invocation.getArgument(0), invocation.getArgument(1),
-					invocation.getArgument(2), false)));
+			when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class)))
+					.thenAnswer(invocation -> add(cqQueries,
+							mockCqQuery(invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2), false)));
 
 			when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class), anyBoolean()))
-				.thenAnswer(invocation -> add(cqQueries, mockCqQuery(invocation.getArgument(0),
-					invocation.getArgument(1), invocation.getArgument(2), invocation.getArgument(3))));
+					.thenAnswer(invocation -> add(cqQueries, mockCqQuery(invocation.getArgument(0), invocation.getArgument(1),
+							invocation.getArgument(2), invocation.getArgument(3))));
 
-			when(mockQueryService.newQuery(anyString()))
-				.thenAnswer(invocation -> mockQuery(invocation.getArgument(0)));
+			when(mockQueryService.newQuery(anyString())).thenAnswer(invocation -> mockQuery(invocation.getArgument(0)));
 
-		}
-		catch (Exception cause) {
+		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
@@ -2267,8 +2188,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				return null;
 
 			}).when(mockCqQuery).stop();
-		}
-		catch (Exception cause) {
+		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
@@ -2296,8 +2216,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			doReturn(mockSelectResults).when(mockQuery).execute(any(Object.class));
 			doReturn(mockSelectResults).when(mockQuery).execute(any(RegionFunctionContext.class));
 			doReturn(mockSelectResults).when(mockQuery).execute(any(RegionFunctionContext.class), any());
-		}
-		catch (Throwable cause) {
+		} catch (Throwable cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
@@ -2320,8 +2239,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(query.execute(any(Object[].class))).thenAnswer(executeAnswer);
 			when(query.execute(any(RegionFunctionContext.class))).thenAnswer(executeAnswer);
 			when(query.execute(any(RegionFunctionContext.class), any(Object[].class))).thenAnswer(executeAnswer);
-		}
-		catch (Exception cause) {
+		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
@@ -2436,10 +2354,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			boolean recursive = invocation.getArgument(0);
 
 			return recursive
-				? subRegions.stream()
-					.flatMap(subRegion -> subRegion.subregions(true).stream())
-					.collect(Collectors.toSet())
-				: subRegions;
+					? subRegions.stream().flatMap(subRegion -> subRegion.subregions(true).stream()).collect(Collectors.toSet())
+					: subRegions;
 
 		}).when(mockRegion).subregions(anyBoolean());
 
@@ -2452,8 +2368,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		AttributesMutator<K, V> mockAttributesMutator = mock(AttributesMutator.class, withSettings().lenient());
 
-		EvictionAttributesMutator mockEvictionAttributesMutator =
-			mock(EvictionAttributesMutator.class, withSettings().lenient());
+		EvictionAttributesMutator mockEvictionAttributesMutator = mock(EvictionAttributesMutator.class,
+				withSettings().lenient());
 
 		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
 
@@ -2464,61 +2380,54 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		AtomicBoolean cloningEnabled = new AtomicBoolean(baseRegionAttributes.getCloningEnabled());
 
-		AtomicInteger evictionMaximum =
-			new AtomicInteger(Optional.ofNullable(baseRegionAttributes.getEvictionAttributes())
-				.map(EvictionAttributes::getMaximum)
-				.orElse(EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM));
+		AtomicInteger evictionMaximum = new AtomicInteger(Optional.ofNullable(baseRegionAttributes.getEvictionAttributes())
+				.map(EvictionAttributes::getMaximum).orElse(EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM));
 
 		AtomicReference<CacheLoader<K, V>> cacheLoader = new AtomicReference<>(baseRegionAttributes.getCacheLoader());
 
 		AtomicReference<CacheWriter<K, V>> cacheWriter = new AtomicReference<>(baseRegionAttributes.getCacheWriter());
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout =
-			new AtomicReference<>(baseRegionAttributes.getCustomEntryIdleTimeout());
+		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				baseRegionAttributes.getCustomEntryIdleTimeout());
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive =
-			new AtomicReference<>(baseRegionAttributes.getCustomEntryTimeToLive());
+		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				baseRegionAttributes.getCustomEntryTimeToLive());
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout =
-			new AtomicReference<>(baseRegionAttributes.getEntryIdleTimeout());
+		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				baseRegionAttributes.getEntryIdleTimeout());
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive =
-			new AtomicReference<>(baseRegionAttributes.getEntryTimeToLive());
+		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				baseRegionAttributes.getEntryTimeToLive());
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout =
-			new AtomicReference<>(baseRegionAttributes.getRegionIdleTimeout());
+		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				baseRegionAttributes.getRegionIdleTimeout());
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive =
-			new AtomicReference<>(baseRegionAttributes.getRegionTimeToLive());
+		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				baseRegionAttributes.getRegionTimeToLive());
 
-		List<String> asyncEventQueueIds =
-			new CopyOnWriteArrayList<>(nullSafeSet(baseRegionAttributes.getAsyncEventQueueIds()));
+		List<String> asyncEventQueueIds = new CopyOnWriteArrayList<>(
+				nullSafeSet(baseRegionAttributes.getAsyncEventQueueIds()));
 
-		List<CacheListener<K, V>> cacheListeners =
-			new CopyOnWriteArrayList<>(nullSafeArray(baseRegionAttributes.getCacheListeners(), CacheListener.class));
+		List<CacheListener<K, V>> cacheListeners = new CopyOnWriteArrayList<>(
+				nullSafeArray(baseRegionAttributes.getCacheListeners(), CacheListener.class));
 
-		List<String> gatewaySenderIds =
-			new CopyOnWriteArrayList<>(nullSafeSet(baseRegionAttributes.getGatewaySenderIds()));
+		List<String> gatewaySenderIds = new CopyOnWriteArrayList<>(nullSafeSet(baseRegionAttributes.getGatewaySenderIds()));
 
 		// Mock AttributesMutator
-		doAnswer(newAdder(asyncEventQueueIds, null))
-			.when(mockAttributesMutator).addAsyncEventQueueId(anyString());
+		doAnswer(newAdder(asyncEventQueueIds, null)).when(mockAttributesMutator).addAsyncEventQueueId(anyString());
 
-		doAnswer(newAdder(cacheListeners, null))
-			.when(mockAttributesMutator).addCacheListener(any(CacheListener.class));
+		doAnswer(newAdder(cacheListeners, null)).when(mockAttributesMutator).addCacheListener(any(CacheListener.class));
 
-		doAnswer(newAdder(gatewaySenderIds, null)).
-			when(mockAttributesMutator).addGatewaySenderId(anyString());
+		doAnswer(newAdder(gatewaySenderIds, null)).when(mockAttributesMutator).addGatewaySenderId(anyString());
 
 		when(mockAttributesMutator.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
 
 		doAnswer(invocation -> {
 
-			CacheListener<K, V>[] cacheListenersArgument =
-				nullSafeArray(invocation.getArgument(0), CacheListener.class);
+			CacheListener<K, V>[] cacheListenersArgument = nullSafeArray(invocation.getArgument(0), CacheListener.class);
 
-			Arrays.stream(cacheListenersArgument).forEach(it ->
-				Assert.notNull(it, "The CacheListener[] must not contain null elements"));
+			Arrays.stream(cacheListenersArgument)
+					.forEach(it -> Assert.notNull(it, "The CacheListener[] must not contain null elements"));
 
 			cacheListeners.forEach(CacheListener::close);
 			cacheListeners.addAll(Arrays.asList(cacheListenersArgument));
@@ -2527,65 +2436,64 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		}).when(mockAttributesMutator).initCacheListeners(any(CacheListener[].class));
 
-		doAnswer(invocation -> asyncEventQueueIds.remove(invocation.getArgument(0)))
-			.when(mockAttributesMutator).removeAsyncEventQueueId(anyString());
+		doAnswer(invocation -> asyncEventQueueIds.remove(invocation.getArgument(0))).when(mockAttributesMutator)
+				.removeAsyncEventQueueId(anyString());
 
-		doAnswer(invocation -> cacheListeners.remove(invocation.getArgument(0)))
-			.when(mockAttributesMutator).removeCacheListener(any(CacheListener.class));
+		doAnswer(invocation -> cacheListeners.remove(invocation.getArgument(0))).when(mockAttributesMutator)
+				.removeCacheListener(any(CacheListener.class));
 
-		doAnswer(invocation -> gatewaySenderIds.remove(invocation.getArgument(0)))
-			.when(mockAttributesMutator).removeGatewaySenderId(anyString());
+		doAnswer(invocation -> gatewaySenderIds.remove(invocation.getArgument(0))).when(mockAttributesMutator)
+				.removeGatewaySenderId(anyString());
 
-		doAnswer(newSetter(cacheLoader))
-			.when(mockAttributesMutator).setCacheLoader(any(CacheLoader.class));
+		doAnswer(newSetter(cacheLoader)).when(mockAttributesMutator).setCacheLoader(any(CacheLoader.class));
 
-		doAnswer(newSetter(cacheWriter))
-			.when(mockAttributesMutator).setCacheWriter(any(CacheWriter.class));
+		doAnswer(newSetter(cacheWriter)).when(mockAttributesMutator).setCacheWriter(any(CacheWriter.class));
 
-		doAnswer(newSetter(cloningEnabled, null))
-			.when(mockAttributesMutator).setCloningEnabled(anyBoolean());
+		doAnswer(newSetter(cloningEnabled, null)).when(mockAttributesMutator).setCloningEnabled(anyBoolean());
 
-		doAnswer(newSetter(customEntryIdleTimeout))
-			.when(mockAttributesMutator).setCustomEntryIdleTimeout(any(CustomExpiry.class));
+		doAnswer(newSetter(customEntryIdleTimeout)).when(mockAttributesMutator)
+				.setCustomEntryIdleTimeout(any(CustomExpiry.class));
 
-		doAnswer(newSetter(customEntryTimeToLive))
-			.when(mockAttributesMutator).setCustomEntryTimeToLive(any(CustomExpiry.class));
+		doAnswer(newSetter(customEntryTimeToLive)).when(mockAttributesMutator)
+				.setCustomEntryTimeToLive(any(CustomExpiry.class));
 
-		doAnswer(newSetter(entryIdleTimeout))
-			.when(mockAttributesMutator).setEntryIdleTimeout(any(ExpirationAttributes.class));
+		doAnswer(newSetter(entryIdleTimeout)).when(mockAttributesMutator)
+				.setEntryIdleTimeout(any(ExpirationAttributes.class));
 
-		doAnswer(newSetter(entryTimeToLive))
-			.when(mockAttributesMutator).setEntryTimeToLive(any(ExpirationAttributes.class));
+		doAnswer(newSetter(entryTimeToLive)).when(mockAttributesMutator)
+				.setEntryTimeToLive(any(ExpirationAttributes.class));
 
-		doAnswer(newSetter(regionIdleTimeout))
-			.when(mockAttributesMutator).setRegionIdleTimeout(any(ExpirationAttributes.class));
+		doAnswer(newSetter(regionIdleTimeout)).when(mockAttributesMutator)
+				.setRegionIdleTimeout(any(ExpirationAttributes.class));
 
-		doAnswer(newSetter(regionTimeToLive))
-			.when(mockAttributesMutator).setRegionTimeToLive(any(ExpirationAttributes.class));
+		doAnswer(newSetter(regionTimeToLive)).when(mockAttributesMutator)
+				.setRegionTimeToLive(any(ExpirationAttributes.class));
 
 		// Mock EvictionAttributesMutator
-		doAnswer(newSetter(evictionMaximum, null))
-			.when(mockEvictionAttributesMutator).setMaximum(anyInt());
+		doAnswer(newSetter(evictionMaximum, null)).when(mockEvictionAttributesMutator).setMaximum(anyInt());
 
 		// Mock RegionAttributes
 		when(mockRegionAttributes.getAsyncEventQueueIds())
-			.thenAnswer(invocation -> asSet(asyncEventQueueIds.toArray(new String[asyncEventQueueIds.size()])));
+				.thenAnswer(invocation -> asSet(asyncEventQueueIds.toArray(new String[asyncEventQueueIds.size()])));
 
 		when(mockRegionAttributes.getCacheListeners())
-			.thenAnswer(invocation -> cacheListeners.toArray(new CacheListener[cacheListeners.size()]));
+				.thenAnswer(invocation -> cacheListeners.toArray(new CacheListener[cacheListeners.size()]));
 
 		when(mockRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader::get));
 		when(mockRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter::get));
 		when(mockRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
 		when(mockRegionAttributes.getCompressor()).thenAnswer(newGetter(baseRegionAttributes::getCompressor));
-		when(mockRegionAttributes.getConcurrencyChecksEnabled()).thenAnswer(newGetter(baseRegionAttributes::getConcurrencyChecksEnabled));
+		when(mockRegionAttributes.getConcurrencyChecksEnabled())
+				.thenAnswer(newGetter(baseRegionAttributes::getConcurrencyChecksEnabled));
 		when(mockRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(baseRegionAttributes::getConcurrencyLevel));
 		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout::get));
 		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive::get));
 		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(baseRegionAttributes::getDataPolicy));
 		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(baseRegionAttributes::getDiskStoreName));
-		when(mockRegionAttributes.getEnableAsyncConflation()).thenAnswer(newGetter(baseRegionAttributes::getEnableAsyncConflation));
-		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenAnswer(newGetter(baseRegionAttributes::getEnableSubscriptionConflation));
+		when(mockRegionAttributes.getEnableAsyncConflation())
+				.thenAnswer(newGetter(baseRegionAttributes::getEnableAsyncConflation));
+		when(mockRegionAttributes.getEnableSubscriptionConflation())
+				.thenAnswer(newGetter(baseRegionAttributes::getEnableSubscriptionConflation));
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout::get));
 		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive::get));
 
@@ -2603,23 +2511,27 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockRegionAttributes.getGatewaySenderIds())
-			.thenAnswer(invocation -> asSet(gatewaySenderIds.toArray(new String[gatewaySenderIds.size()])));
+				.thenAnswer(invocation -> asSet(gatewaySenderIds.toArray(new String[gatewaySenderIds.size()])));
 
 		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(baseRegionAttributes::getIgnoreJTA));
-		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenAnswer(newGetter(baseRegionAttributes::getIndexMaintenanceSynchronous));
+		when(mockRegionAttributes.getIndexMaintenanceSynchronous())
+				.thenAnswer(newGetter(baseRegionAttributes::getIndexMaintenanceSynchronous));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(baseRegionAttributes::getInitialCapacity));
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
-		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
+		when(mockRegionAttributes.getMembershipAttributes())
+				.thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
 		when(mockRegionAttributes.getMulticastEnabled()).thenAnswer(newGetter(baseRegionAttributes::getMulticastEnabled));
 		when(mockRegionAttributes.getOffHeap()).thenAnswer(newGetter(baseRegionAttributes::getOffHeap));
-		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(baseRegionAttributes::getPartitionAttributes));
+		when(mockRegionAttributes.getPartitionAttributes())
+				.thenAnswer(newGetter(baseRegionAttributes::getPartitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(baseRegionAttributes::getPoolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
 		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive::get));
 		when(mockRegionAttributes.getScope()).thenAnswer(newGetter(baseRegionAttributes::getScope));
 		when(mockRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(baseRegionAttributes::getStatisticsEnabled));
-		when(mockRegionAttributes.getSubscriptionAttributes()).thenAnswer(newGetter(baseRegionAttributes::getSubscriptionAttributes));
+		when(mockRegionAttributes.getSubscriptionAttributes())
+				.thenAnswer(newGetter(baseRegionAttributes::getSubscriptionAttributes));
 		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(baseRegionAttributes::getValueConstraint));
 		when(mockRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(baseRegionAttributes::isDiskSynchronous));
 		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(baseRegionAttributes::isLockGrantor));
@@ -2642,12 +2554,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		}).when(mockRegion).clear();
 
 		// Map.containsKey(key) / Region.containsKey(key)
-		doAnswer(invocation -> data.containsKey(invocation.getArgument(0)))
-			.when(mockRegion).containsKey(any());
+		doAnswer(invocation -> data.containsKey(invocation.getArgument(0))).when(mockRegion).containsKey(any());
 
 		// Map.containsValue(value) / Region.containsValue(value)
-		doAnswer(invocation -> data.containsValue(invocation.getArgument(0)))
-			.when(mockRegion).containsValue(any());
+		doAnswer(invocation -> data.containsValue(invocation.getArgument(0))).when(mockRegion).containsValue(any());
 
 		// Region.containsValueForKey(key)
 		// NOTE: This containsValueForKey(..) operation is not atomic
@@ -2655,9 +2565,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			K key = invocation.getArgument(0);
 
-			return !invalidatedKeys.contains(key)
-				&& data.containsKey(key)
-				&& Objects.nonNull(data.get(key));
+			return !invalidatedKeys.contains(key) && data.containsKey(key) && Objects.nonNull(data.get(key));
 
 		}).when(mockRegion).containsValueForKey(any());
 
@@ -2680,32 +2588,29 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			if (value == null) {
 
-				value = Optional.ofNullable(mockRegionAttributes.getCacheLoader())
-					.map(cacheLoader -> {
+				value = Optional.ofNullable(mockRegionAttributes.getCacheLoader()).map(cacheLoader -> {
 
-						LoaderHelper<K, V> mockLoaderHelper = mock(LoaderHelper.class, withSettings().lenient());
+					LoaderHelper<K, V> mockLoaderHelper = mock(LoaderHelper.class, withSettings().lenient());
 
-						when(mockLoaderHelper.getArgument()).thenReturn(null);
-						when(mockLoaderHelper.getKey()).thenReturn(key);
-						when(mockLoaderHelper.getRegion()).thenReturn(mockRegion);
+					when(mockLoaderHelper.getArgument()).thenReturn(null);
+					when(mockLoaderHelper.getKey()).thenReturn(key);
+					when(mockLoaderHelper.getRegion()).thenReturn(mockRegion);
 
-						return cacheLoader.load(mockLoaderHelper);
+					return cacheLoader.load(mockLoaderHelper);
 
-					})
-					.map(loadedValue -> {
+				}).map(loadedValue -> {
 
-						data.put(key, loadedValue);
-						invalidatedKeys.remove(key);
+					data.put(key, loadedValue);
+					invalidatedKeys.remove(key);
 
-						return loadedValue;
+					return loadedValue;
 
-					})
-					.orElse(value);
+				}).orElse(value);
 			}
 
 			return value;
 
-		}).when(mockRegion).get(ArgumentMatchers.<K>any());
+		}).when(mockRegion).get(ArgumentMatchers.<K> any());
 
 		// Region.getAll(:Collection<K>)
 		// NOTE: This getAll(..) operation is not atomic
@@ -2726,22 +2631,18 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		}).when(mockRegion).getAll(any(Collection.class));
 
 		// Region.getEntry(key)
-		when(mockRegion.getEntry(ArgumentMatchers.<K>any())).thenAnswer(regionGetEntryInvocation ->
-			data.entrySet().stream()
-				.filter(entry -> entry.getKey().equals(regionGetEntryInvocation.getArgument(0)))
-				.findFirst()
-				.map(entry -> {
+		when(mockRegion.getEntry(ArgumentMatchers.<K> any()))
+				.thenAnswer(regionGetEntryInvocation -> data.entrySet().stream()
+						.filter(entry -> entry.getKey().equals(regionGetEntryInvocation.getArgument(0))).findFirst().map(entry -> {
 
-					Map.Entry<K, V> entrySpy = spy(entry);
+							Map.Entry<K, V> entrySpy = spy(entry);
 
-					doAnswer(entryGetValueInvocation ->
-						invalidatedKeys.contains(entry.getKey()) ? null : entry.getValue())
-						.when(entrySpy).getValue();
+							doAnswer(entryGetValueInvocation -> invalidatedKeys.contains(entry.getKey()) ? null : entry.getValue())
+									.when(entrySpy).getValue();
 
-					return entrySpy;
+							return entrySpy;
 
-				})
-				.orElse(null));
+						}).orElse(null));
 
 		// Map.getOrDefault(key, defaultValue)
 		doAnswer(invocation -> {
@@ -2773,8 +2674,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				when(mockEntryEvent.getRegion()).thenReturn(mockRegion);
 
 				Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
-					.filter(Objects::nonNull)
-					.forEach(cacheListener -> cacheListener.afterInvalidate(mockEntryEvent));
+						.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterInvalidate(mockEntryEvent));
 			}
 
 			return null;
@@ -2824,12 +2724,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				try {
 					if (entryExists) {
 						cacheWriter.beforeUpdate(mockEntryEvent);
-					}
-					else {
+					} else {
 						cacheWriter.beforeCreate(mockEntryEvent);
 					}
-				}
-				catch (Throwable cause) {
+				} catch (Throwable cause) {
 					throw new CacheWriterException("Create/Update Error", cause);
 				}
 			}
@@ -2837,16 +2735,14 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			V existingValue = data.put(key, newValue);
 
 			Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
-				.filter(Objects::nonNull)
-				.forEach(cacheListener -> {
+					.filter(Objects::nonNull).forEach(cacheListener -> {
 
-					if (entryExists) {
-						cacheListener.afterUpdate(mockEntryEvent);
-					}
-					else {
-						cacheListener.afterCreate(mockEntryEvent);
-					}
-				});
+						if (entryExists) {
+							cacheListener.afterUpdate(mockEntryEvent);
+						} else {
+							cacheListener.afterCreate(mockEntryEvent);
+						}
+					});
 
 			return invalidatedKeys.remove(key) ? null : existingValue;
 
@@ -2858,8 +2754,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			Map<K, V> map = invocation.getArgument(0);
 
-			CollectionUtils.nullSafeMap(map).entrySet()
-				.forEach(entry -> mockRegion.put(entry.getKey(), entry.getValue()));
+			CollectionUtils.nullSafeMap(map).entrySet().forEach(entry -> mockRegion.put(entry.getKey(), entry.getValue()));
 
 			return null;
 
@@ -2886,17 +2781,15 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			if (cacheWriter != null) {
 				try {
 					cacheWriter.beforeDestroy(mockEntryEvent);
-				}
-				catch (Throwable cause) {
+				} catch (Throwable cause) {
 					throw new CacheWriterException("Destroy Error", cause);
 				}
 			}
 
-			V value  = data.remove(key);
+			V value = data.remove(key);
 
 			Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
-				.filter(Objects::nonNull)
-				.forEach(cacheListener -> cacheListener.afterDestroy(mockEntryEvent));
+					.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterDestroy(mockEntryEvent));
 
 			return invalidatedKeys.remove(key) ? null : value;
 
@@ -2910,9 +2803,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			Collection<K> keys = invocation.getArgument(0);
 
-			CollectionUtils.nullSafeCollection(keys).stream()
-				.filter(Objects::nonNull)
-				.forEach(mockRegion::remove);
+			CollectionUtils.nullSafeCollection(keys).stream().filter(Objects::nonNull).forEach(mockRegion::remove);
 
 			return null;
 
@@ -2947,8 +2838,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return mockRegionFactory(mockCache, null, null);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache,
-			RegionAttributes<K, V> regionAttributes) {
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache, RegionAttributes<K, V> regionAttributes) {
 
 		return mockRegionFactory(mockCache, regionAttributes, null);
 	}
@@ -2965,166 +2855,126 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache, RegionAttributes<K, V> regionAttributes,
 			RegionShortcut regionShortcut) {
 
-		RegionFactory<K, V> mockRegionFactory = mock(RegionFactory.class,
-			mockObjectIdentifier("MockRegionFactory"));
+		RegionFactory<K, V> mockRegionFactory = mock(RegionFactory.class, mockObjectIdentifier("MockRegionFactory"));
 
 		Optional<RegionAttributes<K, V>> optionalRegionAttributes = Optional.ofNullable(regionAttributes);
 
-		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES =
-			new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
+		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
 
-		AtomicBoolean cloningEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getCloningEnabled)
-			.orElse(false));
+		AtomicBoolean cloningEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getCloningEnabled).orElse(false));
 
-		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getConcurrencyChecksEnabled)
-			.orElse(true));
+		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getConcurrencyChecksEnabled).orElse(true));
 
-		AtomicBoolean diskSynchronous = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::isDiskSynchronous)
-			.orElse(true));
+		AtomicBoolean diskSynchronous = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::isDiskSynchronous).orElse(true));
 
-		AtomicBoolean enableAsyncConflation = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getEnableAsyncConflation)
-			.orElse(false));
+		AtomicBoolean enableAsyncConflation = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getEnableAsyncConflation).orElse(false));
 
-		AtomicBoolean enableSubscriptionConflation = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getEnableSubscriptionConflation)
-			.orElse(false));
+		AtomicBoolean enableSubscriptionConflation = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getEnableSubscriptionConflation).orElse(false));
 
-		AtomicBoolean ignoreJta = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getIgnoreJTA)
-			.orElse(false));
+		AtomicBoolean ignoreJta = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getIgnoreJTA).orElse(false));
 
-		AtomicBoolean indexMaintenanceSynchronous = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getIndexMaintenanceSynchronous)
-			.orElse(true));
+		AtomicBoolean indexMaintenanceSynchronous = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getIndexMaintenanceSynchronous).orElse(true));
 
-		AtomicBoolean lockGrantor = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::isLockGrantor)
-			.orElse(false));
+		AtomicBoolean lockGrantor = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::isLockGrantor).orElse(false));
 
-		AtomicBoolean multicastEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getMulticastEnabled)
-			.orElse(false));
+		AtomicBoolean multicastEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getMulticastEnabled).orElse(false));
 
-		AtomicBoolean offHeap = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getOffHeap)
-			.orElse(false));
+		AtomicBoolean offHeap = new AtomicBoolean(optionalRegionAttributes.map(RegionAttributes::getOffHeap).orElse(false));
 
-		AtomicBoolean statisticsEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getStatisticsEnabled)
-			.orElse(false));
+		AtomicBoolean statisticsEnabled = new AtomicBoolean(
+				optionalRegionAttributes.map(RegionAttributes::getStatisticsEnabled).orElse(false));
 
-		AtomicInteger concurrencyLevel = new AtomicInteger(optionalRegionAttributes
-			.map(RegionAttributes::getConcurrencyLevel)
-			.orElse(16));
+		AtomicInteger concurrencyLevel = new AtomicInteger(
+				optionalRegionAttributes.map(RegionAttributes::getConcurrencyLevel).orElse(16));
 
-		AtomicInteger initialCapacity = new AtomicInteger(optionalRegionAttributes
-			.map(RegionAttributes::getInitialCapacity)
-			.orElse(16));
+		AtomicInteger initialCapacity = new AtomicInteger(
+				optionalRegionAttributes.map(RegionAttributes::getInitialCapacity).orElse(16));
 
-		AtomicReference<CacheLoader> cacheLoader = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCacheLoader)
-			.orElse(null));
+		AtomicReference<CacheLoader> cacheLoader = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCacheLoader).orElse(null));
 
-		AtomicReference<CacheWriter> cacheWriter = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCacheWriter)
-			.orElse(null));
+		AtomicReference<CacheWriter> cacheWriter = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCacheWriter).orElse(null));
 
-		AtomicReference<Compressor> compressor = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCompressor)
-			.orElse(null));
+		AtomicReference<Compressor> compressor = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCompressor).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCustomEntryIdleTimeout)
-			.orElse(null));
+		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCustomEntryIdleTimeout).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getCustomEntryTimeToLive)
-			.orElse(null));
+		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getCustomEntryTimeToLive).orElse(null));
 
-		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getDataPolicy)
-			.orElseGet(() -> convert(regionShortcut)));
+		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getDataPolicy).orElseGet(() -> convert(regionShortcut)));
 
-		AtomicReference<String> diskStoreName = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getDiskStoreName)
-			.orElse(null));
+		AtomicReference<String> diskStoreName = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getDiskStoreName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEntryIdleTimeout)
-			.orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEntryTimeToLive)
-			.orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
 		AtomicReference<EvictionAttributes> evictionAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getEvictionAttributes)
-			.orElseGet(EvictionAttributes::createLRUEntryAttributes));
+				.map(RegionAttributes::getEvictionAttributes).orElseGet(EvictionAttributes::createLRUEntryAttributes));
 
-		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getKeyConstraint)
-			.orElse(null));
+		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getKeyConstraint).orElse(null));
 
-		AtomicReference<Float> loadFactor = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getLoadFactor)
-			.orElse(0.75f));
+		AtomicReference<Float> loadFactor = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getLoadFactor).orElse(0.75f));
 
-		AtomicReference<MembershipAttributes> membershipAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getMembershipAttributes)
-			.orElseGet(MembershipAttributes::new));
+		AtomicReference<MembershipAttributes> membershipAttributes = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getMembershipAttributes).orElseGet(MembershipAttributes::new));
 
-		AtomicReference<PartitionAttributes<K, V>> partitionAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getPartitionAttributes)
-			.orElse(null));
+		AtomicReference<PartitionAttributes<K, V>> partitionAttributes = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getPartitionAttributes).orElse(null));
 
-		AtomicReference<String> poolName = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getPoolName)
-			.orElse(null));
+		AtomicReference<String> poolName = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getPoolName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getRegionIdleTimeout)
-			.orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getRegionTimeToLive)
-			.orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<Scope> scope = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getScope)
-			.orElse(Scope.DISTRIBUTED_NO_ACK));
+		AtomicReference<Scope> scope = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getScope).orElse(Scope.DISTRIBUTED_NO_ACK));
 
 		AtomicReference<SubscriptionAttributes> subscriptionAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getSubscriptionAttributes)
-			.orElseGet(SubscriptionAttributes::new));
+				.map(RegionAttributes::getSubscriptionAttributes).orElseGet(SubscriptionAttributes::new));
 
-		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getValueConstraint)
-			.orElse(null));
+		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(
+				optionalRegionAttributes.map(RegionAttributes::getValueConstraint).orElse(null));
 
-		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(optionalRegionAttributes
-			.map(RegionAttributes::getCacheListeners)
-			.orElse(null), CacheListener.class)));
+		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
+				optionalRegionAttributes.map(RegionAttributes::getCacheListeners).orElse(null), CacheListener.class)));
 
-		Set<String> asyncEventQueueIds = new HashSet<>(nullSafeSet(optionalRegionAttributes
-			.map(RegionAttributes::getAsyncEventQueueIds)
-			.orElse(null)));
+		Set<String> asyncEventQueueIds = new HashSet<>(
+				nullSafeSet(optionalRegionAttributes.map(RegionAttributes::getAsyncEventQueueIds).orElse(null)));
 
-		Set<String> gatewaySenderIds = new HashSet<>(nullSafeSet(optionalRegionAttributes
-			.map(RegionAttributes::getGatewaySenderIds)
-			.orElse(null)));
+		Set<String> gatewaySenderIds = new HashSet<>(
+				nullSafeSet(optionalRegionAttributes.map(RegionAttributes::getGatewaySenderIds).orElse(null)));
 
 		when(mockRegionFactory.addAsyncEventQueueId(anyString()))
-			.thenAnswer(newAdder(asyncEventQueueIds, mockRegionFactory));
+				.thenAnswer(newAdder(asyncEventQueueIds, mockRegionFactory));
 
 		when(mockRegionFactory.addCacheListener(any(CacheListener.class)))
-			.thenAnswer(newAdder(cacheListeners, mockRegionFactory));
+				.thenAnswer(newAdder(cacheListeners, mockRegionFactory));
 
-		when(mockRegionFactory.addGatewaySenderId(anyString()))
-			.thenAnswer(newAdder(gatewaySenderIds, mockRegionFactory));
+		when(mockRegionFactory.addGatewaySenderId(anyString())).thenAnswer(newAdder(gatewaySenderIds, mockRegionFactory));
 
 		when(mockRegionFactory.initCacheListeners(any(CacheListener[].class))).thenAnswer(invocation -> {
 			cacheListeners.clear();
@@ -3133,104 +2983,100 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockRegionFactory.setCacheLoader(any(CacheLoader.class)))
-			.thenAnswer(newSetter(cacheLoader, () -> mockRegionFactory));
+				.thenAnswer(newSetter(cacheLoader, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setCacheWriter(any(CacheWriter.class)))
-			.thenAnswer(newSetter(cacheWriter, () -> mockRegionFactory));
+				.thenAnswer(newSetter(cacheWriter, () -> mockRegionFactory));
 
-		when(mockRegionFactory.setCloningEnabled(anyBoolean()))
-			.thenAnswer(newSetter(cloningEnabled, mockRegionFactory));
+		when(mockRegionFactory.setCloningEnabled(anyBoolean())).thenAnswer(newSetter(cloningEnabled, mockRegionFactory));
 
 		when(mockRegionFactory.setCompressor(any(Compressor.class)))
-			.thenAnswer(newSetter(compressor, () -> mockRegionFactory));
+				.thenAnswer(newSetter(compressor, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setConcurrencyChecksEnabled(anyBoolean()))
-			.then(newSetter(concurrencyChecksEnabled, mockRegionFactory));
+				.then(newSetter(concurrencyChecksEnabled, mockRegionFactory));
 
-		when(mockRegionFactory.setConcurrencyLevel(anyInt()))
-			.thenAnswer(newSetter(concurrencyLevel, mockRegionFactory));
+		when(mockRegionFactory.setConcurrencyLevel(anyInt())).thenAnswer(newSetter(concurrencyLevel, mockRegionFactory));
 
 		when(mockRegionFactory.setCustomEntryIdleTimeout(any(CustomExpiry.class)))
-			.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockRegionFactory));
+				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setCustomEntryTimeToLive(any(CustomExpiry.class)))
-			.thenAnswer(newSetter(customEntryTimeToLive, () -> mockRegionFactory));
+				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setDataPolicy(any(DataPolicy.class)))
-			.thenAnswer(newSetter(dataPolicy, () -> mockRegionFactory));
+				.thenAnswer(newSetter(dataPolicy, () -> mockRegionFactory));
 
-		when(mockRegionFactory.setDiskStoreName(anyString()))
-			.thenAnswer(newSetter(diskStoreName, () -> mockRegionFactory));
+		when(mockRegionFactory.setDiskStoreName(anyString())).thenAnswer(newSetter(diskStoreName, () -> mockRegionFactory));
 
-		when(mockRegionFactory.setDiskSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(diskSynchronous, mockRegionFactory));
+		when(mockRegionFactory.setDiskSynchronous(anyBoolean())).thenAnswer(newSetter(diskSynchronous, mockRegionFactory));
 
 		when(mockRegionFactory.setEnableAsyncConflation(anyBoolean()))
-			.thenAnswer(newSetter(enableAsyncConflation, mockRegionFactory));
+				.thenAnswer(newSetter(enableAsyncConflation, mockRegionFactory));
 
 		when(mockRegionFactory.setEnableSubscriptionConflation(anyBoolean()))
-			.thenAnswer(newSetter(enableSubscriptionConflation, mockRegionFactory));
+				.thenAnswer(newSetter(enableSubscriptionConflation, mockRegionFactory));
 
 		when(mockRegionFactory.setEntryIdleTimeout(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(entryIdleTimeout, () -> mockRegionFactory));
+				.thenAnswer(newSetter(entryIdleTimeout, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setEntryTimeToLive(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(entryTimeToLive, () -> mockRegionFactory));
+				.thenAnswer(newSetter(entryTimeToLive, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setEvictionAttributes(any(EvictionAttributes.class)))
-			.thenAnswer(newSetter(evictionAttributes, () -> mockRegionFactory));
+				.thenAnswer(newSetter(evictionAttributes, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setIgnoreJTA(anyBoolean())).thenAnswer(newSetter(ignoreJta, mockRegionFactory));
 
 		when(mockRegionFactory.setIndexMaintenanceSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(indexMaintenanceSynchronous, mockRegionFactory));
+				.thenAnswer(newSetter(indexMaintenanceSynchronous, mockRegionFactory));
 
 		when(mockRegionFactory.setInitialCapacity(anyInt())).thenAnswer(newSetter(initialCapacity, mockRegionFactory));
 
 		when(mockRegionFactory.setKeyConstraint(any(Class.class)))
-			.thenAnswer(newSetter(keyConstraint, () -> mockRegionFactory));
+				.thenAnswer(newSetter(keyConstraint, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setLoadFactor(anyFloat())).thenAnswer(newSetter(loadFactor, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setLockGrantor(anyBoolean())).thenAnswer(newSetter(lockGrantor, mockRegionFactory));
 
 		when(mockRegionFactory.setMembershipAttributes(any(MembershipAttributes.class)))
-			.thenAnswer(newSetter(membershipAttributes, () -> mockRegionFactory));
+				.thenAnswer(newSetter(membershipAttributes, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setMulticastEnabled(anyBoolean()))
-			.thenAnswer(newSetter(multicastEnabled, mockRegionFactory));
+				.thenAnswer(newSetter(multicastEnabled, mockRegionFactory));
 
 		when(mockRegionFactory.setOffHeap(anyBoolean())).thenAnswer(newSetter(offHeap, mockRegionFactory));
 
 		when(mockRegionFactory.setPartitionAttributes(any(PartitionAttributes.class)))
-			.thenAnswer(newSetter(partitionAttributes, () -> mockRegionFactory));
+				.thenAnswer(newSetter(partitionAttributes, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setPoolName(anyString())).thenAnswer(newSetter(poolName, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setRegionIdleTimeout(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(regionIdleTimeout, () -> mockRegionFactory));
+				.thenAnswer(newSetter(regionIdleTimeout, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setRegionTimeToLive(any(ExpirationAttributes.class)))
-			.thenAnswer(newSetter(regionTimeToLive, () -> mockRegionFactory));
+				.thenAnswer(newSetter(regionTimeToLive, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setScope(any(Scope.class))).thenAnswer(newSetter(scope, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setStatisticsEnabled(anyBoolean()))
-			.thenAnswer(newSetter(statisticsEnabled, mockRegionFactory));
+				.thenAnswer(newSetter(statisticsEnabled, mockRegionFactory));
 
 		when(mockRegionFactory.setSubscriptionAttributes(any(SubscriptionAttributes.class)))
-			.thenAnswer(newSetter(subscriptionAttributes, () -> mockRegionFactory));
+				.thenAnswer(newSetter(subscriptionAttributes, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setValueConstraint(any(Class.class)))
-			.thenAnswer(newSetter(valueConstraint, () -> mockRegionFactory));
+				.thenAnswer(newSetter(valueConstraint, () -> mockRegionFactory));
 
-		RegionAttributes<K, V> mockRegionAttributes =
-			mock(RegionAttributes.class, mockObjectIdentifier("MockRegionAttributes"));
+		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class,
+				mockObjectIdentifier("MockRegionAttributes"));
 
 		when(mockRegionAttributes.getAsyncEventQueueIds()).thenReturn(asyncEventQueueIds);
 
 		when(mockRegionAttributes.getCacheListeners())
-			.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
+				.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
 
 		when(mockRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader));
 		when(mockRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter));
@@ -3267,11 +3113,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getSubscriptionAttributes()).thenAnswer(newGetter(subscriptionAttributes));
 		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
 
-		when(mockRegionFactory.create(anyString())).thenAnswer(invocation ->
-			mockRegion(mockCache, invocation.getArgument(0), mockRegionAttributes));
+		when(mockRegionFactory.create(anyString()))
+				.thenAnswer(invocation -> mockRegion(mockCache, invocation.getArgument(0), mockRegionAttributes));
 
-		when(mockRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(invocation ->
-			mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
+		when(mockRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(
+				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
 
 		return mockRegionFactory;
 	}
@@ -3280,27 +3126,25 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		ResourceManager mockResourceManager = mock(ResourceManager.class);
 
-		AtomicReference<Float> criticalHeapPercentage =
-			new AtomicReference<>(ResourceManager.DEFAULT_CRITICAL_PERCENTAGE);
+		AtomicReference<Float> criticalHeapPercentage = new AtomicReference<>(ResourceManager.DEFAULT_CRITICAL_PERCENTAGE);
 
 		AtomicReference<Float> criticalOffHeapPercentage = new AtomicReference<>(0.0f);
 
-		AtomicReference<Float> evictionHeapPercentage =
-			new AtomicReference<>(ResourceManager.DEFAULT_EVICTION_PERCENTAGE);
+		AtomicReference<Float> evictionHeapPercentage = new AtomicReference<>(ResourceManager.DEFAULT_EVICTION_PERCENTAGE);
 
 		AtomicReference<Float> evictionOffHeapPercentage = new AtomicReference<>(0.0f);
 
-		doAnswer(newSetter(criticalHeapPercentage, () -> null))
-			.when(mockResourceManager).setCriticalHeapPercentage(anyFloat());
+		doAnswer(newSetter(criticalHeapPercentage, () -> null)).when(mockResourceManager)
+				.setCriticalHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(criticalOffHeapPercentage, () -> null))
-			.when(mockResourceManager).setCriticalOffHeapPercentage(anyFloat());
+		doAnswer(newSetter(criticalOffHeapPercentage, () -> null)).when(mockResourceManager)
+				.setCriticalOffHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(evictionHeapPercentage, () -> null))
-			.when(mockResourceManager).setEvictionHeapPercentage(anyFloat());
+		doAnswer(newSetter(evictionHeapPercentage, () -> null)).when(mockResourceManager)
+				.setEvictionHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(evictionOffHeapPercentage, () -> null))
-			.when(mockResourceManager).setEvictionOffHeapPercentage(anyFloat());
+		doAnswer(newSetter(evictionOffHeapPercentage, () -> null)).when(mockResourceManager)
+				.setEvictionOffHeapPercentage(anyFloat());
 
 		when(mockResourceManager.getCriticalHeapPercentage()).thenAnswer(newGetter(criticalHeapPercentage));
 		when(mockResourceManager.getCriticalOffHeapPercentage()).thenAnswer(newGetter(criticalOffHeapPercentage));
@@ -3312,8 +3156,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	public static boolean resolveUseSingletonCache() {
-		return Boolean.parseBoolean(System.getProperty(USE_SINGLETON_CACHE_PROPERTY,
-			String.valueOf(DEFAULT_USE_SINGLETON_CACHE)));
+		return Boolean
+				.parseBoolean(System.getProperty(USE_SINGLETON_CACHE_PROPERTY, String.valueOf(DEFAULT_USE_SINGLETON_CACHE)));
 	}
 
 	public static CacheFactory spyOn(CacheFactory cacheFactory) {
@@ -3331,34 +3175,31 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		CacheFactory cacheFactorySpy = spy(cacheFactory);
 
-		doAnswer(newSetter(pdxDiskStoreName, () -> cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxDiskStore(anyString());
+		doAnswer(newSetter(pdxDiskStoreName, () -> cacheFactorySpy)).when(cacheFactorySpy).setPdxDiskStore(anyString());
 
-		doAnswer(newSetter(pdxIgnoreUnreadFields, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxIgnoreUnreadFields(anyBoolean());
+		doAnswer(newSetter(pdxIgnoreUnreadFields, cacheFactorySpy)).when(cacheFactorySpy)
+				.setPdxIgnoreUnreadFields(anyBoolean());
 
-		doAnswer(newSetter(pdxPersistent, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxPersistent(anyBoolean());
+		doAnswer(newSetter(pdxPersistent, cacheFactorySpy)).when(cacheFactorySpy).setPdxPersistent(anyBoolean());
 
-		doAnswer(newSetter(pdxReadSerialized, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxReadSerialized(anyBoolean());
+		doAnswer(newSetter(pdxReadSerialized, cacheFactorySpy)).when(cacheFactorySpy).setPdxReadSerialized(anyBoolean());
 
-		doAnswer(newSetter(pdxSerializer, () -> cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxSerializer(any(PdxSerializer.class));
+		doAnswer(newSetter(pdxSerializer, () -> cacheFactorySpy)).when(cacheFactorySpy)
+				.setPdxSerializer(any(PdxSerializer.class));
 
-		Supplier<Cache> resolvedMockCache = () ->
-			GemFireMockObjectsSupport.<Cache>resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
+		Supplier<Cache> resolvedMockCache = () -> GemFireMockObjectsSupport
+				.<Cache> resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
 
-				Cache mockCache = mockPeerCache();
+					Cache mockCache = mockPeerCache();
 
-				when(mockCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
-				when(mockCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
-				when(mockCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
-				when(mockCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
-				when(mockCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
+					when(mockCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
+					when(mockCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
+					when(mockCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
+					when(mockCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
+					when(mockCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
 
-				return mockCache;
-			});
+					return mockCache;
+				});
 
 		doAnswer(invocation -> {
 			storeConfiguration(cacheFactory);
@@ -3383,20 +3224,20 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		ClientCacheFactory clientCacheFactorySpy = spy(clientCacheFactory);
 
-		doAnswer(newSetter(pdxDiskStoreName, () -> clientCacheFactorySpy))
-			.when(clientCacheFactorySpy).setPdxDiskStore(anyString());
+		doAnswer(newSetter(pdxDiskStoreName, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
+				.setPdxDiskStore(anyString());
 
-		doAnswer(newSetter(pdxIgnoreUnreadFields, clientCacheFactorySpy))
-			.when(clientCacheFactorySpy).setPdxIgnoreUnreadFields(anyBoolean());
+		doAnswer(newSetter(pdxIgnoreUnreadFields, clientCacheFactorySpy)).when(clientCacheFactorySpy)
+				.setPdxIgnoreUnreadFields(anyBoolean());
 
-		doAnswer(newSetter(pdxPersistent, clientCacheFactorySpy))
-			.when(clientCacheFactorySpy).setPdxPersistent(anyBoolean());
+		doAnswer(newSetter(pdxPersistent, clientCacheFactorySpy)).when(clientCacheFactorySpy)
+				.setPdxPersistent(anyBoolean());
 
-		doAnswer(newSetter(pdxReadSerialized, clientCacheFactorySpy))
-			.when(clientCacheFactorySpy).setPdxReadSerialized(anyBoolean());
+		doAnswer(newSetter(pdxReadSerialized, clientCacheFactorySpy)).when(clientCacheFactorySpy)
+				.setPdxReadSerialized(anyBoolean());
 
-		doAnswer(newSetter(pdxSerializer, () -> clientCacheFactorySpy))
-			.when(clientCacheFactorySpy).setPdxSerializer(any(PdxSerializer.class));
+		doAnswer(newSetter(pdxSerializer, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
+				.setPdxSerializer(any(PdxSerializer.class));
 
 		PoolFactory mockPoolFactory = mockPoolFactory();
 
@@ -3434,6 +3275,16 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			mockPoolFactory.setMinConnections(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMinConnections(anyInt());
+
+		doAnswer(invocation -> {
+			mockPoolFactory.setMaxConnectionsPerServer(invocation.getArgument(0));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).setPoolMaxConnectionsPerServer(anyInt());
+
+		doAnswer(invocation -> {
+			mockPoolFactory.setMinConnectionsPerServer(invocation.getArgument(0));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).setPoolMinConnectionsPerServer(anyInt());
 
 		doAnswer(invocation -> {
 			mockPoolFactory.setMultiuserAuthentication(invocation.getArgument(0));
@@ -3510,33 +3361,33 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSubscriptionRedundancy(anyInt());
 
-//		doAnswer(invocation -> {
-//			mockPoolFactory.setThreadLocalConnections(invocation.getArgument(0));
-//			return clientCacheFactorySpy;
-//		}).when(clientCacheFactorySpy).setPoolThreadLocalConnections(anyBoolean());
+		// doAnswer(invocation -> {
+		// mockPoolFactory.setThreadLocalConnections(invocation.getArgument(0));
+		// return clientCacheFactorySpy;
+		// }).when(clientCacheFactorySpy).setPoolThreadLocalConnections(anyBoolean());
 
-		Supplier<ClientCache> resolvedMockedClientCache = () ->
-			GemFireMockObjectsSupport.<ClientCache>resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
+		Supplier<ClientCache> resolvedMockedClientCache = () -> GemFireMockObjectsSupport
+				.<ClientCache> resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
 
-				ClientCache mockClientCache = mockClientCache();
+					ClientCache mockClientCache = mockClientCache();
 
-				Pool mockDefaultPool = mockPoolFactory.create("DEFAULT");
+					Pool mockDefaultPool = mockPoolFactory.create("DEFAULT");
 
-				doAnswer(invocation -> mockClientCache.getQueryService()).when(mockDefaultPool).getQueryService();
+					doAnswer(invocation -> mockClientCache.getQueryService()).when(mockDefaultPool).getQueryService();
 
-				when(mockClientCache.getCurrentServers()).thenAnswer(invocation ->
-					Collections.unmodifiableSet(new HashSet<>(mockClientCache.getDefaultPool().getServers())));
+					when(mockClientCache.getCurrentServers()).thenAnswer(
+							invocation -> Collections.unmodifiableSet(new HashSet<>(mockClientCache.getDefaultPool().getServers())));
 
-				when(mockClientCache.getDefaultPool()).thenReturn(mockDefaultPool);
+					when(mockClientCache.getDefaultPool()).thenReturn(mockDefaultPool);
 
-				when(mockClientCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
-				when(mockClientCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
-				when(mockClientCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
-				when(mockClientCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
-				when(mockClientCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
+					when(mockClientCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
+					when(mockClientCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
+					when(mockClientCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
+					when(mockClientCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
+					when(mockClientCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
 
-				return mockClientCache;
-			});
+					return mockClientCache;
+				});
 
 		doAnswer(invocation -> {
 			storeConfiguration(clientCacheFactory);
@@ -3565,9 +3416,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	@SuppressWarnings("unchecked")
 	private static Properties withGemFireApiProperties(Object cacheFactory, String gemfirePropertiesFieldName) {
 
-		Class<?> cacheFactoryType = Optional.ofNullable(cacheFactory)
-			.map(Object::getClass)
-			.orElse((Class) Object.class);
+		Class<?> cacheFactoryType = Optional.ofNullable(cacheFactory).map(Object::getClass).orElse((Class) Object.class);
 
 		try {
 
@@ -3578,31 +3427,27 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			Properties gemfireApiProperties = (Properties) dsPropsField.get(cacheFactory);
 
 			return gemfireApiProperties;
-		}
-		catch (Throwable cause) {
+		} catch (Throwable cause) {
 
 			if (cause instanceof NoSuchFieldException
-				&& !CACHE_FACTORY_INTERNAL_CACHE_BUILDER_FIELD_NAME.equals(gemfirePropertiesFieldName)) {
+					&& !CACHE_FACTORY_INTERNAL_CACHE_BUILDER_FIELD_NAME.equals(gemfirePropertiesFieldName)) {
 
 				return Arrays.stream(ArrayUtils.nullSafeArray(cacheFactoryType.getDeclaredFields(), Field.class))
-					.filter(field -> CACHE_FACTORY_INTERNAL_CACHE_BUILDER_FIELD_NAME.equals(field.getName()))
-					.findFirst()
-					.map(field -> {
+						.filter(field -> CACHE_FACTORY_INTERNAL_CACHE_BUILDER_FIELD_NAME.equals(field.getName())).findFirst()
+						.map(field -> {
 
-						field.setAccessible(true);
+							field.setAccessible(true);
 
-						Object internalCacheBuilder =
-							ObjectUtils.doOperationSafely(() -> field.get(cacheFactory), null);
+							Object internalCacheBuilder = ObjectUtils.doOperationSafely(() -> field.get(cacheFactory), null);
 
-						if (internalCacheBuilder != null) {
-							return withGemFireApiProperties(internalCacheBuilder,
-								INTERNAL_CACHE_BUILDER_CONFIG_PROPERTIES_FIELD_NAME);
-						}
+							if (internalCacheBuilder != null) {
+								return withGemFireApiProperties(internalCacheBuilder,
+										INTERNAL_CACHE_BUILDER_CONFIG_PROPERTIES_FIELD_NAME);
+							}
 
-						return null;
+							return null;
 
-					})
-					.orElseGet(Properties::new);
+						}).orElseGet(Properties::new);
 			}
 
 			return new Properties();
@@ -3614,13 +3459,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		Properties gemfireSystemProperties = new Properties();
 
 		List<String> gemfireSystemPropertyNames = System.getProperties().stringPropertyNames().stream()
-			.filter(StringUtils::hasText)
-			.filter(it -> it.startsWith(GEMFIRE_SYSTEM_PROPERTY_PREFIX))
-			.collect(Collectors.toList());
+				.filter(StringUtils::hasText).filter(it -> it.startsWith(GEMFIRE_SYSTEM_PROPERTY_PREFIX))
+				.collect(Collectors.toList());
 
-		gemfireSystemPropertyNames.stream().forEach(propertyName ->
-			gemfireSystemProperties.setProperty(normalizeGemFirePropertyName(propertyName),
-				System.getProperty(propertyName)));
+		gemfireSystemPropertyNames.stream().forEach(propertyName -> gemfireSystemProperties
+				.setProperty(normalizeGemFirePropertyName(propertyName), System.getProperty(propertyName)));
 
 		return gemfireSystemProperties;
 	}

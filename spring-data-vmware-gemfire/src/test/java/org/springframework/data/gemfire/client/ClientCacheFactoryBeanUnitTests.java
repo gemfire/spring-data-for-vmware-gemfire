@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -28,8 +33,6 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.function.Supplier;
 
-import org.junit.Test;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -38,7 +41,7 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.gemfire.GemfireUtils;
@@ -159,11 +162,11 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void resolvePropertiesWhenDistributedSystemIsConnectedAndClientIsDurable() {
 
-		Properties gemfireProperties = DistributedSystemUtils
-			.configureDurableClient(createProperties("gf", "test"), "123", 600);
+		Properties gemfireProperties = DistributedSystemUtils.configureDurableClient(createProperties("gf", "test"), "123",
+				600);
 
 		Properties distributedSystemProperties = DistributedSystemUtils
-			.configureDurableClient(createProperties("ds", "mock"), "987", 300);
+				.configureDurableClient(createProperties("ds", "mock"), "987", 300);
 
 		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
 
@@ -182,7 +185,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(resolvedProperties.getProperty("gf")).isEqualTo("test");
 		assertThat(resolvedProperties.getProperty("ds")).isEqualTo("mock");
 		assertThat(resolvedProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_ID_PROPERTY_NAME)).isEqualTo("123");
-		assertThat(resolvedProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_TIMEOUT_PROPERTY_NAME)).isEqualTo("600");
+		assertThat(resolvedProperties.getProperty(DistributedSystemUtils.DURABLE_CLIENT_TIMEOUT_PROPERTY_NAME))
+				.isEqualTo("600");
 		assertThat(resolvedProperties.size()).isEqualTo(4);
 
 		verify(mockDistributedSystem, times(1)).isConnected();
@@ -362,6 +366,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setLoadConditioningInterval(120000);
 		clientCacheFactoryBean.setMaxConnections(99);
 		clientCacheFactoryBean.setMinConnections(9);
+		clientCacheFactoryBean.setMaxConnectionsPerServer(55);
+		clientCacheFactoryBean.setMinConnectionsPerServer(4);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPingInterval(15000L);
 		clientCacheFactoryBean.setPool(mockPool);
@@ -379,7 +385,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setSubscriptionMessageTrackingTimeout(500);
 		clientCacheFactoryBean.setSubscriptionRedundancy(2);
 		clientCacheFactoryBean.addLocators(newConnectionEndpoint("localhost", 11235),
-			newConnectionEndpoint("skullbox", 10334));
+				newConnectionEndpoint("skullbox", 10334));
 
 		assertThat(clientCacheFactoryBean.getFreeConnectionTimeout()).isEqualTo(5000);
 		assertThat(clientCacheFactoryBean.getIdleTimeout()).isEqualTo(300000L);
@@ -387,6 +393,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLocators().size()).isEqualTo(2);
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isEqualTo(99);
 		assertThat(clientCacheFactoryBean.getMinConnections()).isEqualTo(9);
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isEqualTo(55);
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(4);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isEqualTo(15000L);
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
@@ -415,6 +423,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolLoadConditioningInterval(eq(120000));
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(99));
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(9));
+		verify(mockClientCacheFactory, times(1)).setPoolMaxConnectionsPerServer(eq(55));
+		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(4));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
@@ -449,6 +459,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getLocators()).thenReturn(Collections.emptyList());
 		when(mockPool.getMaxConnections()).thenReturn(100);
 		when(mockPool.getMinConnections()).thenReturn(10);
+		when(mockPool.getMaxConnectionsPerServer()).thenReturn(44);
+		when(mockPool.getMinConnectionsPerServer()).thenReturn(3);
 		when(mockPool.getMultiuserAuthentication()).thenReturn(true);
 		when(mockPool.getPRSingleHopEnabled()).thenReturn(true);
 		when(mockPool.getPingInterval()).thenReturn(15000L);
@@ -464,8 +476,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getSubscriptionEnabled()).thenReturn(true);
 		when(mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(500);
 		when(mockPool.getSubscriptionRedundancy()).thenReturn(2);
-		when(mockPool.getServers()).thenReturn(Arrays.asList(
-			new InetSocketAddress("localhost", 11235), new InetSocketAddress("localhost", 12480)));
+		when(mockPool.getServers()).thenReturn(
+				Arrays.asList(new InetSocketAddress("localhost", 11235), new InetSocketAddress("localhost", 12480)));
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -477,6 +489,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLocators().isEmpty()).isTrue();
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isNull();
 		assertThat(clientCacheFactoryBean.getMinConnections()).isNull();
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isNull();
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isNull();
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isNull();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isNull();
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
@@ -506,6 +520,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockPool, never()).getLocators();
 		verify(mockPool, times(1)).getMaxConnections();
 		verify(mockPool, times(1)).getMinConnections();
+		verify(mockPool, times(1)).getMaxConnectionsPerServer();
+		verify(mockPool, times(1)).getMinConnectionsPerServer();
 		verify(mockPool, times(1)).getMultiuserAuthentication();
 		verify(mockPool, times(1)).getPRSingleHopEnabled();
 		verify(mockPool, times(1)).getPingInterval();
@@ -527,6 +543,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolLoadConditioningInterval(eq(30000));
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(100));
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(10));
+		verify(mockClientCacheFactory, times(1)).setPoolMaxConnectionsPerServer(eq(44));
+		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(3));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
@@ -560,6 +578,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getLocators()).thenReturn(Collections.emptyList());
 		when(mockPool.getMaxConnections()).thenReturn(200);
 		when(mockPool.getMinConnections()).thenReturn(10);
+		when(mockPool.getMaxConnectionsPerServer()).thenReturn(30);
+		when(mockPool.getMinConnectionsPerServer()).thenReturn(2);
 		when(mockPool.getMultiuserAuthentication()).thenReturn(false);
 		when(mockPool.getPingInterval()).thenReturn(15000L);
 		when(mockPool.getPRSingleHopEnabled()).thenReturn(false);
@@ -582,6 +602,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setIdleTimeout(180000L);
 		clientCacheFactoryBean.setMaxConnections(500);
 		clientCacheFactoryBean.setMinConnections(50);
+		clientCacheFactoryBean.setMaxConnectionsPerServer(50);
+		clientCacheFactoryBean.setMinConnectionsPerServer(5);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPool(mockPool);
 		clientCacheFactoryBean.setPrSingleHopEnabled(true);
@@ -602,6 +624,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLocators().size()).isEqualTo(1);
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isEqualTo(500);
 		assertThat(clientCacheFactoryBean.getMinConnections()).isEqualTo(50);
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isEqualTo(50);
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isNull();
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
@@ -631,6 +655,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockPool, never()).getLocators();
 		verify(mockPool, never()).getMaxConnections();
 		verify(mockPool, never()).getMinConnections();
+		verify(mockPool, never()).getMaxConnectionsPerServer();
+		verify(mockPool, never()).getMinConnectionsPerServer();
 		verify(mockPool, never()).getMultiuserAuthentication();
 		verify(mockPool, times(1)).getPingInterval();
 		verify(mockPool, never()).getPRSingleHopEnabled();
@@ -652,6 +678,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolLoadConditioningInterval(eq(300000));
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(500));
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(50));
+		verify(mockClientCacheFactory, times(1)).setPoolMaxConnectionsPerServer(eq(50));
+		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(5));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
@@ -793,8 +821,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
 		verify(mockClientCacheFactory, never()).addPoolLocator(anyString(), anyInt());
-		verify(mockClientCacheFactory, times(1)).addPoolServer(eq("localhost"),
-			eq(GemfireUtils.DEFAULT_CACHE_SERVER_PORT));
+		verify(mockClientCacheFactory, times(1)).addPoolServer(eq("localhost"), eq(GemfireUtils.DEFAULT_CACHE_SERVER_PORT));
 	}
 
 	@Test
@@ -808,7 +835,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
-		assertThat(clientCacheFactoryBean.<GemFireCache>createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
+		assertThat(clientCacheFactoryBean.<GemFireCache> createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
 
 		verify(mockClientCacheFactory, times(1)).create();
 		verifyNoMoreInteractions(mockClientCacheFactory);
@@ -874,8 +901,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.resolvePool()).isEqualTo(mockPool);
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(mockBeanFactory, times(1))
-			.getBean(eq("&TestPool"), eq(PoolFactoryBean.class));
+		verify(mockBeanFactory, times(1)).getBean(eq("&TestPool"), eq(PoolFactoryBean.class));
 		verify(mockPoolFactoryBean, times(1)).getPool();
 		verifyNoInteractions(mockPool);
 	}
@@ -1088,6 +1114,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLoadConditioningInterval()).isNull();
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isNull();
 		assertThat(clientCacheFactoryBean.getMinConnections()).isNull();
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isNull();
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isNull();
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isNull();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isNull();
 		assertThat(clientCacheFactoryBean.getPrSingleHopEnabled()).isNull();
@@ -1107,6 +1135,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setLoadConditioningInterval(300000);
 		clientCacheFactoryBean.setMaxConnections(500);
 		clientCacheFactoryBean.setMinConnections(50);
+		clientCacheFactoryBean.setMaxConnectionsPerServer(50);
+		clientCacheFactoryBean.setMinConnectionsPerServer(5);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPingInterval(15000L);
 		clientCacheFactoryBean.setPrSingleHopEnabled(true);
@@ -1126,6 +1156,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLoadConditioningInterval()).isEqualTo(300000);
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isEqualTo(500);
 		assertThat(clientCacheFactoryBean.getMinConnections()).isEqualTo(50);
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isEqualTo(50);
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isEqualTo(15000L);
 		assertThat(clientCacheFactoryBean.getPrSingleHopEnabled()).isTrue();
