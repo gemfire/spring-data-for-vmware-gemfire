@@ -19,13 +19,13 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" cache-xml-location="/autoregionlookup-cache.xml"/>
+	<gfe:client-cache properties-ref="gemfireProperties" cache-xml-location="/autoregionlookup-cache.xml"/>
 
-	<gfe:partitioned-region id="SpringPartitionedRegion" persistent="false"/>
+	<gfe:client-region id="SpringClientRegion" persistent="false"/>
 
-	<gfe:replicated-region id="SpringReplicateParent" persistent="false">
-		<gfe:replicated-region name="SpringReplicateChild" persistent="false"/>
-	</gfe:replicated-region>
+	<gfe:client-region id="SpringClientParent" persistent="false">
+		<gfe:client-region name="SpringClientChild" persistent="false"/>
+	</gfe:client-region>
 
 	<gfe:auto-region-lookup/>
 
