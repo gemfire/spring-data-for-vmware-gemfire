@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +23,6 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.control.ResourceManager;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -192,28 +196,40 @@ public @interface ClientCacheApplication {
 	String logLevel() default ClientCacheConfiguration.DEFAULT_LOG_LEVEL;
 
 	/**
-	 * Configures the maximum number of connections between the client and server that the {@literal DEFAULT}
-	 * {@link Pool} will create.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MAX_CONNECTIONS}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.default.max-connections} property
-	 * or the {@literal spring.data.gemfire.pool.max-connections} property
-	 * in {@literal application.properties}.
+	 * Configures the maximum number of connections between the client and server that the {@literal DEFAULT} {@link Pool}
+	 * will create. This setting should not be set in conjunction with maxConnectionsPerServer. Defaults to
+	 * {@link PoolFactory#DEFAULT_MAX_CONNECTIONS}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.max-connections} property or the
+	 * {@literal spring.data.gemfire.pool.max-connections} property in {@literal application.properties}.
 	 */
 	int maxConnections() default PoolFactory.DEFAULT_MAX_CONNECTIONS;
 
 	/**
-	 * Configures the minimum number of connections between the client and server to keep alive and available
-	 * at all times.
-	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MIN_CONNECTIONS}.
-	 *
-	 * Use either the {@literal spring.data.gemfire.pool.default.min-connections} property
-	 * or the {@literal spring.data.gemfire.pool.min-connections} property
-	 * in {@literal application.properties}.
+	 * Configures the minimum number of connections between the client and server to keep alive and available at all
+	 * times. This setting should not be set in conjunction with minConnectionsPerServer. Defaults to
+	 * {@link PoolFactory#DEFAULT_MIN_CONNECTIONS}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.min-connections} property or the
+	 * {@literal spring.data.gemfire.pool.min-connections} property in {@literal application.properties}.
 	 */
 	int minConnections() default PoolFactory.DEFAULT_MIN_CONNECTIONS;
+
+	/**
+	 * Configures the minimum number of connections per server between the client and server to keep alive and available
+	 * at all times. This setting should not be set in conjunction with minConnections. Defaults to
+	 * {@link PoolFactory#DEFAULT_MIN_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.min-connections-per-server} property or the
+	 * {@literal spring.data.gemfire.pool.min-connections-per-server} property in {@literal application.properties}.
+	 */
+	int minConnectionsPerServer() default PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
+
+	/**
+	 * Configures the maximum number of connections per server between the client and server that the {@literal DEFAULT}
+	 * {@link Pool} will create. This setting should not be set in conjunction with maxConnections. Defaults to
+	 * {@link PoolFactory#DEFAULT_MAX_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.max-connections-per-server} property or the
+	 * {@literal spring.data.gemfire.pool.max-connections-per-server} property in {@literal application.properties}.
+	 */
+	int maxConnectionsPerServer() default PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
 
 	/**
 	 * If set to {@literal true} then the {@literal DEFAULT} {@link Pool} can be used by multiple users.

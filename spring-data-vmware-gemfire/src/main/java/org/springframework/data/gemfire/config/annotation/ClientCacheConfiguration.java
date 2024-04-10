@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -15,7 +20,6 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.server.CacheServer;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +84,10 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	private Integer durableClientTimeout;
 	private Integer freeConnectionTimeout;
 	private Integer loadConditioningInterval;
-	private Integer maxConnections;
 	private Integer minConnections;
+	private Integer maxConnections;
+	private Integer minConnectionsPerServer;
+	private Integer maxConnectionsPerServer;
 	private Integer readTimeout;
 	private Integer retryAttempts;
 	private Integer serverConnectionTimeout;
@@ -127,8 +133,10 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		gemfireCache.setKeepAlive(getKeepAlive());
 		gemfireCache.setLocators(getPoolLocators());
 		gemfireCache.setLoadConditioningInterval(getLoadConditioningInterval());
-		gemfireCache.setMaxConnections(getMaxConnections());
 		gemfireCache.setMinConnections(getMinConnections());
+		gemfireCache.setMaxConnections(getMaxConnections());
+		gemfireCache.setMinConnectionsPerServer(getMinConnectionsPerServer());
+		gemfireCache.setMaxConnectionsPerServer(getMaxConnectionsPerServer());
 		gemfireCache.setMultiUserAuthentication(getMultiUserAuthentication());
 		gemfireCache.setPingInterval(getPingInterval());
 		gemfireCache.setPrSingleHopEnabled(getPrSingleHopEnabled());
@@ -277,6 +285,14 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 				resolveProperty(namedPoolProperty("default", "min-connections"),
 				resolveProperty(poolProperty("min-connections"),
 				(Integer) clientCacheApplicationAttributes.get("minConnections"))));
+
+			setMaxConnectionsPerServer(resolveProperty(namedPoolProperty("default", "max-connections-per-server"),
+					resolveProperty(poolProperty("max-connections-per-server"),
+							(Integer) clientCacheApplicationAttributes.get("maxConnectionsPerServer"))));
+
+			setMinConnectionsPerServer(resolveProperty(namedPoolProperty("default", "min-connections-per-server"),
+					resolveProperty(poolProperty("min-connections-per-server"),
+							(Integer) clientCacheApplicationAttributes.get("minConnectionsPerServer"))));
 
 			setMultiUserAuthentication(
 				resolveProperty(namedPoolProperty("default", "multi-user-authentication"),
@@ -495,6 +511,14 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		return this.loadConditioningInterval;
 	}
 
+	void setMinConnections(Integer minConnections) {
+		this.minConnections = minConnections;
+	}
+
+	protected Integer getMinConnections() {
+		return this.minConnections;
+	}
+
 	void setMaxConnections(Integer maxConnections) {
 		this.maxConnections = maxConnections;
 	}
@@ -503,12 +527,20 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		return this.maxConnections;
 	}
 
-	void setMinConnections(Integer minConnections) {
-		this.minConnections = minConnections;
+	void setMinConnectionsPerServer(Integer minConnectionsPerServer) {
+		this.minConnectionsPerServer = minConnectionsPerServer;
 	}
 
-	protected Integer getMinConnections() {
-		return this.minConnections;
+	protected Integer getMinConnectionsPerServer() {
+		return this.minConnectionsPerServer;
+	}
+
+	void setMaxConnectionsPerServer(Integer maxConnectionsPerServer) {
+		this.maxConnectionsPerServer = maxConnectionsPerServer;
+	}
+
+	protected Integer getMaxConnectionsPerServer() {
+		return this.maxConnectionsPerServer;
 	}
 
 	void setMultiUserAuthentication(Boolean multiUserAuthentication) {

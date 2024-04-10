@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -12,7 +17,6 @@ import java.util.function.Supplier;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.query.QueryService;
-
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.Assert;
@@ -109,12 +113,20 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfEmpty(defaultLocators, () -> getDelegate().getLocators());
 	}
 
+	public int getMinConnections(Integer defaultMinConnections) {
+		return defaultIfNull(defaultMinConnections, () -> getDelegate().getMinConnections());
+	}
+
 	public int getMaxConnections(Integer defaultMaxConnections) {
 		return defaultIfNull(defaultMaxConnections, () -> getDelegate().getMaxConnections());
 	}
 
-	public int getMinConnections(Integer defaultMinConnections) {
-		return defaultIfNull(defaultMinConnections, () -> getDelegate().getMinConnections());
+	public int getMinConnectionsPerServer(Integer defaultMinConnectionsPerServer) {
+		return defaultIfNull(defaultMinConnectionsPerServer, () -> getDelegate().getMinConnectionsPerServer());
+	}
+
+	public int getMaxConnectionsPerServer(Integer defaultMaxConnectionsPerServer) {
+		return defaultIfNull(defaultMaxConnectionsPerServer, () -> getDelegate().getMaxConnectionsPerServer());
 	}
 
 	public boolean getMultiuserAuthentication(Boolean defaultMultiUserAuthentication) {
