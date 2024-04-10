@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -25,14 +25,13 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link AutoRegionLookupBeanPostProcessor} class is a Spring {@link BeanPostProcessor} that post processes
- * a {@link GemFireCache} by registering all cache {@link Region Regions} that have not been explicitly defined
+ * a {@link ClientCache} by registering all cache {@link Region Regions} that have not been explicitly defined
  * in the Spring application context.
  *
- * This is usually the case for {@link Region Regions} that have been defined in GemFire's native {@literal cache.xml}
- * or defined using GemFire Cluster-based Configuration Service.
+ * This is usually the case for {@link Region Regions} that have been defined in GemFire's native {@literal cache.xml}.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see BeanFactory
  * @see BeanFactoryAware
@@ -79,14 +78,14 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-		if (bean instanceof GemFireCache) {
-			registerCacheRegionsAsBeans((GemFireCache) bean);
+		if (bean instanceof ClientCache clientCacheBean) {
+			registerCacheRegionsAsBeans(clientCacheBean);
 		}
 
 		return bean;
 	}
 
-	void registerCacheRegionsAsBeans(GemFireCache cache) {
+	void registerCacheRegionsAsBeans(ClientCache cache) {
 		cache.rootRegions().forEach(this::registerCacheRegionAsBean);
 	}
 
@@ -106,7 +105,7 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 		}
 	}
 
-	String getBeanName(Region region) {
+	String getBeanName(Region<?, ?> region) {
 
 		return Optional.ofNullable(region.getFullPath())
 			.filter(StringUtils::hasText)
