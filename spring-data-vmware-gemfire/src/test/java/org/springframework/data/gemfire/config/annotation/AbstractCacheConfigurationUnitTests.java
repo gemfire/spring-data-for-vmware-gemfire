@@ -56,17 +56,15 @@ public class AbstractCacheConfigurationUnitTests {
 		this.cacheConfiguration.setMcastPort(-1);
 		this.cacheConfiguration.setLogLevel("DEBUG");
 		this.cacheConfiguration.setLocators("skullbox[11235]");
-		this.cacheConfiguration.setStartLocator("boombox[12480]");
 
 		Properties gemfireProperties = this.cacheConfiguration.gemfireProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(5);
+		assertThat(gemfireProperties).hasSize(4);
 		assertThat(gemfireProperties.getProperty("name")).isEqualTo("TestName");
 		assertThat(gemfireProperties.getProperty("mcast-port")).isEqualTo(String.valueOf(DEFAULT_MCAST_PORT));
 		assertThat(gemfireProperties.getProperty("log-level")).isEqualTo("DEBUG");
 		assertThat(gemfireProperties.getProperty("locators")).isEqualTo("skullbox[11235]");
-		assertThat(gemfireProperties.getProperty("start-locator")).isEqualTo("boombox[12480]");
 	}
 
 	@Test

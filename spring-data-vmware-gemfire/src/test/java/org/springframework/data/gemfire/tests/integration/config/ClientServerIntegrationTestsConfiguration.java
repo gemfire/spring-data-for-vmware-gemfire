@@ -24,7 +24,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.data.gemfire.config.annotation.CacheServerConfigurer;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
-import org.springframework.data.gemfire.config.annotation.EnableLocator;
 import org.springframework.data.gemfire.config.annotation.EnableLogging;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.util.ClassUtils;
@@ -51,7 +50,6 @@ import org.slf4j.LoggerFactory;
  * @see Profile
  * @see CacheServerConfigurer
  * @see ClientCacheConfigurer
- * @see EnableLocator
  * @since 1.0.0
  */
 @Configuration
@@ -92,12 +90,6 @@ public class ClientServerIntegrationTestsConfiguration {
 			clientCacheFactoryBean.setServers(servers);
 		};
 	}
-
-	@Configuration
-	@EnableLocator
-	@EnableLogging
-	@Profile("locator")
-	static class LocatorConfiguration { }
 
 	public static class SpringBootIsAbsentCondition implements Condition {
 
