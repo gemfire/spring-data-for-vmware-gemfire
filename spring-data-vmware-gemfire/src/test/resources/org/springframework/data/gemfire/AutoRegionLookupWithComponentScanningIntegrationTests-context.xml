@@ -32,7 +32,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" cache-xml-location="/autoregionlookup-cache.xml"/>
+	<gfe:client-cache properties-ref="gemfireProperties" cache-xml-location="/autoregionlookup-cache.xml"/>
 
 	<gfe:auto-region-lookup/>
 
