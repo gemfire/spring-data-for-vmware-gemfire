@@ -111,7 +111,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private String locators = DEFAULT_LOCATORS;
 	private String logLevel = DEFAULT_LOG_LEVEL;
 	private String name;
-	private String startLocator;
 
 	private TransactionWriter transactionWriter;
 
@@ -136,7 +135,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * @see #logLevel()
 	 * @see #mcastPort()
 	 * @see #name()
-	 * @see #startLocator()
 	 */
 	@Bean
 	protected Properties gemfireProperties() {
@@ -147,7 +145,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireProperties.setProperty("mcast-port", mcastPort());
 		gemfireProperties.setProperty("log-level", logLevel());
 		gemfireProperties.setProperty("locators", locators());
-		gemfireProperties.setProperty("start-locator", startLocator());
 		gemfireProperties.add(this.customGemFireProperties);
 
 		return gemfireProperties.build();
@@ -503,14 +500,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	protected String name() {
 		return Optional.ofNullable(this.name).filter(StringUtils::hasText).orElseGet(this::toString);
-	}
-
-	void setStartLocator(String startLocator) {
-		this.startLocator = startLocator;
-	}
-
-	protected String startLocator() {
-		return this.startLocator;
 	}
 
 	void setTransactionListeners(List<TransactionListener> transactionListeners) {

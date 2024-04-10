@@ -28,8 +28,7 @@ import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
 
 /**
- * Integration tests for {@link EnableGemFireProperties},
- * {@link EnableLocator}, {@link EnableLogging},
+ * Integration tests for {@link EnableGemFireProperties}, {@link EnableLogging},
  * {@link EnableSecurity}, {@link EnableSsl}, {@link EnableStatistics}.
  *
  * @author John Blum
@@ -68,28 +67,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 						: Function.identity();
 
 		return newApplicationContext(applicationContextInitializer, annotatedClasses);
-	}
-
-	@Test
-	public void locatorGemFirePropertiesConfiguration() {
-
-		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-				.withProperty("spring.data.gemfire.locator.host", "10.64.32.16")
-				.withProperty("spring.data.gemfire.locator.port", "11235");
-
-		newApplicationContext(testPropertySource, TestLocatorGemFirePropertiesConfiguration.class);
-
-		assertThat(containsBean("gemfireCache")).isTrue();
-
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
-
-		assertThat(gemfireCache).isNotNull();
-		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
-
-		Properties gemfireProperties = gemfireCache.getDistributedSystem().getProperties();
-
-		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties.getProperty("start-locator")).isEqualTo("10.64.32.16[11235]");
 	}
 
 	@Test
@@ -300,12 +277,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@PeerCacheApplication
 	@EnableGemFireProperties
 	static class TestAuthGemFirePropertiesConfiguration { }
-
-	@EnableGemFireMockObjects
-	@PeerCacheApplication
-	@EnableGemFireProperties
-	@EnableLocator
-	static class TestLocatorGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
 	@PeerCacheApplication

@@ -16,9 +16,6 @@ import org.springframework.data.gemfire.config.annotation.support.Configurer;
  * This {@link Configurer} is particularly useful when using {@link LocatorApplication} annotation to configure
  * and bootstrap an Apache Geode or Pivotal GemFire {@link Locator}.
  *
- * This {@link Configurer} is NOT applied when configuring and enabling an embedded {@link Locator}
- * using the {@link @EnableLocator} annotation.
- *
  * @author John Blum
  * @see FunctionalInterface
  * @see Locator
