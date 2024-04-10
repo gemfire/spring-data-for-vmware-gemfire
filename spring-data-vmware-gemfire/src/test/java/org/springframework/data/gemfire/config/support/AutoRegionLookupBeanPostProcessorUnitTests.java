@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -150,7 +151,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 
 		assertThat(autoRegionLookupBeanPostProcessorSpy.postProcessAfterInitialization(bean, "test")).isSameAs(bean);
 
-		verify(autoRegionLookupBeanPostProcessorSpy, never()).registerCacheRegionsAsBeans(any(GemFireCache.class));
+		verify(autoRegionLookupBeanPostProcessorSpy, never()).registerCacheRegionsAsBeans(any(ClientCache.class));
 	}
 
 	@Test
@@ -167,15 +168,15 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 			}
 		};
 
-		GemFireCache mockGemFireCache = mock(GemFireCache.class);
+		ClientCache mockClientCache = mock(ClientCache.class);
 
-		when(mockGemFireCache.rootRegions()).thenReturn(expected);
+		when(mockClientCache.rootRegions()).thenReturn(expected);
 
-		autoRegionLookupBeanPostProcessor.registerCacheRegionsAsBeans(mockGemFireCache);
+		autoRegionLookupBeanPostProcessor.registerCacheRegionsAsBeans(mockClientCache);
 
 		assertThat(actual).isEqualTo(expected);
 
-		verify(mockGemFireCache, times(1)).rootRegions();
+		verify(mockClientCache, times(1)).rootRegions();
 
 		for (Region<?, ?> region : expected) {
 			verifyNoInteractions(region);
