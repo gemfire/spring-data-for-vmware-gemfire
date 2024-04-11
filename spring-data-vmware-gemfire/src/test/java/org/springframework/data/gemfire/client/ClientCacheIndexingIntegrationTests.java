@@ -31,7 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see org.apache.geode.cache.query.Index
  * @see org.apache.geode.cache.query.QueryService
  * @see org.springframework.data.gemfire.IndexFactoryBean
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.2

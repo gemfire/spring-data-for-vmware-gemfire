@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.type.AnnotatedTypeMetadata;
-import org.springframework.data.gemfire.config.annotation.CacheServerConfigurer;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.EnableLogging;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
@@ -36,8 +35,6 @@ import org.slf4j.LoggerFactory;
  * a {@link ClientCacheConfigurer} used to configure the {@link ClientCache} {@literal DEFAULT} {@link Pool} port
  * to connect to the launched Apache Geode/VMware GemFire Server during integration testing.
  *
- * Additionally, this class registers a {@link CacheServerConfigurer} to configure the {@link CacheServer} port.
- *
  * Finally, this class provides a Spring {@link Configuration} class enable the embedded Locator and Manager services
  * in a server providing the {@literal locator-manager} Spring profile is activated.
  *
@@ -48,7 +45,6 @@ import org.slf4j.LoggerFactory;
  * @see Bean
  * @see Configuration
  * @see Profile
- * @see CacheServerConfigurer
  * @see ClientCacheConfigurer
  * @since 1.0.0
  */
@@ -69,13 +65,6 @@ public class ClientServerIntegrationTestsConfiguration {
 	// Required bean to resolve property placeholders in Spring @Value annotations.
 	static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
-	}
-
-	@Bean
-	CacheServerConfigurer cacheServerPortConfigurer(
-			@Value("${" + GEMFIRE_CACHE_SERVER_PORT_PROPERTY + ":" + DEFAULT_PORT + "}") int port) {
-
-		return (beanName, cacheServerFactoryBean) -> cacheServerFactoryBean.setPort(port);
 	}
 
 	@Bean

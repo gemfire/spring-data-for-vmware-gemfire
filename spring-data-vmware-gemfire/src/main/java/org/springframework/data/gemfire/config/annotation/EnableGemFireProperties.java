@@ -212,7 +212,7 @@ public @interface EnableGemFireProperties {
 	/**
 	 * Maximum number of milliseconds to wait for the distributed system to reconnect on each reconnect attempt.
 	 *
-	 * {@link PeerCacheApplication#enableAutoReconnect()} or {@link CacheServerApplication#enableAutoReconnect()}
+	 * {@link PeerCacheApplication#enableAutoReconnect()}
 	 * must be set to {@literal true} for this property to have any effect.
 	 *
 	 * Defaults to {@literal 60000} milliseconds.

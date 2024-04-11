@@ -39,7 +39,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.data.gemfire.LocatorFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.EnableSecurity
  * @see org.springframework.data.gemfire.config.annotation.LocatorApplication
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ActiveProfiles
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
