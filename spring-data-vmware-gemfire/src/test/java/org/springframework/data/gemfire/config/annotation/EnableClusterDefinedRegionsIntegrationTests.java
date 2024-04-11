@@ -44,7 +44,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.config.annotation.ClusterDefinedRegionsConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableClusterDefinedRegions
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.1.0

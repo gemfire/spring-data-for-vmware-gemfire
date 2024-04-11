@@ -51,7 +51,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
  * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0

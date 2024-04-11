@@ -24,7 +24,6 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser("annotation-driven", new AnnotationDrivenParser());
 		registerBeanDefinitionParser("auto-region-lookup", new AutoRegionLookupParser());
 		registerBeanDefinitionParser("cache", new CacheParser());
-		registerBeanDefinitionParser("cache-server", new CacheServerParser());
 		registerBeanDefinitionParser("client-cache", new ClientCacheParser());
 		registerBeanDefinitionParser("client-region", new ClientRegionParser());
 		registerBeanDefinitionParser("client-region-template", new ClientRegionParser());

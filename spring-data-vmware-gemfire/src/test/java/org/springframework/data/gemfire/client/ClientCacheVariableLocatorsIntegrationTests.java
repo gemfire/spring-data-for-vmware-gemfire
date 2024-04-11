@@ -31,8 +31,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.Region
- * @see org.springframework.data.gemfire.fork.ServerProcess
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3

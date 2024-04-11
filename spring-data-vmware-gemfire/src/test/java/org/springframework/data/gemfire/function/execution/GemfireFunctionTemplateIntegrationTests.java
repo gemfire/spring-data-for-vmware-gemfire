@@ -97,7 +97,7 @@ public class GemfireFunctionTemplateIntegrationTests extends ClientServerIntegra
 
 	private void verifyFunctionTemplateExecution(GemfireFunctionOperations functionTemplate) {
 
-		Iterable<String> results = functionTemplate.execute("echoFunction", "1", "2", "3");
+		Iterable<String> results = functionTemplate.execute(EchoFunction.FUNCTION_ID, "1", "2", "3");
 
 		int count = 1;
 

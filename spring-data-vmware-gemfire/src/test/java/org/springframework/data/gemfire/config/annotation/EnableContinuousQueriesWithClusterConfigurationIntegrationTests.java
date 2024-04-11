@@ -41,7 +41,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.data.gemfire.config.annotation.EnableClusterConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
  * @see org.springframework.data.gemfire.listener.annotation.ContinuousQuery
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @see <a href="https://jira.spring.io/browse/DATAGEODE-73">Fix race condition between ContinuousQuery registration and EnableClusterConfiguration Region creation.</a>

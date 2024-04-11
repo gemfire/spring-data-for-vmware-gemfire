@@ -113,14 +113,14 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
      * @param importMetadata {@link AnnotationMetadata} containing peer cache meta-data used to
      * configure the peer {@link Cache}.
      * @see AnnotationMetadata
-     * @see #isCacheServerOrPeerCacheApplication(AnnotationMetadata)
+     * @see #isPeerCacheApplication(AnnotationMetadata)
      */
     @Override
     protected void configureCache(AnnotationMetadata importMetadata) {
 
         super.configureCache(importMetadata);
 
-        if (isCacheServerOrPeerCacheApplication(importMetadata)) {
+        if (isPeerCacheApplication(importMetadata)) {
 
             AnnotationAttributes peerCacheApplicationAttributes = getAnnotationAttributes(importMetadata);
 

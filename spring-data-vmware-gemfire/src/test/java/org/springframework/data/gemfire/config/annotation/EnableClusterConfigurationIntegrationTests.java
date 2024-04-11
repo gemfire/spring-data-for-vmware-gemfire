@@ -29,7 +29,6 @@ import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -49,7 +48,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.data.gemfire.config.admin.GemfireAdminOperations
  * @see org.springframework.data.gemfire.config.annotation.ClusterConfigurationConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableClusterConfiguration
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 2.0.0
@@ -57,7 +55,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = EnableClusterConfigurationIntegrationTests.TestConfiguration.class)
 @SuppressWarnings("unused")
-public class EnableClusterConfigurationIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class EnableClusterConfigurationIntegrationTests {
 
 	@Autowired
 	private ClientCache gemfireCache;

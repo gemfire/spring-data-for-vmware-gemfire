@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -21,9 +22,8 @@ import org.apache.geode.cache.client.Pool;
 
 import org.springframework.data.gemfire.client.PoolResolver;
 import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
-import org.springframework.data.gemfire.fork.FunctionCacheServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.data.gemfire.util.SpringExtensions;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for SDG Function support.
@@ -33,9 +33,8 @@ import org.springframework.data.gemfire.util.SpringExtensions;
  * @see org.junit.Test
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.execute.Function
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  */
-public class FunctionExecutionIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class FunctionExecutionIntegrationTests {
 
 	private ClientCache gemfireCache = null;
 
@@ -45,9 +44,19 @@ public class FunctionExecutionIntegrationTests extends ForkingClientServerIntegr
 
 	private Region<String, String> gemfireRegion = null;
 
+	private static GemFireCluster gemFireCluster;
+
 	@BeforeClass
-	public static void startGemFireServer() throws Exception {
-		startGemFireServer(FunctionCacheServerProcess.class);
+	public static void setupGemFireServer() {
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(false, "deploy --jar=/testJar.jar",
+						"create region --name=test-function --type=REPLICATE",
+						"put --region=/test-function --key=one --value=1",
+						"put --region=/test-function --key=two --value=2",
+						"put --region=/test-function --key=three --value=3");
+
+		gemFireCluster.acceptLicense().start();
 	}
 
 	@Before
@@ -57,7 +66,7 @@ public class FunctionExecutionIntegrationTests extends ForkingClientServerIntegr
 			.set("name", FunctionExecutionIntegrationTests.class.getSimpleName())
 			.set("log-level", "error")
 			.setPoolSubscriptionEnabled(true)
-			.addPoolServer("localhost", Integer.getInteger(GEMFIRE_CACHE_SERVER_PORT_PROPERTY))
+			.addPoolServer("localhost", gemFireCluster.getServerPorts().get(0))
 			.create();
 
 		assertThat(this.gemfireCache).isNotNull();
@@ -93,7 +102,7 @@ public class FunctionExecutionIntegrationTests extends ForkingClientServerIntegr
 
 		Iterable<String> results = functionExecution
 			.setArguments("1", "2", "3")
-			.setFunctionId("echoFunction")
+			.setFunctionId(EchoFunction.FUNCTION_ID)
 			.execute();
 
 		int count = 1;

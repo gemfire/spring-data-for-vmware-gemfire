@@ -58,7 +58,6 @@ import org.slf4j.LoggerFactory;
  * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @see org.springframework.core.io.ClassPathResource
  * @see org.springframework.data.gemfire.fork.LocatorProcess
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @since 1.5.0
  */
 @SuppressWarnings("unused")

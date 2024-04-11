@@ -55,7 +55,6 @@ import com.vmware.gemfire.testcontainers.GemFireCluster;
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCacheFactory
  * @see org.apache.geode.cache.client.Pool
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @since 1.6.3

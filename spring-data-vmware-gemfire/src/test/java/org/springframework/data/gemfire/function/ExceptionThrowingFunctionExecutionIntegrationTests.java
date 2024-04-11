@@ -6,8 +6,7 @@ package org.springframework.data.gemfire.function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +16,10 @@ import org.apache.geode.cache.execute.FunctionContext;
 import org.apache.geode.cache.execute.FunctionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.fork.ServerProcess;
 import org.springframework.data.gemfire.function.sample.ExceptionThrowingFunctionExecution;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.process.ProcessWrapper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests testing the proper behavior of SDG's {@link Function} annotation support when the {@link Function}
@@ -33,10 +30,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.execute.Function
  * @see org.apache.geode.cache.execute.FunctionContext
  * @see org.apache.geode.cache.execute.FunctionException
- * @see org.springframework.data.gemfire.fork.ServerProcess
  * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @see org.springframework.data.gemfire.function.sample.ExceptionThrowingFunctionExecution
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0
@@ -44,17 +39,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ContextConfiguration
 @SuppressWarnings("unused")
-public class ExceptionThrowingFunctionExecutionIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class ExceptionThrowingFunctionExecutionIntegrationTests {
 
-	private static ProcessWrapper gemfireServer;
 
 	@Autowired
 	private ExceptionThrowingFunctionExecution exceptionThrowingFunctionExecution;
 
-	@BeforeClass
-	public static void startGeodeServer() throws IOException {
-		startGemFireServer(ServerProcess.class,
-			getServerContextXmlFileLocation(ExceptionThrowingFunctionExecutionIntegrationTests.class));
+  @BeforeClass
+	public static void startGemFireServer() {
+
+    GemFireCluster gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+        .withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+        .withGfsh(false, "deploy --jar=/testJar.jar");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));
 	}
 
 	@Test(expected = FunctionException.class)

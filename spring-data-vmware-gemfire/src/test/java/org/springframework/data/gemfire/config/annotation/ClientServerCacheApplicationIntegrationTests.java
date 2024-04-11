@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * Integration Tests testing the contract and functionality of the {@link CacheServerApplication}
- * and {@link ClientCacheApplication} SDG annotations for configuring and bootstrapping an Apache Geode
+ * Integration Tests testing the contract and functionality of the
+ * {@link ClientCacheApplication} SDG annotation for configuring and bootstrapping an Apache Geode
  * client/server topology
  *
  * @author John Blum
@@ -37,9 +37,7 @@ import java.util.Collections;
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.server.CacheServer
- * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.9.0
