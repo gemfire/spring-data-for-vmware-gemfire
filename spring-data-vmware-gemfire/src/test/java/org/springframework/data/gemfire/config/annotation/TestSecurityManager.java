@@ -33,7 +33,7 @@ import org.springframework.util.StringUtils;
 public final class TestSecurityManager implements org.apache.geode.security.SecurityManager {
 
 	public static final String SECURITY_USERNAME = "testUser";
-	public static final String SECURITY_PASSWORD = "&t35t9@55w0rd!";
+	public static final String SECURITY_PASSWORD = "t35t9@55w0rd!";
 
 	public static final String SECURITY_USERNAME_PROPERTY = SecurityManager.USER_NAME;
 	public static final String SECURITY_PASSWORD_PROPERTY = SecurityManager.PASSWORD;

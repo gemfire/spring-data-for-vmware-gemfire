@@ -721,14 +721,6 @@ public abstract class AbstractAnnotationConfigSupport
 		return String.format("%1$s%2$s", propertyName("cache.peer."), propertyNameSuffix);
 	}
 
-	protected String cacheServerProperty(String propertyNameSuffix) {
-		return String.format("%1$s%2$s", propertyName("cache.server."), propertyNameSuffix);
-	}
-
-	protected String namedCacheServerProperty(String name, String propertyNameSuffix) {
-		return String.format("%1$s%2$s.%3$s", propertyName("cache.server."), name, propertyNameSuffix);
-	}
-
 	protected String clusterProperty(String propertyNameSuffix) {
 		return String.format("%1$s%2$s", propertyName("cluster."), propertyNameSuffix);
 	}

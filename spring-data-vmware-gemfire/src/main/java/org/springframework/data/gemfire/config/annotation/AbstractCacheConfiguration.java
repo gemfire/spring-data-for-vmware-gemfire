@@ -203,7 +203,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 */
 	protected void configureCache(AnnotationMetadata importMetadata) {
 
-		if (isClientPeerOrServerCacheApplication(importMetadata)) {
+		if (isClientOrPeerCacheApplication(importMetadata)) {
 
 			AnnotationAttributes cacheMetadataAttributes = getAnnotationAttributes(importMetadata);
 
@@ -311,23 +311,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		return gemfireCache;
 	}
 
-	// TODO: Review Javadoc from here
-
-	/**
-	 * Determines whether this is a GemFire {@link CacheServer} application,
-	 * which is indicated by the presence of the {@link CacheServerApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server application.
-	 * @see CacheServerApplication
-	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
-	 */
-	protected boolean isCacheServerApplication(AnnotationMetadata importMetadata) {
-		return isTypedCacheApplication(CacheServerApplication.class, importMetadata);
-	}
-
 	/**
 	 * Determines whether this is a GemFire {@link ClientCache} application,
 	 * which is indicated by the presence of the {@link ClientCacheApplication} annotation on a Spring application
@@ -378,25 +361,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determines whether this is a GemFire {@link CacheServer} or
-	 * {@link Cache peer cache} application, which is indicated by the presence
-	 * of either the {@link CacheServerApplication} annotation or the {@link PeerCacheApplication} annotation
-	 * on a Spring application {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server or peer cache application.
-	 * @see AnnotationMetadata
-	 * @see CacheServerApplication
-	 * @see PeerCacheApplication
-	 * @see #isCacheServerApplication(AnnotationMetadata)
-	 * @see #isPeerCacheApplication(AnnotationMetadata)
-	 */
-	protected boolean isCacheServerOrPeerCacheApplication(AnnotationMetadata importMetadata) {
-		return isCacheServerApplication(importMetadata) || isPeerCacheApplication(importMetadata);
-	}
-
-	/**
 	 * Determine whether this Spring application is a {@link CacheServer},
 	 * {@link ClientCache} or a {@link Cache} application.
 	 *
@@ -404,14 +368,12 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * from the class type-level annotations used to configure the Spring application.
 	 * @return a boolean value indicating whether this is a GemFire cache server, client cache or peer cache
 	 * Spring application.
-	 * @see #isCacheServerApplication(AnnotationMetadata)
 	 * @see #isClientCacheApplication(AnnotationMetadata)
 	 * @see #isPeerCacheApplication(AnnotationMetadata)
 	 */
-	protected boolean isClientPeerOrServerCacheApplication(AnnotationMetadata importMetadata) {
+	protected boolean isClientOrPeerCacheApplication(AnnotationMetadata importMetadata) {
 
-		return isCacheServerApplication(importMetadata)
-			|| isClientCacheApplication(importMetadata)
+		return isClientCacheApplication(importMetadata)
 			|| isPeerCacheApplication(importMetadata);
 	}
 

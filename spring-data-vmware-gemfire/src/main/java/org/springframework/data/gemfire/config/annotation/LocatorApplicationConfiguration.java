@@ -67,7 +67,7 @@ public class LocatorApplicationConfiguration extends AbstractAnnotationConfigSup
     protected static final String LOCATOR_APPLICATION_MUTEX_ERROR_MESSAGE =
 		"A Spring application cannot be both a Cache and a Locator application;"
 			+ " You may annotate your Spring application main class with 1 of"
-			+ " [@ClientCacheApplication, @CacheServerApplication, @PeerCacheApplication] or @LocatorApplication";
+			+ " [@ClientCacheApplication, @PeerCacheApplication] or @LocatorApplication";
 
 	private static final List<String> CACHE_FACTORY_BEAN_CLASS_NAMES =
 		Arrays.asList(CacheFactoryBean.class.getName(), ClientCacheFactoryBean.class.getName());
