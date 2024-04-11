@@ -25,12 +25,10 @@ import org.apache.geode.cache.query.CqQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.TestUtils;
-import org.springframework.data.gemfire.fork.CqCacheServerProcess;
 import org.springframework.data.gemfire.listener.ContinuousQueryListener;
 import org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer;
 import org.springframework.data.gemfire.listener.GemfireMDP;
 import org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ErrorHandler;
@@ -45,7 +43,6 @@ import org.springframework.util.ErrorHandler;
  * @see org.apache.geode.cache.query.CqListener
  * @see org.apache.geode.cache.query.CqQuery
  * @see org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0

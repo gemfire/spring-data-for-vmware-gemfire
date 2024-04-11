@@ -18,8 +18,6 @@ import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.GemfireTemplate;
-import org.springframework.data.gemfire.fork.ServerProcess;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -32,7 +30,6 @@ import java.io.IOException;
  * @see org.junit.Test
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.4.0

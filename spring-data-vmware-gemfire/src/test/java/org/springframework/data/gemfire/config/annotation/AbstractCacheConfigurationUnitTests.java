@@ -61,7 +61,7 @@ public class AbstractCacheConfigurationUnitTests {
 		Properties gemfireProperties = this.cacheConfiguration.gemfireProperties();
 
 		assertThat(gemfireProperties).isNotNull();
-		assertThat(gemfireProperties).hasSize(4);
+		assertThat(gemfireProperties).hasSize(3);
 		assertThat(gemfireProperties.getProperty("name")).isEqualTo("TestName");
 		assertThat(gemfireProperties.getProperty("log-level")).isEqualTo("DEBUG");
 		assertThat(gemfireProperties.getProperty("locators")).isEqualTo("skullbox[11235]");

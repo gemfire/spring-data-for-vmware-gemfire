@@ -41,7 +41,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.7.0

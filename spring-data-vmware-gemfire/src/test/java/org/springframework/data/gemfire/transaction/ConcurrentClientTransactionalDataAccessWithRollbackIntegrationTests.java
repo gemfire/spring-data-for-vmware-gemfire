@@ -58,9 +58,7 @@ import lombok.Setter;
  * @see edu.umd.cs.mtc.MultithreadedTestCase
  * @see edu.umd.cs.mtc.TestFramework
  * @see org.apache.geode.cache.client.ClientCache
- * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner

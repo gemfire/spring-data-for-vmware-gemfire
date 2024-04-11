@@ -44,11 +44,9 @@ import example.app.repo.UserRepository;
  * @see org.junit.Test
  * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
- * @see org.springframework.data.gemfire.config.annotation.CacheServerApplication
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.repository.config.EnableGemfireRepositories
  * @see org.springframework.data.gemfire.repository.support.SimpleGemfireRepository
- * @see org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport
  * @see org.springframework.data.repository.CrudRepository
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
