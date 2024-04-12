@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -27,8 +32,8 @@ plugins {
 java {
   withJavadocJar()
   withSourcesJar()
-
-  toolchain{ languageVersion.set(JavaLanguageVersion.of(17))}
+  val jdkVersion: String by project
+  toolchain { languageVersion.set(JavaLanguageVersion.of(jdkVersion)) }
 }
 
 tasks.named<Javadoc>("javadoc") {
@@ -47,8 +52,6 @@ publishingDetails {
 }
 
 dependencies {
-  val gemfireVersion: String by project
-  val springDataVersion: String by project
   compileOnly(libs.bundles.gemfire)
 
   implementation(libs.cache.api)
@@ -74,9 +77,9 @@ dependencies {
   testImplementation(libs.log4J)
   testImplementation(libs.annotation.api)
   testImplementation(libs.derby)
-  testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta")})
-  testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta")})
-  testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta")})
+  testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta") })
+  testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta") })
+  testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta") })
   testImplementation(libs.assertJ)
   testImplementation(libs.snappy)
   testImplementation(libs.spring.shell) {
@@ -170,8 +173,14 @@ fun getGemFireBaseVersion(): String {
 tasks.register("copyJavadocsToBucket") {
   dependsOn(tasks.named("javadocJar"))
   doLast {
-    val storage = StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
-    val blobId = BlobId.of(project.properties["docsGCSBucket"].toString(), "${publishingDetails.artifactName.get()}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
+    val storage =
+      StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
+    val blobId = BlobId.of(
+      project.properties["docsGCSBucket"].toString(),
+      "${publishingDetails.artifactName.get()}/${project.version}/${
+        tasks.named("javadocJar").get().outputs.files.singleFile.name
+      }"
+    )
     val blobInfo = BlobInfo.newBuilder(blobId).build()
     storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
   }
