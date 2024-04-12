@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  ~ Copyright 2024 Broadcom. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!--
   ~ Copyright 2022-2024 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
@@ -37,7 +42,6 @@
 		initial-capacity="11"
 		key-constraint="java.lang.String"
 		load-factor="0.50"
-		multicast-enabled="true"
 		persistent="false"
 		value-constraint="java.util.Date"/>
 
@@ -48,7 +52,6 @@
 		initial-capacity="21"
 		key-constraint="java.lang.String"
 		load-factor="0.25"
-		multicast-enabled="true"
 		persistent="false"
 		scope="distributed-ack"
 		value-constraint="java.util.Date"/>

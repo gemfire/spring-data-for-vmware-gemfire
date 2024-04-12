@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -6,9 +11,6 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Offset.offset;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheListener;
@@ -19,7 +21,8 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.Scope;
 import org.apache.geode.compression.Compressor;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
@@ -142,7 +145,6 @@ public class ReplicatedRegionNamespaceIntegrationTests extends IntegrationTestsS
 		assertThat(regionAttributes.getKeyConstraint()).isEqualTo(String.class);
 		assertThat(regionAttributes.getLoadFactor()).isCloseTo(0.50f, offset(0.001f));
 		assertThat(regionAttributes.isLockGrantor()).isTrue();
-		assertThat(regionAttributes.getMulticastEnabled()).isTrue();
 		assertThat(regionAttributes.getScope()).isEqualTo(Scope.GLOBAL);
 		assertThat(regionAttributes.getValueConstraint()).isEqualTo(String.class);
 	}

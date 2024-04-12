@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +23,6 @@ import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.Bean;
@@ -86,8 +90,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	protected static final boolean DEFAULT_COPY_ON_READ = false;
 	protected static final boolean DEFAULT_USE_BEAN_FACTORY_LOCATOR = false;
 
-	protected static final int DEFAULT_MCAST_PORT = 0;
-
 	protected static final String DEFAULT_LOCATORS = "";
 	protected static final String DEFAULT_LOG_LEVEL = "config";
 	protected static final String DEFAULT_NAME = "SpringDataGemFireApplication";
@@ -96,7 +98,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private boolean copyOnRead = DEFAULT_COPY_ON_READ;
 	private boolean useBeanFactoryLocator = DEFAULT_USE_BEAN_FACTORY_LOCATOR;
 
-	private Integer mcastPort = DEFAULT_MCAST_PORT;
 
 	private Float criticalHeapPercentage;
 	private Float evictionHeapPercentage;
@@ -121,10 +122,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * The {@literal name} of the Pivotal GemFire/Apache Geode member/node in the cluster is set to a default,
 	 * pre-defined and descriptive value depending on the type of configuration meta-data applied.
 	 *
-	 * {@literal mcast-port} is set to {@literal 0} and {@literal locators} is set to an {@link String empty String},
-	 * which is necessary for {@link ClientCache cache client}-based applications.  These values can be changed
-	 * and set accordingly for {@link Cache peer cache} and {@link CacheServer cache server} applications.
-	 *
 	 * Finally, the {@literal log-level} property defaults to {@literal config}.
 	 *
 	 * @return a {@link Properties} object containing Pivotal GemFire/Apache Geode properties used to configure
@@ -133,7 +130,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * @see Properties
 	 * @see #locators()
 	 * @see #logLevel()
-	 * @see #mcastPort()
 	 * @see #name()
 	 */
 	@Bean
@@ -142,7 +138,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		PropertiesBuilder gemfireProperties = PropertiesBuilder.create();
 
 		gemfireProperties.setProperty("name", name());
-		gemfireProperties.setProperty("mcast-port", mcastPort());
 		gemfireProperties.setProperty("log-level", logLevel());
 		gemfireProperties.setProperty("locators", locators());
 		gemfireProperties.add(this.customGemFireProperties);
@@ -470,7 +465,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	void setLocators(String locators) {
 		this.locators = locators;
-		this.mcastPort = DEFAULT_MCAST_PORT;
 	}
 
 	protected String locators() {
@@ -483,15 +477,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	protected String logLevel() {
 		return Optional.ofNullable(this.logLevel).orElse(DEFAULT_LOG_LEVEL);
-	}
-
-	void setMcastPort(Integer mcastPort) {
-		this.mcastPort = mcastPort;
-		this.locators = DEFAULT_LOCATORS;
-	}
-
-	protected Integer mcastPort() {
-		return Optional.ofNullable(mcastPort).orElse(DEFAULT_MCAST_PORT);
 	}
 
 	void setName(String name) {
