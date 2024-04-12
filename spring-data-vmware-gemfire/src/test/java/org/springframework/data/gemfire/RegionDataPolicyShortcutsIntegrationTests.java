@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -6,15 +11,13 @@ package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAlgorithm;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -169,7 +172,6 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutDefaults.getAttributes().getInitialCapacity()).isEqualTo(101);
 		assertThat(shortcutDefaults.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 		assertThat(shortcutDefaults.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
-		assertThat(shortcutDefaults.getAttributes().getMulticastEnabled()).isFalse();
 		assertThat(shortcutDefaults.getAttributes().getValueConstraint()).isEqualTo(String.class);
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);

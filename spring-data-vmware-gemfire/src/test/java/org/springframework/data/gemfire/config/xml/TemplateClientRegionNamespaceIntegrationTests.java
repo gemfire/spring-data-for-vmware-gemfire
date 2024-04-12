@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -126,7 +131,6 @@ public class TemplateClientRegionNamespaceIntegrationTests extends IntegrationTe
 		assertThat(region.getAttributes().getCustomEntryIdleTimeout()).isNull();
 		assertThat(region.getAttributes().getCustomEntryTimeToLive()).isNull();
 		assertThat(region.getAttributes().getDiskStoreName()).isNull();
-		assertThat(region.getAttributes().getMulticastEnabled()).isFalse();
 		assertDefaultExpirationAttributes(region.getAttributes().getRegionTimeToLive());
 		assertDefaultExpirationAttributes(region.getAttributes().getRegionIdleTimeout());
 	}

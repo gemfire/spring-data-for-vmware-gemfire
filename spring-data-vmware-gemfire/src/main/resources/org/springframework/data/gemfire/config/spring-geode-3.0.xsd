@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
+  ~ Copyright 2024 Broadcom. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!--
   ~ Copyright 2022-2024 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
@@ -1159,14 +1164,6 @@ Required for subregions.
 				<xsd:documentation><![CDATA[
 Indicates whether the Region can conflate its messages to the client.  GemFire default is false.
 				]]></xsd:documentation>
-			</xsd:annotation>
-		</xsd:attribute>
-		<xsd:attribute name="multicast-enabled" type="xsd:string">
-			<xsd:annotation>
-				<xsd:documentation><![CDATA[
-Boolean that indicates whether distributed operations on a region should use multicasting. To enable this, multicast must be enabled for the
-distributed system with the mcast-port gemfire.properties setting.
-                                ]]></xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:attributeGroup>

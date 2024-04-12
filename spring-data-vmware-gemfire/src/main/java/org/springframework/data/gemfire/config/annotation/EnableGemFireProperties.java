@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -365,12 +370,9 @@ public @interface EnableGemFireProperties {
 	int tombstoneGcThreshold() default GemFirePropertiesConfiguration.DEFAULT_TOMBSTONE_THRESHOLD;
 
 	/**
-	 * Maximum fragment size, in bytes, for transmission over UDP unicast or multicast sockets. Smaller messages
-	 * are combined, if possible, for transmission up to the fragment size setting.
-	 *
-	 * Valid values are in the range 1000..60000.
-	 *
-	 * Defaults to {@literal 60000} bytes.
+	 * Maximum fragment size, in bytes, for transmission over UDP unicast. Smaller messages are combined, if possible, for
+	 * transmission up to the fragment size setting. Valid values are in the range 1000..60000. Defaults to
+	 * {@literal 60000} bytes.
 	 */
 	int udpFragmentSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_FRAGMENT_SIZE;
 

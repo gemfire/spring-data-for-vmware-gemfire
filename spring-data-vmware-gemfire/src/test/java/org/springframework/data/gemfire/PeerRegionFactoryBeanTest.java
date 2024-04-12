@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -302,7 +307,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getLoadFactor()).thenReturn(0.90f);
 		when(mockRegionAttributes.isLockGrantor()).thenReturn(true);
 		when(mockRegionAttributes.getMembershipAttributes()).thenReturn(testMembershipAttributes);
-		when(mockRegionAttributes.getMulticastEnabled()).thenReturn(false);
 		when(mockRegionAttributes.getPartitionAttributes()).thenReturn(testPartitionAttributes);
 		when(mockRegionAttributes.getPoolName()).thenReturn("swimming");
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(testExpirationAttributes);
@@ -342,7 +346,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setLoadFactor(eq(0.90f));
 		verify(mockRegionFactory).setLockGrantor(eq(true));
 		verify(mockRegionFactory).setMembershipAttributes(same(testMembershipAttributes));
-		verify(mockRegionFactory).setMulticastEnabled(eq(false));
 		verify(mockRegionFactory).setPartitionAttributes(eq(testPartitionAttributes));
 		verify(mockRegionFactory).setPoolName(eq("swimming"));
 		verify(mockRegionFactory).setRegionIdleTimeout(same(testExpirationAttributes));
@@ -375,7 +378,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory, never()).setLoadFactor(anyFloat());
 		verify(mockRegionFactory, never()).setLockGrantor(anyBoolean());
 		verify(mockRegionFactory, never()).setMembershipAttributes(any(MembershipAttributes.class));
-		verify(mockRegionFactory, never()).setMulticastEnabled(anyBoolean());
 		verify(mockRegionFactory, never()).setPartitionAttributes(any(PartitionAttributes.class));
 		verify(mockRegionFactory, never()).setPoolName(any(String.class));
 		verify(mockRegionFactory, never()).setRegionIdleTimeout(any(ExpirationAttributes.class));
@@ -410,7 +412,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getLoadFactor()).thenReturn(0.60f);
 		when(mockRegionAttributes.isLockGrantor()).thenReturn(false);
 		when(mockRegionAttributes.getMembershipAttributes()).thenReturn(null);
-		when(mockRegionAttributes.getMulticastEnabled()).thenReturn(true);
 		when(mockRegionAttributes.getPartitionAttributes()).thenReturn(null);
 		when(mockRegionAttributes.getPoolName()).thenReturn("swimming");
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(testExpirationAttributes);
@@ -450,7 +451,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setLoadFactor(eq(0.60f));
 		verify(mockRegionFactory).setLockGrantor(eq(false));
 		verify(mockRegionFactory).setMembershipAttributes(null);
-		verify(mockRegionFactory).setMulticastEnabled(eq(true));
 		verify(mockRegionFactory, never()).setPartitionAttributes(any(PartitionAttributes.class));
 		verify(mockRegionFactory).setPoolName(eq("swimming"));
 		verify(mockRegionFactory).setRegionIdleTimeout(same(testExpirationAttributes));

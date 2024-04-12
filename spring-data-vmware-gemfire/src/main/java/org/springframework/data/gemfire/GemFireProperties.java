@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -60,12 +65,6 @@ public enum GemFireProperties {
 	LOG_LEVEL(ConfigurationProperties.LOG_LEVEL, String.class, "config"),
 	MAX_NUM_RECONNECT_TRIES(ConfigurationProperties.MAX_NUM_RECONNECT_TRIES, Integer.class, 3),
 	MAX_WAIT_TIME_RECONNECT(ConfigurationProperties.MAX_WAIT_TIME_RECONNECT, Long.class, 60000),
-	MCAST_ADDRESS(ConfigurationProperties.MCAST_ADDRESS, String.class, "239.192.81.1"),
-	MCAST_FLOW_CONTROL(ConfigurationProperties.MCAST_FLOW_CONTROL, String.class, "1048576,0.25, 5000"),
-	MCAST_PORT(ConfigurationProperties.MCAST_PORT, Integer.class, 10334),
-	MCAST_RECV_BUFFER_SIZE(ConfigurationProperties.MCAST_RECV_BUFFER_SIZE, Integer.class, 1048576),
-	MCAST_SEND_BUFFER_SIZE(ConfigurationProperties.MCAST_SEND_BUFFER_SIZE, Integer.class, 65535),
-	MCAST_TTL(ConfigurationProperties.MCAST_TTL, Integer.class, 32),
 	MEMBER_TIMEOUT(ConfigurationProperties.MEMBER_TIMEOUT, Long.class, 5000L),
 	MEMBERSHIP_PORT_RANGE(ConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(ConfigurationProperties.NAME, String.class),
