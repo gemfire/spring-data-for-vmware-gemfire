@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
-import org.springframework.data.gemfire.function.annotation.GemfireFunction;
 
 /**
  * The CreateRegionFunction class...
@@ -28,7 +27,6 @@ public class CreateRegionFunction {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@GemfireFunction(id = CREATE_REGION_FUNCTION_ID)
 	public boolean createRegion(RegionDefinition regionDefinition) {
 
 		Cache gemfireCache = resolveCache();

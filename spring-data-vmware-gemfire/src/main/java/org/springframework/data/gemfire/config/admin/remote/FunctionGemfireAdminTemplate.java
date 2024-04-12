@@ -24,7 +24,6 @@ import org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperati
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction;
 import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.admin.functions.ListIndexesFunction;
 import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
@@ -105,18 +104,6 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 				return Collections.emptySet();
 			}
 		}
-	}
-
-	/**
-	 * Returns an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
-	 *
-	 * @return an {@link Iterable} of all the server {@link Region} {@link Index Indexes}.
-	 * @see Index#getName()
-	 * @see Iterable
-	 */
-	@Override
-	public Iterable<String> getAvailableServerRegionIndexes() {
-		return execute(ListIndexesFunction.LIST_INDEXES_FUNCTION_ID);
 	}
 
 	@Override

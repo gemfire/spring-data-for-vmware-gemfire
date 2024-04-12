@@ -445,16 +445,6 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 
 				setRunning(true);
 			}
-			/*
-			else if (schemaObjectContext.isPeerCache()) {
-
-				GemfireFunctionUtils.registerFunctionForPojoMethod(new CreateRegionFunction(),
-					CreateRegionFunction.CREATE_REGION_FUNCTION_ID);
-
-				GemfireFunctionUtils.registerFunctionForPojoMethod(new CreateIndexFunction(),
-					CreateIndexFunction.CREATE_INDEX_FUNCTION_ID);
-			}
-			*/
 		}
 
 		@Override

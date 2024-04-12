@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.data.gemfire.GemfireCacheUtils;
 import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
-import org.springframework.data.gemfire.function.annotation.GemfireFunction;
 
 /**
  * The CreateIndexFunction class...
@@ -32,7 +31,6 @@ public class CreateIndexFunction {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@GemfireFunction(id = CREATE_INDEX_FUNCTION_ID)
 	public boolean createIndex(IndexDefinition indexDefinition) {
 
 		Cache gemfireCache = resolveCache();
