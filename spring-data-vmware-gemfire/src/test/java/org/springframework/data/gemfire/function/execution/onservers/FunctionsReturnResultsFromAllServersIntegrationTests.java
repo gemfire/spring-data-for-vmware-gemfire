@@ -56,7 +56,7 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Client
 	private SingleServerAdminFunctions singleServerAdminFunctions;
 
 	@BeforeClass
-	public static void startGemFireServer() throws Exception {
+	public static void startGemFireServer() {
 
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 2)
 				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))

@@ -38,7 +38,6 @@ import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction;
 import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.admin.functions.ListIndexesFunction;
 import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
@@ -165,15 +164,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 
 		verify(this.mockFunctionOperations, times(1))
 			.executeAndExtract(isA(GetRegionsFunction.class), eq(false));
-	}
-
-	@Test
-	public void getAvailableServerRegionIndexesCallsExecuteWithListIndexesFunctionId() {
-
-		this.template.getAvailableServerRegionIndexes();
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(eq(ListIndexesFunction.LIST_INDEXES_FUNCTION_ID));
 	}
 
 	@Test
