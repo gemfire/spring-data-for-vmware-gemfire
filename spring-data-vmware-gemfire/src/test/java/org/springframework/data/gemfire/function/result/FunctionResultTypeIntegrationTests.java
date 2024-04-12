@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.geode.cache.execute.FunctionService;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
 import org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions;
-import org.springframework.data.gemfire.function.config.EnableGemfireFunctions;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -32,10 +33,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.GemFireCache
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
- * @see org.springframework.data.gemfire.function.annotation.GemfireFunction
  * @see org.springframework.data.gemfire.function.annotation.OnRegion
  * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions
- * @see org.springframework.data.gemfire.function.config.EnableGemfireFunctions
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringRunner
@@ -44,6 +43,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration(classes = FunctionResultTypeIntegrationTests.TestConfiguration.class)
 @SuppressWarnings("unused")
 public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport {
+
+	@BeforeClass
+	public static void setup() {
+		FunctionService.registerFunction(new MixedResultTypeFunctions.SingleObjectFunction());
+		FunctionService.registerFunction(new MixedResultTypeFunctions.ListObjectFunction());
+		FunctionService.registerFunction(new MixedResultTypeFunctions.SinglePrimitiveFunction());
+	}
 
 	@Autowired
 	private MixedResultTypeFunctionExecutions functionExecutions;
@@ -68,8 +74,7 @@ public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport 
 
 	@PeerCacheApplication(name = "FunctionResultTypeIntegrationTests")
 	@EnableGemfireFunctionExecutions(basePackageClasses = MixedResultTypeFunctionExecutions.class)
-	@EnableGemfireFunctions
-	public static class TestConfiguration {
+  public static class TestConfiguration {
 
 		@Bean("Numbers")
 		ReplicatedRegionFactoryBean<Long, BigDecimal> numbersRegion(GemFireCache gemFireCache) {
