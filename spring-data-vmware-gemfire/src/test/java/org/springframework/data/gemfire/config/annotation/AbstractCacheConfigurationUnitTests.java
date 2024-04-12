@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -10,20 +15,17 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration.DEFAULT_MCAST_PORT;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.geode.cache.TransactionListener;
+import org.apache.geode.cache.TransactionWriter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.data.gemfire.CacheFactoryBean;
@@ -53,7 +55,6 @@ public class AbstractCacheConfigurationUnitTests {
 	public void gemfirePropertiesContainsEssentialProperties() {
 
 		this.cacheConfiguration.setName("TestName");
-		this.cacheConfiguration.setMcastPort(-1);
 		this.cacheConfiguration.setLogLevel("DEBUG");
 		this.cacheConfiguration.setLocators("skullbox[11235]");
 
@@ -62,7 +63,6 @@ public class AbstractCacheConfigurationUnitTests {
 		assertThat(gemfireProperties).isNotNull();
 		assertThat(gemfireProperties).hasSize(4);
 		assertThat(gemfireProperties.getProperty("name")).isEqualTo("TestName");
-		assertThat(gemfireProperties.getProperty("mcast-port")).isEqualTo(String.valueOf(DEFAULT_MCAST_PORT));
 		assertThat(gemfireProperties.getProperty("log-level")).isEqualTo("DEBUG");
 		assertThat(gemfireProperties.getProperty("locators")).isEqualTo("skullbox[11235]");
 	}

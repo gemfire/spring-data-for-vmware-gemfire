@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -377,7 +382,6 @@ abstract class ParsingUtils {
 		setPropertyValue(element, regionAttributesBuilder, "is-lock-grantor", "lockGrantor");
 		setPropertyValue(element, regionAttributesBuilder, "key-constraint");
 		setPropertyValue(element, regionAttributesBuilder, "load-factor");
-		setPropertyValue(element, regionAttributesBuilder, "multicast-enabled");
 		setPropertyValue(element, regionAttributesBuilder, "publisher");
 		setPropertyValue(element, regionAttributesBuilder, "value-constraint");
 

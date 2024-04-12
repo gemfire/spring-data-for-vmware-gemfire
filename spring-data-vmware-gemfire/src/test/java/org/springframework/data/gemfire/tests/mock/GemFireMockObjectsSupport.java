@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2023-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -10,7 +15,6 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -21,10 +25,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
 import static org.springframework.data.gemfire.tests.util.IOUtils.doSafeIo;
-import static org.springframework.data.gemfire.tests.util.ObjectUtils.rethrowAsRuntimeException;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeSet;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.NOT_SUPPORTED;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -53,7 +54,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -62,9 +62,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import org.mockito.ArgumentMatchers;
-import org.mockito.stubbing.Answer;
 
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.Cache;
@@ -131,7 +128,9 @@ import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.distributed.internal.DistributionConfig;
 import org.apache.geode.internal.cache.PoolManagerImpl;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.apache.xbean.asm9.tree.analysis.Analyzer;
+import org.mockito.ArgumentMatchers;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.IndexType;
@@ -2135,7 +2134,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
-		when(mockRegionAttributes.getMulticastEnabled()).thenAnswer(newGetter(baseRegionAttributes::getMulticastEnabled));
 		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(baseRegionAttributes::getPartitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(baseRegionAttributes::getPoolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
@@ -2524,10 +2522,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::isLockGrantor)
 			.orElse(false));
 
-		AtomicBoolean multicastEnabled = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getMulticastEnabled)
-			.orElse(false));
-
 		AtomicBoolean statisticsEnabled = new AtomicBoolean(optionalRegionAttributes
 			.map(RegionAttributes::getStatisticsEnabled)
 			.orElse(false));
@@ -2695,9 +2689,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionFactory.setMembershipAttributes(any(MembershipAttributes.class)))
 			.thenAnswer(newSetter(membershipAttributes, () -> mockRegionFactory));
 
-		when(mockRegionFactory.setMulticastEnabled(anyBoolean()))
-			.thenAnswer(newSetter(multicastEnabled, mockRegionFactory));
-
 		when(mockRegionFactory.setPartitionAttributes(any(PartitionAttributes.class)))
 			.thenAnswer(newSetter(partitionAttributes, () -> mockRegionFactory));
 
@@ -2748,7 +2739,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
 		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(lockGrantor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(membershipAttributes));
-		when(mockRegionAttributes.getMulticastEnabled()).thenAnswer(newGetter(multicastEnabled));
 		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(partitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));

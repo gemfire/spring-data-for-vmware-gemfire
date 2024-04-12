@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -388,7 +393,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			regionFactory.setLoadFactor(regionAttributes.getLoadFactor());
 			regionFactory.setLockGrantor(regionAttributes.isLockGrantor());
 			regionFactory.setMembershipAttributes(regionAttributes.getMembershipAttributes());
-			regionFactory.setMulticastEnabled(regionAttributes.getMulticastEnabled());
 
 			mergePartitionAttributes(regionFactory, regionAttributes);
 
