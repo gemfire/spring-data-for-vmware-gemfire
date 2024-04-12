@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  ~ Copyright 2024 Broadcom. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!--
   ~ Copyright 2022-2024 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
@@ -26,8 +31,7 @@
 						   concurrency-checks-enabled="true"
 						   concurrency-level="40"
 						   initial-capacity="51"
-						   load-factor="0.85"
-						   multicast-enabled="false">
+                           load-factor="0.85">
 			<key-constraint>java.lang.Integer</key-constraint>
 			<value-constraint>java.lang.String</value-constraint>
 		</region-attributes>
@@ -40,7 +44,6 @@
 						   concurrency-level="20"
 						   initial-capacity="23"
 						   load-factor="0.75"
-						   multicast-enabled="false"
 						   scope="distributed-no-ack">
 			<key-constraint>java.lang.Integer</key-constraint>
 			<value-constraint>java.lang.String</value-constraint>

@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -85,7 +90,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(appDataRegion.getFullPath()).isEqualTo("/AppDataRegion");
 			assertThat(appDataRegion.getAttributes()).isNotNull();
 			assertThat(appDataRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
-			assertThat(appDataRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(appDataRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
 			assertThat(appDataRegion.getAttributes().getInitialCapacity()).isEqualTo(101);
 			assertThat(appDataRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
@@ -220,7 +224,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativePartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 			assertThat(nativePartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
 			assertThat(nativePartitionRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
-			assertThat(nativePartitionRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(nativePartitionRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
 			Region<?, ?> nativeReplicateRegion = applicationContext.getBean("NativeReplicateRegion", Region.class);
@@ -236,7 +239,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(23);
 			assertThat(nativeReplicateRegion.getAttributes().getLoadFactor()).isEqualTo(0.75f);
 			assertThat(nativeReplicateRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(nativeReplicateRegion.getAttributes().getMulticastEnabled()).isFalse();
 			assertThat(nativeReplicateRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
 			assertThat(nativeReplicateRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 

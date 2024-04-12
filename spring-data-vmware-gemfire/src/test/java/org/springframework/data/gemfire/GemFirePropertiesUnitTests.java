@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -35,12 +40,6 @@ public class GemFirePropertiesUnitTests {
 
     private static final Set<String> deprecatedGemFireProperties = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "disable-tcp",
-            "mcast-address",
-            "mcast-flow-control",
-            "mcast-port",
-            "mcast-recv-buffer-size",
-            "mcast-send-buffer-size",
-            "mcast-ttl",
             "security-udp-dhalgo",
             "udp-fragment-size",
             "udp-recv-buffer-size",
