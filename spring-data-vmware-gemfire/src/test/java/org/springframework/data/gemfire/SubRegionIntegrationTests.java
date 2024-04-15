@@ -92,7 +92,6 @@ public class SubRegionIntegrationTests extends IntegrationTestsSupport {
 		assertThat(regionAttributes.getConcurrencyLevel()).isEqualTo(20);
 		assertThat(regionAttributes.isDiskSynchronous()).isTrue();
 		assertThat(regionAttributes.getIgnoreJTA()).isTrue();
-		assertThat(regionAttributes.getIndexMaintenanceSynchronous()).isFalse();
 		assertThat(regionAttributes.getInitialCapacity()).isEqualTo(1000);
 		assertThat(regionAttributes.getKeyConstraint()).isEqualTo(Long.class);
 		assertThat(regionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);

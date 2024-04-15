@@ -26,7 +26,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
 import org.springframework.data.gemfire.config.schema.SchemaObjectType;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 
 /**
@@ -40,15 +39,6 @@ public class GemfireAdminOperationsUnitTests {
 
 	@Mock
 	private GemfireAdminOperations adminOperations;
-
-	private Index mockIndex(String name) {
-
-		Index mockIndex = mock(Index.class, name);
-
-		when(mockIndex.getName()).thenReturn(name);
-
-		return mockIndex;
-	}
 
 	@SuppressWarnings("unchecked")
 	private <K, V> Region<K, V> mockRegion(String name) {
@@ -131,74 +121,5 @@ public class GemfireAdminOperationsUnitTests {
 		adminOperations.createRegions((Iterable) null);
 
 		verify(adminOperations, never()).createRegion(any(RegionDefinition.class));
-	}
-
-	@Test
-	public void createIndexesWithArrayCallsCreateIndex() {
-
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
-
-		IndexDefinition definitionOne = IndexDefinition.from(mockIndex("IndexOne"));
-		IndexDefinition definitionTwo = IndexDefinition.from(mockIndex("IndexTwo"));
-
-		adminOperations.createIndexes(definitionOne, definitionTwo);
-
-		verify(adminOperations, times(1)).createIndex(eq(definitionOne));
-		verify(adminOperations, times(1)).createIndex(eq(definitionTwo));
-	}
-
-	@Test
-	public void createIndexesWithEmptyArray() {
-
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
-
-		adminOperations.createIndexes();
-
-		verify(adminOperations, never()).createIndex(any(IndexDefinition.class));
-	}
-
-	@Test
-	public void createIndexesWithNullArray() {
-
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
-
-		adminOperations.createIndexes();
-
-		verify(adminOperations, never()).createIndex(any(IndexDefinition.class));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createIndexesWithIterableCallsCreateIndex() {
-
-		doCallRealMethod().when(adminOperations).createIndexes(any(Iterable.class));
-
-		IndexDefinition definitionOne = IndexDefinition.from(mockIndex("IndexOne"));
-		IndexDefinition definitionTwo = IndexDefinition.from(mockIndex("IndexTwo"));
-
-		adminOperations.createIndexes(Arrays.asList(definitionOne, definitionTwo));
-
-		verify(adminOperations, times(1)).createIndex(eq(definitionOne));
-		verify(adminOperations, times(1)).createIndex(eq(definitionTwo));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createIndexesWithEmptyIterable() {
-
-		doCallRealMethod().when(adminOperations).createIndexes(any(Iterable.class));
-
-		adminOperations.createIndexes(Collections.emptyList());
-
-		verify(adminOperations, never()).createIndex(any(IndexDefinition.class));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createIndexesWithNullIterable() {
-
-		adminOperations.createIndexes((Iterable) null);
-
-		verify(adminOperations, never()).createIndex(any(IndexDefinition.class));
 	}
 }

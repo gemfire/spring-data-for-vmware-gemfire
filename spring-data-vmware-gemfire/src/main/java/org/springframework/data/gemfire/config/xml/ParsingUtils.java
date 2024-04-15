@@ -377,7 +377,6 @@ abstract class ParsingUtils {
 		setPropertyValue(element, regionAttributesBuilder, "disk-synchronous");
 		setPropertyValue(element, regionAttributesBuilder, "enable-subscription-conflation");
 		setPropertyValue(element, regionAttributesBuilder, "ignore-jta", "ignoreJTA");
-		setPropertyValue(element, regionAttributesBuilder, "index-update-type");
 		setPropertyValue(element, regionAttributesBuilder, "initial-capacity");
 		setPropertyValue(element, regionAttributesBuilder, "is-lock-grantor", "lockGrantor");
 		setPropertyValue(element, regionAttributesBuilder, "key-constraint");

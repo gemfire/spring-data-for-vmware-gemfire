@@ -141,28 +141,11 @@ public class ReplicatedRegionNamespaceIntegrationTests extends IntegrationTestsS
 		assertThat(regionAttributes.getEnableSubscriptionConflation()).isTrue();
 		assertThat(regionAttributes.getIgnoreJTA()).isTrue();
 		assertThat(regionAttributes.getInitialCapacity()).isEqualTo(10);
-		assertThat(regionAttributes.getIndexMaintenanceSynchronous()).isFalse();
 		assertThat(regionAttributes.getKeyConstraint()).isEqualTo(String.class);
 		assertThat(regionAttributes.getLoadFactor()).isCloseTo(0.50f, offset(0.001f));
 		assertThat(regionAttributes.isLockGrantor()).isTrue();
 		assertThat(regionAttributes.getScope()).isEqualTo(Scope.GLOBAL);
 		assertThat(regionAttributes.getValueConstraint()).isEqualTo(String.class);
-	}
-
-	@Test
-	public void replicatedWithSynchronousIndexUpdatesConfigurationIsCorrect() {
-
-		assertThat(applicationContext.containsBean("replicated-with-synchronous-index-updates")).isTrue();
-
-		Region<?, ?> region = applicationContext.getBean("replicated-with-synchronous-index-updates", Region.class);
-
-		assertThat(region).as(String.format("The '%1$s' Region was not properly configured and initialized",
-			"replicated-with-synchronous-index-updates")).isNotNull();
-
-		RegionAttributes<?, ?> regionAttributes = region.getAttributes();
-
-		assertThat(regionAttributes).isNotNull();
-		assertThat(regionAttributes.getIndexMaintenanceSynchronous()).isTrue();
 	}
 
 	@Test

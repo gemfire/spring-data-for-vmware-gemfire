@@ -56,8 +56,4 @@ public class RegionAttributesFactoryBean<K, V> extends AttributesFactory<K, V>
 	public boolean isSingleton() {
 		return true;
 	}
-
-	public void setIndexUpdateType(@NonNull IndexMaintenancePolicyType indexUpdateType) {
-		indexUpdateType.setIndexMaintenance(this);
-	}
 }

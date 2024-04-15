@@ -46,7 +46,6 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see PeerRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see EntityDefinedRegionsConfiguration
- * @see IndexConfiguration
  * @see CacheTypeAwareRegionFactoryBean
  * @see ClientRegion
  * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
@@ -59,7 +58,7 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-@Import(IndexConfiguration.class)
+@Import(EntityDefinedRegionsConfiguration.class)
 @SuppressWarnings("unused")
 public @interface EnableEntityDefinedRegions {
 

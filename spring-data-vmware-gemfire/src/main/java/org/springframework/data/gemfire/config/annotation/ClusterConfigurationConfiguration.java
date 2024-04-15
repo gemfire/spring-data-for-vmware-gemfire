@@ -40,10 +40,6 @@ import org.springframework.data.gemfire.config.schema.SchemaObjectCollector;
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefiner;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.config.schema.support.ClientRegionCollector;
-import org.springframework.data.gemfire.config.schema.support.ComposableSchemaObjectCollector;
-import org.springframework.data.gemfire.config.schema.support.ComposableSchemaObjectDefiner;
-import org.springframework.data.gemfire.config.schema.support.IndexCollector;
-import org.springframework.data.gemfire.config.schema.support.IndexDefiner;
 import org.springframework.data.gemfire.config.schema.support.RegionDefiner;
 import org.springframework.data.gemfire.config.support.AbstractSmartLifecycle;
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
@@ -377,11 +373,7 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * @see SchemaObjectCollector
 	 */
 	private SchemaObjectCollector<?> newSchemaObjectCollector() {
-
-		return ComposableSchemaObjectCollector.compose(
-			new ClientRegionCollector(),
-			new IndexCollector()
-		);
+		return new ClientRegionCollector();
 	}
 
 	/**
@@ -392,11 +384,7 @@ public class ClusterConfigurationConfiguration extends AbstractAnnotationConfigS
 	 * @see SchemaObjectDefiner
 	 */
 	private SchemaObjectDefiner newSchemaObjectDefiner() {
-
-		return ComposableSchemaObjectDefiner.compose(
-			new RegionDefiner(resolveServerRegionShortcut()),
-			new IndexDefiner()
-		);
+		return new RegionDefiner(resolveServerRegionShortcut());
 	}
 
 	public static class ClusterSchemaObjectInitializer extends AbstractSmartLifecycle {

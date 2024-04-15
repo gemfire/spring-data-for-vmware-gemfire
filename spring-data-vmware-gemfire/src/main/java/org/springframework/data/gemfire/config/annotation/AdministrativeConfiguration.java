@@ -9,7 +9,6 @@ import org.apache.geode.cache.execute.Function;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction;
 import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
 
 /**
@@ -23,18 +22,12 @@ import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunct
  * @see Function
  * @see Bean
  * @see Configuration
- * @see CreateIndexFunction
  * @see CreateRegionFunction
  * @since 2.0.3
  */
 @Configuration
 @SuppressWarnings("unused")
 public class AdministrativeConfiguration {
-
-	@Bean
-	public CreateIndexFunction createIndexFunction() {
-		return new CreateIndexFunction();
-	}
 
 	@Bean
 	public CreateRegionFunction createRegionFunction() {

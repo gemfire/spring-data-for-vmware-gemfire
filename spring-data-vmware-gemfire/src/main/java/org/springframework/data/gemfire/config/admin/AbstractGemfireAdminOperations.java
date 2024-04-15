@@ -10,7 +10,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 
 /**
@@ -61,20 +60,6 @@ public class AbstractGemfireAdminOperations implements GemfireAdminOperations {
 	 */
 	@Override
 	public void createRegion(RegionDefinition regionDefinition) {
-		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
-	}
-
-	/**
-	 * Creates a {@link Region} OQL {@link Index} based on the given {@link IndexDefinition schema object definition}.
-	 *
-	 * @param indexDefinition {@link IndexDefinition} encapsulating the configuration meta-data
-	 * defining a {@link Region} OQL {@link Index}.
-	 * @see IndexDefinition
-	 * @see Index
-	 * @see Region
-	 */
-	@Override
-	public void createIndex(IndexDefinition indexDefinition) {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
