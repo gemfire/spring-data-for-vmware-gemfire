@@ -27,8 +27,6 @@
 
 	<gfe:replicated-region id="Users" persistent="false"/>
 
-	<gfe:index id="UsernameIdx" expression="username" from="/Users" type="PRIMARY_KEY"/>
-
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable" expression="org.springframework.data.gemfire.repository.sample.UsingQueryAnnotationExtensionsInUserRepository"/>
 	</gfe-data:repositories>

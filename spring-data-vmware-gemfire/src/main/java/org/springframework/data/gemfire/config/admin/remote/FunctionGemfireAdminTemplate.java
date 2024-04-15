@@ -15,16 +15,13 @@ import java.util.stream.Collectors;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.query.Index;
 import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
 import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
-import org.springframework.data.gemfire.config.admin.functions.CreateIndexFunction;
 import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 import org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate;
@@ -109,11 +106,6 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	@Override
 	public void createRegion(RegionDefinition regionDefinition) {
 		execute(CreateRegionFunction.CREATE_REGION_FUNCTION_ID, regionDefinition);
-	}
-
-	@Override
-	public void createIndex(IndexDefinition indexDefinition) {
-		execute(CreateIndexFunction.CREATE_INDEX_FUNCTION_ID, indexDefinition);
 	}
 
 	<T> T execute(Function gemfireFunction, Object... arguments) {

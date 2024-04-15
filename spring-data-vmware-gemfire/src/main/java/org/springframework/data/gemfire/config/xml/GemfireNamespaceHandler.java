@@ -29,7 +29,6 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser("cq-listener-container", new GemfireListenerContainerParser());
 		registerBeanDefinitionParser("disk-store", new DiskStoreParser());
 		registerBeanDefinitionParser("function-service", new FunctionServiceParser());
-		registerBeanDefinitionParser("index", new IndexParser());
 		registerBeanDefinitionParser("local-region", new LocalRegionParser());
 		registerBeanDefinitionParser("local-region-template", new LocalRegionParser());
 		registerBeanDefinitionParser("lookup-region", new LookupRegionParser());

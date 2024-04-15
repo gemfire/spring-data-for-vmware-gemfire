@@ -42,8 +42,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.remote.FunctionGemfireAdminTemplate;
 import org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate;
-import org.springframework.data.gemfire.config.schema.support.ComposableSchemaObjectCollector;
-import org.springframework.data.gemfire.config.schema.support.ComposableSchemaObjectDefiner;
+import org.springframework.data.gemfire.config.schema.support.RegionCollector;
+import org.springframework.data.gemfire.config.schema.support.RegionDefiner;
 import org.springframework.data.gemfire.tests.util.ReflectionUtils;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.InterceptingClientHttpRequestFactory;
@@ -363,8 +363,8 @@ public class EnableClusterConfigurationUnitTests {
 
 		assertThat(schemaObjectContext).isNotNull();
 		assertThat(schemaObjectContext.<GemfireAdminOperations>getGemfireAdminOperations()).isEqualTo(mockGemfireAdminOperations);
-		assertThat(schemaObjectContext.getSchemaObjectCollector()).isInstanceOf(ComposableSchemaObjectCollector.class);
-		assertThat(schemaObjectContext.getSchemaObjectDefiner()).isInstanceOf(ComposableSchemaObjectDefiner.class);
+		assertThat(schemaObjectContext.getSchemaObjectCollector()).isInstanceOf(RegionCollector.class);
+		assertThat(schemaObjectContext.getSchemaObjectDefiner()).isInstanceOf(RegionDefiner.class);
 
 		verify(configuration, times(1))
 			.resolveGemfireAdminOperations(eq(mockEnvironment), eq(mockClientCache));

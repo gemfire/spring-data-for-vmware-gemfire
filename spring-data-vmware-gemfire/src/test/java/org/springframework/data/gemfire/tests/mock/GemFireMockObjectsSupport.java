@@ -133,7 +133,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.data.gemfire.GemfireUtils;
-import org.springframework.data.gemfire.IndexType;
 import org.springframework.data.gemfire.RegionShortcutWrapper;
 import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
 import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
@@ -1713,21 +1712,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			});
 
-			when(mockQueryService.createIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
-
-			when(mockQueryService.createIndex(anyString(), anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.FUNCTIONAL));
-
-			when(mockQueryService.createHashIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
-
-			when(mockQueryService.createHashIndex(anyString(), anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.HASH));
-
-			when(mockQueryService.createKeyIndex(anyString(), anyString(), anyString()))
-				.thenAnswer(createIndexAnswer(indexes, IndexType.KEY));
-
 			when(mockQueryService.newCq(anyString(), any(CqAttributes.class))).thenAnswer(invocation ->
 				add(cqQueries, mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
 					false)));
@@ -1767,18 +1751,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		indexes.add(index);
 
 		return index;
-	}
-
-	private static Answer<Index> createIndexAnswer(Collection<Index> indexes, IndexType indexType) {
-
-		return invocation -> {
-
-			String indexName = invocation.getArgument(0);
-			String indexedExpression = invocation.getArgument(1);
-			String regionPath = invocation.getArgument(2);
-
-			return add(indexes, mockIndex(indexName, indexedExpression, regionPath, indexType));
-		};
 	}
 
 	private static CqQuery mockCqQuery(String name, String queryString, CqAttributes cqAttributes, boolean durable) {
@@ -1910,33 +1882,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return mockSelectResults;
 	}
 
-	public static Index mockIndex(String name, String expression, String fromClause, IndexType indexType) {
-
-		Index mockIndex = mock(Index.class, name);
-
-		IndexStatistics mockIndexStaticts = mockIndexStatistics(name);
-
-		when(mockIndex.getName()).thenReturn(name);
-		when(mockIndex.getCanonicalizedFromClause()).thenReturn(fromClause);
-		when(mockIndex.getCanonicalizedIndexedExpression()).thenReturn(expression);
-		when(mockIndex.getCanonicalizedProjectionAttributes()).thenReturn(expression);
-		when(mockIndex.getFromClause()).thenReturn(fromClause);
-		when(mockIndex.getIndexedExpression()).thenReturn(expression);
-		when(mockIndex.getProjectionAttributes()).thenReturn(expression);
-		when(mockIndex.getStatistics()).thenReturn(mockIndexStaticts);
-		when(mockIndex.getType()).thenReturn(indexType.getGemfireIndexType());
-
-		doAnswer(invocation -> {
-
-			String regionName = fromClauseToRegionPath(fromClause);
-
-			return regions.get(regionName);
-
-		}).when(mockIndex).getRegion();
-
-		return mockIndex;
-	}
-
 	private static String fromClauseToRegionPath(String fromClause) {
 
 		String regionName = String.valueOf(fromClause);
@@ -1949,10 +1894,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		regionName = indexOfDot > -1 ? regionName.substring(0, indexOfDot) : regionName;
 
 		return regionName;
-	}
-
-	private static IndexStatistics mockIndexStatistics(String name) {
-		return mock(IndexStatistics.class, mockObjectIdentifier(name));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -2129,7 +2070,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		});
 
 		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(baseRegionAttributes::getIgnoreJTA));
-		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenAnswer(newGetter(baseRegionAttributes::getIndexMaintenanceSynchronous));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(baseRegionAttributes::getInitialCapacity));
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
@@ -2514,10 +2454,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::getIgnoreJTA)
 			.orElse(false));
 
-		AtomicBoolean indexMaintenanceSynchronous = new AtomicBoolean(optionalRegionAttributes
-			.map(RegionAttributes::getIndexMaintenanceSynchronous)
-			.orElse(true));
-
 		AtomicBoolean lockGrantor = new AtomicBoolean(optionalRegionAttributes
 			.map(RegionAttributes::isLockGrantor)
 			.orElse(false));
@@ -2674,9 +2610,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		when(mockRegionFactory.setIgnoreJTA(anyBoolean())).thenAnswer(newSetter(ignoreJta, mockRegionFactory));
 
-		when(mockRegionFactory.setIndexMaintenanceSynchronous(anyBoolean()))
-			.thenAnswer(newSetter(indexMaintenanceSynchronous, mockRegionFactory));
-
 		when(mockRegionFactory.setInitialCapacity(anyInt())).thenAnswer(newSetter(initialCapacity, mockRegionFactory));
 
 		when(mockRegionFactory.setKeyConstraint(any(Class.class)))
@@ -2733,7 +2666,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
 		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
 		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(ignoreJta));
-		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenAnswer(newGetter(indexMaintenanceSynchronous));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));

@@ -387,7 +387,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			}
 
 			regionFactory.setIgnoreJTA(regionAttributes.getIgnoreJTA());
-			regionFactory.setIndexMaintenanceSynchronous(regionAttributes.getIndexMaintenanceSynchronous());
 			regionFactory.setInitialCapacity(regionAttributes.getInitialCapacity());
 			regionFactory.setKeyConstraint(regionAttributes.getKeyConstraint());
 			regionFactory.setLoadFactor(regionAttributes.getLoadFactor());

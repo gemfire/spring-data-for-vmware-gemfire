@@ -41,7 +41,6 @@
 					  data-policy="PRELOADED"
 					  disk-synchronous="true"
 					  ignore-jta="true"
-					  index-update-type="asynchronous"
 					  initial-capacity="10"
 					  key-constraint="java.lang.String"
 					  load-factor="0.90"
