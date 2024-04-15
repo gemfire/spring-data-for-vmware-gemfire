@@ -14,7 +14,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.query.Index;
 
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 
 /**
@@ -25,7 +24,6 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
  * @see DiskStore
  * @see Region
  * @see Index
- * @see IndexDefinition
  * @see RegionDefinition
  * @see SchemaObjectDefinition
  * @since 2.0.0
@@ -68,25 +66,6 @@ public interface GemfireAdminOperations {
 
 	default void createRegions(Iterable<RegionDefinition> regionDefinitions) {
 		nullSafeIterable(regionDefinitions).forEach(this::createRegion);
-	}
-
-	/**
-	 * Creates a {@link Region} OQL {@link Index} based on the given {@link IndexDefinition schema object definition}.
-	 *
-	 * @param indexDefinition {@link IndexDefinition} encapsulating the configuration meta-data
-	 * defining a {@link Region} OQL {@link Index}.
-	 * @see IndexDefinition
-	 * @see Index
-	 * @see Region
-	 */
-	void createIndex(IndexDefinition indexDefinition);
-
-	default void createIndexes(IndexDefinition... indexDefinitions) {
-		stream(nullSafeArray(indexDefinitions, IndexDefinition.class)).forEach(this::createIndex);
-	}
-
-	default void createIndexes(Iterable<IndexDefinition> indexDefinitions) {
-		nullSafeIterable(indexDefinitions).forEach(this::createIndex);
 	}
 
 	/**

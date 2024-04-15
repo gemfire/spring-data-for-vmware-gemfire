@@ -132,7 +132,6 @@ public class LocalRegionNamespaceIntegrationTests extends IntegrationTestsSuppor
 		assertThat(localRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.PRELOADED);
 		assertThat(localRegionAttributes.isDiskSynchronous()).isTrue();
 		assertThat(localRegionAttributes.getIgnoreJTA()).isTrue();
-		assertThat(localRegionAttributes.getIndexMaintenanceSynchronous()).isFalse();
 		assertThat(localRegionAttributes.getInitialCapacity()).isEqualTo(10);
 		assertThat(localRegionAttributes.getKeyConstraint()).isEqualTo(String.class);
 		assertThat(String.valueOf(localRegionAttributes.getLoadFactor())).isEqualTo("0.9");

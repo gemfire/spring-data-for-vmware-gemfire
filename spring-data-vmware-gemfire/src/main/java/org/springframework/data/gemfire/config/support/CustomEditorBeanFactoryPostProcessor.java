@@ -20,10 +20,6 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.gemfire.IndexMaintenancePolicyConverter;
-import org.springframework.data.gemfire.IndexMaintenancePolicyType;
-import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.IndexTypeConverter;
 import org.springframework.data.gemfire.InterestPolicyConverter;
 import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
@@ -81,8 +77,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			beanFactory.registerCustomEditor(EvictionAction.class, EvictionActionConverter.class);
 			beanFactory.registerCustomEditor(EvictionPolicyType.class, EvictionPolicyConverter.class);
 			beanFactory.registerCustomEditor(ExpirationAction.class, ExpirationActionConverter.class);
-			beanFactory.registerCustomEditor(IndexMaintenancePolicyType.class, IndexMaintenancePolicyConverter.class);
-			beanFactory.registerCustomEditor(IndexType.class, IndexTypeConverter.class);
 			beanFactory.registerCustomEditor(InterestPolicy.class, InterestPolicyConverter.class);
 			beanFactory.registerCustomEditor(InterestResultPolicy.class, InterestResultPolicyConverter.class);
 			beanFactory.registerCustomEditor(Scope.class, ScopeConverter.class);
@@ -102,8 +96,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 				registry.registerCustomEditor(EvictionAction.class, new EvictionActionConverter());
 				registry.registerCustomEditor(EvictionPolicyType.class, new EvictionPolicyConverter());
 				registry.registerCustomEditor(ExpirationAction.class, new ExpirationActionConverter());
-				registry.registerCustomEditor(IndexMaintenancePolicyType.class, new IndexMaintenancePolicyConverter());
-				registry.registerCustomEditor(IndexType.class, new IndexTypeConverter());
 				registry.registerCustomEditor(InterestPolicy.class, new InterestPolicyConverter());
 				registry.registerCustomEditor(InterestResultPolicy.class, new InterestResultPolicyConverter());
 				registry.registerCustomEditor(Scope.class, new ScopeConverter());

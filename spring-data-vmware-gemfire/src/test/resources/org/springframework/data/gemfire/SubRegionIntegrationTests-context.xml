@@ -27,7 +27,6 @@
 							   destroy="true"
 							   disk-synchronous="true"
 							   ignore-jta="true"
-							   index-update-type="asynchronous"
 							   initial-capacity="1000"
 							   key-constraint="java.lang.Long"
 							   persistent="true"

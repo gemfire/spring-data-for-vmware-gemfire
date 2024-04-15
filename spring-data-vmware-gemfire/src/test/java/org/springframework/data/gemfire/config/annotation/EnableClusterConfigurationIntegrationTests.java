@@ -21,10 +21,7 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.gemfire.IndexFactoryBean;
-import org.springframework.data.gemfire.IndexType;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate;
@@ -88,12 +85,6 @@ public class EnableClusterConfigurationIntegrationTests {
 	}
 
 	@Test
-	public void serverIndexesAreCorrect() {
-		assertThat(gemFireCluster.gfsh(false, "list indexes"))
-			.contains("IndexOne", "IndexTwo");
-	}
-
-	@Test
 	public void serverRegionsAreCorrect() {
 
 		assertThat(gemFireCluster.gfsh(false, "list regions"))
@@ -113,20 +104,6 @@ public class EnableClusterConfigurationIntegrationTests {
 
 			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean
 				.setServers(Collections.singletonList(new ConnectionEndpoint("localhost", gemFireCluster.getServerPorts().get(0))));
-		}
-
-		@Bean("IndexOne")
-		@DependsOn("RegionOne")
-		IndexFactoryBean indexOne(GemFireCache gemfireCache) {
-
-			IndexFactoryBean indexFactory = new IndexFactoryBean();
-
-			indexFactory.setCache(gemfireCache);
-			indexFactory.setExpression("id");
-			indexFactory.setFrom("/RegionOne");
-			indexFactory.setType(IndexType.KEY);
-
-			return indexFactory;
 		}
 
 		@Bean("RegionOne")

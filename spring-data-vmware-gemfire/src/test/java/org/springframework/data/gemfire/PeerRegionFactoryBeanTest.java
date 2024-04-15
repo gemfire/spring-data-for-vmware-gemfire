@@ -301,7 +301,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(testExpirationAttributes);
 		when(mockRegionAttributes.getEvictionAttributes()).thenReturn(testEvictionAttributes);
 		when(mockRegionAttributes.getIgnoreJTA()).thenReturn(false);
-		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenReturn(false);
 		when(mockRegionAttributes.getInitialCapacity()).thenReturn(1024);
 		when(mockRegionAttributes.getKeyConstraint()).thenReturn(Long.class);
 		when(mockRegionAttributes.getLoadFactor()).thenReturn(0.90f);
@@ -340,7 +339,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setEntryTimeToLive(same(testExpirationAttributes));
 		verify(mockRegionFactory).setEvictionAttributes(same(testEvictionAttributes));
 		verify(mockRegionFactory).setIgnoreJTA(eq(false));
-		verify(mockRegionFactory).setIndexMaintenanceSynchronous(eq(false));
 		verify(mockRegionFactory).setInitialCapacity(eq(1024));
 		verify(mockRegionFactory).setKeyConstraint(Long.class);
 		verify(mockRegionFactory).setLoadFactor(eq(0.90f));
@@ -372,7 +370,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory, never()).setEntryTimeToLive(any(ExpirationAttributes.class));
 		verify(mockRegionFactory, never()).setEvictionAttributes(any(EvictionAttributes.class));
 		verify(mockRegionFactory, never()).setIgnoreJTA(anyBoolean());
-		verify(mockRegionFactory, never()).setIndexMaintenanceSynchronous(anyBoolean());
 		verify(mockRegionFactory, never()).setInitialCapacity(anyInt());
 		verify(mockRegionFactory, never()).setKeyConstraint(any(Class.class));
 		verify(mockRegionFactory, never()).setLoadFactor(anyFloat());
@@ -406,7 +403,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(testExpirationAttributes);
 		when(mockRegionAttributes.getEvictionAttributes()).thenReturn(null);
 		when(mockRegionAttributes.getIgnoreJTA()).thenReturn(true);
-		when(mockRegionAttributes.getIndexMaintenanceSynchronous()).thenReturn(true);
 		when(mockRegionAttributes.getInitialCapacity()).thenReturn(512);
 		when(mockRegionAttributes.getKeyConstraint()).thenReturn(Long.class);
 		when(mockRegionAttributes.getLoadFactor()).thenReturn(0.60f);
@@ -445,7 +441,6 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 		verify(mockRegionFactory).setEntryTimeToLive(same(testExpirationAttributes));
 		verify(mockRegionFactory, never()).setEvictionAttributes(any(EvictionAttributes.class));
 		verify(mockRegionFactory).setIgnoreJTA(eq(true));
-		verify(mockRegionFactory).setIndexMaintenanceSynchronous(eq(true));
 		verify(mockRegionFactory).setInitialCapacity(eq(512));
 		verify(mockRegionFactory).setKeyConstraint(Long.class);
 		verify(mockRegionFactory).setLoadFactor(eq(0.60f));

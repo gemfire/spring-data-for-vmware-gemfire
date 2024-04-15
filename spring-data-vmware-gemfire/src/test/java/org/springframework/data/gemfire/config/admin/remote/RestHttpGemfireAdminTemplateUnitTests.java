@@ -33,8 +33,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.query.Index;
 
-import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
 import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
 import org.springframework.http.HttpHeaders;
@@ -78,9 +76,6 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 	private ClientCache mockClientCache;
 
 	@Mock
-	private Index mockIndex;
-
-	@Mock
 	private Region mockRegion;
 
 	private RestHttpGemfireAdminTemplate template;
@@ -104,10 +99,6 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		};
 
 		when(this.mockRegion.getName()).thenReturn("MockRegion");
-		when(this.mockIndex.getType()).thenReturn(IndexType.FUNCTIONAL.getGemfireIndexType());
-		when(this.mockIndex.getName()).thenReturn("MockIndex");
-		when(this.mockIndex.getIndexedExpression()).thenReturn("age");
-		when(this.mockIndex.getFromClause()).thenReturn("/Customers");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -312,46 +303,6 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		assertThat(this.template.resolveManagementRestApiUrl("http", "shoebox", 101123))
 			.isEqualTo(String.format(RestHttpGemfireAdminTemplate.MANAGEMENT_REST_API_NO_PORT_URL_TEMPLATE,
 				"http", "shoebox"));
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
-	public void createIndexCallsGemFireManagementRestApi() {
-
-		IndexDefinition indexDefinition = IndexDefinition.from(this.mockIndex);
-
-		when(this.mockRestOperations.exchange(any(RequestEntity.class), eq(String.class))).thenAnswer(invocation -> {
-
-			RequestEntity requestEntity = invocation.getArgument(0);
-
-			assertThat(requestEntity).isNotNull();
-			assertThat(requestEntity.getMethod()).isEqualTo(HttpMethod.POST);
-			assertThat(requestEntity.getUrl()).isEqualTo(URI.create("https://localhost/gemfire/v1/indexes"));
-
-			HttpHeaders headers = requestEntity.getHeaders();
-
-			assertThat(headers).isNotNull();
-			assertThat(headers.getContentType()).isEqualTo(MediaType.APPLICATION_FORM_URLENCODED);
-
-			Object body = requestEntity.getBody();
-
-			assertThat(body).isInstanceOf(MultiValueMap.class);
-
-			MultiValueMap<String, Object> requestBody = (MultiValueMap<String, Object>) body;
-
-			assertThat(requestBody).isNotNull();
-			assertThat(requestBody.getFirst("name")).isEqualTo(indexDefinition.getName());
-			assertThat(requestBody.getFirst("expression")).isEqualTo(indexDefinition.getExpression());
-			assertThat(requestBody.getFirst("region")).isEqualTo(indexDefinition.getFromClause());
-			assertThat(requestBody.getFirst("type")).isEqualTo(indexDefinition.getIndexType().getGemfireIndexType().getName());
-
-			return new ResponseEntity(HttpStatus.OK);
-		});
-
-		this.template.createIndex(indexDefinition);
-
-		verify(this.mockRestOperations, times(1))
-			.exchange(isA(RequestEntity.class), eq(String.class));
 	}
 
 	@Test
