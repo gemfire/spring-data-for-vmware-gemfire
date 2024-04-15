@@ -38,9 +38,6 @@ import org.springframework.data.gemfire.config.schema.definitions.RegionDefiniti
 public class RegionDefinerUnitTests {
 
 	@Mock
-	private Index mockIndex;
-
-	@Mock
 	private Region<Object, Object> mockRegion;
 
 	private RegionDefiner regionInstanceHandler = new RegionDefiner();
@@ -48,11 +45,6 @@ public class RegionDefinerUnitTests {
 	@Before
 	public void setup() {
 		when(this.mockRegion.getName()).thenReturn("MockRegion");
-	}
-
-	@Test
-	public void canHandleIndexInstanceIsFalse() {
-		assertThat(this.regionInstanceHandler.canDefine(this.mockIndex)).isFalse();
 	}
 
 	@Test

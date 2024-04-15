@@ -999,14 +999,6 @@ non-transactional operations on a Region, such as caching a result set.  GemFire
 								]]></xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
-				<xsd:attribute name="index-update-type" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Specifies whether Region indexes are maintained synchronously with Region modifications, or asynchronously
-in a background thread.  GemFire default is synchronous.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -2082,97 +2074,6 @@ use inner bean declarations.
 	</xsd:complexType>
 	<!-- -->
 	<xsd:element name="disk-store" type="diskStoreType"/>
-	<!-- Index -->
-	<xsd:element name="index">
-		<xsd:annotation>
-			<xsd:documentation
-				source="org.springframework.data.gemfire.IndexFactoryBean"><![CDATA[
-Defines a GemFire index.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.query.Index" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The name of the index bean definition. If property 'name' is not set, it will be used as the index name as well.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="cache-ref" type="xsd:string" use="optional" default="gemfireCache">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The name of the bean defining the GemFire cache (by default 'gemfireCache').
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="name" type="xsd:string" use="optional">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The name of the index.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="pool-name" type="xsd:string" use="optional">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The name of the pool used by the index. Used usually in client scenarios.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="define" type="xsd:string" use="optional" default="false">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-Boolean condition used to lazily create this index once all indexes with define set to true are defined
-(i.e. declared and defined in the Spring context as Spring beans).
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="expression" type="xsd:string" use="required" />
-			<xsd:attribute name="from" type="xsd:string" use="required">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-Corresponds to the regionPath parameter in createIndex methods.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="ignore-if-exists" type="xsd:string" use="optional" default="false">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-Indicates whether this Index is ignored when there exists an Index with the same name, but possibly
-different definition.
-
-You should use this setting with care.  See Javadoc for more details.
-
-Defaults to false.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="imports" type="xsd:string" use="optional" />
-			<xsd:attribute name="override" type="xsd:string" use="optional" default="false">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-Indicates whether the Index is created even if there exists an Index with the same definition, different name.
-
-You should use this setting with care.  See Javadoc for more details.
-
-Defaults to false.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-			<xsd:attribute name="type" type="xsd:string" use="optional">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The type of index: FUNCTIONAL, HASH, PRIMARY_KEY.
-					]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-		</xsd:complexType>
-	</xsd:element>
 	<!-- CQ -->
 	<xsd:element name="cq-listener-container">
 		<xsd:annotation>

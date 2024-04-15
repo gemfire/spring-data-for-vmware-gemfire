@@ -21,10 +21,6 @@ import org.apache.geode.cache.InterestResultPolicy;
 import org.apache.geode.cache.Scope;
 
 import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.data.gemfire.IndexMaintenancePolicyConverter;
-import org.springframework.data.gemfire.IndexMaintenancePolicyType;
-import org.springframework.data.gemfire.IndexType;
-import org.springframework.data.gemfire.IndexTypeConverter;
 import org.springframework.data.gemfire.InterestPolicyConverter;
 import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
@@ -72,10 +68,6 @@ public class CustomEditorBeanFactoryPostProcessorUnitTests {
 			isA(EvictionPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(ExpirationAction.class),
 			isA(ExpirationActionConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(IndexMaintenancePolicyType.class),
-			isA(IndexMaintenancePolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(IndexType.class),
-			isA(IndexTypeConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestPolicy.class),
 			isA(InterestPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestResultPolicy.class),

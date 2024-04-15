@@ -52,7 +52,6 @@
 						   disk-synchronous="true"
 						   enable-subscription-conflation="true"
 						   ignore-jta="true"
-						   index-update-type="asynchronous"
 						   initial-capacity="10"
 						   is-lock-grantor="true"
 						   key-constraint="java.lang.String"
@@ -61,13 +60,10 @@
 						   value-constraint="java.lang.String"/>
 
 	<util:properties id="regionConfigurationSettings">
-		<prop key="gemfire.index-update-type">synchronous</prop>
 		<prop key="gemfire.scope">distributed-No_ACK</prop>
 	</util:properties>
 
 	<context:property-placeholder properties-ref="regionConfigurationSettings"/>
-
-	<gfe:replicated-region id="replicated-with-synchronous-index-updates" index-update-type="${gemfire.index-update-type}"/>
 
 	<gfe:replicated-region id="Compressed" persistent="false" scope="${gemfire.scope}">
 		<gfe:compressor ref="testCompressor"/>

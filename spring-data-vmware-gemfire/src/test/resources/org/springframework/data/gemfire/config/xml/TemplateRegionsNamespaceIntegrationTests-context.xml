@@ -36,8 +36,7 @@
 	</gfe:region-template>
 
 	<gfe:region-template id="ExtendedRegionTemplate" cloning-enabled="false" concurrency-checks-enabled="true"
-						 index-update-type="asynchronous" key-constraint="java.lang.Integer" load-factor="0.55"
-						 template="BaseRegionTemplate">
+						 key-constraint="java.lang.Integer" load-factor="0.55" template="BaseRegionTemplate">
 		<gfe:cache-loader>
 			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheLoader" p:name="A"/>
 		</gfe:cache-loader>
@@ -48,7 +47,7 @@
 
 	<!-- REPLICATE Regions -->
 	<gfe:replicated-region-template id="ReplicateRegionTemplate" concurrency-checks-enabled="true" concurrency-level="24"
-									disk-synchronous="false" index-update-type="synchronous" enable-subscription-conflation="true"
+									enable-subscription-conflation="true"
 									key-constraint="java.lang.String" persistent="true" scope="distributed-ack"
 									value-constraint="java.lang.Object" template="BaseRegionTemplate">
 		<gfe:cache-listener>

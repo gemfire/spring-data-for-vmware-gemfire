@@ -287,7 +287,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertDefaultExpirationAttributes(nonTemplateBasedReplicateRegion.getAttributes().getEntryIdleTimeout());
 		assertDefaultExpirationAttributes(nonTemplateBasedReplicateRegion.getAttributes().getEntryTimeToLive());
 		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getIgnoreJTA()).isFalse();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getIndexMaintenanceSynchronous()).isTrue();
 		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(97);
 		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getKeyConstraint()).isNull();
 		assertThat(String.valueOf(nonTemplateBasedReplicateRegion.getAttributes().getLoadFactor())).isEqualTo("0.65");
@@ -320,7 +319,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertExpirationAttributes(templateBasedReplicateRegion.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.INVALIDATE, 300);
 		assertThat(templateBasedReplicateRegion.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateRegion.getAttributes().getIndexMaintenanceSynchronous()).isTrue();
 		assertThat(templateBasedReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedReplicateRegion.getAttributes().getKeyConstraint()).isEqualTo(String.class);
 		assertThat(String.valueOf(templateBasedReplicateRegion.getAttributes().getLoadFactor())).isEqualTo("0.85");
@@ -354,7 +352,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertExpirationAttributes(templateBasedReplicateSubRegion.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.DESTROY, 600);
 		assertThat(templateBasedReplicateSubRegion.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getIndexMaintenanceSynchronous()).isFalse();
 		assertThat(templateBasedReplicateSubRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedReplicateSubRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
 		assertThat(String.valueOf(templateBasedReplicateSubRegion.getAttributes().getLoadFactor())).isEqualTo("0.95");
@@ -388,7 +385,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertExpirationAttributes(templateBasedReplicateRegionNoOverrides.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.INVALIDATE, 300);
 		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getIndexMaintenanceSynchronous()).isTrue();
 		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getKeyConstraint()).isEqualTo(String.class);
 		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getLoadFactor())
@@ -425,7 +421,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertExpirationAttributes(templateBasedPartitionRegion.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.INVALIDATE, 300);
 		assertThat(templateBasedPartitionRegion.getAttributes().getIgnoreJTA()).isFalse();
-		assertThat(templateBasedPartitionRegion.getAttributes().getIndexMaintenanceSynchronous()).isFalse();
 		assertThat(templateBasedPartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedPartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Date.class);
 		assertThat(String.valueOf(templateBasedPartitionRegion.getAttributes().getLoadFactor())).isEqualTo("0.7");
@@ -475,7 +470,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertExpirationAttributes(templateBasedLocalRegion.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.INVALIDATE, 300);
 		assertThat(templateBasedLocalRegion.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedLocalRegion.getAttributes().getIndexMaintenanceSynchronous()).isTrue();
 		assertThat(templateBasedLocalRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedLocalRegion.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
 		assertThat(String.valueOf(templateBasedLocalRegion.getAttributes().getLoadFactor())).isEqualTo("0.85");
