@@ -21,8 +21,6 @@ import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
-import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 import org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate;
 import org.springframework.util.Assert;
@@ -32,7 +30,7 @@ import org.springframework.util.Assert;
  * supporting the Pivotal GemFire / Apache Geode administrative functions/operations via {@link Function} execution
  * in the cluster.
  *
- * Note: any schema changing functionality (e.g. {@link #createRegion(RegionDefinition)}) does not get recorded by
+ * Note: any schema changing functionality does not get recorded by
  * the GemFire/Geode Cluster Configuration Service using this strategy.
  *
  * @author John Blum
@@ -103,17 +101,8 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 		}
 	}
 
-	@Override
-	public void createRegion(RegionDefinition regionDefinition) {
-		execute(CreateRegionFunction.CREATE_REGION_FUNCTION_ID, regionDefinition);
-	}
-
 	<T> T execute(Function gemfireFunction, Object... arguments) {
 		return newGemfireFunctionOperations().executeAndExtract(gemfireFunction, arguments);
-	}
-
-	<T> T execute(String gemfireFunctionId, Object... arguments) {
-		return newGemfireFunctionOperations().executeAndExtract(gemfireFunctionId, arguments);
 	}
 
 	protected GemfireFunctionOperations newGemfireFunctionOperations() {

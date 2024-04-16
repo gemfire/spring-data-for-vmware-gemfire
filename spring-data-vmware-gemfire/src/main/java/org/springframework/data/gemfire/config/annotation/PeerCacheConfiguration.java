@@ -32,13 +32,11 @@ import org.springframework.util.StringUtils;
  * @see Import
  * @see CacheFactoryBean
  * @see AbstractCacheConfiguration
- * @see AdministrativeConfiguration
  * @see PeerCacheApplication
  * @see PeerCacheConfigurer
  * @since 1.9.0
  */
 @Configuration
-@Import(AdministrativeConfiguration.class)
 @SuppressWarnings("unused")
 public class PeerCacheConfiguration extends AbstractCacheConfiguration {
 
