@@ -1,7 +1,7 @@
 [versions]
 cacheApiVersion = "1.1.1"
 springDataVersion = "3.0.12"
-springFrameworkVersion = "6.0.18"
+springFrameworkVersion = "6.0.19"
 springShiroVersion = "1.12.0"
 springShellVersion = "1.2.0.RELEASE"
 springBootVersion = "3.0.13"
@@ -25,7 +25,7 @@ lombokVersion = "1.18.32"
 awaitilityVersion = "4.2.1"
 googleCloudStorageVersion = "2.30.2"
 springDependencyManagementVersion = "1.1.4"
-lombokPluginVersion = "8.0.1"
+lombokPluginVersion = "8.6"
 versionCatalogUpdateVersion = "0.8.4"
 versionsVersion = "0.50.0"
 
