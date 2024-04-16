@@ -35,8 +35,6 @@ import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
 import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
-import org.springframework.data.gemfire.config.admin.functions.CreateRegionFunction;
-import org.springframework.data.gemfire.config.schema.definitions.RegionDefinition;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 
 /**
@@ -70,8 +68,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 
 		doReturn(this.mockFunctionOperations).when(this.template)
 			.newGemfireFunctionOperations(any(ClientCache.class));
-
-		when(this.mockRegion.getName()).thenReturn("MockRegion");
 	}
 
 	private Region mockRegion(String name) {
@@ -157,17 +153,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 
 		verify(this.mockFunctionOperations, times(1))
 			.executeAndExtract(isA(GetRegionsFunction.class), eq(false));
-	}
-
-	@Test
-	public void createRegionCallsExecuteWithCreateRegionFunctionIdAndRegionDefinition() {
-
-		RegionDefinition regionDefinition = RegionDefinition.from(this.mockRegion);
-
-		this.template.createRegion(regionDefinition);
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(eq(CreateRegionFunction.CREATE_REGION_FUNCTION_ID), eq(regionDefinition));
 	}
 
 	@Test
