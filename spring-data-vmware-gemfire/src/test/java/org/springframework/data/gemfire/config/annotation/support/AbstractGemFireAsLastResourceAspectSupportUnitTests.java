@@ -1,9 +1,4 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -33,14 +28,17 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.geode.cache.GemFireCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.mockito.internal.matchers.VarargMatcher;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import org.apache.geode.cache.GemFireCache;
+
 import org.slf4j.Logger;
 
 /**
@@ -410,7 +408,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 	}
 
 	// TODO refactor this BS; damn you Mockito for your inability to match Varargs completely/reliably; WTF!
-	static final class VariableArgumentMatcher<T> implements ArgumentMatcher<T> {
+	static final class VariableArgumentMatcher<T> implements ArgumentMatcher<T>, VarargMatcher {
 
 		static Object[] varArgThat(Object... expectedArguments) {
 			return argThat(new VariableArgumentMatcher<>(expectedArguments));
