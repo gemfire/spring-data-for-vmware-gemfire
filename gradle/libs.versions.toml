@@ -1,10 +1,10 @@
 [versions]
 cacheApiVersion = "1.1.1"
-springFrameworkVersion = "6.1.5"
-springDataVersion = "3.2.4"
+springFrameworkVersion = "6.1.6"
+springDataVersion = "3.2.5"
 springShiroVersion = "1.13.0"
 springShellVersion = "1.2.0.RELEASE"
-springBootVersion = "3.2.3"
+springBootVersion = "3.2.4"
 aspectJVersion = "1.9.20.1"
 jacksonVersion = "2.16.2"
 antlrVersion = "2.7.7"
