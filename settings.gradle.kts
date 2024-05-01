@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import java.io.FileInputStream
 import java.util.*
 
@@ -16,8 +21,6 @@ pluginManagement {
     gradlePluginPortal()
   }
 }
-
-include("spring-data-vmware-gemfire")
 
 dependencyResolutionManagement {
   versionCatalogs {
@@ -38,3 +41,4 @@ private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogB
   versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
 }
 
+include("spring-data-vmware-gemfire")

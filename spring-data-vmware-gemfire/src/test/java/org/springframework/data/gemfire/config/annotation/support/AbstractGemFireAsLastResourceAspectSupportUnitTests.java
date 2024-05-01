@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -28,17 +33,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.apache.geode.cache.GemFireCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.internal.matchers.VarargMatcher;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.slf4j.Logger;
 
 /**
@@ -60,11 +63,9 @@ import org.slf4j.Logger;
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 
-	@Mock
-	private Logger mockLogger;
+	@Mock private Logger mockLogger;
 
-	@Spy
-	private AbstractGemFireAsLastResourceAspectSupport aspectSupport;
+	@Spy private AbstractGemFireAsLastResourceAspectSupport aspectSupport;
 
 	@Before
 	@SuppressWarnings("all")
@@ -125,8 +126,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 		//verify(mockLogger, times(1)).debug(eq("test debug message"),
 		//	ArgumentMatchers.<Object[]>any());
 		// TODO and so does this, but what a hack!
-		verify(mockLogger, times(1)).debug(eq("test debug message"),
-			VariableArgumentMatcher.varArgThat("debug", "test"));
+		verify(mockLogger, times(1)).debug(eq("test debug message"), ArgumentMatchers.eq(new String[]{"debug", "test"}));
 	}
 
 	@Test
@@ -318,11 +318,9 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 
 		try {
 			aspectSupport.resolveContext();
-		}
-		catch (IllegalStateException expected) {
+		} catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage(
-				"Failed to initialize an %1$s with the provided Environment configuration [%2$s]",
+			assertThat(expected).hasMessage("Failed to initialize an %1$s with the provided Environment configuration [%2$s]",
 					InitialContext.class.getName(), testEnvironment.toString());
 
 			assertThat(expected).hasCauseInstanceOf(NamingException.class);
@@ -330,8 +328,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 			assertThat(expected.getCause()).hasNoCause();
 
 			throw expected;
-		}
-		finally {
+		} finally {
 			verify(aspectSupport, times(1)).getContext();
 			verify(aspectSupport, times(1)).resolveEnvironment();
 			verify(aspectSupport, times(1)).newInitialContext(eq(testEnvironment));
@@ -342,8 +339,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 	@Test
 	public void resolveEnvironmentContainsInitialContextFactoryAndProviderUrl() {
 
-		doReturn("org.example.test.naming.AppServerContextFactory").when(aspectSupport)
-			.getInitialContextFactory();
+		doReturn("org.example.test.naming.AppServerContextFactory").when(aspectSupport).getInitialContextFactory();
 
 		doReturn("jndi:rmi://java/comp:jndi/context").when(aspectSupport).getProviderUrl();
 
@@ -353,7 +349,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 		assertThat(resolvedEnvironment).hasSize(2);
 		assertThat(resolvedEnvironment.containsKey(Context.INITIAL_CONTEXT_FACTORY)).isTrue();
 		assertThat(resolvedEnvironment.get(Context.INITIAL_CONTEXT_FACTORY))
-			.isEqualTo("org.example.test.naming.AppServerContextFactory");
+				.isEqualTo("org.example.test.naming.AppServerContextFactory");
 		assertThat(resolvedEnvironment.containsKey(Context.PROVIDER_URL)).isTrue();
 		assertThat(resolvedEnvironment.get(Context.PROVIDER_URL)).isEqualTo("jndi:rmi://java/comp:jndi/context");
 	}
@@ -382,11 +378,10 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 	@SuppressWarnings("all")
 	public void resolveGemFireJcaResourceAdapterJndiNameReturnsConfiguredJndiName() {
 
-		doReturn("java/comp:gemfire/jca/resourceAdapter").when(aspectSupport)
-			.getGemFireJcaResourceAdapterJndiName();
+		doReturn("java/comp:gemfire/jca/resourceAdapter").when(aspectSupport).getGemFireJcaResourceAdapterJndiName();
 
 		assertThat(aspectSupport.resolveGemFireJcaResourceAdapterJndiName())
-			.isEqualTo("java/comp:gemfire/jca/resourceAdapter");
+				.isEqualTo("java/comp:gemfire/jca/resourceAdapter");
 
 		verify(aspectSupport, times(1)).getGemFireJcaResourceAdapterJndiName();
 	}
@@ -395,20 +390,22 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 	public void resolveGemFireJcaResourceAdapterJndiNameReturnsDefaultJndiName() {
 		assertThat(aspectSupport.getGemFireJcaResourceAdapterJndiName()).isNull();
 		assertThat(aspectSupport.resolveGemFireJcaResourceAdapterJndiName())
-			.isEqualTo(AbstractGemFireAsLastResourceAspectSupport.DEFAULT_GEMFIRE_JCA_RESOURCE_ADAPTER_JNDI_NAME);
+				.isEqualTo(AbstractGemFireAsLastResourceAspectSupport.DEFAULT_GEMFIRE_JCA_RESOURCE_ADAPTER_JNDI_NAME);
 	}
 
 	@Test
 	public void withThrowOnErrorAndIsThrowOnError() {
 		assertThat(aspectSupport.isThrowOnError()).isFalse();
-		assertThat(aspectSupport.<AbstractGemFireAsLastResourceAspectSupport>withThrowOnError(true)).isSameAs(aspectSupport);
+		assertThat(aspectSupport.<AbstractGemFireAsLastResourceAspectSupport> withThrowOnError(true))
+				.isSameAs(aspectSupport);
 		assertThat(aspectSupport.isThrowOnError()).isTrue();
-		assertThat(aspectSupport.<AbstractGemFireAsLastResourceAspectSupport>withThrowOnError(false)).isSameAs(aspectSupport);
+		assertThat(aspectSupport.<AbstractGemFireAsLastResourceAspectSupport> withThrowOnError(false))
+				.isSameAs(aspectSupport);
 		assertThat(aspectSupport.isThrowOnError()).isFalse();
 	}
 
 	// TODO refactor this BS; damn you Mockito for your inability to match Varargs completely/reliably; WTF!
-	static final class VariableArgumentMatcher<T> implements ArgumentMatcher<T>, VarargMatcher {
+	static final class VariableArgumentMatcher<T> implements ArgumentMatcher<T> {
 
 		static Object[] varArgThat(Object... expectedArguments) {
 			return argThat(new VariableArgumentMatcher<>(expectedArguments));
@@ -418,7 +415,7 @@ public class AbstractGemFireAsLastResourceAspectSupportUnitTests {
 
 		VariableArgumentMatcher(Object... expectedArguments) {
 			this.expectedArguments = Optional.ofNullable(expectedArguments)
-				.orElseThrow(() -> newIllegalArgumentException("Expected arguments must not be null"));
+					.orElseThrow(() -> newIllegalArgumentException("Expected arguments must not be null"));
 		}
 
 		@Override

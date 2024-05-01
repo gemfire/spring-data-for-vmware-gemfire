@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +23,6 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -72,7 +76,6 @@ public class ApplicationContextBeanOrderingIntegrationTests extends IntegrationT
 	 */
 	@Test
 	public void autoWiredBeansAreOrderedByOrderAnnotationAndOrderedInterface() {
-
 		List<String> beanNames = Arrays.stream(this.namedBeans)
 			.map(Object::toString)
 			.collect(Collectors.toList());

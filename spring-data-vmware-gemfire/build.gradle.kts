@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -32,8 +37,13 @@ plugins {
 java {
   withJavadocJar()
   withSourcesJar()
-  val jdkVersion: String by project
-  toolchain { languageVersion.set(JavaLanguageVersion.of(jdkVersion)) }
+  toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
+}
+
+tasks.register<Test>("testOn21") {
+  javaLauncher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
 }
 
 tasks.named<Javadoc>("javadoc") {
@@ -105,11 +115,34 @@ tasks.register("prepareKotlinBuildScriptModel") {}
 
 tasks {
   test {
-    setForkEvery(1)
+    forkEvery = 1
 //  maxParallelForks = 1
     val springTestGemfireDockerImage: String by project
 
-    systemProperty("java.util.logging.config.file", "${project.layout.buildDirectory}/test-classes/java-util-logging.properties")
+    systemProperty(
+      "java.util.logging.config.file",
+      "${project.layout.buildDirectory}/test-classes/java-util-logging.properties"
+    )
+    systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
+    systemProperty("gemfire.disableShutdownHook", "true")
+    systemProperty("logback.log.level", "error")
+    systemProperty("spring.profiles.active", "apache-geode")
+    systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
+
+    filter {
+      includeTestsMatching("*.*Tests")
+      includeTestsMatching("*.*Test")
+    }
+  }
+  getByName("testOn21", Test::class) {
+    forkEvery = 1
+//  maxParallelForks = 1
+    val springTestGemfireDockerImage: String by project
+
+    systemProperty(
+      "java.util.logging.config.file",
+      "${project.layout.buildDirectory}/test-classes/java-util-logging.properties"
+    )
     systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
     systemProperty("gemfire.disableShutdownHook", "true")
     systemProperty("logback.log.level", "error")
@@ -126,22 +159,25 @@ tasks {
 gradle.taskGraph.whenReady {
   tasks.withType<Test>().forEach { test ->
     tasks.named("check").get().dependsOn(test)
-    test.jvmArgs("-XX:+HeapDumpOnOutOfMemoryError", "-ea",
-    // Product: BufferPool uses DirectBuffer
-    "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
-    // Tests: CertificateBuilder uses numerous types declared here
-    "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
-    // Product: ManagementAgent"s custom MBean servers extend types declared here
-    "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
-    // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
-    "--add-opens=java.base/java.lang=ALL-UNNAMED",
-    // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
-    "--add-opens=java.base/java.nio=ALL-UNNAMED",
-    // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
-    "--add-opens=java.base/java.util=ALL-UNNAMED",
-    // Tests: SecurityTestUtils resets SSL-related fields
-    "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
-    "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED")
+    test.jvmArgs(
+      "-XX:+HeapDumpOnOutOfMemoryError", "-ea",
+      // Product: BufferPool uses DirectBuffer
+      "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
+      // Tests: CertificateBuilder uses numerous types declared here
+      "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
+      // Product: ManagementAgent"s custom MBean servers extend types declared here
+      "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
+      // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
+      "--add-opens=java.base/java.nio=ALL-UNNAMED",
+      // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
+      "--add-opens=java.base/java.util=ALL-UNNAMED",
+      // Tests: SecurityTestUtils resets SSL-related fields
+      "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
+      "-XX:+EnableDynamicAgentLoading",
+      "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED"
+    )
 
     if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
       test.jvmArgs("-XX:+UseZGC")
@@ -194,6 +230,11 @@ tasks.register<Jar>("testJar") {
 }
 
 tasks.getByName<Test>("test") {
+  dependsOn("testJar")
+  systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
+}
+
+tasks.getByName<Test>("testOn21") {
   dependsOn("testJar")
   systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
 }

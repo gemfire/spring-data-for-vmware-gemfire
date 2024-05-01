@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -30,11 +35,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
@@ -45,7 +45,11 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -250,7 +254,7 @@ public class GemfireDataSourcePostProcessorTest {
 		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
 
 		doReturn(Arrays.asList(expectedRegionNames)).when(postProcessor)
-			.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class), any());
+				.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class), ArgumentMatchers.any(Object[].class));
 
 		Iterable<String> actualRegionNames = postProcessor.regionNames(this.mockClientCache);
 
@@ -270,7 +274,7 @@ public class GemfireDataSourcePostProcessorTest {
 		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
 
 		doThrow(new RuntimeException("FAIL")).when(postProcessor)
-			.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class), any());
+				.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class));
 
 		doAnswer(invocation ->
 			Arrays.stream(expectedRegionNames)
@@ -299,7 +303,7 @@ public class GemfireDataSourcePostProcessorTest {
 		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
 
 		doThrow(new RuntimeException("FAIL")).when(postProcessor)
-			.execute(any(ClientCache.class), isA(ListRegionsOnServerFunction.class), any());
+				.execute(any(ClientCache.class), isA(ListRegionsOnServerFunction.class));
 
 		doReturn(null).when(postProcessor)
 			.execute(any(ClientCache.class), isA(GetRegionsFunction.class), any());

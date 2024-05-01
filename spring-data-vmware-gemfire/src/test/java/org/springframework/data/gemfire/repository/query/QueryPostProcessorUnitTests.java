@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,14 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InOrder;
-
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.QueryMethod;
 
@@ -41,9 +48,11 @@ public class QueryPostProcessorUnitTests {
 		QueryPostProcessor<Repository, String> mockQueryPostProcessorOne = mock(QueryPostProcessor.class);
 		QueryPostProcessor<Repository, String> mockQueryPostProcessorTwo = mock(QueryPostProcessor.class);
 
-		when(mockQueryPostProcessorOne.processAfter(any())).thenCallRealMethod();
-		when(mockQueryPostProcessorOne.postProcess(any(QueryMethod.class), anyString(), any())).thenReturn(query);
-		when(mockQueryPostProcessorTwo.postProcess(any(QueryMethod.class), anyString(), any())).thenReturn(query);
+		doCallRealMethod().when(mockQueryPostProcessorOne).processAfter(any(QueryPostProcessor.class));
+		doReturn(query).when(mockQueryPostProcessorOne).postProcess(any(QueryMethod.class), anyString(),
+				ArgumentMatchers.any(Object[].class));
+		doReturn(query).when(mockQueryPostProcessorTwo).postProcess(any(QueryMethod.class), anyString(),
+				ArgumentMatchers.any(Object[].class));
 
 		QueryPostProcessor<?, String> composite = mockQueryPostProcessorOne.processAfter(mockQueryPostProcessorTwo);
 
@@ -54,11 +63,11 @@ public class QueryPostProcessorUnitTests {
 
 		InOrder inOrder = inOrder(mockQueryPostProcessorOne, mockQueryPostProcessorTwo);
 
-		inOrder.verify(mockQueryPostProcessorTwo, times(1))
-			.postProcess(eq(mockQueryMethod), eq(query), any());
+		inOrder.verify(mockQueryPostProcessorTwo, times(1)).postProcess(eq(mockQueryMethod), eq(query),
+				ArgumentMatchers.any(Object[].class));
 
-		inOrder.verify(mockQueryPostProcessorOne, times(1))
-			.postProcess(eq(mockQueryMethod), eq(query), any());
+		inOrder.verify(mockQueryPostProcessorOne, times(1)).postProcess(eq(mockQueryMethod), eq(query),
+				ArgumentMatchers.any(Object[].class));
 	}
 
 	@Test
@@ -70,6 +79,7 @@ public class QueryPostProcessorUnitTests {
 
 		assertThat(mockQueryPostProcessor.processAfter(null)).isSameAs(mockQueryPostProcessor);
 	}
+
 	@Test
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void processBeforeReturnsCompositeQueryPostProcessorAndPostProcessesInOrder() {
@@ -81,9 +91,11 @@ public class QueryPostProcessorUnitTests {
 		QueryPostProcessor<Repository, String> mockQueryPostProcessorOne = mock(QueryPostProcessor.class);
 		QueryPostProcessor<Repository, String> mockQueryPostProcessorTwo = mock(QueryPostProcessor.class);
 
-		when(mockQueryPostProcessorOne.processBefore(any())).thenCallRealMethod();
-		when(mockQueryPostProcessorOne.postProcess(any(QueryMethod.class), anyString(), any())).thenReturn(query);
-		when(mockQueryPostProcessorTwo.postProcess(any(QueryMethod.class), anyString(), any())).thenReturn(query);
+		doCallRealMethod().when(mockQueryPostProcessorOne).processBefore(any(QueryPostProcessor.class));
+		doReturn(query).when(mockQueryPostProcessorOne).postProcess(any(QueryMethod.class), anyString(),
+				ArgumentMatchers.any(Object[].class));
+		doReturn(query).when(mockQueryPostProcessorTwo).postProcess(any(QueryMethod.class), anyString(),
+				ArgumentMatchers.any(Object[].class));
 
 		QueryPostProcessor<?, String> composite = mockQueryPostProcessorOne.processBefore(mockQueryPostProcessorTwo);
 
@@ -94,11 +106,11 @@ public class QueryPostProcessorUnitTests {
 
 		InOrder inOrder = inOrder(mockQueryPostProcessorOne, mockQueryPostProcessorTwo);
 
-		inOrder.verify(mockQueryPostProcessorOne, times(1))
-			.postProcess(eq(mockQueryMethod), eq(query), any());
+		inOrder.verify(mockQueryPostProcessorOne, times(1)).postProcess(eq(mockQueryMethod), eq(query),
+				ArgumentMatchers.any(Object[].class));
 
-		inOrder.verify(mockQueryPostProcessorTwo, times(1))
-			.postProcess(eq(mockQueryMethod), eq(query), any());
+		inOrder.verify(mockQueryPostProcessorTwo, times(1)).postProcess(eq(mockQueryMethod), eq(query),
+				ArgumentMatchers.any(Object[].class));
 	}
 
 	@Test
