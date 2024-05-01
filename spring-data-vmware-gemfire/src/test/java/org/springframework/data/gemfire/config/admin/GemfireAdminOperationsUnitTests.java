@@ -17,15 +17,13 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.query.Index;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.Index;
-
 import org.springframework.data.gemfire.config.schema.SchemaObjectDefinition;
 import org.springframework.data.gemfire.config.schema.SchemaObjectType;
 import org.springframework.data.gemfire.config.schema.definitions.IndexDefinition;
@@ -69,7 +67,7 @@ public class GemfireAdminOperationsUnitTests {
 	@Test
 	public void createRegionsWithArrayCallsCreateRegion() {
 
-		doCallRealMethod().when(adminOperations).createRegions(ArgumentMatchers.<RegionDefinition[]>any());
+		doCallRealMethod().when(adminOperations).createRegions(ArgumentMatchers.any(RegionDefinition[].class));
 
 		RegionDefinition definitionOne = RegionDefinition.from(mockRegion("RegionOne"));
 		RegionDefinition definitionTwo = RegionDefinition.from(mockRegion("RegionTwo"));
@@ -83,7 +81,7 @@ public class GemfireAdminOperationsUnitTests {
 	@Test
 	public void createRegionsWithEmptyArray() {
 
-		doCallRealMethod().when(adminOperations).createRegions(ArgumentMatchers.<RegionDefinition[]>any());
+		doCallRealMethod().when(adminOperations).createRegions(ArgumentMatchers.any(RegionDefinition[].class));
 
 		adminOperations.createRegions();
 
@@ -138,7 +136,7 @@ public class GemfireAdminOperationsUnitTests {
 	@Test
 	public void createIndexesWithArrayCallsCreateIndex() {
 
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.<IndexDefinition[]>any());
+		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
 
 		IndexDefinition definitionOne = IndexDefinition.from(mockIndex("IndexOne"));
 		IndexDefinition definitionTwo = IndexDefinition.from(mockIndex("IndexTwo"));
@@ -152,7 +150,7 @@ public class GemfireAdminOperationsUnitTests {
 	@Test
 	public void createIndexesWithEmptyArray() {
 
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.<IndexDefinition[]>any());
+		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
 
 		adminOperations.createIndexes();
 
@@ -162,7 +160,7 @@ public class GemfireAdminOperationsUnitTests {
 	@Test
 	public void createIndexesWithNullArray() {
 
-		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.<IndexDefinition[]>any());
+		doCallRealMethod().when(adminOperations).createIndexes(ArgumentMatchers.any(IndexDefinition[].class));
 
 		adminOperations.createIndexes();
 
