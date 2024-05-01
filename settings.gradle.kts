@@ -1,18 +1,10 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 import java.io.FileInputStream
 import java.util.*
-
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
 
 pluginManagement {
   includeBuild("build-tools/publishing")

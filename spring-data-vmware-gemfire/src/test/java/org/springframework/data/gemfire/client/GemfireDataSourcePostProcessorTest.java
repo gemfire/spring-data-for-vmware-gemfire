@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*
- * Copyright 2022-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
 package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
