@@ -24,6 +24,11 @@ plugins {
   alias(libs.plugins.dependency.management)
 }
 
+repositories {
+  mavenCentral()
+  maven { url = uri("https://repo.spring.io/milestone") }
+}
+
 java {
   withJavadocJar()
   withSourcesJar()
