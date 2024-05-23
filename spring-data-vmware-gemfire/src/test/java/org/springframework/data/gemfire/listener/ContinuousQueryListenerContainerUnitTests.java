@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -677,9 +678,13 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		ContinuousQueryListener mockListener = mock(ContinuousQueryListener.class);
 
+		Set<CQEvent> cqEvents = new HashSet<>();
+		cqEvents.add(CQEvent.DESTROY);
+		cqEvents.add(CQEvent.UPDATE);
+
 		ContinuousQueryDefinition definition =
 				new ContinuousQueryDefinition("SELECT * FROM /Utilization",
-						mockListener, false, Set.of(CQEvent.DESTROY, CQEvent.UPDATE));
+						mockListener, false, cqEvents);
 
 		cqListenerContainer.setQueryService(mockQueryService);
 

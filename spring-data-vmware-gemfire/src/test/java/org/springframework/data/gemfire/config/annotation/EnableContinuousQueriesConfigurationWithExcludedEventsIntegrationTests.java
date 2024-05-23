@@ -152,5 +152,14 @@ public class EnableContinuousQueriesConfigurationWithExcludedEventsIntegrationTe
         }
     }
 
-    public record TemperatureReading(Integer temperature) implements Serializable { }
+    public static class TemperatureReading implements Serializable {
+        private Integer temperature;
+        public TemperatureReading(Integer temperature) {
+            this.temperature = temperature;
+        }
+
+        public Integer getTemperature() {
+            return temperature;
+        }
+    }
 }

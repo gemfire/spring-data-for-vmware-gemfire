@@ -6,6 +6,7 @@ package org.springframework.data.gemfire.listener;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -63,7 +64,8 @@ public class ContinuousQueryDefinition implements InitializingBean {
 
 		boolean durable = continuousQuery.durable();
 
-		Set<CQEvent> excludedEvents = Set.of(continuousQuery.excludedEvents());
+		Set<CQEvent> excludedEvents = new HashSet<>();
+		Collections.addAll(excludedEvents, continuousQuery.excludedEvents());
 
 		return new ContinuousQueryDefinition(name, query, listener, durable, excludedEvents);
 	}
@@ -179,11 +181,17 @@ public class ContinuousQueryDefinition implements InitializingBean {
 	}
 
 	private ExcludedEvent mapCQEventToExcludedEvent(CQEvent cqEvent) {
-        return switch (cqEvent) {
-            case UPDATE -> ExcludedEvent.UPDATE;
-            case CREATE -> ExcludedEvent.CREATE;
-            case INVALIDATE -> ExcludedEvent.INVALIDATE;
-            case DESTROY -> ExcludedEvent.DESTROY;
-        };
-	}
+        switch (cqEvent) {
+					case UPDATE:
+            return ExcludedEvent.UPDATE;
+					case CREATE:
+            return ExcludedEvent.CREATE;
+					case INVALIDATE:
+            return ExcludedEvent.INVALIDATE;
+					case DESTROY:
+            return ExcludedEvent.DESTROY;
+					default:
+						return null;
+        }
+  }
 }
