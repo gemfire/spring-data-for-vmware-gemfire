@@ -134,6 +134,7 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 		assertThat(Long.valueOf(fullyConfiguredDiskStore.getQueueSize())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("queueSize")));
 		assertThat(Long.valueOf(fullyConfiguredDiskStore.getTimeInterval())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("timeInterval")));
 		assertThat(Long.valueOf(fullyConfiguredDiskStore.getWriteBufferSize())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("writeBufferSize")));
+		assertThat(Long.valueOf(fullyConfiguredDiskStore.getSegments())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("segments")));
 		assertThat(fullyConfiguredDiskStore.getDiskDirs()).isNotNull();
 		assertThat(fullyConfiguredDiskStore.getDiskDirs().length).isEqualTo(1);
 		assertThat(fullyConfiguredDiskStore.getDiskDirs()[0]).isEqualTo(new File(diskStoreProperties.getProperty("location")));
