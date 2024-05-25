@@ -35,6 +35,7 @@
         <prop key="queueSize">50</prop>
         <prop key="timeInterval">9999</prop>
         <prop key="writeBufferSize">4096</prop>
+        <prop key="segments">4</prop>
         <prop key="ttl">300</prop>
     </util:properties>
 
@@ -58,7 +59,8 @@
 					max-oplog-size="${maxOplogSize}"
 					queue-size="${queueSize}"
 					time-interval="${timeInterval}"
-					write-buffer-size="${writeBufferSize}">
+					write-buffer-size="${writeBufferSize}"
+					segments="${segments}">
 		<gfe:disk-dir location="${location}" max-size="${maxSize}"/>
 	</gfe:disk-store>
 
