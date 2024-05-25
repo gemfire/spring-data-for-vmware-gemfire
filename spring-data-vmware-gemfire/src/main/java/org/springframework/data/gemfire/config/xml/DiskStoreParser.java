@@ -77,6 +77,7 @@ class DiskStoreParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, builder, "queue-size");
 		ParsingUtils.setPropertyValue(element, builder, "time-interval");
 		ParsingUtils.setPropertyValue(element, builder, "write-buffer-size");
+		ParsingUtils.setPropertyValue(element, builder, "segments");
 
 		List<Element> diskDirElements = DomUtils.getChildElementsByTagName(element, "disk-dir");
 

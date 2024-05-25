@@ -55,7 +55,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 	@SuppressWarnings("all")
 	private void assertDiskStore(DiskStore diskStore, String name, boolean allowForceCompaction, boolean autoCompact,
 			int compactionThreshold, float diskUsageCriticalPercentage, float diskUsageWarningPercentage,
-			long maxOplogSize, int queueSize, long timeInterval, int writeBufferSize) {
+			long maxOplogSize, int queueSize, long timeInterval, int writeBufferSize, int segments) {
 
 		assertThat(diskStore).isNotNull();
 		assertThat(diskStore.getAllowForceCompaction()).isEqualTo(allowForceCompaction);
@@ -68,6 +68,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 		assertThat(diskStore.getQueueSize()).isEqualTo(queueSize);
 		assertThat(diskStore.getTimeInterval()).isEqualTo(timeInterval);
 		assertThat(diskStore.getWriteBufferSize()).isEqualTo(writeBufferSize);
+		assertThat(diskStore.getSegments()).isEqualTo(segments);
 	}
 
 	@Test
@@ -98,6 +99,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 		assertThat(testDiskStore.getQueueSize()).isEqualTo(DiskStoreFactory.DEFAULT_QUEUE_SIZE);
 		assertThat(testDiskStore.getTimeInterval()).isEqualTo(500L);
 		assertThat(testDiskStore.getWriteBufferSize()).isEqualTo(DiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE);
+		assertThat(testDiskStore.getSegments()).isEqualTo(DiskStoreFactory.DEFAULT_SEGMENTS);
 	}
 
 	@Test
@@ -113,6 +115,7 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 			.withProperty("spring.data.gemfire.disk.store.queue-size", 1024)
 			.withProperty("spring.data.gemfire.disk.store.time-interval", 500L)
 			.withProperty("spring.data.gemfire.disk.store.write-buffer-size", 16384)
+			.withProperty("spring.data.gemfire.disk.store.segments", 1)
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.allow-force-compaction", true)
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.auto-compact", false)
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.compaction-threshold", 75)
@@ -121,7 +124,8 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.max-oplog-size", 2048L)
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.queue-size", 512)
 			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.time-interval", 250L)
-			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.write-buffer-size", 65535);
+			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.write-buffer-size", 65535)
+			.withProperty("spring.data.gemfire.disk.store.TestDiskStoreTwo.segments", 3);
 
 		newApplicationContext(testPropertySource, TestDiskStoresConfiguration.class);
 
@@ -132,13 +136,13 @@ public class DiskStorePropertiesIntegrationTests extends SpringApplicationContex
 
 		assertDiskStore(testDiskStoreOne, "TestDiskStoreOne", true, false,
 			60, 90.0f, 75.0f, 512L,
-			1024, 500L, 16384);
+			1024, 500L, 16384, 1);
 
 		DiskStore testDiskStoreTwo = getBean("TestDiskStoreTwo", DiskStore.class);
 
 		assertDiskStore(testDiskStoreTwo, "TestDiskStoreTwo", true, false,
 			75, 95.0f, 80.0f, 2048L,
-			512, 250L, 65535);
+			512, 250L, 65535, 3);
 	}
 
 	@PeerCacheApplication
