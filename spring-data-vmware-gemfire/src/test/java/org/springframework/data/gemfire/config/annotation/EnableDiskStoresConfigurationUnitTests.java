@@ -40,7 +40,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 	private void assertDiskStore(DiskStore diskStore, String name, boolean allowForceCompaction, boolean autoCompact,
 			int compactionThreshold, float diskUsageCriticalPercentage, float diskUsageWarningPercentage,
-			long maxOplogSize, int queueSize, long timeInterval, int writeBufferSize) {
+			long maxOplogSize, int queueSize, long timeInterval, int writeBufferSize, int segments) {
 
 		assertThat(diskStore).isNotNull();
 		assertThat(diskStore.getName()).isEqualTo(name);
@@ -53,6 +53,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 		assertThat(diskStore.getQueueSize()).isEqualTo(queueSize);
 		assertThat(diskStore.getTimeInterval()).isEqualTo(timeInterval);
 		assertThat(diskStore.getWriteBufferSize()).isEqualTo(writeBufferSize);
+		assertThat(diskStore.getSegments()).isEqualTo(segments);
 	}
 
 	private void assertDiskStoreDirectoryLocations(DiskStore diskStore, File... diskDirectories) {
@@ -98,7 +99,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 		DiskStore testDiskStore = getBean("TestDiskStore", DiskStore.class);
 
-		assertDiskStore(testDiskStore, "TestDiskStore", true, true, 75, 95.0f, 75.0f, 8192L, 100, 2000L, 65536);
+		assertDiskStore(testDiskStore, "TestDiskStore", true, true, 75, 95.0f, 75.0f, 8192L, 100, 2000L, 65536, 2);
 		assertDiskStoreDirectoryLocations(testDiskStore, newFile("/absolute/path/to/gemfire/disk/directory"),
 			newFile("relative/path/to/gemfire/disk/directory"));
 		assertDiskStoreDirectorySizes(testDiskStore, 1024, 4096);
@@ -111,11 +112,11 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 		DiskStore testDiskStoreOne = getBean("TestDiskStoreOne", DiskStore.class);
 
-		assertDiskStore(testDiskStoreOne, "TestDiskStoreOne", false, true, 75, 99.0f, 90.0f, 2048L, 100, 1000L, 32768);
+		assertDiskStore(testDiskStoreOne, "TestDiskStoreOne", false, true, 75, 99.0f, 90.0f, 2048L, 100, 1000L, 32768, 0);
 
 		DiskStore testDiskStoreTwo = getBean("TestDiskStoreTwo", DiskStore.class);
 
-		assertDiskStore(testDiskStoreTwo, "TestDiskStoreTwo", true, true, 85, 99.0f, 90.0f, 4096L, 0, 1000L, 32768);
+		assertDiskStore(testDiskStoreTwo, "TestDiskStoreTwo", true, true, 85, 99.0f, 90.0f, 4096L, 0, 1000L, 32768, 0);
 	}
 
 	static String mockName(String baseName) {
@@ -138,7 +139,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 	@EnableGemFireMockObjects
 	@EnableDiskStore(name = "TestDiskStore", allowForceCompaction = true, autoCompact = true, compactionThreshold = 75,
 		diskUsageCriticalPercentage = 95.0f, diskUsageWarningPercentage = 75.0f, maxOplogSize = 8192L, queueSize = 100,
-		timeInterval = 2000L, writeBufferSize = 65536, diskDirectories = {
+		timeInterval = 2000L, writeBufferSize = 65536, segments = 2, diskDirectories = {
 			@EnableDiskStore.DiskDirectory(location = "/absolute/path/to/gemfire/disk/directory", maxSize = 1024),
 			@EnableDiskStore.DiskDirectory(location = "relative/path/to/gemfire/disk/directory", maxSize = 4096)
 	})
