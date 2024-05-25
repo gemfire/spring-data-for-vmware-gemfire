@@ -55,6 +55,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	private Integer compactionThreshold;
 	private Integer queueSize;
 	private Integer writeBufferSize;
+	private Integer segments;
 
 	private Float diskUsageCriticalPercentage;
 	private Float diskUsageWarningPercentage;
@@ -162,6 +163,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 		Optional.ofNullable(this.queueSize).ifPresent(diskStoreFactory::setQueueSize);
 		Optional.ofNullable(this.timeInterval).ifPresent(diskStoreFactory::setTimeInterval);
 		Optional.ofNullable(this.writeBufferSize).ifPresent(diskStoreFactory::setWriteBufferSize);
+		Optional.ofNullable(this.segments).ifPresent(diskStoreFactory::setSegments);
 
 		Optional.ofNullable(this.diskDirs).filter(diskDirs -> !CollectionUtils.isEmpty(diskDirs))
 			.ifPresent(diskDirs -> {
@@ -316,6 +318,10 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 
 	public void setWriteBufferSize(Integer writeBufferSize) {
 		this.writeBufferSize = writeBufferSize;
+	}
+
+	public void setSegments(Integer segments) {
+		this.segments = segments;
 	}
 
 	public static class DiskDir {
