@@ -55,6 +55,7 @@ public class DiskStoreBeanUsingPropertyPlaceholdersIntegrationTests extends Inte
 		assertThat(this.diskStoreConfiguration).isNotNull();
 		assertThat(String.valueOf(this.diskStoreConfiguration.get("allowForceCompaction"))).isEqualTo("false");
 		assertThat(String.valueOf(this.diskStoreConfiguration.get("writeBufferSize"))).isEqualTo("65536");
+		assertThat(String.valueOf(this.diskStoreConfiguration.get("segments"))).isEqualTo("2");
 	}
 
 	private Object getExpectedValue(String propertyPlaceholderName) {
@@ -73,5 +74,6 @@ public class DiskStoreBeanUsingPropertyPlaceholdersIntegrationTests extends Inte
 		assertThat(testDataStore.getQueueSize()).isEqualTo(getExpectedValue("queueSize"));
 		assertThat(testDataStore.getTimeInterval()).isEqualTo(getExpectedValue("timeInterval"));
 		assertThat(testDataStore.getWriteBufferSize()).isEqualTo(getExpectedValue("writeBufferSize"));
+		assertThat(testDataStore.getSegments()).isEqualTo(getExpectedValue("segments"));
 	}
 }

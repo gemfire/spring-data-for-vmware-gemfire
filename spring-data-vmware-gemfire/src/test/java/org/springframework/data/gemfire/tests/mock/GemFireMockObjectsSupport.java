@@ -1494,6 +1494,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicInteger compactionThreshold = new AtomicInteger(DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD);
 		AtomicInteger queueSize = new AtomicInteger(DiskStoreFactory.DEFAULT_QUEUE_SIZE);
 		AtomicInteger writeBufferSize = new AtomicInteger(DiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE);
+		AtomicInteger segments = new AtomicInteger(DiskStoreFactory.DEFAULT_SEGMENTS);
 
 		AtomicLong maxOplogSize = new AtomicLong(DiskStoreFactory.DEFAULT_MAX_OPLOG_SIZE);
 		AtomicLong timeInterval = new AtomicLong(DiskStoreFactory.DEFAULT_TIME_INTERVAL);
@@ -1558,6 +1559,9 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockDiskStoreFactory.setWriteBufferSize(anyInt()))
 			.thenAnswer(newSetter(writeBufferSize, mockDiskStoreFactory));
 
+		when(mockDiskStoreFactory.setSegments(anyInt()))
+				.thenAnswer(newSetter(segments, mockDiskStoreFactory));
+
 		when(mockDiskStoreFactory.create(anyString())).thenAnswer(invocation -> {
 
 			String name = invocation.getArgument(0);
@@ -1577,6 +1581,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(mockDiskStore.getQueueSize()).thenReturn(queueSize.get());
 			when(mockDiskStore.getTimeInterval()).thenReturn(timeInterval.get());
 			when(mockDiskStore.getWriteBufferSize()).thenReturn(writeBufferSize.get());
+			when(mockDiskStore.getSegments()).thenReturn(segments.get());
 
 			diskStores.put(name, mockDiskStore);
 
