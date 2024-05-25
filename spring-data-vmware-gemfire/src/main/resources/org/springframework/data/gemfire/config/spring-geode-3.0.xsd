@@ -2238,6 +2238,13 @@ Indicates the write buffer size in bytes
 				 ]]></xsd:documentation>
 			</xsd:annotation>
 		</xsd:attribute>
+		<xsd:attribute name="segments" type="xsd:string" default="0">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[
+Indicates the number of DiskStore segments
+				 ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
 	</xsd:complexType>
 	<!-- -->
 	<xsd:complexType name="diskStoreType">

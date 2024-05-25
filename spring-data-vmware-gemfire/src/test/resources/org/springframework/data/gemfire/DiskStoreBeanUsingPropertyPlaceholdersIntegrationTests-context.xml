@@ -24,6 +24,7 @@
 		<entry key="queueSize" value-type="java.lang.Integer" value="8192"/>
 		<entry key="timeInterval" value-type="java.lang.Long" value="5000"/>
 		<entry key="writeBufferSize" value-type="java.lang.Integer" value="65536"/>
+		<entry key="segments" value-type="java.lang.Integer" value="2"/>
 	</util:map>
 
 	<context:property-placeholder properties-ref="diskStoreConfiguration"/>
@@ -42,7 +43,8 @@
 					max-oplog-size="${maxOplogSize}"
 					queue-size="${queueSize}"
 					time-interval="${timeInterval}"
-					write-buffer-size="${writeBufferSize}">
+					write-buffer-size="${writeBufferSize}"
+					segments="${segments}">
 	</gfe:disk-store>
 
 </beans>

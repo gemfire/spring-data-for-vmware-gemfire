@@ -12,6 +12,7 @@ import static org.springframework.data.gemfire.config.annotation.DiskStoreConfig
 import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE;
 import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_MAX_OPLOG_SIZE;
 import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_QUEUE_SIZE;
+import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_SEGMENTS;
 import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_TIME_INTERVAL;
 import static org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration.DEFAULT_WRITE_BUFFER_SIZE;
 
@@ -201,6 +202,17 @@ public @interface EnableDiskStore {
 	 * in {@literal application.properties}.
 	 */
 	int writeBufferSize() default DEFAULT_WRITE_BUFFER_SIZE;
+
+	/**
+	 * The number of DiskStore segments across which to spread a region.
+	 *
+	 * Defaults to {@literal 0} which will use as many segments as there are available CPUs on the
+	 * server when the DiskStore is configured.
+	 *
+	 * Use either the {@literal spring.data.gemfire.disk.store.<diskStoreName>.segments} property
+	 * or the {@literal spring.data.gemfire.disk.store.segments} property in {@literal application.properties}.
+	 */
+	int segments() default DEFAULT_SEGMENTS;
 
 	@interface DiskDirectory {
 
