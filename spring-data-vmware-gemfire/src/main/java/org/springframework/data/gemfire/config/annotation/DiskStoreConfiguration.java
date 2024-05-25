@@ -62,6 +62,7 @@ public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
 	protected static final int DEFAULT_COMPACTION_THRESHOLD = DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD;
 	protected static final int DEFAULT_QUEUE_SIZE = DiskStoreFactory.DEFAULT_QUEUE_SIZE;
 	protected static final int DEFAULT_WRITE_BUFFER_SIZE = DiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE;
+	protected static final int DEFAULT_SEGMENTS = DiskStoreFactory.DEFAULT_SEGMENTS;
 
 	protected static final long DEFAULT_MAX_OPLOG_SIZE = 1024L;
 	protected static final long DEFAULT_TIME_INTERVAL = DiskStoreFactory.DEFAULT_TIME_INTERVAL;
@@ -182,6 +183,15 @@ public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
 				resolveProperty(diskStoreProperty("write-buffer-size"), (Integer) null)))
 			.ifPresent(writeBufferSize ->
 				diskStoreFactoryBeanBuilder.addPropertyValue("writeBufferSize", writeBufferSize));
+
+		setPropertyValueIfNotDefault(diskStoreFactoryBeanBuilder, "segments",
+				enableDiskStoreAttributes.<Integer>getNumber("segments"),
+				DEFAULT_SEGMENTS);
+
+		Optional.ofNullable(resolveProperty(namedDiskStoreProperty(diskStoreName, "segments"),
+						resolveProperty(diskStoreProperty("segments"), (Integer) null)))
+				.ifPresent(segments ->
+						diskStoreFactoryBeanBuilder.addPropertyValue("segments", segments));
 
 		resolveDiskStoreDirectories(diskStoreName, enableDiskStoreAttributes, diskStoreFactoryBeanBuilder);
 
