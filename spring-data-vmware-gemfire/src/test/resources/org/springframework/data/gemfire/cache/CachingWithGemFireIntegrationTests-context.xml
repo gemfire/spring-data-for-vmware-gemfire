@@ -61,13 +61,8 @@
 							   value-constraint="java.lang.Integer" template="Template"/>
 	</beans>
 
-	<beans profile="partition">
-		<gfe:partitioned-region id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
-								value-constraint="java.lang.Integer" template="Template"/>
-	</beans>
-
 	<beans profile="local">
-		<gfe:partitioned-region id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
+		<gfe:replicated-region id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
 								value-constraint="java.lang.Integer" template="Template"/>
 	</beans>
 

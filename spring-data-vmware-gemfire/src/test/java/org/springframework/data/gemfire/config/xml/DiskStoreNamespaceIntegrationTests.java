@@ -27,14 +27,11 @@ import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.util.ObjectSizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
-import org.springframework.data.gemfire.SimpleObjectSizer;
 import org.springframework.data.gemfire.TestUtils;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
@@ -170,32 +167,6 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 		assertThat(replicatedDataEvictionAttributes.getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
 		assertThat(replicatedDataEvictionAttributes.getMaximum()).isEqualTo(50);
 		assertThat(replicatedDataEvictionAttributes.getObjectSizer()).isNull();
-	}
-
-	@Test
-	@SuppressWarnings("rawtypes")
-	public void partitionDataOptionsAreCorrect() throws Exception {
-
-		assertThat(requireApplicationContext().containsBean("partition-data")).isTrue();
-
-		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&partition-data", PeerRegionFactoryBean.class);
-
-		assertThat(regionFactoryBean).isInstanceOf(PartitionedRegionFactoryBean.class);
-		assertThat(TestUtils.<Boolean>readField("persistent", regionFactoryBean)).isTrue();
-
-		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
-
-		assertThat(regionAttributes).isNotNull();
-
-		EvictionAttributes evictionAttributes = regionAttributes.getEvictionAttributes();
-
-		assertThat(evictionAttributes.getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
-		assertThat(evictionAttributes.getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_MEMORY);
-
-		ObjectSizer sizer = evictionAttributes.getObjectSizer();
-
-		assertThat(sizer.getClass()).isEqualTo(SimpleObjectSizer.class);
 	}
 
 	@Test

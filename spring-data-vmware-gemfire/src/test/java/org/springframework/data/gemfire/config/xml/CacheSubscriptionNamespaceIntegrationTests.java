@@ -56,40 +56,4 @@ public class CacheSubscriptionNamespaceIntegrationTests extends IntegrationTests
 		assertThat(subscriptionAttributes).isNotNull();
 		assertThat(subscriptionAttributes.getInterestPolicy()).isEqualTo(InterestPolicy.ALL);
 	}
-
-	@Test
-	public void partitionRegionSubscriptionCacheContentPolicy() {
-
-		assertThat(requireApplicationContext().containsBean("partCACHE_CONTENT")).isTrue();
-
-		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&partCACHE_CONTENT", PeerRegionFactoryBean.class);
-
-		RegionAttributes regionAttributes = regionFactoryBean.getAttributes();
-
-		assertThat(regionAttributes).isNotNull();
-
-		SubscriptionAttributes subscriptionAttributes = regionAttributes.getSubscriptionAttributes();
-
-		assertThat(subscriptionAttributes).isNotNull();
-		assertThat(subscriptionAttributes.getInterestPolicy()).isEqualTo(InterestPolicy.CACHE_CONTENT);
-	}
-
-	@Test
-	public void partitionRegionSubscriptionDefaultPolicy() {
-
-		assertThat(requireApplicationContext().containsBean("partDEFAULT")).isTrue();
-
-		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&partDEFAULT", PeerRegionFactoryBean.class);
-
-		RegionAttributes regionAttributes = regionFactoryBean.getAttributes();
-
-		assertThat(regionAttributes).isNotNull();
-
-		SubscriptionAttributes subscriptionAttributes = regionAttributes.getSubscriptionAttributes();
-
-		assertThat(subscriptionAttributes).isNotNull();
-		assertThat(subscriptionAttributes.getInterestPolicy()).isEqualTo(InterestPolicy.DEFAULT);
-	}
 }

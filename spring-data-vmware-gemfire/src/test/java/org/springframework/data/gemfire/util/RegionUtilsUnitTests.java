@@ -30,8 +30,8 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void assertAllDataPoliciesWithNullPersistentPropertyIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PARTITION, null);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_PARTITION, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, null);
 		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, null);
 		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, null);
 	}
@@ -39,14 +39,14 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void assertNonPersistentDataPolicyWithNoPersistenceIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PARTITION, false);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, false);
 		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, false);
 	}
 
 	@Test
 	public void assertPersistentDataPolicyWithPersistenceIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_PARTITION, true);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, true);
 		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, true);
 	}
 
@@ -69,11 +69,11 @@ public class RegionUtilsUnitTests {
 	public void assertPersistentDataPolicyWithNonPersistentAttribute() {
 
 		try {
-			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_PARTITION, false);
+			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, false);
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Data Policy [PERSISTENT_PARTITION] is not valid when persistent is false");
+			assertThat(expected).hasMessage("Data Policy [PERSISTENT_REPLICATE] is not valid when persistent is false");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

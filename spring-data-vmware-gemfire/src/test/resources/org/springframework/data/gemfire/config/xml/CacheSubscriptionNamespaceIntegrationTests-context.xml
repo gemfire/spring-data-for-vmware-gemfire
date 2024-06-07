@@ -25,13 +25,4 @@
 		<gfe:subscription type="ALL"/>
 	</gfe:replicated-region>
 
-	<gfe:partitioned-region id="partCACHE_CONTENT">
-		<gfe:subscription type="CACHE_CONTENT"/>
-		<gfe:eviction threshold="70"/>
-	</gfe:partitioned-region>
-
-	<gfe:partitioned-region id="partDEFAULT">
-		<gfe:subscription/>
-	</gfe:partitioned-region>
-
 </beans>

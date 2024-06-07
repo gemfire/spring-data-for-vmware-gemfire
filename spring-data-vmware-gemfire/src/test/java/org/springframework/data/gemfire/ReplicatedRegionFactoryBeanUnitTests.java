@@ -133,15 +133,15 @@ public class ReplicatedRegionFactoryBeanUnitTests {
 		RegionFactory<Object, Object> mockRegionFactory = createMockRegionFactory();
 
 		try {
-			factoryBean.resolveDataPolicy(mockRegionFactory, null, "PARTITION");
+			factoryBean.resolveDataPolicy(mockRegionFactory, null, "NORMAL");
 		}
 		catch (IllegalArgumentException e) {
-			assertThat(e.getMessage()).isEqualTo("Data Policy [PARTITION] is not supported in Replicated Regions.");
+			assertThat(e.getMessage()).isEqualTo("Data Policy [NORMAL] is not supported in Replicated Regions.");
 			throw e;
 		}
 		finally {
 			verify(mockRegionFactory, never()).setDataPolicy(null);
-			verify(mockRegionFactory, never()).setDataPolicy(eq(DataPolicy.PARTITION));
+			verify(mockRegionFactory, never()).setDataPolicy(eq(DataPolicy.NORMAL));
 		}
 	}
 

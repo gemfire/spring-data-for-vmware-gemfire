@@ -48,7 +48,7 @@ public class InvalidRegionDataPolicyShortcutsTest {
 		catch (BeanDefinitionParsingException expected) {
 
 			assertThat(expected).hasMessageContaining(
-				"Only one of [data-policy, shortcut] may be specified with element [gfe:partitioned-region]");
+				"Only one of [data-policy, shortcut] may be specified with element [gfe:replicated-region]");
 
 			throw expected;
 		}

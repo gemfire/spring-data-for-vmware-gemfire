@@ -318,7 +318,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 
 		getTemplate().execute((GemfireCallback<Void>) region -> {
 
-			if (isPartitioned(region) || isTransactionPresent(region)) {
+			if (isTransactionPresent(region)) {
 				doRegionClear(region);
 			}
 			else {
@@ -359,17 +359,6 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	@Override
 	public void deleteById(@NonNull ID id) {
 		getTemplate().remove(id);
-	}
-
-	boolean isPartitioned(@Nullable Region<?, ?> region) {
-
-		return region != null
-			&& region.getAttributes() != null
-			&& isPartitioned(region.getAttributes().getDataPolicy());
-	}
-
-	boolean isPartitioned(@Nullable DataPolicy dataPolicy) {
-		return dataPolicy != null && dataPolicy.withPartitioning();
 	}
 
 	boolean isTransactionPresent(@Nullable Region<?, ?> region) {

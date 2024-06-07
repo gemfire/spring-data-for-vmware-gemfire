@@ -41,7 +41,7 @@ public class RegionShortcutConverterUnitTests {
 			assertThat(converter.convert(shortcut.name())).isEqualTo(shortcut);
 		}
 
-		assertThat(converter.convert("Partition_Proxy")).isEqualTo(RegionShortcut.PARTITION_PROXY);
+		assertThat(converter.convert("Replicate_Proxy")).isEqualTo(RegionShortcut.REPLICATE_PROXY);
 		assertThat(converter.convert("replicate_overflow")).isEqualTo(RegionShortcut.REPLICATE_OVERFLOW);
 		assertThat(converter.convert("local_Heap_LRU")).isEqualTo(RegionShortcut.LOCAL_HEAP_LRU);
 	}

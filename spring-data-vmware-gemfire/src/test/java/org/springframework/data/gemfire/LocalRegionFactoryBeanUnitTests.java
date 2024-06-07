@@ -180,10 +180,10 @@ public class LocalRegionFactoryBeanUnitTests extends AbstractRegionFactoryBeanTe
 		RegionFactory mockRegionFactory = createMockRegionFactory();
 
 		try {
-			factoryBean.resolveDataPolicy(mockRegionFactory, null, "PARTITION");
+			factoryBean.resolveDataPolicy(mockRegionFactory, null, "REPLICATE");
 		}
 		catch (IllegalArgumentException e) {
-			assertThat(e.getMessage()).isEqualTo("Data Policy [PARTITION] is not supported for Local Regions");
+			assertThat(e.getMessage()).isEqualTo("Data Policy [REPLICATE] is not supported for Local Regions");
 			throw e;
 		}
 		finally {

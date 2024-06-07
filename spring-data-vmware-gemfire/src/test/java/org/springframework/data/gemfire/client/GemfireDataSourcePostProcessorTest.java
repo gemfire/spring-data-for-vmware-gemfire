@@ -89,7 +89,7 @@ public class GemfireDataSourcePostProcessorTest {
 		when(mockRegion.getParentRegion()).thenReturn(null);
 		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
-		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.PARTITION);
+		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.REPLICATE);
 		when(mockRegionAttributes.getScope()).thenReturn(Scope.DISTRIBUTED_ACK);
 
 		return mockRegion;
