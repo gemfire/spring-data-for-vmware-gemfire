@@ -25,18 +25,6 @@
 		</region-attributes>
 	</region>
 
-	<region name="NativePartitionRegion">
-		<region-attributes data-policy="persistent-partition"
-						   cloning-enabled="true"
-						   concurrency-checks-enabled="true"
-						   concurrency-level="40"
-						   initial-capacity="51"
-                           load-factor="0.85">
-			<key-constraint>java.lang.Integer</key-constraint>
-			<value-constraint>java.lang.String</value-constraint>
-		</region-attributes>
-	</region>
-
 	<region name="NativeReplicateRegion">
 		<region-attributes data-policy="persistent-replicate"
 						   cloning-enabled="false"

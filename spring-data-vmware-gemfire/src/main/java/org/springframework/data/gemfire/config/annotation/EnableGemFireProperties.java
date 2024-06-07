@@ -163,16 +163,6 @@ public @interface EnableGemFireProperties {
 		default GemFirePropertiesConfiguration.DEFAULT_ENABLE_NETWORK_PARTITION_DETECTION;
 
 	/**
-	 * Whether partitioned regions will put redundant copies of the same data in different members
-	 * running on the same physical machine. By default, GemFire tries to put redundant copies on different machines,
-	 * but it will put them on the same machine if no other machines are available. Setting this property
-	 * to {@literal true} prevents this and requires different machines for redundant copies.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean enforceUniqueHost() default GemFirePropertiesConfiguration.DEFAULT_ENFORCE_UNIQUE_HOST;
-
-	/**
 	 * Defines the list of groups that this member belongs to. Use commas to separate group names.
 	 * Note that anything defined by the {@literal roles} gemfire property will also be considered
 	 * a group.
@@ -266,17 +256,6 @@ public @interface EnableGemFireProperties {
 	 * Defaults to unset.
 	 */
 	String name() default GemFirePropertiesConfiguration.DEFAULT_NAME;
-
-	/**
-	 * Defines this member’s redundancy zone. Used to separate member’s into different groups for satisfying
-	 * Partitioned Region redundancy. If this property is set, GemFire will not put redundant copies of data
-	 * in members with the same redundancy zone setting.
-	 *
-	 * Defaults to unset.
-	 *
-	 * @see <a href="https://geode.apache.org/docs/guide/113/developing/partitioned_regions/overview_how_pr_ha_works.html">Configure High Availability for a Partitioned Region</a>
-	 */
-	String redundancyZone() default GemFirePropertiesConfiguration.DEFAULT_REDUNDANCY_ZONE;
 
 	/**
 	 * Used to configure the Locators that a cluster will use in order to connect to a remote site in a multi-site

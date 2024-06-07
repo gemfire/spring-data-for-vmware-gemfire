@@ -32,8 +32,6 @@ import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.PartitionAttributes;
-import org.apache.geode.cache.PartitionAttributesFactory;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionFactory;
@@ -78,7 +76,6 @@ import org.springframework.util.StringUtils;
  * @see EvictionAttributes
  * @see ExpirationAttributes
  * @see GemFireCache
- * @see PartitionAttributes
  * @see Region
  * @see RegionAttributes
  * @see RegionFactory
@@ -345,7 +342,7 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 
 	/**
 	 * Intelligently merges the given RegionAttributes with the configuration setting of the RegionFactory. This method
-	 * is used to merge the RegionAttributes and PartitionAttributes with the RegionFactory that is created when the
+	 * is used to merge the RegionAttributes with the RegionFactory that is created when the
 	 * user specified a RegionShortcut.  This method gets called by the createRegionFactory method depending upon
 	 * the value passed to the Cache.createRegionFactory() method (i.e. whether there was a RegionShortcut specified
 	 * or not).
@@ -393,8 +390,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 			regionFactory.setLockGrantor(regionAttributes.isLockGrantor());
 			regionFactory.setMembershipAttributes(regionAttributes.getMembershipAttributes());
 
-			mergePartitionAttributes(regionFactory, regionAttributes);
-
 			regionFactory.setPoolName(regionAttributes.getPoolName());
 			regionFactory.setRegionIdleTimeout(regionAttributes.getRegionIdleTimeout());
 			regionFactory.setRegionTimeToLive(regionAttributes.getRegionTimeToLive());
@@ -404,49 +399,6 @@ public abstract class PeerRegionFactoryBean<K, V> extends ConfigurableRegionFact
 		}
 
 		return regionFactory;
-	}
-
-	/**
-	 * Merges the {@link RegionAttributes} into the {@link RegionFactory}.
-	 *
-	 * @param regionFactory {@link RegionFactory} to configure.
-	 * @param regionAttributes {@link RegionAttributes} used to configure the {@link RegionFactory}
-	 * if not {@literal null}.
-	 * @see RegionAttributes
-	 * @see RegionFactory
-	 */
-	@SuppressWarnings("rawtypes")
-	protected <K, V> void mergePartitionAttributes(RegionFactory<K, V> regionFactory,
-			RegionAttributes<K, V> regionAttributes) {
-
-		// NOTE: PartitionAttributes are created by certain RegionShortcuts; need the null check since RegionAttributes
-		// can technically return null!
-		// NOTE: Most likely, the PartitionAttributes will never be null since the PartitionRegionFactoryBean always
-		// sets a PartitionAttributesFactoryBean BeanBuilder on the RegionAttributesFactoryBean "partitionAttributes"
-		// property.
-		if (regionAttributes.getPartitionAttributes() != null) {
-
-			PartitionAttributes partitionAttributes = regionAttributes.getPartitionAttributes();
-
-			PartitionAttributesFactory partitionAttributesFactory = new PartitionAttributesFactory(partitionAttributes);
-
-			RegionShortcutWrapper shortcutWrapper = RegionShortcutWrapper.valueOf(shortcut);
-
-			// NOTE: However, since the default value of redundancy is 0, we need to account for 'redundant'
-			// RegionShortcut types, which specify a redundancy of 1.
-			if (shortcutWrapper.isRedundant() && partitionAttributes.getRedundantCopies() == 0) {
-				partitionAttributesFactory.setRedundantCopies(1);
-			}
-
-			// NOTE: And, since the default value of localMaxMemory is based on the system memory, we need to
-			// account for 'proxy' RegionShortcut types, which specify a local max memory of 0.
-			if (shortcutWrapper.isProxy()) {
-				partitionAttributesFactory.setLocalMaxMemory(0);
-			}
-
-			// NOTE: Internally, RegionFactory.setPartitionAttributes handles merging the PartitionAttributes, hooray!
-			regionFactory.setPartitionAttributes(partitionAttributesFactory.create());
-		}
 	}
 
 	private boolean isDiskStoreConfigurationAllowed() {

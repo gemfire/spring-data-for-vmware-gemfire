@@ -33,8 +33,6 @@ import org.apache.geode.cache.EntryExistsException;
 import org.apache.geode.cache.EntryNotFoundException;
 import org.apache.geode.cache.FailedSynchronizationException;
 import org.apache.geode.cache.OperationAbortedException;
-import org.apache.geode.cache.PartitionedRegionDistributionException;
-import org.apache.geode.cache.PartitionedRegionStorageException;
 import org.apache.geode.cache.RegionDestroyedException;
 import org.apache.geode.cache.RegionExistsException;
 import org.apache.geode.cache.ResourceException;
@@ -152,12 +150,6 @@ public abstract class GemfireCacheUtils {
 					return new GemfireSystemException(cause);
 				}
 				// the rest are treated as resource failures
-				return new DataAccessResourceFailureException(cause.getMessage(), cause);
-			}
-			if (cause instanceof PartitionedRegionDistributionException) {
-				return new DataAccessResourceFailureException(cause.getMessage(), cause);
-			}
-			if (cause instanceof PartitionedRegionStorageException) {
 				return new DataAccessResourceFailureException(cause.getMessage(), cause);
 			}
 			if (cause instanceof QueryExecutionTimeoutException) {

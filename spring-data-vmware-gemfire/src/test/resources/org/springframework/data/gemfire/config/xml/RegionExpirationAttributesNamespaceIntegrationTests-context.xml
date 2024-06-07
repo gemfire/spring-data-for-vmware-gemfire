@@ -50,17 +50,6 @@
 		<gfe:entry-ttl timeout="120" action="LOCAL_DESTROY"/>
 	</gfe:local-region>
 
-	<gfe:partitioned-region id="PartitionExample" persistent="false">
-		<gfe:cache-listener ref="testListener"/>
-		<gfe:entry-ttl timeout="300" action="${expiration.action}"/>
-		<gfe:custom-entry-tti>
-			<bean class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCustomExpiry"
-				  p:name="PartitionCustomExpiry" p:timeout="120" p:action="#{T(org.apache.geode.cache.ExpirationAction).INVALIDATE}"/>
-		</gfe:custom-entry-tti>
-		<gfe:cache-loader ref="testLoader"/>
-		<gfe:cache-writer ref="testWriter"/>
-	</gfe:partitioned-region>
-
 	<gfe:local-region id="LocalExample" persistent="false">
 		<gfe:custom-entry-ttl>
 			<bean class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCustomExpiry"

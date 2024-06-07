@@ -15,7 +15,7 @@
 	<bean class="org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor"/>
 
 	<gfe:cache/>
-	<gfe:partitioned-region id="TemplateBasedPartitionRegion" template="RegionTemplate"/>
+	<gfe:replicated-region id="TemplateBasedReplicateRegion" template="RegionTemplate"/>
 	<gfe:region-template id="RegionTemplate" persistent="false"/>
 
 </beans>

@@ -25,19 +25,19 @@
 		<gfe:disk-dir location="." max-size="1024"/>
 	</gfe:disk-store>
 
-	<gfe:partitioned-region id="NotPersistentNoOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
-	</gfe:partitioned-region>
+	<gfe:local-region id="NotPersistentNoOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
+	</gfe:local-region>
 
-	<gfe:partitioned-region id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
-		<gfe:eviction action="OVERFLOW_TO_DISK"/>
-	</gfe:partitioned-region>
+	<gfe:replicated-region id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
+		<gfe:eviction/>
+	</gfe:replicated-region>
 
-	<gfe:partitioned-region id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
-		<gfe:eviction action="LOCAL_DESTROY"/>
-	</gfe:partitioned-region>
+	<gfe:local-region id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+		<gfe:eviction/>
+	</gfe:local-region>
 
-	<gfe:partitioned-region id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
-		<gfe:eviction action="OVERFLOW_TO_DISK"/>
-	</gfe:partitioned-region>
+	<gfe:replicated-region id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+		<gfe:eviction/>
+	</gfe:replicated-region>
 
 </beans>

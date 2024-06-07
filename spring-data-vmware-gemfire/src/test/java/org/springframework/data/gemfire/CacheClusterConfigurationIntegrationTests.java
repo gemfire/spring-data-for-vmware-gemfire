@@ -234,13 +234,10 @@ public class CacheClusterConfigurationIntegrationTests extends ForkingClientServ
 			newApplicationContext(getLocation("cacheUsingClusterConfigurationIntegrationTest.xml"));
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "ClusterConfigRegion"), "ClusterConfigRegion"),
-			DataPolicy.PARTITION, Scope.DISTRIBUTED_NO_ACK);
+			DataPolicy.REPLICATE, Scope.DISTRIBUTED_NO_ACK);
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeLocalRegion"), "NativeLocalRegion"),
 			DataPolicy.NORMAL, Scope.LOCAL);
-
-		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativePartitionRegion"), "NativePartitionRegion"),
-			DataPolicy.PARTITION, Scope.DISTRIBUTED_NO_ACK);
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeReplicateRegion"), "NativeReplicateRegion"),
 			DataPolicy.REPLICATE, Scope.DISTRIBUTED_ACK);

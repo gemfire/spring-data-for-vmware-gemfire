@@ -86,7 +86,6 @@ import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.MembershipAttributes;
-import org.apache.geode.cache.PartitionAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionExistsException;
@@ -178,7 +177,6 @@ import org.springframework.util.StringUtils;
  * @see ExpirationAttributes
  * @see GemFireCache
  * @see MembershipAttributes
- * @see PartitionAttributes
  * @see Region
  * @see RegionAttributes
  * @see RegionFactory
@@ -432,20 +430,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 					case LOCAL_HEAP_LRU:
 					case LOCAL_OVERFLOW:
 						return DataPolicy.NORMAL;
-					case PARTITION:
-					case PARTITION_HEAP_LRU:
-					case PARTITION_OVERFLOW:
-					case PARTITION_PROXY:
-					case PARTITION_PROXY_REDUNDANT:
-					case PARTITION_REDUNDANT:
-					case PARTITION_REDUNDANT_HEAP_LRU:
-					case PARTITION_REDUNDANT_OVERFLOW:
-						return DataPolicy.PARTITION;
-					case PARTITION_PERSISTENT:
-					case PARTITION_PERSISTENT_OVERFLOW:
-					case PARTITION_REDUNDANT_PERSISTENT:
-					case PARTITION_REDUNDANT_PERSISTENT_OVERFLOW:
-						return DataPolicy.PERSISTENT_PARTITION;
 					case REPLICATE:
 					case REPLICATE_HEAP_LRU:
 					case REPLICATE_OVERFLOW:
@@ -714,22 +698,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			if (regionShortcutWrapper.isLocal()) {
 				doReturn(Scope.LOCAL).when(mockRegionAttributes).getScope();
-			}
-
-			if (regionShortcutWrapper.isPartition()) {
-
-				PartitionAttributes<K, V> mockPartitionAttributes =
-					mock(PartitionAttributes.class, withSettings().lenient());
-
-				if (regionShortcut.isProxy()) {
-					doReturn(0).when(mockPartitionAttributes).getLocalMaxMemory();
-				}
-
-				if (regionShortcutWrapper.isRedundant()) {
-					doReturn(1).when(mockPartitionAttributes).getRedundantCopies();
-				}
-
-				doReturn(mockPartitionAttributes).when(mockRegionAttributes).getPartitionAttributes();
 			}
 
 			if (regionShortcutWrapper.isReplicate()) {
@@ -2079,7 +2047,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
-		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(baseRegionAttributes::getPartitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(baseRegionAttributes::getPoolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
 		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive::get));
@@ -2527,10 +2494,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			.map(RegionAttributes::getMembershipAttributes)
 			.orElseGet(MembershipAttributes::new));
 
-		AtomicReference<PartitionAttributes<K, V>> partitionAttributes = new AtomicReference<>(optionalRegionAttributes
-			.map(RegionAttributes::getPartitionAttributes)
-			.orElse(null));
-
 		AtomicReference<String> poolName = new AtomicReference<>(optionalRegionAttributes
 			.map(RegionAttributes::getPoolName)
 			.orElse(null));
@@ -2627,9 +2590,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionFactory.setMembershipAttributes(any(MembershipAttributes.class)))
 			.thenAnswer(newSetter(membershipAttributes, () -> mockRegionFactory));
 
-		when(mockRegionFactory.setPartitionAttributes(any(PartitionAttributes.class)))
-			.thenAnswer(newSetter(partitionAttributes, () -> mockRegionFactory));
-
 		when(mockRegionFactory.setPoolName(anyString())).thenAnswer(newSetter(poolName, () -> mockRegionFactory));
 
 		when(mockRegionFactory.setRegionIdleTimeout(any(ExpirationAttributes.class)))
@@ -2676,7 +2636,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
 		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(lockGrantor));
 		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(membershipAttributes));
-		when(mockRegionAttributes.getPartitionAttributes()).thenAnswer(newGetter(partitionAttributes));
 		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
 		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
 		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive));

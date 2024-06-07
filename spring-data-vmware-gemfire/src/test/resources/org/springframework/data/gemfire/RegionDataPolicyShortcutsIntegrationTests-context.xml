@@ -29,22 +29,19 @@
 	<gfe:local-region id="LocalWithDataPolicy" data-policy="NORMAL"/>
 	<gfe:local-region id="LocalWithShortcut" shortcut="LOCAL_PERSISTENT"/>
 
-	<gfe:partitioned-region id="PartitionWithDataPolicy" data-policy="PARTITION"/>
-	<gfe:partitioned-region id="PartitionWithShortcut" shortcut="PARTITION_PERSISTENT"/>
-
 	<gfe:replicated-region id="ReplicateWithDataPolicy" data-policy="REPLICATE"/>
 	<gfe:replicated-region id="ReplicateWithShortcut" shortcut="REPLICATE_PERSISTENT"/>
 
-	<gfe:partitioned-region id="ShortcutDefaults" shortcut="PARTITION_REDUNDANT_PERSISTENT_OVERFLOW"
+	<gfe:replicated-region id="ShortcutDefaults" shortcut="REPLICATE_PERSISTENT_OVERFLOW"
 							cloning-enabled="false" concurrency-checks-enabled="true" disk-synchronous="false"
 							ignore-jta="true" initial-capacity="101" load-factor="0.85f" key-constraint="java.lang.Long"
-                            total-buckets="177" value-constraint="java.lang.String"/>
+                            value-constraint="java.lang.String"/>
 
-	<gfe:partitioned-region id="ShortcutOverrides" shortcut="PARTITION_REDUNDANT_OVERFLOW"
-							cloning-enabled="true" concurrency-checks-enabled="false" copies="3" disk-synchronous="true"
+	<gfe:replicated-region id="ShortcutOverrides" shortcut="REPLICATE_OVERFLOW"
+							cloning-enabled="true" concurrency-checks-enabled="false" disk-synchronous="true"
 							ignore-jta="false" initial-capacity="51" load-factor="0.72f" key-constraint="java.lang.String"
-                            total-buckets="111" value-constraint="java.lang.Object">
-		<gfe:eviction threshold="8192" type="ENTRY_COUNT" action="LOCAL_DESTROY"/>
-	</gfe:partitioned-region>
+                            value-constraint="java.lang.Object">
+		<gfe:eviction threshold="8192" type="ENTRY_COUNT"/>
+	</gfe:replicated-region>
 
 </beans>

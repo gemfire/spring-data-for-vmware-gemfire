@@ -128,8 +128,8 @@ public class EnableCachingDefinedRegionsUnitTests {
 	@Test
 	public void setGetAndResolveServerRegionShortcut() {
 
-		assertThat(this.configuration.getServerRegionShortcut().orElse(null)).isEqualTo(RegionShortcut.PARTITION);
-		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.PARTITION);
+		assertThat(this.configuration.getServerRegionShortcut().orElse(null)).isEqualTo(RegionShortcut.REPLICATE);
+		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.REPLICATE);
 
 		this.configuration.setServerRegionShortcut(RegionShortcut.LOCAL);
 
@@ -139,7 +139,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 		this.configuration.setServerRegionShortcut(null);
 
 		assertThat(this.configuration.getServerRegionShortcut().orElse(null)).isNull();
-		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.PARTITION);
+		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.REPLICATE);
 
 		this.configuration.setServerRegionShortcut(RegionShortcut.REPLICATE);
 
@@ -155,7 +155,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 		Map<String, Object> annotationAttributes = MapBuilder.<String, Object>newMapBuilder()
 			.put("clientRegionShortcut", ClientRegionShortcut.LOCAL_PERSISTENT)
 			.put("poolName", "SwimmingPool")
-			.put("serverRegionShortcut", RegionShortcut.PARTITION_PERSISTENT)
+			.put("serverRegionShortcut", RegionShortcut.REPLICATE_PERSISTENT)
 			.build();
 
 		when(mockAnnotationMetadata.hasAnnotation(eq(EnableCachingDefinedRegions.class.getName()))).thenReturn(true);
@@ -166,7 +166,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		assertThat(this.configuration.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT);
 		assertThat(this.configuration.resolvePoolName()).isEqualTo("SwimmingPool");
-		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.PARTITION_PERSISTENT);
+		assertThat(this.configuration.resolveServerRegionShortcut()).isEqualTo(RegionShortcut.REPLICATE_PERSISTENT);
 
 		verify(mockAnnotationMetadata, times(1))
 			.hasAnnotation(eq(EnableCachingDefinedRegions.class.getName()));

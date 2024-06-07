@@ -27,12 +27,6 @@
         </gfe:replicated-region>
     </gfe:replicated-region>
 
-    <gfe:replicated-region id="replicatedParent">
-        <gfe:replicated-region name="replicatedChild">
-            <gfe:partitioned-region name="partitionedGrandchild"/>
-        </gfe:replicated-region>
-    </gfe:replicated-region>
-
     <gfe:replicated-region id="parentWithSiblings">
         <gfe:replicated-region name="child1">
             <gfe:replicated-region name="grandChild11"/>

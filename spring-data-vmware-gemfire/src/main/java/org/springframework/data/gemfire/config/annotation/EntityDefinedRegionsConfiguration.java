@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -40,8 +39,6 @@ import org.springframework.core.type.filter.AspectJTypeFilter;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.RegexPatternTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
-import org.springframework.data.gemfire.FixedPartitionAttributesFactoryBean;
-import org.springframework.data.gemfire.PartitionAttributesFactoryBean;
 import org.springframework.data.gemfire.RegionAttributesFactoryBean;
 import org.springframework.data.gemfire.ScopeType;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
@@ -53,7 +50,6 @@ import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.PartitionRegion;
 import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.support.CompositeTypeFilter;
 import org.springframework.data.gemfire.util.SpringExtensions;
@@ -61,7 +57,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -77,10 +72,7 @@ import org.springframework.util.StringUtils;
  * @see BeanDefinitionBuilder
  * @see BeanDefinitionRegistry
  * @see ImportBeanDefinitionRegistrar
- * @see FixedPartitionAttributesFactoryBean
  * @see org.springframework.data.gemfire.LocalRegionFactoryBean
- * @see PartitionAttributesFactoryBean
- * @see org.springframework.data.gemfire.PartitionedRegionFactoryBean
  * @see RegionAttributesFactoryBean
  * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
  * @see ClientRegionFactoryBean
@@ -91,7 +83,6 @@ import org.springframework.util.StringUtils;
  * @see GemfirePersistentEntity
  * @see ClientRegion
  * @see LocalRegion
- * @see PartitionRegion
  * @see ReplicateRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
@@ -102,7 +93,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 	protected static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY;
 
-	protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.PARTITION;
+	protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.REPLICATE;
 
 	@Autowired(required = false)
 	private GemfireMappingContext mappingContext;
@@ -402,9 +393,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 			setClientRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder);
 
-			setPartitionRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder,
-				regionAttributesFactoryBeanBuilder);
-
 			setReplicateRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder);
 		});
 
@@ -429,8 +417,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		return LocalRegion.class.equals(regionAnnotationType)
 				? (persistent ? RegionShortcut.LOCAL_PERSISTENT : RegionShortcut.LOCAL)
-			: PartitionRegion.class.equals(regionAnnotationType)
-				? (persistent ? RegionShortcut.PARTITION_PERSISTENT : RegionShortcut.PARTITION)
 			: ReplicateRegion.class.equals(regionAnnotationType)
 				? (persistent ? RegionShortcut.REPLICATE_PERSISTENT : RegionShortcut.REPLICATE)
 			: regionMetadata.resolveServerRegionShortcut(DEFAULT_SERVER_REGION_SHORTCUT);
@@ -447,75 +433,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			resolvedPoolName, ClientRegionFactoryBean.DEFAULT_POOL_NAME);
 
 		return regionFactoryBeanBuilder;
-	}
-
-	protected BeanDefinitionBuilder setPartitionRegionAttributes(RegionBeanDefinitionMetadata regionMetadata,
-			AnnotationAttributes regionAnnotationAttributes, BeanDefinitionBuilder regionFactoryBeanBuilder,
-			BeanDefinitionBuilder regionAttributesFactoryBeanBuilder) {
-
-		if (regionAnnotationAttributes.containsKey("redundantCopies")) {
-
-			BeanDefinitionBuilder partitionAttributesFactoryBeanBuilder =
-				BeanDefinitionBuilder.genericBeanDefinition(PartitionAttributesFactoryBean.class);
-
-			String collocatedWith = regionAnnotationAttributes.getString("collocatedWith");
-
-			setPropertyValueIfNotDefault(partitionAttributesFactoryBeanBuilder, "colocatedWith",
-				collocatedWith, "");
-
-			if (StringUtils.hasText(collocatedWith)) {
-				regionFactoryBeanBuilder.addDependsOn(collocatedWith);
-			}
-
-			setPropertyReferenceIfSet(partitionAttributesFactoryBeanBuilder, "partitionResolver",
-				regionAnnotationAttributes.getString("partitionResolverName"));
-
-			setPropertyValueIfNotDefault(partitionAttributesFactoryBeanBuilder, "redundantCopies",
-				regionAnnotationAttributes.<Integer>getNumber("redundantCopies"), 0);
-
-			setFixedPartitionRegionAttributes(regionAnnotationAttributes, partitionAttributesFactoryBeanBuilder);
-
-			regionAttributesFactoryBeanBuilder.addPropertyValue("partitionAttributes",
-				partitionAttributesFactoryBeanBuilder.getBeanDefinition());
-		}
-
-		return regionAttributesFactoryBeanBuilder;
-	}
-
-	protected BeanDefinitionBuilder setFixedPartitionRegionAttributes(AnnotationAttributes regionAnnotationAttributes,
-			BeanDefinitionBuilder partitionAttributesFactoryBeanBuilder) {
-
-		PartitionRegion.FixedPartition[] fixedPartitions = nullSafeArray(regionAnnotationAttributes.getAnnotationArray(
-			"fixedPartitions", PartitionRegion.FixedPartition.class), PartitionRegion.FixedPartition.class);
-
-		if (!ObjectUtils.isEmpty(fixedPartitions)) {
-
-			ManagedList<BeanDefinition> fixedPartitionAttributesFactoryBeans =
-				new ManagedList<>(fixedPartitions.length);
-
-			for (PartitionRegion.FixedPartition fixedPartition : fixedPartitions) {
-
-				BeanDefinitionBuilder fixedPartitionAttributesFactoryBeanBuilder =
-					BeanDefinitionBuilder.genericBeanDefinition(FixedPartitionAttributesFactoryBean.class);
-
-				fixedPartitionAttributesFactoryBeanBuilder.addPropertyValue("partitionName",
-					fixedPartition.name());
-
-				setPropertyValueIfNotDefault(fixedPartitionAttributesFactoryBeanBuilder, "primary",
-					fixedPartition.primary(), false);
-
-				setPropertyValueIfNotDefault(fixedPartitionAttributesFactoryBeanBuilder, "numBuckets",
-					fixedPartition.numBuckets(), 1);
-
-				fixedPartitionAttributesFactoryBeans
-					.add(fixedPartitionAttributesFactoryBeanBuilder.getBeanDefinition());
-			}
-
-			partitionAttributesFactoryBeanBuilder
-				.addPropertyValue("fixedPartitionAttributes", fixedPartitionAttributesFactoryBeans);
-		}
-
-		return partitionAttributesFactoryBeanBuilder;
 	}
 
 	protected BeanDefinitionBuilder setReplicateRegionAttributes(RegionBeanDefinitionMetadata regionMetadata,

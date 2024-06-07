@@ -15,8 +15,6 @@ import static org.assertj.core.data.Offset.offset;
 import static org.junit.Assume.assumeNotNull;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +23,6 @@ import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheLoaderException;
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EntryOperation;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAlgorithm;
 import org.apache.geode.cache.EvictionAttributes;
@@ -33,12 +30,9 @@ import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.PartitionResolver;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.SubscriptionAttributes;
-import org.apache.geode.cache.partition.PartitionListener;
-import org.apache.geode.cache.partition.PartitionListenerAdapter;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.apache.geode.cache.util.CacheWriterAdapter;
 import org.apache.geode.cache.util.ObjectSizer;
@@ -89,10 +83,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 	@Autowired
 	@Qualifier("TemplateBasedReplicateRegionNoOverrides")
 	private Region<String, Object> templateBasedReplicateRegionNoOverrides;
-
-	@Autowired
-	@Qualifier("TemplateBasedPartitionRegion")
-	private Region<Date, Object> templateBasedPartitionRegion;
 
 	@Autowired
 	@Qualifier("TemplateBasedLocalRegion")
@@ -155,33 +145,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertThat(expirationAttributes).as("The 'ExpirationAttributes' must not be null").isNotNull();
 		assertThat(expirationAttributes.getAction()).isEqualTo(expectedAction);
 		assertThat(expirationAttributes.getTimeout()).isEqualTo(expectedTimeout);
-	}
-
-	private void assertPartitionListener(Region<?, ?> region, String... expectedNames) {
-
-		assertThat(region).isNotNull();
-		assertThat(region.getAttributes()).isNotNull();
-		assertThat(region.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(region.getAttributes().getPartitionAttributes().getPartitionListeners()).isNotNull();
-		assertThat(region.getAttributes().getPartitionAttributes().getPartitionListeners().length)
-			.isEqualTo(expectedNames.length);
-
-		for (PartitionListener partitionListener : region.getAttributes().getPartitionAttributes().getPartitionListeners()) {
-			assertThat(partitionListener instanceof TestPartitionListener).isTrue();
-			assertThat(Arrays.asList(expectedNames).contains(partitionListener.toString())).isTrue();
-		}
-	}
-
-	private void assertPartitionResolver(Region<?, ?> region, String expectedName) {
-
-		assertThat(region).isNotNull();
-		assertThat(region.getAttributes()).isNotNull();
-		assertThat(region.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(
-			region.getAttributes().getPartitionAttributes().getPartitionResolver() instanceof TestPartitionResolver)
-			.isTrue();
-		assertThat(region.getAttributes().getPartitionAttributes().getPartitionResolver().toString())
-			.isEqualTo(expectedName);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -248,7 +211,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 			"BaseRegionTemplate",
 			"ExtendedRegionTemplate",
 			"ReplicateRegionTemplate",
-			"PartitionRegionTemplate",
 			"LocalRegionTemplate"
 		};
 
@@ -401,55 +363,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 	}
 
 	@Test
-	public void testTemplateBasedPartitionRegion() {
-
-		assertRegionMetaData(templateBasedPartitionRegion, "TemplateBasedPartitionRegion");
-		assertDefaultRegionAttributes(templateBasedPartitionRegion);
-		assertCacheListeners(templateBasedPartitionRegion, "X", "Y", "Z");
-		assertCacheLoader(templateBasedPartitionRegion, "A");
-		assertCacheWriter(templateBasedPartitionRegion, "dbWriter");
-		assertThat(templateBasedPartitionRegion.getAttributes().getCloningEnabled()).isFalse();
-		assertThat(templateBasedPartitionRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(templateBasedPartitionRegion.getAttributes().getDataPolicy())
-			.isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-		assertThat(templateBasedPartitionRegion.getAttributes().isDiskSynchronous()).isTrue();
-		assertThat(templateBasedPartitionRegion.getAttributes().getEnableSubscriptionConflation()).isTrue();
-		assertEvictionAttributes(templateBasedPartitionRegion.getAttributes().getEvictionAttributes(),
-			EvictionAction.OVERFLOW_TO_DISK, EvictionAlgorithm.LRU_ENTRY, 8192000, null);
-		assertExpirationAttributes(templateBasedPartitionRegion.getAttributes().getEntryIdleTimeout(),
-			ExpirationAction.DESTROY, 600);
-		assertExpirationAttributes(templateBasedPartitionRegion.getAttributes().getEntryTimeToLive(),
-			ExpirationAction.INVALIDATE, 300);
-		assertThat(templateBasedPartitionRegion.getAttributes().getIgnoreJTA()).isFalse();
-		assertThat(templateBasedPartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
-		assertThat(templateBasedPartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Date.class);
-		assertThat(String.valueOf(templateBasedPartitionRegion.getAttributes().getLoadFactor())).isEqualTo("0.7");
-		assertThat(templateBasedPartitionRegion.getAttributes().isLockGrantor()).isFalse();
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getColocatedWith())
-			.isEqualTo("Neighbor");
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getLocalMaxMemory())
-			.isEqualTo(8192);
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getRedundantCopies())
-			.isEqualTo(2);
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getRecoveryDelay())
-			.isEqualTo(60000L);
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getStartupRecoveryDelay())
-			.isEqualTo(15000L);
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getTotalMaxMemory())
-			.isEqualTo(16384);
-		assertThat(templateBasedPartitionRegion.getAttributes().getPartitionAttributes().getTotalNumBuckets())
-			.isEqualTo(91);
-		assertPartitionListener(templateBasedPartitionRegion, "testListener");
-		assertPartitionResolver(templateBasedPartitionRegion, "testResolver");
-		assertThat(templateBasedPartitionRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
-		assertThat(templateBasedPartitionRegion.getAttributes().getStatisticsEnabled()).isTrue();
-		assertSubscriptionAttributes(templateBasedPartitionRegion.getAttributes().getSubscriptionAttributes(),
-			InterestPolicy.ALL);
-		assertThat(templateBasedPartitionRegion.getAttributes().getValueConstraint()).isEqualTo(Object.class);
-	}
-
-	@Test
 	public void testTemplateBasedLocalRegion() {
 
 		assertRegionMetaData(templateBasedLocalRegion, "TemplateBasedLocalRegion");
@@ -524,47 +437,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		public void setName(String name) {
 			this.name = name;
 		}
-
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
-
-	public static final class TestPartitionListener extends PartitionListenerAdapter {
-
-		private String name;
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
-
-	public static final class TestPartitionResolver implements PartitionResolver {
-
-		private String name;
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public Object getRoutingObject(EntryOperation entryOperation) {
-			return null;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		@Override
-		public void close() { }
 
 		@Override
 		public String toString() {
