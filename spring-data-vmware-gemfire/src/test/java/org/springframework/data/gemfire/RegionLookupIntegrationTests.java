@@ -124,11 +124,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 	}
 
 	@Test(expected = RegionExistsException.class)
-	public void noPartitionRegionLookups() {
-		assertNoRegionLookup("/org/springframework/data/gemfire/noPartitionRegionLookupTest.xml");
-	}
-
-	@Test(expected = RegionExistsException.class)
 	public void noReplicateRegionLookups() {
 		assertNoRegionLookup("/org/springframework/data/gemfire/noReplicateRegionLookupTest.xml");
 	}
@@ -189,7 +184,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 
 			assertThat(applicationContext).isNotNull();
 			assertThat(applicationContext.containsBean("NativeLocalRegion")).isTrue();
-			assertThat(applicationContext.containsBean("NativePartitionRegion")).isTrue();
 			assertThat(applicationContext.containsBean("NativeReplicateRegion")).isTrue();
 			assertThat(applicationContext.containsBean("NativeParentRegion")).isTrue();
 			assertThat(applicationContext.containsBean("/NativeParentRegion/NativeChildRegion")).isTrue();
@@ -209,22 +203,6 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeLocalRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
 			assertThat(nativeLocalRegion.getAttributes().getLoadFactor()).isEqualTo(0.95f);
 			assertThat(nativeLocalRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
-
-			Region<?, ?> nativePartitionRegion = applicationContext.getBean("NativePartitionRegion", Region.class);
-
-			assertThat(nativePartitionRegion).isNotNull();
-			assertThat(nativePartitionRegion.getName()).isEqualTo("NativePartitionRegion");
-			assertThat(nativePartitionRegion.getFullPath()).isEqualTo("/NativePartitionRegion");
-			assertThat(nativePartitionRegion.getAttributes()).isNotNull();
-			assertThat(nativePartitionRegion.getAttributes().getDataPolicy())
-				.isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-			assertThat(nativePartitionRegion.getAttributes().getCloningEnabled()).isTrue();
-			assertThat(nativePartitionRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-			assertThat(nativePartitionRegion.getAttributes().getConcurrencyLevel()).isEqualTo(40);
-			assertThat(nativePartitionRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
-			assertThat(nativePartitionRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-			assertThat(nativePartitionRegion.getAttributes().getLoadFactor()).isEqualTo(0.85f);
-			assertThat(nativePartitionRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 
 			Region<?, ?> nativeReplicateRegion = applicationContext.getBean("NativeReplicateRegion", Region.class);
 

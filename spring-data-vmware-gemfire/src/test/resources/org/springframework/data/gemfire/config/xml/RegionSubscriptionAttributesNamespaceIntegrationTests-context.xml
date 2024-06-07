@@ -35,12 +35,12 @@
 		<gfe:subscription type="${subscription.interest.policy}"/>
 	</gfe:replicated-region>
 
-	<gfe:partitioned-region id="CacheContentSubscriptionRegion">
+	<gfe:replicated-region id="CacheContentSubscriptionRegion">
 		<gfe:subscription type="Cache_ConTENt"/>
-	</gfe:partitioned-region>
+	</gfe:replicated-region>
 
-	<gfe:partitioned-region id="DefaultSubscriptionRegion">
+	<gfe:replicated-region id="DefaultSubscriptionRegion">
 		<gfe:subscription/>
-	</gfe:partitioned-region>
+	</gfe:replicated-region>
 
 </beans>

@@ -55,7 +55,7 @@
 		<gfe:disk-dir location="./gemfire/data-store/" max-size="50"/>
 	</gfe:disk-store>
 
-	<gfe:partitioned-region id="pdxDataRegion" name="PdxData" persistent="true" disk-store-ref="dataStore" disk-synchronous="true"/>
+	<gfe:replicated-region id="pdxDataRegion" name="PdxData" persistent="true" disk-store-ref="dataStore" disk-synchronous="true"/>
 
 	<!--
 	  <bean id="pdxDataTemplate" class="org.springframework.data.gemfire.GemfireTemplate" p:region-ref="pdxDataRegion"/>

@@ -20,7 +20,7 @@ import org.springframework.core.convert.converter.Converter;
 public class DataPolicyConverter implements Converter<String, DataPolicy> {
 
 	static enum Policy {
-		DEFAULT, EMPTY, NORMAL, PRELOADED, PARTITION, PERSISTENT_PARTITION, REPLICATE, PERSISTENT_REPLICATE;
+		DEFAULT, EMPTY, NORMAL, PRELOADED, REPLICATE, PERSISTENT_REPLICATE;
 
 		private static String toUpperCase(String value) {
 			return (value == null ? null : value.toUpperCase());
@@ -43,10 +43,6 @@ public class DataPolicyConverter implements Converter<String, DataPolicy> {
 					return DataPolicy.NORMAL;
 				case PRELOADED:
 					return DataPolicy.PRELOADED;
-				case PARTITION :
-					return DataPolicy.PARTITION;
-				case PERSISTENT_PARTITION:
-					return DataPolicy.PERSISTENT_PARTITION;
 				case REPLICATE:
 					return DataPolicy.REPLICATE;
 				case PERSISTENT_REPLICATE:

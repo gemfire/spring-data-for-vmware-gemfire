@@ -18,7 +18,6 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.core.type.MethodMetadata;
 import org.springframework.data.gemfire.GenericRegionFactoryBean;
 import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
@@ -100,7 +99,6 @@ public abstract class AbstractDependencyStructuringBeanFactoryPostProcessor impl
 
 		return genericRegionBeanType.or(typeName -> ClientRegionFactoryBean.class.getName().equals(typeName))
 			.or(typeName -> LocalRegionFactoryBean.class.getName().equals(typeName))
-			.or(typeName -> PartitionedRegionFactoryBean.class.getName().equals(typeName))
 			.or(typeName -> ReplicatedRegionFactoryBean.class.getName().equals(typeName));
 	}
 }

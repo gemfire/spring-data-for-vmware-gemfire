@@ -17,7 +17,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.util.ObjectSizer;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionActionType;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
@@ -95,7 +94,6 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		EvictionAttributes defaultEvictionAttributes = EvictionAttributes.createLRUEntryAttributes();
 
-		assertEvictionAttributes(getBean("PartitionRegion", Region.class), defaultEvictionAttributes);
 		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), defaultEvictionAttributes);
 	}
 
@@ -110,27 +108,7 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 			newEvictionAttributes(65536, EvictionPolicyType.MEMORY_SIZE, EvictionActionType.OVERFLOW_TO_DISK,
 				mockObjectSizer);
 
-		assertEvictionAttributes(getBean("PartitionRegion", Region.class), customEvictionAttributes);
 		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), customEvictionAttributes);
-	}
-
-	@Test
-	public void usesRegionSpecificEvictionPolicyConfiguration() {
-
-		newApplicationContext(RegionSpecificEvictionPolicyConfiguration.class);
-
-		ObjectSizer mockObjectSizer = getBean("mockObjectSizer", ObjectSizer.class);
-
-		EvictionAttributes partitionRegionEvictionAttributes =
-			newEvictionAttributes(null, EvictionPolicyType.HEAP_PERCENTAGE, EvictionActionType.OVERFLOW_TO_DISK,
-				mockObjectSizer);
-
-		EvictionAttributes replicateRegionEvictionAttributes = newEvictionAttributes(10000,
-			EvictionPolicyType.ENTRY_COUNT, EvictionActionType.LOCAL_DESTROY);
-
-		assertEvictionAttributes(getBean("PartitionRegion", Region.class), partitionRegionEvictionAttributes);
-
-		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), replicateRegionEvictionAttributes);
 	}
 
 	@Test
@@ -141,8 +119,6 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 		EvictionAttributes lastMatchingEvictionAttributes =
 			newEvictionAttributes(99, EvictionPolicyType.ENTRY_COUNT, EvictionActionType.OVERFLOW_TO_DISK);
 
-		assertEvictionAttributes(getBean("PartitionRegion", Region.class), lastMatchingEvictionAttributes);
-
 		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), lastMatchingEvictionAttributes);
 	}
 
@@ -150,18 +126,6 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 	@EnableGemFireMockObjects
 	@SuppressWarnings("unused")
 	static class CacheRegionConfiguration {
-
-		@Bean("PartitionRegion")
-		PartitionedRegionFactoryBean<Object, Object> mockPartitionRegion(Cache gemfireCache) {
-
-			PartitionedRegionFactoryBean<Object, Object> partitionRegion =
-				new PartitionedRegionFactoryBean<>();
-
-			partitionRegion.setCache(gemfireCache);
-			partitionRegion.setPersistent(false);
-
-			return partitionRegion;
-		}
 
 		@Bean("ReplicateRegion")
 		ReplicatedRegionFactoryBean<Object, Object> mockReplicateRegion(Cache gemfireCache) {
@@ -187,14 +151,6 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 	@EnableEviction(policies = @EvictionPolicy(maximum = 65536, type = EvictionPolicyType.MEMORY_SIZE,
 		action = EvictionActionType.OVERFLOW_TO_DISK, objectSizerName = "mockObjectSizer"))
 	static class CustomEvictionPolicyConfiguration extends CacheRegionConfiguration { }
-
-	@EnableEviction(policies = {
-		@EvictionPolicy(maximum = 85, type = EvictionPolicyType.HEAP_PERCENTAGE, action = EvictionActionType.OVERFLOW_TO_DISK,
-			objectSizerName = "mockObjectSizer", regionNames = "PartitionRegion"),
-		@EvictionPolicy(maximum = 10000, type = EvictionPolicyType.ENTRY_COUNT, action = EvictionActionType.LOCAL_DESTROY,
-			regionNames = "ReplicateRegion")
-	})
-	static class RegionSpecificEvictionPolicyConfiguration extends CacheRegionConfiguration { }
 
 	@EnableEviction(policies = {
 		@EvictionPolicy(maximum = 1, type = EvictionPolicyType.ENTRY_COUNT, action = EvictionActionType.LOCAL_DESTROY,

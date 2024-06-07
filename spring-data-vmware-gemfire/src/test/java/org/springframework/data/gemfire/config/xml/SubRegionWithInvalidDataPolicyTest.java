@@ -42,7 +42,7 @@ public class SubRegionWithInvalidDataPolicyTest extends IntegrationTestsSupport 
 		catch (XmlBeanDefinitionStoreException expected) {
 
 			assertThat(expected.getCause()).isInstanceOf(SAXParseException.class);
-			assertThat(expected.getCause().getMessage().contains("PERSISTENT_PARTITION")).isTrue();
+			assertThat(expected.getCause().getMessage().contains("EMPTY")).isTrue();
 
 			throw expected;
 		}

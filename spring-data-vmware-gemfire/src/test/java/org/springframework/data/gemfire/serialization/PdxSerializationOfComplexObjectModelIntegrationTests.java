@@ -103,7 +103,7 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 		assertThat(orders).isNotNull();
 		assertThat(orders.getName()).isEqualTo("Orders");
 		assertThat(orders.getAttributes()).isNotNull();
-		assertThat(orders.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(orders.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 
 		RegionService regionService = orders.getRegionService();
 
@@ -144,7 +144,7 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 
 		// Store (save) the Order in the Apache Geode cache "Orders" Region;
 		// The Order should be stored as PDX using the SDG MappingPdxSerializer since the "Orders" Region
-		// is a PARTITION Region and the cache was configured with SDG's MappingPdxSerializer.
+		// is a REPLICATE Region and the cache was configured with SDG's MappingPdxSerializer.
 		this.ordersTemplate.put(order.getNumber(), order);
 
 		// Get (load) the Order from the Apache Geode cache "Orders" Region;

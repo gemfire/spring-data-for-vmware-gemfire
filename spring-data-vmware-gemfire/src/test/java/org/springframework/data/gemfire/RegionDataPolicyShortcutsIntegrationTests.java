@@ -53,14 +53,6 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 	private Region<?, ?> localWithShortcut;
 
 	@Autowired
-	@Qualifier("PartitionWithDataPolicy")
-	private Region<?, ?> partitionWithDataPolicy;
-
-	@Autowired
-	@Qualifier("PartitionWithShortcut")
-	private Region<?, ?> partitionWithShortcut;
-
-	@Autowired
 	@Qualifier("ReplicateWithDataPolicy")
 	private Region<?, ?> replicateWithDataPolicy;
 
@@ -103,32 +95,6 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 	}
 
 	@Test
-	public void partitionRegionWithDataPolicyIsCorrect() {
-
-		assertThat(partitionWithDataPolicy)
-			.describedAs("A reference to the 'PartitionWithDataPolicy' Region was not property configured")
-			.isNotNull();
-
-		assertThat(partitionWithDataPolicy.getName()).isEqualTo("PartitionWithDataPolicy");
-		assertThat(partitionWithDataPolicy.getFullPath()).isEqualTo("/PartitionWithDataPolicy");
-		assertThat(partitionWithDataPolicy.getAttributes()).isNotNull();
-		assertThat(partitionWithDataPolicy.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
-	}
-
-	@Test
-	public void partitionRegionWithShortcutIsCorrect() {
-
-		assertThat(partitionWithShortcut)
-			.describedAs("A reference to the 'PartitionWithShortcut' Region was not property configured")
-			.isNotNull();
-
-		assertThat(partitionWithShortcut.getName()).isEqualTo("PartitionWithShortcut");
-		assertThat(partitionWithShortcut.getFullPath()).isEqualTo("/PartitionWithShortcut");
-		assertThat(partitionWithShortcut.getAttributes()).isNotNull();
-		assertThat(partitionWithShortcut.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-	}
-
-	@Test
 	public void replicateRegionWithDataPolicyIsCorrect() {
 
 		assertThat(replicateWithDataPolicy)
@@ -166,7 +132,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutDefaults.getAttributes()).isNotNull();
 		assertThat(shortcutDefaults.getAttributes().getCloningEnabled()).isFalse();
 		assertThat(shortcutDefaults.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(shortcutDefaults.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
+		assertThat(shortcutDefaults.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(shortcutDefaults.getAttributes().isDiskSynchronous()).isFalse();
 		assertThat(shortcutDefaults.getAttributes().getIgnoreJTA()).isTrue();
 		assertThat(shortcutDefaults.getAttributes().getInitialCapacity()).isEqualTo(101);
@@ -176,9 +142,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_HEAP);
-		assertThat(shortcutDefaults.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(shortcutDefaults.getAttributes().getPartitionAttributes().getRedundantCopies()).isEqualTo(1);
-		assertThat(shortcutDefaults.getAttributes().getPartitionAttributes().getTotalNumBuckets()).isEqualTo(177);
+		assertThat(shortcutDefaults.getAttributes().getPartitionAttributes()).isNull();
 	}
 
 	@Test
@@ -193,7 +157,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutOverrides.getAttributes()).isNotNull();
 		assertThat(shortcutOverrides.getAttributes().getCloningEnabled()).isTrue();
 		assertThat(shortcutOverrides.getAttributes().getConcurrencyChecksEnabled()).isFalse();
-		assertThat(shortcutOverrides.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(shortcutOverrides.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 		assertThat(shortcutOverrides.getAttributes().isDiskSynchronous()).isTrue();
 		assertThat(shortcutOverrides.getAttributes().getIgnoreJTA()).isFalse();
 		assertThat(shortcutOverrides.getAttributes().getInitialCapacity()).isEqualTo(51);
@@ -201,11 +165,9 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutOverrides.getAttributes().getKeyConstraint()).isEqualTo(String.class);
 		assertThat(shortcutOverrides.getAttributes().getValueConstraint()).isEqualTo(Object.class);
 		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
+		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes().getMaximum()).isEqualTo(8192);
 		assertThat(shortcutOverrides.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
-		assertThat(shortcutOverrides.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(shortcutOverrides.getAttributes().getPartitionAttributes().getRedundantCopies()).isEqualTo(3);
-		assertThat(shortcutOverrides.getAttributes().getPartitionAttributes().getTotalNumBuckets()).isEqualTo(111);
+		assertThat(shortcutOverrides.getAttributes().getPartitionAttributes()).isNull();
 	}
 }

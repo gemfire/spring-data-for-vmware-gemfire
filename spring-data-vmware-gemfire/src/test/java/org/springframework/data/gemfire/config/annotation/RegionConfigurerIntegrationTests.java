@@ -20,14 +20,12 @@ import org.apache.geode.cache.GemFireCache;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
+import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
-import org.springframework.data.gemfire.config.annotation.test.entities.CollocatedPartitionRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.NonEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.PartitionRegion;
 import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
@@ -105,19 +103,18 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 
 		assertThat(containsBean("Test")).isTrue();
 		assertThat(containsBean("GenericRegionEntity")).isTrue();
-		assertThat(containsBean("Customers")).isTrue();
 		assertThat(containsBean("testRegionConfigurerOne")).isTrue();
 		assertThat(containsBean("testRegionConfigurerTwo")).isTrue();
 		assertThat(containsBean("testRegionConfigurerThree")).isTrue();
 
 		assertRegionConfigurerInvocations(getBean("testRegionConfigurerOne", TestRegionConfigurer.class),
-			"Customers", "GenericRegionEntity");
+			"GenericRegionEntity");
 
 		assertRegionConfigurerInvocations(getBean("testRegionConfigurerTwo", TestRegionConfigurer.class),
-			"Customers", "GenericRegionEntity");
+			"GenericRegionEntity");
 
 		assertRegionConfigurerInvocations(resolveBeanNames(getBean("testRegionConfigurerThree",
-				RegionConfigurer.class)),"Customers", "GenericRegionEntity");
+				RegionConfigurer.class)),"GenericRegionEntity");
 	}
 
 	@SuppressWarnings("unused")
@@ -162,7 +159,7 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
-			classes = { LocalRegion.class, PartitionRegion.class, ReplicateRegion.class
+			classes = { LocalRegion.class, ReplicateRegion.class
 		})
 	)
 	@SuppressWarnings("unused")
@@ -184,18 +181,16 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
 		excludeFilters = {
 			@ComponentScan.Filter(type = FilterType.ANNOTATION,
-				classes = { ClientRegion.class, LocalRegion.class, ReplicateRegion.class }),
-			@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
-				classes = CollocatedPartitionRegionEntity.class)
+				classes = { ClientRegion.class, LocalRegion.class, ReplicateRegion.class })
 		}
 	)
 	@SuppressWarnings("unused")
 	static class PeerTestConfiguration extends AbstractTestConfiguration {
 
 		@Bean(name = "Test")
-		PartitionedRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		ReplicatedRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
 
-			PartitionedRegionFactoryBean<Object, Object> testRegionFactory = new PartitionedRegionFactoryBean<>();
+			ReplicatedRegionFactoryBean<Object, Object> testRegionFactory = new ReplicatedRegionFactoryBean<>();
 
 			testRegionFactory.setCache(gemfireCache);
 

@@ -870,8 +870,6 @@ region. This allows data to be recovered after a machine or process failure or a
 of GemFire.
 
 Default is false, meaning the regions are not persisted.
-
-Note: Persistence for partitioned regions is supported only from GemFire 6.5 onwards.
 						]]></xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
@@ -1042,7 +1040,6 @@ Defines a template for creating multiple GemFire Regions that all share a common
 		<xsd:choice>
 			<xsd:element name="lookup-region" type="lookupSubRegionType"/>
 			<xsd:element name="replicated-region" type="replicatedSubRegionType"/>
-			<xsd:element name="partitioned-region" type="partitionedSubRegionType"/>
 			<xsd:element name="local-region" type="localSubRegionType"/>
 			<xsd:element name="client-region" type="clientSubRegionType"/>
 		</xsd:choice>
@@ -1191,8 +1188,7 @@ Set to one of the following Eviction Actions:
 
 LOCAL_DESTROY - Entry is destroyed locally. Not available for Replicated Regions.
 
-OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory. For Partitioned Regions,
-this provides the most reliable read behavior across the region.
+OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
 											]]></xsd:documentation>
 										</xsd:annotation>
 									</xsd:attribute>
@@ -1206,7 +1202,7 @@ this provides the most reliable read behavior across the region.
 					<xsd:annotation>
 						<xsd:documentation><![CDATA[
 Provides an estimate of the maximum number of application threads that will concurrently access a Region entry
-at one time.  This attribute does not apply to Partitioned Regions. This attribute helps GemFire optimize the use of
+at one time. This attribute helps GemFire optimize the use of
 system resources and reduce thread contention. This sets an initial parameter on the underlying
 java.util.ConcurrentHashMap used for storing Region entries.
                         ]]></xsd:documentation>
@@ -1343,8 +1339,7 @@ Set to one of the following Eviction Actions:
 
 LOCAL_DESTROY - Entry is destroyed locally. Not available for Replicated Regions.
 
-OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory. For Partitioned Regions,
-this provides the most reliable read behavior across the region.
+OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
 											]]></xsd:documentation>
 										</xsd:annotation>
 									</xsd:attribute>
@@ -1358,7 +1353,7 @@ this provides the most reliable read behavior across the region.
 					<xsd:annotation>
 						<xsd:documentation><![CDATA[
 Provides an estimate of the maximum number of application threads that will concurrently access a region entry at one time.
-This attribute does not apply to partitioned regions. This attribute helps GemFire optimize the use of system resources and
+This attribute helps GemFire optimize the use of system resources and
 reduce thread contention. This sets an initial parameter on the underlying java.util.ConcurrentHashMap used for storing region entries.
                         ]]></xsd:documentation>
 					</xsd:annotation>
@@ -1433,291 +1428,6 @@ Defines a template for creating multiple GemFire Local Regions that all share a 
 	</xsd:element>
 	<!-- -->
 	<xsd:element name="local-region" type="localRegionType"/>
-	<!-- PARTITION Region -->
-	<xsd:complexType name="basePartitionedRegionType" abstract="true">
-		<xsd:annotation>
-			<xsd:documentation
-				source="org.springframework.data.gemfire.RegionFactoryBean"><![CDATA[
-Defines a GemFire Partitioned Region instance. Through partitioning, the data is split across Regions.
-Partitioning is useful when the amount of data to store is too large for one member to hold and work
-with as if it were a single entity. One can configure the Partitioned Region to store redundant copies
-in different members, for high availability in case of an application failure.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Region" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="baseRegionType">
-				<xsd:sequence>
-					<xsd:element name="partition-resolver" type="beanDeclarationType" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation source="org.apache.geode.cache.PartitionResolver"><![CDATA[
-The partition resolver definition for this region, allowing for custom partitioning. GemFire uses the resolver to
-colocate data based on custom criterias (such as colocating trades by month and year).
-								]]></xsd:documentation>
-							<xsd:appinfo>
-								<tool:annotation>
-									<tool:exports type="org.apache.geode.cache.PartitionResolver" />
-								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-					</xsd:element>
-					<xsd:element name="partition-listener" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation
-								source="org.apache.geode.cache.partition.PartitionListener"><![CDATA[
-The PartitionListener definition for this Region. Defines a callback for Partitioned Regions, invoked when
-a Partition Region is created or any Bucket in a Partitioned Region becomes primary.
-                                ]]></xsd:documentation>
-							<xsd:appinfo>
-								<tool:annotation>
-									<tool:exports type="org.apache.geode.cache.partition.PartitionListener" />
-								</tool:annotation>
-							</xsd:appinfo>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded">
-									<xsd:annotation>
-										<xsd:documentation><![CDATA[
-Inner bean definition of the ParitionListener.
-										]]></xsd:documentation>
-									</xsd:annotation>
-								</xsd:any>
-							</xsd:sequence>
-							<xsd:attribute name="ref" type="xsd:string" use="optional">
-								<xsd:annotation>
-									<xsd:documentation><![CDATA[
-The name of the PartitionListener bean referred to by this declaration. Used for convenience. If no reference exists,
-use inner bean declarations.
-									]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:attribute>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="fixed-partition" minOccurs="0" maxOccurs="unbounded">
-						<xsd:annotation>
-							<xsd:documentation
-								source="org.apache.geode.cache.partition.FixedPartitionAttributes"><![CDATA[
- Create a fixed partition with the given attributes. Required for a FixedPartitionResolver.
-                    		]]></xsd:documentation>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:attribute name="partition-name" type="xsd:string"
-										   use="required">
-								<xsd:annotation>
-									<xsd:documentation
-										source="org.apache.geode.cache.partition.FixedPartitionAttributes"><![CDATA[
-Specifies the fixed partition name
-                    		]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:attribute>
-							<xsd:attribute name="primary" use="optional"
-										   default="true">
-								<xsd:annotation>
-									<xsd:documentation
-										source="org.apache.geode.cache.partition.FixedPartitionAttributes"><![CDATA[
-Specifies if this member is primary for this partition
-                    		]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:attribute>
-							<xsd:attribute name="num-buckets" use="optional">
-								<xsd:annotation>
-									<xsd:documentation
-										source="org.apache.geode.cache.partition.FixedPartitionAttributes"><![CDATA[
-Specifies the number of buckets to allocate to the fixed partition
-                    		]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:attribute>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="subscription" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Subscription policy for the partitioned region.
-                                 ]]></xsd:documentation>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:attribute name="type" type="xsd:string" use="optional"/>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="eviction" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Eviction policy for the partitioned region.
-								]]></xsd:documentation>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:complexContent>
-								<xsd:extension base="evictionType">
-									<xsd:attribute name="action" type="xsd:string" default="LOCAL_DESTROY">
-										<xsd:annotation>
-											<xsd:documentation><![CDATA[
-Set to one of the following Eviction Actions:
-
-LOCAL_DESTROY - Entry is destroyed locally. Not available for Replicated Regions.
-
-OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory. For Partitioned Regions,
-this provides the most reliable read behavior across the region.
-											]]></xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-								</xsd:extension>
-							</xsd:complexContent>
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:sequence>
-				<xsd:attributeGroup ref="distributedRegionAttributes" />
-				<xsd:attribute name="copies" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The number of copies (0-3) of each partition for high-availability. By default, no copies are created meaning
-there is no redundancy. Each copy provides extra backup at the expense of extra storage. GemFire default is 0, or
-no redundancy.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="colocated-with" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The name of the partitioned region with which this newly created partitioned region is colocated.
-							]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="data-policy" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Specifies the data policy for this region (PARTITION, PERSISTENT_PARTITION).  Setting 'data-policy' is not
-stictly necessary, but if set, then the value must agree with the 'persistent' attribute if also specified.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-					<xsd:simpleType>
-						<xsd:restriction base="xsd:string">
-							<xsd:enumeration value="PARTITION"/>
-							<xsd:enumeration value="PERSISTENT_PARTITION"/>
-						</xsd:restriction>
-					</xsd:simpleType>
-				</xsd:attribute>
-				<xsd:attribute name="local-max-memory" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The maximum amount of memory, in megabytes, to be used by the Region in this process. If not set, a default of 90%
-of available heap is used.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="total-max-memory" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The maximum amount of memory, in megabytes, to be used by the region in all process.
-
-Note: This setting must be the same in all processes using the region.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="total-buckets" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The total number of hash buckets to be used by the Region in all processes.
-
-A Bucket is the smallest unit of data management in a Partitioned Region. Entries are stored in Buckets and Buckets may
-move from one VM to another. Buckets may also have copies, depending on redundancy to provide high availability in the
-face of VM failure.
-
-The number of Buckets should be prime, and as a rough guide, at the least four times the number of partition VMs.
-However, there is significant overhead to managing a Bucket, particularly for higher values of redundancy.
-
-Note: This setting must be the same in all processes using the Region.
-							]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="recovery-delay" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Applies when copies is greater than zero. The number of milliseconds to wait after a member crashes
-before reestablishing redundancy for the Region. A setting of -1 disables automatic recovery of redundancy
-after member failure. Gemfire default is -1.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="shortcut" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The RegionShortcut for this region. Allows easy initialization of the region based on pre-defined defaults.
-						]]></xsd:documentation>
-					</xsd:annotation>
-					<xsd:simpleType>
-						<xsd:restriction base="xsd:string">
-							<xsd:enumeration value="PARTITION"/>
-							<xsd:enumeration value="PARTITION_HEAP_LRU"/>
-							<xsd:enumeration value="PARTITION_OVERFLOW"/>
-							<xsd:enumeration value="PARTITION_PERSISTENT"/>
-							<xsd:enumeration value="PARTITION_PERSISTENT_OVERFLOW"/>
-							<xsd:enumeration value="PARTITION_PROXY"/>
-							<xsd:enumeration value="PARTITION_PROXY_REDUNDANT"/>
-							<xsd:enumeration value="PARTITION_REDUNDANT"/>
-							<xsd:enumeration value="PARTITION_REDUNDANT_HEAP_LRU"/>
-							<xsd:enumeration value="PARTITION_REDUNDANT_OVERFLOW"/>
-							<xsd:enumeration value="PARTITION_REDUNDANT_PERSISTENT"/>
-							<xsd:enumeration value="PARTITION_REDUNDANT_PERSISTENT_OVERFLOW"/>
-						</xsd:restriction>
-					</xsd:simpleType>
-				</xsd:attribute>
-				<xsd:attribute name="startup-recovery-delay" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Applies when copies is greater than zero. The number of milliseconds a newly started member should wait
-before trying to satisfy redundancy of Region data stored on other members. A setting of -1 disables automatic recovery
-of redundancy after new members join.  GemFire default is 0, meaning the default is to recover redundancy immediately
-when a new member joins the cluster.
-						]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:complexType name="partitionedRegionType">
-		<xsd:complexContent>
-			<xsd:extension base="basePartitionedRegionType">
-				<xsd:attributeGroup ref="topLevelRegionAttributes" />
-			</xsd:extension>
-			<!-- subRegions not supported -->
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:complexType name="partitionedSubRegionType">
-		<xsd:complexContent>
-			<xsd:extension base="basePartitionedRegionType">
-				<xsd:attribute name="name" type="xsd:string" use="required">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The name of the region definition.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-			<!-- subRegions not supported -->
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:element name="partitioned-region-template" type="partitionedRegionType">
-		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.PartitionedRegionFactoryBean"><![CDATA[
-Defines a template for creating multiple GemFire PARTITION Regions that all share a common attribute configuration.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Region"/>
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-	</xsd:element>
-	<!-- -->
-	<xsd:element name="partitioned-region" type="partitionedRegionType"/>
 	<!-- REPLICATE Region -->
 	<xsd:complexType name="baseReplicatedRegionType" abstract="true">
 		<xsd:annotation>
@@ -1759,8 +1469,7 @@ Eviction policy for the replicated region.
 											<xsd:documentation><![CDATA[
 Set to the following Eviction Actions (Note LOCAL_DESTROY is not available for Replicated Regions):
 
-OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory. For Partitioned Regions,
-this provides the most reliable read behavior across the region.
+OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
 											]]></xsd:documentation>
 										</xsd:annotation>
 									</xsd:attribute>
@@ -1775,7 +1484,7 @@ this provides the most reliable read behavior across the region.
 					<xsd:annotation>
 						<xsd:documentation><![CDATA[
 Provides an estimate of the maximum number of application threads that will concurrently access a region entry at one time.
-This attribute does not apply to partitioned regions. This attribute helps GemFire optimize the use of system resources and
+This attribute helps GemFire optimize the use of system resources and
 reduce thread contention. This sets an initial parameter on the underlying java.util.ConcurrentHashMap used for storing region entries.
                         ]]></xsd:documentation>
 					</xsd:annotation>

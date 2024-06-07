@@ -896,7 +896,6 @@ public class SimpleGemfireRepositoryUnitTests {
 		gemfireRepository.deleteAll();
 
 		verify(mockCache, times(1)).getCacheTransactionManager();
-		verify(mockRegion, times(2)).getAttributes();
 		verify(mockRegion, times(2)).getRegionService();
 		verify(mockRegion, times(1)).clear();
 		verify(mockRegion, never()).keySet();
@@ -924,34 +923,9 @@ public class SimpleGemfireRepositoryUnitTests {
 		gemfireRepository.deleteAll();
 
 		verify(mockCache, times(1)).getCacheTransactionManager();
-		verify(mockRegion, times(4)).getAttributes();
+		verify(mockRegion, times(2)).getAttributes();
 		verify(mockRegion, times(2)).getRegionService();
 		verify(mockRegion, times(1)).clear();
-		verify(mockRegion, times(1)).keySet();
-		verify(mockRegion, never()).keySetOnServer();
-		verify(mockRegion, times(1)).removeAll(eq(keys));
-	}
-
-	@Test
-	public void deleteAllWithKeysWhenPartitionRegion() {
-
-		Cache mockCache = mockCache("MockCache", false);
-
-		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.PERSISTENT_PARTITION);
-
-		Set<Long> keys = new HashSet<>(Arrays.asList(1L, 2L, 3L));
-
-		when(mockRegion.keySet()).thenReturn(keys);
-
-		SimpleGemfireRepository<Animal, Long> gemfireRepository =
-			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
-
-		gemfireRepository.deleteAll();
-
-		verify(mockCache, times(0)).getCacheTransactionManager();
-		verify(mockRegion, times(4)).getAttributes();
-		verify(mockRegion, never()).getRegionService();
-		verify(mockRegion, never()).clear();
 		verify(mockRegion, times(1)).keySet();
 		verify(mockRegion, never()).keySetOnServer();
 		verify(mockRegion, times(1)).removeAll(eq(keys));
@@ -974,7 +948,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		gemfireRepository.deleteAll();
 
 		verify(mockCache, times(1)).getCacheTransactionManager();
-		verify(mockRegion, times(4)).getAttributes();
+		verify(mockRegion, times(2)).getAttributes();
 		verify(mockRegion, times(2)).getRegionService();
 		verify(mockRegion, never()).clear();
 		verify(mockRegion, times(1)).keySet();
@@ -1003,7 +977,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		gemfireRepository.deleteAll();
 
 		verify(mockCache, times(1)).getCacheTransactionManager();
-		verify(mockRegion, times(4)).getAttributes();
+		verify(mockRegion, times(2)).getAttributes();
 		verify(mockRegion, times(2)).getRegionService();
 		verify(mockRegion, times(1)).clear();
 		verify(mockRegion, times(1)).keySetOnServer();

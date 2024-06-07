@@ -24,11 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.test.context.ContextConfiguration;
@@ -62,8 +58,8 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 
 		gemFireCluster.acceptLicense().start();
 
-		gemFireCluster.gfsh(false, "create region --name=PartitionRegion --type=PARTITION",
-				"create region --name=ReplicateRegion --type=REPLICATE", "create region --name=LocalRegion --type=LOCAL");
+		gemFireCluster.gfsh(false, "create region --name=ReplicateRegion --type=REPLICATE",
+				"create region --name=LocalRegion --type=LOCAL");
 
 		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 	}
@@ -79,10 +75,6 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	@Autowired
 	@Qualifier("LocalRegion")
 	private Region<?, ?> localClientProxyRegion;
-
-	@Autowired
-	@Qualifier("PartitionRegion")
-	private Region<?, ?> partitionClientProxyRegion;
 
 	@Autowired
 	@Qualifier("ReplicateRegion")
@@ -108,7 +100,6 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	public void clusterRegionsExistOnClient() {
 
 		assertRegion(this.localClientProxyRegion, "LocalRegion");
-		assertRegion(this.partitionClientProxyRegion, "PartitionRegion");
 		assertRegion(this.replicateClientProxyRegion, "ReplicateRegion");
 	}
 
