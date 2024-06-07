@@ -113,7 +113,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region-template");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region-template");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("partitioned-region-template");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("replicated-region-template");
 	}
 
@@ -122,7 +121,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("partitioned-region");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("replicated-region");
 	}
 
@@ -141,7 +139,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("partitioned-region");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("replicated-region");
 	}
 
@@ -150,7 +147,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region-template");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("partitioned-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("replicated-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("region-template");
 	}
@@ -176,7 +172,7 @@ public class AbstractRegionParserUnitTests {
 
 		Node mockNode = mock(Node.class);
 
-		when(mockElement.getLocalName()).thenReturn("partitioned-region-template");
+		when(mockElement.getLocalName()).thenReturn("replicate-region-template");
 		when(mockElement.getParentNode()).thenReturn(mockNode);
 		when(mockNode.getLocalName()).thenReturn("cache");
 

@@ -23,6 +23,6 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:partitioned-region id="InvalidPartition" data-policy="PARTITION" shortcut="PARTITION_REDUNDANT_PERSISTENT"/>
+	<gfe:replicated-region id="InvalidReplicate" data-policy="REPLICATE" shortcut="REPLICATE_PERSISTENT"/>
 
 </beans>

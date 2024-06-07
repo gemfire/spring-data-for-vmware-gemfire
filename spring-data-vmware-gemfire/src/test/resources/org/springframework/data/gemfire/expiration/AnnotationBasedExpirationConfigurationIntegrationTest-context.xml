@@ -47,9 +47,9 @@
 		<constructor-arg ref="defaultExpirationAttributes"/>
 	</bean>
 
-	<gfe:partitioned-region id="Example" persistent="false">
+	<gfe:replicated-region id="Example" persistent="false">
 		<gfe:custom-entry-ttl ref="ttlExpiration"/>
 		<gfe:custom-entry-tti ref="ttiExpiration"/>
-	</gfe:partitioned-region>
+	</gfe:replicated-region>
 
 </beans>

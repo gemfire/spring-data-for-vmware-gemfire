@@ -30,7 +30,6 @@ import org.springframework.context.SmartLifecycle;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.GenericRegionFactoryBean;
 import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PartitionedRegionFactoryBean;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.RegionShortcutWrapper;
 import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
@@ -63,7 +62,6 @@ import org.springframework.util.StringUtils;
  * @see Compressor
  * @see GenericRegionFactoryBean
  * @see LocalRegionFactoryBean
- * @see PartitionedRegionFactoryBean
  * @see PeerRegionFactoryBean
  * @see ResolvableRegionFactoryBean
  * @see ReplicatedRegionFactoryBean
@@ -233,7 +231,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 *
 	 * @return a new instance of the {@link PeerRegionFactoryBean}.
 	 * @see LocalRegionFactoryBean
-	 * @see PartitionedRegionFactoryBean
 	 * @see ReplicatedRegionFactoryBean
 	 * @see PeerRegionFactoryBean
 	 */
@@ -247,9 +244,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 
 		if (regionShortcutWrapper.isLocal()) {
 			return new LocalRegionFactoryBean<>();
-		}
-		else if (resolvedDataPolicy.withPartitioning()) {
-			return new PartitionedRegionFactoryBean<>();
 		}
 		else if (resolvedDataPolicy.withReplication()) {
 

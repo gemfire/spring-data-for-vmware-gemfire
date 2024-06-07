@@ -28,10 +28,10 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:partitioned-region id="Doe" persistent="false"/>
-	<gfe:partitioned-region id="EveryoneElse" persistent="false"/>
-	<gfe:partitioned-region id="Handy" persistent="false"/>
-	<gfe:partitioned-region id="People" persistent="false"/>
+	<gfe:replicated-region id="Doe" persistent="false"/>
+	<gfe:replicated-region id="EveryoneElse" persistent="false"/>
+	<gfe:replicated-region id="Handy" persistent="false"/>
+	<gfe:replicated-region id="People" persistent="false"/>
 
 	<bean id="nonHandyNonDoeSnapshotFilter" class="org.springframework.data.gemfire.snapshot.filter.ComposableSnapshotFilter" factory-method="and">
 		<constructor-arg index="0">

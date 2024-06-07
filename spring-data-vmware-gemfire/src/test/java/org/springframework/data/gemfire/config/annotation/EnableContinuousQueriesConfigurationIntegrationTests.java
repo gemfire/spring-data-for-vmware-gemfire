@@ -70,7 +70,7 @@ public class EnableContinuousQueriesConfigurationIntegrationTests extends Integr
 	public static void startGeodeServer() throws IOException {
 
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-				.withGfsh(false, "create region --name=TemperatureReadings --type=PARTITION");
+				.withGfsh(false, "create region --name=TemperatureReadings --type=REPLICATE");
 
 		gemFireCluster.acceptLicense().start();
 

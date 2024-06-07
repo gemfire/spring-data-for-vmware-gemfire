@@ -9,7 +9,7 @@
 	   xsi:schemaLocation="http://geode.apache.org/schema/cache https://geode.apache.org/schema/cache/cache-1.0.xsd"
 	   version="1.0">
 
-	<region name="ServerOnlyRegion" refid="PARTITION"/>
+	<region name="ServerOnlyRegion" refid="REPLICATE"/>
 	<region name="AnotherServerRegion" refid="REPLICATE"/>
 	<region name="simple" refid="REPLICATE"/>
 

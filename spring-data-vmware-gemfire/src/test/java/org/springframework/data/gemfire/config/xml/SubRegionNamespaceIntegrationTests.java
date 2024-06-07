@@ -67,22 +67,6 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 	@Test
 	@SuppressWarnings("unchecked")
-	public void testMixedNestedRegions() {
-
-		Region parent = requireApplicationContext().getBean("replicatedParent", Region.class);
-		Region child = requireApplicationContext().getBean("/replicatedParent/replicatedChild", Region.class);
-		Region grandchild = requireApplicationContext().getBean("/replicatedParent/replicatedChild/partitionedGrandchild", Region.class);
-
-		assertThat(child).isNotNull();
-		assertThat(child.getFullPath()).isEqualTo("/replicatedParent/replicatedChild");
-		assertThat(parent.getSubregion("replicatedChild")).isEqualTo(child);
-		assertThat(grandchild).isNotNull();
-		assertThat(grandchild.getFullPath()).isEqualTo("/replicatedParent/replicatedChild/partitionedGrandchild");
-		assertThat(child.getSubregion("partitionedGrandchild")).isSameAs(grandchild);
-	}
-
-	@Test
-	@SuppressWarnings("unchecked")
 	public void testNestedRegionsWithSiblings() {
 
 		Region parent = requireApplicationContext().getBean("parentWithSiblings", Region.class);

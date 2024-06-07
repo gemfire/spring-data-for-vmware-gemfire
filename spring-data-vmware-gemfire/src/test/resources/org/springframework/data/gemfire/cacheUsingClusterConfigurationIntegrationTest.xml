@@ -30,7 +30,6 @@
 	<gfe:lookup-region id="ClusterConfigRegion"/>
 
 	<gfe:lookup-region id="NativeLocalRegion"/>
-	<gfe:lookup-region id="NativePartitionRegion"/>
 	<gfe:lookup-region id="NativeReplicateRegion"/>
 
 	<gfe:local-region id="LocalRegion"/>

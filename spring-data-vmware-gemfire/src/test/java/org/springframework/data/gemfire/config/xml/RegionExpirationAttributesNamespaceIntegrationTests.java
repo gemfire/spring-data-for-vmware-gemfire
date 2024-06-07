@@ -57,10 +57,6 @@ public class RegionExpirationAttributesNamespaceIntegrationTests extends Integra
 	private Region<?, ?> preloadedExample;
 
 	@Autowired
-	@Qualifier("PartitionExample")
-	private Region<?, ?> partitionExample;
-
-	@Autowired
 	@Qualifier("LocalExample")
 	private Region<?, ?> localExample;
 
@@ -127,18 +123,6 @@ public class RegionExpirationAttributesNamespaceIntegrationTests extends Integra
 		assertNoExpiration(preloadedExample.getAttributes().getEntryIdleTimeout());
 		assertThat(preloadedExample.getAttributes().getCustomEntryTimeToLive()).isNull();
 		assertThat(preloadedExample.getAttributes().getCustomEntryIdleTimeout()).isNull();
-	}
-
-	@Test
-	public void examplePartitionRegionExpirationAttributesAreCorrect() {
-
-		assertRegionMetaData(partitionExample, "PartitionExample", DataPolicy.PARTITION);
-		assertExpirationAttributes(partitionExample.getAttributes().getEntryTimeToLive(),
-			300, ExpirationAction.DESTROY);
-		assertNoExpiration(partitionExample.getAttributes().getEntryIdleTimeout());
-		assertThat(partitionExample.getAttributes().getCustomEntryTimeToLive()).isNull();
-		assertCustomExpiry(partitionExample.getAttributes().getCustomEntryIdleTimeout(), "PartitionCustomExpiry",
-			120, ExpirationAction.INVALIDATE);
 	}
 
 	@Test

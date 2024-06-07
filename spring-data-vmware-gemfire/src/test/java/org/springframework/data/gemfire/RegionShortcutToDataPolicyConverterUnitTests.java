@@ -40,16 +40,8 @@ public class RegionShortcutToDataPolicyConverterUnitTests {
 		assertDataPolicy(actual, DataPolicy.NORMAL);
 	}
 
-	protected void assertDataPolicyPersistentPartition(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.PERSISTENT_PARTITION);
-	}
-
 	protected void assertDataPolicyPersistentReplicate(DataPolicy actual) {
 		assertDataPolicy(actual, DataPolicy.PERSISTENT_REPLICATE);
-	}
-
-	protected void assertDataPolicyPartition(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.PARTITION);
 	}
 
 	protected void assertDataPolicyReplicate(DataPolicy actual) {
@@ -88,66 +80,6 @@ public class RegionShortcutToDataPolicyConverterUnitTests {
 	@Test
 	public void regionShortcutLocalPersistentOverflowIsDataPolicyPersistentReplicate() {
 		assertDataPolicyPersistentReplicate(convert(RegionShortcut.LOCAL_PERSISTENT_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutPartitionIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION));
-	}
-
-	@Test
-	public void regionShortcutPartitionHeapLruIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_HEAP_LRU));
-	}
-
-	@Test
-	public void regionShortcutPartitionOverflowIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutPartitionPersistentIsDataPolicyPersistentPartition() {
-		assertDataPolicyPersistentPartition(convert(RegionShortcut.PARTITION_PERSISTENT));
-	}
-
-	@Test
-	public void regionShortcutPartitionPersistentOverflowIsDataPolicyPersistentPartition() {
-		assertDataPolicyPersistentPartition(convert(RegionShortcut.PARTITION_PERSISTENT_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutPartitionProxyIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_PROXY));
-	}
-
-	@Test
-	public void regionShortcutPartitionProxyRedundantIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_PROXY_REDUNDANT));
-	}
-
-	@Test
-	public void regionShortcutPartitionRedundantIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_REDUNDANT));
-	}
-
-	@Test
-	public void regionShortcutPartitionRedundantHeapLruIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_REDUNDANT_HEAP_LRU));
-	}
-
-	@Test
-	public void regionShortcutPartitionRedundantOverflowIsDataPolicyPartition() {
-		assertDataPolicyPartition(convert(RegionShortcut.PARTITION_REDUNDANT_HEAP_LRU));
-	}
-
-	@Test
-	public void regionShortcutPartitionRedundantPersistentIsDataPolicyPartition() {
-		assertDataPolicyPersistentPartition(convert(RegionShortcut.PARTITION_REDUNDANT_PERSISTENT));
-	}
-
-	@Test
-	public void regionShortcutPartitionRedundantPersistentOverflowIsDataPolicyPartition() {
-		assertDataPolicyPersistentPartition(convert(RegionShortcut.PARTITION_REDUNDANT_PERSISTENT_OVERFLOW));
 	}
 
 	@Test

@@ -77,9 +77,9 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(two).isNotNull();
 		assertThat(two.getAttributes()).isNotNull();
-		assertThat(two.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(two.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 		assertThat(two.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(two.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
+		assertThat(two.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(two.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
 		assertThat(two.getAttributes().getEvictionAttributes().getMaximum()).isEqualTo(EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM);
 	}
@@ -96,7 +96,7 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(four).isNotNull();
 		assertThat(four.getAttributes()).isNotNull();
-		assertThat(four.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(four.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 		assertThat(four.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(four.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(three.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_HEAP);
@@ -116,7 +116,7 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(six).isNotNull();
 		assertThat(six.getAttributes()).isNotNull();
-		assertThat(six.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
+		assertThat(six.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 		assertThat(six.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(six.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(six.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_MEMORY);

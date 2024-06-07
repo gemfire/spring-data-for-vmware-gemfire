@@ -33,7 +33,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.DataPolicy
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.PeerRegionFactoryBean
- * @see org.springframework.data.gemfire.PartitionAttributesFactoryBean
  * @see org.springframework.data.gemfire.RegionAttributesFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
@@ -64,11 +63,9 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 		assertThat(example.getName()).isEqualTo("Example");
 		assertThat(example.getFullPath()).isEqualTo("/Example");
 		assertThat(example.getAttributes()).isNotNull();
-		assertThat(example.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
+		assertThat(example.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(example.getAttributes().getStatisticsEnabled()).isTrue();
-		assertThat(example.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(example.getAttributes().getPartitionAttributes().getRedundantCopies()).isEqualTo(1);
-		assertThat(example.getAttributes().getPartitionAttributes().getRecoveryDelay()).isEqualTo(0);
+		assertThat(example.getAttributes().getPartitionAttributes()).isNull();
 	}
 
 	@Test
@@ -78,19 +75,14 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 			applicationContext.getBean("&AnotherExample", PeerRegionFactoryBean.class);
 
 		assertThat(anotherExampleRegionFactoryBean).isNotNull();
-		assertThat(anotherExampleRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
+		assertThat(anotherExampleRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(Boolean.TRUE.equals(TestUtils.readField("persistent", anotherExampleRegionFactoryBean))).isTrue();
 
 		RegionAttributes<?, ?> anotherExampleRegionAttributes =
 			TestUtils.readField("attributes", anotherExampleRegionFactoryBean);
 
 		assertThat(anotherExampleRegionAttributes).isNotNull();
-		assertThat(anotherExampleRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.PARTITION);
-
-		PartitionAttributes<?, ?> anotherExamplePartitionAttributes = anotherExampleRegionAttributes.getPartitionAttributes();
-
-		assertThat(anotherExamplePartitionAttributes).isNotNull();
-		assertThat(anotherExamplePartitionAttributes.getRedundantCopies()).isEqualTo(2);
+		assertThat(anotherExampleRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
 	}
 
 	@Test
@@ -101,9 +93,8 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 		assertThat(anotherExample.getName()).isEqualTo("AnotherExample");
 		assertThat(anotherExample.getFullPath()).isEqualTo("/AnotherExample");
 		assertThat(anotherExample.getAttributes()).isNotNull();
-		assertThat(anotherExample.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_PARTITION);
-		assertThat(anotherExample.getAttributes().getPartitionAttributes()).isNotNull();
-		assertThat(anotherExample.getAttributes().getPartitionAttributes().getRedundantCopies()).isEqualTo(2);
+		assertThat(anotherExample.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
+		assertThat(anotherExample.getAttributes().getPartitionAttributes()).isNull();
 	}
 
 	public static final class TestRegionFactoryBean<K, V> extends PeerRegionFactoryBean<K, V> { }

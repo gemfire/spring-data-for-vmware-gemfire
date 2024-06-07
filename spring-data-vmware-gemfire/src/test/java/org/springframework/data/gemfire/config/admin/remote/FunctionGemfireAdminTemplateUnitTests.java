@@ -79,7 +79,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class,
 			String.format("Mock%sRegionAttributes", name));
 
-		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.PARTITION);
+		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.REPLICATE);
 		when(mockRegionAttributes.getScope()).thenReturn(Scope.DISTRIBUTED_ACK);
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 

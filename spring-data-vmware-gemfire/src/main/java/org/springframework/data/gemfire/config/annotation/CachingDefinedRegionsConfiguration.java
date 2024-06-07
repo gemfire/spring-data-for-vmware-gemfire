@@ -111,7 +111,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	@Autowired(required = false)
 	private final List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
-	private RegionShortcut serverRegionShortcut = RegionShortcut.PARTITION;
+	private RegionShortcut serverRegionShortcut = RegionShortcut.REPLICATE;
 
 	private String poolName = ClientRegionFactoryBean.DEFAULT_POOL_NAME;
 
@@ -244,15 +244,15 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 	/**
 	 * Resolves the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#PARTITION}.
+	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
 	 *
 	 * @return the resolved {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#PARTITION}.
+	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
 	 * @see RegionShortcut
 	 * @see #getServerRegionShortcut()
 	 */
 	protected RegionShortcut resolveServerRegionShortcut() {
-		return getServerRegionShortcut().orElse(RegionShortcut.PARTITION);
+		return getServerRegionShortcut().orElse(RegionShortcut.REPLICATE);
 	}
 
 	@Override

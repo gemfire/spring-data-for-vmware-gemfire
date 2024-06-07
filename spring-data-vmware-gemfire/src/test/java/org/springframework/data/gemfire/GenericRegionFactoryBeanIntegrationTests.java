@@ -43,7 +43,7 @@ public class GenericRegionFactoryBeanIntegrationTests extends IntegrationTestsSu
 	private static Region<Object, Object> emptyRegion;
 	private static Region<Object, Object> localRegion;
 	private static Region<Object, Object> normalRegion;
-	private static Region<Object, Object> persistentPartitionRegion;
+	private static Region<Object, Object> persistentReplicateRegion;
 	private static Region<Object, Object> preloadedRegion;
 	private static Region<Object, Object> replicateRegion;
 
@@ -93,15 +93,15 @@ public class GenericRegionFactoryBeanIntegrationTests extends IntegrationTestsSu
 
 		normalRegion = normalRegionFactory.getObject();
 
-		PeerRegionFactoryBean<Object, Object> persistentPartitionRegionFactory = new GenericRegionFactoryBean<>();
+		PeerRegionFactoryBean<Object, Object> persistentReplicateRegionFactory = new GenericRegionFactoryBean<>();
 
-		persistentPartitionRegionFactory.setCache(gemfireCache);
-		persistentPartitionRegionFactory.setDataPolicy(DataPolicy.PERSISTENT_PARTITION);
-		persistentPartitionRegionFactory.setName("PersistentPartitionRegion");
-		persistentPartitionRegionFactory.setPersistent(true);
-		persistentPartitionRegionFactory.afterPropertiesSet();
+		persistentReplicateRegionFactory.setCache(gemfireCache);
+		persistentReplicateRegionFactory.setDataPolicy(DataPolicy.PERSISTENT_REPLICATE);
+		persistentReplicateRegionFactory.setName("PersistentReplicateRegion");
+		persistentReplicateRegionFactory.setPersistent(true);
+		persistentReplicateRegionFactory.afterPropertiesSet();
 
-		persistentPartitionRegion = persistentPartitionRegionFactory.getObject();
+		persistentReplicateRegion = persistentReplicateRegionFactory.getObject();
 
 		PeerRegionFactoryBean<Object, Object> preloadedRegionFactory = new GenericRegionFactoryBean<>();
 
@@ -173,8 +173,8 @@ public class GenericRegionFactoryBeanIntegrationTests extends IntegrationTestsSu
 	}
 
 	@Test
-	public void persistentPartitionRegionAttributes() {
-		assertRegionAttributes(persistentPartitionRegion, "PersistentPartitionRegion", DataPolicy.PERSISTENT_PARTITION,
+	public void persistentReplicateRegionAttributes() {
+		assertRegionAttributes(persistentReplicateRegion, "PersistentReplicateRegion", DataPolicy.PERSISTENT_REPLICATE,
 			DEFAULT_SCOPE);
 	}
 

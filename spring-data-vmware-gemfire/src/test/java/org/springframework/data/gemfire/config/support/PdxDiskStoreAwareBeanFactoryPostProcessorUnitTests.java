@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
-import org.apache.geode.internal.cache.PartitionedRegion;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -139,10 +138,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		return newBeanDefinitionBuilder(regionClass, dependencies).getBeanDefinition();
 	}
 
-	protected BeanDefinition definePartitionedRegion(String... dependencies) {
-		return defineRegion(PartitionedRegion.class, dependencies);
-	}
-
 	protected BeanDefinition defineReplicatedRegion(String... dependencies) {
 		return defineRegion(Region.class, dependencies);
 	}
@@ -186,11 +181,10 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		beanDefinitions.put("region1", defineReplicatedRegion("overflowDiskStore"));
 		beanDefinitions.put("region2DiskStore", defineDiskStore("someBean"));
 		beanDefinitions.put("region2", defineReplicatedRegion("region2DiskStore"));
-		beanDefinitions.put("colocatedRegion", definePartitionedRegion("residentRegion", "overflowDiskStore"));
 		beanDefinitions.put("residentRegionDiskStore", defineDiskStore("someBean", "yetAnotherBean"));
-		beanDefinitions.put("residentRegion", definePartitionedRegion("residentRegionDiskStore"));
+		beanDefinitions.put("residentRegion", defineReplicatedRegion("residentRegionDiskStore"));
 		beanDefinitions.put("yetAnotherBean", defineBean("org.company.app.domain.YetAnotherBean", "someBean"));
-		beanDefinitions.put("region3", definePartitionedRegion());
+		beanDefinitions.put("region3", defineReplicatedRegion());
 
 		ConfigurableListableBeanFactory mockBeanFactory = mockBeanFactory(beanDefinitions);
 
@@ -207,7 +201,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		assertDependencies(beanDefinitions.get("region1"), "pdxDiskStore", "overflowDiskStore");
 		assertDependencies(beanDefinitions.get("region2DiskStore"), "pdxDiskStore", "someBean");
 		assertDependencies(beanDefinitions.get("region2"), "pdxDiskStore", "region2DiskStore");
-		assertDependencies(beanDefinitions.get("colocatedRegion"), "pdxDiskStore", "residentRegion", "overflowDiskStore");
 		assertDependencies(beanDefinitions.get("residentRegionDiskStore"), "pdxDiskStore", "someBean", "yetAnotherBean");
 		assertDependencies(beanDefinitions.get("residentRegion"), "pdxDiskStore", "residentRegionDiskStore");
 		assertDependencies(beanDefinitions.get("yetAnotherBean"), "someBean");

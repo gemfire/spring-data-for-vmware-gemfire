@@ -80,13 +80,13 @@ public class RegionSubscriptionAttributesNamespaceIntegrationTests extends Integ
 
 	@Test
 	public void testCacheContentSubscriptionRegion() {
-		assertSubscription(cacheContentSubscriptionRegion, "CacheContentSubscriptionRegion", DataPolicy.PARTITION,
+		assertSubscription(cacheContentSubscriptionRegion, "CacheContentSubscriptionRegion", DataPolicy.REPLICATE,
 			InterestPolicy.CACHE_CONTENT);
 	}
 
 	@Test
 	public void testDefaultSubscriptionRegion() {
-		assertSubscription(defaultSubscriptionRegion, "DefaultSubscriptionRegion", DataPolicy.PARTITION,
+		assertSubscription(defaultSubscriptionRegion, "DefaultSubscriptionRegion", DataPolicy.REPLICATE,
 			InterestPolicy.DEFAULT);
 	}
 }

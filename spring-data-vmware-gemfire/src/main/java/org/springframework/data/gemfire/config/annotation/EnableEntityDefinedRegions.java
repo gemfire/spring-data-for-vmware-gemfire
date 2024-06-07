@@ -49,7 +49,6 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see CacheTypeAwareRegionFactoryBean
  * @see ClientRegion
  * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
- * @see org.springframework.data.gemfire.mapping.annotation.PartitionRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
  * @since 1.9.0
@@ -146,9 +145,9 @@ public @interface EnableEntityDefinedRegions {
 	 * are only annotated with the generic {@link org.springframework.data.gemfire.mapping.annotation.Region}
 	 * mapping annotation, or the non-data policy specific mapping annotation.
 	 *
-	 * Defaults to {@link RegionShortcut#PARTITION}.
+	 * Defaults to {@link RegionShortcut#REPLICATE}.
 	 */
-	RegionShortcut serverRegionShortcut() default RegionShortcut.PARTITION;
+	RegionShortcut serverRegionShortcut() default RegionShortcut.REPLICATE;
 
 	/**
 	 * Determines whether the created {@link Region} will have strongly-typed key and value constraints

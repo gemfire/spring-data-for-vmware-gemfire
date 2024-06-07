@@ -81,8 +81,8 @@ public @interface EnableCachingDefinedRegions {
 	 * only annotated with the generic {@link org.springframework.data.gemfire.mapping.annotation.Region}
 	 * mapping annotation, or the non-data policy specific mapping annotation.
 	 *
-	 * Defaults to {@link RegionShortcut#PARTITION}.
+	 * Defaults to {@link RegionShortcut#REPLICATE}.
 	 */
-	RegionShortcut serverRegionShortcut() default RegionShortcut.PARTITION;
+	RegionShortcut serverRegionShortcut() default RegionShortcut.REPLICATE;
 
 }

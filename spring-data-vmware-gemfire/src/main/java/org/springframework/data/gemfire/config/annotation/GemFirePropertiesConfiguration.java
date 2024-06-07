@@ -56,7 +56,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 	public static final String DEFAULT_DEPLOY_WORKING_DIRECTORY = ".";
 	public static final String DEFAULT_MEMBERSHIP_PORT_RANGE = "1024-65535";
 	public static final String DEFAULT_NAME = "";
-	public static final String DEFAULT_REDUNDANCY_ZONE = "";
 	public static final String DEFAULT_REMOTE_LOCATORS = "";
 	public static final String DEFAULT_USER_COMMAND_PACKAGES = "";
 
