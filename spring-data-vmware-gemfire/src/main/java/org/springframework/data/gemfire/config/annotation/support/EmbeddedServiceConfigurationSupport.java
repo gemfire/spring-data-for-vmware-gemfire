@@ -24,11 +24,9 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.CacheFactoryBean;
-import org.springframework.data.gemfire.LocatorFactoryBean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
-import org.springframework.data.gemfire.config.annotation.LocatorConfigurer;
 import org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
@@ -139,7 +137,6 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 			Properties gemfireProperties) {
 
 		registerClientGemFirePropertiesConfigurer(registry, gemfireProperties);
-		registerLocatorGemFirePropertiesConfigurer(registry, gemfireProperties);
 		registerPeerGemFirePropertiesConfigurer(registry, gemfireProperties);
 	}
 
@@ -158,12 +155,6 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 			Properties gemfireProperties) {
 
 		registerBeanDefinition(registry, ClientGemFirePropertiesConfigurer.class, gemfireProperties);
-	}
-
-	protected void registerLocatorGemFirePropertiesConfigurer(BeanDefinitionRegistry registry,
-		Properties gemfireProperties) {
-
-		registerBeanDefinition(registry, LocatorGemFirePropertiesConfigurer.class, gemfireProperties);
 	}
 
 	protected void registerPeerGemFirePropertiesConfigurer(BeanDefinitionRegistry registry,
@@ -266,28 +257,6 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 		@Override
 		public void configure(@Nullable String beanName, @NonNull ClientCacheFactoryBean bean) {
 			configureGemFireProperties(bean);
-		}
-	}
-
-	protected static class LocatorGemFirePropertiesConfigurer implements LocatorConfigurer {
-
-		private final Properties gemfireProperties;
-
-		public LocatorGemFirePropertiesConfigurer(@NonNull Properties gemfireProperties) {
-
-			Assert.notEmpty(gemfireProperties, "GemFire Properties must not be null");
-
-			this.gemfireProperties = gemfireProperties;
-		}
-
-		@Override
-		public void configure(@Nullable String beanName, @NonNull LocatorFactoryBean bean) {
-
-			Properties gemfireProperties = bean.getGemFireProperties();
-
-			gemfireProperties.putAll(this.gemfireProperties);
-
-			bean.setGemFireProperties(gemfireProperties);
 		}
 	}
 
