@@ -116,10 +116,6 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 				SpringExtensions.addDependsOn(configurableListableBeanFactory.getBeanDefinition("gemfireCache"),
 					"shiroSecurityManager");
 			}
-			else if (configurableListableBeanFactory.containsBean("locatorApplication")) {
-				SpringExtensions.addDependsOn(configurableListableBeanFactory.getBeanDefinition("locatorApplication"),
-					"shiroSecurityManager");
-			}
 		};
 	}
 
