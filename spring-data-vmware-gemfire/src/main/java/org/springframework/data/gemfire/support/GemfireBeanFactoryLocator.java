@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * and defined in Apache Geode's native configuration format (e.g. {@literal cache.xml}.
  *
  * In most cases, a developer does not need to use this class directly as it is registered by
- * the {@link org.springframework.data.gemfire.CacheFactoryBean} or {@link org.springframework.data.gemfire.LocatorFactoryBean}
+ * the {@link org.springframework.data.gemfire.CacheFactoryBean}
  * when the {@literal useBeanFactoryLocator} property is set, and used internally by both
  * the {@link WiringDeclarableSupport} and {@link LazyWiringDeclarableSupport} SDG classes.
  *

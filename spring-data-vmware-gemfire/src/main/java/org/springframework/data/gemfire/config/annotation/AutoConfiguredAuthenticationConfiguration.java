@@ -218,14 +218,6 @@ public class AutoConfiguredAuthenticationConfiguration {
 	}
 
 	@Bean
-	public LocatorConfigurer authenticationInitializingLocatorConfigurer(
-			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
-
-		return (beanName, locatorFactoryBean) ->
-			initializeMemberAuthentication(locatorFactoryBean.getGemFireProperties(), authentication);
-	}
-
-	@Bean
 	public PeerCacheConfigurer authenticationInitializingPeerCacheConfigurer(
 			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
 
