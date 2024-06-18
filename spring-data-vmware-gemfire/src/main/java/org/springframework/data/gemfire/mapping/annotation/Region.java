@@ -34,7 +34,6 @@ public @interface Region {
 	List<Class<? extends Annotation>> REGION_ANNOTATION_TYPES = Arrays.asList(
 		ClientRegion.class,
 		LocalRegion.class,
-		ReplicateRegion.class,
 		Region.class
 	);
 

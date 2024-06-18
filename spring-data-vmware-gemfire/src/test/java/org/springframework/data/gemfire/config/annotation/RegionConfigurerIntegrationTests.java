@@ -21,12 +21,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.test.entities.NonEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.util.ReflectionUtils;
@@ -159,8 +158,7 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
-			classes = { LocalRegion.class, ReplicateRegion.class
-		})
+			classes = { LocalRegion.class })
 	)
 	@SuppressWarnings("unused")
 	static class ClientTestConfiguration extends AbstractTestConfiguration {
@@ -181,16 +179,16 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
 		excludeFilters = {
 			@ComponentScan.Filter(type = FilterType.ANNOTATION,
-				classes = { ClientRegion.class, LocalRegion.class, ReplicateRegion.class })
+				classes = { ClientRegion.class, LocalRegion.class })
 		}
 	)
 	@SuppressWarnings("unused")
 	static class PeerTestConfiguration extends AbstractTestConfiguration {
 
 		@Bean(name = "Test")
-		ReplicatedRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		LocalRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
 
-			ReplicatedRegionFactoryBean<Object, Object> testRegionFactory = new ReplicatedRegionFactoryBean<>();
+			LocalRegionFactoryBean<Object, Object> testRegionFactory = new LocalRegionFactoryBean<>();
 
 			testRegionFactory.setCache(gemfireCache);
 

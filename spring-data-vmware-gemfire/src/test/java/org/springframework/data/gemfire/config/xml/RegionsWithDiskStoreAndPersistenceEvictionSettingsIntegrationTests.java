@@ -76,7 +76,7 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 			.isNotNull();
 
 		assertThat(notPersistentOverflowRegion.getAttributes()).isNotNull();
-		assertThat(notPersistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(notPersistentOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(notPersistentOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(notPersistentOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(notPersistentOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");

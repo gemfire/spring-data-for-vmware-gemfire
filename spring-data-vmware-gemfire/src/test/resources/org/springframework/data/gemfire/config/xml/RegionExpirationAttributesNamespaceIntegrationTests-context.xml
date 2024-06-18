@@ -34,13 +34,13 @@
 	<bean name="testLoader" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCacheLoader"/>
 	<bean name="testWriter" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCacheWriter"/>
 
-	<gfe:replicated-region id="ReplicateExample" persistent="false">
+	<gfe:local-region id="ReplicateExample" persistent="false">
 		<gfe:cache-listener ref="testListener"/>
 		<gfe:entry-ttl timeout="600" action="${expiration.action}"/>
 		<gfe:entry-tti timeout="300" action="INVALIDATE"/>
 		<gfe:cache-loader ref="testLoader"/>
 		<gfe:cache-writer ref="testWriter"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
 	<!--
 	 NOTE GemFire will switch the Region's DataPolicy when Entry Expiration Action settings

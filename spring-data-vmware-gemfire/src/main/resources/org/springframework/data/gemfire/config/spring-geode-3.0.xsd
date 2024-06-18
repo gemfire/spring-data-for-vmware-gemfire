@@ -1039,7 +1039,6 @@ Defines a template for creating multiple GemFire Regions that all share a common
 	<xsd:group name="subRegionGroup">
 		<xsd:choice>
 			<xsd:element name="lookup-region" type="lookupSubRegionType"/>
-			<xsd:element name="replicated-region" type="replicatedSubRegionType"/>
 			<xsd:element name="local-region" type="localSubRegionType"/>
 			<xsd:element name="client-region" type="clientSubRegionType"/>
 		</xsd:choice>
@@ -1186,7 +1185,7 @@ Eviction policy for the partitioned region.
 											<xsd:documentation><![CDATA[
 Set to one of the following Eviction Actions:
 
-LOCAL_DESTROY - Entry is destroyed locally. Not available for Replicated Regions.
+LOCAL_DESTROY - Entry is destroyed locally.
 
 OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
 											]]></xsd:documentation>
@@ -1311,7 +1310,7 @@ Defines a GemFire Client Region
 	<xsd:complexType name="baseLocalRegionType" abstract="true">
 		<xsd:annotation>
 			<xsd:documentation
-				source="org.springframework.data.gemfire.ReplicatedRegionFactoryBean"><![CDATA[
+				source="org.springframework.data.gemfire.LocalRegionFactoryBean"><![CDATA[
 Defines a GemFire Local Region instance. Each Local Region is scoped only to the local JVM.
             ]]></xsd:documentation>
 			<xsd:appinfo>
@@ -1326,7 +1325,7 @@ Defines a GemFire Local Region instance. Each Local Region is scoped only to the
 					<xsd:element name="eviction" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:documentation><![CDATA[
-Eviction policy for the replicated region.
+Eviction policy for the local region.
                                 ]]></xsd:documentation>
 						</xsd:annotation>
 						<xsd:complexType>
@@ -1337,7 +1336,7 @@ Eviction policy for the replicated region.
 											<xsd:documentation><![CDATA[
 Set to one of the following Eviction Actions:
 
-LOCAL_DESTROY - Entry is destroyed locally. Not available for Replicated Regions.
+LOCAL_DESTROY - Entry is destroyed locally.
 
 OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
 											]]></xsd:documentation>
@@ -1428,158 +1427,6 @@ Defines a template for creating multiple GemFire Local Regions that all share a 
 	</xsd:element>
 	<!-- -->
 	<xsd:element name="local-region" type="localRegionType"/>
-	<!-- REPLICATE Region -->
-	<xsd:complexType name="baseReplicatedRegionType" abstract="true">
-		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.RegionFactoryBean"><![CDATA[
-Defines a GemFire Replicated Region instance. Each Replicated Region contains a complete copy of the data.
-As well as high availability, replication provides excellent performance as each Region contains a complete,
-up-to-date copy of the data.
-            ]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Region" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexContent>
-			<xsd:extension base="baseRegionType">
-				<xsd:sequence>
-					<xsd:element name="subscription" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Subscription policy for the replicated region.
-							]]></xsd:documentation>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:attribute name="type" type="xsd:string" use="optional"/>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="eviction" minOccurs="0" maxOccurs="1">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Eviction policy for the replicated region.
-                                ]]></xsd:documentation>
-						</xsd:annotation>
-						<xsd:complexType>
-							<xsd:complexContent>
-								<xsd:extension base="evictionType">
-									<xsd:attribute name="action" type="xsd:string" fixed="OVERFLOW_TO_DISK">
-										<xsd:annotation>
-											<xsd:documentation><![CDATA[
-Set to the following Eviction Actions (Note LOCAL_DESTROY is not available for Replicated Regions):
-
-OVERFLOW_TO_DISK - Entry is overflowed to disk and the value set to null in memory.
-											]]></xsd:documentation>
-										</xsd:annotation>
-									</xsd:attribute>
-								</xsd:extension>
-							</xsd:complexContent>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:group ref="subRegionGroup" minOccurs="0" maxOccurs="unbounded"/>
-				</xsd:sequence>
-				<xsd:attributeGroup ref="distributedRegionAttributes"/>
-				<xsd:attribute name="concurrency-level">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Provides an estimate of the maximum number of application threads that will concurrently access a region entry at one time.
-This attribute helps GemFire optimize the use of system resources and
-reduce thread contention. This sets an initial parameter on the underlying java.util.ConcurrentHashMap used for storing region entries.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="data-policy" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Specifies the data policy for this region (EMPTY, REPLICATE, PERSISTENT_REPLICATE).  Setting 'data-policy' is not
-stictly necessary, but if set, then the value must agree with the 'persistent' attribute if also specified.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-					<xsd:simpleType>
-						<xsd:restriction base="xsd:string">
-							<xsd:enumeration value="EMPTY"/>
-							<xsd:enumeration value="REPLICATE"/>
-							<xsd:enumeration value="PERSISTENT_REPLICATE"/>
-						</xsd:restriction>
-					</xsd:simpleType>
-				</xsd:attribute>
-				<xsd:attribute name="is-lock-grantor" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Indicates whether the Region is a lock grantor. This attribute is only relevant for Regions with global scope,
-as only they allow locking.  GemFire default is false.
-                                ]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="scope" type="xsd:string" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-Specifies the Scope for this Region: distributed-ack, distributed-no-ack, global
-
-Scope determines how updates to Region Entries are distributed to the other Caches in the Distributed System where
-the Region and Entry are defined.  Scope also determines whether to allow remote invocation of some of
-the Region’s event handlers.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-				<xsd:attribute name="shortcut" use="optional">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The RegionShortcut for this region. Allows easy initialization of the region based on pre-defined defaults.
-						]]></xsd:documentation>
-					</xsd:annotation>
-					<xsd:simpleType>
-						<xsd:restriction base="xsd:string">
-							<xsd:enumeration value="REPLICATE"/>
-							<xsd:enumeration value="REPLICATE_HEAP_LRU"/>
-							<xsd:enumeration value="REPLICATE_OVERFLOW"/>
-							<xsd:enumeration value="REPLICATE_PERSISTENT"/>
-							<xsd:enumeration value="REPLICATE_PERSISTENT_OVERFLOW"/>
-							<xsd:enumeration value="REPLICATE_PROXY"/>
-						</xsd:restriction>
-					</xsd:simpleType>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:complexType name="replicatedRegionType">
-		<xsd:complexContent>
-			<xsd:extension base="baseReplicatedRegionType">
-				<xsd:attributeGroup ref="topLevelRegionAttributes" />
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:complexType name="replicatedSubRegionType">
-		<xsd:complexContent>
-			<xsd:extension base="baseReplicatedRegionType">
-				<xsd:attribute name="name" type="xsd:string" use="required">
-					<xsd:annotation>
-						<xsd:documentation><![CDATA[
-The name of the region definition.
-                        ]]></xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
-	<!-- -->
-	<xsd:element name="replicated-region-template" type="replicatedRegionType">
-		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.ReplicatedRegionFactoryBean"><![CDATA[
-Defines a template for creating multiple GemFire REPLICATE Regions that all share a common attribute configuration.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Region"/>
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-	</xsd:element>
-	<!-- -->
-	<xsd:element name="replicated-region" type="replicatedRegionType"/>
 	<!-- Disk Store -->
 	<xsd:complexType name="baseDiskStoreType">
 		<xsd:sequence>

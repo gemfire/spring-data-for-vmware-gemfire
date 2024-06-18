@@ -69,17 +69,17 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(one).isNotNull();
 		assertThat(one.getAttributes()).isNotNull();
-		assertThat(one.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(one.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(one.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(one.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(one.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
 		assertThat(one.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
 		assertThat(one.getAttributes().getEvictionAttributes().getMaximum()).isEqualTo(4096);
 
 		assertThat(two).isNotNull();
 		assertThat(two.getAttributes()).isNotNull();
-		assertThat(two.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(two.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(two.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(two.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(two.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
 		assertThat(two.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
 		assertThat(two.getAttributes().getEvictionAttributes().getMaximum()).isEqualTo(EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM);
 	}
@@ -89,14 +89,14 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(three).isNotNull();
 		assertThat(three.getAttributes()).isNotNull();
-		assertThat(three.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(three.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(three.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(three.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(three.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_HEAP);
 
 		assertThat(four).isNotNull();
 		assertThat(four.getAttributes()).isNotNull();
-		assertThat(four.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(four.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(four.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(four.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(three.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_HEAP);
@@ -108,17 +108,17 @@ public class RegionEvictionAttributesNamespaceIntegrationTests extends Integrati
 
 		assertThat(five).isNotNull();
 		assertThat(five.getAttributes()).isNotNull();
-		assertThat(five.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(five.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(five.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(five.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(five.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
 		assertThat(five.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_MEMORY);
 		assertThat(five.getAttributes().getEvictionAttributes().getMaximum()).isEqualTo(128);
 
 		assertThat(six).isNotNull();
 		assertThat(six.getAttributes()).isNotNull();
-		assertThat(six.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(six.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(six.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(six.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(six.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.LOCAL_DESTROY);
 		assertThat(six.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_MEMORY);
 
 		int expectedMaximum = Boolean.getBoolean("org.springframework.data.gemfire.test.GemfireTestRunner.nomock")

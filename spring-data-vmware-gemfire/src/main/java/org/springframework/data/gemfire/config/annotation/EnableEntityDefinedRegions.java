@@ -50,7 +50,6 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see ClientRegion
  * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
- * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)

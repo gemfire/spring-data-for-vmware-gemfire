@@ -50,7 +50,6 @@ import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.support.CompositeTypeFilter;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.lang.NonNull;
@@ -74,7 +73,6 @@ import org.springframework.util.StringUtils;
  * @see ImportBeanDefinitionRegistrar
  * @see org.springframework.data.gemfire.LocalRegionFactoryBean
  * @see RegionAttributesFactoryBean
- * @see org.springframework.data.gemfire.ReplicatedRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see AbstractAnnotationConfigSupport
  * @see CacheTypeAwareRegionFactoryBean
@@ -83,7 +81,6 @@ import org.springframework.util.StringUtils;
  * @see GemfirePersistentEntity
  * @see ClientRegion
  * @see LocalRegion
- * @see ReplicateRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
  */
@@ -392,8 +389,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			}
 
 			setClientRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder);
-
-			setReplicateRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder);
 		});
 
 		return regionFactoryBeanBuilder;
@@ -417,8 +412,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		return LocalRegion.class.equals(regionAnnotationType)
 				? (persistent ? RegionShortcut.LOCAL_PERSISTENT : RegionShortcut.LOCAL)
-			: ReplicateRegion.class.equals(regionAnnotationType)
-				? (persistent ? RegionShortcut.REPLICATE_PERSISTENT : RegionShortcut.REPLICATE)
 			: regionMetadata.resolveServerRegionShortcut(DEFAULT_SERVER_REGION_SHORTCUT);
 	}
 
@@ -431,18 +424,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		setPropertyValueIfNotDefault(regionFactoryBeanBuilder, "poolName",
 			resolvedPoolName, ClientRegionFactoryBean.DEFAULT_POOL_NAME);
-
-		return regionFactoryBeanBuilder;
-	}
-
-	protected BeanDefinitionBuilder setReplicateRegionAttributes(RegionBeanDefinitionMetadata regionMetadata,
-			AnnotationAttributes regionAnnotationAttributes, BeanDefinitionBuilder regionFactoryBeanBuilder) {
-
-		if (regionAnnotationAttributes.containsKey("scope")) {
-			setPropertyValueIfNotDefault(regionFactoryBeanBuilder, "scope",
-				regionAnnotationAttributes.<ScopeType>getEnum("scope").getScope(),
-					Scope.DISTRIBUTED_NO_ACK);
-		}
 
 		return regionFactoryBeanBuilder;
 	}

@@ -5,11 +5,15 @@
 package org.springframework.data.gemfire.function.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport.DEFAULT_HOSTNAME;
+import static org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport.GEMFIRE_POOL_SERVERS_PROPERTY;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.geode.cache.execute.FunctionService;
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +22,13 @@ import org.apache.geode.cache.GemFireCache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.function.config.EnableGemfireFunctionExecutions;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for Function Execution Return Types.
@@ -44,11 +49,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SuppressWarnings("unused")
 public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport {
 
+	private static GemFireCluster gemFireCluster;
+
 	@BeforeClass
-	public static void setup() {
-		FunctionService.registerFunction(new MixedResultTypeFunctions.SingleObjectFunction());
-		FunctionService.registerFunction(new MixedResultTypeFunctions.ListObjectFunction());
-		FunctionService.registerFunction(new MixedResultTypeFunctions.SinglePrimitiveFunction());
+	public static void startGemFireServer() {
+
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(false, "deploy --jar=/testJar.jar",
+						"create region --name=Numbers --type=REPLICATE");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty(GEMFIRE_POOL_SERVERS_PROPERTY,
+				String.format("%s[%d]", DEFAULT_HOSTNAME, gemFireCluster.getServerPorts().get(0)));
+	}
+
+	@AfterClass
+	public static void stopGemFireServer() {
+		gemFireCluster.close();
 	}
 
 	@Autowired
@@ -72,17 +91,18 @@ public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport 
 		assertThat(num).isEqualTo(7);
 	}
 
-	@PeerCacheApplication(name = "FunctionResultTypeIntegrationTests")
+	@ClientCacheApplication(name = "FunctionResultTypeIntegrationTests")
 	@EnableGemfireFunctionExecutions(basePackageClasses = MixedResultTypeFunctionExecutions.class)
   public static class TestConfiguration {
 
 		@Bean("Numbers")
-		ReplicatedRegionFactoryBean<Long, BigDecimal> numbersRegion(GemFireCache gemFireCache) {
+		ClientRegionFactoryBean<Long, BigDecimal> numbersRegion(GemFireCache gemFireCache) {
 
-			ReplicatedRegionFactoryBean<Long, BigDecimal> numbersRegion = new ReplicatedRegionFactoryBean<>();
+			ClientRegionFactoryBean<Long, BigDecimal> numbersRegion = new ClientRegionFactoryBean<>();
 
 			numbersRegion.setCache(gemFireCache);
 			numbersRegion.setPersistent(false);
+			numbersRegion.setShortcut(ClientRegionShortcut.PROXY);
 
 			return numbersRegion;
 		}

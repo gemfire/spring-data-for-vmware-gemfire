@@ -47,21 +47,4 @@ public class SubRegionWithInvalidDataPolicyTest extends IntegrationTestsSupport 
 			throw expected;
 		}
 	}
-
-	@Test(expected = BeanCreationException.class)
-	public void subRegionBeanDefinitionWithInvalidDataPolicyAndPersistentSettingsThrowsException() {
-
-		try {
-			new ClassPathXmlApplicationContext(
-				"/org/springframework/data/gemfire/config/xml/subregion-with-inconsistent-datapolicy-persistent-settings.xml");
-		}
-		catch (BeanCreationException expected) {
-
-			assertThat(expected).hasMessageContaining("Error creating bean with name '/Parent/Child'");
-			assertThat(expected).hasCauseInstanceOf(IllegalArgumentException.class);
-			assertThat(expected.getCause()).hasMessage("Data Policy [REPLICATE] is not valid when persistent is true");
-
-			throw expected;
-		}
-	}
 }

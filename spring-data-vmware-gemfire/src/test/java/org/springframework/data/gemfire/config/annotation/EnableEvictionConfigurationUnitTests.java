@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
 
+import org.apache.geode.cache.DataPolicy;
 import org.junit.After;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.util.ObjectSizer;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionActionType;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
@@ -94,7 +95,7 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		EvictionAttributes defaultEvictionAttributes = EvictionAttributes.createLRUEntryAttributes();
 
-		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), defaultEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", Region.class), defaultEvictionAttributes);
 	}
 
 	@Test
@@ -108,7 +109,7 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 			newEvictionAttributes(65536, EvictionPolicyType.MEMORY_SIZE, EvictionActionType.OVERFLOW_TO_DISK,
 				mockObjectSizer);
 
-		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), customEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", Region.class), customEvictionAttributes);
 	}
 
 	@Test
@@ -119,7 +120,7 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 		EvictionAttributes lastMatchingEvictionAttributes =
 			newEvictionAttributes(99, EvictionPolicyType.ENTRY_COUNT, EvictionActionType.OVERFLOW_TO_DISK);
 
-		assertEvictionAttributes(getBean("ReplicateRegion", Region.class), lastMatchingEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", Region.class), lastMatchingEvictionAttributes);
 	}
 
 	@PeerCacheApplication
@@ -127,16 +128,17 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 	@SuppressWarnings("unused")
 	static class CacheRegionConfiguration {
 
-		@Bean("ReplicateRegion")
-		ReplicatedRegionFactoryBean<Object, Object> mockReplicateRegion(Cache gemfireCache) {
+		@Bean("LocalRegion")
+		LocalRegionFactoryBean<Object, Object> mockLocalRegion(Cache gemfireCache) {
 
-			ReplicatedRegionFactoryBean<Object, Object> replicateRegion =
-				new ReplicatedRegionFactoryBean<>();
+			LocalRegionFactoryBean<Object, Object> localRegionFactoryBean =
+				new LocalRegionFactoryBean<>();
 
-			replicateRegion.setCache(gemfireCache);
-			replicateRegion.setPersistent(false);
+			localRegionFactoryBean.setCache(gemfireCache);
+			localRegionFactoryBean.setPersistent(false);
+			localRegionFactoryBean.setDataPolicy(DataPolicy.NORMAL);
 
-			return replicateRegion;
+			return localRegionFactoryBean;
 		}
 
 		@Bean
@@ -154,7 +156,7 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 	@EnableEviction(policies = {
 		@EvictionPolicy(maximum = 1, type = EvictionPolicyType.ENTRY_COUNT, action = EvictionActionType.LOCAL_DESTROY,
-			objectSizerName = "mockObjectSizer", regionNames = "ReplicateRegion"),
+			objectSizerName = "mockObjectSizer", regionNames = "LocalRegion"),
 		@EvictionPolicy(maximum = 99, type = EvictionPolicyType.ENTRY_COUNT, action = EvictionActionType.OVERFLOW_TO_DISK)
 	})
 	static class LastMatchingWinsEvictionPolicyConfiguration extends CacheRegionConfiguration { }

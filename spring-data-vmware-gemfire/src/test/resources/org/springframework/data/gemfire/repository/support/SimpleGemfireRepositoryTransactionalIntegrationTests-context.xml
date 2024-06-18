@@ -24,7 +24,7 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Customers" persistent="false" key-constraint="java.lang.Long"
+	<gfe:local-region id="Customers" persistent="false" key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Customer"/>
 
 	<context:annotation-config/>

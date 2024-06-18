@@ -23,8 +23,8 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Parent" persistent="false" destroy="true">
+	<gfe:local-region id="Parent" persistent="false" destroy="true">
 		<gfe:local-region name="Child" data-policy="EMPTY"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
 </beans>
