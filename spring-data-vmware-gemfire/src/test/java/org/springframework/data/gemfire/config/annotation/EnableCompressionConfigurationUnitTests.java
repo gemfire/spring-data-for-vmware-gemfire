@@ -22,7 +22,7 @@ import org.apache.geode.compression.SnappyCompressor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
@@ -68,7 +68,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 
 		assertThat(compressor).isInstanceOf(SnappyCompressor.class);
 
-		Arrays.asList("People", "ExampleLocalRegion", "ExampleReplicateRegion")
+		Arrays.asList("People", "ExampleLocalRegion")
 			.forEach(regionName -> {
 				assertThat(containsBean(regionName)).isTrue();
 				assertRegionCompressor(getBean(regionName, Region.class), regionName, compressor);
@@ -109,17 +109,6 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 			localRegion.setPersistent(false);
 
 			return localRegion;
-		}
-
-		@Bean("ExampleReplicateRegion")
-		public ReplicatedRegionFactoryBean<Object, Object> replicateRegion(GemFireCache gemfireCache) {
-
-			ReplicatedRegionFactoryBean<Object, Object> replicateRegion = new ReplicatedRegionFactoryBean<>();
-
-			replicateRegion.setCache(gemfireCache);
-			replicateRegion.setPersistent(false);
-
-			return replicateRegion;
 		}
 	}
 

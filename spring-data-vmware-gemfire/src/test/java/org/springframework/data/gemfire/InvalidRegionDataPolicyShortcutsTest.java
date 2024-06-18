@@ -23,21 +23,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class InvalidRegionDataPolicyShortcutsTest {
 
-	@Test(expected = BeanCreationException.class)
-	public void testInvalidRegionShortcutWithPersistentAttribute() {
-
-		try {
-			new ClassPathXmlApplicationContext(
-				"/org/springframework/data/gemfire/invalid-region-shortcut-with-persistent-attribute.xml");
-		}
-		catch (BeanCreationException expected) {
-
-			assertThat(expected).hasMessageContaining("Error creating bean with name 'InvalidReplicate'");
-
-			throw expected;
-		}
-	}
-
 	@Test(expected = BeanDefinitionParsingException.class)
 	public void testInvalidUseOfRegionDataPolicyAndShortcut() {
 
@@ -48,7 +33,7 @@ public class InvalidRegionDataPolicyShortcutsTest {
 		catch (BeanDefinitionParsingException expected) {
 
 			assertThat(expected).hasMessageContaining(
-				"Only one of [data-policy, shortcut] may be specified with element [gfe:replicated-region]");
+				"Only one of [data-policy, shortcut] may be specified with element [gfe:local-region]");
 
 			throw expected;
 		}

@@ -15,7 +15,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionShortcut;
@@ -26,15 +25,12 @@ import org.apache.geode.cache.client.Pool;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.test.entities.ClientRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.GenericRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.LocalRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.NonEntity;
-import org.springframework.data.gemfire.config.annotation.test.entities.ReplicateRegionEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 
@@ -52,8 +48,6 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * @see org.springframework.data.gemfire.config.annotation.EntityDefinedRegionsConfiguration
  * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
  * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
- * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
- * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
  * @see org.springframework.data.gemfire.tests.mock.MockObjectsSupport
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects
@@ -118,7 +112,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		stream(nullSafeArray(regionBeanNames, String.class)).forEach(regionBeanName ->
 			assertThat(containsBean(regionBeanName)).isFalse());
 
-		assertThat(getBeansOfType(Region.class)).hasSize(8 - length(regionBeanNames));
+		assertThat(getBeansOfType(Region.class)).hasSize(5 - length(regionBeanNames));
 	}
 
 	@Test
@@ -138,9 +132,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		assertRegionAttributes(genericRegionEntity.getAttributes(), DataPolicy.EMPTY,
 			null, true, false, null, null);
 
-		assertUndefinedRegions("ClientRegionEntity",
-			"ContactEvents", "LocalRegionEntity", "NonEntity",
-			"ReplicateRegionEntity", "Accounts");
+		assertUndefinedRegions("ClientRegionEntity", "LocalRegionEntity", "NonEntity");
 	}
 
 	@Test
@@ -158,9 +150,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.NORMAL,
 			null, true, false, "TestPool", null);
 
-		assertUndefinedRegions("ClientRegionEntity",
-			"ContactEvents", "LocalRegionEntity", "NonEntity",
-			"ReplicateRegionEntity", "Accounts");
+		assertUndefinedRegions("ClientRegionEntity", "LocalRegionEntity", "NonEntity");
 	}
 
 	@Test
@@ -186,25 +176,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		assertRegionAttributes(localRegionEntity.getAttributes(), DataPolicy.EMPTY,
 			null, true, false, null, null);
 
-		Region<Object, ReplicateRegionEntity> accounts = getBean("Accounts", Region.class);
-
-		assertRegion(accounts, "Accounts", Object.class, ReplicateRegionEntity.class);
-		assertRegionAttributes(accounts.getAttributes(), DataPolicy.EMPTY,
-			null, true, false, null, null);
-
-		assertUndefinedRegions("ClientRegionEntity",
-			"ContactEvents", "NonEntity", "ReplicateRegionEntity");
-	}
-
-	@Test
-	public void entityReplicateRegionAlreadyDefinedIgnoresEntityDefinedRegionDefinition() {
-
-		newApplicationContext(ExistingReplicateRegionPersistentEntitiesConfiguration.class);
-
-		Region<Object, Object> accounts = getBean("Accounts", Region.class);
-
-		assertRegionWithAttributes(accounts, "Accounts", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_NO_ACK);
+		assertUndefinedRegions("ClientRegionEntity", "NonEntity");
 	}
 
 	@Test
@@ -212,11 +184,6 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		newApplicationContext(ServerPersistentEntitiesConfiguration.class);
 
-		Region<Object, Object> accounts = getBean("Accounts", Region.class);
-
-		assertRegionWithAttributes(accounts, "Accounts", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
-
 		Region<Object, Object> localRegionEntity = getBean("LocalRegionEntity", Region.class);
 
 		assertRegionWithAttributes(localRegionEntity, "LocalRegionEntity", DataPolicy.NORMAL,
@@ -224,35 +191,10 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		Region<Object, Object> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
 
-		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
+		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.NORMAL,
+			null, true, false, null, Scope.DISTRIBUTED_NO_ACK);
 
-		assertUndefinedRegions("ClientRegionEntity", "Sessions",
-			"ContactEvents", "NonEntity", "ReplicateRegionEntity");
-	}
-
-	@Test
-	public void entityServerRegionsDefinedWithCustomConfiguration() {
-
-		newApplicationContext(ServerPersistentEntitiesWithCustomConfiguration.class);
-
-		Region<Object, Object> accounts = getBean("Sessions", Region.class);
-
-		assertRegionWithAttributes(accounts, "Sessions", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
-
-		Region<Object, Object> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
-
-		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
-
-		Region<Object, Object> localRegionEntity = getBean("LocalRegionEntity", Region.class);
-
-		assertRegionWithAttributes(localRegionEntity, "LocalRegionEntity", DataPolicy.NORMAL,
-			null, true, false, null, Scope.LOCAL);
-
-		assertUndefinedRegions("ClientRegionEntity",
-			"ContactEvents", "NonEntity", "ReplicateRegionEntity", "Accounts");
+		assertUndefinedRegions("ClientRegionEntity", "Sessions", "NonEntity");
 	}
 
 	@Test
@@ -262,24 +204,22 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		Region<Object, Object> sessions = getBean("Sessions", Region.class);
 
-		assertRegionWithAttributes(sessions, "Sessions", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
+		assertRegionWithAttributes(sessions, "Sessions", DataPolicy.NORMAL,
+			null, true, false, null, Scope.DISTRIBUTED_NO_ACK);
 
 		Region<Object, Object> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
 
-		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.REPLICATE,
-			null, true, false, null, Scope.DISTRIBUTED_ACK);
+		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.NORMAL,
+			null, true, false, null, Scope.DISTRIBUTED_NO_ACK);
 
-		assertUndefinedRegions("ClientRegionEntity",
-			"ContactEvents", "LocalRegionEntity", "NonEntity", "ReplicateRegionEntity",
-			"Accounts");
+		assertUndefinedRegions("ClientRegionEntity", "LocalRegionEntity", "NonEntity");
 	}
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, strict = true, excludeFilters =
 		@ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {
-			LocalRegion.class, ReplicateRegion.class
+			LocalRegion.class
 		})
 	)
 	static class ClientPersistentEntitiesConfiguration { }
@@ -288,7 +228,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, clientRegionShortcut = ClientRegionShortcut.LOCAL,
 		poolName = "TestPool", excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION,
-			classes = { LocalRegion.class, ReplicateRegion.class })
+			classes = { LocalRegion.class })
 	)
 	static class ClientPersistentEntitiesWithCustomConfiguration {
 
@@ -314,44 +254,11 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 	@PeerCacheApplication
 	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, serverRegionShortcut = RegionShortcut.REPLICATE,
-		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
-			ReplicateRegionEntity.class
-		})
-	)
-	static class ServerPersistentEntitiesWithCustomConfiguration { }
-
-	@PeerCacheApplication
-	@EnableGemFireMockObjects
 	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, clientRegionShortcut = ClientRegionShortcut.LOCAL,
 		poolName = "TestPool", excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
-			LocalRegionEntity.class, ReplicateRegionEntity.class
+			LocalRegionEntity.class
 		})
 	)
 	static class ServerPersistentEntitiesWithClientRegionMappingAnnotationsConfiguration { }
 
-	@PeerCacheApplication
-	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, excludeFilters =
-		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
-			ClientRegionEntity.class, GenericRegionEntity.class, LocalRegionEntity.class
-		})
-	)
-	static class ExistingReplicateRegionPersistentEntitiesConfiguration {
-
-		@Bean
-		ReplicatedRegionFactoryBean<Long, ReplicateRegionEntity> accountsRegion(GemFireCache gemfireCache) {
-
-			ReplicatedRegionFactoryBean<Long, ReplicateRegionEntity> accounts = new ReplicatedRegionFactoryBean<>();
-
-			accounts.setCache(gemfireCache);
-			accounts.setClose(false);
-			accounts.setLookupEnabled(true);
-			accounts.setPersistent(false);
-			accounts.setRegionName("Accounts");
-			accounts.setScope(Scope.DISTRIBUTED_NO_ACK);
-
-			return accounts;
-		}
-	}
 }

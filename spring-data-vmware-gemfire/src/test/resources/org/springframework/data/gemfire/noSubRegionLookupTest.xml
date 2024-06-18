@@ -22,7 +22,7 @@
 	<gfe:cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
 
 	<gfe:lookup-region id="NativeParentRegion">
-		<gfe:replicated-region name="NativeChildRegion" persistent="true"/>
+		<gfe:local-region name="NativeChildRegion" persistent="true"/>
 	</gfe:lookup-region>
 
 </beans>

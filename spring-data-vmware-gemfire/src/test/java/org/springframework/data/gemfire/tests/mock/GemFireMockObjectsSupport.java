@@ -699,10 +699,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			if (regionShortcutWrapper.isLocal()) {
 				doReturn(Scope.LOCAL).when(mockRegionAttributes).getScope();
 			}
-
-			if (regionShortcutWrapper.isReplicate()) {
-				doReturn(Scope.DISTRIBUTED_ACK).when(mockRegionAttributes).getScope();
-			}
 		}
 
 		return mockRegionAttributes;

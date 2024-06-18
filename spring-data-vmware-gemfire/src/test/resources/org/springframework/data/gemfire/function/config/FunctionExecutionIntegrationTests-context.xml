@@ -22,6 +22,6 @@
 
 	<gfe:cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
 
-	<gfe:replicated-region id="r1"/>
+	<gfe:local-region id="r1"/>
 
 </beans>

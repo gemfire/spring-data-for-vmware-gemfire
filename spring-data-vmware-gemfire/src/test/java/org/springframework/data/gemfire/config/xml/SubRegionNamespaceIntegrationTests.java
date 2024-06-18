@@ -13,7 +13,7 @@ import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.Region;
 
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.TestUtils;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
@@ -94,9 +94,9 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
 		Region child2 = requireApplicationContext().getBean("/complexNested/child2", Region.class);
 		Region grandchild11 = requireApplicationContext().getBean("/complexNested/child1/grandChild11", Region.class);
 
-		ReplicatedRegionFactoryBean grandchild11FactoryBean =
+		LocalRegionFactoryBean grandchild11FactoryBean =
 			requireApplicationContext().getBean("&/complexNested/child1/grandChild11",
-				ReplicatedRegionFactoryBean.class);
+				LocalRegionFactoryBean.class);
 
 		assertThat(grandchild11FactoryBean).isNotNull();
 

@@ -217,7 +217,7 @@ public class ClientRegionNamespaceIntegrationTests extends IntegrationTestsSuppo
 	}
 
 	@Test
-	public void compressedReplicateRegionConfigurationIsCorrect() {
+	public void compressedRegionConfigurationIsCorrect() {
 
 		assertThat(requireApplicationContext().containsBean("Compressed")).isTrue();
 

@@ -97,7 +97,6 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	 * if this {@link PersistentEntity} was not annotated with a {@link Region} {@link Annotation}.
 	 * @see org.springframework.data.gemfire.mapping.annotation.ClientRegion
 	 * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
-	 * @see org.springframework.data.gemfire.mapping.annotation.ReplicateRegion
 	 * @see Region
 	 * @see Annotation
 	 */

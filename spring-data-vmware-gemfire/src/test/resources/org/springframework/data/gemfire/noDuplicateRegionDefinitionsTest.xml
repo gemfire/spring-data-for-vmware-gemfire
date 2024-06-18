@@ -23,8 +23,8 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="regionOne" name="AppDataRegion" persistent="false"/>
+	<gfe:local-region id="regionOne" name="AppDataRegion" persistent="false"/>
 
-	<gfe:replicated-region id="regionTwo" name="AppDataRegion" persistent="false"/>
+	<gfe:local-region id="regionTwo" name="AppDataRegion" persistent="false"/>
 
 </beans>

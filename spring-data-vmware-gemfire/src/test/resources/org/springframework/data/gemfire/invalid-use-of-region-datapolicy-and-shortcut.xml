@@ -23,6 +23,6 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="InvalidReplicate" data-policy="REPLICATE" shortcut="REPLICATE_PERSISTENT"/>
+	<gfe:local-region id="InvalidReplicate" data-policy="NORMAL" shortcut="LOCAL_PERSISTENT"/>
 
 </beans>

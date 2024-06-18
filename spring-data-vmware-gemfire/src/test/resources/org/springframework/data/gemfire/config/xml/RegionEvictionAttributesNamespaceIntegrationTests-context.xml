@@ -30,28 +30,28 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="One">
+	<gfe:local-region id="One">
 		<gfe:eviction threshold="4096" type="ENTRY_COUNT"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="Two">
+	<gfe:local-region id="Two">
 		<gfe:eviction type="ENTRY_COUNT"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="Three">
+	<gfe:local-region id="Three">
 		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="Four">
+	<gfe:local-region id="Four">
 		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="Five">
+	<gfe:local-region id="Five">
 		<gfe:eviction threshold="128" type="MEMORY_SIZE"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="Six">
+	<gfe:local-region id="Six">
 		<gfe:eviction threshold="256" type="MEMORY_SIZE"/>
-	</gfe:replicated-region>
+	</gfe:local-region>
 
 </beans>

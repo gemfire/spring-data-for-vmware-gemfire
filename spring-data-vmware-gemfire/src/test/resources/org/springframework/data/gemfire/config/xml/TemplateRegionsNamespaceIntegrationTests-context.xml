@@ -45,47 +45,6 @@
 		</gfe:cache-writer>
 	</gfe:region-template>
 
-	<!-- REPLICATE Regions -->
-	<gfe:replicated-region-template id="ReplicateRegionTemplate" concurrency-checks-enabled="true" concurrency-level="24"
-									enable-subscription-conflation="true"
-									key-constraint="java.lang.String" persistent="true" scope="distributed-ack"
-									value-constraint="java.lang.Object" template="BaseRegionTemplate">
-		<gfe:cache-listener>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheListener" p:name="XYZ"/>
-		</gfe:cache-listener>
-		<gfe:subscription type="CACHE_CONTENT"/>
-		<gfe:eviction threshold="2024" type="ENTRY_COUNT"/>
-	</gfe:replicated-region-template>
-
-	<gfe:replicated-region id="NonTemplateBasedReplicateRegion" persistent="false" load-factor="0.65" initial-capacity="97"
-						   concurrency-level="12">
-		<gfe:cache-loader>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheLoader" p:name="ABC"/>
-		</gfe:cache-loader>
-		<gfe:cache-writer>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheWriter" p:name="DEF"/>
-		</gfe:cache-writer>
-	</gfe:replicated-region>
-
-	<gfe:replicated-region id="TemplateBasedReplicateRegion" persistent="false" is-lock-grantor="true" scope="global"
-						   template="ReplicateRegionTemplate">
-		<gfe:cache-loader>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheLoader" p:name="dbLoader"/>
-		</gfe:cache-loader>
-		<gfe:cache-writer>
-			<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheWriter" p:name="dbWriter"/>
-		</gfe:cache-writer>
-		<gfe:replicated-region name="TemplateBasedReplicateSubRegion" load-factor="0.95"
-							   template="ExtendedRegionTemplate">
-			<gfe:cache-listener>
-				<bean class="org.springframework.data.gemfire.config.xml.TemplateRegionsNamespaceIntegrationTests$TestCacheListener" p:name="testListener"/>
-			</gfe:cache-listener>
-			<gfe:entry-ttl timeout="600" action="DESTROY"/>
-		</gfe:replicated-region>
-	</gfe:replicated-region>
-
-	<gfe:replicated-region id="TemplateBasedReplicateRegionNoOverrides" template="ReplicateRegionTemplate"/>
-
 	<!-- LOCAL Regions -->
 	<gfe:local-region-template id="LocalRegionTemplate" concurrency-level="8" template="BaseRegionTemplate">
 		<gfe:eviction type="ENTRY_COUNT" threshold="4096" action="LOCAL_DESTROY"/>

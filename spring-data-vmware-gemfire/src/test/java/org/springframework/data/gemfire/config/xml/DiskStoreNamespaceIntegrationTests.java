@@ -31,7 +31,7 @@ import org.apache.geode.cache.Scope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.TestUtils;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
@@ -140,43 +140,43 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 	@Test
 	@SuppressWarnings("rawtypes")
-	public void replicatedDataRegionAttributesIsConfiguredCorrectly() throws Exception {
+	public void localDataRegionAttributesIsConfiguredCorrectly() throws Exception {
 
-		assertThat(requireApplicationContext().containsBean("replicated-data")).isTrue();
+		assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		PeerRegionFactoryBean replicatedDataRegionFactoryBean =
-			requireApplicationContext().getBean("&replicated-data", PeerRegionFactoryBean.class);
+		PeerRegionFactoryBean localDataRegionFactoryBean =
+			requireApplicationContext().getBean("&local-data", PeerRegionFactoryBean.class);
 
-		assertThat(replicatedDataRegionFactoryBean instanceof ReplicatedRegionFactoryBean).isTrue();
-		assertThat(replicatedDataRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-		assertThat(replicatedDataRegionFactoryBean.getDataPolicy().withPersistence()).isFalse();
-		assertThat(TestUtils.<String>readField("diskStoreName", replicatedDataRegionFactoryBean)).isEqualTo("diskStore1");
-		assertThat(TestUtils.<Object>readField("scope", replicatedDataRegionFactoryBean)).isNull();
+		assertThat(localDataRegionFactoryBean instanceof LocalRegionFactoryBean).isTrue();
+		assertThat(localDataRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
+		assertThat(localDataRegionFactoryBean.getDataPolicy().withPersistence()).isFalse();
+		assertThat(TestUtils.<String>readField("diskStoreName", localDataRegionFactoryBean)).isEqualTo("diskStore1");
+		assertThat(TestUtils.<Object>readField("scope", localDataRegionFactoryBean)).isEqualTo(Scope.LOCAL);
 
-		Region replicatedDataRegion = requireApplicationContext().getBean("replicated-data", Region.class);
+		Region localDataRegion = requireApplicationContext().getBean("local-data", Region.class);
 
-		RegionAttributes replicatedDataRegionAttributes = TestUtils.readField("attributes", replicatedDataRegionFactoryBean);
+		RegionAttributes localDataRegionAttributes = TestUtils.readField("attributes", localDataRegionFactoryBean);
 
-		assertThat(replicatedDataRegionAttributes).isNotNull();
-		assertThat(replicatedDataRegionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
+		assertThat(localDataRegionAttributes).isNotNull();
+		assertThat(localDataRegionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
 
-		EvictionAttributes replicatedDataEvictionAttributes = replicatedDataRegionAttributes.getEvictionAttributes();
+		EvictionAttributes localDataEvictionAttributes = localDataRegionAttributes.getEvictionAttributes();
 
-		assertThat(replicatedDataEvictionAttributes).isNotNull();
-		assertThat(replicatedDataEvictionAttributes.getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
-		assertThat(replicatedDataEvictionAttributes.getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
-		assertThat(replicatedDataEvictionAttributes.getMaximum()).isEqualTo(50);
-		assertThat(replicatedDataEvictionAttributes.getObjectSizer()).isNull();
+		assertThat(localDataEvictionAttributes).isNotNull();
+		assertThat(localDataEvictionAttributes.getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(localDataEvictionAttributes.getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_ENTRY);
+		assertThat(localDataEvictionAttributes.getMaximum()).isEqualTo(50);
+		assertThat(localDataEvictionAttributes.getObjectSizer()).isNull();
 	}
 
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void entryTtlConfigurationIsCorrect() throws Exception {
 
-		assertThat(requireApplicationContext().containsBean("replicated-data")).isTrue();
+		assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
 		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&replicated-data", PeerRegionFactoryBean.class);
+			requireApplicationContext().getBean("&local-data", PeerRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 
@@ -205,10 +205,10 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 	@SuppressWarnings("rawtypes")
 	public void testCustomExpiry() throws Exception {
 
-		assertThat(requireApplicationContext().containsBean("replicated-data-with-custom-expiry")).isTrue();
+		assertThat(requireApplicationContext().containsBean("local-data-with-custom-expiry")).isTrue();
 
 		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&replicated-data-with-custom-expiry", PeerRegionFactoryBean.class);
+			requireApplicationContext().getBean("&local-data-with-custom-expiry", PeerRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 

@@ -183,7 +183,7 @@ public class LocalRegionFactoryBeanUnitTests extends AbstractRegionFactoryBeanTe
 			factoryBean.resolveDataPolicy(mockRegionFactory, null, "REPLICATE");
 		}
 		catch (IllegalArgumentException e) {
-			assertThat(e.getMessage()).isEqualTo("Data Policy [REPLICATE] is not supported for Local Regions");
+			assertThat(e.getMessage()).isEqualTo("Data Policy [REPLICATE] is invalid");
 			throw e;
 		}
 		finally {

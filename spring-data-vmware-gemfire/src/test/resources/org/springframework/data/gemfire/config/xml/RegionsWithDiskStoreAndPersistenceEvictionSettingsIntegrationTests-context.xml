@@ -28,16 +28,16 @@
 	<gfe:local-region id="NotPersistentNoOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
 	</gfe:local-region>
 
-	<gfe:replicated-region id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
-		<gfe:eviction/>
-	</gfe:replicated-region>
-
-	<gfe:local-region id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
-		<gfe:eviction/>
+	<gfe:local-region id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
+		<gfe:eviction action="OVERFLOW_TO_DISK"/>
 	</gfe:local-region>
 
-	<gfe:replicated-region id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
-		<gfe:eviction/>
-	</gfe:replicated-region>
+	<gfe:local-region id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+		<gfe:eviction action="LOCAL_DESTROY"/>
+	</gfe:local-region>
+
+	<gfe:local-region id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+		<gfe:eviction action="OVERFLOW_TO_DISK"/>
+	</gfe:local-region>
 
 </beans>

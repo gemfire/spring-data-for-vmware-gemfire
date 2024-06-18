@@ -40,14 +40,6 @@ public class RegionShortcutToDataPolicyConverterUnitTests {
 		assertDataPolicy(actual, DataPolicy.NORMAL);
 	}
 
-	protected void assertDataPolicyPersistentReplicate(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.PERSISTENT_REPLICATE);
-	}
-
-	protected void assertDataPolicyReplicate(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.REPLICATE);
-	}
-
 	protected DataPolicy convert(RegionShortcut regionShortcut) {
 		return RegionShortcutToDataPolicyConverter.INSTANCE.convert(regionShortcut);
 	}
@@ -70,45 +62,5 @@ public class RegionShortcutToDataPolicyConverterUnitTests {
 	@Test
 	public void regionShortcutLocalOverflowIsDataPolicyNormal() {
 		assertDataPolicyNormal(convert(RegionShortcut.LOCAL_HEAP_LRU));
-	}
-
-	@Test
-	public void regionShortcutLocalPersistentIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(RegionShortcut.LOCAL_PERSISTENT));
-	}
-
-	@Test
-	public void regionShortcutLocalPersistentOverflowIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(RegionShortcut.LOCAL_PERSISTENT_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutReplicateIsDataPolicyReplicate() {
-		assertDataPolicyReplicate(convert(RegionShortcut.REPLICATE));
-	}
-
-	@Test
-	public void regionShortcutReplicateHeapLruIsDataPolicyReplicate() {
-		assertDataPolicyReplicate(convert(RegionShortcut.REPLICATE_HEAP_LRU));
-	}
-
-	@Test
-	public void regionShortcutReplicateOverflowIsDataPolicyReplicate() {
-		assertDataPolicyReplicate(convert(RegionShortcut.REPLICATE_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutReplicatePersistentIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(RegionShortcut.REPLICATE_PERSISTENT));
-	}
-
-	@Test
-	public void regionShortcutReplicatePersistentOverflowIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(RegionShortcut.REPLICATE_PERSISTENT_OVERFLOW));
-	}
-
-	@Test
-	public void regionShortcutReplicateProxyIsDataPolicyPersistentReplicate() {
-		assertDataPolicyEmpty(convert(RegionShortcut.REPLICATE_PROXY));
 	}
 }

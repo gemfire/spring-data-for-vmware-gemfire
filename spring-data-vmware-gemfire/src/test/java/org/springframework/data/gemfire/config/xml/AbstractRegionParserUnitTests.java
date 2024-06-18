@@ -113,7 +113,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region-template");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region-template");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("replicated-region-template");
 	}
 
 	@Test
@@ -121,7 +120,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region");
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("replicated-region");
 	}
 
 	@Test
@@ -139,7 +137,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("replicated-region");
 	}
 
 	@Test
@@ -147,7 +144,6 @@ public class AbstractRegionParserUnitTests {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region-template");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("replicated-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("region-template");
 	}
 
@@ -195,9 +191,9 @@ public class AbstractRegionParserUnitTests {
 		Element mockElement = mock(Element.class);
 		Node mockNode = mock(Node.class);
 
-		when(mockElement.getLocalName()).thenReturn("replicated-region");
+		when(mockElement.getLocalName()).thenReturn("local-region");
 		when(mockElement.getParentNode()).thenReturn(mockNode);
-		when(mockNode.getLocalName()).thenReturn("replicated-region");
+		when(mockNode.getLocalName()).thenReturn("local-region");
 
 		regionParserSpy.doParse(mockElement, null, builder);
 

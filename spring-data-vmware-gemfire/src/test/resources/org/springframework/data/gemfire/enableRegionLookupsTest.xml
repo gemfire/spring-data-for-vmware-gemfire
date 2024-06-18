@@ -36,7 +36,7 @@
 		persistent="true"
 		value-constraint="java.util.Date"/>
 
-	<gfe:replicated-region id="NativeReplicateRegion" ignore-if-exists="true"
+	<gfe:local-region id="NativeReplicateRegion" ignore-if-exists="true"
 		cloning-enabled="true"
 		concurrency-checks-enabled="false"
 		concurrency-level="15"
@@ -44,15 +44,14 @@
 		key-constraint="java.lang.String"
 		load-factor="0.25"
 		persistent="false"
-		scope="distributed-ack"
 		value-constraint="java.util.Date"/>
 
-	<gfe:replicated-region id="NativeParentRegion" ignore-if-exists="true">
-		<gfe:replicated-region name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
-	</gfe:replicated-region>
+	<gfe:local-region id="NativeParentRegion" ignore-if-exists="true">
+		<gfe:local-region name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
+	</gfe:local-region>
 
-	<gfe:replicated-region id="regionOne" name="SpringReplicateRegion" persistent="false"/>
+	<gfe:local-region id="regionOne" name="SpringLocalRegion" persistent="false"/>
 
-	<gfe:replicated-region id="regionTwo" name="SpringReplicateRegion" ignore-if-exists="true" persistent="true"/>
+	<gfe:local-region id="regionTwo" name="SpringLocalRegion" ignore-if-exists="true" persistent="true"/>
 
 </beans>

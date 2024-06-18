@@ -21,8 +21,8 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Customers" persistent="false">
-		<gfe:replicated-region name="Accounts"
+	<gfe:local-region id="Customers" persistent="false">
+		<gfe:local-region name="Accounts"
 							   concurrency-level="20"
 							   destroy="true"
 							   disk-synchronous="true"
@@ -30,7 +30,6 @@
 							   initial-capacity="1000"
 							   key-constraint="java.lang.Long"
 							   persistent="true"
-							   scope="DISTRIBUTED_ACK"
 							   statistics="true"
 							   value-constraint="java.lang.String">
 			<gfe:cache-listener>
@@ -42,9 +41,8 @@
 			<gfe:cache-writer>
 				<bean class="org.springframework.data.gemfire.SimpleCacheWriter"/>
 			</gfe:cache-writer>
-			<gfe:subscription type="CACHE_CONTENT"/>
 			<gfe:eviction action="OVERFLOW_TO_DISK" threshold="10000"/>
-		</gfe:replicated-region>
-	</gfe:replicated-region>
+		</gfe:local-region>
+	</gfe:local-region>
 
 </beans>

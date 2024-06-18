@@ -25,7 +25,7 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Users" persistent="false"/>
+	<gfe:local-region id="Users" persistent="false"/>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable"
