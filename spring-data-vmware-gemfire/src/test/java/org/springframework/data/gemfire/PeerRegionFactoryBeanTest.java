@@ -670,7 +670,7 @@ public class PeerRegionFactoryBeanTest extends AbstractRegionFactoryBeanTests {
 				"Setting the 'persistent' attribute to TRUE and 'Data Policy' to REPLICATE should have thrown an IllegalArgumentException");
 		}
 		catch (IllegalArgumentException expected) {
-			assertThat(expected.getMessage()).isEqualTo("Data Policy [REPLICATE] is not valid when persistent is true");
+			assertThat(expected.getMessage()).isEqualTo("Data Policy [REPLICATE] is invalid");
 			throw expected;
 		}
 		finally {

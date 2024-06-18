@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.geode.internal.cache.LocalRegion;
 import org.junit.Test;
 
 import org.apache.geode.cache.DiskStore;
@@ -138,10 +139,6 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		return newBeanDefinitionBuilder(regionClass, dependencies).getBeanDefinition();
 	}
 
-	protected BeanDefinition defineReplicatedRegion(String... dependencies) {
-		return defineRegion(Region.class, dependencies);
-	}
-
 	@Test(expected = IllegalArgumentException.class)
 	public void createPdxDiskStoreAwareBeanFactoryPostProcessorWithBlankDiskStoreName() {
 		new PdxDiskStoreAwareBeanFactoryPostProcessor("  ");
@@ -178,13 +175,13 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		beanDefinitions.put("pdxDiskStore", defineDiskStore());
 		beanDefinitions.put("someOtherBean", defineBean("org.company.app.domain.SomeOtherBean"));
 		beanDefinitions.put("overflowDiskStore", defineDiskStore());
-		beanDefinitions.put("region1", defineReplicatedRegion("overflowDiskStore"));
+		beanDefinitions.put("region1", defineRegion(LocalRegion.class, "overflowDiskStore"));
 		beanDefinitions.put("region2DiskStore", defineDiskStore("someBean"));
-		beanDefinitions.put("region2", defineReplicatedRegion("region2DiskStore"));
+		beanDefinitions.put("region2", defineRegion(LocalRegion.class, "region2DiskStore"));
 		beanDefinitions.put("residentRegionDiskStore", defineDiskStore("someBean", "yetAnotherBean"));
-		beanDefinitions.put("residentRegion", defineReplicatedRegion("residentRegionDiskStore"));
+		beanDefinitions.put("residentRegion", defineRegion(LocalRegion.class, "residentRegionDiskStore"));
 		beanDefinitions.put("yetAnotherBean", defineBean("org.company.app.domain.YetAnotherBean", "someBean"));
-		beanDefinitions.put("region3", defineReplicatedRegion());
+		beanDefinitions.put("region3", defineRegion(LocalRegion.class));
 
 		ConfigurableListableBeanFactory mockBeanFactory = mockBeanFactory(beanDefinitions);
 

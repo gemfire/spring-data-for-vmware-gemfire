@@ -8,8 +8,8 @@ package org.springframework.data.gemfire.repository.sample;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
 import org.springframework.data.gemfire.mapping.annotation.Region;
-import org.springframework.data.gemfire.mapping.annotation.ReplicateRegion;
 import org.springframework.util.ObjectUtils;
 
 import lombok.Data;
@@ -23,7 +23,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-@ReplicateRegion("Customers")
+@LocalRegion("Customers")
 @SuppressWarnings("unused")
 public class Customer {
 

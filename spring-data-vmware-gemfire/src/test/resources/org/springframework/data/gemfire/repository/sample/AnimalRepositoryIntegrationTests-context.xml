@@ -25,11 +25,11 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Cats" persistent="false"
+	<gfe:local-region id="Cats" persistent="false"
 		key-constraint="java.lang.Long"
 		value-constraint="org.springframework.data.gemfire.repository.sample.Animal"/>
 
-	<gfe:replicated-region id="Dogs" persistent="false"
+	<gfe:local-region id="Dogs" persistent="false"
 		key-constraint="java.lang.Long"
 		value-constraint="org.springframework.data.gemfire.repository.sample.Animal"/>
 

@@ -94,7 +94,7 @@ public class SubRegionIntegrationTests extends IntegrationTestsSupport {
 		assertThat(regionAttributes.getIgnoreJTA()).isTrue();
 		assertThat(regionAttributes.getInitialCapacity()).isEqualTo(1000);
 		assertThat(regionAttributes.getKeyConstraint()).isEqualTo(Long.class);
-		assertThat(regionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
+		assertThat(regionAttributes.getScope()).isEqualTo(Scope.LOCAL);
 		assertThat(regionAttributes.getStatisticsEnabled()).isTrue();
 		assertThat(regionAttributes.getValueConstraint()).isEqualTo(String.class);
 		assertThat(regionAttributes.getCacheListeners()).isNotNull();

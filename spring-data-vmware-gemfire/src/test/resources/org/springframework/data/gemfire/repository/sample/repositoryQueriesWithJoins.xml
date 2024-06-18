@@ -25,11 +25,11 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="Customers" persistent="false"
+	<gfe:local-region id="Customers" persistent="false"
 						   key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Customer"/>
 
-	<gfe:replicated-region id="Accounts" persistent="false"
+	<gfe:local-region id="Accounts" persistent="false" data-policy="NORMAL"
 						   key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Account"/>
 

@@ -11,7 +11,6 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.data.Offset.offset;
 import static org.junit.Assume.assumeNotNull;
 
 import java.util.Arrays;
@@ -67,22 +66,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 
 	@Autowired
 	private ApplicationContext applicationContext;
-
-	@Autowired
-	@Qualifier("NonTemplateBasedReplicateRegion")
-	private Region<Integer, String> nonTemplateBasedReplicateRegion;
-
-	@Autowired
-	@Qualifier("TemplateBasedReplicateRegion")
-	private Region<String, Object> templateBasedReplicateRegion;
-
-	@Autowired
-	@Qualifier("/TemplateBasedReplicateRegion/TemplateBasedReplicateSubRegion")
-	private Region<Integer, String> templateBasedReplicateSubRegion;
-
-	@Autowired
-	@Qualifier("TemplateBasedReplicateRegionNoOverrides")
-	private Region<String, Object> templateBasedReplicateRegionNoOverrides;
 
 	@Autowired
 	@Qualifier("TemplateBasedLocalRegion")
@@ -210,7 +193,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		String[] beanNames = {
 			"BaseRegionTemplate",
 			"ExtendedRegionTemplate",
-			"ReplicateRegionTemplate",
 			"LocalRegionTemplate"
 		};
 
@@ -229,137 +211,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 				assertThat(expected.getMessage().contains(beanName)).isTrue();
 			}
 		}
-	}
-
-	@Test
-	public void testNonTemplateBasedReplicateRegion() {
-
-		assertRegionMetaData(nonTemplateBasedReplicateRegion, "NonTemplateBasedReplicateRegion");
-		assertDefaultRegionAttributes(nonTemplateBasedReplicateRegion);
-		assertEmpty(nonTemplateBasedReplicateRegion.getAttributes().getCacheListeners());
-		assertCacheLoader(nonTemplateBasedReplicateRegion, "ABC");
-		assertCacheWriter(nonTemplateBasedReplicateRegion, "DEF");
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getCloningEnabled()).isFalse();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getConcurrencyLevel()).isEqualTo(12);
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().isDiskSynchronous()).isTrue();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getEnableSubscriptionConflation()).isFalse();
-		assertDefaultEvictionAttributes(nonTemplateBasedReplicateRegion.getAttributes().getEvictionAttributes());
-		assertDefaultExpirationAttributes(nonTemplateBasedReplicateRegion.getAttributes().getEntryIdleTimeout());
-		assertDefaultExpirationAttributes(nonTemplateBasedReplicateRegion.getAttributes().getEntryTimeToLive());
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getIgnoreJTA()).isFalse();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(97);
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getKeyConstraint()).isNull();
-		assertThat(String.valueOf(nonTemplateBasedReplicateRegion.getAttributes().getLoadFactor())).isEqualTo("0.65");
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().isLockGrantor()).isFalse();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getPartitionAttributes()).isNull();
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getStatisticsEnabled()).isFalse();
-		assertDefaultSubscriptionAttributes(nonTemplateBasedReplicateRegion.getAttributes().getSubscriptionAttributes());
-		assertThat(nonTemplateBasedReplicateRegion.getAttributes().getValueConstraint()).isNull();
-	}
-
-	@Test
-	public void testTemplateBasedReplicateRegion() {
-
-		assertRegionMetaData(templateBasedReplicateRegion, "TemplateBasedReplicateRegion");
-		assertDefaultRegionAttributes(templateBasedReplicateRegion);
-		assertCacheListeners(templateBasedReplicateRegion, "XYZ");
-		assertCacheLoader(templateBasedReplicateRegion, "dbLoader");
-		assertCacheWriter(templateBasedReplicateRegion, "dbWriter");
-		assertThat(templateBasedReplicateRegion.getAttributes().getCloningEnabled()).isTrue();
-		assertThat(templateBasedReplicateRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(templateBasedReplicateRegion.getAttributes().getConcurrencyLevel()).isEqualTo(24);
-		assertThat(templateBasedReplicateRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-		assertThat(templateBasedReplicateRegion.getAttributes().isDiskSynchronous()).isFalse();
-		assertThat(templateBasedReplicateRegion.getAttributes().getEnableSubscriptionConflation()).isTrue();
-		assertEvictionAttributes(templateBasedReplicateRegion.getAttributes().getEvictionAttributes(),
-			EvictionAction.OVERFLOW_TO_DISK, EvictionAlgorithm.LRU_ENTRY, 2024, null);
-		assertExpirationAttributes(templateBasedReplicateRegion.getAttributes().getEntryIdleTimeout(),
-			ExpirationAction.DESTROY, 600);
-		assertExpirationAttributes(templateBasedReplicateRegion.getAttributes().getEntryTimeToLive(),
-			ExpirationAction.INVALIDATE, 300);
-		assertThat(templateBasedReplicateRegion.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
-		assertThat(templateBasedReplicateRegion.getAttributes().getKeyConstraint()).isEqualTo(String.class);
-		assertThat(String.valueOf(templateBasedReplicateRegion.getAttributes().getLoadFactor())).isEqualTo("0.85");
-		assertThat(templateBasedReplicateRegion.getAttributes().isLockGrantor()).isTrue();
-		assertThat(templateBasedReplicateRegion.getAttributes().getPartitionAttributes()).isNull();
-		assertThat(templateBasedReplicateRegion.getAttributes().getScope()).isEqualTo(Scope.GLOBAL);
-		assertThat(templateBasedReplicateRegion.getAttributes().getStatisticsEnabled()).isTrue();
-		assertSubscriptionAttributes(templateBasedReplicateRegion.getAttributes().getSubscriptionAttributes(),
-			InterestPolicy.CACHE_CONTENT);
-		assertThat(templateBasedReplicateRegion.getAttributes().getValueConstraint()).isEqualTo(Object.class);
-	}
-
-	@Test
-	public void testTemplateBasedReplicateSubRegion() {
-
-		assertRegionMetaData(templateBasedReplicateSubRegion, "TemplateBasedReplicateSubRegion",
-			"/TemplateBasedReplicateRegion/TemplateBasedReplicateSubRegion");
-		assertDefaultRegionAttributes(templateBasedReplicateSubRegion);
-		assertCacheListeners(templateBasedReplicateSubRegion, "testListener");
-		assertCacheLoader(templateBasedReplicateSubRegion, "A");
-		assertCacheWriter(templateBasedReplicateSubRegion, "B");
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getCloningEnabled()).isFalse();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getConcurrencyLevel()).isEqualTo(16);
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-		assertThat(templateBasedReplicateSubRegion.getAttributes().isDiskSynchronous()).isFalse();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getEnableSubscriptionConflation()).isFalse();
-		assertDefaultEvictionAttributes(templateBasedReplicateSubRegion.getAttributes().getEvictionAttributes());
-		assertExpirationAttributes(templateBasedReplicateSubRegion.getAttributes().getEntryIdleTimeout(),
-			ExpirationAction.DESTROY, 600);
-		assertExpirationAttributes(templateBasedReplicateSubRegion.getAttributes().getEntryTimeToLive(),
-			ExpirationAction.DESTROY, 600);
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getKeyConstraint()).isEqualTo(Integer.class);
-		assertThat(String.valueOf(templateBasedReplicateSubRegion.getAttributes().getLoadFactor())).isEqualTo("0.95");
-		assertThat(templateBasedReplicateSubRegion.getAttributes().isLockGrantor()).isFalse();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getPartitionAttributes()).isNull();
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getStatisticsEnabled()).isTrue();
-		assertDefaultSubscriptionAttributes(templateBasedReplicateSubRegion.getAttributes().getSubscriptionAttributes());
-		assertThat(templateBasedReplicateSubRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
-	}
-
-	@Test
-	public void testTemplateBasedReplicateRegionNoOverrides() {
-
-		assertRegionMetaData(templateBasedReplicateRegionNoOverrides, "TemplateBasedReplicateRegionNoOverrides");
-		assertDefaultRegionAttributes(templateBasedReplicateRegionNoOverrides);
-		assertCacheListeners(templateBasedReplicateRegionNoOverrides, "XYZ");
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getCacheLoader()).isNull();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getCacheWriter()).isNull();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getCloningEnabled()).isTrue();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getConcurrencyChecksEnabled()).isTrue();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getConcurrencyLevel()).isEqualTo(24);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getDataPolicy())
-			.isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().isDiskSynchronous()).isFalse();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getEnableSubscriptionConflation()).isTrue();
-		assertEvictionAttributes(templateBasedReplicateRegionNoOverrides.getAttributes().getEvictionAttributes(),
-			EvictionAction.OVERFLOW_TO_DISK, EvictionAlgorithm.LRU_ENTRY, 2024, null);
-		assertExpirationAttributes(templateBasedReplicateRegionNoOverrides.getAttributes().getEntryIdleTimeout(),
-			ExpirationAction.DESTROY, 600);
-		assertExpirationAttributes(templateBasedReplicateRegionNoOverrides.getAttributes().getEntryTimeToLive(),
-			ExpirationAction.INVALIDATE, 300);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getIgnoreJTA()).isTrue();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getInitialCapacity()).isEqualTo(51);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getKeyConstraint()).isEqualTo(String.class);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getLoadFactor())
-			.isCloseTo(0.85f, offset(0.0f));
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().isLockGrantor()).isFalse();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getPartitionAttributes()).isNull();
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getStatisticsEnabled()).isTrue();
-		assertSubscriptionAttributes(
-			templateBasedReplicateRegionNoOverrides.getAttributes().getSubscriptionAttributes(),
-			InterestPolicy.CACHE_CONTENT);
-		assertThat(templateBasedReplicateRegionNoOverrides.getAttributes().getValueConstraint())
-			.isEqualTo(Object.class);
 	}
 
 	@Test

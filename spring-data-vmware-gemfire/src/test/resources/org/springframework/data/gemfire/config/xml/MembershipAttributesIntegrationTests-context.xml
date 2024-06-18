@@ -21,10 +21,10 @@
 
 	<gfe:cache properties-ref="gemfireProperties"/>
 
-	<gfe:replicated-region id="secure">
+	<gfe:local-region id="secure">
         <gfe:membership-attributes required-roles="ROLE1,ROLE2" loss-action="limited-access" resumption-action="reinitialize"/>
-    </gfe:replicated-region>
+    </gfe:local-region>
 
-    <gfe:replicated-region id="simple"/>
+    <gfe:local-region id="simple"/>
 
 </beans>

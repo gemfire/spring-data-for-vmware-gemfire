@@ -32,7 +32,7 @@ import org.springframework.data.gemfire.GenericRegionFactoryBean;
 import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.RegionShortcutWrapper;
-import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
+import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.Interest;
@@ -64,7 +64,6 @@ import org.springframework.util.StringUtils;
  * @see LocalRegionFactoryBean
  * @see PeerRegionFactoryBean
  * @see ResolvableRegionFactoryBean
- * @see ReplicatedRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see RegionConfigurer
  * @see EvictingRegionFactoryBean
@@ -231,7 +230,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 *
 	 * @return a new instance of the {@link PeerRegionFactoryBean}.
 	 * @see LocalRegionFactoryBean
-	 * @see ReplicatedRegionFactoryBean
 	 * @see PeerRegionFactoryBean
 	 */
 	protected PeerRegionFactoryBean<K, V> newPeerRegionFactoryBean() {
@@ -244,14 +242,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 
 		if (regionShortcutWrapper.isLocal()) {
 			return new LocalRegionFactoryBean<>();
-		}
-		else if (resolvedDataPolicy.withReplication()) {
-
-			ReplicatedRegionFactoryBean<K, V> replicatedRegionFactoryBean = new ReplicatedRegionFactoryBean<>();
-
-			replicatedRegionFactoryBean.setScope(getScope());
-
-			return replicatedRegionFactoryBean;
 		}
 
 		return new GenericRegionFactoryBean<>();

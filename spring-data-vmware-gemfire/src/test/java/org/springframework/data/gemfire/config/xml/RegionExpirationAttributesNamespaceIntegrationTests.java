@@ -103,18 +103,6 @@ public class RegionExpirationAttributesNamespaceIntegrationTests extends Integra
 	}
 
 	@Test
-	public void exampleReplicateRegionExpirationAttributesAreCorrect() {
-
-		assertRegionMetaData(replicateExample, "ReplicateExample", DataPolicy.REPLICATE);
-		assertExpirationAttributes(replicateExample.getAttributes().getEntryTimeToLive(),
-			600, ExpirationAction.DESTROY);
-		assertExpirationAttributes(replicateExample.getAttributes().getEntryIdleTimeout(),
-			300, ExpirationAction.INVALIDATE);
-		assertThat(replicateExample.getAttributes().getCustomEntryTimeToLive()).isNull();
-		assertThat(replicateExample.getAttributes().getCustomEntryIdleTimeout()).isNull();
-	}
-
-	@Test
 	public void examplePreloadedRegionExpirationAttributesAreCorrect() {
 
 		assertRegionMetaData(preloadedExample, "PreloadedExample", DataPolicy.PRELOADED);
