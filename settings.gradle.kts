@@ -6,11 +6,9 @@
 import java.io.FileInputStream
 import java.util.*
 
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
-
 pluginManagement {
   includeBuild("build-tools/publishing")
+  includeBuild("build-tools/convention-plugins")
   repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     gradlePluginPortal()
