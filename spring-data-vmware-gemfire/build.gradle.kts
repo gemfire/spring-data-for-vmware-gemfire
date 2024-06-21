@@ -20,6 +20,7 @@ buildscript {
 plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
+  id("commercial-repositories")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
@@ -57,6 +58,9 @@ publishingDetails {
 }
 
 dependencies {
+  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
+  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+
   compileOnly(libs.bundles.gemfire)
 
   implementation(libs.cache.api)

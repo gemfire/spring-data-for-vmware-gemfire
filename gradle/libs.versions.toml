@@ -1,7 +1,7 @@
 [versions]
 cacheApiVersion = "1.1.1"
 springFrameworkVersion = "6.1.6"
-springDataVersion = "3.3.0-RC1"
+springDataVersion = "3.3.0"
 springShiroVersion = "1.13.0"
 springShellVersion = "1.2.0.RELEASE"
 springBootVersion = "3.3.0-RC1"
