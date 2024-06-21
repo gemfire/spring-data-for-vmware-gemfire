@@ -14,7 +14,6 @@ import java.lang.annotation.Target;
 import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.cache.server.CacheServer;
 import org.apache.geode.cache.server.ClientSubscriptionConfig;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -51,11 +50,8 @@ import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 public @interface CacheServerApplication {
 
 	/**
-	 * Configures whether the {@link CacheServer} should start automatically at runtime.
-	 *
-	 * Defaults to {@literal true).
-	 *
-	 * Use {@literal spring.data.gemfire.cache.server.auto-startup} property in {@literal application.properties}.
+	 * Configures whether the {@link CacheServer} should start automatically at runtime. Defaults to {@literal true}. Use
+	 * {@literal spring.data.gemfire.cache.server.auto-startup} property in {@literal application.properties}.
 	 */
 	boolean autoStartup() default true;
 

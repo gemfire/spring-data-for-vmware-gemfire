@@ -24,7 +24,7 @@ import org.springframework.data.gemfire.wan.GatewayReceiverFactoryBean;
 class GatewayReceiverParser extends AbstractSimpleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -32,7 +32,7 @@ class GatewayReceiverParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

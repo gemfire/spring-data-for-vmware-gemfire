@@ -105,7 +105,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -118,7 +118,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull ApplicationContext loadContext(@NonNull MergedContextConfiguration mergedContextConfiguration) {
@@ -153,7 +153,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void closeContext(@NonNull MergedContextConfiguration mergedContextConfiguration,
@@ -251,7 +251,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean equals(Object obj) {
@@ -272,7 +272,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public int hashCode() {
@@ -286,7 +286,7 @@ public class ConfigurableCacheAwareContextLoaderDelegate extends DefaultCacheAwa
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

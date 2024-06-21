@@ -80,7 +80,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable Object postProcessBeforeInitialization(@Nullable Object bean, @NonNull String beanName)
@@ -93,7 +93,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable Object postProcessAfterInitialization(@Nullable Object bean, @NonNull String beanName)

@@ -33,7 +33,7 @@ public class DiskStoreDirectoryBeanPostProcessor implements BeanPostProcessor {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

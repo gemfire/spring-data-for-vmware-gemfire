@@ -25,7 +25,7 @@ import org.springframework.test.context.MergedContextConfiguration;
 public class DependencyOfAnnotationContextCustomizer implements ContextCustomizer {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void customizeContext(@NonNull ConfigurableApplicationContext applicationContext,

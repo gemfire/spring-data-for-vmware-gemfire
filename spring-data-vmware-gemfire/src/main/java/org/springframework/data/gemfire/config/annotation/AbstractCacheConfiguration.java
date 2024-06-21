@@ -159,7 +159,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
@@ -590,7 +590,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public String toString() {

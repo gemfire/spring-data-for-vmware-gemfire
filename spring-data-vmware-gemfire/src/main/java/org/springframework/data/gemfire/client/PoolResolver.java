@@ -10,7 +10,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
-
 import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -78,8 +77,8 @@ public interface PoolResolver {
 	 * Resolves a {@link Pool} with the given {@link String name}.
 	 *
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
-	 * @return the {@link Pool} with the given {@link String name} or {@link null} if no {@link Pool} exists with
-	 * the {@link String name}.
+	 * @return the {@link Pool} with the given {@code String name} or {@code null} if no {@link Pool} exists with the
+	 *         {@link String name}.
 	 * @see Pool
 	 */
 	@Nullable Pool resolve(@Nullable String poolName);

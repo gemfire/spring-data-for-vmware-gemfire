@@ -71,7 +71,7 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -93,7 +93,7 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {

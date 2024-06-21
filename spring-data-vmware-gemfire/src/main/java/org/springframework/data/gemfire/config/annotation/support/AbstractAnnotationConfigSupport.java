@@ -438,7 +438,7 @@ public abstract class AbstractAnnotationConfigSupport
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void setBeanClassLoader(@Nullable ClassLoader beanClassLoader) {
@@ -473,7 +473,7 @@ public abstract class AbstractAnnotationConfigSupport
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void setBeanFactory(@Nullable BeanFactory beanFactory) throws BeansException {

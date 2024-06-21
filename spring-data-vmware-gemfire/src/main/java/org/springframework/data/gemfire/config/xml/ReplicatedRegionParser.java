@@ -26,7 +26,7 @@ import org.springframework.data.gemfire.ReplicatedRegionFactoryBean;
 class ReplicatedRegionParser extends AbstractPeerRegionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getRegionFactoryClass() {
@@ -34,7 +34,7 @@ class ReplicatedRegionParser extends AbstractPeerRegionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParseRegion(Element element, ParserContext parserContext, BeanDefinitionBuilder builder,

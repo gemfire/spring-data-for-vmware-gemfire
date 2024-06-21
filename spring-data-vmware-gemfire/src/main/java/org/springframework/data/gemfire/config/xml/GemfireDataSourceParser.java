@@ -45,7 +45,7 @@ class GemfireDataSourceParser extends AbstractBeanDefinitionParser {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {

@@ -1,6 +1,6 @@
 [versions]
 cacheApiVersion = "1.1.1"
-springDataVersion = "3.0.12"
+springDataVersion = "2022.0.12" #3.0.12
 springFrameworkVersion = "6.0.19"
 springShiroVersion = "1.12.0"
 springShellVersion = "1.2.0.RELEASE"
@@ -38,11 +38,9 @@ gemfire-gfsh = { module = "com.vmware.gemfire:gemfire-gfsh", version.ref = "gemf
 gemfire-tcp-server = { module = "com.vmware.gemfire:gemfire-tcp-server", version.ref = "gemfireVersion" }
 gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
 cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
-spring-context-support = { module = "org.springframework:spring-context-support", version.ref = "springFrameworkVersion" }
-spring-tx = { module = "org.springframework:spring-tx", version.ref = "springFrameworkVersion" }
-spring-web = { module = "org.springframework:spring-web", version.ref = "springFrameworkVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-test = { module = "org.springframework:spring-test", version.ref = "springFrameworkVersion" }
-spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }

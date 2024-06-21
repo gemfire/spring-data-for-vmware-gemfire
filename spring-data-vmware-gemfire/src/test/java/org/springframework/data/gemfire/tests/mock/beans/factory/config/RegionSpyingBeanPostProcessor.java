@@ -61,7 +61,7 @@ public class RegionSpyingBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object postProcessAfterInitialization(@NonNull Object bean, @NonNull String beanName) throws BeansException {

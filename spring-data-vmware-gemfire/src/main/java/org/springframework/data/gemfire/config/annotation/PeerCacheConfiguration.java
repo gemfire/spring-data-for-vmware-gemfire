@@ -163,8 +163,8 @@ public class PeerCacheConfiguration extends AbstractCacheConfiguration {
     }
 
     /**
-     * {@inheritDoc}
-     */
+		 * {{@inheritDoc}}
+		 */
     @Override
     protected Class<? extends Annotation> getAnnotationType() {
         return PeerCacheApplication.class;

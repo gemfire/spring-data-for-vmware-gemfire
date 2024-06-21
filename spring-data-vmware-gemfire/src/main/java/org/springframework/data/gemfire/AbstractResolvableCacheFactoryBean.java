@@ -14,7 +14,6 @@ import java.util.Properties;
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.distributed.DistributedSystem;
-
 import org.springframework.lang.NonNull;
 
 /**
@@ -34,7 +33,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	private volatile String cacheResolutionMessagePrefix;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected GemFireCache doGetObject() {
@@ -173,7 +172,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object initializeFactory(Object factory) {

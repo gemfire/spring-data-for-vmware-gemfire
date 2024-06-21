@@ -31,7 +31,7 @@ import org.springframework.util.xml.DomUtils;
 class LookupRegionParser extends AbstractRegionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getRegionFactoryClass() {
@@ -39,7 +39,7 @@ class LookupRegionParser extends AbstractRegionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParseRegion(Element element, ParserContext parserContext, BeanDefinitionBuilder builder,

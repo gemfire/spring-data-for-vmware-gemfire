@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
 public class FunctionExecutionBeanDefinitionParser implements BeanDefinitionParser {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {

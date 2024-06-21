@@ -26,7 +26,7 @@ import org.springframework.data.gemfire.util.ArrayUtils;
 public class AddPoolsConfiguration extends AddPoolConfiguration {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {

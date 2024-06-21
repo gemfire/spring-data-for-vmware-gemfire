@@ -11,6 +11,7 @@ import java.util.*
 
 pluginManagement {
   includeBuild("build-tools/publishing")
+  includeBuild("build-tools/convention-plugins")
   repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     gradlePluginPortal()

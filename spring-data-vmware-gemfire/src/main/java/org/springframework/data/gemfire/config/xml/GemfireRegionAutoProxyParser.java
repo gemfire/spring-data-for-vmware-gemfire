@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
 class GemfireRegionAutoProxyParser implements BeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {

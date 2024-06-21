@@ -70,7 +70,7 @@ public abstract class SpringApplicationContextIntegrationTestsSupport extends In
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setApplicationEventPublisher(@NonNull ApplicationEventPublisher applicationEventPublisher) {

@@ -32,7 +32,7 @@ import org.springframework.util.xml.DomUtils;
 class ClientRegionParser extends AbstractRegionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getRegionFactoryClass() {
@@ -40,7 +40,7 @@ class ClientRegionParser extends AbstractRegionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParseRegion(Element element, ParserContext parserContext, BeanDefinitionBuilder regionBuilder,

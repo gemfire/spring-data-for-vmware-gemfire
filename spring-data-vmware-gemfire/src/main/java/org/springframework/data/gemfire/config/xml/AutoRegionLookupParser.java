@@ -31,7 +31,7 @@ import org.springframework.data.gemfire.config.support.AutoRegionLookupBeanPostP
 class AutoRegionLookupParser implements BeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {

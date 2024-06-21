@@ -26,7 +26,7 @@ import org.springframework.util.xml.DomUtils;
 class GatewaySenderParser extends AbstractSimpleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -34,7 +34,7 @@ class GatewaySenderParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

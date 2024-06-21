@@ -20,6 +20,7 @@ buildscript {
 plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
+  id("commercial-repositories")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
@@ -34,6 +35,7 @@ java {
 tasks.named<Javadoc>("javadoc") {
   title = "Spring Data for VMware GemFire Java API Reference"
   isFailOnError = false
+  source = fileTree("src/main/java")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -47,15 +49,16 @@ publishingDetails {
 }
 
 dependencies {
-  val gemfireVersion: String by project
-  val springDataVersion: String by project
+  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
+  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+
   compileOnly(libs.bundles.gemfire)
 
   implementation(libs.cache.api)
-  api(libs.spring.context.support)
-  api(libs.spring.tx)
-  api(libs.spring.web)
-  api(libs.spring.data.commons)
+  api("org.springframework:spring-context-support")
+  api("org.springframework:spring-tx")
+  api("org.springframework:spring-web")
+  api("org.springframework.data:spring-data-commons")
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
   implementation(libs.bundles.jackson)
@@ -92,7 +95,7 @@ dependencies {
   testImplementation(libs.assertJ)
   testImplementation(libs.mockito)
   testImplementation(libs.lombok)
-  testImplementation(libs.spring.test)
+  testImplementation("org.springframework:spring-test")
   testImplementation(libs.spring.boot)
   testImplementation(libs.awaitility)
 }

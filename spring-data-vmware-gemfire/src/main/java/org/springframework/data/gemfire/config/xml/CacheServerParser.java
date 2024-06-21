@@ -33,7 +33,7 @@ class CacheServerParser extends AbstractSimpleBeanDefinitionParser {
 	private final AtomicInteger cacheServerIdentifier = new AtomicInteger(0);
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -41,7 +41,7 @@ class CacheServerParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected boolean isEligibleAttribute(Attr attribute, ParserContext parserContext) {
@@ -52,7 +52,7 @@ class CacheServerParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void postProcess(BeanDefinitionBuilder builder, Element element) {
@@ -89,7 +89,7 @@ class CacheServerParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected boolean shouldGenerateIdAsFallback() {
@@ -97,7 +97,7 @@ class CacheServerParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext parserContext)

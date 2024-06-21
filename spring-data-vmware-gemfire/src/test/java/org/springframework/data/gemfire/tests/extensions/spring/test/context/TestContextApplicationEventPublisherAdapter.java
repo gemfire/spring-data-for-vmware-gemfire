@@ -71,7 +71,7 @@ public class TestContextApplicationEventPublisherAdapter implements ApplicationE
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void publishEvent(@NonNull Object event) {

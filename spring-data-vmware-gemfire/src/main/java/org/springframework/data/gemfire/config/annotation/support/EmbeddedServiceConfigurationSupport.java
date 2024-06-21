@@ -332,7 +332,7 @@ public abstract class EmbeddedServiceConfigurationSupport extends AbstractAnnota
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * {{@inheritDoc}}
 		 */
 		@Override
 		public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

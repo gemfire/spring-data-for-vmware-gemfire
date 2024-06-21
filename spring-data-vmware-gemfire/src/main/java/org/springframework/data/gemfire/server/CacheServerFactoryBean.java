@@ -92,7 +92,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	private SubscriptionEvictionPolicy subscriptionEvictionPolicy = SubscriptionEvictionPolicy.DEFAULT;
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void afterPropertiesSet() throws IOException {
@@ -213,7 +213,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public CacheServer getObject() {
@@ -221,7 +221,7 @@ public class CacheServerFactoryBean extends AbstractFactoryBeanSupport<CacheServ
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public Class<?> getObjectType() {

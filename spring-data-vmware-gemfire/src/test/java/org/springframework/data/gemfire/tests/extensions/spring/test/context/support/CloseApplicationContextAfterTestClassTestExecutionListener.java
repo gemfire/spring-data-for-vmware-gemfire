@@ -44,7 +44,7 @@ public class CloseApplicationContextAfterTestClassTestExecutionListener extends 
 	private final AtomicReference<Boolean> springTestContextCloseEnabled = new AtomicReference<>();
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getOrder() {

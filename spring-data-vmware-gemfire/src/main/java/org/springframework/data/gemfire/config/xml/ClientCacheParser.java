@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
 class ClientCacheParser extends CacheParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -37,7 +37,7 @@ class ClientCacheParser extends CacheParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder clientCacheBuilder) {

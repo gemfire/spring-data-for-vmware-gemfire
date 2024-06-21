@@ -1,0 +1,28 @@
+{
+  "repositories": [
+    {
+      "id": "springEnterpriseRepo",
+      "url": "https://packages.broadcom.com/artifactory/spring-enterprise",
+      "username": "",
+      "password": "",
+      "private": true
+    },
+    {
+      "id": "gemfireRepo",
+      "url": "https://packages.broadcom.com/artifactory/gemfire",
+      "username": "",
+      "password": "",
+      "private": false
+    }
+  ],
+  "pluginRepositories": [
+    {
+      "id": "springEnterpriseRepo",
+      "url": "https://packages.broadcom.com/artifactory/spring-enterprise",
+      "username": "",
+      "password": "",
+      "private": true
+    }
+  ],
+  "publishRepositories": []
+}

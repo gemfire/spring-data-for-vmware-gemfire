@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
 class PartitionedRegionParser extends AbstractPeerRegionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getRegionFactoryClass() {
@@ -46,7 +46,7 @@ class PartitionedRegionParser extends AbstractPeerRegionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")

@@ -25,7 +25,7 @@ import org.springframework.data.gemfire.util.ArrayUtils;
 public class AddCacheServersConfiguration extends AddCacheServerConfiguration {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {

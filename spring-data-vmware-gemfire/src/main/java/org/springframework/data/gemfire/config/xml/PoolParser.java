@@ -71,7 +71,7 @@ class PoolParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -79,7 +79,7 @@ class PoolParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder poolBuilder) {

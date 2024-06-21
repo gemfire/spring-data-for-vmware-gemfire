@@ -49,7 +49,7 @@ class DiskStoreParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -57,7 +57,7 @@ class DiskStoreParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

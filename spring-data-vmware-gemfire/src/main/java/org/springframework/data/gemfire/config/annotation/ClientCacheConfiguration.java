@@ -432,7 +432,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -440,7 +440,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected BeanFactory getBeanFactory() {

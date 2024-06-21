@@ -517,7 +517,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Index getObject() {
@@ -527,7 +527,7 @@ public class IndexFactoryBean extends AbstractFactoryBeanSupport<Index> implemen
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {

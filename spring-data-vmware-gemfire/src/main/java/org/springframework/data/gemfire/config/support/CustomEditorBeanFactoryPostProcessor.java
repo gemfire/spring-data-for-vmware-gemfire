@@ -56,7 +56,7 @@ import org.springframework.data.gemfire.wan.OrderPolicyConverter;
 public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProcessor, Ordered {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public int getOrder() {
@@ -64,7 +64,7 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
@@ -119,7 +119,7 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			implements Converter<ConnectionEndpoint[], Iterable<?>>  {
 
 		/**
-		 * {@inheritDoc}
+		 * {{@inheritDoc}}
 		 */
 		@Override
 		@SuppressWarnings("all")
@@ -132,7 +132,7 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			extends AbstractPropertyEditorConverterSupport<ConnectionEndpoint> {
 
 		/**
-		 * {@inheritDoc}
+		 * {{@inheritDoc}}
 		 */
 		@Override
 		public ConnectionEndpoint convert(String source) {
@@ -144,7 +144,7 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			extends AbstractPropertyEditorConverterSupport<ConnectionEndpointList> {
 
 		/**
-		 * {@inheritDoc}
+		 * {{@inheritDoc}}
 		 */
 		@Override
 		public ConnectionEndpointList convert(String source) {

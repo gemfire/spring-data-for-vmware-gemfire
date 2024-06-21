@@ -38,7 +38,7 @@ public class DependencyOfBeanFactoryPostProcessor implements BeanFactoryPostProc
 	protected static final String VALUE_ATTRIBUTE_NAME = "value";
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {

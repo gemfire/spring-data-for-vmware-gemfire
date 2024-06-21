@@ -70,7 +70,7 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 	public static final String[] DEFAULT_SERIALIZABLE_OBJECT_FILTER = {};
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

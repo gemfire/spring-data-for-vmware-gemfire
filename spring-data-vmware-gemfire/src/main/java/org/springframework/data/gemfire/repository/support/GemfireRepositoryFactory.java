@@ -109,7 +109,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T, ID> GemfireEntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
@@ -117,7 +117,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
@@ -125,7 +125,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object getTargetRepository(RepositoryInformation repositoryInformation) {

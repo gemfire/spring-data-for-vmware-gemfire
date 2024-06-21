@@ -36,7 +36,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -56,7 +56,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Type getType() {
@@ -64,7 +64,7 @@ public class RegexInterest extends Interest<String> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setType(Type type) {

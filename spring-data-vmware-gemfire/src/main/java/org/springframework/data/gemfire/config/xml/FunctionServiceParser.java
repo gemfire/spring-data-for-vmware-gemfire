@@ -27,7 +27,7 @@ import org.springframework.util.xml.DomUtils;
 class FunctionServiceParser extends AbstractSimpleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -35,7 +35,7 @@ class FunctionServiceParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
@@ -52,7 +52,7 @@ class FunctionServiceParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected String resolveId(Element element, AbstractBeanDefinition beanDefinition, ParserContext parserContext)

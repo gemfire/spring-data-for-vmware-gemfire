@@ -29,7 +29,7 @@ import org.springframework.util.xml.DomUtils;
 class AsyncEventQueueParser extends AbstractSingleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -37,7 +37,7 @@ class AsyncEventQueueParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

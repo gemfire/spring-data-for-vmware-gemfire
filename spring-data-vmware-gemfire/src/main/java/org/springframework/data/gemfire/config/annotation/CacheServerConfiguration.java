@@ -200,7 +200,7 @@ public class CacheServerConfiguration extends PeerCacheConfiguration {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {

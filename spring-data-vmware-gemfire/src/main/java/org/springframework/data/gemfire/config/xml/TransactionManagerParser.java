@@ -26,7 +26,7 @@ import org.springframework.util.StringUtils;
 class TransactionManagerParser extends AbstractSingleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -34,7 +34,7 @@ class TransactionManagerParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, BeanDefinitionBuilder builder) {
@@ -45,7 +45,7 @@ class TransactionManagerParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected String resolveId(Element element, AbstractBeanDefinition definition, ParserContext parserContext)

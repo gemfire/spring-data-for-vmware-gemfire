@@ -131,7 +131,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
@@ -140,7 +140,7 @@ public class CacheFactoryBean extends AbstractResolvableCacheFactoryBean {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<? extends GemFireCache> doGetObjectType() {

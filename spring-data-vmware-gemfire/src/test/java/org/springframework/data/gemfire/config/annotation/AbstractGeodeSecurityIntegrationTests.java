@@ -178,7 +178,7 @@ public abstract class AbstractGeodeSecurityIntegrationTests extends ForkingClien
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {
@@ -331,7 +331,7 @@ public abstract class AbstractGeodeSecurityIntegrationTests extends ForkingClien
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Iterator<ResourcePermission> iterator() {
@@ -339,7 +339,7 @@ public abstract class AbstractGeodeSecurityIntegrationTests extends ForkingClien
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

@@ -48,14 +48,14 @@ class IndexParser extends AbstractSimpleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	protected Class<?> getBeanClass(Element element) {
 		return IndexFactoryBean.class;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

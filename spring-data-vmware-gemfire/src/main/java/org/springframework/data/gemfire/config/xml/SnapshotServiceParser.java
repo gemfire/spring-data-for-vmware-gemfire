@@ -28,7 +28,7 @@ import org.springframework.util.xml.DomUtils;
 class SnapshotServiceParser extends AbstractSingleBeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected Class<?> getBeanClass(final Element element) {
@@ -36,7 +36,7 @@ class SnapshotServiceParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

@@ -84,7 +84,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setImportMetadata(@NonNull AnnotationMetadata importMetadata) {
@@ -257,7 +257,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Object configure(Object regionBean) {
@@ -265,7 +265,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Region<?, ?> configure(Region<?, ?> region) {
@@ -566,7 +566,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Object configure(Object regionBean) {
@@ -577,7 +577,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Region<?, ?> configure(Region<?, ?> region) {

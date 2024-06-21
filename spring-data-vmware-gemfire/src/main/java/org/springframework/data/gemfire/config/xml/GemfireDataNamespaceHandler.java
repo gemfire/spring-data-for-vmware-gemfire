@@ -24,7 +24,7 @@ import org.springframework.data.repository.config.RepositoryConfigurationExtensi
 class GemfireDataNamespaceHandler extends NamespaceHandlerSupport {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void init() {

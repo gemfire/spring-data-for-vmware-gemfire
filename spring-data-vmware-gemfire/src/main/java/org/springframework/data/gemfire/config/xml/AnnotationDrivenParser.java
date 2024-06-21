@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.function.config.GemfireFunctionBeanPostP
 class AnnotationDrivenParser implements BeanDefinitionParser {
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {

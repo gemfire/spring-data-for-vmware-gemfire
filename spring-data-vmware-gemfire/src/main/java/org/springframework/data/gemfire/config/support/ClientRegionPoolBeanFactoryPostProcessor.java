@@ -38,7 +38,7 @@ public class ClientRegionPoolBeanFactoryPostProcessor extends AbstractDependency
 	protected static final String POOL_NAME_PROPERTY = "poolName";
 
 	/**
-	 * {@inheritDoc}
+	 * {{@inheritDoc}}
 	 */
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {

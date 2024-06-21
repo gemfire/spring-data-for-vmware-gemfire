@@ -28,7 +28,7 @@ import org.springframework.test.context.TestContext;
 public class DependencyOfAnnotationContextCustomizerFactory implements ContextCustomizerFactory {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull ContextCustomizer createContextCustomizer(@NonNull Class<?> testClass,

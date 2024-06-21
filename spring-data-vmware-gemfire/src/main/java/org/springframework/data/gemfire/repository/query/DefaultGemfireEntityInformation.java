@@ -38,7 +38,7 @@ public class DefaultGemfireEntityInformation<T, ID> extends PersistentEntityInfo
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRegionName() {

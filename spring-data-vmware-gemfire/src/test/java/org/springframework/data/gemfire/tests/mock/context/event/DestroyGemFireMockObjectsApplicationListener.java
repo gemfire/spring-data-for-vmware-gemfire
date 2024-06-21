@@ -111,7 +111,7 @@ public class DestroyGemFireMockObjectsApplicationListener implements Application
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void onApplicationEvent(@NonNull ApplicationEvent event) {
