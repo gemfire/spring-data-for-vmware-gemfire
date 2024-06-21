@@ -1,9 +1,9 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 plugins {
-  id("groovy-gradle-plugin")
   `kotlin-dsl`
 }
 
@@ -13,5 +13,5 @@ repositories {
 }
 
 dependencies {
-  implementation(libs.kotlin)
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
 }
