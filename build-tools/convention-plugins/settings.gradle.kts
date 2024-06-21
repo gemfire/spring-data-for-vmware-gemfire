@@ -1,8 +1,10 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 pluginManagement {
+  repositories.mavenCentral()
   repositories.gradlePluginPortal()
   repositories.google()
   repositories.maven {
@@ -15,9 +17,5 @@ plugins {
 }
 
 dependencyResolutionManagement {
-  versionCatalogs {
-    create("libs") {
-      from(files("../../gradle/publishing.versions.toml"))
-    }
-  }
+  repositories.mavenCentral()
 }

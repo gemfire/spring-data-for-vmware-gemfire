@@ -1,3 +1,8 @@
+/*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import java.io.FileInputStream
 import java.util.*
 
@@ -6,6 +11,7 @@ import java.util.*
 
 pluginManagement {
   includeBuild("build-tools/publishing")
+  includeBuild("build-tools/convention-plugins")
   repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     gradlePluginPortal()
@@ -31,6 +37,5 @@ private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBui
 
 private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
   versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
-  versionOverrideFromProperty(versionCatalogBuilder, "springDataVersion", properties)
 }
 
