@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -8,6 +8,7 @@ import java.util.*
 
 pluginManagement {
   includeBuild("build-tools/publishing")
+  includeBuild("build-tools/convention-plugins")
   repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     gradlePluginPortal()
