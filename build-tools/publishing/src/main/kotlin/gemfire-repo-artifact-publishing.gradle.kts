@@ -1,4 +1,9 @@
 /*
+ * Copyright 2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * Copyright (c) VMware, Inc. 2023. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -40,10 +45,10 @@ publishing {
             )
           }
           scm {
-            connection = "scm:git:https://github.com/gemfire/spring-integration-for-vmware-gemfire.git"
+            connection = "scm:git:https://github.com/gemfire/spring-data-for-vmware-gemfire.git"
             developerConnection =
-              "scm:git:https://github.com/gemfire/spring-integration-for-vmware-gemfire.git"
-            url = "https://github.com/gemfire/spring-integration-for-vmware-gemfire"
+              "scm:git:https://github.com/gemfire/spring-data-for-vmware-gemfire.git"
+            url = "https://github.com/gemfire/spring-data-for-vmware-gemfire"
           }
         }
       }
@@ -52,19 +57,38 @@ publishing {
           val mavenPushRepositoryURL = project.findProperty("mavenPushRepository")
           if (mavenPushRepositoryURL != null) {
             url = uri(mavenPushRepositoryURL)
-            if (url.toString().startsWith("http") || url.toString().startsWith("sftp")) {
-              // Username / password credentials are only supported for http, https, and sftp repos.
-              // See the Gradle documentation on Repository Types for more information.
-              credentials {
-                username = project.findProperty("gemfirePublishRepoUsername").toString()
-                password = project.findProperty("gemfirePublishRepoPassword").toString()
-              }
+            if (mavenPushRepositoryURL.toString().startsWith("gcs:")) {
+              name = "GCS"
             }
+            setGemFirePublishingCredentials(this)
           } else {
             println("WARNING: No push repository configured")
           }
         }
       }
+    }
+  }
+}
+
+tasks.register("publishToInternalGCS") {
+  group = "publishing"
+  description = "Publishes all Maven publications to internal GCS repository."
+  dependsOn(tasks.withType<PublishToMavenRepository>().matching {
+    it.repository == publishing.repositories["GCS"]
+  })
+}
+
+fun setGemFirePublishingCredentials(
+  mavenArtifactRepository: MavenArtifactRepository
+) {
+  if (mavenArtifactRepository.url.toString().startsWith("http") || mavenArtifactRepository.url.toString()
+      .startsWith("sftp")
+  ) {
+    // Username / password credentials are only supported for http, https, and sftp repos.
+    // See the Gradle documentation on Repository Types for more information.
+    mavenArtifactRepository.credentials {
+      username = project.findProperty("gemfirePublishRepoUsername").toString()
+      password = project.findProperty("gemfirePublishRepoPassword").toString()
     }
   }
 }
