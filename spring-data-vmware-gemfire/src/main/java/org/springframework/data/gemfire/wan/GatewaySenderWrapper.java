@@ -6,13 +6,10 @@ package org.springframework.data.gemfire.wan;
 
 import java.util.List;
 
-import org.apache.geode.cache.wan.GatewayEventFailureListener;
 import org.apache.geode.cache.wan.GatewayEventFilter;
 import org.apache.geode.cache.wan.GatewayEventSubstitutionFilter;
 import org.apache.geode.cache.wan.GatewaySender;
 import org.apache.geode.cache.wan.GatewayTransportFilter;
-
-import org.apache.geode.internal.cache.wan.AbstractGatewaySender;
 import org.springframework.util.Assert;
 
 /**
@@ -143,12 +140,6 @@ public class GatewaySenderWrapper implements GatewaySender {
 	@Override
 	public boolean getEnforceThreadsConnectSameReceiver() {
 		return this.delegate.getEnforceThreadsConnectSameReceiver();
-	}
-
-	//A temporary fix to fix the build but requires the GemFire product to address this optional API https://jira-pivotal.atlassian.net/browse/GEM-7102
-	@Override
-	public GatewayEventFailureListener getGatewayEventFailureListener() {
-		return null;
 	}
 
 	/**
