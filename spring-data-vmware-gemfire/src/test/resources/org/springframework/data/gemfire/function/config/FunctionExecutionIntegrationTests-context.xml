@@ -20,8 +20,8 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
+	<gfe:client-cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
 
-	<gfe:local-region id="r1"/>
+	<gfe:client-region shortcut="LOCAL" id="r1"/>
 
 </beans>

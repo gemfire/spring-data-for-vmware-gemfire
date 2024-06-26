@@ -5,21 +5,17 @@
 package org.springframework.data.gemfire.config.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-
+import org.apache.geode.cache.GemFireCache;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.DiskStoreFactoryBean;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.test.context.ContextConfiguration;
@@ -61,7 +57,7 @@ public class DiskStoreDirectoryBeanPostProcessorIntegrationTests extends Integra
 		assertThat(new File("./gfe/ds/store3/local").isDirectory()).isTrue();
 	}
 
-	@PeerCacheApplication(logLevel = "error")
+	@ClientCacheApplication(logLevel = "error")
 	@SuppressWarnings("unused")
 	static class DiskStoreDirectoryBeanPostProcessorConfiguration {
 

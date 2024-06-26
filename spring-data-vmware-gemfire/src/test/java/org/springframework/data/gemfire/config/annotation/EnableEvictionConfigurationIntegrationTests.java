@@ -5,15 +5,11 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.After;
-import org.junit.Test;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -88,12 +84,6 @@ public class EnableEvictionConfigurationIntegrationTests extends SpringApplicati
 			"People", EvictionActionType.LOCAL_DESTROY, 100);
 	}
 
-	@Test
-	public void assertPeerCacheRegionEvictionPolicyIsCorrect() {
-		assertRegionEvictionConfiguration(newApplicationContext(PeerCacheRegionEvictionConfiguration.class),
-			"People", EvictionActionType.OVERFLOW_TO_DISK, 10000);
-	}
-
 	@ClientCacheApplication(name = "EnableEvictionConfigurationIntegrationTests")
 	@EnableCachingDefinedRegions(clientRegionShortcut = ClientRegionShortcut.LOCAL)
 	@EnableEviction(policies = @EnableEviction.EvictionPolicy(maximum = 100))
@@ -125,12 +115,5 @@ public class EnableEvictionConfigurationIntegrationTests extends SpringApplicati
 	@EnableEviction(policies = @EnableEviction.EvictionPolicy(regionNames = "People", maximum = 100))
 	@EnableGemFireMockObjects
 	static class ClientCacheRegionEvictionConfiguration { }
-
-	@PeerCacheApplication(name = "EnableEvictionConfigurationIntegrationTests", logLevel = GEMFIRE_LOG_LEVEL)
-	@EnableEntityDefinedRegions(basePackageClasses = Person.class, serverRegionShortcut = RegionShortcut.LOCAL)
-	@EnableEviction(policies = @EnableEviction.EvictionPolicy(regionNames = "People",
-		action = EvictionActionType.OVERFLOW_TO_DISK, maximum = 10000))
-	@EnableGemFireMockObjects
-	static class PeerCacheRegionEvictionConfiguration { }
 
 }

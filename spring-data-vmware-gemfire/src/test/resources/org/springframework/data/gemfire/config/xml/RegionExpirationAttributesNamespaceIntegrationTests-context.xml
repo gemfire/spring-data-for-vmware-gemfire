@@ -28,35 +28,27 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<bean name="testListener" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCacheListener"/>
 	<bean name="testLoader" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCacheLoader"/>
 	<bean name="testWriter" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCacheWriter"/>
 
-	<gfe:local-region id="ReplicateExample" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="TTLExample" persistent="false">
 		<gfe:cache-listener ref="testListener"/>
 		<gfe:entry-ttl timeout="600" action="${expiration.action}"/>
 		<gfe:entry-tti timeout="300" action="INVALIDATE"/>
 		<gfe:cache-loader ref="testLoader"/>
 		<gfe:cache-writer ref="testWriter"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<!--
-	 NOTE GemFire will switch the Region's DataPolicy when Entry Expiration Action settings
-	 are "LOCAL_[DESTROY|INVALIDATE]" based or the Eviction Action is "LOCAL_[DESTROY|INVALIDATE]".
-	-->
-	<gfe:local-region id="PreloadedExample" data-policy="PRELOADED">
-		<gfe:entry-ttl timeout="120" action="LOCAL_DESTROY"/>
-	</gfe:local-region>
-
-	<gfe:local-region id="LocalExample" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="CustomExample" persistent="false">
 		<gfe:custom-entry-ttl>
 			<bean class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCustomExpiry"
 				  p:name="LocalTtlCustomExpiry" p:timeout="180" p:action="#{T(org.apache.geode.cache.ExpirationAction).LOCAL_DESTROY}"/>
 		</gfe:custom-entry-ttl>
 		<gfe:custom-entry-tti ref="LocalTtiCustomExpiry"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
 	<bean id="LocalTtiCustomExpiry" class="org.springframework.data.gemfire.config.xml.RegionExpirationAttributesNamespaceIntegrationTests$TestCustomExpiry">
 		<property name="name" value="LocalTtiCustomExpiry"/>

@@ -19,17 +19,17 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<!-- NOTE non-parent Regions do not cause an infinite loop when calling hashCode on the BeanDefinition -->
-	<gfe:local-region id="NON_PARENT"/>
+	<gfe:client-region shortcut="LOCAL" id="NON_PARENT"/>
 
 	<!--
 	  NOTE Regions with SubRegions cause an infinite loop to occur when calling hashCode on the parent Region's
 	  BeanDefinition, which is the subject of JIRA issue SGF-178 (https://jira.springsource.org/browse/SGF-178).
 	-->
-	<gfe:local-region id="PARENT">
-		<gfe:local-region name="CHILD"/>
-	</gfe:local-region>
+	<gfe:client-region shortcut="LOCAL" id="PARENT">
+		<gfe:client-region shortcut="LOCAL" name="CHILD"/>
+	</gfe:client-region>
 
 </beans>

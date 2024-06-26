@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 
 import org.springframework.beans.BeanUtils;
@@ -40,7 +39,6 @@ import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.RegexPatternTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.data.gemfire.RegionAttributesFactoryBean;
-import org.springframework.data.gemfire.ScopeType;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
@@ -49,7 +47,6 @@ import org.springframework.data.gemfire.config.xml.GemfireConstants;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
-import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
 import org.springframework.data.gemfire.support.CompositeTypeFilter;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.lang.NonNull;
@@ -71,7 +68,7 @@ import org.springframework.util.StringUtils;
  * @see BeanDefinitionBuilder
  * @see BeanDefinitionRegistry
  * @see ImportBeanDefinitionRegistrar
- * @see org.springframework.data.gemfire.LocalRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see RegionAttributesFactoryBean
  * @see ClientRegionFactoryBean
  * @see AbstractAnnotationConfigSupport
@@ -80,7 +77,6 @@ import org.springframework.util.StringUtils;
  * @see GemfireMappingContext
  * @see GemfirePersistentEntity
  * @see ClientRegion
- * @see LocalRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
  */
@@ -344,9 +340,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			regionFactoryBeanBuilder.addPropertyValue("clientRegionShortcut",
 				resolveClientRegionShortcut(regionMetadata, regionAnnotation, regionAnnotationAttributes));
 
-			regionFactoryBeanBuilder.addPropertyValue("serverRegionShortcut",
-				resolveServerRegionShortcut(regionMetadata, regionAnnotation, regionAnnotationAttributes));
-
 			if (regionAnnotationAttributes.containsKey("diskStoreName")) {
 
 				String diskStoreName = regionAnnotationAttributes.getString("diskStoreName");
@@ -400,19 +393,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 		return ClientRegion.class.equals(regionAnnotation.annotationType())
 			? regionAnnotationAttributes.getEnum("shortcut")
 			: regionMetadata.resolveClientRegionShortcut(DEFAULT_CLIENT_REGION_SHORTCUT);
-	}
-
-	protected RegionShortcut resolveServerRegionShortcut(RegionBeanDefinitionMetadata regionMetadata,
-			Annotation regionAnnotation, AnnotationAttributes regionAnnotationAttributes) {
-
-		Class<? extends Annotation> regionAnnotationType = regionAnnotation.annotationType();
-
-		boolean persistent = (regionAnnotationAttributes.containsKey("persistent")
-			&& regionAnnotationAttributes.getBoolean("persistent"));
-
-		return LocalRegion.class.equals(regionAnnotationType)
-				? (persistent ? RegionShortcut.LOCAL_PERSISTENT : RegionShortcut.LOCAL)
-			: regionMetadata.resolveServerRegionShortcut(DEFAULT_SERVER_REGION_SHORTCUT);
 	}
 
 	protected BeanDefinitionBuilder setClientRegionAttributes(RegionBeanDefinitionMetadata regionMetadata,

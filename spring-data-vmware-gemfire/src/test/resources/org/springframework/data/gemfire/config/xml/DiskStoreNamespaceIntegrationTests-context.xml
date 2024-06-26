@@ -21,7 +21,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-    <gfe:cache properties-ref="gemfireProperties"/>
+    <gfe:client-cache properties-ref="gemfireProperties"/>
 
     <util:properties id="diskStoreProperties">
         <prop key="allowForceCompaction">true</prop>
@@ -64,20 +64,20 @@
 		<gfe:disk-dir location="${location}" max-size="${maxSize}"/>
 	</gfe:disk-store>
 
-	<gfe:local-region id="local-data" persistent="false" disk-store-ref="diskStore1" close="true" destroy="false">
+	<gfe:client-region shortcut="LOCAL" id="local-data" persistent="false" disk-store-ref="diskStore1" close="true" destroy="false">
 		<gfe:region-ttl timeout="${ttl}" action="DESTROY"/>
 		<gfe:region-tti timeout="400" action="INVALIDATE"/>
 		<gfe:entry-ttl timeout="100" action="DESTROY"/>
 		<gfe:entry-tti timeout="200" action="INVALIDATE"/>
 		<gfe:eviction type="ENTRY_COUNT" threshold="50" action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="local-data-with-custom-expiry" close="true" destroy="false">
+	<gfe:client-region shortcut="LOCAL" id="local-data-with-custom-expiry" close="true" destroy="false">
 		<gfe:custom-entry-ttl ref="customExpiry"/>
 		<gfe:custom-entry-tti>
 			<bean class="org.springframework.data.gemfire.config.xml.DiskStoreNamespaceIntegrationTests.TestCustomExpiry"/>
 		</gfe:custom-entry-tti>
-	</gfe:local-region>
+	</gfe:client-region>
 
     <bean id="customExpiry" class="org.springframework.data.gemfire.config.xml.DiskStoreNamespaceIntegrationTests.TestCustomExpiry"/>
 

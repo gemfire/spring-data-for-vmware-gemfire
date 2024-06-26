@@ -5,20 +5,14 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.SubscriptionAttributes;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -44,7 +38,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SubRegionIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private Cache cache;
+	private ClientCache cache;
 
 	@Autowired
 	@Qualifier("Customers")
@@ -91,10 +85,8 @@ public class SubRegionIntegrationTests extends IntegrationTestsSupport {
 		assertThat(regionAttributes.getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(regionAttributes.getConcurrencyLevel()).isEqualTo(20);
 		assertThat(regionAttributes.isDiskSynchronous()).isTrue();
-		assertThat(regionAttributes.getIgnoreJTA()).isTrue();
 		assertThat(regionAttributes.getInitialCapacity()).isEqualTo(1000);
 		assertThat(regionAttributes.getKeyConstraint()).isEqualTo(Long.class);
-		assertThat(regionAttributes.getScope()).isEqualTo(Scope.LOCAL);
 		assertThat(regionAttributes.getStatisticsEnabled()).isTrue();
 		assertThat(regionAttributes.getValueConstraint()).isEqualTo(String.class);
 		assertThat(regionAttributes.getCacheListeners()).isNotNull();
@@ -108,10 +100,5 @@ public class SubRegionIntegrationTests extends IntegrationTestsSupport {
 		assertThat(evictionAttributes).isNotNull();
 		assertThat(evictionAttributes.getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
 		assertThat(evictionAttributes.getMaximum()).isEqualTo(10000);
-
-		SubscriptionAttributes subscriptionAttributes = regionAttributes.getSubscriptionAttributes();
-
-		assertThat(subscriptionAttributes).isNotNull();
-		assertThat(subscriptionAttributes.getInterestPolicy()).isEqualTo(InterestPolicy.CACHE_CONTENT);
 	}
 }

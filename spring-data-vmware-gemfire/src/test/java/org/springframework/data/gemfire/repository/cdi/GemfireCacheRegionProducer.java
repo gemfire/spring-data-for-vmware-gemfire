@@ -7,13 +7,11 @@ package org.springframework.data.gemfire.repository.cdi;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionFactory;
-import org.apache.geode.cache.RegionShortcut;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.util.Assert;
 
@@ -37,12 +35,12 @@ public class GemfireCacheRegionProducer {
 	@ApplicationScoped
 	public Region<Long, Person> createPeopleRegion() {
 
-		Cache gemfireCache = new CacheFactory()
+		ClientCache gemfireCache = new ClientCacheFactory()
 			.set("name", "SpringDataGemFireCdiTest")
 			.set("log-level", "error")
 			.create();
 
-		RegionFactory<Long, Person> peopleRegionFactory = gemfireCache.createRegionFactory(RegionShortcut.REPLICATE);
+		ClientRegionFactory<Long, Person> peopleRegionFactory = gemfireCache.createClientRegionFactory(ClientRegionShortcut.LOCAL);
 
 		peopleRegionFactory.setKeyConstraint(Long.class);
 		peopleRegionFactory.setValueConstraint(Person.class);

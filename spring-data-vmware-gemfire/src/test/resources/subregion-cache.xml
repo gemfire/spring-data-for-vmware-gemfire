@@ -4,23 +4,23 @@
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 
-<cache xmlns="http://geode.apache.org/schema/cache"
+<client-cache xmlns="http://geode.apache.org/schema/cache"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://geode.apache.org/schema/cache https://geode.apache.org/schema/cache/cache-1.0.xsd"
 	   version="1.0">
 
-	<region name="Parent" refid="REPLICATE">
-		<region name="Child" refid="REPLICATE">
-			<region name="Grandchild" refid="REPLICATE"/>
+	<region name="Parent" refid="LOCAL">
+		<region name="Child" refid="LOCAL">
+			<region name="Grandchild" refid="LOCAL"/>
 		</region>
 	</region>
 
-	<region name="Customers" refid="REPLICATE">
-		<region name="Accounts" refid="REPLICATE">
-			<region name="Orders" refid="REPLICATE">
-				<region name="Items" refid="REPLICATE"/>
+	<region name="Customers" refid="LOCAL">
+		<region name="Accounts" refid="LOCAL">
+			<region name="Orders" refid="LOCAL">
+				<region name="Items" refid="LOCAL"/>
 			</region>
 		</region>
 	</region>
 
-</cache>
+</client-cache>

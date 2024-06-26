@@ -9,21 +9,17 @@ import static java.util.Arrays.stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.cache.query.Index;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * Unit tests for {@link SchemaObjectType}.
@@ -41,7 +37,7 @@ public class SchemaObjectTypeUnitTests {
 	@Test
 	public void objectTypesAreSetAndCorrect() {
 
-		Set<Class<?>> expectedSchemaObjectTypes = asSet(Cache.class, ClientCache.class,
+		Set<Class<?>> expectedSchemaObjectTypes = asSet(ClientCache.class,
 			DiskStore.class, Function.class, Index.class,
 			Pool.class, Region.class, Void.class);
 

@@ -15,6 +15,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.sql.DataSource;
 
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -81,7 +83,7 @@ public class SpringContextBootstrappingInitializerIntegrationTests extends Integ
 	@SuppressWarnings("all")
 	private void doSpringContextBootstrappingInitializationTest(String cacheXmlFile) {
 
-		Cache gemfireCache = new CacheFactory()
+		ClientCache gemfireCache = new ClientCacheFactory()
 			.set("name", GEMFIRE_NAME)
 			.set("log-level", GEMFIRE_LOG_LEVEL)
 			.set("cache-xml-file", cacheXmlFile)

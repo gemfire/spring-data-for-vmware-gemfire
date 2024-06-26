@@ -8,15 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+import org.apache.geode.cache.GemFireCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,7 +44,6 @@ public class ClientCacheFactoryCacheResolverIntegrationTests extends Integration
 	@Before
 	public void setup() {
 		assertThat(this.clientCache).isNotNull();
-		assertThat(GemfireUtils.isClient(this.clientCache)).isTrue();
 	}
 
 	@Test

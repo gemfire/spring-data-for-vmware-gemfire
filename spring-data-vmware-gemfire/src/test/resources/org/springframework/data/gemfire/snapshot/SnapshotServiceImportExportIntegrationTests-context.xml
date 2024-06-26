@@ -21,9 +21,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="People" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="People" persistent="false"/>
 
 	<gfe-data:snapshot-service id="peopleSnapshotService" region-ref="People">
 		<gfe-data:snapshot-import location="gemfire/snapshots/import/people-snapshot.gfd"/>

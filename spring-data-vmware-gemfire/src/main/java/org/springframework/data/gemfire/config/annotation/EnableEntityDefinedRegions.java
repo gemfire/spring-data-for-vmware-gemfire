@@ -10,17 +10,14 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
-
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
@@ -43,12 +40,10 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see ComponentScan.Filter
  * @see Import
  * @see AliasFor
- * @see PeerRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see EntityDefinedRegionsConfiguration
  * @see CacheTypeAwareRegionFactoryBean
  * @see ClientRegion
- * @see org.springframework.data.gemfire.mapping.annotation.LocalRegion
  * @see org.springframework.data.gemfire.mapping.annotation.Region
  * @since 1.9.0
  */

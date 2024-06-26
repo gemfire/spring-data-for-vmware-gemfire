@@ -19,7 +19,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/subregion-cache.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/subregion-cache.xml" properties-ref="gemfireProperties"/>
 
 	<gfe:lookup-region id="/Customers/Accounts"/>
 

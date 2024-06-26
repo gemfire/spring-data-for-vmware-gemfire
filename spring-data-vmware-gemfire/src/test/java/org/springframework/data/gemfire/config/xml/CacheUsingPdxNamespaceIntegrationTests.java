@@ -5,13 +5,10 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.apache.geode.pdx.PdxSerializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.pdx.PdxSerializer;
-
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
@@ -23,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.pdx.PdxSerializer
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
@@ -53,8 +50,8 @@ public class CacheUsingPdxNamespaceIntegrationTests extends IntegrationTestsSupp
 	@Test
 	public void testCachePdxConfiguration() {
 
-		CacheFactoryBean cacheFactoryBean =
-			requireApplicationContext().getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean =
+			requireApplicationContext().getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(cacheFactoryBean).isNotNull();
 		assertThat(cacheFactoryBean.getPdxDiskStoreName()).isEqualTo("pdxStore");

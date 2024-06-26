@@ -19,8 +19,8 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="NativeLocalRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="NativeLocalRegion" persistent="false"/>
 
 </beans>

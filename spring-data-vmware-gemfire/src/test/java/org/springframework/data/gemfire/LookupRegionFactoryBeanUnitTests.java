@@ -13,9 +13,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheListener;
@@ -26,6 +23,8 @@ import org.apache.geode.cache.EvictionAttributesMutator;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
 
 /**
  * Unit Tests for {@link LookupRegionFactoryBean}.
@@ -129,7 +128,7 @@ public class LookupRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void testAfterPropertiesSetWhenRegionStatisticsDisabledAndExpirationSpecified() throws Exception {
 
-		Cache mockCache = mock(Cache.class);
+		ClientCache mockCache = mock(ClientCache.class);
 
 		Region<Object, Object> mockRegion = mock(Region.class);
 

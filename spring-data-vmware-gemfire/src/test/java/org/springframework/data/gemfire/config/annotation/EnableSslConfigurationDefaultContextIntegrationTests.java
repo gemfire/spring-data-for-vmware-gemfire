@@ -5,17 +5,13 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
@@ -249,7 +245,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	@EnableSsl
 	static class SslPropertyBasedClientConfiguration { }
 
-	@PeerCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
+	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl(
 		ciphers = { "FISH", "Scream", "SEAL", "SNOW" },
 		components = { EnableSsl.Component.SERVER, EnableSsl.Component.GATEWAY },
@@ -269,7 +265,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	)
 	static class SslAnnotationBasedPeerConfiguration { }
 
-	@PeerCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
+	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl
 	static class SslPropertyBasedPeerConfiguration { }
 

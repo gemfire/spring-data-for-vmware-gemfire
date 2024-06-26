@@ -21,8 +21,8 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
+	<gfe:client-cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
 
-	<gfe:local-region id="TestRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="TestRegion" persistent="false"/>
 
 </beans>

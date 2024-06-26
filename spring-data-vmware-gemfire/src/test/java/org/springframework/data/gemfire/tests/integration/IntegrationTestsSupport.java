@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.tests.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -28,10 +27,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import org.junit.AfterClass;
-import org.junit.Before;
-
 import org.apache.geode.DataSerializer;
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
@@ -44,9 +39,9 @@ import org.apache.geode.internal.cache.GemFireCacheImpl;
 import org.apache.geode.internal.cache.InternalCache;
 import org.apache.geode.internal.net.SSLConfigurationFactory;
 import org.apache.geode.internal.net.SocketCreatorFactory;
-
 import org.apache.shiro.util.StringUtils;
-
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -427,12 +422,7 @@ public abstract class IntegrationTestsSupport {
 
 		Function<GemFireCache, GemFireCache> cacheClosingFunction = cacheToClose -> {
 
-			if (GemfireUtils.isClient(cacheToClose)) {
-				((ClientCache) cacheToClose).close(false);
-			}
-			else {
-				cacheToClose.close();
-			}
+			((ClientCache) cacheToClose).close(false);
 
 			return cacheToClose;
 		};

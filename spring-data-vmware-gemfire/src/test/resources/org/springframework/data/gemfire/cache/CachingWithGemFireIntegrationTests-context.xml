@@ -24,7 +24,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:region-template id="Template" initial-capacity="51" load-factor="0.75"/>
 
@@ -56,13 +56,8 @@
 		<property name="namedNumbersRepo" ref="namedNumbersRepo"/>
 	</bean>
 
-	<beans profile="replica">
-		<gfe:local-region id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
-							   value-constraint="java.lang.Integer" template="Template"/>
-	</beans>
-
-	<beans profile="local">
-		<gfe:local-region id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
+	<beans>
+		<gfe:client-region shortcut="LOCAL" id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
 								value-constraint="java.lang.Integer" template="Template"/>
 	</beans>
 

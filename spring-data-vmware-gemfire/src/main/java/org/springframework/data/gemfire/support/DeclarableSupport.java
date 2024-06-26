@@ -5,12 +5,9 @@
 package org.springframework.data.gemfire.support;
 
 import static org.springframework.data.gemfire.support.GemfireBeanFactoryLocator.newBeanFactoryLocator;
-
 import org.apache.geode.cache.CacheCallback;
 import org.apache.geode.cache.Declarable;
-
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 
 /**
  * Abstract base class for implementing Spring aware, Apache Geode {@link Declarable} components.
@@ -19,7 +16,7 @@ import org.springframework.data.gemfire.PeerRegionFactoryBean;
  * perform Spring bean lookups or resource loading.
  *
  * Note, in most cases, the developer should just declare the same Apache Geode components as Spring beans
- * in the Spring container through the {@link PeerRegionFactoryBean}, which gives full access to the Spring container
+ * in the Spring container through the {@link ClientRegionFactoryBean}, which gives full access to the Spring container
  * capabilities and does not enforce the {@link Declarable} interface to be implemented.
  *
  * @author Costin Leau

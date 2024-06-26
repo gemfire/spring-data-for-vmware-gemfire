@@ -17,26 +17,21 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
+import com.gemstone.gemfire.TestGemStoneGemFireType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import com.gemstone.gemfire.TestGemStoneGemFireType;
-
+import org.apache.geode.pdx.PdxSerializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.MappingPdxSerializer;
 import org.springframework.util.MethodInvoker;
@@ -145,7 +140,7 @@ public class EnablePdxConfigurationUnitTests {
 		doReturn(true).when(this.pdxConfiguration).isReadSerialized();
 		doReturn(Optional.of("MockPdxSerializer")).when(this.pdxConfiguration).getSerializerBeanName();
 
-		CacheFactoryBean cacheFactoryBean = new CacheFactoryBean();
+		ClientCacheFactoryBean cacheFactoryBean = new ClientCacheFactoryBean();
 
 		this.pdxConfiguration.setBeanFactory(mockBeanFactory);
 		this.pdxConfiguration.configurePdx(cacheFactoryBean);

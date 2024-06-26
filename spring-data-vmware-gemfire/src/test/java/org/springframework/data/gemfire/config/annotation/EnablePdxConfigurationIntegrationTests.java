@@ -6,19 +6,15 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
-import org.junit.After;
-import org.junit.Test;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.data.gemfire.DiskStoreFactoryBean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.mapping.MappingPdxSerializer;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
@@ -54,7 +50,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 		assertThat(containsBean("TestDiskStore")).isTrue();
 		assertThat(containsBean("TestRegion")).isTrue();
 
-		CacheFactoryBean gemfireCache = getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean gemfireCache = getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getPdxSerializer()).isEqualTo(getBean("MockPdxSerializer", PdxSerializer.class));
@@ -81,7 +77,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 		assertThat(containsBean("TestDiskStore")).isTrue();
 		assertThat(containsBean("TestRegion")).isTrue();
 
-		CacheFactoryBean gemfireCache = getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean gemfireCache = getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getPdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
@@ -100,7 +96,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnablePdx(diskStoreName = "TestDiskStore", serializerBeanName = "MockPdxSerializer")
 	@SuppressWarnings("unused")
@@ -117,9 +113,9 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 		}
 
 		@Bean("TestRegion")
-		LocalRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
 
-			LocalRegionFactoryBean<Object, Object> testRegion = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> testRegion = new ClientRegionFactoryBean<>();
 
 			testRegion.setCache(gemfireCache);
 			testRegion.setClose(false);

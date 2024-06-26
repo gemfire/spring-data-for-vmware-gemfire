@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractLazyResolvingComposableConfigurer;
 import org.springframework.lang.Nullable;
@@ -16,7 +15,6 @@ import org.springframework.lang.Nullable;
  * @author John Blum
  * @see BeanFactory
  * @see org.springframework.data.gemfire.ConfigurableRegionFactoryBean
- * @see PeerRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see RegionConfigurer
  * @see AbstractLazyResolvingComposableConfigurer
@@ -40,7 +38,7 @@ public class LazyResolvingComposableRegionConfigurer
 	}
 
 	@Override
-	public void configure(String beanName, PeerRegionFactoryBean<?, ?> peerRegionFactoryBean) {
+	public void configure(String beanName, ClientRegionFactoryBean<?, ?> peerRegionFactoryBean) {
 		resolveConfigurers().forEach(configurer -> configurer.configure(beanName, peerRegionFactoryBean));
 	}
 }

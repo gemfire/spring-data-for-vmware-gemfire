@@ -9,15 +9,13 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.springframework.data.gemfire.CacheFactoryBean.JndiDataSource;
+import static org.springframework.data.gemfire.client.ClientCacheFactoryBean.JndiDataSource;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
@@ -31,7 +29,7 @@ import org.springframework.context.annotation.ImportAware;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.Resource;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.config.support.DefinedIndexesApplicationListener;
@@ -64,7 +62,7 @@ import org.springframework.util.StringUtils;
  * @see AnnotationAttributes
  * @see Resource
  * @see AnnotationMetadata
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see AbstractAnnotationConfigSupport
  * @see CustomEditorBeanFactoryPostProcessor
@@ -203,7 +201,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 */
 	protected void configureCache(AnnotationMetadata importMetadata) {
 
-		if (isClientOrPeerCacheApplication(importMetadata)) {
+		if (isClientCacheApplication(importMetadata)) {
 
 			AnnotationAttributes cacheMetadataAttributes = getAnnotationAttributes(importMetadata);
 
@@ -247,53 +245,48 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	protected void configureOptional(AnnotationMetadata importMetadata) { }
 
 	/**
-	 * Constructs a new, initialized instance of {@link CacheFactoryBean} based on the Spring application's
+	 * Constructs a new, initialized instance of {@link ClientCacheFactoryBean} based on the Spring application's
 	 * cache type preference (i.e. client or peer), which is expressed via the appropriate annotation.
 	 *
 	 * Use the {@link ClientCacheApplication} Annotation to construct a {@link ClientCache cache client} application.
 	 *
-	 * Use the {@link PeerCacheApplication} Annotation to construct a {@link Cache peer cache} application.
-	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @return a new instance of the appropriate {@link CacheFactoryBean} given the Spring application's
-	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
-	 * or {@link PeerCacheApplication}).
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @return a new instance of the appropriate {@link ClientCacheFactoryBean} given the Spring application's
+	 * cache type preference.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
-	 * @see #configureCacheFactoryBean(CacheFactoryBean)
+	 * @see ClientCacheFactoryBean
+	 * @see #configureCacheFactoryBean(ClientCacheFactoryBean)
 	 * @see #newCacheFactoryBean()
 	 */
-	protected <T extends CacheFactoryBean> T constructCacheFactoryBean() {
+	protected <T extends ClientCacheFactoryBean> T constructCacheFactoryBean() {
 		return configureCacheFactoryBean(newCacheFactoryBean());
 	}
 
 	/**
-	 * Constructs a new, uninitialized instance of {@link CacheFactoryBean} based on the Spring application's
+	 * Constructs a new, uninitialized instance of {@link ClientCacheFactoryBean} based on the Spring application's
 	 * cache type preference (i.e. client or peer), which is expressed via the appropriate annotation.
 	 *
 	 * Use the {@link ClientCacheApplication} Annotation to construct a {@link ClientCache cache client} application.
 	 *
-	 * Use the {@link PeerCacheApplication} Annotation to construct a {@link Cache peer cache} application.
 	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @return a new instance of the appropriate {@link CacheFactoryBean} given the Spring application's
-	 * cache type preference (i.e client or peer),  (e.g. {@link ClientCacheApplication}
-	 * or {@link PeerCacheApplication}).
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @return a new instance of the appropriate {@link ClientCacheFactoryBean} given the Spring application's
+	 * cache type preference.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see ClientCacheFactoryBean
 	 */
-	protected abstract <T extends CacheFactoryBean> T newCacheFactoryBean();
+	protected abstract <T extends ClientCacheFactoryBean> T newCacheFactoryBean();
 
 	/**
-	 * Configures the {@link CacheFactoryBean} with common cache configuration settings.
+	 * Configures the {@link ClientCacheFactoryBean} with common cache configuration settings.
 	 *
-	 * @param <T> {@link Class} specific sub-type of the {@link CacheFactoryBean}.
-	 * @param gemfireCache {@link CacheFactoryBean} to configure.
-	 * @return the given {@link CacheFactoryBean} with common cache configuration settings applied.
+	 * @param <T> {@link Class} specific sub-type of the {@link ClientCacheFactoryBean}.
+	 * @param gemfireCache {@link ClientCacheFactoryBean} to configure.
+	 * @return the given {@link ClientCacheFactoryBean} with common cache configuration settings applied.
 	 * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
-	 * @see CacheFactoryBean
+	 * @see ClientCacheFactoryBean
 	 */
-	protected <T extends CacheFactoryBean> T configureCacheFactoryBean(T gemfireCache) {
+	protected <T extends ClientCacheFactoryBean> T configureCacheFactoryBean(T gemfireCache) {
 
 		gemfireCache.setBeanClassLoader(getBeanClassLoader());
 		gemfireCache.setBeanFactory(getBeanFactory());
@@ -327,21 +320,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	}
 
 	/**
-	 * Determines whether this is a GemFire peer {@link Cache} application,
-	 * which is indicated by the presence of the {@link PeerCacheApplication} annotation on a Spring application
-	 * {@link Configuration @Configuration} class.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire peer cache application.
-	 * @see PeerCacheApplication
-	 * @see #isTypedCacheApplication(Class, AnnotationMetadata)
-	 */
-	protected boolean isPeerCacheApplication(AnnotationMetadata importMetadata) {
-		return isTypedCacheApplication(PeerCacheApplication.class, importMetadata);
-	}
-
-	/**
 	 * Determines whether this Spring application is annotated with the given GemFire cache type annotation.
 	 *
 	 * @param annotationType {@link Annotation} cache type.
@@ -358,23 +336,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 			AnnotationMetadata importMetadata) {
 
 		return annotationType.equals(getAnnotationType()) && importMetadata.hasAnnotation(getAnnotationTypeName());
-	}
-
-	/**
-	 * Determine whether this Spring application is a {@link CacheServer},
-	 * {@link ClientCache} or a {@link Cache} application.
-	 *
-	 * @param importMetadata {@link AnnotationMetadata} containing application configuration meta-data
-	 * from the class type-level annotations used to configure the Spring application.
-	 * @return a boolean value indicating whether this is a GemFire cache server, client cache or peer cache
-	 * Spring application.
-	 * @see #isClientCacheApplication(AnnotationMetadata)
-	 * @see #isPeerCacheApplication(AnnotationMetadata)
-	 */
-	protected boolean isClientOrPeerCacheApplication(AnnotationMetadata importMetadata) {
-
-		return isClientCacheApplication(importMetadata)
-			|| isPeerCacheApplication(importMetadata);
 	}
 
 	void setCacheXml(Resource cacheXml) {

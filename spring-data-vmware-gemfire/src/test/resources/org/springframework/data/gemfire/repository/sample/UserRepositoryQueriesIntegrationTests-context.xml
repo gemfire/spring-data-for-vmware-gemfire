@@ -23,9 +23,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="Users" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="Users" persistent="false"/>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable"

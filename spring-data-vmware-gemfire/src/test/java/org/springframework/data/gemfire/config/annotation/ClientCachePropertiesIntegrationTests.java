@@ -6,19 +6,15 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
@@ -196,7 +192,6 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		assertThat(mockSocketFactory).isNotNull();
 		assertThat(clientCacheFactoryBean.getDurableClientId()).isEqualTo("123");
 		assertThat(clientCacheFactoryBean.getDurableClientTimeout()).isEqualTo(600);
-		assertThat(clientCacheFactoryBean.getUseClusterConfiguration()).isFalse();
 		assertThat(clientCacheFactoryBean.isKeepAlive()).isTrue();
 		assertThat(clientCacheFactoryBean.isReadyForEvents()).isTrue();
 		assertThat(clientCacheFactoryBean.isUseBeanFactoryLocator()).isTrue();

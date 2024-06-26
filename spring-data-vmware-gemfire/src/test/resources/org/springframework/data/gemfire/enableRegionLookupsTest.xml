@@ -24,9 +24,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="NativeLocalRegion" ignore-if-exists="true"
+	<gfe:client-region shortcut="LOCAL" id="NativeLocalRegion" ignore-if-exists="true"
 		cloning-enabled="true"
 		concurrency-checks-enabled="true"
 		concurrency-level="5"
@@ -36,7 +36,7 @@
 		persistent="true"
 		value-constraint="java.util.Date"/>
 
-	<gfe:local-region id="NativeReplicateRegion" ignore-if-exists="true"
+	<gfe:client-region shortcut="LOCAL" id="NativeReplicateRegion" ignore-if-exists="true"
 		cloning-enabled="true"
 		concurrency-checks-enabled="false"
 		concurrency-level="15"
@@ -46,12 +46,12 @@
 		persistent="false"
 		value-constraint="java.util.Date"/>
 
-	<gfe:local-region id="NativeParentRegion" ignore-if-exists="true">
-		<gfe:local-region name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
-	</gfe:local-region>
+	<gfe:client-region shortcut="LOCAL" id="NativeParentRegion" ignore-if-exists="true">
+		<gfe:client-region shortcut="LOCAL" name="NativeChildRegion" ignore-if-exists="true" persistent="true"/>
+	</gfe:client-region>
 
-	<gfe:local-region id="regionOne" name="SpringLocalRegion" persistent="false"/>
+	<gfe:client-region shortcut="LOCAL" id="regionOne" name="SpringLocalRegion" persistent="false"/>
 
-	<gfe:local-region id="regionTwo" name="SpringLocalRegion" ignore-if-exists="true" persistent="true"/>
+	<gfe:client-region shortcut="LOCAL" id="regionTwo" name="SpringLocalRegion" ignore-if-exists="true" persistent="true"/>
 
 </beans>

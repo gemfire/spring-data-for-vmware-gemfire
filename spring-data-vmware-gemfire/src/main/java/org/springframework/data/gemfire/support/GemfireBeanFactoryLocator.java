@@ -7,14 +7,14 @@ package org.springframework.data.gemfire.support;
 import static org.springframework.data.gemfire.support.GemfireBeanFactoryLocator.BeanFactoryReference.newBeanFactoryReference;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeSet;
 import static org.springframework.data.gemfire.util.SpringExtensions.nullOrEquals;
-
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicReference;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.BeanNameAware;
@@ -25,9 +25,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The {@link GemfireBeanFactoryLocator} class stores a reference to the Spring
  * {@link org.springframework.context.ApplicationContext} / {@link BeanFactory} needed to auto-wire
@@ -35,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * and defined in Apache Geode's native configuration format (e.g. {@literal cache.xml}.
  *
  * In most cases, a developer does not need to use this class directly as it is registered by
- * the {@link org.springframework.data.gemfire.CacheFactoryBean}
+ * the {@link org.springframework.data.gemfire.client.ClientCacheFactoryBean}
  * when the {@literal useBeanFactoryLocator} property is set, and used internally by both
  * the {@link WiringDeclarableSupport} and {@link LazyWiringDeclarableSupport} SDG classes.
  *

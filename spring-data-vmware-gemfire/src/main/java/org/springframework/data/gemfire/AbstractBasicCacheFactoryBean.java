@@ -8,11 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-
 import org.apache.geode.GemFireCheckedException;
 import org.apache.geode.GemFireException;
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
@@ -21,7 +18,6 @@ import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,7 +27,6 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
-import org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
@@ -40,8 +35,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Abstract base class for {@link CacheFactoryBean} and {@link ClientCacheFactoryBean} classes,
- * used to create Apache Geode peer {@link Cache} and {@link ClientCache} instances, respectively.
+ * Abstract base class for {@link ClientCacheFactoryBean} and {@link ClientCacheFactoryBean} classes,
+ * used to create Apache Geode {@link ClientCache} instances, respectively.
  *
  * This class implements Spring's {@link PersistenceExceptionTranslator} interface and is auto-detected by Spring's
  * {@link PersistenceExceptionTranslationPostProcessor} to enable AOP-based translation of native Apache Geode
@@ -70,13 +65,11 @@ import org.springframework.util.StringUtils;
  *     <li>Transaction event processing</li>
  * </ul>
  *
- * All of these concerns are applicable to both Apache Geode {@link ClientCache} and peer {@link Cache} instances.
+ * All of these concerns are applicable to both Apache Geode {@link ClientCache} instances.
  *
  * @author John Blum
  * @see GemFireCheckedException
  * @see GemFireException
- * @see Cache
- * @see CacheFactory
  * @see DiskStore
  * @see GemFireCache
  * @see Region
@@ -92,10 +85,10 @@ import org.springframework.util.StringUtils;
  * @see DataAccessException
  * @see PersistenceExceptionTranslationPostProcessor
  * @see PersistenceExceptionTranslator
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see ClientCacheFactoryBean
  * @see ClientCacheConfigurer
- * @see PeerCacheConfigurer
+ * @see ClientCacheConfigurer
  * @see AbstractFactoryBeanSupport
  * @since 2.5.0
  */
@@ -338,7 +331,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Sets the {@link String name} of the Apache Geode {@link DiskStore} used to store PDX metadata.
 	 *
 	 * @param pdxDiskStoreName {@link String name} for the PDX {@link DiskStore}.
-	 * @see CacheFactory#setPdxDiskStore(String)
+	 * @see ClientCacheFactory#setPdxDiskStore(String)
 	 * @see DiskStore#getName()
 	 */
 	public void setPdxDiskStoreName(@Nullable String pdxDiskStoreName) {
@@ -362,7 +355,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Defaults to {@literal false}.
 	 *
 	 * @param pdxIgnoreUnreadFields {@link Boolean} value controlling ignoring unread fields.
-	 * @see CacheFactory#setPdxIgnoreUnreadFields(boolean)
+	 * @see ClientCacheFactory#setPdxIgnoreUnreadFields(boolean)
 	 */
 	public void setPdxIgnoreUnreadFields(@Nullable Boolean pdxIgnoreUnreadFields) {
 		this.pdxIgnoreUnreadFields = pdxIgnoreUnreadFields;
@@ -387,7 +380,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 *
 	 * @param pdxPersistent {@link Boolean} value controlling whether PDX {@link Class type} metadata
 	 * will be persisted to disk.
-	 * @see CacheFactory#setPdxPersistent(boolean)
+	 * @see ClientCacheFactory#setPdxPersistent(boolean)
 	 */
 	public void setPdxPersistent(@Nullable Boolean pdxPersistent) {
 		this.pdxPersistent = pdxPersistent;
@@ -410,7 +403,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * is called.
 	 *
 	 * @param pdxReadSerialized {@link Boolean} value controlling the PDX read serialized function.
-	 * @see CacheFactory#setPdxReadSerialized(boolean)
+	 * @see ClientCacheFactory#setPdxReadSerialized(boolean)
 	 */
 	public void setPdxReadSerialized(@Nullable Boolean pdxReadSerialized) {
 		this.pdxReadSerialized = pdxReadSerialized;
@@ -433,7 +426,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * stored in the cache and distributed/transferred across the distributed system as PDX bytes.
 	 *
 	 * @param serializer {@link PdxSerializer} used by this cache to de/serialize {@link Object objects} as PDX.
-	 * @see CacheFactory#setPdxSerializer(PdxSerializer)
+	 * @see ClientCacheFactory#setPdxSerializer(PdxSerializer)
 	 * @see PdxSerializer
 	 */
 	public void setPdxSerializer(@Nullable PdxSerializer serializer) {
@@ -536,7 +529,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Applies any user-defined cache configurers (e.g. {@link ClientCacheConfigurer} or {@link PeerCacheConfigurer})
+	 * Applies any user-defined cache configurers (e.g. {@link ClientCacheConfigurer} or {@link ClientCacheConfigurer})
 	 * to this cache {@link FactoryBean} before cache construction, configuration and initialization.
  	 */
 	protected abstract void applyCacheConfigurers();
@@ -656,7 +649,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * @return an existing cache instance if available.
 	 * @throws org.apache.geode.cache.CacheClosedException if an existing cache instance does not exist.
 	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see CacheFactory#getAnyInstance()
+	 * @see ClientCacheFactory#getAnyInstance()
 	 * @see GemFireCache
 	 * @see #doFetchCache()
 	 * @see #getCache()
@@ -672,7 +665,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Called by {@link #fetchCache()} if the {@link GemFireCache} reference returned by {@link #getCache()}
 	 * is {@literal null}.
 	 *
-	 * This method is typically implemented by calling {@link CacheFactory#getAnyInstance()}
+	 * This method is typically implemented by calling {@link ClientCacheFactory#getAnyInstance()}
 	 * or {@link ClientCacheFactory#getAnyInstance()} depending on the {@link GemFireCache} type declared
 	 * and used in the Spring application.
 	 *
@@ -684,14 +677,14 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	protected abstract <T extends GemFireCache> T doFetchCache();
 
 	/**
-	 * Initializes the given {@link CacheFactory} or {@link ClientCacheFactory}
+	 * Initializes the given {@link ClientCacheFactory} or {@link ClientCacheFactory}
 	 * with the configured {@link CacheFactoryInitializer}.
 	 *
-	 * @param factory {@link CacheFactory} or {@link ClientCacheFactory} to initialize.
-	 * @return the initialized {@link CacheFactory} or {@link ClientCacheFactory}.
+	 * @param factory {@link ClientCacheFactory} or {@link ClientCacheFactory} to initialize.
+	 * @return the initialized {@link ClientCacheFactory} or {@link ClientCacheFactory}.
 	 * @see CacheFactoryInitializer#initialize(Object)
 	 * @see ClientCacheFactory
-	 * @see CacheFactory
+	 * @see ClientCacheFactory
 	 * @see #getCacheFactoryInitializer()
 	 */
 	@Nullable
@@ -722,27 +715,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 		CollectionUtils.nullSafeCollection(getTransactionListeners()).stream()
 			.filter(Objects::nonNull)
 			.forEach(transactionListener -> cache.getCacheTransactionManager().addListener(transactionListener));
-
-		return cache;
-	}
-
-	/**
-	 * Registers the configured, application-defined {@link TransactionWriter} with the cache (transaction manager)
-	 * to receive transaction events with the intent to alter the transaction outcome (e.g. veto).
-	 *
-	 * @param cache {@link GemFireCache} used to register the configured, application-defined {@link TransactionWriter},
-	 * must not be {@literal null}.
-	 * @return the given {@link GemFireCache}.
-	 * @see GemFireCache#getCacheTransactionManager()
-	 * @see org.apache.geode.cache.CacheTransactionManager#setWriter(TransactionWriter)
-	 * @see org.apache.geode.cache.CacheTransactionManager
-	 * @see TransactionWriter
-	 * @see GemFireCache
-	 */
-	protected @NonNull GemFireCache registerTransactionWriter(@NonNull GemFireCache cache) {
-
-		Optional.ofNullable(getTransactionWriter())
-			.ifPresent(transactionWriter -> cache.getCacheTransactionManager().setWriter(transactionWriter));
 
 		return cache;
 	}
@@ -786,11 +758,11 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Callback interface for initializing a {@link CacheFactory} or a {@link ClientCacheFactory} instance,
+	 * Callback interface for initializing a {@link ClientCacheFactory} or a {@link ClientCacheFactory} instance,
 	 * which is used to create an instance of {@link GemFireCache}.
 	 *
 	 * @see ClientCacheFactory
-	 * @see CacheFactory
+	 * @see ClientCacheFactory
 	 * @see Function
 	 */
 	@FunctionalInterface
@@ -814,7 +786,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 		 * @param cacheFactory cache factory to initialize.
 		 * @return the given cache factory.
 		 * @see ClientCacheFactory
-		 * @see CacheFactory
+		 * @see ClientCacheFactory
 		 */
 		T initialize(T cacheFactory);
 
@@ -825,7 +797,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 *
 	 * @param <T> parameterized {@link Class} type capable of configuring Apache Geode PDX functionality.
 	 * @see ClientCacheFactory
-	 * @see CacheFactory
+	 * @see ClientCacheFactory
 	 * @see GemFireCache
 	 */
 	public interface PdxConfigurer<T> {

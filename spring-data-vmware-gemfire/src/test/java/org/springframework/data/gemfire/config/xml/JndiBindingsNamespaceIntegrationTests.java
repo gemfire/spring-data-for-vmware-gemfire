@@ -5,16 +5,12 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.internal.datasource.GemFireBasicDataSource;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.internal.datasource.GemFireBasicDataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
@@ -46,7 +42,7 @@ public class JndiBindingsNamespaceIntegrationTests extends IntegrationTestsSuppo
 	}
 
 	@Autowired
-	private Cache cache;
+	private ClientCache cache;
 
 	@Test
 	public void testJndiBindings() throws Exception {

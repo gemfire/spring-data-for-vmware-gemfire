@@ -19,25 +19,25 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:disk-store id="DiskStoreOne" auto-compact="true" compaction-threshold="75">
 		<gfe:disk-dir location="." max-size="1024"/>
 	</gfe:disk-store>
 
-	<gfe:local-region id="NotPersistentNoOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
-	</gfe:local-region>
+	<gfe:client-region shortcut="LOCAL" id="NotPersistentNoOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
+	</gfe:client-region>
 
-	<gfe:local-region id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
+	<gfe:client-region shortcut="LOCAL" id="NotPersistentOverflowRegion" persistent="false" disk-store-ref="DiskStoreOne">
 		<gfe:eviction action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+	<gfe:client-region shortcut="LOCAL_PERSISTENT" id="PersistentNoOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
 		<gfe:eviction action="LOCAL_DESTROY"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
+	<gfe:client-region shortcut="LOCAL_PERSISTENT_OVERFLOW" id="PersistentOverflowRegion" persistent="true" disk-store-ref="DiskStoreOne">
 		<gfe:eviction action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
 </beans>

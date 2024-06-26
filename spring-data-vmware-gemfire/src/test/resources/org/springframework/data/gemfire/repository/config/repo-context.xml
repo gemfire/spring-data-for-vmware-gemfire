@@ -23,11 +23,11 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
+	<gfe:client-cache properties-ref="gemfireProperties" use-bean-factory-locator="false"/>
 
-	<gfe:local-region id="simple"/>
-	<gfe:local-region id="person"/>
-	<gfe:local-region id="address"/>
+	<gfe:client-region shortcut="LOCAL" id="simple"/>
+	<gfe:client-region shortcut="LOCAL" id="person"/>
+	<gfe:client-region shortcut="LOCAL" id="address"/>
 
 	<gfe-data:repositories base-package="org.springframework.data.gemfire.repository.sample">
 		<repo:include-filter type="assignable"

@@ -31,7 +31,7 @@
 		<prop key="groups">HelloGroup</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="lazy-wiring-declarable-support-function-cache.xml" properties-ref="gemfireProperties"
+	<gfe:client-cache cache-xml-location="lazy-wiring-declarable-support-function-cache.xml" properties-ref="gemfireProperties"
 			   use-bean-factory-locator="true"/>
 
 	<gfe-data:function-executions base-package="org.springframework.data.gemfire.function.sample">

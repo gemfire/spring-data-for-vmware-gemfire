@@ -24,7 +24,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
-import static org.springframework.data.gemfire.tests.util.IOUtils.doSafeIo;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.NOT_SUPPORTED;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -66,7 +65,6 @@ import java.util.stream.Collectors;
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheCallback;
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheTransactionManager;
@@ -164,7 +162,7 @@ import org.springframework.util.StringUtils;
  * @see UUID
  * @see AttributesMutator
  * @see Cache
- * @see CacheFactory
+ * @see ClientCacheFactory
  * @see CacheListener
  * @see CacheLoader
  * @see CacheWriter
@@ -847,147 +845,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		GemFireCache mockGemFireCache = mock(GemFireCache.class);
 
 		return referTo(mockQueryService(mockCacheApi(mockGemFireCache)));
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Cache mockPeerCache() {
-
-		Cache mockCache = mock(Cache.class);
-
-		AtomicInteger lockLease = new AtomicInteger();
-		AtomicInteger lockTimeout = new AtomicInteger();
-		AtomicInteger messageSyncInterval = new AtomicInteger();
-		AtomicInteger searchTimeout = new AtomicInteger();
-
-		List<CacheServer> cacheServers = new ArrayList<>();
-
-		when(mockCache.addCacheServer()).thenAnswer(invocation -> {
-
-			CacheServer mockCacheServer = mockCacheServer();
-
-			cacheServers.add(mockCacheServer);
-
-			return mockCacheServer;
-		});
-
-		doAnswer(newSetter(lockLease, null)).when(mockCache).setLockLease(anyInt());
-		doAnswer(newSetter(lockTimeout, null)).when(mockCache).setLockTimeout(anyInt());
-		doAnswer(newSetter(messageSyncInterval, null)).when(mockCache).setMessageSyncInterval(anyInt());
-		doAnswer(newSetter(searchTimeout, null)).when(mockCache).setSearchTimeout(anyInt());
-
-		when(mockCache.isServer()).thenReturn(true);
-		when(mockCache.getCacheServers()).thenAnswer(invocation -> Collections.unmodifiableList(cacheServers));
-		when(mockCache.getLockLease()).thenAnswer(newGetter(lockLease));
-		when(mockCache.getLockTimeout()).thenAnswer(newGetter(lockTimeout));
-		when(mockCache.getMessageSyncInterval()).thenAnswer(newGetter(messageSyncInterval));
-		when(mockCache.getReconnectedCache()).thenAnswer(invocation -> mockPeerCache());
-		when(mockCache.getSearchTimeout()).thenAnswer(newGetter(searchTimeout));
-
-		when(mockCache.createRegionFactory()).thenAnswer(invocation -> mockRegionFactory(mockCache));
-
-		when(mockCache.createRegionFactory(any(RegionAttributes.class))).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<RegionAttributes<?, ?>>getArgument(0)));
-
-		when(mockCache.createRegionFactory(any(RegionShortcut.class))).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<RegionShortcut>getArgument(0)));
-
-		when(mockCache.createRegionFactory(anyString())).thenAnswer(invocation ->
-			mockRegionFactory(mockCache, invocation.<String>getArgument(0)));
-
-		return referTo(
-			mockQueryService(mockCacheApi(mockCache)));
-	}
-
-	public static CacheServer mockCacheServer() {
-
-		CacheServer mockCacheServer = mock(CacheServer.class);
-
-		AtomicBoolean running = new AtomicBoolean(false);
-		AtomicBoolean tcpNoDelay = new AtomicBoolean(CacheServer.DEFAULT_TCP_NO_DELAY);
-
-		AtomicInteger maxConnections = new AtomicInteger(CacheServer.DEFAULT_MAX_CONNECTIONS);
-		AtomicInteger maxMessageCount = new AtomicInteger(CacheServer.DEFAULT_MAXIMUM_MESSAGE_COUNT);
-		AtomicInteger maxThreads = new AtomicInteger(CacheServer.DEFAULT_MAX_THREADS);
-		AtomicInteger maxTimeBetweenPings = new AtomicInteger(CacheServer.DEFAULT_MAXIMUM_TIME_BETWEEN_PINGS);
-		AtomicInteger messageTimeToLive = new AtomicInteger(CacheServer.DEFAULT_MESSAGE_TIME_TO_LIVE);
-		AtomicInteger port = new AtomicInteger(CacheServer.DEFAULT_PORT);
-		AtomicInteger socketBufferSize = new AtomicInteger(CacheServer.DEFAULT_SOCKET_BUFFER_SIZE);
-
-		AtomicLong loadPollInterval = new AtomicLong(CacheServer.DEFAULT_LOAD_POLL_INTERVAL);
-
-		AtomicReference<String> bindAddress = new AtomicReference<>(CacheServer.DEFAULT_BIND_ADDRESS);
-		AtomicReference<String> hostnameForClients = new AtomicReference<>(CacheServer.DEFAULT_HOSTNAME_FOR_CLIENTS);
-		AtomicReference<ServerLoadProbe> serverLoadProbe = new AtomicReference<>(null);
-
-		AtomicReference<String[]> groups = new AtomicReference<>(CacheServer.DEFAULT_GROUPS);
-
-		doAnswer(newSetter(bindAddress, () -> null))
-			.when(mockCacheServer).setBindAddress(anyString());
-
-		doAnswer(newSetter(groups, () -> null))
-			.when(mockCacheServer).setGroups(any(String[].class));
-
-		doAnswer(newSetter(hostnameForClients, () -> null))
-			.when(mockCacheServer).setHostnameForClients(anyString());
-
-		doAnswer(newSetter(loadPollInterval, null))
-			.when(mockCacheServer).setLoadPollInterval(anyLong());
-
-		doAnswer(newSetter(maxConnections, null))
-			.when(mockCacheServer).setMaxConnections(anyInt());
-
-		doAnswer(newSetter(maxMessageCount, null))
-			.when(mockCacheServer).setMaximumMessageCount(anyInt());
-
-		doAnswer(newSetter(maxThreads, null))
-			.when(mockCacheServer).setMaxThreads(anyInt());
-
-		doAnswer(newSetter(maxTimeBetweenPings, null))
-			.when(mockCacheServer).setMaximumTimeBetweenPings(anyInt());
-
-		doAnswer(newSetter(messageTimeToLive, null))
-			.when(mockCacheServer).setMessageTimeToLive(anyInt());
-
-		doAnswer(newSetter(port, null))
-			.when(mockCacheServer).setPort(anyInt());
-
-		doAnswer(newSetter(serverLoadProbe, () -> null))
-			.when(mockCacheServer).setLoadProbe(any(ServerLoadProbe.class));
-
-		doAnswer(newSetter(socketBufferSize, null))
-			.when(mockCacheServer).setSocketBufferSize(anyInt());
-
-		doAnswer(newSetter(tcpNoDelay, null))
-			.when(mockCacheServer).setTcpNoDelay(anyBoolean());
-
-		when(mockCacheServer.isRunning()).thenAnswer(newGetter(running));
-		when(mockCacheServer.getAllClientSessions()).thenReturn(Collections.emptySet());
-		when(mockCacheServer.getBindAddress()).thenAnswer(newGetter(bindAddress));
-		when(mockCacheServer.getClientSession(any(DistributedMember.class)))
-			.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
-		when(mockCacheServer.getClientSession(anyString())).thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
-		when(mockCacheServer.getGroups()).thenAnswer(newGetter(groups));
-		when(mockCacheServer.getHostnameForClients()).thenAnswer(newGetter(hostnameForClients));
-		when(mockCacheServer.getInterestRegistrationListeners()).thenReturn(Collections.emptySet());
-		when(mockCacheServer.getLoadPollInterval()).thenAnswer(newGetter(loadPollInterval));
-		when(mockCacheServer.getLoadProbe()).thenAnswer(newGetter(serverLoadProbe));
-		when(mockCacheServer.getMaxConnections()).thenAnswer(newGetter(maxConnections));
-		when(mockCacheServer.getMaximumMessageCount()).thenAnswer(newGetter(maxMessageCount));
-		when(mockCacheServer.getMaximumTimeBetweenPings()).thenAnswer(newGetter(maxTimeBetweenPings));
-		when(mockCacheServer.getMaxThreads()).thenAnswer(newGetter(maxThreads));
-		when(mockCacheServer.getMessageTimeToLive()).thenAnswer(newGetter(messageTimeToLive));
-		when(mockCacheServer.getPort()).thenAnswer(newGetter(port));
-		when(mockCacheServer.getSocketBufferSize()).thenAnswer(newGetter(socketBufferSize));
-		when(mockCacheServer.getTcpNoDelay()).thenAnswer(newGetter(tcpNoDelay));
-
-		ClientSubscriptionConfig mockClientSubscriptionConfig = mockClientSubscriptionConfig();
-
-		when(mockCacheServer.getClientSubscriptionConfig()).thenReturn(mockClientSubscriptionConfig);
-
-		doSafeIo(() -> doAnswer(newSetter(running, true, null)).when(mockCacheServer).start());
-		doAnswer(newSetter(running, false, null)).when(mockCacheServer).stop();
-
-		return mockCacheServer;
 	}
 
 	public static CacheTransactionManager mockCacheTransactionManager() {
@@ -2038,7 +1895,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return mockEvictionAttibutes;
 		});
 
-		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(baseRegionAttributes::getIgnoreJTA));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(baseRegionAttributes::getInitialCapacity));
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
@@ -2626,7 +2482,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
 		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
 		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
-		when(mockRegionAttributes.getIgnoreJTA()).thenAnswer(newGetter(ignoreJta));
 		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
 		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
 		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
@@ -2675,58 +2530,6 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	public static boolean resolveUseSingletonCache() {
 		return Boolean.parseBoolean(System.getProperty(USE_SINGLETON_CACHE_PROPERTY,
 			String.valueOf(DEFAULT_USE_SINGLETON_CACHE)));
-	}
-
-	public static CacheFactory spyOn(CacheFactory cacheFactory) {
-		return spyOn(cacheFactory, resolveUseSingletonCache());
-	}
-
-	public static CacheFactory spyOn(CacheFactory cacheFactory, boolean useSingletonCache) {
-
-		AtomicBoolean pdxIgnoreUnreadFields = new AtomicBoolean(false);
-		AtomicBoolean pdxPersistent = new AtomicBoolean(false);
-		AtomicBoolean pdxReadSerialized = new AtomicBoolean(false);
-
-		AtomicReference<String> pdxDiskStoreName = new AtomicReference<>(null);
-		AtomicReference<PdxSerializer> pdxSerializer = new AtomicReference<>(null);
-
-		CacheFactory cacheFactorySpy = spy(cacheFactory);
-
-		doAnswer(newSetter(pdxDiskStoreName, () -> cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxDiskStore(anyString());
-
-		doAnswer(newSetter(pdxIgnoreUnreadFields, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxIgnoreUnreadFields(anyBoolean());
-
-		doAnswer(newSetter(pdxPersistent, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxPersistent(anyBoolean());
-
-		doAnswer(newSetter(pdxReadSerialized, cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxReadSerialized(anyBoolean());
-
-		doAnswer(newSetter(pdxSerializer, () -> cacheFactorySpy))
-			.when(cacheFactorySpy).setPdxSerializer(any(PdxSerializer.class));
-
-		Supplier<Cache> resolvedMockCache = () ->
-			GemFireMockObjectsSupport.<Cache>resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
-
-				Cache mockCache = mockPeerCache();
-
-				when(mockCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
-				when(mockCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
-				when(mockCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
-				when(mockCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
-				when(mockCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
-
-				return mockCache;
-			});
-
-		doAnswer(invocation -> {
-			storeConfiguration(cacheFactory);
-			return rememberMockedGemFireCache(constructGemFireObjects(resolvedMockCache.get()), useSingletonCache);
-		}).when(cacheFactorySpy).create();
-
-		return cacheFactorySpy;
 	}
 
 	public static ClientCacheFactory spyOn(ClientCacheFactory clientCacheFactory) {
@@ -2907,26 +2710,22 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return clientCacheFactorySpy;
 	}
 
-	private static void storeConfiguration(CacheFactory cacheFactory) {
-		storeConfiguration(cacheFactory, CACHE_FACTORY_DS_PROPS_FIELD_NAME);
-	}
-
 	private static void storeConfiguration(ClientCacheFactory clientCacheFactory) {
 		storeConfiguration(clientCacheFactory, CLIENT_CACHE_FACTORY_DS_PROPS_FIELD_NAME);
 	}
 
-	private static void storeConfiguration(Object cacheFactory, String gemfirePropertiesFieldName) {
+	private static void storeConfiguration(Object clientCacheFactory, String gemfirePropertiesFieldName) {
 
 		Properties localGemFireProperties = gemfireProperties.get();
 
-		localGemFireProperties.putAll(withGemFireApiProperties(cacheFactory, gemfirePropertiesFieldName));
+		localGemFireProperties.putAll(withGemFireApiProperties(clientCacheFactory, gemfirePropertiesFieldName));
 		localGemFireProperties.putAll(withGemFireSystemProperties());
 	}
 
 	@SuppressWarnings("unchecked")
-	private static Properties withGemFireApiProperties(Object cacheFactory, String gemfirePropertiesFieldName) {
+	private static Properties withGemFireApiProperties(Object clientCacheFactory, String gemfirePropertiesFieldName) {
 
-		Class<?> cacheFactoryType = Optional.ofNullable(cacheFactory)
+		Class<?> cacheFactoryType = Optional.ofNullable(clientCacheFactory)
 			.map(Object::getClass)
 			.orElse((Class) Object.class);
 
@@ -2936,7 +2735,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			dsPropsField.setAccessible(true);
 
-			Properties gemfireApiProperties = (Properties) dsPropsField.get(cacheFactory);
+			Properties gemfireApiProperties = (Properties) dsPropsField.get(clientCacheFactory);
 
 			return gemfireApiProperties;
 		}
@@ -2953,7 +2752,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 						field.setAccessible(true);
 
 						Object internalCacheBuilder =
-							ObjectUtils.doOperationSafely(() -> field.get(cacheFactory), null);
+							ObjectUtils.doOperationSafely(() -> field.get(clientCacheFactory), null);
 
 						if (internalCacheBuilder != null) {
 							return withGemFireApiProperties(internalCacheBuilder,
