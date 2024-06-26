@@ -9,25 +9,20 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.geode.cache.DiskStore;
 import org.apache.geode.internal.cache.LocalRegion;
 import org.junit.Test;
-
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.util.ArrayUtils;
 
 /**
@@ -128,7 +123,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 	}
 
 	protected BeanDefinition defineCache() {
-		return newBeanDefinitionBuilder(CacheFactoryBean.class).getBeanDefinition();
+		return newBeanDefinitionBuilder(ClientCacheFactoryBean.class).getBeanDefinition();
 	}
 
 	protected BeanDefinition defineDiskStore(String... dependencies) {

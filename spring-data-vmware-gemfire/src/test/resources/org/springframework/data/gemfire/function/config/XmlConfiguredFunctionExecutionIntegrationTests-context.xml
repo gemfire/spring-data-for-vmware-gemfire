@@ -22,9 +22,9 @@
 		<prop key="statistic-sampling-enabled">false</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="r1"/>
+	<gfe:client-region shortcut="LOCAL" id="r1"/>
 
 	<gfe-data:function-executions base-package="org.springframework.data.gemfire.function.config.two"/>
 

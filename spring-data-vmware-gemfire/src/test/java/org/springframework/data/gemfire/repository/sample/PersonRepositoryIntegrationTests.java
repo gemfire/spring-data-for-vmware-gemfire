@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.repository.sample;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,23 +12,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
-
+import org.apache.geode.cache.RegionAttributes;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.RegionAttributes;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.gemfire.CacheFactoryBean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.RegionAttributesFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
@@ -213,9 +209,9 @@ public class PersonRepositoryIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean
-		CacheFactoryBean gemfireCache() {
+		ClientCacheFactoryBean gemfireCache() {
 
-			CacheFactoryBean gemfireCache = new CacheFactoryBean();
+			ClientCacheFactoryBean gemfireCache = new ClientCacheFactoryBean();
 
 			gemfireCache.setClose(true);
 			gemfireCache.setProperties(gemfireProperties());
@@ -224,9 +220,9 @@ public class PersonRepositoryIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean(name = "simple")
-		LocalRegionFactoryBean<Long, Person> simpleRegion(Cache gemfireCache, RegionAttributes<Long, Person> simpleRegionAttributes) {
+		ClientRegionFactoryBean<Long, Person> simpleRegion(ClientCache gemfireCache, RegionAttributes<Long, Person> simpleRegionAttributes) {
 
-			LocalRegionFactoryBean<Long, Person> simpleRegion = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Long, Person> simpleRegion = new ClientRegionFactoryBean<>();
 
 			simpleRegion.setAttributes(simpleRegionAttributes);
 			simpleRegion.setCache(gemfireCache);

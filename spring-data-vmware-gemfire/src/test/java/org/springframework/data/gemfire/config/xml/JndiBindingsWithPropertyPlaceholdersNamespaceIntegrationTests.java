@@ -6,16 +6,12 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-
 import java.util.List;
 import java.util.Map;
-
+import org.apache.geode.internal.datasource.ConfigProperty;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.internal.datasource.ConfigProperty;
-
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -53,14 +49,14 @@ public class JndiBindingsWithPropertyPlaceholdersNamespaceIntegrationTests exten
 	@Test
 	public void cacheJndiContextDataSourceConfigurationIsCorrect() {
 
-		CacheFactoryBean factory = requireApplicationContext().getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean factory = requireApplicationContext().getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
-		List<CacheFactoryBean.JndiDataSource> jndiDataSources = factory.getJndiDataSources();
+		List<ClientCacheFactoryBean.JndiDataSource> jndiDataSources = factory.getJndiDataSources();
 
 		assertThat(jndiDataSources).isNotNull();
 		assertThat(jndiDataSources.size()).isEqualTo(1);
 
-		CacheFactoryBean.JndiDataSource dataSource = jndiDataSources.get(0);
+		ClientCacheFactoryBean.JndiDataSource dataSource = jndiDataSources.get(0);
 
 		assertThat(dataSource).isNotNull();
 

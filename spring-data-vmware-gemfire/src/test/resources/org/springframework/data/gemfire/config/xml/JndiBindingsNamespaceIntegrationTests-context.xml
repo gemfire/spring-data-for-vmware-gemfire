@@ -19,7 +19,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties">
+	<gfe:client-cache properties-ref="gemfireProperties">
 		<gfe:jndi-binding jndi-name="SimpleDataSource"
 						  type="SimpleDataSource"
 						  blocking-timeout-seconds="40"
@@ -36,6 +36,6 @@
 			<gfe:jndi-prop key="description">hi</gfe:jndi-prop>
 			<gfe:jndi-prop key="databaseName">newDB</gfe:jndi-prop>
 		</gfe:jndi-binding>
-	</gfe:cache>
+	</gfe:client-cache>
 
 </beans>

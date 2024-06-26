@@ -19,22 +19,22 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="Parent" persistent="false">
-		<gfe:local-region name="Child" persistent="false"/>
-	</gfe:local-region>
+	<gfe:client-region shortcut="LOCAL" id="Parent" persistent="false">
+		<gfe:client-region shortcut="LOCAL" name="Child" persistent="false"/>
+	</gfe:client-region>
 
-	<gfe:local-region id="Customers" persistent="false">
-		<gfe:local-region name="Accounts" persistent="false">
+	<gfe:client-region shortcut="LOCAL" id="Customers" persistent="false">
+		<gfe:client-region shortcut="LOCAL" name="Accounts" persistent="false">
 			<gfe:cache-listener>
 				<bean class="org.springframework.data.gemfire.config.xml.SubRegionSubElementNamespaceIntegrationTests.TestNoOpCacheListener"/>
 			</gfe:cache-listener>
-		</gfe:local-region>
-	</gfe:local-region>
+		</gfe:client-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Orders" persistent="false">
-		<gfe:local-region name="Items" persistent="false"/>
-	</gfe:local-region>
+	<gfe:client-region shortcut="LOCAL" id="Orders" persistent="false">
+		<gfe:client-region shortcut="LOCAL" name="Items" persistent="false"/>
+	</gfe:client-region>
 
 </beans>

@@ -19,10 +19,10 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/cache-with-regions.xml" properties-ref="gemfireProperties"/>
 
 	<gfe:lookup-region id="NativeParentRegion">
-		<gfe:local-region name="NativeChildRegion" persistent="true"/>
+		<gfe:client-region shortcut="LOCAL_PERSISTENT" name="NativeChildRegion" persistent="true"/>
 	</gfe:lookup-region>
 
 </beans>

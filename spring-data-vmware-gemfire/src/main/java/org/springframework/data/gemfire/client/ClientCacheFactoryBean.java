@@ -5,17 +5,16 @@
 package org.springframework.data.gemfire.client;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
-
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.StreamSupport;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -23,15 +22,17 @@ import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.distributed.DistributedSystem;
+import org.apache.geode.internal.datasource.ConfigProperty;
+import org.apache.geode.internal.jndi.JNDIInvoker;
 import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.AbstractResolvableCacheFactoryBean;
 import org.springframework.data.gemfire.GemfireUtils;
+import org.springframework.data.gemfire.JndiDataSourceType;
 import org.springframework.data.gemfire.client.support.DefaultableDelegatingPoolAdapter;
 import org.springframework.data.gemfire.client.support.DelegatingPoolAdapter;
 import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
@@ -68,14 +69,14 @@ import org.springframework.util.StringUtils;
  * @see ApplicationListener
  * @see ApplicationContextEvent
  * @see ContextRefreshedEvent
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see PoolManagerPoolResolver
  * @see ClientCacheConfigurer
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
-// TODO: Refactor this class to no longer extend CacheFactoryBean
-public class ClientCacheFactoryBean extends CacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
+// TODO: Refactor this class to no longer extend ClientCacheFactoryBean
+public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
 
 	protected static final PoolResolver DEFAULT_POOL_RESOLVER = new PoolManagerPoolResolver();
 
@@ -105,6 +106,7 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	private Integer subscriptionRedundancy;
 
 	private List<ClientCacheConfigurer> clientCacheConfigurers = Collections.emptyList();
+	private List<JndiDataSource> jndiDataSources;
 
 	private Long idleTimeout;
 	private Long pingInterval;
@@ -385,6 +387,51 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		return getPoolResolver().resolve(name);
 	}
 
+	@Override
+	protected @NonNull <T extends GemFireCache> T postProcess(@NonNull T cache) {
+
+		super.postProcess(cache);
+
+		registerJndiDataSources(cache);
+
+		return cache;
+	}
+
+	private GemFireCache registerJndiDataSources(GemFireCache cache) {
+
+		CollectionUtils.nullSafeCollection(getJndiDataSources()).forEach(jndiDataSource -> {
+
+			String type = jndiDataSource.getAttributes().get("type");
+
+			JndiDataSourceType jndiDataSourceType = JndiDataSourceType.valueOfIgnoreCase(type);
+
+			Assert.notNull(jndiDataSourceType,
+					String.format("'jndi-binding' 'type' [%1$s] is invalid; 'type' must be one of %2$s",
+							type, Arrays.toString(JndiDataSourceType.values())));
+
+			jndiDataSource.getAttributes().put("type", jndiDataSourceType.getName());
+
+			SpringExtensions.safeRunOperation(() ->
+					JNDIInvoker.mapDatasource(jndiDataSource.getAttributes(), jndiDataSource.getProps()));
+		});
+
+		return cache;
+	}
+
+	/**
+	 * @param jndiDataSources the list of configured JndiDataSources to use with this Cache.
+	 */
+	public void setJndiDataSources(List<JndiDataSource> jndiDataSources) {
+		this.jndiDataSources = jndiDataSources;
+	}
+
+	/**
+	 * @return the list of configured JndiDataSources.
+	 */
+	public List<JndiDataSource> getJndiDataSources() {
+		return this.jndiDataSources;
+	}
+
 	/**
 	 * Creates a new {@link ClientCache} instance using the provided {@link ClientCacheFactory factory}.
 	 *
@@ -528,16 +575,6 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	 */
 	public Integer getDurableClientTimeout() {
 		return this.durableClientTimeout;
-	}
-
-	@Override
-	public final void setEnableAutoReconnect(Boolean enableAutoReconnect) {
-		throw new UnsupportedOperationException("Auto-reconnect does not apply to clients");
-	}
-
-	@Override
-	public final Boolean getEnableAutoReconnect() {
-		return Boolean.FALSE;
 	}
 
 	public void setFreeConnectionTimeout(Integer freeConnectionTimeout) {
@@ -870,16 +907,6 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		return this.threadLocalConnections;
 	}
 
-	@Override
-	public final void setUseClusterConfiguration(Boolean useClusterConfiguration) {
-		throw new UnsupportedOperationException("Cluster-based Configuration does not apply to clients");
-	}
-
-	@Override
-	public final Boolean getUseClusterConfiguration() {
-		return Boolean.FALSE;
-	}
-
 	public static class ClientCacheFactoryToPdxConfigurerAdapter implements PdxConfigurer<ClientCacheFactory> {
 
 		public static ClientCacheFactoryToPdxConfigurerAdapter from(@NonNull ClientCacheFactory clientCacheFactory) {
@@ -926,6 +953,29 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		public @NonNull PdxConfigurer<ClientCacheFactory> setSerializer(PdxSerializer pdxSerializer) {
 			getTarget().setPdxSerializer(pdxSerializer);
 			return this;
+		}
+	}
+
+	public static class JndiDataSource {
+
+		private List<ConfigProperty> configProperties;
+
+		private Map<String, String> attributes;
+
+		public Map<String, String> getAttributes() {
+			return this.attributes;
+		}
+
+		public void setAttributes(Map<String, String> attributes) {
+			this.attributes = attributes;
+		}
+
+		public List<ConfigProperty> getProps() {
+			return this.configProperties;
+		}
+
+		public void setProps(List<ConfigProperty> props) {
+			this.configProperties = props;
 		}
 	}
 }

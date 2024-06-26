@@ -20,7 +20,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<!-- Template Regions -->
 	<gfe:region-template id="BaseRegionTemplate" cloning-enabled="true" concurrency-checks-enabled="false"
@@ -46,10 +46,10 @@
 	</gfe:region-template>
 
 	<!-- LOCAL Regions -->
-	<gfe:local-region-template id="LocalRegionTemplate" concurrency-level="8" template="BaseRegionTemplate">
+	<gfe:client-region-template id="LocalRegionTemplate" concurrency-level="8" template="BaseRegionTemplate" shortcut="LOCAL">
 		<gfe:eviction type="ENTRY_COUNT" threshold="4096" action="LOCAL_DESTROY"/>
-	</gfe:local-region-template>
+	</gfe:client-region-template>
 
-	<gfe:local-region id="TemplateBasedLocalRegion" template="LocalRegionTemplate"/>
+	<gfe:client-region shortcut="LOCAL" id="TemplateBasedLocalRegion" template="LocalRegionTemplate"/>
 
 </beans>

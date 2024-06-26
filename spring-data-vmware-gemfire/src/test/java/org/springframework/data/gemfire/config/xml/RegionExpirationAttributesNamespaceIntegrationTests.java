@@ -6,11 +6,6 @@ package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheLoaderException;
 import org.apache.geode.cache.CustomExpiry;
@@ -21,7 +16,8 @@ import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.apache.geode.cache.util.CacheWriterAdapter;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -49,15 +45,11 @@ import org.springframework.util.Assert;
 public class RegionExpirationAttributesNamespaceIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	@Qualifier("ReplicateExample")
+	@Qualifier("TTLExample")
 	private Region<?, ?> replicateExample;
 
 	@Autowired
-	@Qualifier("PreloadedExample")
-	private Region<?, ?> preloadedExample;
-
-	@Autowired
-	@Qualifier("LocalExample")
+	@Qualifier("CustomExample")
 	private Region<?, ?> localExample;
 
 	private void assertRegionMetaData(Region<?, ?> region, String regionName, DataPolicy dataPolicy) {
@@ -103,20 +95,9 @@ public class RegionExpirationAttributesNamespaceIntegrationTests extends Integra
 	}
 
 	@Test
-	public void examplePreloadedRegionExpirationAttributesAreCorrect() {
-
-		assertRegionMetaData(preloadedExample, "PreloadedExample", DataPolicy.PRELOADED);
-		assertExpirationAttributes(preloadedExample.getAttributes().getEntryTimeToLive(),
-			120, ExpirationAction.LOCAL_DESTROY);
-		assertNoExpiration(preloadedExample.getAttributes().getEntryIdleTimeout());
-		assertThat(preloadedExample.getAttributes().getCustomEntryTimeToLive()).isNull();
-		assertThat(preloadedExample.getAttributes().getCustomEntryIdleTimeout()).isNull();
-	}
-
-	@Test
 	public void exampleLocalRegionExpirationAttributesAreCorrect() {
 
-		assertRegionMetaData(localExample, "LocalExample", DataPolicy.NORMAL);
+		assertRegionMetaData(localExample, "CustomExample", DataPolicy.NORMAL);
 		assertNoExpiration(localExample.getAttributes().getEntryTimeToLive());
 		assertNoExpiration(localExample.getAttributes().getEntryIdleTimeout());
 		assertCustomExpiry(localExample.getAttributes().getCustomEntryTimeToLive(), "LocalTtlCustomExpiry",

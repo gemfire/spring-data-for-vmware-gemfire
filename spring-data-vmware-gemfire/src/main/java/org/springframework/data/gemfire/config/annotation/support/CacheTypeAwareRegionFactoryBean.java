@@ -27,14 +27,8 @@ import org.apache.geode.compression.Compressor;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.SmartLifecycle;
-import org.springframework.data.gemfire.GemfireUtils;
-import org.springframework.data.gemfire.GenericRegionFactoryBean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
-import org.springframework.data.gemfire.RegionShortcutWrapper;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
-import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.client.Interest;
 import org.springframework.data.gemfire.config.annotation.RegionConfigurer;
 import org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean;
@@ -61,8 +55,7 @@ import org.springframework.util.StringUtils;
  * @see ClientRegionShortcut
  * @see Compressor
  * @see GenericRegionFactoryBean
- * @see LocalRegionFactoryBean
- * @see PeerRegionFactoryBean
+ * @see ClientRegionFactoryBean
  * @see ResolvableRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see RegionConfigurer
@@ -120,9 +113,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	@Override
 	public Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) throws Exception {
 
-		return GemfireUtils.isClient(gemfireCache)
-			? newClientRegion(gemfireCache, regionName)
-			: newServerRegion(gemfireCache, regionName);
+		return newClientRegion(gemfireCache, regionName);
 	}
 
 	/**
@@ -179,72 +170,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 */
 	protected <K, V> ClientRegionFactoryBean<K, V> newClientRegionFactoryBean() {
 		return new ClientRegionFactoryBean<>();
-	}
-
-	/**
-	 * Constructs, configures and initializes a new server {@link Region} using a sub-class
-	 * of {@link PeerRegionFactoryBean}.
-	 *
-	 * @param gemfireCache reference to the {@link GemFireCache} used to create/initialize the factory
-	 * used to create the server {@link Region}.
-	 * @param regionName name given to the server {@link Region}.
-	 * @return a new instance of a server {@link Region} with the given {@code regionName}.
-	 * @throws Exception if the server {@link Region} could not be created.
-	 * @see GenericRegionFactoryBean
-	 * @see GemFireCache
-	 * @see Region
-	 * @see #newPeerRegionFactoryBean()
-	 */
-	protected Region<K, V> newServerRegion(GemFireCache gemfireCache, String regionName) throws Exception {
-
-		PeerRegionFactoryBean<K, V> serverRegionFactory = newPeerRegionFactoryBean();
-
-		serverRegionFactory.setAttributes(getAttributes());
-		serverRegionFactory.setBeanFactory(getBeanFactory());
-		serverRegionFactory.setCache(gemfireCache);
-		serverRegionFactory.setClose(isClose());
-		serverRegionFactory.setCompressor(getCompressor());
-		serverRegionFactory.setDataPolicy(getDataPolicy());
-		serverRegionFactory.setDiskStoreName(getDiskStoreName());
-		serverRegionFactory.setKeyConstraint(getKeyConstraint());
-		serverRegionFactory.setLookupEnabled(getLookupEnabled());
-		serverRegionFactory.setRegionConfigurers(this.regionConfigurers);
-		serverRegionFactory.setRegionName(regionName);
-		serverRegionFactory.setShortcut(getServerRegionShortcut());
-		serverRegionFactory.setStatisticsEnabled(getStatisticsEnabled());
-		serverRegionFactory.setValueConstraint(getValueConstraint());
-
-		configureEviction(serverRegionFactory);
-		configureExpiration(serverRegionFactory);
-
-		serverRegionFactory.afterPropertiesSet();
-
-		this.smartLifecycleComponent = serverRegionFactory;
-
-		return serverRegionFactory.getObject();
-	}
-
-	/**
-	 * Constructs a {@link Class sub-type} of the {@link PeerRegionFactoryBean} class based on
-	 * the {@link #getServerRegionShortcut()} and {@link #getDataPolicy()}.
-	 *
-	 * @return a new instance of the {@link PeerRegionFactoryBean}.
-	 * @see LocalRegionFactoryBean
-	 * @see PeerRegionFactoryBean
-	 */
-	protected PeerRegionFactoryBean<K, V> newPeerRegionFactoryBean() {
-
-		RegionShortcutWrapper regionShortcutWrapper = RegionShortcutWrapper.valueOf(getServerRegionShortcut());
-
-		DataPolicy resolvedDataPolicy = Optional.of(regionShortcutWrapper)
-			.map(RegionShortcutWrapper::getDataPolicy)
-			.orElseGet(this::getDataPolicy);
-
-		if (regionShortcutWrapper.isLocal()) {
-			return new LocalRegionFactoryBean<>();
-		}
-
-		return new GenericRegionFactoryBean<>();
 	}
 
 	protected void configureEviction(EvictingRegionFactoryBean regionFactoryBean) {

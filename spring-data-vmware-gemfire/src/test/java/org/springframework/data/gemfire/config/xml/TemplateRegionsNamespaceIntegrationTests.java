@@ -12,12 +12,7 @@ package org.springframework.data.gemfire.config.xml;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assume.assumeNotNull;
-
 import java.util.Arrays;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheLoaderException;
@@ -30,12 +25,12 @@ import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.SubscriptionAttributes;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.apache.geode.cache.util.CacheWriterAdapter;
 import org.apache.geode.cache.util.ObjectSizer;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,13 +228,11 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 			ExpirationAction.DESTROY, 600);
 		assertExpirationAttributes(templateBasedLocalRegion.getAttributes().getEntryTimeToLive(),
 			ExpirationAction.INVALIDATE, 300);
-		assertThat(templateBasedLocalRegion.getAttributes().getIgnoreJTA()).isTrue();
 		assertThat(templateBasedLocalRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(templateBasedLocalRegion.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
 		assertThat(String.valueOf(templateBasedLocalRegion.getAttributes().getLoadFactor())).isEqualTo("0.85");
 		assertThat(templateBasedLocalRegion.getAttributes().isLockGrantor()).isFalse();
 		assertThat(templateBasedLocalRegion.getAttributes().getPartitionAttributes()).isNull();
-		assertThat(templateBasedLocalRegion.getAttributes().getScope()).isEqualTo(Scope.LOCAL);
 		assertThat(templateBasedLocalRegion.getAttributes().getStatisticsEnabled()).isTrue();
 		assertDefaultSubscriptionAttributes(templateBasedLocalRegion.getAttributes().getSubscriptionAttributes());
 		assertThat(templateBasedLocalRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);

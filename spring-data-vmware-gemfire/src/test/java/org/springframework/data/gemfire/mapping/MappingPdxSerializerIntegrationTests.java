@@ -14,7 +14,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -24,22 +24,26 @@ import java.time.Month;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Optional;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.apache.geode.DataSerializable;
+import org.apache.geode.Instantiator;
+import org.apache.geode.cache.Cache;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.pdx.PdxReader;
+import org.apache.geode.pdx.PdxSerializer;
+import org.apache.geode.pdx.PdxWriter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.apache.geode.DataSerializable;
-import org.apache.geode.Instantiator;
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
-
 import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.gemfire.GemfireUtils;
@@ -47,13 +51,6 @@ import org.springframework.data.gemfire.repository.sample.Address;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.EntityInstantiator;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.util.TypeInformation;
 
 /**
@@ -72,33 +69,41 @@ import org.springframework.data.util.TypeInformation;
  */
 public class MappingPdxSerializerIntegrationTests {
 
-	static Cache cache;
+	private static GemFireCluster gemFireCluster;
+
+	static ClientCache cache;
 
 	static Region<Object, Object> region;
 
 	@BeforeClass
 	public static void setUp() {
 
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=TemporaryRegion --type=PARTITION");
+
+		gemFireCluster.acceptLicense().start();
+
 		MappingPdxSerializer serializer = MappingPdxSerializer.newMappingPdxSerializer();
 
 		serializer.setIncludeTypeFilters(type ->
 			type.getPackage().getName().startsWith("org.springframework.data.gemfire"));
 
-		cache = new CacheFactory()
+		cache = new ClientCacheFactory()
 			.set("name", MappingPdxSerializerIntegrationTests.class.getSimpleName())
 			.set("log-level", "error")
+				.addPoolLocator("localhost", gemFireCluster.getLocatorPort())
 			.setPdxSerializer(serializer)
 			.setPdxPersistent(true)
 			.create();
 
-		region = cache.createRegionFactory()
-			.setDataPolicy(DataPolicy.PARTITION)
+		region = cache.createClientRegionFactory(ClientRegionShortcut.PROXY)
 			.create("TemporaryRegion");
 	}
 
 	@AfterClass
 	public static void tearDown() {
 		GemfireUtils.close(cache);
+		gemFireCluster.close();
 	}
 
 	private final GemfireMappingContext mappingContext = new GemfireMappingContext();

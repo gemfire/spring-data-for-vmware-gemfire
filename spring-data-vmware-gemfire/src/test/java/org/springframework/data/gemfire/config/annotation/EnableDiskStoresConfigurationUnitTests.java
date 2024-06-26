@@ -5,16 +5,12 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-
+import org.apache.geode.cache.DiskStore;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
-
-import org.apache.geode.cache.DiskStore;
-
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 
@@ -135,7 +131,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 		};
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableDiskStore(name = "TestDiskStore", allowForceCompaction = true, autoCompact = true, compactionThreshold = 75,
 		diskUsageCriticalPercentage = 95.0f, diskUsageWarningPercentage = 75.0f, maxOplogSize = 8192L, queueSize = 100,
@@ -145,7 +141,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 	})
 	static class SingleDiskStoreConfiguration { }
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@EnableDiskStores(autoCompact = true, compactionThreshold = 75, maxOplogSize = 2048L, diskStores = {
 		@EnableDiskStore(name = "TestDiskStoreOne", queueSize = 100),

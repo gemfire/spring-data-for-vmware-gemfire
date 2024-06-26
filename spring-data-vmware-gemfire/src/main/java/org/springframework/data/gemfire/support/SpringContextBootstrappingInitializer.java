@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
-
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.Declarable;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -31,9 +32,6 @@ import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The {@link SpringContextBootstrappingInitializer} class is a GemFire configuration initializer used to bootstrap
@@ -402,7 +400,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	@Override
 	@SuppressWarnings("deprecation")
 	public void init(Properties parameters) {
-		init(CacheUtils.getCache(), parameters);
+		init(CacheUtils.getClientCache(), parameters);
 	}
 
 	/**
@@ -420,7 +418,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @see #refreshApplicationContext(ConfigurableApplicationContext)
 	 * @see Properties
 	 */
-	public void init(Cache cache, Properties parameters) {
+	public void init(ClientCache cache, Properties parameters) {
 
 		try {
 			synchronized (SpringContextBootstrappingInitializer.class) {

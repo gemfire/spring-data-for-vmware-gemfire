@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
-
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,11 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.query.CqQuery;
 import org.apache.geode.cache.query.QueryService;
-
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
@@ -32,8 +29,6 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 import org.springframework.data.gemfire.listener.ContinuousQueryDefinition;
 import org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
-import org.springframework.data.gemfire.util.CacheUtils;
-import org.springframework.util.Assert;
 import org.springframework.util.ErrorHandler;
 import org.springframework.util.StringUtils;
 
@@ -182,9 +177,6 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 
 	@Bean
 	public ContinuousQueryListenerContainer continuousQueryListenerContainer(GemFireCache gemfireCache) {
-
-		Assert.state(CacheUtils.isClient(gemfireCache),
-			"Continuous Queries (CQ) may only be used in a ClientCache application");
 
 		ContinuousQueryListenerContainer container = new ContinuousQueryListenerContainer();
 

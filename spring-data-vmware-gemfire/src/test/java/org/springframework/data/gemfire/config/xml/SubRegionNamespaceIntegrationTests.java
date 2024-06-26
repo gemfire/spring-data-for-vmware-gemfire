@@ -5,16 +5,13 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.Region;
-
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -40,7 +37,7 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
     @Test
     public void testNestedRegionsCreated() {
 
-        Cache cache = requireApplicationContext().getBean(Cache.class);
+        ClientCache cache = requireApplicationContext().getBean(ClientCache.class);
 
         assertThat(cache.getRegion("parent")).isNotNull();
         assertThat(cache.getRegion("/parent/child")).isNotNull();
@@ -94,9 +91,9 @@ public class SubRegionNamespaceIntegrationTests extends IntegrationTestsSupport 
 		Region child2 = requireApplicationContext().getBean("/complexNested/child2", Region.class);
 		Region grandchild11 = requireApplicationContext().getBean("/complexNested/child1/grandChild11", Region.class);
 
-		LocalRegionFactoryBean grandchild11FactoryBean =
+		ClientRegionFactoryBean grandchild11FactoryBean =
 			requireApplicationContext().getBean("&/complexNested/child1/grandChild11",
-				LocalRegionFactoryBean.class);
+				ClientRegionFactoryBean.class);
 
 		assertThat(grandchild11FactoryBean).isNotNull();
 

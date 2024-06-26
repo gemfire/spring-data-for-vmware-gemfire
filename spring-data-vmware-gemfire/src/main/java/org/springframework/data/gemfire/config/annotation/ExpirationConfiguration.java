@@ -8,21 +8,18 @@ import static org.springframework.data.gemfire.config.annotation.EnableExpiratio
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeIterable;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +30,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
@@ -115,7 +111,6 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 	 * @return a boolean value indicating whether the Spring bean is an instance of {@link ExpiringRegionFactoryBean}.
 	 * @see ExpiringRegionFactoryBean
 	 * @see ClientRegionFactoryBean
-	 * @see PeerRegionFactoryBean
 	 */
 	protected static boolean isRegionFactoryBean(Object bean) {
 		return bean instanceof ExpiringRegionFactoryBean;
@@ -537,8 +532,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Configures the Expiration policies on the targeted {@link ExpiringRegionFactoryBean}, which may be
-		 * either a {@link PeerRegionFactoryBean} or {@link ClientRegionFactoryBean}.
+		 * Configures the Expiration policies on the targeted {@link ExpiringRegionFactoryBean}.
 		 *
 		 * @param regionFactoryBean {@link ExpiringRegionFactoryBean} to configure.
 		 * @return the given {@link ExpiringRegionFactoryBean}.

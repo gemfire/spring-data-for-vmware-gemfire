@@ -194,99 +194,6 @@ do not need to pay the cost of preserving the unread fields since you will never
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<!-- Peer Cache Type -->
-	<xsd:element name="cache">
-		<xsd:annotation>
-			<xsd:documentation
-				source="org.springframework.data.gemfire.CacheFactoryBean"><![CDATA[
-Defines a GemFire Cache instance used for creating or retrieving 'regions'.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Cache" />
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-		<xsd:complexType>
-			<xsd:complexContent>
-				<xsd:extension base="cacheBaseType">
-					<xsd:attribute name="enable-auto-reconnect" type="xsd:string" use="optional" default="false">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-By default, GemFire 8.0 and later will attempt to reconnect and reinitialize the cache when the peer member has been
-forced out of the distributed system by a network-partition event, or has otherwise been shunned by other members.
-
-An auto-reconnect causes all GemFire component references (e.g. Cache, Regions, etc) that may have been
-injected into SDG application components to become stale.  Even when using GemFire's public Java API directly,
-GemFire makes no guarantees to automatically refresh any stale references used by application objects.
-
-Therefore, in Spring Data GemFire, the default behavior will be to not 'auto-reconnect'.  Automatically reconnecting
-is not recommended for applications that are also peer member Caches (i.e. GemFire Servers) that inject
-GemFire components, such as the Cache or Regions, into application objects (e.g. @Repository POJOs).
-
-Enabling 'auto-reconnect' is only recommended when bootstrapping a GemFire Server's within a Spring context using
-Spring Data GemFire XML namespace and configuration meta-data to configure GemFire instead of GemFire's cache.xml.
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="lock-lease" type="xsd:string"
-								   use="optional" default="120">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-The timeout, in seconds, for implicit and explicit object lock leases. This affects both automatic locking and manual locking.
-Once a lock is obtained, it can remain in force for the lock lease time period before being automatically cleared by the system
-                ]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="lock-timeout" type="xsd:string"
-								   use="optional" default="60">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-The timeout, in seconds, for implicit object lock requests. This setting affects automatic locking only,
- and does not apply to manual locking. If a lock request does not return before the specified timeout period,
-  it is cancelled and returns with a failure.
-                  ]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="message-sync-interval" type="xsd:string"
-								   use="optional" default="1">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Used for client subscription queue synchronization when this member acts as a server to clients and server redundancy is used.
-Sets the frequency (in seconds) at which the primary server sends messages to its secondary servers to remove queued events
-that have already been processed by the clients.
-                ]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="search-timeout" type="xsd:string" use="optional" default="300">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-How many seconds a netSearch operation can wait for data before timing out.
-You may want to change this based on your knowledge of the network load or other factors.
-                ]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-					<xsd:attribute name="use-cluster-configuration" type="xsd:string" use="optional" default="false">
-						<xsd:annotation>
-							<xsd:documentation><![CDATA[
-Enables this Spring Data GemFire configured peer member Cache node to participate in cluster-wide configuration
-by receiving it's configuration meta-data (in the form of cache.xml) from a Locator, with persistent configuration
-enabled, running in the cluster.
-
-The cluster-wide configuration is a shared, persistent and consistent view of the cluster when the member joins
-the cluster and requests the cluster configuration from the Locator.
-
-Spring Data GemFire disables this GemFire 8 feature by default assuming that the primary configuration for this
-member will be defined in Spring Data GemFire's XML namespace configuration meta-data.  However, this feature is useful
-in a production setting to set the base configuration of the member and augment that cluster-wide configuration
-with Spring configuration meta-data that is specific to the application's needs.
-							]]></xsd:documentation>
-						</xsd:annotation>
-					</xsd:attribute>
-				</xsd:extension>
-			</xsd:complexContent>
-		</xsd:complexType>
-	</xsd:element>
 	<!-- -->
 	<xsd:complexType name="connectionType">
 		<xsd:attribute name="host" type="xsd:string">
@@ -1039,7 +946,6 @@ Defines a template for creating multiple GemFire Regions that all share a common
 	<xsd:group name="subRegionGroup">
 		<xsd:choice>
 			<xsd:element name="lookup-region" type="lookupSubRegionType"/>
-			<xsd:element name="local-region" type="localSubRegionType"/>
 			<xsd:element name="client-region" type="clientSubRegionType"/>
 		</xsd:choice>
 	</xsd:group>
@@ -1283,7 +1189,7 @@ The name of the region definition.
 	<!-- -->
 	<xsd:element name="client-region-template" type="clientRegionType">
 		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.ClientRegionFactoryBean"><![CDATA[
+			<xsd:documentation source="org.springframework.data.gemfire.client.ClientRegionFactoryBean"><![CDATA[
 Defines a template for creating multiple GemFire Client Regions that all share a common attribute configuration.
 			]]></xsd:documentation>
 			<xsd:appinfo>
@@ -1296,7 +1202,7 @@ Defines a template for creating multiple GemFire Client Regions that all share a
 	<!-- -->
 	<xsd:element name="client-region" type="clientRegionType">
 		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.ClientRegionFactoryBean"><![CDATA[
+			<xsd:documentation source="org.springframework.data.gemfire.client.ClientRegionFactoryBean"><![CDATA[
 Defines a GemFire Client Region
 			]]></xsd:documentation>
 			<xsd:appinfo>
@@ -1412,21 +1318,6 @@ The name of the region definition.
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	<!-- -->
-	<xsd:element name="local-region-template" type="localRegionType">
-		<xsd:annotation>
-			<xsd:documentation source="org.springframework.data.gemfire.LocalRegionFactoryBean"><![CDATA[
-Defines a template for creating multiple GemFire Local Regions that all share a common attribute configuration.
-			]]></xsd:documentation>
-			<xsd:appinfo>
-				<tool:annotation>
-					<tool:exports type="org.apache.geode.cache.Region"/>
-				</tool:annotation>
-			</xsd:appinfo>
-		</xsd:annotation>
-	</xsd:element>
-	<!-- -->
-	<xsd:element name="local-region" type="localRegionType"/>
 	<!-- Disk Store -->
 	<xsd:complexType name="baseDiskStoreType">
 		<xsd:sequence>

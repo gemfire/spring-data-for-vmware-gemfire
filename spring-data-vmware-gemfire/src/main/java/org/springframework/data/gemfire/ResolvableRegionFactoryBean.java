@@ -5,14 +5,11 @@
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
-
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.function.Function;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,7 +27,6 @@ import org.springframework.util.StringUtils;
  * Spring {@link FactoryBean} used to look up or create {@link Region Regions}.
  *
  * For declaring and configuring new {@literal client} {@link Region Regions}, see {@link ClientRegionFactoryBean}.
- * For declaring and configuring new {@literal peer} {@link Region Regions}, see {@link PeerRegionFactoryBean}
  * and {@link Class subclasses}.
  *
  * @author Costin Leau
@@ -180,7 +176,7 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	}
 
 	/**
-	 * Post-process the {@link Region} created by this {@link PeerRegionFactoryBean}.
+	 * Post-process the {@link Region} created by this {@link ClientRegionFactoryBean}.
 	 *
 	 * @param region {@link Region} to process.
 	 * @see Region

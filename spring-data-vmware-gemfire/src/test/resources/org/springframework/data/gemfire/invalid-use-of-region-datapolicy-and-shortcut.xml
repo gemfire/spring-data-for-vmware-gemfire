@@ -21,8 +21,8 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="InvalidReplicate" data-policy="NORMAL" shortcut="LOCAL_PERSISTENT"/>
+	<gfe:client-region id="InvalidReplicate" data-policy="NORMAL" shortcut="LOCAL_PERSISTENT"/>
 
 </beans>

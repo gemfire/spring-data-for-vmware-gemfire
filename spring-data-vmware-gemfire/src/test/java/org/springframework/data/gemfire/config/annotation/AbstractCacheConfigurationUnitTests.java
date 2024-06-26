@@ -28,7 +28,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 
 /**
  * Unit Tests for {@link AbstractCacheConfiguration}.
@@ -41,7 +41,7 @@ import org.springframework.data.gemfire.CacheFactoryBean;
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.AbstractCacheConfiguration
  * @since 1.9.0
  */
@@ -72,11 +72,11 @@ public class AbstractCacheConfigurationUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		CacheFactoryBean cacheFactoryBean = mock(CacheFactoryBean.class);
+		ClientCacheFactoryBean cacheFactoryBean = mock(ClientCacheFactoryBean.class);
 
 		ClassLoader testBeanClassLoader = Thread.currentThread().getContextClassLoader();
 
-		List<CacheFactoryBean.JndiDataSource> jndiDataSources = Collections.emptyList();
+		List<ClientCacheFactoryBean.JndiDataSource> jndiDataSources = Collections.emptyList();
 		List<TransactionListener> transactionListeners = Collections.singletonList(mock(TransactionListener.class));
 
 		Properties gemfireProperties = new Properties();

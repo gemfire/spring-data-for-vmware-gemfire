@@ -5,10 +5,8 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.data.gemfire.transaction.GemfireTransactionManager;
@@ -20,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Costin Leau
  * @author John Blum
  * @see org.junit.Test
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest

@@ -5,30 +5,19 @@
 package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.TransactionEvent;
-import org.apache.geode.cache.TransactionWriter;
-
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
-import org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer;
 import org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions;
 import org.springframework.data.gemfire.transaction.event.TransactionApplicationEvent;
 import org.springframework.stereotype.Component;
@@ -45,8 +34,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
  * @see org.junit.Test
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.context.annotation.Import
- * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
- * @see org.springframework.data.gemfire.config.annotation.PeerCacheConfigurer
+ * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer
  * @see org.springframework.data.gemfire.transaction.config.EnableGemfireCacheTransactions
  * @see org.springframework.data.gemfire.transaction.event.TransactionApplicationEvent
  * @see org.springframework.test.context.ContextConfiguration
@@ -63,10 +51,6 @@ public class AutoTransactionalEventListenerIntegrationTests extends AbstractTran
 	@Autowired
 	private TestTransactionEventListener transactionEventListener;
 
-	@Autowired
-	@Qualifier("MockTransactionWriter")
-	private TransactionWriter mockTransactionWriter;
-
 	@Override
 	protected void assertTransactionEventListenerOnSuccess() throws Exception {
 
@@ -74,8 +58,6 @@ public class AutoTransactionalEventListenerIntegrationTests extends AbstractTran
 
 		assertThat(this.transactionEventListener.getAndClearTransactionPhases())
 			.containsExactly(TransactionPhase.AFTER_COMMIT);
-
-		verify(this.mockTransactionWriter, times(1)).beforeCommit(any(TransactionEvent.class));
 	}
 
 	@Override
@@ -87,7 +69,7 @@ public class AutoTransactionalEventListenerIntegrationTests extends AbstractTran
 			.containsExactly(TransactionPhase.AFTER_ROLLBACK);
 	}
 
-	@PeerCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
+	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableEntityDefinedRegions(
 		basePackageClasses = Customer.class,
 		serverRegionShortcut = RegionShortcut.LOCAL
@@ -104,18 +86,6 @@ public class AutoTransactionalEventListenerIntegrationTests extends AbstractTran
 		@Bean
 		TestTransactionEventListener testTransactionEventListener() {
 			return new TestTransactionEventListener();
-		}
-
-		@Bean("MockTransactionWriter")
-		TransactionWriter mockTransactionWriter() {
-			return mock(TransactionWriter.class);
-		}
-
-		@Bean
-		PeerCacheConfigurer transactionWriterRegisteringCacheConfigurer(
-				@Qualifier("MockTransactionWriter") TransactionWriter transactionWriter) {
-
-			return (beanName, bean) -> bean.setTransactionWriter(transactionWriter);
 		}
 	}
 

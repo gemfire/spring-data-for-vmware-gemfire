@@ -19,6 +19,6 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties" critical-heap-percentage="55"/>
+	<gfe:client-cache properties-ref="gemfireProperties" critical-heap-percentage="55"/>
 
 </beans>

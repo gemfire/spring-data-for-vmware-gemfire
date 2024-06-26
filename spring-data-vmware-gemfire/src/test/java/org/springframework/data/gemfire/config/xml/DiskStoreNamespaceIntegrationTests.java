@@ -5,17 +5,9 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.util.Properties;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.DiskStoreFactory;
 import org.apache.geode.cache.EvictionAction;
@@ -27,12 +19,14 @@ import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.Scope;
-
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
 import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
@@ -144,14 +138,12 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		PeerRegionFactoryBean localDataRegionFactoryBean =
-			requireApplicationContext().getBean("&local-data", PeerRegionFactoryBean.class);
+		ClientRegionFactoryBean localDataRegionFactoryBean =
+			requireApplicationContext().getBean("&local-data", ClientRegionFactoryBean.class);
 
-		assertThat(localDataRegionFactoryBean instanceof LocalRegionFactoryBean).isTrue();
-		assertThat(localDataRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
-		assertThat(localDataRegionFactoryBean.getDataPolicy().withPersistence()).isFalse();
+		assertThat(localDataRegionFactoryBean instanceof ClientRegionFactoryBean).isTrue();
+
 		assertThat(TestUtils.<String>readField("diskStoreName", localDataRegionFactoryBean)).isEqualTo("diskStore1");
-		assertThat(TestUtils.<Object>readField("scope", localDataRegionFactoryBean)).isEqualTo(Scope.LOCAL);
 
 		Region localDataRegion = requireApplicationContext().getBean("local-data", Region.class);
 
@@ -175,8 +167,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data", PeerRegionFactoryBean.class);
+		ClientRegionFactoryBean regionFactoryBean =
+			requireApplicationContext().getBean("&local-data", ClientRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 
@@ -207,8 +199,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		assertThat(requireApplicationContext().containsBean("local-data-with-custom-expiry")).isTrue();
 
-		PeerRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data-with-custom-expiry", PeerRegionFactoryBean.class);
+		ClientRegionFactoryBean regionFactoryBean =
+			requireApplicationContext().getBean("&local-data-with-custom-expiry", ClientRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 

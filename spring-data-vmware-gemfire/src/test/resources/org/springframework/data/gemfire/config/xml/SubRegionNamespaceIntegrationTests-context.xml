@@ -19,34 +19,34 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-    <gfe:local-region id="parent">
-        <gfe:local-region name="child">
-            <gfe:local-region name="grandchild"/>
-        </gfe:local-region>
-    </gfe:local-region>
+    <gfe:client-region shortcut="LOCAL" id="parent">
+        <gfe:client-region shortcut="LOCAL" name="child">
+            <gfe:client-region shortcut="LOCAL" name="grandchild"/>
+        </gfe:client-region>
+    </gfe:client-region>
 
-    <gfe:local-region id="parentWithSiblings">
-        <gfe:local-region name="child1">
-            <gfe:local-region name="grandChild11"/>
-			<gfe:local-region name="grandChild12"/>
-        </gfe:local-region>
-        <gfe:local-region name="child2"/>
-    </gfe:local-region>
+    <gfe:client-region shortcut="LOCAL" id="parentWithSiblings">
+        <gfe:client-region shortcut="LOCAL" name="child1">
+            <gfe:client-region shortcut="LOCAL" name="grandChild11"/>
+			<gfe:client-region shortcut="LOCAL" name="grandChild12"/>
+        </gfe:client-region>
+        <gfe:client-region shortcut="LOCAL" name="child2"/>
+    </gfe:client-region>
 
-	<gfe:local-region id="complexNested">
+	<gfe:client-region shortcut="LOCAL" id="complexNested">
 		<gfe:cache-listener ref="c-listener"/>
-		<gfe:local-region name="child1">
-			<gfe:local-region name="grandChild11">
+		<gfe:client-region shortcut="LOCAL" name="child1">
+			<gfe:client-region shortcut="LOCAL" name="grandChild11">
 				<gfe:cache-loader ref="c-loader"/>
-			</gfe:local-region>
-			<gfe:local-region name="grandChild12"/>
-		</gfe:local-region>
-		<gfe:local-region name="child2">
+			</gfe:client-region>
+			<gfe:client-region shortcut="LOCAL" name="grandChild12"/>
+		</gfe:client-region>
+		<gfe:client-region shortcut="LOCAL" name="child2">
 			<gfe:cache-writer ref="c-writer"/>
-		</gfe:local-region>
-	</gfe:local-region>
+		</gfe:client-region>
+	</gfe:client-region>
 
 	<bean id="c-listener" class="org.springframework.data.gemfire.SimpleCacheListener"/>
     <bean id="c-loader" class="org.springframework.data.gemfire.SimpleCacheLoader"/>

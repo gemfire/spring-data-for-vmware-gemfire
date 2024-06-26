@@ -21,11 +21,9 @@
 	<util:properties id="gemfireProperties">
 		<prop key="name">CacheNotUsingSharedConfigurationIntegrationTest</prop>
 		<prop key="log-level">error</prop>
-		<prop key="locators">localhost[${spring.data.gemfire.locator.port:20668}]</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/non-cluster-config-cache.xml" properties-ref="gemfireProperties"
-			   use-cluster-configuration="false"/>
+	<gfe:client-cache cache-xml-location="/non-cluster-config-cache.xml" properties-ref="gemfireProperties"/>
 
 	<!-- Should throw an Exception! -->
 	<gfe:lookup-region id="ClusterConfigRegion"/>

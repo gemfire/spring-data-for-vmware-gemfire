@@ -5,10 +5,7 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
-
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.parsing.BeanDefinitionParsingException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -33,7 +30,7 @@ public class InvalidRegionDataPolicyShortcutsTest {
 		catch (BeanDefinitionParsingException expected) {
 
 			assertThat(expected).hasMessageContaining(
-				"Only one of [data-policy, shortcut] may be specified with element [gfe:local-region]");
+				"Only one of [data-policy, shortcut] may be specified with element [gfe:client-region]");
 
 			throw expected;
 		}

@@ -11,15 +11,12 @@ package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-
-import org.junit.After;
-import org.junit.Test;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionExistsException;
 import org.apache.geode.cache.Scope;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -221,7 +218,7 @@ public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
 			assertThat(nativeChildRegion.getName()).isEqualTo("NativeChildRegion");
 			assertThat(nativeChildRegion.getFullPath()).isEqualTo("/NativeParentRegion/NativeChildRegion");
 			assertThat(nativeChildRegion.getAttributes()).isNotNull();
-			assertThat(nativeChildRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+			assertThat(nativeChildRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 
 			Region<?, ?> springLocalRegion = applicationContext.getBean("SpringLocalRegion", Region.class);
 

@@ -9,7 +9,7 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd"
 	   default-lazy-init="true">
 
-	<bean id="default-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="default-cache" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="properties">
 			<props>
 				<prop key="name">default-cache</prop>
@@ -18,7 +18,7 @@
 		</property>
 	</bean>
 
-	<bean id="cache-with-props" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="cache-with-props" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="properties">
 			<props>
 				<prop key="name">cache-with-props</prop>
@@ -27,7 +27,7 @@
 		</property>
 	</bean>
 
-	<bean id="cache-with-xml" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="cache-with-xml" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="cacheXml" value="classpath:gemfire-cache.xml"/>
 		<property name="properties">
 			<props>
@@ -37,7 +37,7 @@
 		</property>
 	</bean>
 
-	<bean id="named-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="named-cache" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="properties">
 			<props>
 				<prop key="name">named-cache</prop>
@@ -46,7 +46,7 @@
 		</property>
 	</bean>
 
-	<bean id="pdx-cache" class="org.springframework.data.gemfire.CacheFactoryBean">
+	<bean id="pdx-cache" class="org.springframework.data.gemfire.client.ClientCacheFactoryBean">
 		<property name="properties">
 			<props>
 				<prop key="name">pdx-cache</prop>

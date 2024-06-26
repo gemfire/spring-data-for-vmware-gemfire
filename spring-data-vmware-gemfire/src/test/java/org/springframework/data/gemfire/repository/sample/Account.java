@@ -6,7 +6,6 @@
 package org.springframework.data.gemfire.repository.sample;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.gemfire.mapping.annotation.LocalRegion;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.util.Assert;
 
@@ -17,7 +16,7 @@ import org.springframework.util.Assert;
  * @see Region
  * @since 1.0.0
  */
-@LocalRegion("Accounts")
+@Region("Accounts")
 @SuppressWarnings("unused")
 public class Account {
 

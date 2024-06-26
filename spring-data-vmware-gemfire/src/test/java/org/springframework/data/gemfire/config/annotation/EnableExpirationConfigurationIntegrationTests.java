@@ -77,12 +77,6 @@ public class EnableExpirationConfigurationIntegrationTests extends SpringApplica
 			"People");
 	}
 
-	@Test
-	public void assertPeerCacheRegionExpirationPoliciesAreCorrect() {
-		assertRegionExpirationConfiguration(newApplicationContext(PeerCacheRegionExpirationConfiguration.class),
-			"People");
-	}
-
 	@ClientCacheApplication(name = "EnableExpirationConfigurationIntegrationTests")
 	@EnableCachingDefinedRegions(clientRegionShortcut = ClientRegionShortcut.LOCAL)
 	@EnableExpiration
@@ -114,11 +108,5 @@ public class EnableExpirationConfigurationIntegrationTests extends SpringApplica
 	@EnableExpiration
 	@EnableGemFireMockObjects
 	static class ClientCacheRegionExpirationConfiguration { }
-
-	@PeerCacheApplication(name = "EnableExpirationConfigurationIntegrationTests")
-	@EnableEntityDefinedRegions(basePackageClasses = Person.class, serverRegionShortcut = RegionShortcut.LOCAL)
-	@EnableExpiration
-	@EnableGemFireMockObjects
-	static class PeerCacheRegionExpirationConfiguration { }
 
 }

@@ -9,20 +9,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
-
 import java.io.InputStream;
-
+import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.context.GemFireMockObjectsApplicationContextInitializer;
 import org.springframework.lang.Nullable;
@@ -53,7 +50,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	private Cache cache;
+	private ClientCache cache;
 
 	@After
 	public void tearDown() {
@@ -63,7 +60,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testBasicCache() {
 
-		this.cache = this.applicationContext.getBean("default-cache", Cache.class);
+		this.cache = this.applicationContext.getBean("default-cache", ClientCache.class);
 
 		assertThat(this.cache).isNotNull();
 		assertThat(this.cache.getName()).isEqualTo("default-cache");
@@ -72,7 +69,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testCacheWithProps() {
 
-		this.cache = this.applicationContext.getBean("cache-with-props", Cache.class);
+		this.cache = this.applicationContext.getBean("cache-with-props", ClientCache.class);
 
 		// the name property seems to be ignored
 		assertThat(this.cache).isNotNull();
@@ -82,7 +79,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testCacheWithXml() {
 
-		this.cache = this.applicationContext.getBean("cache-with-xml", Cache.class);
+		this.cache = this.applicationContext.getBean("cache-with-xml", ClientCache.class);
 
 		assertThat(this.cache).isNotNull();
 		assertThat(this.cache.getName()).isEqualTo("cache-with-xml");
@@ -91,7 +88,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testNamedCache() {
 
-		this.cache = this.applicationContext.getBean("named-cache", Cache.class);
+		this.cache = this.applicationContext.getBean("named-cache", ClientCache.class);
 
 		assertThat(this.cache).isNotNull();
 		assertThat(this.cache.getName()).isEqualTo("named-cache");
@@ -100,7 +97,7 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	public void testPdxCache() {
 
-		this.cache = this.applicationContext.getBean("pdx-cache", Cache.class);
+		this.cache = this.applicationContext.getBean("pdx-cache", ClientCache.class);
 
 		assertThat(this.cache).isNotNull();
 		assertThat(this.cache.getName()).isEqualTo("pdx-cache");
@@ -111,9 +108,9 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 		@Nullable @Override
 		public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-			if (bean instanceof CacheFactoryBean && "cache-with-xml".equals(beanName)) {
+			if (bean instanceof ClientCacheFactoryBean && "cache-with-xml".equals(beanName)) {
 
-				CacheFactoryBean cacheBean = spy((CacheFactoryBean) bean);
+				ClientCacheFactoryBean cacheBean = spy((ClientCacheFactoryBean) bean);
 
 				doAnswer(invocation -> {
 

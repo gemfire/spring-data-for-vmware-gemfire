@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.server.CacheServer;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.support.ClientRegionPoolBeanFactoryPostProcessor;
@@ -51,7 +48,7 @@ import org.springframework.util.StringUtils;
  * @see Configuration
  * @see AnnotationAttributes
  * @see AnnotationMetadata
- * @see CacheFactoryBean
+ * @see ClientCacheFactoryBean
  * @see ClientCacheFactoryBean
  * @see AbstractCacheConfiguration
  * @see ClientCacheConfigurer
@@ -183,13 +180,13 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	/**
 	 * Constructs a new instance of {@link ClientCacheFactoryBean} used to create a peer {@link ClientCache}.
 	 *
-	 * @param <T> {@link Class} sub-type of {@link CacheFactoryBean}.
+	 * @param <T> {@link Class} sub-type of {@link ClientCacheFactoryBean}.
 	 * @return a new instance of {@link ClientCacheFactoryBean}.
 	 * @see ClientCacheFactoryBean
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <T extends CacheFactoryBean> T newCacheFactoryBean() {
+	protected <T extends ClientCacheFactoryBean> T newCacheFactoryBean() {
 		return (T) new ClientCacheFactoryBean();
 	}
 

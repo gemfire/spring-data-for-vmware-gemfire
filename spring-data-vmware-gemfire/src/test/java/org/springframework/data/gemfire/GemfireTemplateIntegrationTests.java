@@ -5,8 +5,8 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assumptions.assumeThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,25 +15,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.client.Pool;
+import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.query.SelectResults;
-
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.client.PoolFactoryBean;
+import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.repository.sample.User;
+import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testcontainers.utility.MountableFile;
 
 /**
  * Integration Tests for {@link GemfireTemplate}.
@@ -56,6 +64,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration
 @SuppressWarnings("unused")
 public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
+
+	private static GemFireCluster gemFireCluster;
+	private ClassPathXmlApplicationContext applicationContext;
+
+	@BeforeClass
+	public static void startCluster() {
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withGfsh(false, "deploy --jar=/testJar.jar", "create region --name=Users --type=REPLICATE");
+
+		gemFireCluster.acceptLicense().start();
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
+	}
 
 	protected static final String DEFAULT_GEMFIRE_LOG_LEVEL = "error";
 
@@ -177,9 +202,6 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 
 	@Test
 	public void containsKeyOnServer() {
-
-		assumeThat(CacheUtils.isClient(this.gemfireCache)).isTrue();
-
 		assertThat(this.usersTemplate.containsKeyOnServer(getKey(getUser("jackHandy")))).isTrue();
 		assertThat(this.usersTemplate.containsKeyOnServer("maxPayne")).isFalse();
 	}
@@ -431,10 +453,10 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean
-		CacheFactoryBean gemfireCache() {
+		ClientCacheFactoryBean gemfireCache() {
 
-			CacheFactoryBean gemfireCache = new CacheFactoryBean();
-
+			ClientCacheFactoryBean gemfireCache = new ClientCacheFactoryBean();
+			gemfireCache.setPoolName("server-pool");
 			gemfireCache.setClose(false);
 			gemfireCache.setProperties(gemfireProperties());
 
@@ -442,11 +464,13 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean(name = "Users")
-		LocalRegionFactoryBean<String, User> usersRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<String, User> usersRegion(GemFireCache gemfireCache) {
 
-			LocalRegionFactoryBean<String, User> usersRegion = new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<String, User> usersRegion = new ClientRegionFactoryBean<>();
 
 			usersRegion.setCache(gemfireCache);
+			usersRegion.setPoolName("server-pool");
+			usersRegion.setShortcut(ClientRegionShortcut.LOCAL);
 			usersRegion.setPersistent(false);
 
 			return usersRegion;
@@ -455,6 +479,13 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		@Bean
 		GemfireTemplate usersTemplate(Region<Object, Object> simple) {
 			return new GemfireTemplate(simple);
+		}
+
+		@Bean("server-pool")
+		PoolFactoryBean pool() {
+			PoolFactoryBean pool = new PoolFactoryBean();
+			pool.setLocators(new ConnectionEndpoint[] { new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort()) });
+			return pool;
 		}
 	}
 }

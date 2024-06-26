@@ -7,10 +7,8 @@ package org.springframework.data.gemfire.client;
 import static java.util.Arrays.stream;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheWriter;
@@ -26,7 +24,6 @@ import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.compression.Compressor;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.data.gemfire.ConfigurableRegionFactoryBean;
@@ -212,7 +209,6 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	private ClientCache resolveCache(GemFireCache gemfireCache) {
 
 		return Optional.ofNullable(gemfireCache)
-			.filter(GemfireUtils::isClient)
 			.map(ClientCache.class::cast)
 			.orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
 	}

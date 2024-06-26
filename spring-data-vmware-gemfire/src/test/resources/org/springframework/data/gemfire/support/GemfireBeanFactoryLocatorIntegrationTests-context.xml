@@ -14,7 +14,7 @@
 
 	<bean class="org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor"/>
 
-	<gfe:cache use-bean-factory-locator="true"/>
+	<gfe:client-cache use-bean-factory-locator="true"/>
 
 	<bean class="org.springframework.data.gemfire.support.GemfireBeanFactoryLocator"/>
 

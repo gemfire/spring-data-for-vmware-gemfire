@@ -19,7 +19,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<bean id="replicate-persistent-region" class="org.springframework.data.gemfire.PeerRegionFactoryBeanTest$TestRegionFactoryBean">
 		<property name="cache" ref="gemfireCache"/>

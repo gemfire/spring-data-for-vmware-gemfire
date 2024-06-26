@@ -6,17 +6,14 @@ package org.springframework.data.gemfire.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.context.annotation.Configuration
- * @see org.springframework.data.gemfire.CacheFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
@@ -86,8 +83,8 @@ public class GemfireBeanFactoryLocatorJavaConfigIntegrationTests extends Integra
 		}
 
 		@Bean
-		CacheFactoryBean gemfireCache() {
-			CacheFactoryBean gemfireCache = new CacheFactoryBean();
+		ClientCacheFactoryBean gemfireCache() {
+			ClientCacheFactoryBean gemfireCache = new ClientCacheFactoryBean();
 
 			gemfireCache.setClose(true);
 			gemfireCache.setUseBeanFactoryLocator(true);

@@ -5,27 +5,22 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.io.IOException;
 import java.util.Collections;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.DataPolicy;
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -54,12 +49,11 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=PartitionRegion --type=PARTITION",
+						"create region --name=ReplicateRegion --type=REPLICATE", "create region --name=LocalRegion --type=LOCAL");
 
 		gemFireCluster.acceptLicense().start();
-
-		gemFireCluster.gfsh(false, "create region --name=ReplicateRegion --type=REPLICATE",
-				"create region --name=LocalRegion --type=LOCAL");
 
 		System.setProperty("gemfire.locator.port", String.valueOf(gemFireCluster.getLocatorPort()));
 	}
@@ -75,6 +69,10 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	@Autowired
 	@Qualifier("LocalRegion")
 	private Region<?, ?> localClientProxyRegion;
+
+	@Autowired
+	@Qualifier("PartitionRegion")
+	private Region<?, ?> partitionClientProxyRegion;
 
 	@Autowired
 	@Qualifier("ReplicateRegion")
@@ -93,13 +91,13 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 	public void setup() {
 
 		assertThat(this.cache).isNotNull();
-		assertThat(CacheUtils.isClient(this.cache));
 	}
 
 	@Test
 	public void clusterRegionsExistOnClient() {
 
 		assertRegion(this.localClientProxyRegion, "LocalRegion");
+		assertRegion(this.partitionClientProxyRegion, "PartitionRegion");
 		assertRegion(this.replicateClientProxyRegion, "ReplicateRegion");
 	}
 

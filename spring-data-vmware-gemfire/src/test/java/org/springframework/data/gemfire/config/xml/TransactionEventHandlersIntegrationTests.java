@@ -5,15 +5,11 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.TransactionEvent;
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -48,10 +44,7 @@ public class TransactionEventHandlersIntegrationTests extends IntegrationTestsSu
 	private TestTransactionListener txListener2;
 
 	@Autowired
-	private TestTransactionWriter txWriter;
-
-	@Autowired
-	private Cache cache;
+	private ClientCache cache;
 
 	@Test
 	public void transactionEventHandlersConfiguredCorrectly() {
@@ -61,7 +54,6 @@ public class TransactionEventHandlersIntegrationTests extends IntegrationTestsSu
 		assertThat(listeners.length).isEqualTo(2);
 		assertThat(listeners[0]).isSameAs(txListener1);
 		assertThat(listeners[1]).isSameAs(txListener2);
-		assertThat(cache.getCacheTransactionManager().getWriter()).isSameAs(txWriter);
 	}
 
 	public static class TestTransactionListener implements TransactionListener, BeanNameAware {
@@ -95,26 +87,5 @@ public class TransactionEventHandlersIntegrationTests extends IntegrationTestsSu
 		public void close() {
 			closed = true;
 		}
-	}
-
-	public static class TestTransactionWriter implements TransactionWriter, BeanNameAware {
-
-		private String name;
-
-		public String value;
-
-		@Override
-		public void setBeanName(String name) {
-			this.name = name;
-		}
-
-		@Override
-		public void beforeCommit(TransactionEvent event) {
-			this.value = name;
-		}
-
-		@Override
-		public void close() { }
-
 	}
 }

@@ -34,7 +34,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:disk-store id="TestDataStore"
 					allow-force-compaction="${allowForceCompaction}"
