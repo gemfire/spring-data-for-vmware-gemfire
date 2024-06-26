@@ -6,20 +6,18 @@ package org.springframework.data.gemfire.serialization.json;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
-import java.util.Arrays;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.util.Arrays;
+import java.util.Map;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.query.SelectResults;
-
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.GemfireOperations;
@@ -47,6 +45,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration
 @SuppressWarnings("unused")
 public class JSONRegionAdviceIntegrationTests extends IntegrationTestsSupport {
+
+	private static GemFireCluster gemFireCluster;
+
+	@BeforeClass
+	public static void startCluster() {
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withGfsh(false, "create region --name=JsonRegion --type=REPLICATE");
+
+		gemFireCluster.acceptLicense().start();
+
+		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));
+	}
+
+	@AfterClass
+	public static void shutdown() {
+		gemFireCluster.close();
+	}
 
 	private static String toJson(Object bean) {
 

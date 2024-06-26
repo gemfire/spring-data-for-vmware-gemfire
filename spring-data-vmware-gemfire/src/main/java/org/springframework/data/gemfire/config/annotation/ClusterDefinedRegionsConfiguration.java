@@ -6,14 +6,10 @@ package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
-import org.apache.shiro.util.Assert;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
@@ -23,8 +19,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
-import org.springframework.data.gemfire.util.CacheUtils;
-import org.springframework.util.ObjectUtils;
 
 /**
  * The {@link ClusterDefinedRegionsConfiguration} class configures client Proxy-based {@link Region Regions}
@@ -83,10 +77,6 @@ public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 	@Bean
 	Object nullCacheDependentBean(GemFireCache cache) {
-
-		Assert.isTrue(CacheUtils.isClient(cache), String.format("GemFireCache [%s] must be a %s",
-			ObjectUtils.nullSafeClassName(cache), ClientCache.class.getName()));
-
 		return null;
 	}
 }

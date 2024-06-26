@@ -7,18 +7,16 @@ package org.springframework.data.gemfire.config.annotation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
-
 import org.apache.geode.cache.DataPolicy;
-import org.junit.After;
-import org.junit.Test;
-
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.util.ObjectSizer;
-
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.LocalRegionFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionActionType;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
@@ -123,22 +121,23 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 		assertEvictionAttributes(getBean("LocalRegion", Region.class), lastMatchingEvictionAttributes);
 	}
 
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireMockObjects
 	@SuppressWarnings("unused")
 	static class CacheRegionConfiguration {
 
 		@Bean("LocalRegion")
-		LocalRegionFactoryBean<Object, Object> mockLocalRegion(Cache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> mockLocalRegion(ClientCache gemfireCache) {
 
-			LocalRegionFactoryBean<Object, Object> localRegionFactoryBean =
-				new LocalRegionFactoryBean<>();
+			ClientRegionFactoryBean<Object, Object> clientRegionFactory =
+				new ClientRegionFactoryBean<>();
 
-			localRegionFactoryBean.setCache(gemfireCache);
-			localRegionFactoryBean.setPersistent(false);
-			localRegionFactoryBean.setDataPolicy(DataPolicy.NORMAL);
+			clientRegionFactory.setCache(gemfireCache);
+			clientRegionFactory.setPersistent(false);
+			clientRegionFactory.setDataPolicy(DataPolicy.NORMAL);
+			clientRegionFactory.setShortcut(ClientRegionShortcut.LOCAL);
 
-			return localRegionFactoryBean;
+			return clientRegionFactory;
 		}
 
 		@Bean

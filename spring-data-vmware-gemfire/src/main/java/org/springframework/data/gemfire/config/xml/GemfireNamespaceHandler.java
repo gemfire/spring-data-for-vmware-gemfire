@@ -22,15 +22,12 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 	public void init() {
 
 		registerBeanDefinitionParser("auto-region-lookup", new AutoRegionLookupParser());
-		registerBeanDefinitionParser("cache", new CacheParser());
 		registerBeanDefinitionParser("client-cache", new ClientCacheParser());
 		registerBeanDefinitionParser("client-region", new ClientRegionParser());
 		registerBeanDefinitionParser("client-region-template", new ClientRegionParser());
 		registerBeanDefinitionParser("cq-listener-container", new GemfireListenerContainerParser());
 		registerBeanDefinitionParser("disk-store", new DiskStoreParser());
 		registerBeanDefinitionParser("function-service", new FunctionServiceParser());
-		registerBeanDefinitionParser("local-region", new LocalRegionParser());
-		registerBeanDefinitionParser("local-region-template", new LocalRegionParser());
 		registerBeanDefinitionParser("lookup-region", new LookupRegionParser());
 		registerBeanDefinitionParser("pool", new PoolParser());
 		registerBeanDefinitionParser("region-template", new TemplateRegionParser());

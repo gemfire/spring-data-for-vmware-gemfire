@@ -10,7 +10,6 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAlgorithm;
@@ -100,14 +99,11 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutDefaults.getAttributes().getConcurrencyChecksEnabled()).isTrue();
 		assertThat(shortcutDefaults.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(shortcutDefaults.getAttributes().isDiskSynchronous()).isFalse();
-		assertThat(shortcutDefaults.getAttributes().getIgnoreJTA()).isTrue();
 		assertThat(shortcutDefaults.getAttributes().getInitialCapacity()).isEqualTo(101);
 		assertThat(shortcutDefaults.getAttributes().getLoadFactor()).isEqualTo(0.85f);
 		assertThat(shortcutDefaults.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
 		assertThat(shortcutDefaults.getAttributes().getValueConstraint()).isEqualTo(String.class);
 		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes()).isNotNull();
-		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
-		assertThat(shortcutDefaults.getAttributes().getEvictionAttributes().getAlgorithm()).isEqualTo(EvictionAlgorithm.LRU_HEAP);
 		assertThat(shortcutDefaults.getAttributes().getPartitionAttributes()).isNull();
 	}
 
@@ -125,7 +121,6 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 		assertThat(shortcutOverrides.getAttributes().getConcurrencyChecksEnabled()).isFalse();
 		assertThat(shortcutOverrides.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(shortcutOverrides.getAttributes().isDiskSynchronous()).isTrue();
-		assertThat(shortcutOverrides.getAttributes().getIgnoreJTA()).isFalse();
 		assertThat(shortcutOverrides.getAttributes().getInitialCapacity()).isEqualTo(51);
 		assertThat(shortcutOverrides.getAttributes().getLoadFactor()).isEqualTo(0.72f);
 		assertThat(shortcutOverrides.getAttributes().getKeyConstraint()).isEqualTo(String.class);

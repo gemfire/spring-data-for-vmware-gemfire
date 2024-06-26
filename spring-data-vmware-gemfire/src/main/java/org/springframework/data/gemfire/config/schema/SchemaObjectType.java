@@ -6,7 +6,6 @@
 package org.springframework.data.gemfire.config.schema;
 
 import static java.util.Arrays.stream;
-
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
@@ -33,7 +32,6 @@ import org.apache.geode.cache.query.Index;
  */
 public enum SchemaObjectType {
 
-	CACHE(Cache.class),
 	CLIENT_CACHE(ClientCache.class),
 	DISK_STORE(DiskStore.class),
 	FUNCTION(Function.class),

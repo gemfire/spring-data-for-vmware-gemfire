@@ -77,7 +77,7 @@ public class GemfireBeanFactoryLocatorIntegrationTests extends IntegrationTestsS
 	@Test
 	public void registeredBeanFactoriesIsCorrect() {
 
-		Set<String> beanNames = asSet("gemfire-cache", "gemfireCache", "testBeanFactoryLocator", "aliasOne", "aliasTwo",
+		Set<String> beanNames = asSet("testBeanFactoryLocator", "aliasOne", "aliasTwo",
 			GemfireBeanFactoryLocator.class.getName());
 
 		assertThat(GemfireBeanFactoryLocator.BEAN_FACTORIES.keySet()).containsAll(beanNames);

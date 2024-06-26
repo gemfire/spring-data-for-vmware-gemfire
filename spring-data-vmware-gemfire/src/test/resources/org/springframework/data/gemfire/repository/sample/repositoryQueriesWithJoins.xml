@@ -23,13 +23,13 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="Customers" persistent="false"
+	<gfe:client-region shortcut="LOCAL" id="Customers" persistent="false"
 						   key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Customer"/>
 
-	<gfe:local-region id="Accounts" persistent="false" data-policy="NORMAL"
+	<gfe:client-region shortcut="LOCAL" id="Accounts" persistent="false"
 						   key-constraint="java.lang.Long"
 						   value-constraint="org.springframework.data.gemfire.repository.sample.Account"/>
 

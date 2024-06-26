@@ -13,7 +13,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.core.annotation.AliasFor;
 
 /**
@@ -33,7 +32,6 @@ public @interface Region {
 
 	List<Class<? extends Annotation>> REGION_ANNOTATION_TYPES = Arrays.asList(
 		ClientRegion.class,
-		LocalRegion.class,
 		Region.class
 	);
 

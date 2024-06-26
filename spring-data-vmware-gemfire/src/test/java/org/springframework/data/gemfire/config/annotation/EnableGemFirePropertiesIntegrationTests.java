@@ -6,21 +6,17 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
-import org.springframework.data.gemfire.CacheFactoryBean;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.data.gemfire.util.ArrayUtils;
@@ -135,7 +131,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(containsBean("gemfireCache")).isTrue();
 		assertThat(containsBean("mockPdxSerializer")).isTrue();
 
-		CacheFactoryBean gemfireCache = getBean("&gemfireCache", CacheFactoryBean.class);
+		ClientCacheFactoryBean gemfireCache = getBean("&gemfireCache", ClientCacheFactoryBean.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getPdxDiskStoreName()).isEqualTo("TestDiskStore");
@@ -274,23 +270,23 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	static class TestAuthGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableLogging
 	static class TestLoggingGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties(name = "TestName", groups = { "TestGroupOne", "TestGroupTwo" })
 	static class TestNameAndGroupsAnnotationBasedGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnablePdx
 	@SuppressWarnings("unused")
 	static class TestPdxGemFirePropertiesConfiguration {
@@ -302,19 +298,19 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableSecurity
 	static class TestSecurityGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties(serializableObjectFilter = { "example.app.model.TypeOne", "example.app.model.TypeTwo" },
 		validateSerializableObjects = true)
 	static class TestSerializableObjectFilterAndValidateSerializableObjectsGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableSsl(ciphers = "FISH", components = {
 		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY,
@@ -326,7 +322,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	static class TestSslGemFirePropertiesConfiguration { }
 
 	@EnableGemFireMockObjects
-	@PeerCacheApplication
+	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableStatistics
 	static class TestStatisticsGemFirePropertiesConfiguration { }

@@ -20,7 +20,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="/lookup-region-mutation-cache.xml" properties-ref="gemfireProperties"/>
+	<gfe:client-cache cache-xml-location="/lookup-region-mutation-cache.xml" properties-ref="gemfireProperties"/>
 
 	<bean id="B" class="org.springframework.data.gemfire.LookupRegionMutationIntegrationTests.TestCacheListener"/>
 

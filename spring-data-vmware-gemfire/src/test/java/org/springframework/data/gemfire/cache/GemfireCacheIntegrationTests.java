@@ -5,19 +5,16 @@
 package org.springframework.data.gemfire.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import edu.umd.cs.mtc.MultithreadedTestCase;
+import edu.umd.cs.mtc.TestFramework;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import edu.umd.cs.mtc.MultithreadedTestCase;
-import edu.umd.cs.mtc.TestFramework;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.junit.Test;
 import org.springframework.cache.Cache;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.test.support.AbstractNativeCacheTests;
@@ -49,13 +46,13 @@ public class GemfireCacheIntegrationTests extends AbstractNativeCacheTests<Regio
 		gemfireProperties.setProperty("name", GemfireCacheIntegrationTests.class.getName());
 		gemfireProperties.setProperty("log-level", "error");
 
-		org.apache.geode.cache.Cache cache = GemfireUtils.getCache();
+		ClientCache cache = GemfireUtils.getClientCache();
 
-		cache = cache != null ? cache : new CacheFactory(gemfireProperties).create();
+		cache = cache != null ? cache : new ClientCacheFactory(gemfireProperties).create();
 
 		Region<Object, Object> region = cache.getRegion(CACHE_NAME);
 
-		region = region != null ? region : cache.createRegionFactory().create(CACHE_NAME);
+		region = region != null ? region : cache.createClientRegionFactory(ClientRegionShortcut.LOCAL).create(CACHE_NAME);
 
 		return region;
 	}

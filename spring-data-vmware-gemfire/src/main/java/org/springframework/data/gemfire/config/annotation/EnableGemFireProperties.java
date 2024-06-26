@@ -16,7 +16,6 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import org.springframework.context.annotation.Import;
 
 /**
@@ -201,9 +200,6 @@ public @interface EnableGemFireProperties {
 
 	/**
 	 * Maximum number of milliseconds to wait for the distributed system to reconnect on each reconnect attempt.
-	 *
-	 * {@link PeerCacheApplication#enableAutoReconnect()}
-	 * must be set to {@literal true} for this property to have any effect.
 	 *
 	 * Defaults to {@literal 60000} milliseconds.
 	 */

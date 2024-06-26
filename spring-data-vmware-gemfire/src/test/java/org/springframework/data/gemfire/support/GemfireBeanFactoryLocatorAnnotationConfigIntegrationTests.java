@@ -6,16 +6,13 @@ package org.springframework.data.gemfire.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.config.annotation.PeerCacheApplication;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,7 +24,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @see org.junit.Test
  * @see org.springframework.beans.factory.BeanFactory
- * @see org.springframework.data.gemfire.config.annotation.PeerCacheApplication
  * @see org.springframework.data.gemfire.support.GemfireBeanFactoryLocator
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.mock.beans.factory.config.GemFireMockObjectsBeanPostProcessor
@@ -73,7 +69,7 @@ public class GemfireBeanFactoryLocatorAnnotationConfigIntegrationTests extends I
 		}
 	}
 
-	@PeerCacheApplication(useBeanFactoryLocator = true)
+	@ClientCacheApplication(useBeanFactoryLocator = true)
 	@SuppressWarnings("unused")
 	static class TestConfiguration {
 

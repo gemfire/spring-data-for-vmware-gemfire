@@ -19,14 +19,13 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="Customers" persistent="false">
-		<gfe:local-region name="Accounts"
+	<gfe:client-region shortcut="LOCAL" id="Customers" persistent="false">
+		<gfe:client-region shortcut="LOCAL_PERSISTENT" name="Accounts"
 							   concurrency-level="20"
 							   destroy="true"
 							   disk-synchronous="true"
-							   ignore-jta="true"
 							   initial-capacity="1000"
 							   key-constraint="java.lang.Long"
 							   persistent="true"
@@ -42,7 +41,7 @@
 				<bean class="org.springframework.data.gemfire.SimpleCacheWriter"/>
 			</gfe:cache-writer>
 			<gfe:eviction action="OVERFLOW_TO_DISK" threshold="10000"/>
-		</gfe:local-region>
-	</gfe:local-region>
+		</gfe:client-region>
+	</gfe:client-region>
 
 </beans>

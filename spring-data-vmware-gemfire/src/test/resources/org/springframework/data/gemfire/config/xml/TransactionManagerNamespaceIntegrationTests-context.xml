@@ -18,7 +18,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
 	<gfe:transaction-manager cache-ref="gemfireCache" copy-on-read="false"/>
 

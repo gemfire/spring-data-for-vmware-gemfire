@@ -21,15 +21,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.function.Supplier;
-
-import org.junit.Test;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -38,7 +34,7 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.gemfire.GemfireUtils;
@@ -1003,26 +999,6 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.close(mockClientCache);
 
 		verify(mockClientCache, times(1)).close(eq(false));
-	}
-
-	@Test
-	public void autoReconnectDisabled() {
-		assertThat(new ClientCacheFactoryBean().getEnableAutoReconnect()).isFalse();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void autoReconnectEnabled() {
-		new ClientCacheFactoryBean().setEnableAutoReconnect(true);
-	}
-
-	@Test
-	public void clusterConfigurationNotUsed() {
-		assertThat(new ClientCacheFactoryBean().getUseClusterConfiguration()).isFalse();
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void usesClusterConfiguration() {
-		new ClientCacheFactoryBean().setUseClusterConfiguration(true);
 	}
 
 	@Test

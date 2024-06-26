@@ -7,15 +7,12 @@ package org.springframework.data.gemfire.test.support;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.apache.geode.cache.GemFireCache;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
-
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
 
 /**
@@ -40,7 +37,7 @@ public abstract class AbstractRegionFactoryBeanTests {
 
 	@Before
 	public void setUp() throws Exception {
-		this.cache = GemFireMockObjectsSupport.mockPeerCache();
+		this.cache = GemFireMockObjectsSupport.mockClientCache();
 	}
 
 	@After
@@ -75,12 +72,12 @@ public abstract class AbstractRegionFactoryBeanTests {
 		public Exception exception;
 
 		@SuppressWarnings("rawtypes")
-		public final PeerRegionFactoryBean regionFactoryBean;
+		public final ClientRegionFactoryBean regionFactoryBean;
 
 		public final String regionName;
 
 		@SuppressWarnings("rawtypes")
-		public RegionFactoryBeanConfig(PeerRegionFactoryBean regionFactoryBean, String regionName) {
+		public RegionFactoryBeanConfig(ClientRegionFactoryBean regionFactoryBean, String regionName) {
 
 			this.regionFactoryBean = regionFactoryBean;
 			this.regionName = regionName;

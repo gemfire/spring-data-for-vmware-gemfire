@@ -28,30 +28,30 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache properties-ref="gemfireProperties"/>
+	<gfe:client-cache properties-ref="gemfireProperties"/>
 
-	<gfe:local-region id="One">
+	<gfe:client-region shortcut="LOCAL" id="One">
 		<gfe:eviction threshold="4096" type="ENTRY_COUNT"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Two">
+	<gfe:client-region shortcut="LOCAL" id="Two">
 		<gfe:eviction type="ENTRY_COUNT"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Three">
+	<gfe:client-region shortcut="LOCAL" id="Three">
 		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Four">
+	<gfe:client-region shortcut="LOCAL" id="Four">
 		<gfe:eviction type="${eviction.type}" action="OVERFLOW_TO_DISK"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Five">
+	<gfe:client-region shortcut="LOCAL" id="Five">
 		<gfe:eviction threshold="128" type="MEMORY_SIZE"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
-	<gfe:local-region id="Six">
+	<gfe:client-region shortcut="LOCAL" id="Six">
 		<gfe:eviction threshold="256" type="MEMORY_SIZE"/>
-	</gfe:local-region>
+	</gfe:client-region>
 
 </beans>

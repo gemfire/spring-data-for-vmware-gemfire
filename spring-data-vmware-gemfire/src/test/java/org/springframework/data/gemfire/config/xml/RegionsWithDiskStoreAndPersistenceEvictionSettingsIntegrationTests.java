@@ -5,15 +5,12 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.Region;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -65,7 +62,7 @@ public class RegionsWithDiskStoreAndPersistenceEvictionSettingsIntegrationTests 
 		assertThat(notPersistentNoOverflowRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(notPersistentNoOverflowRegion.getAttributes().getEvictionAttributes()).isNotNull();
 		assertThat(notPersistentNoOverflowRegion.getAttributes().getEvictionAttributes().getAction()).isEqualTo(EvictionAction.NONE);
-		assertThat(notPersistentNoOverflowRegion.getAttributes().getDiskStoreName()).isNull();
+		assertThat(notPersistentNoOverflowRegion.getAttributes().getDiskStoreName()).isEqualTo("DiskStoreOne");
 	}
 
 	@Test

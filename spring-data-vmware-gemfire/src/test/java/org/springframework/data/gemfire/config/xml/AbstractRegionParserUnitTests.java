@@ -15,13 +15,10 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import org.junit.Test;
-
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.beans.factory.xml.XmlReaderContext;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -112,14 +109,12 @@ public class AbstractRegionParserUnitTests {
 	public void isRegionTemplateWithRegionTemplateElementsIsTrue() {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region-template");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region-template");
 	}
 
 	@Test
 	public void isRegionTemplateWithRegionElementsIsFalse() {
 
 		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("client-region");
-		assertIsRegionTemplateWhenElementLocalNameEndsWithTemplate("local-region");
 	}
 
 	@Test
@@ -136,14 +131,12 @@ public class AbstractRegionParserUnitTests {
 	public void isSubRegionWithRegionElementIsTrue() {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region");
 	}
 
 	@Test
 	public void isSubRegionWithRegionTemplateElementIsFalse() {
 
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("client-region-template");
-		assertIsSubRegionWhenElementLocalNameEndsWithRegion("local-region-template");
 		assertIsSubRegionWhenElementLocalNameEndsWithRegion("region-template");
 	}
 
@@ -191,9 +184,9 @@ public class AbstractRegionParserUnitTests {
 		Element mockElement = mock(Element.class);
 		Node mockNode = mock(Node.class);
 
-		when(mockElement.getLocalName()).thenReturn("local-region");
+		when(mockElement.getLocalName()).thenReturn("client-region");
 		when(mockElement.getParentNode()).thenReturn(mockNode);
-		when(mockNode.getLocalName()).thenReturn("local-region");
+		when(mockNode.getLocalName()).thenReturn("client-region");
 
 		regionParserSpy.doParse(mockElement, null, builder);
 
@@ -257,12 +250,12 @@ public class AbstractRegionParserUnitTests {
 
 		when(mockElement.hasAttribute(matches("data-policy"))).thenReturn(true);
 		when(mockElement.hasAttribute(matches("shortcut"))).thenReturn(true);
-		when(mockElement.getTagName()).thenReturn("local-region");
+		when(mockElement.getTagName()).thenReturn("client-region");
 
 		this.regionParser.validateDataPolicyShortcutAttributesMutualExclusion(mockElement, mockParserContext);
 
 		verify(mockReaderContext).error(
-			eq("Only one of [data-policy, shortcut] may be specified with element [local-region]"),
+			eq("Only one of [data-policy, shortcut] may be specified with element [client-region]"),
 				eq(mockElement));
 	}
 

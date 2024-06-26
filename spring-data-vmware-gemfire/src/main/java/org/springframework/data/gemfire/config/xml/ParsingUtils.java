@@ -10,11 +10,9 @@
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
-
 import org.apache.geode.cache.LossAction;
 import org.apache.geode.cache.MembershipAttributes;
 import org.apache.geode.cache.ResumptionAction;
-
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -30,7 +28,6 @@ import org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBe
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
-
 import org.w3c.dom.Element;
 
 /**
@@ -376,7 +373,6 @@ abstract class ParsingUtils {
 		setPropertyValue(element, regionAttributesBuilder, "concurrency-level");
 		setPropertyValue(element, regionAttributesBuilder, "disk-synchronous");
 		setPropertyValue(element, regionAttributesBuilder, "enable-subscription-conflation");
-		setPropertyValue(element, regionAttributesBuilder, "ignore-jta", "ignoreJTA");
 		setPropertyValue(element, regionAttributesBuilder, "initial-capacity");
 		setPropertyValue(element, regionAttributesBuilder, "is-lock-grantor", "lockGrantor");
 		setPropertyValue(element, regionAttributesBuilder, "key-constraint");

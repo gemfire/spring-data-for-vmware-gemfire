@@ -5,26 +5,22 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.PartitionAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.gemfire.PeerRegionFactoryBean;
 import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Integration Tests testing the contract and functionality of the SDG {@link PeerRegionFactoryBean} class,
+ * Integration Tests testing the contract and functionality of the SDG {@link ClientRegionFactoryBean} class,
  * and specifically the specification of the Apache Geode {@link Region} {@link DataPolicy} when used as
  * raw bean definition in Spring XML configuration metadata.
  *
@@ -32,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.junit.Test
  * @see org.apache.geode.cache.DataPolicy
  * @see org.apache.geode.cache.Region
- * @see org.springframework.data.gemfire.PeerRegionFactoryBean
+ * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.RegionAttributesFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
@@ -63,7 +59,7 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 		assertThat(example.getName()).isEqualTo("Example");
 		assertThat(example.getFullPath()).isEqualTo("/Example");
 		assertThat(example.getAttributes()).isNotNull();
-		assertThat(example.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
+		assertThat(example.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		assertThat(example.getAttributes().getStatisticsEnabled()).isTrue();
 		assertThat(example.getAttributes().getPartitionAttributes()).isNull();
 	}
@@ -71,18 +67,17 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 	@Test
 	public void testAnotherExampleRegionFactoryBeanConfiguration() throws Exception {
 
-		PeerRegionFactoryBean<?, ?> anotherExampleRegionFactoryBean =
-			applicationContext.getBean("&AnotherExample", PeerRegionFactoryBean.class);
+		ClientRegionFactoryBean<?, ?> anotherExampleRegionFactoryBean =
+			applicationContext.getBean("&AnotherExample", ClientRegionFactoryBean.class);
 
 		assertThat(anotherExampleRegionFactoryBean).isNotNull();
-		assertThat(anotherExampleRegionFactoryBean.getDataPolicy()).isEqualTo(DataPolicy.PERSISTENT_REPLICATE);
 		assertThat(Boolean.TRUE.equals(TestUtils.readField("persistent", anotherExampleRegionFactoryBean))).isTrue();
 
 		RegionAttributes<?, ?> anotherExampleRegionAttributes =
 			TestUtils.readField("attributes", anotherExampleRegionFactoryBean);
 
 		assertThat(anotherExampleRegionAttributes).isNotNull();
-		assertThat(anotherExampleRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
+		assertThat(anotherExampleRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 	}
 
 	@Test
@@ -97,6 +92,6 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 		assertThat(anotherExample.getAttributes().getPartitionAttributes()).isNull();
 	}
 
-	public static final class TestRegionFactoryBean<K, V> extends PeerRegionFactoryBean<K, V> { }
+	public static final class TestRegionFactoryBean<K, V> extends ClientRegionFactoryBean<K, V> { }
 
 }

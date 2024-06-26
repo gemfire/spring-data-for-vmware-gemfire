@@ -20,7 +20,7 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<gfe:cache cache-xml-location="cache-with-declarable.xml" properties-ref="gemfireProperties"
+	<gfe:client-cache cache-xml-location="cache-with-declarable.xml" properties-ref="gemfireProperties"
 			   use-bean-factory-locator="true"/>
 
 	<gfe:lookup-region id="Example"/>

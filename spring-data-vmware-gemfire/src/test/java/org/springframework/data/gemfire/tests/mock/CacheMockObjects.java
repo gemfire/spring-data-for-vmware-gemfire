@@ -8,11 +8,9 @@ import static org.apache.geode.internal.util.CollectionUtils.asSet;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
-
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.GemFireCache;
@@ -22,7 +20,6 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.distributed.DistributedMember;
 import org.apache.geode.distributed.DistributedSystem;
-
 import org.springframework.data.gemfire.util.RegionUtils;
 
 /**
@@ -65,13 +62,6 @@ public abstract class CacheMockObjects {
 			Region<?, ?>... regions) {
 
 		return mockGemFireCache(mock(ClientCache.class, withSettings().name(name).lenient()),
-			name, distributedSystem, resourceManager, regions);
-	}
-
-	public static Cache mockPeerCache(String name, DistributedSystem distributedSystem, ResourceManager resourceManager,
-			Region<?, ?>... regions) {
-
-		return mockGemFireCache(mock(Cache.class, withSettings().name(name).lenient()),
 			name, distributedSystem, resourceManager, regions);
 	}
 
