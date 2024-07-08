@@ -47,7 +47,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 publishingDetails {
-  artifactName.set("spring-data-3.2-gemfire-${getGemFireBaseVersion()}")
+  artifactName.set("spring-data-3.3-gemfire-${getGemFireBaseVersion()}")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
 }
@@ -59,10 +59,10 @@ dependencies {
   compileOnly(libs.bundles.gemfire)
 
   implementation(libs.cache.api)
-  api(libs.spring.context.support)
-  api(libs.spring.tx)
-  api(libs.spring.web)
-  api(libs.spring.data.commons)
+  api("org.springframework:spring-context-support")
+  api("org.springframework:spring-tx")
+  api("org.springframework:spring-web")
+  api("org.springframework.data:spring-data-commons")
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
   implementation(libs.bundles.jackson)
@@ -99,7 +99,7 @@ dependencies {
   testImplementation(libs.assertJ)
   testImplementation(libs.mockito)
   testImplementation(libs.lombok)
-  testImplementation(libs.spring.test)
+  testImplementation("org.springframework:spring-test")
   testImplementation(libs.spring.boot)
   testImplementation(libs.awaitility)
   testImplementation(libs.gemfire.testcontainers)
