@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 
@@ -30,7 +29,6 @@ import org.springframework.lang.Nullable;
  * @see File
  * @see InputStream
  * @see Properties
- * @see Cache
  * @see GemFireCache
  * @see ClientCache
  * @see BeanFactory

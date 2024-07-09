@@ -20,7 +20,6 @@ import org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientRegionShortcut
  * @see org.springframework.core.type.AnnotationMetadata

@@ -22,7 +22,6 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see jakarta.enterprise.context.ApplicationScoped
  * @see jakarta.enterprise.inject.Produces
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.CacheFactory
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.RegionFactory

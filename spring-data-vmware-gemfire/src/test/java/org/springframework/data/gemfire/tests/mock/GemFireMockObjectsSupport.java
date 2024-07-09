@@ -63,7 +63,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheCallback;
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
@@ -147,7 +146,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link GemFireMockObjectsSupport} class is an abstract base class encapsulating factory methods for creating
- * Apache Geode or VMware (Pivotal) GemFire Mock Objects (e.g. {@link Cache}, {@link ClientCache}, {@link Region},
+ * Apache Geode or VMware (Pivotal) GemFire Mock Objects, {@link ClientCache}, {@link Region},
  * and so on).
  *
  * @author John Blum
@@ -161,7 +160,6 @@ import org.springframework.util.StringUtils;
  * @see Random
  * @see UUID
  * @see AttributesMutator
- * @see Cache
  * @see ClientCacheFactory
  * @see CacheListener
  * @see CacheLoader
@@ -519,7 +517,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Remembers the given mock {@link GemFireCache} object, which may be a {@link ClientCache} or a peer {@link Cache}.
+	 * Remembers the given mock {@link GemFireCache} object, which may be a {@link ClientCache}.
 	 *
 	 * @param <T> {@link Class sub-type} of the {@link GemFireCache} instance.
 	 * @param mockedGemFireCache {@link GemFireCache} to remember.
@@ -2228,26 +2226,26 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return mockSubRegion;
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache) {
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache) {
 		return mockRegionFactory(mockCache, null, null);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache,
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache,
 			RegionAttributes<K, V> regionAttributes) {
 
 		return mockRegionFactory(mockCache, regionAttributes, null);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache, RegionShortcut regionShortcut) {
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache, RegionShortcut regionShortcut) {
 		return mockRegionFactory(mockCache, resolveRegionAttributesFromRegionShortcut(regionShortcut), regionShortcut);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache, String regionAttributesId) {
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache, String regionAttributesId) {
 		return mockRegionFactory(mockCache, resolveRegionAttributes(regionAttributesId), null);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(Cache mockCache, RegionAttributes<K, V> regionAttributes,
+	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache, RegionAttributes<K, V> regionAttributes,
 			RegionShortcut regionShortcut) {
 
 		RegionFactory<K, V> mockRegionFactory = mock(RegionFactory.class,

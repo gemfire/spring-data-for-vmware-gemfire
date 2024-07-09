@@ -6,7 +6,6 @@
 package org.springframework.data.gemfire.config.schema;
 
 import static java.util.Arrays.stream;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -20,7 +19,6 @@ import org.apache.geode.cache.query.Index;
  * and that can be created remotely, from a client application.
  *
  * @author John Blum
- * @see Cache
  * @see DiskStore
  * @see Region
  * @see ClientCache

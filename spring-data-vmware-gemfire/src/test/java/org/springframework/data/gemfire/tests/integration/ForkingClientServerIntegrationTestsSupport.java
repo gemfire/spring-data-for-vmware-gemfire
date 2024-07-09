@@ -19,7 +19,6 @@ import java.util.function.Function;
 
 import org.junit.AfterClass;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.client.ClientCache;
 
 import org.springframework.context.ApplicationContext;
@@ -39,7 +38,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Abstract base class used to bootstrap Apache Geode {@link Cache} and/or {@link ClientCache} applications
+ * Abstract base class used to bootstrap Apache Geode {@link ClientCache} applications
  * as independent (forked), {@link Process child processes}.
  *
  * @author John Blum
@@ -47,7 +46,6 @@ import org.springframework.lang.Nullable;
  * @see InetAddress
  * @see Executors
  * @see ThreadFactory
- * @see Cache
  * @see ClientCache
  * @see ApplicationContext
  * @see Bean

@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.TransactionEvent
  * @see org.apache.geode.cache.TransactionListener
  * @see org.apache.geode.cache.TransactionWriter

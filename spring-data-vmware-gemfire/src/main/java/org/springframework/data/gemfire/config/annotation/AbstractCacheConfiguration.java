@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
@@ -48,7 +47,6 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see Annotation
  * @see Properties
- * @see Cache
  * @see org.apache.geode.cache.GemFireCache
  * @see ClientCache
  * @see CacheServer

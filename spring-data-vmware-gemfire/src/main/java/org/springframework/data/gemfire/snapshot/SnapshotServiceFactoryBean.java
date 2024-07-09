@@ -27,6 +27,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.snapshot.CacheSnapshotService;
 import org.apache.geode.cache.snapshot.RegionSnapshotService;
 import org.apache.geode.cache.snapshot.SnapshotFilter;
@@ -70,7 +71,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 
 	private Boolean suppressImportOnInit;
 
-	private Cache cache;
+	private ClientCache cache;
 
 	private Region<K, V> region;
 
@@ -123,7 +124,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 
 		return Optional.ofNullable(getRegion())
 			.<SnapshotServiceAdapter>map(region -> wrap(region.getSnapshotService()))
-			.orElseGet(() -> wrap(getCache().getSnapshotService()));
+			.orElse(null);
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * @see Cache
 	 * @see #getCache()
 	 */
-	public void setCache(Cache cache) {
+	public void setCache(ClientCache cache) {
 		this.cache = Optional.ofNullable(cache)
 			.orElseThrow(() -> newIllegalArgumentException("The GemFire Cache must not be null"));
 	}
@@ -173,9 +174,9 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 	 * @return the GemFire Cache used to create an instance of CacheSnapshotService.
 	 * @throws IllegalStateException if the Cache argument is null.
 	 * @see Cache
-	 * @see #setCache(Cache)
+	 * @see #setCache(ClientCache)
 	 */
-	protected Cache getCache() {
+	protected ClientCache getCache() {
 		return Optional.ofNullable(this.cache)
 			.orElseThrow(() -> newIllegalStateException("The GemFire Cache was not properly initialized"));
 	}

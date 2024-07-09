@@ -34,7 +34,6 @@ import org.apache.geode.cache.execute.Function;
 import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
-import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 
 /**
@@ -115,26 +114,7 @@ public class FunctionGemfireAdminTemplateUnitTests {
 	}
 
 	@Test
-	public void getAvailableServerRegionsExecutesListRegionsOnServerFunction() {
-
-		when(this.mockFunctionOperations.executeAndExtract(any(Function.class)))
-			.thenReturn(asSet("RegionOne", "RegionTwo"));
-
-		Iterable<String> availableServerRegions = this.template.getAvailableServerRegions();
-
-		assertThat(availableServerRegions).isNotNull();
-		assertThat(availableServerRegions).hasSize(2);
-		assertThat(availableServerRegions).contains("RegionOne", "RegionTwo");
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(isA(ListRegionsOnServerFunction.class));
-	}
-
-	@Test
 	public void getAvailableServerRegionsExecutesGetRegionsFunction() {
-
-		when(this.mockFunctionOperations.executeAndExtract(isA(ListRegionsOnServerFunction.class)))
-			.thenThrow(new RuntimeException("TEST"));
 
 		Object[] regionInformation = asArray(newRegionInformation("MockRegionOne"),
 			newRegionInformation("MockRegionTwo"));
@@ -147,9 +127,6 @@ public class FunctionGemfireAdminTemplateUnitTests {
 		assertThat(availableServerRegions).isNotNull();
 		assertThat(availableServerRegions).hasSize(2);
 		assertThat(availableServerRegions).contains("MockRegionOne", "MockRegionTwo");
-
-		verify(this.mockFunctionOperations, times(1))
-			.executeAndExtract(isA(ListRegionsOnServerFunction.class));
 
 		verify(this.mockFunctionOperations, times(1))
 			.executeAndExtract(isA(GetRegionsFunction.class), eq(false));

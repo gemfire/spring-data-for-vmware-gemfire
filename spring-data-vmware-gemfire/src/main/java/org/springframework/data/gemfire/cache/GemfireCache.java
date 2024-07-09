@@ -19,7 +19,6 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author John Blum
  * @author Oliver Gierke
- * @see Cache
  * @see Region
  */
 @SuppressWarnings("rawtypes")

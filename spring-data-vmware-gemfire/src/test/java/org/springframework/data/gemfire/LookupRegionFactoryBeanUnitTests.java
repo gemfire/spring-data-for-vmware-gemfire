@@ -14,7 +14,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheListener;
 import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.CacheWriter;
@@ -33,7 +32,6 @@ import org.junit.Test;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.AttributesMutator
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.EvictionAttributesMutator
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.LookupRegionFactoryBean
@@ -46,7 +44,7 @@ public class LookupRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void testAfterPropertiesSet() throws Exception {
 
-		Cache mockCache = mock(Cache.class, "testAfterPropertiesSet.MockCache");
+		ClientCache mockCache = mock(ClientCache.class, "testAfterPropertiesSet.MockCache");
 
 		Region<Object, Object> mockRegion = mock(Region.class, "testAfterPropertiesSet.MockRegion");
 
