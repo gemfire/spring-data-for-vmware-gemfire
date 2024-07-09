@@ -25,7 +25,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionService;
@@ -40,7 +39,6 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.RegionService
@@ -130,19 +128,6 @@ public class RegionServiceRegionResolverUnitTests {
 		assertThat(regionResolver.doResolve("TestRegion")).isNull();
 
 		verify(mockCacheResolver, times(1)).resolve();
-	}
-
-	@Test
-	public void fromNonNullCacheResolverResolvingPeerCache() {
-
-		CacheResolver<Cache> mockPeerCacheResolver = mock(CacheResolver.class);
-
-		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockPeerCacheResolver);
-
-		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
-
-		verify(mockPeerCacheResolver, never()).resolve();
 	}
 
 	@Test(expected = IllegalArgumentException.class)

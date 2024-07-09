@@ -11,7 +11,6 @@ import static org.mockito.Mockito.withSettings;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
@@ -28,7 +27,6 @@ import org.springframework.data.gemfire.util.RegionUtils;
  * {@link Region}, etc).
  *
  * @author John Blum
- * @see Cache
  * @see GemFireCache
  * @see Region
  * @see ClientCache

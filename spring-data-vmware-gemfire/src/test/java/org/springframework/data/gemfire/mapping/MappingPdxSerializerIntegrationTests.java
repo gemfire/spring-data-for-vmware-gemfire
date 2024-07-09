@@ -58,7 +58,6 @@ import org.springframework.data.util.TypeInformation;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.pdx.PdxReader
  * @see org.apache.geode.pdx.PdxSerializer

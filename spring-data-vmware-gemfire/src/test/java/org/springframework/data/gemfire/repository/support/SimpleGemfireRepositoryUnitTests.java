@@ -37,12 +37,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheTransactionManager;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
@@ -78,7 +78,6 @@ import lombok.ToString;
  * @see java.util.stream.Stream
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.domain.Page
  * @see org.springframework.data.domain.Pageable
@@ -132,9 +131,9 @@ public class SimpleGemfireRepositoryUnitTests {
 		return new Wrapper<>(entity, entity.getId());
 	}
 
-	private Cache mockCache(String name, boolean transactionExists) {
+	private ClientCache mockCache(String name, boolean transactionExists) {
 
-		Cache mockCache = mock(Cache.class, String.format("%s.MockCache", name));
+		ClientCache mockCache = mock(ClientCache.class, String.format("%s.MockCache", name));
 
 		CacheTransactionManager mockCacheTransactionManager = mock(CacheTransactionManager.class,
 			String.format("%s.MockCacheTransactionManager", name));
@@ -184,7 +183,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		return mockRegion;
 	}
 
-	private Region mockRegion(String name, Cache mockCache, DataPolicy dataPolicy) {
+	private Region mockRegion(String name, ClientCache mockCache, DataPolicy dataPolicy) {
 
 		Region mockRegion = mockRegion(name);
 
@@ -886,7 +885,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithClear() {
 
-		Cache mockCache = mockCache("MockCache", false);
+		ClientCache mockCache = mockCache("MockCache", false);
 
 		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.REPLICATE);
 
@@ -908,7 +907,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeysWhenClearThrowsException() {
 
-		Cache mockCache = mockCache("MockCache", false);
+		ClientCache mockCache = mockCache("MockCache", false);
 
 		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.PERSISTENT_REPLICATE);
 
@@ -934,7 +933,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeysWhenTransactionPresent() {
 
-		Cache mockCache = mockCache("MockCache", true);
+		ClientCache mockCache = mockCache("MockCache", true);
 
 		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.REPLICATE);
 
@@ -959,7 +958,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeySetOnServerWhenClientRegion() {
 
-		Cache mockCache = mockCache("MockCache", false);
+		ClientCache mockCache = mockCache("MockCache", false);
 
 		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.EMPTY);
 

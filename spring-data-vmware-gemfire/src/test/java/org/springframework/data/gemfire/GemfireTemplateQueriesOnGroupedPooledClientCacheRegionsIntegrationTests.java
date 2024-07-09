@@ -54,7 +54,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.GemFireCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.GemfireTemplate

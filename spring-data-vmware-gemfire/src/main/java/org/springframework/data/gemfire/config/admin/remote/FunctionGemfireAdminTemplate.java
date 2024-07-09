@@ -18,7 +18,6 @@ import org.apache.geode.cache.execute.Function;
 import org.apache.geode.management.internal.cli.domain.RegionInformation;
 import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
-import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
@@ -36,7 +35,6 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see ClientCache
  * @see Function
- * @see ListRegionsOnServerFunction
  * @see AbstractGemfireAdminOperations
  * @see GemfireOnServersFunctionTemplate
  * @since 2.0.0
@@ -80,24 +78,18 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	 */
 	@Override
 	public Iterable<String> getAvailableServerRegions() {
-
 		try {
-			return execute(new ListRegionsOnServerFunction());
+			return Optional.ofNullable(execute(new GetRegionsFunction(), false))
+				.filter(this::containsRegionInformation)
+				.map(regionInformationArray ->
+					stream(nullSafeArray((Object[]) regionInformationArray, Object.class))
+						.map(regionInformation -> ((RegionInformation) regionInformation).getName())
+						.collect(Collectors.toSet())
+				)
+				.orElse(Collections.emptySet());
 		}
-		catch (Exception cause) {
-			try {
-				return Optional.ofNullable(execute(new GetRegionsFunction(), false))
-					.filter(this::containsRegionInformation)
-					.map(regionInformationArray ->
-						stream(nullSafeArray((Object[]) regionInformationArray, Object.class))
-							.map(regionInformation -> ((RegionInformation) regionInformation).getName())
-							.collect(Collectors.toSet())
-					)
-					.orElse(Collections.emptySet());
-			}
-			catch (Exception ignore) {
-				return Collections.emptySet();
-			}
+		catch (Exception ignore) {
+			return Collections.emptySet();
 		}
 	}
 

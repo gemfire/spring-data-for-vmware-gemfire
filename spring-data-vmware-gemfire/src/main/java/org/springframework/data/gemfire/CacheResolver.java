@@ -14,7 +14,6 @@ import org.apache.geode.cache.GemFireCache;
  * @author John Blum
  * @param <T> {@link Class subclass} of {@link GemFireCache}.
  * @see Supplier
- * @see org.apache.geode.cache.Cache
  * @see GemFireCache
  * @see org.apache.geode.cache.client.ClientCache
  * @since 2.3.0

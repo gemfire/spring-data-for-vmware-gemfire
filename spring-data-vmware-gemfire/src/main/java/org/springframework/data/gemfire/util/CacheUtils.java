@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -19,10 +18,9 @@ import org.springframework.util.StringUtils;
 
 /**
  * {@link CacheUtils} is an abstract utility class encapsulating common operations for working with
- * {@link Cache} and {@link ClientCache} instances.
+ * {@link ClientCache} instances.
  *
  * @author John Blum
- * @see Cache
  * @see GemFireCache
  * @see org.apache.geode.cache.Region
  * @see ClientCache
@@ -69,17 +67,6 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 			.map(properties -> properties.getProperty(DURABLE_CLIENT_ID_PROPERTY_NAME, null))
 			.filter(StringUtils::hasText)
 			.isPresent();
-	}
-
-	public static boolean isPeer(@Nullable GemFireCache cache) {
-
-		boolean peer = cache instanceof Cache;
-
-		if (cache instanceof GemFireCacheImpl) {
-			peer &= !((GemFireCacheImpl) cache).isClient();
-		}
-
-		return peer;
 	}
 
 	public static boolean close() {

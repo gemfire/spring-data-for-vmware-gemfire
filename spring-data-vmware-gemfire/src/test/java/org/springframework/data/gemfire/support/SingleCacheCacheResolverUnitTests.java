@@ -17,7 +17,6 @@ import org.springframework.data.gemfire.CacheResolver;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Cache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.CacheResolver
  * @see org.springframework.data.gemfire.support.SingleCacheCacheResolver

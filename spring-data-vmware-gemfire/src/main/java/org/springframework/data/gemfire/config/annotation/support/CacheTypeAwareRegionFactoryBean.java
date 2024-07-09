@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAttributes;
@@ -41,7 +40,6 @@ import org.springframework.util.StringUtils;
  * or a peer {@link Cache}.
  *
  * @author John Blum
- * @see Cache
  * @see CustomExpiry
  * @see DataPolicy
  * @see EvictionAttributes

@@ -49,7 +49,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.data.gemfire.client.function.ListRegionsOnServerFunction;
 import org.springframework.data.gemfire.util.RegionUtils;
 
 /**
@@ -243,34 +242,11 @@ public class GemfireDataSourcePostProcessorTest {
 	}
 
 	@Test
-	public void regionNamesWithListRegionsOnServerFunction() {
-
-		String[] expectedRegionNames = { "ExampleOne", "ExampleTwo" };
-
-		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
-
-		doReturn(Arrays.asList(expectedRegionNames)).when(postProcessor)
-				.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class), ArgumentMatchers.any(Object[].class));
-
-		Iterable<String> actualRegionNames = postProcessor.regionNames(this.mockClientCache);
-
-		assertThat(actualRegionNames).containsExactly(expectedRegionNames);
-
-		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
-
-		verify(postProcessor, never()).execute(any(ClientCache.class), any(GetRegionsFunction.class));
-	}
-
-	@Test
 	public void regionNamesWithGetRegionsFunction() {
 
 		String[] expectedRegionNames = { "ExampleOne", "ExampleTwo" };
 
 		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
-
-		doThrow(new RuntimeException("FAIL")).when(postProcessor)
-				.execute(isA(ClientCache.class), isA(ListRegionsOnServerFunction.class));
 
 		doAnswer(invocation ->
 			Arrays.stream(expectedRegionNames)
@@ -287,9 +263,6 @@ public class GemfireDataSourcePostProcessorTest {
 		assertThat(actualRegionNames).containsExactly(expectedRegionNames);
 
 		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
-
-		verify(postProcessor, times(1))
 			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());
 	}
 
@@ -298,9 +271,6 @@ public class GemfireDataSourcePostProcessorTest {
 
 		GemfireDataSourcePostProcessor postProcessor = spy(new GemfireDataSourcePostProcessor());
 
-		doThrow(new RuntimeException("FAIL")).when(postProcessor)
-				.execute(any(ClientCache.class), isA(ListRegionsOnServerFunction.class));
-
 		doReturn(null).when(postProcessor)
 			.execute(any(ClientCache.class), isA(GetRegionsFunction.class), any());
 
@@ -308,9 +278,6 @@ public class GemfireDataSourcePostProcessorTest {
 
 		assertThat(actualRegionNames).isNotNull();
 		assertThat(actualRegionNames).isEmpty();
-
-		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
 
 		verify(postProcessor, times(1))
 			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());
@@ -334,9 +301,6 @@ public class GemfireDataSourcePostProcessorTest {
 
 		assertThat(actualRegionNames).isNotNull();
 		assertThat(actualRegionNames).isEmpty();
-
-		verify(postProcessor, times(1))
-			.execute(eq(this.mockClientCache), isA(ListRegionsOnServerFunction.class));
 
 		verify(postProcessor, times(1))
 			.execute(eq(this.mockClientCache), isA(GetRegionsFunction.class), anyBoolean());

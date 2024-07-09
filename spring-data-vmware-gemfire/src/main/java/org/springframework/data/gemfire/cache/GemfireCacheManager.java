@@ -28,7 +28,6 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see Cache
  * @see CacheManager
  * @see AbstractCacheManager
  * @see GemFireCache

@@ -52,7 +52,6 @@ import org.slf4j.LoggerFactory;
  * @author David Turanski
  * @author John Blum
  * @author Jens Schauder
- * @see org.apache.geode.cache.Cache
  * @see CacheTransactionManager
  * @see Region
  * @see GemfireTemplate
