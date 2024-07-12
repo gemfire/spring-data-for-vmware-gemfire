@@ -14,13 +14,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.query.SelectResults;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,9 +40,6 @@ import org.springframework.data.util.Streamable;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple, basic {@link PagingAndSortingRepository} / {@link CrudRepository} implementation for Apache Geode.
@@ -363,8 +359,8 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	boolean isTransactionPresent(@Nullable Region<?, ?> region) {
 
 		return region != null
-			&& region.getRegionService() instanceof GemFireCache
-			&& isTransactionPresent(((GemFireCache) region.getRegionService()).getCacheTransactionManager());
+			&& region.getRegionService() instanceof ClientCache
+			&& isTransactionPresent(((ClientCache) region.getRegionService()).getCacheTransactionManager());
 	}
 
 	boolean isTransactionPresent(@Nullable CacheTransactionManager cacheTransactionManager) {

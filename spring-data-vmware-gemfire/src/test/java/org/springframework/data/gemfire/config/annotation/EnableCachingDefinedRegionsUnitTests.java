@@ -14,25 +14,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import javax.cache.annotation.CacheDefaults;
 import javax.cache.annotation.CacheRemove;
 import javax.cache.annotation.CacheRemoveAll;
 import javax.cache.annotation.CacheResult;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionShortcut;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -180,10 +175,10 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(false);
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		this.configuration.setBeanFactory(mockBeanFactory);
 
@@ -195,7 +190,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		Arrays.asList("RegionOne", "RegionTwo").forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(2)).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(2)).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -206,14 +201,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -228,7 +223,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		Arrays.asList("RegionTwo", "RegionThree", "RegionFour", "RegionFive", "RegionSix").forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(5)).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(5)).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -239,14 +234,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -266,7 +261,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		registeredRegionBeanNames.forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -277,14 +272,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -305,7 +300,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		registeredRegionBeanNames.forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -316,14 +311,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -353,7 +348,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 			int wantedNumberOfInvocations = asSet("RegionTwo", "RegionSix").contains(beanName) ? 2 : 1;
 
 			verify(mockBeanFactory, times(wantedNumberOfInvocations)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -364,14 +359,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -390,7 +385,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		registeredRegionBeanNames.forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -401,14 +396,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -426,7 +421,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		registeredRegionBeanNames.forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});
@@ -437,14 +432,14 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GemFireCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		ClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
 		when(mockBeanFactory.containsBean(anyString())).thenAnswer(invocation ->
 			registeredBeanNames.contains(invocation.<String>getArgument(0)));
 
-		when(mockBeanFactory.getBean(eq(GemFireCache.class))).thenReturn(mockGemFireCache);
+		when(mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(mockGemFireCache);
 
 		doAnswer(invocation -> registeredBeanNames.add(invocation.getArgument(0))).when(mockBeanFactory)
 			.registerSingleton(anyString(), any());
@@ -463,7 +458,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		registeredRegionBeanNames.forEach(beanName -> {
 			verify(mockBeanFactory, times(1)).containsBean(eq(beanName));
-			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(GemFireCache.class));
+			verify(mockBeanFactory, times(registeredBeanNames.size())).getBean(eq(ClientCache.class));
 			verify(mockBeanFactory, times(1))
 				.registerSingleton(eq(beanName), any(Region.class));
 		});

@@ -4,16 +4,14 @@
  */
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.lang.Nullable;
 
 /**
- * {@link CacheResolver} implementation that resolves to a configured, single {@link GemFireCache} instance.
+ * {@link CacheResolver} implementation that resolves to a configured, single {@link ClientCache} instance.
  *
  * @author John Blum
- * @see GemFireCache
  * @see ClientCache
  * @since 2.3.0
  */

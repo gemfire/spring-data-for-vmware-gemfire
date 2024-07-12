@@ -8,7 +8,7 @@ import static org.mockito.Mockito.doReturn;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.distributed.DistributedSystem;
@@ -27,7 +27,7 @@ import org.springframework.lang.Nullable;
  * @author John Blum
  * @see Properties
  * @see CacheFactory
- * @see GemFireCache
+ * @see ClientCache
  * @see ClientCacheFactory
  * @see PoolFactory
  * @see DistributedSystem
@@ -95,9 +95,9 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	public @Nullable Object postProcessAfterInitialization(@Nullable Object bean, @NonNull String beanName)
 			throws BeansException {
 
-		if (bean instanceof GemFireCache) {
+		if (bean instanceof ClientCache) {
 
-			GemFireCache gemfireCache = (GemFireCache) bean;
+			ClientCache gemfireCache = (ClientCache) bean;
 
 			DistributedSystem distributedSystem = gemfireCache.getDistributedSystem();
 

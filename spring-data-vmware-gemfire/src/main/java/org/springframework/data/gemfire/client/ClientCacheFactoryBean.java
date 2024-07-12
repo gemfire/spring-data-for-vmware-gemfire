@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.StreamSupport;
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.Pool;
@@ -57,7 +56,6 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see InetSocketAddress
  * @see Properties
- * @see GemFireCache
  * @see ClientCache
  * @see ClientCacheFactory
  * @see Pool
@@ -168,29 +166,29 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	/**
 	 * Fetches an existing {@link ClientCache} instance from the {@link ClientCacheFactory}.
 	 *
-	 * @param <T> parameterized {@link Class} type extension of {@link GemFireCache}.
+	 * @param <T> parameterized {@link Class} type extension of {@link ClientCache}.
 	 * @return an existing {@link ClientCache} instance if available.
 	 * @throws CacheClosedException if an existing {@link ClientCache} instance does not exist.
 	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see #getCache()
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <T extends GemFireCache> T doFetchCache() {
+	protected <T extends ClientCache> T doFetchCache() {
 		return (T) ClientCacheFactory.getAnyInstance();
 	}
 
 	/**
-	 * Returns the {@link Class type} of {@link GemFireCache} constructed by this {@link ClientCacheFactoryBean}.
+	 * Returns the {@link Class type} of {@link ClientCache} constructed by this {@link ClientCacheFactoryBean}.
 	 *
 	 * Returns {@link ClientCache} {@link Class}.
 	 *
-	 * @return the {@link Class type} of {@link GemFireCache} constructed by this {@link ClientCacheFactoryBean}.
+	 * @return the {@link Class type} of {@link ClientCache} constructed by this {@link ClientCacheFactoryBean}.
 	 * @see FactoryBean#getObjectType()
 	 */
 	@Override
-	protected Class<? extends GemFireCache> doGetObjectType() {
+	protected Class<? extends ClientCache> doGetObjectType() {
 		return ClientCache.class;
 	}
 
@@ -388,7 +386,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	@Override
-	protected @NonNull <T extends GemFireCache> T postProcess(@NonNull T cache) {
+	protected @NonNull <T extends ClientCache> T postProcess(@NonNull T cache) {
 
 		super.postProcess(cache);
 
@@ -397,7 +395,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return cache;
 	}
 
-	private GemFireCache registerJndiDataSources(GemFireCache cache) {
+	private ClientCache registerJndiDataSources(ClientCache cache) {
 
 		CollectionUtils.nullSafeCollection(getJndiDataSources()).forEach(jndiDataSource -> {
 
@@ -435,16 +433,16 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	/**
 	 * Creates a new {@link ClientCache} instance using the provided {@link ClientCacheFactory factory}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link GemFireCache}.
+	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
 	 * @param factory instance of {@link ClientCacheFactory}.
 	 * @return a new instance of {@link ClientCache} created by the provided factory.
 	 * @see ClientCacheFactory#create()
 	 * @see ClientCache
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected @NonNull <T extends GemFireCache> T createCache(@NonNull Object factory) {
+	protected @NonNull <T extends ClientCache> T createCache(@NonNull Object factory) {
 		return (T) ((ClientCacheFactory) factory).create();
 	}
 
@@ -472,14 +470,14 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Null-safe method used to {@link GemFireCache#close()} the {@link ClientCache} and preserve durability.
+	 * Null-safe method used to {@link ClientCache#close()} the {@link ClientCache} and preserve durability.
 	 *
-	 * @param cache {@link GemFireCache} to close.
+	 * @param cache {@link ClientCache} to close.
 	 * @see ClientCache#close(boolean)
 	 * @see #isKeepAlive()
 	 */
 	@Override
-	protected void close(@NonNull GemFireCache cache) {
+	protected void close(@NonNull ClientCache cache) {
 		((ClientCache) cache).close(isKeepAlive());
 	}
 

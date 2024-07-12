@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.query.CqQuery;
 import org.apache.geode.cache.query.QueryService;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -38,7 +38,7 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see Executor
- * @see GemFireCache
+ * @see ClientCache
  * @see CqQuery
  * @see QueryService
  * @see BeanPostProcessor
@@ -176,7 +176,7 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 	}
 
 	@Bean
-	public ContinuousQueryListenerContainer continuousQueryListenerContainer(GemFireCache gemfireCache) {
+	public ContinuousQueryListenerContainer continuousQueryListenerContainer(ClientCache gemfireCache) {
 
 		ContinuousQueryListenerContainer container = new ContinuousQueryListenerContainer();
 

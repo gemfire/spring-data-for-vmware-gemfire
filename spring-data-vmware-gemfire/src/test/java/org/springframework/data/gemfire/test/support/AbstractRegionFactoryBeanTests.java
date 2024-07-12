@@ -7,7 +7,7 @@ package org.springframework.data.gemfire.test.support;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
  */
 public abstract class AbstractRegionFactoryBeanTests {
 
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	private final Map<String, RegionFactoryBeanConfig> regionFactoryBeanConfigs = new HashMap<>();
 

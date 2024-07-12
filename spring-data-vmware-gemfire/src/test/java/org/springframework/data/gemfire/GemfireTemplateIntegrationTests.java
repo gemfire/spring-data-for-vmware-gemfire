@@ -6,7 +6,6 @@ package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import com.vmware.gemfire.testcontainers.GemFireCluster;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.query.SelectResults;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,7 +32,6 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
-import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.repository.sample.User;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -49,7 +45,7 @@ import org.testcontainers.utility.MountableFile;
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.query.SelectResults
  * @see org.springframework.context.annotation.Bean
@@ -99,7 +95,7 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 	}
 
 	@Autowired
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	@Autowired
 	private GemfireTemplate usersTemplate;
@@ -464,7 +460,7 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean(name = "Users")
-		ClientRegionFactoryBean<String, User> usersRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<String, User> usersRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<String, User> usersRegion = new ClientRegionFactoryBean<>();
 

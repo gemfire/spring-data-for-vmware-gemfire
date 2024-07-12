@@ -18,17 +18,13 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -77,7 +73,7 @@ public class AbstractAnnotationConfigSupportUnitTests {
 	@Test
 	public void isNotInfrastructureBeanWithApacheGeodeClassIsTrue() {
 
-		BeanDefinition mockBeanDefinition = mockBeanDefinition(GemFireCache.class);
+		BeanDefinition mockBeanDefinition = mockBeanDefinition(ClientCache.class);
 
 		assertThat(this.support.isNotInfrastructureBean(mockBeanDefinition)).isTrue();
 

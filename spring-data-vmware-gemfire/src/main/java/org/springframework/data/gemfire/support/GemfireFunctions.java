@@ -6,10 +6,8 @@ package org.springframework.data.gemfire.support;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.lang.NonNull;
 
 /**
@@ -17,18 +15,18 @@ import org.springframework.lang.NonNull;
  *
  * @author John Blum
  * @see Function
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @since 2.7.0
  */
 @SuppressWarnings("unused")
 public abstract class GemfireFunctions {
 
-	public static @NonNull <K, V> Function<GemFireCache, Region<K, V>> getRegionFromCache(String regionName) {
+	public static @NonNull <K, V> Function<ClientCache, Region<K, V>> getRegionFromCache(String regionName) {
 		return cache -> cache.getRegion(regionName);
 	}
 
-	public static @NonNull <K, V> Supplier<Region<K, V>> getRegionFromCache(@NonNull GemFireCache cache,
+	public static @NonNull <K, V> Supplier<Region<K, V>> getRegionFromCache(@NonNull ClientCache cache,
 			String regionName) {
 
 		return () -> cache.getRegion(regionName);

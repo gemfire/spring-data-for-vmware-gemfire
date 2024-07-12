@@ -15,10 +15,10 @@ import org.apache.geode.cache.EvictionAlgorithm;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.Scope;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 	private static File diskStoreDirectory;
 
 	@Autowired
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	@Autowired
 	@Qualifier("diskStore1")

@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.function.Supplier;
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.Pool;
@@ -50,7 +49,7 @@ import org.springframework.data.gemfire.util.DistributedSystemUtils;
  * @see java.util.Properties
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCacheFactory
  * @see org.apache.geode.cache.client.Pool
@@ -804,7 +803,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
-		assertThat(clientCacheFactoryBean.<GemFireCache>createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
+		assertThat(clientCacheFactoryBean.<ClientCache>createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
 
 		verify(mockClientCacheFactory, times(1)).create();
 		verifyNoMoreInteractions(mockClientCacheFactory);

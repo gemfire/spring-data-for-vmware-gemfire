@@ -108,7 +108,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 * @return a new instance of a peer {@link ClientCache}.
 	 * @see ClientCacheFactoryBean
 	 * @see ClientCache
-	 * @see org.apache.geode.cache.GemFireCache
+	 * @see org.apache.geode.cache.client.ClientCache
 	 * @see #constructCacheFactoryBean()
 	 */
 	@Bean

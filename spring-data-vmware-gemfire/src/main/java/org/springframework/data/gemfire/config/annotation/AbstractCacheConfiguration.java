@@ -47,7 +47,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see Annotation
  * @see Properties
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see ClientCache
  * @see CacheServer
  * @see org.springframework.beans.factory.BeanFactory

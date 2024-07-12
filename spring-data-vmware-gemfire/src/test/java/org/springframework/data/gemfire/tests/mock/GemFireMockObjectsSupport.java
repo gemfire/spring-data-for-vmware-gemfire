@@ -29,7 +29,6 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.NOT_
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newUnsupportedOperationException;
-
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -61,7 +60,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.CacheCallback;
 import org.apache.geode.cache.CacheListener;
@@ -80,7 +78,6 @@ import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.EvictionAttributesMutator;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.MembershipAttributes;
 import org.apache.geode.cache.Region;
@@ -171,7 +168,7 @@ import org.springframework.util.StringUtils;
  * @see EvictionAttributes
  * @see EvictionAttributesMutator
  * @see ExpirationAttributes
- * @see GemFireCache
+ * @see ClientCache
  * @see MembershipAttributes
  * @see Region
  * @see RegionAttributes
@@ -213,8 +210,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 	private static final boolean DEFAULT_USE_SINGLETON_CACHE = false;
 
-	private static final AtomicReference<GemFireCache> cacheReference = new AtomicReference<>(null);
-	private static final AtomicReference<GemFireCache> singletonCache = new AtomicReference<>(null);
+	private static final AtomicReference<ClientCache> cacheReference = new AtomicReference<>(null);
+	private static final AtomicReference<ClientCache> singletonCache = new AtomicReference<>(null);
 	private static final AtomicReference<Properties> gemfireProperties = new AtomicReference<>(new Properties());
 
 	private static final List<Object> cachedGemFireObjects = Collections.synchronizedList(new ArrayList<>());
@@ -354,12 +351,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * Instantiates all Apache Geode/VMware GemFire objects which have been declared
 	 * via {@link System#getProperties() System properties}.
 	 *
-	 * @param <T> {@link Class type} of the {@link GemFireCache}.
-	 * @param gemfireCache reference to the {@link GemFireCache} instance.
-	 * @return the given {@link GemFireCache} instance.
-	 * @see GemFireCache
+	 * @param <T> {@link Class type} of the {@link ClientCache}.
+	 * @param gemfireCache reference to the {@link ClientCache} instance.
+	 * @return the given {@link ClientCache} instance.
+	 * @see ClientCache
 	 */
-	private static <T extends GemFireCache> T constructGemFireObjects(T gemfireCache) {
+	private static <T extends ClientCache> T constructGemFireObjects(T gemfireCache) {
 
 		Properties localGemfireProperties = gemfireProperties.get();
 
@@ -504,29 +501,29 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Stores a reference to the given {@link GemFireCache} object.
+	 * Stores a reference to the given {@link ClientCache} object.
 	 *
-	 * @param <T> {@link Class type} of {@link GemFireCache} (e.g. client or peer).
-	 * @param gemfireCache reference to the {@link GemFireCache} object to store; maybe {@literal null}.
-	 * @return the given {@link GemFireCache} object.
-	 * @see GemFireCache
+	 * @param <T> {@link Class type} of {@link ClientCache} (e.g. client or peer).
+	 * @param gemfireCache reference to the {@link ClientCache} object to store; maybe {@literal null}.
+	 * @return the given {@link ClientCache} object.
+	 * @see ClientCache
 	 */
 	@SuppressWarnings("unchecked")
-	private static @Nullable  <T extends GemFireCache> T referTo(@Nullable T gemfireCache) {
+	private static @Nullable  <T extends ClientCache> T referTo(@Nullable T gemfireCache) {
 		return (T) cacheReference.updateAndGet(currentCacheReference -> gemfireCache);
 	}
 
 	/**
-	 * Remembers the given mock {@link GemFireCache} object, which may be a {@link ClientCache}.
+	 * Remembers the given mock {@link ClientCache} object, which may be a {@link ClientCache}.
 	 *
-	 * @param <T> {@link Class sub-type} of the {@link GemFireCache} instance.
-	 * @param mockedGemFireCache {@link GemFireCache} to remember.
-	 * @param useSingletonCache boolean value indicating whether the {@link GemFireCache} is a Singleton.
-	 * @return the given {@link GemFireCache}.
-	 * @throws IllegalArgumentException if {@link GemFireCache} is {@literal null}.
-	 * @see GemFireCache
+	 * @param <T> {@link Class sub-type} of the {@link ClientCache} instance.
+	 * @param mockedGemFireCache {@link ClientCache} to remember.
+	 * @param useSingletonCache boolean value indicating whether the {@link ClientCache} is a Singleton.
+	 * @return the given {@link ClientCache}.
+	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
+	 * @see ClientCache
 	 */
-	private static <T extends GemFireCache> T rememberMockedGemFireCache(T mockedGemFireCache,
+	private static <T extends ClientCache> T rememberMockedGemFireCache(T mockedGemFireCache,
 			boolean useSingletonCache) {
 
 		return Optional.ofNullable(mockedGemFireCache)
@@ -538,7 +535,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				return it;
 			})
-			.orElseThrow(() -> newIllegalArgumentException("GemFireCache is required"));
+			.orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
 	}
 
 	/**
@@ -569,30 +566,30 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Resolves any {@link GemFireCache} object created by the Spring Test for Apache Geode mock objects test framework.
+	 * Resolves any {@link ClientCache} object created by the Spring Test for Apache Geode mock objects test framework.
 	 *
 	 * If {@literal Singleton} caches are not used (default is {@literal false}), then the reference will store the last
-	 * mock {@link GemFireCache} object created by the Apache Geode mock objects test framework.
+	 * mock {@link ClientCache} object created by the Apache Geode mock objects test framework.
 	 *
-	 * @param <T> {@link Class type} of {@link GemFireCache} (e.g. client or peer).
-	 * @return a reference to any (and the last) {@ink GemFireCache} object created by this test framework.
-	 * @see GemFireCache
+	 * @param <T> {@link Class type} of {@link ClientCache} (e.g. client or peer).
+	 * @return a reference to any (and the last) {@ink ClientCache} object created by this test framework.
+	 * @see ClientCache
 	 * @see Optional
 	 */
-	private static <T extends GemFireCache> Optional<T> resolveAnyGemFireCache() {
+	private static <T extends ClientCache> Optional<T> resolveAnyGemFireCache() {
 		return Optional.ofNullable((T) cacheReference.get());
 	}
 
 	/**
-	 * Resolves the single, remembered {@link GemFireCache} if using GemFire in Singleton-mode.
+	 * Resolves the single, remembered {@link ClientCache} if using GemFire in Singleton-mode.
 	 *
-	 * @param <T> {@link Class sub-type} of the {@link GemFireCache} instance.
+	 * @param <T> {@link Class sub-type} of the {@link ClientCache} instance.
 	 * @param useSingletonCache boolean value indicating if mock infrastructure is using GemFire Singletons.
-	 * @return an {@link Optional}, single remembered instance of the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @return an {@link Optional}, single remembered instance of the {@link ClientCache}.
+	 * @see ClientCache
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T extends GemFireCache> Optional<T> resolveMockedGemFireCache(boolean useSingletonCache) {
+	private static <T extends ClientCache> Optional<T> resolveMockedGemFireCache(boolean useSingletonCache) {
 
 		return Optional.ofNullable((T) singletonCache.get())
 			.filter(it -> useSingletonCache);
@@ -743,7 +740,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends GemFireCache> T mockCacheApi(T mockGemFireCache) {
+	private static <T extends ClientCache> T mockCacheApi(T mockGemFireCache) {
 
 		AtomicBoolean copyOnRead = new AtomicBoolean(false);
 
@@ -838,9 +835,9 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return referTo(mockQueryService(mockCacheApi(mockClientCache)));
 	}
 
-	public static GemFireCache mockGemFireCache() {
+	public static ClientCache mockGemFireCache() {
 
-		GemFireCache mockGemFireCache = mock(GemFireCache.class);
+		ClientCache mockGemFireCache = mock(ClientCache.class);
 
 		return referTo(mockQueryService(mockCacheApi(mockGemFireCache)));
 	}
@@ -1420,7 +1417,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			doAnswer(getQueryServiceInvocation ->
 				resolveAnyGemFireCache()
-					.map(GemFireCache::getQueryService)
+					.map(ClientCache::getQueryService)
 					.orElseGet(() -> queryService.updateAndGet(it -> it != null ? it : mockQueryService()))
 			).when(mockPool).getQueryService();
 

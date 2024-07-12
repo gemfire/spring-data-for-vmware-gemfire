@@ -9,17 +9,14 @@ import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeIterable;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.DiskStoreFactory;
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer;
@@ -36,7 +33,7 @@ import org.springframework.util.StringUtils;
  * @see File
  * @see DiskStore
  * @see DiskStoreFactory
- * @see GemFireCache
+ * @see ClientCache
  * @see FactoryBean
  * @see InitializingBean
  * @see DiskStoreConfigurer
@@ -50,7 +47,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 
 	private DiskStore diskStore;
 
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	private Integer compactionThreshold;
 	private Integer queueSize;
@@ -78,7 +75,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 
 		applyDiskStoreConfigurers(diskStoreName);
 
-		GemFireCache cache = resolveCache(diskStoreName);
+		ClientCache cache = resolveCache(diskStoreName);
 
 		DiskStoreFactory diskStoreFactory = postProcess(configure(createDiskStoreFactory(cache)));
 
@@ -120,7 +117,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	}
 
 	/* (non-Javadoc) */
-	private GemFireCache resolveCache(String diskStoreName) {
+	private ClientCache resolveCache(String diskStoreName) {
 		return Optional.ofNullable(this.cache)
 			.orElseThrow(() -> newIllegalStateException("Cache is required to create DiskStore [%s]", diskStoreName));
 	}
@@ -132,15 +129,15 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	}
 
 	/**
-	 * Creates an instance of {@link DiskStoreFactory} using the given {@link GemFireCache} in order to
+	 * Creates an instance of {@link DiskStoreFactory} using the given {@link ClientCache} in order to
 	 * construct, configure and initialize a new {@link DiskStore}.
 	 *
-	 * @param cache reference to the {@link GemFireCache} used to create the {@link DiskStoreFactory}.
+	 * @param cache reference to the {@link ClientCache} used to create the {@link DiskStoreFactory}.
 	 * @return a new instance of {@link DiskStoreFactory}.
-	 * @see GemFireCache#createDiskStoreFactory()
+	 * @see ClientCache#createDiskStoreFactory()
 	 * @see DiskStoreFactory
 	 */
-	protected DiskStoreFactory createDiskStoreFactory(GemFireCache cache) {
+	protected DiskStoreFactory createDiskStoreFactory(ClientCache cache) {
 		return cache.createDiskStoreFactory();
 	}
 
@@ -243,7 +240,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 		return this.diskStore != null ? this.diskStore.getClass() : DiskStore.class;
 	}
 
-	public void setCache(GemFireCache cache) {
+	public void setCache(ClientCache cache) {
 		this.cache = cache;
 	}
 

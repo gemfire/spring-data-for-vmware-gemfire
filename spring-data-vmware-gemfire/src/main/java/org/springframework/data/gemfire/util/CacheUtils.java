@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
 import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.Pool;
@@ -21,7 +20,7 @@ import org.springframework.util.StringUtils;
  * {@link ClientCache} instances.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see org.apache.geode.cache.Region
  * @see ClientCache
  * @see ClientCacheFactory
@@ -70,14 +69,18 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	}
 
 	public static boolean close() {
-		return close(resolveGemFireCache());
+		ClientCache clientCache = getClientCache();
+		if (clientCache != null) {
+			return close(clientCache);
+		}
+		return true;
 	}
 
-	public static boolean close(@NonNull GemFireCache gemfireCache) {
+	public static boolean close(@NonNull ClientCache gemfireCache) {
 		return close(gemfireCache, () -> {});
 	}
 
-	public static boolean close(@NonNull GemFireCache gemfireCache, @Nullable Runnable shutdownHook) {
+	public static boolean close(@NonNull ClientCache gemfireCache, @Nullable Runnable shutdownHook) {
 
 		try {
 			gemfireCache.close();
@@ -123,7 +126,7 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 		}
 	}
 
-	public static GemFireCache resolveGemFireCache() {
-		return Optional.<GemFireCache>ofNullable(getClientCache()).orElseGet(CacheUtils::getClientCache);
+	public static ClientCache resolveGemFireCache() {
+		return getClientCache();
 	}
 }

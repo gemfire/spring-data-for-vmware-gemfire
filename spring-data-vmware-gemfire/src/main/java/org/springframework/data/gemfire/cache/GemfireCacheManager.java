@@ -9,10 +9,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.support.AbstractCacheManager;
@@ -30,7 +28,7 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see CacheManager
  * @see AbstractCacheManager
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  */
 @SuppressWarnings("unused")
@@ -38,7 +36,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 
 	private final AtomicBoolean dynamic = new AtomicBoolean(true);
 
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	private Set<Region<?, ?>> regions;
 
@@ -46,7 +44,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 
 	/* (non-Javadoc) */
 	@SuppressWarnings("all")
-	<T extends GemFireCache> T assertGemFireCacheAvailable(T gemfireCache) {
+	<T extends ClientCache> T assertGemFireCacheAvailable(T gemfireCache) {
 		Assert.state(gemfireCache != null, "A GemFire cache instance is required");
 		Assert.state(!gemfireCache.isClosed(), String.format("GemFire cache [%s] has been closed",
 			gemfireCache.getName()));
@@ -73,7 +71,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 *
 	 * However, if neither {@link #regions} nor {@link #cacheNames} were specified, then all defined GemFire
 	 * {@link Region Regions} declared in the Spring application context, as determined by
-	 * {@link GemFireCache#rootRegions()}, will be used as Spring {@link Cache Caches}, and this {@link CacheManager}
+	 * {@link ClientCache#rootRegions()}, will be used as Spring {@link Cache Caches}, and this {@link CacheManager}
 	 * will allow any dynamically created GemFire {@link Region Regions} at runtime to be found and used as a
 	 * Spring {@link Cache} as well.
 	 *
@@ -98,7 +96,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/* (non-Javadoc) */
-	Set<Region<?, ?>> resolveRegions(GemFireCache gemfireCache, Set<Region<?, ?>> regions, Set<String> cacheNames) {
+	Set<Region<?, ?>> resolveRegions(ClientCache gemfireCache, Set<Region<?, ?>> regions, Set<String> cacheNames) {
 		if (isSet(regions)) {
 			dynamic.set(false);
 			return regions;
@@ -137,7 +135,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/* (non-Javadoc) */
-	Region<?, ?> regionFor(GemFireCache gemfireCache, String cacheName) {
+	Region<?, ?> regionFor(ClientCache gemfireCache, String cacheName) {
 		return assertGemFireRegionAvailable(assertGemFireCacheAvailable(gemfireCache).getRegion(cacheName), cacheName);
 	}
 
@@ -181,19 +179,19 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	 *
 	 * @param gemfireCache the GemFire cache instance used by this {@link CacheManager}
 	 * to manage Spring {@link Cache Caches}.
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
-	public void setCache(GemFireCache gemfireCache) {
+	public void setCache(ClientCache gemfireCache) {
 		this.gemfireCache = gemfireCache;
 	}
 
 	/**
-	 * Returns the {@link GemFireCache} instance backing this {@link CacheManager}.
+	 * Returns the {@link ClientCache} instance backing this {@link CacheManager}.
 	 *
-	 * @return the {@link GemFireCache} instance backing this {@link CacheManager}.
-	 * @see GemFireCache
+	 * @return the {@link ClientCache} instance backing this {@link CacheManager}.
+	 * @see ClientCache
 	 */
-	protected GemFireCache getCache() {
+	protected ClientCache getCache() {
 		return this.gemfireCache;
 	}
 

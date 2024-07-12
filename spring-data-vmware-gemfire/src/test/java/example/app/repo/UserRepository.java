@@ -4,20 +4,18 @@
  */
 package example.app.repo;
 
+import example.app.model.User;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.data.gemfire.repository.GemfireRepository;
-
-import example.app.model.User;
 
 /**
  * Spring Data [Geode] {@link GemfireRepository} used to perform basic CRUD and simple OQL query data access operations
- * on {@link User} objects to and from an Apache Geode {@link org.apache.geode.cache.GemFireCache}
+ * on {@link User} objects to and from an Apache Geode {@link org.apache.geode.cache.client.ClientCache}
  * {@link org.apache.geode.cache.Region}.
  *
  * @author John Blum
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.repository.GemfireRepository
  * @see example.app.model.User

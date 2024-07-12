@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.config.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
@@ -15,12 +14,12 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
 import org.springframework.data.gemfire.util.SpringExtensions;
 
 /**
- * Integration Tests for multiple Apache Geode {@link GemFireCache caches}.
+ * Integration Tests for multiple Apache Geode {@link ClientCache caches}.
  *
  * @author David Turanski
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.support.ClassPathXmlApplicationContext

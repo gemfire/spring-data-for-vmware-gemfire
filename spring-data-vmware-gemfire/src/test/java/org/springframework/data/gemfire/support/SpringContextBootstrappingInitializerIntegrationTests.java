@@ -5,29 +5,23 @@
 package org.springframework.data.gemfire.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.Instant;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-
 import javax.sql.DataSource;
-
+import org.apache.geode.cache.CacheLoader;
+import org.apache.geode.cache.CacheLoaderException;
+import org.apache.geode.cache.LoaderHelper;
+import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.apache.geode.cache.CacheFactory;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -88,11 +82,11 @@ public class SpringContextBootstrappingInitializerIntegrationTests extends Integ
 			.create();
 
 		assertThat(gemfireCache)
-			.describedAs("GemFireCache was not properly created and initialized")
+			.describedAs("ClientCache was not properly created and initialized")
 			.isNotNull();
 
 		assertThat(gemfireCache.isClosed())
-			.describedAs("GemFireCache is closed")
+			.describedAs("ClientCache is closed")
 			.isFalse();
 
 		Set<Region<?, ?>> rootRegions = gemfireCache.rootRegions();

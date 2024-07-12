@@ -5,17 +5,13 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.Region;
-
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +26,7 @@ import org.springframework.stereotype.Service;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.cache.annotation.CacheConfig
  * @see org.springframework.cache.annotation.Cacheable
@@ -55,7 +51,7 @@ public class CachingDefinedRegionsConsidersCacheConfigCacheNamesIntegrationTests
 
 		newApplicationContext(annotatedClasses);
 
-		GemFireCache cache = getBean(GemFireCache.class);
+		ClientCache cache = getBean(ClientCache.class);
 
 		assertThat(cache).isNotNull();
 

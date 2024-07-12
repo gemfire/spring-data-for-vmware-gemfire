@@ -5,8 +5,8 @@
 package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import org.springframework.util.Assert;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
@@ -79,7 +79,7 @@ public class GemfireTransactionManagerIntegrationTests extends IntegrationTestsS
 	static class TestConfiguration {
 
 		@Bean(name = "Example")
-		ClientRegionFactoryBean<Object, Object> exampleRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> exampleRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> example = new ClientRegionFactoryBean<>();
 
@@ -92,7 +92,7 @@ public class GemfireTransactionManagerIntegrationTests extends IntegrationTestsS
 
 		@Bean
 		SuspendAndResumeCacheTransactionsRepository suspendAndResumeCacheTransactionsRepository(
-				GemFireCache gemFireCache) {
+				ClientCache gemFireCache) {
 
 			return new SuspendAndResumeCacheTransactionsRepository(gemFireCache.getRegion("Example"));
 		}

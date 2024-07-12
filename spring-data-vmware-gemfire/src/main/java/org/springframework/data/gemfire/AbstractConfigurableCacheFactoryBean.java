@@ -5,16 +5,12 @@
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
@@ -29,7 +25,6 @@ import org.springframework.lang.Nullable;
  * @see File
  * @see InputStream
  * @see Properties
- * @see GemFireCache
  * @see ClientCache
  * @see BeanFactory
  * @see Resource
@@ -247,18 +242,18 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	}
 
 	/**
-	 * Loads the configured {@literal cache.xml} to initialize the {@link GemFireCache}.
+	 * Loads the configured {@literal cache.xml} to initialize the {@link ClientCache}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link GemFireCache}.
-	 * @param cache {@link GemFireCache} instance to initialize with {@literal cache.xml}; must not be {@literal null}.
-	 * @return the given {@link GemFireCache}.
+	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
+	 * @param cache {@link ClientCache} instance to initialize with {@literal cache.xml}; must not be {@literal null}.
+	 * @return the given {@link ClientCache}.
 	 * @throws RuntimeException if the configured {@literal cache.xml} file could not be loaded
-	 * into the {@link GemFireCache}.
-	 * @see GemFireCache#loadCacheXml(InputStream)
-	 * @see GemFireCache
+	 * into the {@link ClientCache}.
+	 * @see ClientCache#loadCacheXml(InputStream)
+	 * @see ClientCache
 	 * @see #getOptionalCacheXml()
 	 */
-	protected @NonNull <T extends GemFireCache> T loadCacheXml(@NonNull T cache) {
+	protected @NonNull <T extends ClientCache> T loadCacheXml(@NonNull T cache) {
 
 		// Load the cache.xml file (Resource) and initialize the cache
 		getOptionalCacheXml().ifPresent(cacheXml -> {
@@ -275,9 +270,9 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	}
 
 	/**
-	 * Resolves the Apache Geode {@link Properties} used to configure the {@link GemFireCache}.
+	 * Resolves the Apache Geode {@link Properties} used to configure the {@link ClientCache}.
 	 *
-	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link GemFireCache}.
+	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link ClientCache}.
 	 * @see #setAndGetProperties(Properties)
 	 * @see #getProperties()
 	 * @see Properties

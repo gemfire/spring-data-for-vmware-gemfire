@@ -6,15 +6,12 @@ package org.springframework.data.gemfire.transaction;
 
 import static org.springframework.data.gemfire.transaction.GemfireTransactionManager.CacheHolder.newCacheHolder;
 import static org.springframework.data.gemfire.transaction.GemfireTransactionManager.CacheTransactionObject.newCacheTransactionObject;
-
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.TransactionId;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.transaction.NoTransactionException;
@@ -31,8 +28,8 @@ import org.springframework.util.Assert;
  * Local Transaction Management for Pivotal GemFire. Provides a Spring {@link PlatformTransactionManager} implementation
  * for the Pivotal GemFire {@link CacheTransactionManager}.
  *
- * Binds one or multiple GemFire {@link Region Regions} for the specified {@link GemFireCache} to the thread,
- * potentially allowing for one {@link Region} per {@link GemFireCache} model.
+ * Binds one or multiple GemFire {@link Region Regions} for the specified {@link ClientCache} to the thread,
+ * potentially allowing for one {@link Region} per {@link ClientCache} model.
  *
  * <p>
  * This local strategy is an alternative to executing cache operations within JTA transactions.
@@ -41,14 +38,14 @@ import org.springframework.util.Assert;
  * with data access.
  *
  * <p>
- * By default, to prevent dirty reads, the {@link GemFireCache} is configured to return copies rather then direct references
+ * By default, to prevent dirty reads, the {@link ClientCache} is configured to return copies rather then direct references
  * for <code>get</code> data access operations. As a workaround, one could use explicitly deep copy objects before
  * making changes to them to avoid unnecessary copying on every fetch.
  *
  * @author Costin Leau
  * @author John Blum
  * @see org.apache.geode.CopyHelper#copy(Object)
- * @see GemFireCache#setCopyOnRead(boolean)
+ * @see ClientCache#setCopyOnRead(boolean)
  * @see CacheTransactionManager
  * @see Region
  * @see TransactionId
@@ -66,7 +63,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 	protected static final TimeUnit DEFAULT_RESUME_WAIT_TIME_UNIT = TimeUnit.SECONDS;
 
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	private boolean copyOnRead = true;
 
@@ -81,13 +78,13 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 	/**
 	 * Constructs an instance of the {@link GemfireTransactionManager} initialized with
-	 * the given {@link GemFireCache} reference.
+	 * the given {@link ClientCache} reference.
 	 *
-	 * @param cache reference to the {@link GemFireCache} associated with cache transactions.
-	 * @see GemFireCache
+	 * @param cache reference to the {@link ClientCache} associated with cache transactions.
+	 * @see ClientCache
 	 * @see #afterPropertiesSet()
 	 */
-	public GemfireTransactionManager(GemFireCache cache) {
+	public GemfireTransactionManager(ClientCache cache) {
 
 		this.cache = cache;
 
@@ -132,7 +129,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 			CacheTransactionObject cacheTransaction = (CacheTransactionObject) transaction;
 
-			GemFireCache cache = getCache();
+			ClientCache cache = getCache();
 
 			if (logger.isDebugEnabled()) {
 				logger.debug(String.format("Acquired GemFire Cache [%s] for local cache transaction", cache));
@@ -263,24 +260,24 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * Sets a reference to the {@link GemFireCache} for which this transaction manager
+	 * Sets a reference to the {@link ClientCache} for which this transaction manager
 	 * manages local cache transactions.
 	 *
-	 * @param cache reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @param cache reference to the {@link ClientCache}.
+	 * @see ClientCache
 	 */
-	public void setCache(GemFireCache cache) {
+	public void setCache(ClientCache cache) {
 		this.cache = cache;
 	}
 
 	/**
-	 * Returns a reference to the {@link GemFireCache} for which this transaction manager
+	 * Returns a reference to the {@link ClientCache} for which this transaction manager
 	 * manages local cache transactions.
 	 *
-	 * @return a reference to the {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @return a reference to the {@link ClientCache}.
+	 * @see ClientCache
 	 */
-	public GemFireCache getCache() {
+	public ClientCache getCache() {
 		return this.cache;
 	}
 
@@ -326,7 +323,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * Sets the GemFire cache {@link Region} as an alternative in setting in the {@link GemFireCache} directly.
+	 * Sets the GemFire cache {@link Region} as an alternative in setting in the {@link ClientCache} directly.
 	 *
 	 * @param <K> {@link Class} type of the {@link Region} key.
 	 * @param <V> {@link Class} type of the {@link Region} value.
@@ -338,7 +335,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 		Assert.notNull(region, "Region must not be null");
 
-		this.cache = (GemFireCache) region.getRegionService();
+		this.cache = (ClientCache) region.getRegionService();
 	}
 
 	/**

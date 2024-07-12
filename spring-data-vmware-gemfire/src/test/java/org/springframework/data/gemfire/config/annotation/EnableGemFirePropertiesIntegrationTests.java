@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxSerializer;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @see org.springframework.core.env.PropertySource
@@ -78,7 +78,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -102,7 +102,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		//Properties gemfireProperties = this.applicationContext.getBean("gemfireProperties", Properties.class);
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -159,7 +159,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -212,7 +212,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		assertThat(containsBean("gemfireCache")).isTrue();
 		assertThat(containsBean("gemfireProperties")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();
@@ -253,7 +253,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		assertThat(containsBean("gemfireCache")).isTrue();
 
-		GemFireCache gemfireCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache gemfireCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(gemfireCache).isNotNull();
 		assertThat(gemfireCache.getDistributedSystem()).isNotNull();

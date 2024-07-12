@@ -5,8 +5,8 @@
 package org.springframework.data.gemfire.transaction.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.context.annotation.Bean
  * @see org.springframework.data.gemfire.transaction.GemfireTransactionManager
@@ -44,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EnableGemfireCacheTransactionsIntegrationTests extends IntegrationTestsSupport {
 
 	@Autowired
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	@Autowired
 	private GemfireTransactionManager transactionManager;
@@ -103,7 +103,7 @@ public class EnableGemfireCacheTransactionsIntegrationTests extends IntegrationT
 	static class TestConfiguration {
 
 		@Bean("Example")
-		public ClientRegionFactoryBean<Object, Object> exampleRegion(GemFireCache gemFireCache) {
+		public ClientRegionFactoryBean<Object, Object> exampleRegion(ClientCache gemFireCache) {
 
 			ClientRegionFactoryBean<Object, Object> example = new ClientRegionFactoryBean<>();
 

@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -29,7 +28,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see java.util.Properties
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.core.env.PropertySource
@@ -109,7 +108,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache clientCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache clientCache = getBean("gemfireCache", ClientCache.class);
 
 		//Get Properties from GemFire
 		Properties gemfireProperties = clientCache.getDistributedSystem().getProperties();
@@ -129,7 +128,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache clientCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache clientCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(clientCache).isNotNull();
 
@@ -169,7 +168,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache peerCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(peerCache).isNotNull();
 
@@ -188,7 +187,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		assertThat(containsBean("gemfireCache"));
 		assertThat(containsBean("gemfireProperties"));
 
-		GemFireCache peerCache = getBean("gemfireCache", GemFireCache.class);
+		ClientCache peerCache = getBean("gemfireCache", ClientCache.class);
 
 		assertThat(peerCache).isNotNull();
 

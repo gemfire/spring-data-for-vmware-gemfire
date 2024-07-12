@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,7 +66,7 @@ public class DiskStoreDirectoryBeanPostProcessorIntegrationTests extends Integra
 		}
 
 		@Bean
-		DiskStoreFactoryBean diskStoreOne(GemFireCache gemfireCache) {
+		DiskStoreFactoryBean diskStoreOne(ClientCache gemfireCache) {
 			DiskStoreFactoryBean diskStoreOne = new DiskStoreFactoryBean();
 			diskStoreOne.setCache(gemfireCache);
 			diskStoreOne.setDiskDirs(Collections.singletonList(newDiskDir("./gemfire/disk-stores/ds1")));
@@ -74,7 +74,7 @@ public class DiskStoreDirectoryBeanPostProcessorIntegrationTests extends Integra
 		}
 
 		@Bean
-		DiskStoreFactoryBean diskStoreTwo(GemFireCache gemfireCache) {
+		DiskStoreFactoryBean diskStoreTwo(ClientCache gemfireCache) {
 			DiskStoreFactoryBean diskStoreTwo = new DiskStoreFactoryBean();
 			diskStoreTwo.setCache(gemfireCache);
 			diskStoreTwo.setDiskDirs(Arrays.asList(newDiskDir("./gemfire/disk-stores/ds2/local"),
@@ -83,7 +83,7 @@ public class DiskStoreDirectoryBeanPostProcessorIntegrationTests extends Integra
 		}
 
 		@Bean
-		DiskStoreFactoryBean diskStoreThree(GemFireCache gemfireCache) {
+		DiskStoreFactoryBean diskStoreThree(ClientCache gemfireCache) {
 			DiskStoreFactoryBean diskStoreThree = new DiskStoreFactoryBean();
 			diskStoreThree.setCache(gemfireCache);
 			diskStoreThree.setDiskDirs(Collections.singletonList(newDiskDir("./gfe/ds/store3/local")));

@@ -7,19 +7,15 @@ package org.springframework.data.gemfire.function.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport.DEFAULT_HOSTNAME;
 import static org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport.GEMFIRE_POOL_SERVERS_PROPERTY;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
@@ -35,7 +31,7 @@ import org.testcontainers.utility.MountableFile;
  *
  * @author Patrick Johnson
  * @author John Blum
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
  * @see org.springframework.data.gemfire.function.annotation.OnRegion
@@ -96,7 +92,7 @@ public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport 
   public static class TestConfiguration {
 
 		@Bean("Numbers")
-		ClientRegionFactoryBean<Long, BigDecimal> numbersRegion(GemFireCache gemFireCache) {
+		ClientRegionFactoryBean<Long, BigDecimal> numbersRegion(ClientCache gemFireCache) {
 
 			ClientRegionFactoryBean<Long, BigDecimal> numbersRegion = new ClientRegionFactoryBean<>();
 

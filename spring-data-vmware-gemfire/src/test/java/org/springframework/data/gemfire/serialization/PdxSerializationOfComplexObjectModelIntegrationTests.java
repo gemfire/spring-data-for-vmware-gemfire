@@ -28,8 +28,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.RegionService;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxInstance;
 import org.apache.geode.pdx.PdxSerializer;
 import org.apache.geode.pdx.PdxWriter;
@@ -66,7 +66,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * using Apache Geode PDX serialization.
  *
  * @author John Blum
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.pdx.PdxInstance
  * @see org.apache.geode.pdx.PdxSerializer
@@ -123,14 +123,14 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 
 		RegionService regionService = orders.getRegionService();
 
-		assertThat(regionService).isInstanceOf(GemFireCache.class);
+		assertThat(regionService).isInstanceOf(ClientCache.class);
 
 		Class<? extends PdxSerializer> expectedPdxSerializerType =
 			Arrays.asList(this.environment.getActiveProfiles()).contains("MappingPdxSerializer")
 				? MappingPdxSerializer.class
 				: ReflectionBasedAutoSerializer.class;
 
-		GemFireCache cache = (GemFireCache) regionService;
+		ClientCache cache = (ClientCache) regionService;
 
 		assertThat(cache).isNotNull();
 		assertThat(cache.getPdxSerializer()).isInstanceOf(expectedPdxSerializerType);
@@ -210,9 +210,9 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 		PdxSerializer pdxSerializer = Optional.ofNullable(this.ordersTemplate)
 			.map(GemfireTemplate::getRegion)
 			.map(org.apache.geode.cache.Region::getRegionService)
-			.filter(GemFireCache.class::isInstance)
-			.map(GemFireCache.class::cast)
-			.map(GemFireCache::getPdxSerializer)
+			.filter(ClientCache.class::isInstance)
+			.map(ClientCache.class::cast)
+			.map(ClientCache::getPdxSerializer)
 			.orElse(null);
 
 		assertThat(pdxSerializer).isNotNull();
@@ -251,7 +251,7 @@ public class PdxSerializationOfComplexObjectModelIntegrationTests {
 
 		@Bean
 		@DependsOn("Orders")
-		GemfireTemplate ordersTemplate(GemFireCache cache) {
+		GemfireTemplate ordersTemplate(ClientCache cache) {
 			return new GemfireTemplate(cache.getRegion("/Orders"));
 		}
 

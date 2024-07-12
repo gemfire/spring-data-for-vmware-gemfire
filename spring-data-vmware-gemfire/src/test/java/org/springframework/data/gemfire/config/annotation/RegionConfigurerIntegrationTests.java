@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ import org.springframework.util.ReflectionUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
@@ -125,7 +125,7 @@ public class RegionConfigurerIntegrationTests extends SpringApplicationContextIn
 	static class ClientTestConfiguration extends AbstractTestConfiguration {
 
 		@Bean(name = "Test")
-		ClientRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> testRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> testRegionFactory = new ClientRegionFactoryBean<>();
 

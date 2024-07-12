@@ -15,10 +15,8 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,7 @@ import org.springframework.util.ObjectUtils;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see FactoryBean
  * @see ApplicationContext
@@ -71,7 +69,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 
 	private ApplicationContext applicationContext;
 
-	private GemFireCache cache;
+	private ClientCache cache;
 
 	private Iterable<Region<?, ?>> regions;
 
@@ -114,22 +112,22 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	}
 
 	/**
-	 * Set a reference to the Apache Geode {@link GemFireCache}.
+	 * Set a reference to the Apache Geode {@link ClientCache}.
 	 *
-	 * @param cache reference to the Apache Geode {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @param cache reference to the Apache Geode {@link ClientCache}.
+	 * @see ClientCache
 	 */
-	public void setCache(@Nullable GemFireCache cache) {
+	public void setCache(@Nullable ClientCache cache) {
 		this.cache = cache;
 	}
 
 	/**
-	 * Returns an {@link Optional} reference to the configured Apache Geode {@link GemFireCache}.
+	 * Returns an {@link Optional} reference to the configured Apache Geode {@link ClientCache}.
 	 *
-	 * @return an {@link Optional} reference to the configured Apache Geode {@link GemFireCache}.
-	 * @see GemFireCache
+	 * @return an {@link Optional} reference to the configured Apache Geode {@link ClientCache}.
+	 * @see ClientCache
 	 */
-	protected Optional<GemFireCache> getCache() {
+	protected Optional<ClientCache> getCache() {
 		return Optional.ofNullable(this.cache);
 	}
 
@@ -192,7 +190,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 
 	/**
 	 * Configures a reference to a {@link Set} of all {@link Region Regions} defined, declared and registered in
-	 * the Spring {@link ApplicationContext} as well as in the Apache Geode {@link GemFireCache}.
+	 * the Spring {@link ApplicationContext} as well as in the Apache Geode {@link ClientCache}.
 	 */
 	protected void configureRegions() {
 
@@ -207,7 +205,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 			.forEach(regions::add);
 
 		getCache()
-			.map(GemFireCache::rootRegions)
+			.map(ClientCache::rootRegions)
 			.orElseGet(Collections::emptySet)
 			.stream()
 			.filter(Objects::nonNull)

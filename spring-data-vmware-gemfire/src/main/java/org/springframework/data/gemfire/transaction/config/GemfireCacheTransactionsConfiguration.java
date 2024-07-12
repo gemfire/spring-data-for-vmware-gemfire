@@ -7,9 +7,9 @@ package org.springframework.data.gemfire.transaction.config;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * to manage local, cache transactions for either Pivotal GemFire or Apache Geode.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see TransactionListener
  * @see TransactionWriter
  * @see ApplicationEventPublisher
@@ -79,13 +79,13 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	 * Declares and registers SDG's {@link GemfireTransactionManager} as the {@literal transactionManager}
 	 * in Spring's Transaction Management infrastructure to manage local, GemFire/Geode cache transactions.
 	 *
-	 * @param gemfireCache reference to the {@link GemFireCache}.
-	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link GemFireCache}.
+	 * @param gemfireCache reference to the {@link ClientCache}.
+	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link ClientCache}.
 	 * @see GemfireTransactionManager
-	 * @see GemFireCache
+	 * @see ClientCache
 	 */
 	@Bean
-	public GemfireTransactionManager transactionManager(GemFireCache gemfireCache) {
+	public GemfireTransactionManager transactionManager(ClientCache gemfireCache) {
 		return new GemfireTransactionManager(gemfireCache);
 	}
 

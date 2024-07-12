@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -76,7 +75,7 @@ public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	@Bean
-	Object nullCacheDependentBean(GemFireCache cache) {
+	Object nullCacheDependentBean(ClientCache cache) {
 		return null;
 	}
 }

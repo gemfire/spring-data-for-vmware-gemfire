@@ -12,14 +12,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import org.junit.Test;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.Test;
 
 /**
  * Unit Tests for {@link GemfireFunctions}
@@ -27,7 +24,7 @@ import org.apache.geode.cache.Region;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.support.GemfireFunctions
  * @since 2.7.0
@@ -37,13 +34,13 @@ public class GemfireFunctionsUnitTests {
 	@Test
 	public void getRegionFromCacheFunctionReturnsRegion() {
 
-		GemFireCache mockCache = mock(GemFireCache.class);
+		ClientCache mockCache = mock(ClientCache.class);
 
 		Region<?, ?> mockRegion = mock(Region.class);
 
 		doReturn(mockRegion).when(mockCache).getRegion(eq("TestRegion"));
 
-		Function<GemFireCache, Region<Object, Object>> function =
+		Function<ClientCache, Region<Object, Object>> function =
 			GemfireFunctions.getRegionFromCache("TestRegion");
 
 		assertThat(function).isNotNull();
@@ -57,7 +54,7 @@ public class GemfireFunctionsUnitTests {
 	@Test
 	public void getRegionFromCacheSupplierReturnsRegions() {
 
-		GemFireCache mockCache = mock(GemFireCache.class);
+		ClientCache mockCache = mock(ClientCache.class);
 
 		Region<?, ?> mockRegion = mock(Region.class);
 

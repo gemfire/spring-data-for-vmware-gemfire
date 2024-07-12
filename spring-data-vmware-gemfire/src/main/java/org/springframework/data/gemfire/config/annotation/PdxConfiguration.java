@@ -8,7 +8,7 @@ import java.lang.annotation.Annotation;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxSerializer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -31,10 +31,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link PdxConfiguration} class is a Spring {@link Configuration} class that configures PDX
- * on a {@link GemFireCache} instance.
+ * on a {@link ClientCache} instance.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see PdxSerializer
  * @see BeanFactory
  * @see BeanFactoryPostProcessor

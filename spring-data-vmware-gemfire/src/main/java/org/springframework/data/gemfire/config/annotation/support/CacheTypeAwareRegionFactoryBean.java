@@ -5,17 +5,14 @@
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.geode.cache.CustomExpiry;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionShortcut;
@@ -23,11 +20,10 @@ import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.compression.Compressor;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.SmartLifecycle;
-import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
+import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.Interest;
 import org.springframework.data.gemfire.config.annotation.RegionConfigurer;
 import org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean;
@@ -36,7 +32,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link CacheTypeAwareRegionFactoryBean} class is a smart Spring {@link FactoryBean} that knows how to
- * create a client or server {@link Region} depending on whether the {@link GemFireCache} is a {@link ClientCache}
+ * create a client or server {@link Region} depending on whether the {@link ClientCache} is a {@link ClientCache}
  * or a peer {@link Cache}.
  *
  * @author John Blum
@@ -44,7 +40,7 @@ import org.springframework.util.StringUtils;
  * @see DataPolicy
  * @see EvictionAttributes
  * @see ExpirationAttributes
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see RegionAttributes
  * @see RegionShortcut
@@ -65,7 +61,7 @@ import org.springframework.util.StringUtils;
 public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K, V>
 		implements EvictingRegionFactoryBean, ExpiringRegionFactoryBean<K, V>, SmartLifecycle {
 
-	private GemFireCache gemfireCache;
+	private ClientCache gemfireCache;
 
 	private Boolean close = false;
 	private Boolean statisticsEnabled = false;
@@ -109,7 +105,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) throws Exception {
+	public Region<K, V> createRegion(ClientCache gemfireCache, String regionName) throws Exception {
 
 		return newClientRegion(gemfireCache, regionName);
 	}
@@ -117,17 +113,17 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	/**
 	 * Constructs, configures and initialize\s a new client {@link Region} using the {@link ClientRegionFactoryBean}.
 	 *
-	 * @param gemfireCache reference to the {@link GemFireCache} used to create/initialize the factory
+	 * @param gemfireCache reference to the {@link ClientCache} used to create/initialize the factory
 	 * used to create the client {@link Region}.
 	 * @param regionName name given to the client {@link Region}.
 	 * @return a new instance of a client {@link Region} with the given {@code regionName}.
 	 * @throws Exception if the client {@link Region} could not be created.
 	 * @see ClientRegionFactoryBean
-	 * @see GemFireCache
+	 * @see ClientCache
 	 * @see Region
 	 * @see #newClientRegionFactoryBean()
 	 */
-	protected Region<K, V> newClientRegion(GemFireCache gemfireCache, String regionName) throws Exception {
+	protected Region<K, V> newClientRegion(ClientCache gemfireCache, String regionName) throws Exception {
 
 		ClientRegionFactoryBean<K, V> clientRegionFactory = newClientRegionFactoryBean();
 

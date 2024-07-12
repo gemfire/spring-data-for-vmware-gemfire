@@ -12,21 +12,17 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
+import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.Region;
-
 import org.springframework.cache.Cache;
 
 /**
@@ -42,7 +38,7 @@ import org.springframework.cache.Cache;
 public class GemfireCacheManagerUnitTests {
 
 	@Mock
-	private GemFireCache mockGemFireCache;
+	private ClientCache mockGemFireCache;
 
 	private GemfireCacheManager cacheManager;
 

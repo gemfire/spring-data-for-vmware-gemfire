@@ -5,24 +5,22 @@
 package org.springframework.data.gemfire.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
+import edu.umd.cs.mtc.MultithreadedTestCase;
+import edu.umd.cs.mtc.TestFramework;
+import example.app.model.User;
+import example.app.repo.UserRepository;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.vmware.gemfire.testcontainers.GemFireCluster;
-import edu.umd.cs.mtc.MultithreadedTestCase;
-import edu.umd.cs.mtc.TestFramework;
-
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.GemFireCache;
-import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,11 +41,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import example.app.model.User;
-import example.app.repo.UserRepository;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Integration Tests asserting the concurrent interaction of multiple {@link ClientCache} (client/server) transactions
@@ -104,7 +97,7 @@ public class ConcurrentClientTransactionalDataAccessWithRollbackIntegrationTests
 	static class TestGeodeClientConfiguration {
 
 		@Bean
-		GemfireRepositoryFactoryBean<UserRepository, User, Integer> userRepository(GemFireCache gemfireCache) {
+		GemfireRepositoryFactoryBean<UserRepository, User, Integer> userRepository(ClientCache gemfireCache) {
 
 			GemfireRepositoryFactoryBean<UserRepository, User, Integer> userRepositoryFactoryBean =
 				new GemfireRepositoryFactoryBean<>(UserRepository.class);

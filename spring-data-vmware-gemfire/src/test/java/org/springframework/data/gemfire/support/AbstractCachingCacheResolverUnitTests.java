@@ -9,18 +9,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.concurrent.atomic.AtomicReference;
-
 import edu.umd.cs.mtc.MultithreadedTestCase;
 import edu.umd.cs.mtc.TestFramework;
-
+import java.util.concurrent.atomic.AtomicReference;
+import org.apache.geode.cache.client.ClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.apache.geode.cache.GemFireCache;
 
 /**
  * Unit Tests for {@link AbstractCachingCacheResolver}.
@@ -39,7 +35,7 @@ import org.apache.geode.cache.GemFireCache;
 public class AbstractCachingCacheResolverUnitTests {
 
 	@Mock
-	private GemFireCache mockCache;
+	private ClientCache mockCache;
 
 	@Test
 	@SuppressWarnings("rawtypes")
@@ -67,8 +63,8 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		private AbstractCachingCacheResolver<?> mockCacheResolver;
 
-		private AtomicReference<GemFireCache> gemfireCacheFromThreadOne = new AtomicReference<>(null);
-		private AtomicReference<GemFireCache> gemfireCacheFromThreadTwo = new AtomicReference<>(null);
+		private AtomicReference<ClientCache> gemfireCacheFromThreadOne = new AtomicReference<>(null);
+		private AtomicReference<ClientCache> gemfireCacheFromThreadTwo = new AtomicReference<>(null);
 
 		@Override
 		public void initialize() {
@@ -89,7 +85,7 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		public void thread1() {
 
-			Thread.currentThread().setName("GemFireCache Access Thread 1");
+			Thread.currentThread().setName("ClientCache Access Thread 1");
 
 			assertTick(0);
 
@@ -98,7 +94,7 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		public void thread2() {
 
-			Thread.currentThread().setName("GemFireCache Access Thread 2");
+			Thread.currentThread().setName("ClientCache Access Thread 2");
 
 			assertTick(0);
 			waitForTick(1);
@@ -109,7 +105,7 @@ public class AbstractCachingCacheResolverUnitTests {
 		@Override
 		public void finish() {
 
-			GemFireCache gemfireCacheFromThreadOne = this.gemfireCacheFromThreadOne.get();
+			ClientCache gemfireCacheFromThreadOne = this.gemfireCacheFromThreadOne.get();
 
 			assertThat(gemfireCacheFromThreadOne).isNotNull();
 			assertThat(gemfireCacheFromThreadOne).isEqualTo(this.gemfireCacheFromThreadTwo.get());

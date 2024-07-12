@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.CompressionConfiguration.SNAPPY_COMPRESSOR_BEAN_NAME;
 import java.util.Arrays;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.compression.Compressor;
 import org.apache.geode.compression.SnappyCompressor;
@@ -27,7 +27,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.config.annotation.CompressionConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableCompression
@@ -95,7 +95,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForAllRegionsConfiguration {
 
 		@Bean("ExampleLocalRegion")
-		public ClientRegionFactoryBean<Object, Object> localRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> localRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> localRegion = new ClientRegionFactoryBean<>();
 
@@ -114,7 +114,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForSelectRegionsConfiguration {
 
 		@Bean("ExampleClientRegion")
-		public ClientRegionFactoryBean<Object, Object> clientRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> clientRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegion = new ClientRegionFactoryBean<>();
 

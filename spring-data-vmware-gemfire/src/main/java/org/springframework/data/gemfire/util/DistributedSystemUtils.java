@@ -6,14 +6,12 @@ package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
 import java.util.Properties;
-
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.distributed.Locator;
 import org.apache.geode.distributed.internal.InternalDistributedSystem;
 import org.apache.geode.distributed.internal.InternalLocator;
-
 import org.springframework.data.gemfire.GemFireProperties;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -24,7 +22,7 @@ import org.springframework.util.StringUtils;
  * DistributedSystemUtils is an abstract utility class for working with the GemFire DistributedSystem.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see DistributedSystem
  * @see InternalDistributedSystem
  * @see org.apache.geode.internal.DistributionLocator
@@ -75,10 +73,10 @@ public abstract class DistributedSystemUtils extends SpringExtensions {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static @Nullable <T extends DistributedSystem> T getDistributedSystem(GemFireCache gemfireCache) {
+	public static @Nullable <T extends DistributedSystem> T getDistributedSystem(ClientCache gemfireCache) {
 
 		return (T) Optional.ofNullable(gemfireCache)
-			.map(GemFireCache::getDistributedSystem)
+			.map(ClientCache::getDistributedSystem)
 			.orElse(null);
 	}
 

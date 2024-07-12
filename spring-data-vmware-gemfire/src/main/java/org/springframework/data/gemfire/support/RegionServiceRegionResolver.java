@@ -5,12 +5,9 @@
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
-
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionService;
 import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.RegionResolver;
 import org.springframework.lang.NonNull;
@@ -22,7 +19,7 @@ import org.springframework.util.Assert;
  * using the configured {@link RegionService}.
  *
  * @author John Blum
- * @see GemFireCache
+ * @see ClientCache
  * @see Region
  * @see RegionService
  * @see ClientCache
@@ -36,11 +33,11 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	/**
 	 * Factory method used to construct a {@link RegionServiceRegionResolver} from a {@link CacheResolver}.
 	 *
-	 * The {@link CacheResolver} will resolve an instance of {@link GemFireCache}, such as a {@link ClientCache},
+	 * The {@link CacheResolver} will resolve an instance of {@link ClientCache}, such as a {@link ClientCache},
 	 * which is a {@link RegionService} capable of resolving a {@link Region}
 	 * identified by {@link String name}.
 	 *
-	 * @param <S> {@link Class subclass} of {@link GemFireCache}.
+	 * @param <S> {@link Class subclass} of {@link ClientCache}.
 	 * @param cacheResolver {@link CacheResolver} used to resolve the {@link RegionService}.
 	 * @return a new instance of {@link RegionServiceRegionResolver}.
 	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
@@ -48,7 +45,7 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	 * @see CacheResolver
 	 */
 	@NonNull
-	public static <S extends GemFireCache> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
+	public static <S extends ClientCache> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
 
 		Assert.notNull(cacheResolver, "CacheResolver must not be null");
 
@@ -59,7 +56,7 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 	 * Factory method used to construct a {@link RegionServiceRegionResolver} initialized with
 	 * the given {@link RegionService}.
 	 *
-	 * The {@link RegionService} may be an instance of {@link GemFireCache}, such as a {@link ClientCache}.
+	 * The {@link RegionService} may be an instance of {@link ClientCache}, such as a {@link ClientCache}.
 	 *
 	 * @param regionService {@link RegionService} used to resolve cache {@link Region Regions}
 	 * identified by {@link String name}; may be {@literal null}.

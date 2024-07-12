@@ -6,7 +6,7 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import org.apache.geode.cache.GemFireCache;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.pdx.PdxSerializer;
 import org.junit.After;
@@ -25,7 +25,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.pdx.PdxSerializer
  * @see org.springframework.data.gemfire.config.annotation.EnablePdx
  * @see org.springframework.data.gemfire.config.annotation.PdxConfiguration
@@ -103,7 +103,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 	static class TestEnablePdxWithDiskStoreConfiguration {
 
 		@Bean("TestDiskStore")
-		DiskStoreFactoryBean testPdxDiskStore(GemFireCache gemfireCache) {
+		DiskStoreFactoryBean testPdxDiskStore(ClientCache gemfireCache) {
 
 			DiskStoreFactoryBean testDiskStore = new DiskStoreFactoryBean();
 
@@ -113,7 +113,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 		}
 
 		@Bean("TestRegion")
-		ClientRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> testRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> testRegion = new ClientRegionFactoryBean<>();
 
@@ -137,7 +137,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 	static class TestEnablePdxConfigurationWithNoDiskStoreConfiguration {
 
 		@Bean("TestDiskStore")
-		DiskStoreFactoryBean testPdxDiskStore(GemFireCache gemfireCache) {
+		DiskStoreFactoryBean testPdxDiskStore(ClientCache gemfireCache) {
 
 			DiskStoreFactoryBean testDiskStore = new DiskStoreFactoryBean();
 
@@ -147,7 +147,7 @@ public class EnablePdxConfigurationIntegrationTests extends SpringApplicationCon
 		}
 
 		@Bean("TestRegion")
-		public ClientRegionFactoryBean<Object, Object> testRegion(GemFireCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> testRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> testRegion = new ClientRegionFactoryBean<>();
 

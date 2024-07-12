@@ -10,7 +10,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import java.io.InputStream;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
 import org.junit.After;
 import org.junit.Test;
@@ -113,13 +112,13 @@ public class CacheIntegrationTests extends IntegrationTestsSupport {
 
 				doAnswer(invocation -> {
 
-					GemFireCache cache = invocation.getArgument(0);
+					ClientCache cache = invocation.getArgument(0);
 
 					doNothing().when(cache).loadCacheXml(any(InputStream.class));
 
 					return cache;
 
-				}).when(cacheBean).loadCacheXml(any(GemFireCache.class));
+				}).when(cacheBean).loadCacheXml(any(ClientCache.class));
 
 				bean = cacheBean;
 			}

@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionEvent;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.query.SelectResults;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.junit.Before;
@@ -41,7 +41,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author John Blum
  * @author Jens Schauder
  * @see org.junit.Test
- * @see org.apache.geode.cache.GemFireCache
+ * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.GemfireTemplate
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
@@ -267,7 +267,7 @@ public class SimpleGemfireRepositoryIntegrationTests extends IntegrationTestsSup
 	static class SimpleGemfireRepositoryConfiguration {
 
 		@Bean(name = "People")
-		ClientRegionFactoryBean<Object, Object> peopleRegion(GemFireCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> peopleRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> peopleRegion = new ClientRegionFactoryBean<>();
 

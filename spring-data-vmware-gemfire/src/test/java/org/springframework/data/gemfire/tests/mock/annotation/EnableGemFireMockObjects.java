@@ -10,9 +10,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.apache.geode.cache.GemFireCache;
-
+import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.event.AfterTestClassEvent;
@@ -25,7 +23,7 @@ import org.springframework.test.context.event.AfterTestClassEvent;
  * @see Inherited
  * @see Retention
  * @see Target
- * @see GemFireCache
+ * @see ClientCache
  * @see ApplicationEvent
  * @see Import
  * @since 0.0.1
@@ -50,11 +48,11 @@ public @interface EnableGemFireMockObjects {
 	Class<? extends ApplicationEvent>[] destroyOnEvents() default { AfterTestClassEvent.class };
 
 	/**
-	 * Configures whether the mock {@link GemFireCache} created for Unit Testing is a Singleton.
+	 * Configures whether the mock {@link ClientCache} created for Unit Testing is a Singleton.
 	 *
 	 * Defaults to {@literal false}.
 	 *
-	 * @return a boolean value indicating whether the mock {@link GemFireCache} created for Unit Testing
+	 * @return a boolean value indicating whether the mock {@link ClientCache} created for Unit Testing
 	 * is a Singleton.
 	 */
 	boolean useSingletonCache() default GemFireMockObjectsConfiguration.DEFAULT_USE_SINGLETON_CACHE;
