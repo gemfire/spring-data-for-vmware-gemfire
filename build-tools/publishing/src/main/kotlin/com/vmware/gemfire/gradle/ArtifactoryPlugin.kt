@@ -20,20 +20,19 @@ class ArtifactoryPlugin : Plugin<Project> {
       repository.password = (project.findProperty("artifactoryPassword") ?: let { "" }) as String
       defaults {
         publications("ALL_PUBLICATIONS")
-//        setPublishArtifacts(true)
-//        publishBuildInfo = true
-//        setPublishPom(true)
+        setPublishArtifacts(true)
+        setPublishPom(true)
         setPublishIvy(false)
       }
       isPublishBuildInfo = true
       forkCount = 5
     }
-    val clientConfig = jfrogExtension.clientConfig
 
-    val buildInfo = clientConfig.info
-    buildInfo.buildName = "${project.name}-${project.version}"
-    buildInfo.buildNumber = (project.properties.getOrDefault("buildId", "0000") as String)
-    buildInfo.project = "tds-gemfire"
-    buildInfo.agentName = System.getProperty("user.name") as String
+    jfrogExtension.buildInfo {
+      buildName = "${project.name}-${project.version}"
+      buildNumber = (project.properties.getOrDefault("buildId", "0000") as String)
+      setProject("tds-gemfire")
+      agentName = System.getProperty("user.name") as String
+    }
   }
 }
