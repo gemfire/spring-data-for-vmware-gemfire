@@ -20,13 +20,13 @@ class ArtifactoryPlugin : Plugin<Project> {
       repository.password = (project.findProperty("artifactoryPassword") ?: let { "" }) as String
       defaults {
         publications("ALL_PUBLICATIONS")
-        setPublishArtifacts(true)
+//        setPublishArtifacts(true)
 //        publishBuildInfo = true
-        setPublishPom(true)
+//        setPublishPom(true)
         setPublishIvy(false)
-
-        forkCount = 5
       }
+      isPublishBuildInfo = true
+      forkCount = 5
     }
     val clientConfig = jfrogExtension.clientConfig
 
