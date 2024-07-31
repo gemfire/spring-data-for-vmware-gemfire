@@ -14,4 +14,5 @@ repositories {
 
 dependencies {
   implementation(libs.kotlin)
+  implementation("org.jfrog.buildinfo:build-info-extractor-gradle:5.2.2")
 }

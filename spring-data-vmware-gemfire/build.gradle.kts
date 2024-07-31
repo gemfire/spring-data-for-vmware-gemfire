@@ -5,7 +5,6 @@
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
-import org.apache.tools.ant.taskdefs.condition.Os
 
 
 buildscript {
@@ -21,6 +20,7 @@ plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
   id("commercial-repositories")
+  id("publishing-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
@@ -97,8 +97,7 @@ tasks.register("prepareKotlinBuildScriptModel") {}
 
 tasks {
   test {
-    setForkEvery(1)
-//  maxParallelForks = 1
+    forkEvery = 1
 
     systemProperty("java.util.logging.config.file", "${project.layout.buildDirectory}/test-classes/java-util-logging.properties")
     systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")

@@ -9,6 +9,7 @@ import java.util.*
 pluginManagement {
   includeBuild("build-tools/publishing")
   includeBuild("build-tools/convention-plugins")
+  includeBuild("build-tools/publishing-artifactory")
   repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
     gradlePluginPortal()
