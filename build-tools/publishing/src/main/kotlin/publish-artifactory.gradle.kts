@@ -27,7 +27,7 @@ configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
       // Reference to Gradle publications defined in the build script.
       // This is how we tell the Artifactory Plugin which artifacts should be
       // published to Artifactory.
-      publications("mavenJava")
+      publications("ALL_PUBLICATIONS")
       setPublishArtifacts(true)
       setPublishPom(true) // Publish generated POM files to Artifactory (true by default)
       setPublishIvy(false) // Publish generated Ivy descriptor files to Artifactory (true by default)
