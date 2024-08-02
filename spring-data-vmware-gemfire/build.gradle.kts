@@ -93,8 +93,6 @@ dependencies {
   testImplementation(libs.awaitility)
 }
 
-tasks.register("prepareKotlinBuildScriptModel") {}
-
 tasks {
   test {
     forkEvery = 1

@@ -11,11 +11,12 @@ val projectBuildName = "${project.name}-${project.version}"
 val projectBuildNumber = project.properties.getOrDefault("buildId", "0000") as String
 val projectAgentName = System.getProperty("user.name") as String
 
-configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
+artifactory {
   clientConfig.isIncludeEnvVars = true
 
   setContextUrl("https://usw1.packages.broadcom.com/artifactory")
   publish {
+    contextUrl = "https://usw1.packages.broadcom.com/artifactory"
     repository {
       repoKey = providers.gradleProperty("artifactoryRepo").getOrNull() // The Artifactory repository key to publish to
       username = providers.gradleProperty("artifactoryUsername").getOrNull() // The publisher user name
@@ -35,12 +36,11 @@ configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
 
     isPublishBuildInfo = true
     forkCount = 5
-
-    buildInfo {
-      buildName = projectBuildName
-      buildNumber = projectBuildNumber
-      project = "tds-gemfire"
-      agentName = projectAgentName
-    }
+  }
+  buildInfo {
+    buildName = projectBuildName
+    buildNumber = projectBuildNumber
+    project = "tds-gemfire"
+    agentName = projectAgentName
   }
 }
