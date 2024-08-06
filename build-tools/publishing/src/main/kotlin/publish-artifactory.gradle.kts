@@ -29,13 +29,14 @@ artifactory {
       // Reference to Gradle publications defined in the build script.
       // This is how we tell the Artifactory Plugin which artifacts should be
       // published to Artifactory.
-      publications("maven")
+      publications("ALL_PUBLICATIONS")
       setPublishArtifacts(true)
       setPublishPom(true) // Publish generated POM files to Artifactory (true by default)
       setPublishIvy(false) // Publish generated Ivy descriptor files to Artifactory (true by default)
     }
 
     isPublishBuildInfo = true
+    forkCount = 5
   }
   buildInfo {
     buildName = projectBuildName
