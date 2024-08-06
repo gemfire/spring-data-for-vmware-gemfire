@@ -24,19 +24,15 @@ artifactory {
       password = providers.gradleProperty("artifactoryPassword").getOrNull() // The publisher password
       // This is an optional section for configuring Ivy publication (when publishIvy = true).
     }
-
     defaults {
-      // Reference to Gradle publications defined in the build script.
-      // This is how we tell the Artifactory Plugin which artifacts should be
-      // published to Artifactory.
       publications("ALL_PUBLICATIONS")
-      setPublishArtifacts(true)
-      setPublishPom(true) // Publish generated POM files to Artifactory (true by default)
-      setPublishIvy(false) // Publish generated Ivy descriptor files to Artifactory (true by default)
-    }
+      publishArtifacts = true
+      isPublishBuildInfo = true
+      publishPom = true
+      publishIvy = false
 
-    isPublishBuildInfo = true
-    forkCount = 5
+      forkCount = 5
+    }
   }
   buildInfo {
     buildName = projectBuildName
