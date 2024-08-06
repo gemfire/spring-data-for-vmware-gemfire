@@ -14,9 +14,10 @@ val projectAgentName = System.getProperty("user.name") as String
 artifactory {
   clientConfig.isIncludeEnvVars = true
 
-  setContextUrl("https://usw1.packages.broadcom.com/artifactory")
+  val url = providers.gradleProperty("artifactoryURL").getOrNull()
+  setContextUrl(url)
   publish {
-    contextUrl = "https://usw1.packages.broadcom.com/artifactory"
+    contextUrl = url
     repository {
       repoKey = providers.gradleProperty("artifactoryRepo").getOrNull() // The Artifactory repository key to publish to
       username = providers.gradleProperty("artifactoryUsername").getOrNull() // The publisher user name
@@ -28,14 +29,13 @@ artifactory {
       // Reference to Gradle publications defined in the build script.
       // This is how we tell the Artifactory Plugin which artifacts should be
       // published to Artifactory.
-      publications("ALL_PUBLICATIONS")
+      publications("maven")
       setPublishArtifacts(true)
       setPublishPom(true) // Publish generated POM files to Artifactory (true by default)
       setPublishIvy(false) // Publish generated Ivy descriptor files to Artifactory (true by default)
     }
 
     isPublishBuildInfo = true
-    forkCount = 5
   }
   buildInfo {
     buildName = projectBuildName

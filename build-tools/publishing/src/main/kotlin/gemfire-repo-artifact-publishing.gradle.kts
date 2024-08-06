@@ -50,12 +50,9 @@ publishing {
       repositories {
         maven {
           val mavenPushRepositoryURL = project.findProperty("mavenPushRepository")
-          if (mavenPushRepositoryURL != null) {
+          if (mavenPushRepositoryURL != null && mavenPushRepositoryURL.toString().startsWith("gcs:")) {
             url = uri(mavenPushRepositoryURL)
-            if (mavenPushRepositoryURL.toString().startsWith("gcs:")) {
-              name = "GCS"
-            }
-            setGemFirePublishingCredentials(this)
+            name = "GCS"
           } else {
             println("WARNING: No push repository configured")
           }
@@ -104,7 +101,7 @@ gradle.taskGraph.whenReady {
       attributes["Created-By"] = System.getProperty("user.name")
       attributes["Title"] = publishingDetails.longName
       attributes["Version"] = version
-      attributes["Organization"] = "VMware, Inc."
+      attributes["Organization"] = "Broadcom, Inc."
     }
     jar.metaInf {
       from("$rootDir/LICENSE.txt")
