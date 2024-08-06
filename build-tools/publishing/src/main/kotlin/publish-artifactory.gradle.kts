@@ -26,10 +26,10 @@ artifactory {
     }
     defaults {
       publications("ALL_PUBLICATIONS")
-      publishArtifacts = true
-      isPublishBuildInfo = true
-      publishPom = true
-      publishIvy = false
+      setPublishArtifacts(true)
+      setPublishBuildInfo(true)
+      setPublishPom(true)
+      setPublishIvy(false)
 
       forkCount = 5
     }
