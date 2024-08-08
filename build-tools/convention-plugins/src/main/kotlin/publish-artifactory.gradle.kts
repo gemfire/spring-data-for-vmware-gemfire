@@ -19,15 +19,17 @@ artifactory {
   publish {
     contextUrl = url
     repository {
-      repoKey = providers.gradleProperty("artifactoryRepo").getOrNull() // The Artifactory repository key to publish to
-      username = providers.gradleProperty("artifactoryUsername").getOrNull() // The publisher user name
-      password = providers.gradleProperty("artifactoryPassword").getOrNull() // The publisher password
-      // This is an optional section for configuring Ivy publication (when publishIvy = true).
+      // The Artifactory repository key to publish to
+      repoKey = providers.gradleProperty("artifactoryRepo").getOrNull()
+      // The publisher username
+      username = providers.gradleProperty("artifactoryUsername").getOrNull()
+      // The publisher password
+      password = providers.gradleProperty("artifactoryPassword").getOrNull()
     }
     defaults {
       publications("ALL_PUBLICATIONS")
       setPublishArtifacts(true)
-      setPublishBuildInfo(true)
+      isPublishBuildInfo = true
       setPublishPom(true)
       setPublishIvy(false)
 

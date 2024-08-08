@@ -4,6 +4,7 @@
  */
 
 plugins {
+  id("groovy-gradle-plugin")
   `kotlin-dsl`
 }
 
@@ -13,5 +14,8 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
+  implementation(libs.kotlin)
+  implementation(gradleApi())
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.10")
+  implementation("org.jfrog.buildinfo:build-info-extractor-gradle:5.2.2")
 }
