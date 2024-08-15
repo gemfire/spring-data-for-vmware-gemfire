@@ -20,7 +20,8 @@ plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
   id("commercial-repositories")
-  id("publish-artifactory")
+//  id("publish-artifactory")
+  id("gemfire-artifactory2")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
