@@ -3,11 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*
- * Copyright (c) VMware, Inc. 2023. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import com.vmware.gemfire.publishing.extension.ManifestExtension
 import org.gradle.jvm.tasks.Jar
 

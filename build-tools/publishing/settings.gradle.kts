@@ -1,5 +1,7 @@
-// Copyright (c) VMware, Inc. 2022. All rights reserved.
-// SPDX-License-Identifier: Apache-2.0
+/*
+ * Copyright 2022-2024 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 pluginManagement {
   repositories.gradlePluginPortal()
   repositories.google()
