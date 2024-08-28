@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -21,7 +21,6 @@ import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;

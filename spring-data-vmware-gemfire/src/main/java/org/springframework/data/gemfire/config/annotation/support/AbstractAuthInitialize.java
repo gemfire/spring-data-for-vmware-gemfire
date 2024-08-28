@@ -1,5 +1,5 @@
 /*
- * Copyright (c) VMware, Inc. 2022-2023. All rights reserved.
+ * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation.support;
@@ -12,7 +12,6 @@ import org.apache.geode.cache.Cache;
 import org.apache.geode.distributed.DistributedMember;
 import org.apache.geode.security.AuthInitialize;
 import org.apache.geode.security.AuthenticationFailedException;
-
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.data.gemfire.support.WiringDeclarableSupport;
