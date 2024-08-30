@@ -32,6 +32,12 @@ java {
   toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 }
 
+tasks.register<Test>("testOn21") {
+  javaLauncher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
 tasks.named<Javadoc>("javadoc") {
   title = "Spring Data for VMware GemFire Java API Reference"
   isFailOnError = false
