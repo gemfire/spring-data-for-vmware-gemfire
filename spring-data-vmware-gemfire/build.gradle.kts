@@ -5,7 +5,6 @@
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
-import org.apache.tools.ant.taskdefs.condition.Os
 
 
 buildscript {
@@ -21,25 +20,15 @@ plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
   id("commercial-repositories")
+  id("gemfire-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
-}
-
-repositories {
-  mavenCentral()
-  maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 java {
   withJavadocJar()
   withSourcesJar()
   toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
-}
-
-tasks.register<Test>("testOn21") {
-  javaLauncher = javaToolchains.launcherFor {
-    languageVersion = JavaLanguageVersion.of(21)
-  }
 }
 
 tasks.named<Javadoc>("javadoc") {
