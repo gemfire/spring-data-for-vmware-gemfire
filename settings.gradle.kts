@@ -4,7 +4,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 pluginManagement {
   includeBuild("build-tools/publishing")
@@ -16,6 +16,10 @@ pluginManagement {
 }
 
 include("spring-data-vmware-gemfire")
+
+project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
+
+rootProject.name = "spring-data-for-vmware-gemfire"
 
 dependencyResolutionManagement {
   versionCatalogs {
