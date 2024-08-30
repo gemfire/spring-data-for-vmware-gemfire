@@ -17,6 +17,10 @@ pluginManagement {
 
 include("spring-data-vmware-gemfire")
 
+project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
+
+rootProject.name = "spring-data-for-vmware-gemfire"
+
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
