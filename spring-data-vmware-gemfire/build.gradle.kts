@@ -5,7 +5,7 @@
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
-import org.gradle.internal.impldep.org.codehaus.plexus.interpolation.os.Os
+import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
   repositories {
