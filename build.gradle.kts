@@ -16,6 +16,13 @@ plugins {
   id("commercial-repositories")
   alias(libs.plugins.versions)
   alias(libs.plugins.version.catalog.update)
+  id("gemfire-artifactory")
+}
+
+// Suppress warning from gemfire-artifactory plugin. We need the module to be on this project in order to get buildInfo
+// uploaded, but there is no artifact on the root project, so we skip that part.
+tasks.artifactoryPublish {
+  skip = true
 }
 
 allprojects {
