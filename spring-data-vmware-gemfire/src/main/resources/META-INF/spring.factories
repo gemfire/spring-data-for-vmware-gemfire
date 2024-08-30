@@ -1,1 +1,6 @@
+#
+# Copyright 2024 Broadcom. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
 org.springframework.data.repository.core.support.RepositoryFactorySupport=org.springframework.data.gemfire.repository.support.GemfireRepositoryFactory
