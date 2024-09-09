@@ -21,6 +21,7 @@ plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
   id("commercial-repositories")
+  id("gemfire-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
@@ -180,11 +181,13 @@ gradle.taskGraph.whenReady {
 }
 
 repositories {
-  val additionalMavenRepoURLs: String by project
-  if (additionalMavenRepoURLs.isNotEmpty() && additionalMavenRepoURLs.isNotBlank()) {
-    additionalMavenRepoURLs.split(",").forEach {
-      project.repositories.maven {
-        this.url = uri(it)
+  val additionalMavenRepoURLs: String? by project
+  additionalMavenRepoURLs?.apply {
+    if (this.isNotEmpty() && this.isNotBlank()) {
+      this.split(",").forEach {
+        project.repositories.maven {
+          this.url = uri(it)
+        }
       }
     }
   }
