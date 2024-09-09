@@ -1,9 +1,4 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
  * Copyright 2023-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */

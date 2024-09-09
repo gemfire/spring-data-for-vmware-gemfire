@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import java.nio.file.Path
+
 plugins {
   id("java-library")
   id("idea")
@@ -40,4 +42,17 @@ repositories {
         }
       }
     }
+}
+
+fun getEtcDirectoryFromProjectPath(path: Path): String {
+  var originalPath = path
+  for (depth in 0..10) {
+    if (originalPath.toFile().listFiles { pathname -> pathname.name == "etc" }!!.isEmpty()) {
+      originalPath = originalPath.parent
+    } else {
+      originalPath = originalPath.resolve("etc")
+      break
+    }
+  }
+  return originalPath.toAbsolutePath().toString()
 }

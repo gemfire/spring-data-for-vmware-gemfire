@@ -1,9 +1,4 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -11,11 +6,13 @@ package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.client.ClientCacheFactoryBean.JndiDataSource;
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
+
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
