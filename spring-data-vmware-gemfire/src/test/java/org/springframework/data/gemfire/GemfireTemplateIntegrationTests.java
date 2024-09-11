@@ -75,6 +75,7 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 
 		gemFireCluster.acceptLicense().start();
 
+		assertThat(System.getProperty("TEST_JAR_PATH")).isEqualTo("somePath");
 		gemFireCluster.gfshBuilder().build().run("create region --name=Users --type=REPLICATE");
 		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
 	}
