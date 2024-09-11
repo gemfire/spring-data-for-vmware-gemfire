@@ -5,7 +5,7 @@
 package org.springframework.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -38,6 +39,8 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.utility.MountableFile;
+
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 
 /**
  * Integration Tests for {@link GemfireTemplate}.
@@ -67,10 +70,13 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 	@BeforeClass
 	public static void startCluster() {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
-				.withGfsh(false, "deploy --jar=/testJar.jar", "create region --name=Users --type=REPLICATE");
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
+//				.withGfsh(false, "deploy --jar=/testJar.jar", "create region --name=Users --type=REPLICATE");
 
 		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfshBuilder().build().run("create region --name=Users --type=REPLICATE");
+		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
 	}
 
 	@AfterClass
