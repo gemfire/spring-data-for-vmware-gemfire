@@ -111,7 +111,7 @@ tasks.register("prepareKotlinBuildScriptModel") {}
 tasks {
   test {
     forkEvery = 1
-//  maxParallelForks = 1
+    maxParallelForks = 2
     val springTestGemfireDockerImage: String by project
 
     systemProperty(
@@ -227,11 +227,11 @@ tasks.register<Jar>("testJar") {
 }
 
 tasks.getByName<Test>("test") {
-  dependsOn("testJar")
+  dependsOn(tasks.getByPath("testJar"))
   systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
 }
 
 tasks.getByName<Test>("testOn21") {
-  dependsOn("testJar")
+  dependsOn(tasks.getByPath("testJar"))
   systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
 }

@@ -8,8 +8,10 @@ import static com.vmware.gemfire.testcontainers.GemFireCluster.ALL_GLOB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.config.annotation.TestSecurityManager.SECURITY_PASSWORD;
 import static org.springframework.data.gemfire.config.annotation.TestSecurityManager.SECURITY_USERNAME;
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+
 import java.util.Collections;
+import java.util.List;
+
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.junit.BeforeClass;
@@ -23,6 +25,8 @@ import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 
 /**
  * Integration Tests for {@link AutoConfiguredAuthenticationConfiguration}.
@@ -38,8 +42,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(
-	classes = AutoConfiguredAuthenticationConfigurationIntegrationTests.TestGemFireClientConfiguration.class
-)
+		classes = AutoConfiguredAuthenticationConfigurationIntegrationTests.TestGemFireClientConfiguration.class)
 @SuppressWarnings("unused")
 public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 
@@ -47,29 +50,30 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 
 	@BeforeClass
 	public static void setupGemFireServer() {
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-manager", TestSecurityManager.class.getName())
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+		gemFireCluster.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-manager", TestSecurityManager.class.getName())
 				.withClasspath(GemFireCluster.ALL_GLOB, System.getProperty("TEST_JAR_PATH"))
 				.withGemFireProperty(ALL_GLOB, "security-username", SECURITY_USERNAME)
-				.withGemFireProperty(ALL_GLOB, "security-password", SECURITY_PASSWORD)
-				.withGfsh(false, String.format("connect --jmx-manager=localhost[1099] --username=%s --password=%s", SECURITY_USERNAME, SECURITY_PASSWORD),
-						"create region --name=Echo --type=LOCAL",
+				.withGemFireProperty(ALL_GLOB, "security-password", SECURITY_PASSWORD);
+
+		gemFireCluster.acceptLicense().start();
+
+		gemFireCluster.gfshBuilder()
+				.withConnect(List.of(String.format("--username=%s --password=%s", SECURITY_USERNAME, SECURITY_PASSWORD)))
+				.run("create region --name=Echo --type=LOCAL",
 						"put --region=/Echo --key=Hello --value=Hello",
 						"put --region=/Echo --key=TEST --value=TEST",
 						"put --region=/Echo --key=Good-Bye --value=Good-Bye");
-
-		gemFireCluster.acceptLicense().start();
 	}
 
-	@Autowired
-	private GemfireTemplate echoTemplate;
+	@Autowired private GemfireTemplate echoTemplate;
 
 	@Test
 	public void clientAuthenticatesWithServer() {
 
-		assertThat(this.echoTemplate.<String, String>get("Hello")).isEqualTo("Hello");
-		assertThat(this.echoTemplate.<String, String>get("TEST")).isEqualTo("TEST");
-		assertThat(this.echoTemplate.<String, String>get("Good-Bye")).isEqualTo("Good-Bye");
+		assertThat(this.echoTemplate.<String, String> get("Hello")).isEqualTo("Hello");
+		assertThat(this.echoTemplate.<String, String> get("TEST")).isEqualTo("TEST");
+		assertThat(this.echoTemplate.<String, String> get("Good-Bye")).isEqualTo("Good-Bye");
 	}
 
 	@ClientCacheApplication
@@ -94,9 +98,8 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 
 		@Bean
 		ClientCacheConfigurer clientCacheConfigurer() {
-			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean.setLocators(
-					Collections.singletonList(
-							new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
+			return (bean, clientCacheFactoryBean) -> clientCacheFactoryBean
+					.setLocators(Collections.singletonList(new ConnectionEndpoint("localhost", gemFireCluster.getLocatorPort())));
 		}
 	}
 }

@@ -2,7 +2,7 @@
 cacheApiVersion = "1.1.1"
 springShiroVersion = "1.13.0"
 springShellVersion = "1.2.0.RELEASE"
-springBootVersion = "3.2.4"
+springBootVersion = "3.2.9"
 aspectJVersion = "1.9.20.1"
 jacksonVersion = "2.16.2"
 antlrVersion = "2.7.7"
@@ -16,17 +16,17 @@ openWebBeansVersion = "2.0.27"
 assertJVersion = "3.24.2"
 snappyVersion = "0.4"
 multithreadedTCVersion = "1.01"
-jUnitJupiterVersion = "5.10.2"
+jUnitJupiterVersion = "5.10.3"
 jUnitVersion = "4.13.2"
 mockitoVersion = "5.11.0"
-lombokVersion = "1.18.32"
-awaitilityVersion = "4.2.1"
+lombokVersion = "1.18.34"
+awaitilityVersion = "4.2.2"
 googleCloudStorageVersion = "2.30.2"
-springDependencyManagementVersion = "1.1.4"
+springDependencyManagementVersion = "1.1.6"
 lombokPluginVersion = "8.6"
 versionCatalogUpdateVersion = "0.8.4"
 versionsVersion = "0.50.0"
-gemFireTestContainersVersion = "2.0.0"
+gemFireTestContainersVersion = "2.3.0"
 
 [libraries]
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
@@ -63,7 +63,7 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombokVersion" }
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
-gemfire-testcontainers = { module = "com.vmware.gemfire:gemfire-testcontainers", version.ref = "gemFireTestContainersVersion" }
+gemfire-testcontainers = { module = "dev.gemfire:gemfire-testcontainers", version.ref = "gemFireTestContainersVersion" }
 google-cloud-storage = { module = "com.google.cloud:google-cloud-storage", version.ref = "googleCloudStorageVersion" }
 
 [plugins]
