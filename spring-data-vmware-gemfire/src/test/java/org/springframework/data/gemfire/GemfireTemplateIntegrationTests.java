@@ -69,13 +69,12 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 
 	@BeforeClass
 	public static void startCluster() {
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+//				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
 //				.withGfsh(false, "deploy --jar=/testJar.jar", "create region --name=Users --type=REPLICATE");
 
 		gemFireCluster.acceptLicense().start();
-
-		assertThat(System.getProperty("TEST_JAR_PATH")).isEqualTo("somePath");
+		gemFireCluster.getContainers().values().forEach(container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
 		gemFireCluster.gfshBuilder().build().run("create region --name=Users --type=REPLICATE");
 		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
 	}
