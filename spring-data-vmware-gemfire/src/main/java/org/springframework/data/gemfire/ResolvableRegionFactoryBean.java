@@ -4,20 +4,15 @@
  */
 package org.springframework.data.gemfire;
 
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
-import java.io.InputStream;
 import java.util.Optional;
-import java.util.function.Function;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.io.Resource;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.data.gemfire.support.GemfireFunctions;
-import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -51,8 +46,6 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 
 	private Region<?, ?> parent;
 
-	private Resource snapshot;
-
 	private volatile Region<K, V> region;
 
 	private String name;
@@ -79,10 +72,9 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 
 			if (getRegion() != null) {
 				logInfo(REGION_FOUND_LOG_MESSAGE, regionName, cache.getName());
-			}
-			else {
+			} else {
 				logInfo(CREATING_REGION_LOG_MESSAGE, regionName, cache.getName());
-				setRegion(postProcess(loadSnapshot(createRegion(cache, regionName))));
+				setRegion(postProcess(createRegion(cache, regionName)));
 			}
 		}
 	}
@@ -146,33 +138,6 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	 */
 	protected Region<K, V> createRegion(ClientCache cache, String regionName) throws Exception {
 		throw new BeanInitializationException(String.format(REGION_NOT_FOUND_ERROR_MESSAGE, regionName, cache));
-	}
-
-	/**
-	 * Loads data from the configured {@link Resource snapshot} into the given {@link Region}.
-	 *
-	 * @param region {@link Region} to load; must not be {@literal null}.
-	 * @return the given {@link Region}.
-	 * @throws RuntimeException if loading the snapshot fails.
-	 * @see Region#loadSnapshot(InputStream)
-	 * @see Region
-	 */
-	protected @NonNull Region<K, V> loadSnapshot(@NonNull Region<K, V> region) {
-
-		Resource snapshot = this.snapshot;
-
-		if (snapshot != null) {
-
-			SpringExtensions.VoidReturningThrowableOperation operation =
-				() -> region.loadSnapshot(snapshot.getInputStream());
-
-			Function<Throwable, RuntimeException> exceptionHandler =
-				cause -> newRuntimeException(cause, "Failed to load snapshot [%s]", snapshot);
-
-			SpringExtensions.safeRunOperation(operation, exceptionHandler);
-		}
-
-		return region;
 	}
 
 	/**
@@ -311,17 +276,5 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	 */
 	public void setRegionName(@Nullable String regionName) {
 		this.regionName = regionName;
-	}
-
-	/**
-	 * Sets the snapshots used for loading a newly <i>created</i> region. That
-	 * is, the snapshot will be used <i>only</i> when a new region is created -
-	 * if the region already exists, no loading will be performed.
-	 *
-	 * @see #setName(String)
-	 * @param snapshot the snapshot to set
-	 */
-	public void setSnapshot(@Nullable Resource snapshot) {
-		this.snapshot = snapshot;
 	}
 }
