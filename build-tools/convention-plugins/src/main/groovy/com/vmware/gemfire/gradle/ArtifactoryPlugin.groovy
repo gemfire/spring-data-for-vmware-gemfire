@@ -14,7 +14,8 @@ class ArtifactoryPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.plugins.apply('com.jfrog.artifactory')
         def jf_ext = org.jfrog.gradle.plugin.artifactory.utils.ExtensionsUtils.getOrCreateArtifactoryExtension(project)
-        jf_ext.setContextUrl(project.property('artifactoryURL'))
+        def artifactoryURL = project.hasProperty('artifactoryURL') ? project.property('artifactoryURL') : ""
+        jf_ext.setContextUrl(artifactoryURL)
         jf_ext.publish {
             repository.repoKey = project.hasProperty('artifactoryRepo') ? project.property('artifactoryRepo') : ""
             repository.username = project.hasProperty('artifactoryUsername') ? project.property('artifactoryUsername') : ""
