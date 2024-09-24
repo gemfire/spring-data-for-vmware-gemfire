@@ -5,7 +5,6 @@
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
-import org.apache.tools.ant.taskdefs.condition.Os
 
 
 buildscript {
@@ -21,6 +20,7 @@ plugins {
   id("java-library")
   id("gemfire-repo-artifact-publishing")
   id("commercial-repositories")
+  id("gemfire-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
 }
