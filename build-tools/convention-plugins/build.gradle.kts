@@ -13,5 +13,14 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
+  implementation(libs.kotlin)
+  implementation(gradleApi())
+  implementation("org.jfrog.buildinfo:build-info-extractor-gradle:5.2.2")
+}
+
+gradlePlugin {
+  plugins.register("gemfire-artifactory") {
+    id = "gemfire-artifactory"
+    implementationClass = "com.vmware.gemfire.gradle.ArtifactoryPlugin"
+  }
 }
