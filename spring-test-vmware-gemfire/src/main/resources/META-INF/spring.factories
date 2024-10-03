@@ -1,0 +1,12 @@
+#
+# Copyright 2024 Broadcom. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Spring Test for Apache Geode (STDG) framework configuration for the Spring TestContext Framework.
+
+org.springframework.test.context.ContextCustomizerFactory = \
+	org.springframework.data.gemfire.tests.extensions.spring.test.context.DependencyOfAnnotationContextCustomizerFactory
+
+org.springframework.test.context.TestExecutionListener = \
+  org.springframework.data.gemfire.tests.extensions.spring.test.context.support.CloseApplicationContextAfterTestClassTestExecutionListener
