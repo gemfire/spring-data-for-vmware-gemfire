@@ -259,7 +259,7 @@ public class PdxInstanceMethodInterceptorUnitTests {
 		@NonNull String lastName;
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

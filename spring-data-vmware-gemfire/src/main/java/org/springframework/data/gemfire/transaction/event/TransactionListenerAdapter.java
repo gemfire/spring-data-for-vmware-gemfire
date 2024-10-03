@@ -58,7 +58,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void beforeCommit(TransactionEvent event) {
@@ -72,7 +72,7 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterCommit(TransactionEvent event) {
@@ -80,13 +80,13 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterFailedCommit(TransactionEvent event) { }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterRollback(TransactionEvent event) {

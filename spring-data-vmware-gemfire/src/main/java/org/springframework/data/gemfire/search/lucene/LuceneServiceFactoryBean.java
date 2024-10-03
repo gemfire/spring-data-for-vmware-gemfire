@@ -36,7 +36,7 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	private LuceneService luceneService;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -63,7 +63,7 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public LuceneService getObject() throws Exception {
@@ -71,7 +71,7 @@ public class LuceneServiceFactoryBean extends AbstractFactoryBeanSupport<LuceneS
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {

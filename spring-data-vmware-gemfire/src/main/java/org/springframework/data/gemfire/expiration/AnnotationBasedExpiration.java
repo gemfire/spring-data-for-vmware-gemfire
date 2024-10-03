@@ -561,7 +561,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean equals(final Object obj) {
@@ -581,7 +581,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public int hashCode() {
@@ -595,7 +595,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

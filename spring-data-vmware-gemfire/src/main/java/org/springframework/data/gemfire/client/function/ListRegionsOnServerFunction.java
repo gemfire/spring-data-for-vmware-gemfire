@@ -51,7 +51,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getId() {
@@ -59,7 +59,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasResult() {
@@ -67,7 +67,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isHA() {
@@ -75,7 +75,7 @@ public class ListRegionsOnServerFunction implements Function<Object> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean optimizeForWrite() {

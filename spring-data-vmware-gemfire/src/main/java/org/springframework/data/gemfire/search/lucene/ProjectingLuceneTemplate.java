@@ -77,7 +77,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(String query, String defaultField, int resultLimit, Class<T> projectionType) {
@@ -85,7 +85,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(String query, String defaultField, int resultLimit, int pageSize,
@@ -95,7 +95,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(LuceneQueryProvider queryProvider, int resultLimit, Class<T> projectionType) {
@@ -103,7 +103,7 @@ public class ProjectingLuceneTemplate extends ProjectingLuceneAccessor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(LuceneQueryProvider queryProvider, int resultLimit, int pageSize,

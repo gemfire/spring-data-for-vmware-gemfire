@@ -32,7 +32,7 @@ abstract class MemberBasedFunctionExecutionBeanDefinitionBuilder
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected BeanDefinitionBuilder getGemfireFunctionOperationsBeanDefinitionBuilder(BeanDefinitionRegistry registry) {
@@ -52,7 +52,7 @@ abstract class MemberBasedFunctionExecutionBeanDefinitionBuilder
 
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getFunctionProxyFactoryBeanClass() {

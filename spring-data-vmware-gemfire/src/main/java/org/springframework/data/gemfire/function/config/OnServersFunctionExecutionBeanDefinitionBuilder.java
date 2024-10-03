@@ -17,7 +17,7 @@ class OnServersFunctionExecutionBeanDefinitionBuilder extends ServerBasedFunctio
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getGemfireFunctionOperationsClass() {

@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
 public class FunctionExecutionBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {

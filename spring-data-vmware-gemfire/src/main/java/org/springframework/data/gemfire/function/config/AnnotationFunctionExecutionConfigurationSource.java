@@ -69,7 +69,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getSource() {
@@ -77,7 +77,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<String> getBasePackages() {
@@ -119,7 +119,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<TypeFilter> getIncludeFilters() {
@@ -127,7 +127,7 @@ public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
  	@Override
 	public Iterable<TypeFilter> getExcludeFilters() {

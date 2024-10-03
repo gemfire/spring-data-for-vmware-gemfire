@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
 public abstract class ProjectingLuceneAccessorSupport extends ProjectingLuceneAccessor {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(String query, String defaultField, int resultLimit, Class<T> projectionType) {
@@ -36,7 +36,7 @@ public abstract class ProjectingLuceneAccessorSupport extends ProjectingLuceneAc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(String query, String defaultField, int resultLimit, int pageSize,
@@ -46,7 +46,7 @@ public abstract class ProjectingLuceneAccessorSupport extends ProjectingLuceneAc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(LuceneQueryProvider queryProvider, int resultLimit, Class<T> projectionType) {
@@ -54,7 +54,7 @@ public abstract class ProjectingLuceneAccessorSupport extends ProjectingLuceneAc
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(LuceneQueryProvider queryProvider, int resultLimit, int pageSize,

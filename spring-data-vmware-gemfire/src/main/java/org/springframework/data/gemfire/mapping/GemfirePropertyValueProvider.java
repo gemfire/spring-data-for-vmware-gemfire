@@ -34,7 +34,7 @@ class GemfirePropertyValueProvider implements PropertyValueProvider<GemfirePersi
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("unchecked")

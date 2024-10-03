@@ -98,7 +98,7 @@ public class ApacheGeodeSecurityManagerSecurityIntegrationTests extends Abstract
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public Object authenticate(Properties credentials) throws AuthenticationFailedException {
@@ -116,7 +116,7 @@ public class ApacheGeodeSecurityManagerSecurityIntegrationTests extends Abstract
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean authorize(Object principal, ResourcePermission permission) {

@@ -24,7 +24,7 @@ import org.springframework.data.gemfire.search.lucene.LuceneServiceFactoryBean;
 class LuceneServiceParser extends AbstractSingleBeanDefinitionParser {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getBeanClass(Element element) {
@@ -32,7 +32,7 @@ class LuceneServiceParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doParse(Element element, BeanDefinitionBuilder builder) {

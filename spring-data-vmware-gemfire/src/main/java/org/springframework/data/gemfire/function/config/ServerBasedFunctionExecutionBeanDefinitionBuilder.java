@@ -37,7 +37,7 @@ abstract class ServerBasedFunctionExecutionBeanDefinitionBuilder
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected BeanDefinitionBuilder getGemfireFunctionOperationsBeanDefinitionBuilder(BeanDefinitionRegistry registry) {
@@ -65,7 +65,7 @@ abstract class ServerBasedFunctionExecutionBeanDefinitionBuilder
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getFunctionProxyFactoryBeanClass() {

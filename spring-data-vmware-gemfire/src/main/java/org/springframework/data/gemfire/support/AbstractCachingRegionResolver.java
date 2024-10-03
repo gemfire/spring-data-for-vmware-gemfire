@@ -48,7 +48,7 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Nullable @Override @SuppressWarnings("unchecked")
 	public synchronized <K, V> Region<K, V> resolve(@Nullable String regionName) {

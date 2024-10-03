@@ -95,7 +95,7 @@ public class Regions implements Iterable<Region<?, ?>> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<Region<?, ?>> iterator() {

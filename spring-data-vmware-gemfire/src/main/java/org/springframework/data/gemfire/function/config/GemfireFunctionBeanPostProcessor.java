@@ -37,7 +37,7 @@ import org.springframework.util.ReflectionUtils;
 public class GemfireFunctionBeanPostProcessor implements BeanPostProcessor {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
