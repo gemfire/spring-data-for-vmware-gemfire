@@ -97,7 +97,7 @@ class QueryBuilder {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

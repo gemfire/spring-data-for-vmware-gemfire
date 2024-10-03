@@ -57,7 +57,7 @@ public class GemfireAccessor implements InitializingBean {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void afterPropertiesSet() {
 		Assert.notNull(getRegion(), "Region is required");

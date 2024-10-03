@@ -61,7 +61,7 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Nullable @Override
 	public Pool resolve(@Nullable String poolName) {

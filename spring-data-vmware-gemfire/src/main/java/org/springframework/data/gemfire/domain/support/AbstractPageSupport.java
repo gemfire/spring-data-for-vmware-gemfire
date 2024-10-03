@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
 public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> implements Page<T> {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public long getTotalElements() {
@@ -36,7 +36,7 @@ public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getTotalPages() {
@@ -44,7 +44,7 @@ public abstract class AbstractPageSupport<T> extends AbstractSliceSupport<T> imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <S> Page<S> map(Function<? super T, ? extends S> converter) {

@@ -293,7 +293,7 @@ public enum GemFireProperties {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull String toString() {

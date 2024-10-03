@@ -44,7 +44,7 @@ public class BeanFactoryPoolResolver implements BeanFactoryAware, PoolResolver {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public final void setBeanFactory(@NonNull BeanFactory beanFactory) throws BeansException {

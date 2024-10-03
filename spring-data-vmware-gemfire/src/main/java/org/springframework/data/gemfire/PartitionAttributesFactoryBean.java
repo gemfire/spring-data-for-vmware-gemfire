@@ -47,7 +47,7 @@ public class PartitionAttributesFactoryBean<K, V> extends AbstractFactoryBeanSup
 	private final PartitionAttributesFactory<K, V> partitionAttributesFactory = new PartitionAttributesFactory<>();
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
