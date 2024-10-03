@@ -22,7 +22,7 @@ public abstract class AbstractCachingCacheResolver<T extends GemFireCache> imple
 	private T cacheReference;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public synchronized T resolve() {

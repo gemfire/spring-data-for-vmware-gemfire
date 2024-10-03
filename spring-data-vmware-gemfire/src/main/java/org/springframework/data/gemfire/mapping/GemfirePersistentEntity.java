@@ -136,7 +136,7 @@ public class GemfirePersistentEntity<T> extends BasicPersistentEntity<T, Gemfire
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see BasicPersistentEntity#returnPropertyIfBetterIdPropertyCandidateOrNull(PersistentProperty)
 	 */
 	@Override

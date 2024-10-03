@@ -95,7 +95,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -550,7 +550,7 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 

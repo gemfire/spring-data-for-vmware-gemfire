@@ -5,6 +5,7 @@ springFrameworkVersion = "5.3.34"
 springShiroVersion = "1.11.0"
 springShellVersion = "1.2.0.RELEASE"
 springTestGemFireVersion = "1.0.1"
+springBootVersion = "2.6.15"
 aspectJVersion = "1.9.22"
 jacksonVersion = "2.14.3"
 antlrVersion = "2.7.7"
@@ -44,6 +45,7 @@ spring-context-support = { module = "org.springframework:spring-context-support"
 spring-tx = { module = "org.springframework:spring-tx", version.ref = "springFrameworkVersion" }
 spring-web = { module = "org.springframework:spring-web", version.ref = "springFrameworkVersion" }
 spring-test = { module = "org.springframework:spring-test", version.ref = "springFrameworkVersion" }
+spring-boot = { module = "org.springframework.boot:spring-boot-starter", version.ref = "springBootVersion" }
 spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }

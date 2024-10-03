@@ -107,7 +107,7 @@ public class IndexConfiguration extends EntityDefinedRegionsConfiguration {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected GemfirePersistentEntity<?> postProcess(AnnotationMetadata importingClassMetadata,

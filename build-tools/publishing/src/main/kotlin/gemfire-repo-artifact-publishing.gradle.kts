@@ -27,6 +27,11 @@ publishing {
         from(components["java"])
         groupId = "com.vmware.gemfire"
         artifactId = publishingDetails.artifactName.get()
+        if(publishingDetails.test.get()) {
+          artifact(tasks["jar"]) {
+            classifier = "test-framework"
+          }
+        }
         pom {
           name = publishingDetails.longName.get()
           description = publishingDetails.description.get()
