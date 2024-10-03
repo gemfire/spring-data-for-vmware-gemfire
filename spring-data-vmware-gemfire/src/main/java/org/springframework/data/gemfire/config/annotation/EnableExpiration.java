@@ -166,7 +166,7 @@ public @interface EnableExpiration {
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String toString() {

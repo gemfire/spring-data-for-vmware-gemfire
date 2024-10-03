@@ -11,4 +11,5 @@ interface ManifestExtension {
   val artifactName: Property<String>
   val longName: Property<String>
   val description: Property<String>
+  val test: Property<Boolean>
 }

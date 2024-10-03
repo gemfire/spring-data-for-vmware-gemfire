@@ -246,7 +246,7 @@ public class LuceneIndexFactoryBean extends AbstractFactoryBeanSupport<LuceneInd
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("all")
@@ -273,7 +273,7 @@ public class LuceneIndexFactoryBean extends AbstractFactoryBeanSupport<LuceneInd
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public LuceneIndex getObject() throws Exception {
@@ -288,7 +288,7 @@ public class LuceneIndexFactoryBean extends AbstractFactoryBeanSupport<LuceneInd
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getObjectType() {
@@ -409,7 +409,7 @@ public class LuceneIndexFactoryBean extends AbstractFactoryBeanSupport<LuceneInd
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanName(String name) {

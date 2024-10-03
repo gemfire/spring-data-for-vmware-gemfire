@@ -23,7 +23,7 @@ public final class DisableBeanDefinitionOverridingApplicationContextInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {

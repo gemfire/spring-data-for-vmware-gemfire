@@ -122,7 +122,7 @@ public class Interest<K> implements InitializingBean {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void afterPropertiesSet() {
 
@@ -354,7 +354,7 @@ public class Interest<K> implements InitializingBean {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

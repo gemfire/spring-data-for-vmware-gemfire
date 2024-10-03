@@ -34,7 +34,7 @@ public class KeyInterest<K> extends Interest<K> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Type getType() {
@@ -42,7 +42,7 @@ public class KeyInterest<K> extends Interest<K> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setType(Type type) {

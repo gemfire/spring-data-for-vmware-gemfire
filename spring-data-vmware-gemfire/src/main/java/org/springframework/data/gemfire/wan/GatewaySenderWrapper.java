@@ -40,7 +40,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isBatchConflationEnabled() {
@@ -48,7 +48,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isDiskSynchronous() {
@@ -56,7 +56,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isManualStart() {
@@ -64,7 +64,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isParallel() {
@@ -72,7 +72,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isPaused() {
@@ -80,7 +80,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isPersistenceEnabled() {
@@ -88,7 +88,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
     public boolean isRunning() {
@@ -96,7 +96,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getAlertThreshold() {
@@ -104,7 +104,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBatchSize() {
@@ -112,7 +112,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBatchTimeInterval() {
@@ -120,7 +120,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getDiskStoreName() {
@@ -128,7 +128,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getDispatcherThreads() {
@@ -136,7 +136,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean getEnforceThreadsConnectSameReceiver() {
@@ -144,7 +144,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<GatewayEventFilter> getGatewayEventFilters() {
@@ -152,7 +152,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -161,7 +161,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<GatewayTransportFilter> getGatewayTransportFilters() {
@@ -169,7 +169,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public String getId() {
@@ -181,7 +181,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMaxParallelismForReplicatedRegion() {
@@ -189,7 +189,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getMaximumQueueMemory() {
@@ -197,7 +197,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public OrderPolicy getOrderPolicy() {
@@ -205,7 +205,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getRemoteDSId() {
@@ -213,7 +213,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getSocketBufferSize() {
@@ -221,7 +221,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
     @Override
     public int getSocketReadTimeout() {
@@ -229,7 +229,7 @@ public class GatewaySenderWrapper implements GatewaySender {
     }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addGatewayEventFilter(GatewayEventFilter filter) {
@@ -237,7 +237,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean mustGroupTransactionEvents() {
@@ -245,7 +245,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeGatewayEventFilter(GatewayEventFilter filter) {
@@ -253,7 +253,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void destroy() {
@@ -261,7 +261,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void pause() {
@@ -269,7 +269,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void rebalance() {
@@ -277,7 +277,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void resume() {
@@ -285,7 +285,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void start() {
@@ -293,13 +293,13 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void startWithCleanQueue() { }
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void stop() {
@@ -307,7 +307,7 @@ public class GatewaySenderWrapper implements GatewaySender {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
