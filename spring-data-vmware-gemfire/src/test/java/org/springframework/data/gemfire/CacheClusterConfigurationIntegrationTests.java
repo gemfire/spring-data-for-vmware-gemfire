@@ -35,6 +35,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.gemfire.fork.LocatorProcess;
+import org.springframework.data.gemfire.tests.integration.ClientServerIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.integration.ForkingClientServerIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.process.ProcessWrapper;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
@@ -61,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @since 1.5.0
  */
 @SuppressWarnings("unused")
-public class CacheClusterConfigurationIntegrationTests extends ForkingClientServerIntegrationTestsSupport {
+public class CacheClusterConfigurationIntegrationTests extends ClientServerIntegrationTestsSupport {
 
 	private static final int ASSERTJ_MAX_STACK_TRACE_ELEMENTS = 500;
 
