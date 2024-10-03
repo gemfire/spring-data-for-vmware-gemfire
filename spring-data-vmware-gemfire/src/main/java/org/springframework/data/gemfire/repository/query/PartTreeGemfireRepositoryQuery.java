@@ -80,7 +80,7 @@ public class PartTreeGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object execute(Object[] arguments) {

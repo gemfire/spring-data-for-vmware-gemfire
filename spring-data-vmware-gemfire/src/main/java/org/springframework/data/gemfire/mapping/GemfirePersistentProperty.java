@@ -50,7 +50,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Association<GemfirePersistentProperty> createAssociation() {
@@ -73,7 +73,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see org.springframework.data.mapping.model.AnnotationBasedPersistentProperty#isIdProperty()
 	 */
 	@Override
@@ -110,7 +110,7 @@ public class GemfirePersistentProperty extends AnnotationBasedPersistentProperty
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean usePropertyAccess() {

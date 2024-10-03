@@ -216,7 +216,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object execute(Object[] arguments) {
@@ -533,7 +533,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
@@ -590,7 +590,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		protected String preparePagedQuery(String query, Pageable pageRequest) {
@@ -655,7 +655,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		}
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")

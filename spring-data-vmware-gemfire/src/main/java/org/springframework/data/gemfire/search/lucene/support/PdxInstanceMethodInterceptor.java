@@ -90,7 +90,7 @@ public class PdxInstanceMethodInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {

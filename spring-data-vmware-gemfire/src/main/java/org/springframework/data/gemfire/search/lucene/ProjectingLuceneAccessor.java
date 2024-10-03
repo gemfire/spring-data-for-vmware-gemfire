@@ -94,7 +94,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see #resolveProjectionFactory()
 	 */
 	@Override
@@ -124,7 +124,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanClassLoader(ClassLoader beanClassLoader) {
@@ -145,7 +145,7 @@ public abstract class ProjectingLuceneAccessor extends LuceneTemplate
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {

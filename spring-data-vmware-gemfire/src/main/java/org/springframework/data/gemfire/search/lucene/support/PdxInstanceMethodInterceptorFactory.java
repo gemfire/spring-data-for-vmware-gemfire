@@ -30,7 +30,7 @@ public enum PdxInstanceMethodInterceptorFactory implements MethodInterceptorFact
 	INSTANCE;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public MethodInterceptor createMethodInterceptor(Object source, Class<?> targetType) {
@@ -38,7 +38,7 @@ public enum PdxInstanceMethodInterceptorFactory implements MethodInterceptorFact
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean supports(Object source, Class<?> targetType) {

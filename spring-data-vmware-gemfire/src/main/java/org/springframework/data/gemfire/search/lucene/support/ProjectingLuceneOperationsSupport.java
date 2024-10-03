@@ -29,7 +29,7 @@ public abstract class ProjectingLuceneOperationsSupport extends LuceneOperations
 		implements ProjectingLuceneOperations {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(String query, String defaultField, int resultLimit, Class<T> projectionType) {
@@ -37,7 +37,7 @@ public abstract class ProjectingLuceneOperationsSupport extends LuceneOperations
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(String query, String defaultField, int resultLimit, int pageSize,
@@ -47,7 +47,7 @@ public abstract class ProjectingLuceneOperationsSupport extends LuceneOperations
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> List<T> query(LuceneQueryProvider queryProvider, int resultLimit, Class<T> projectionType) {
@@ -55,7 +55,7 @@ public abstract class ProjectingLuceneOperationsSupport extends LuceneOperations
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <T> Page<T> query(LuceneQueryProvider queryProvider, int resultLimit, int pageSize,

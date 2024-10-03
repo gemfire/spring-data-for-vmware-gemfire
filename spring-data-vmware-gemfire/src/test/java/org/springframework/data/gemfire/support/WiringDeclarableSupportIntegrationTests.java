@@ -94,7 +94,7 @@ public class WiringDeclarableSupportIntegrationTests extends IntegrationTestsSup
 		private String propertyTwo;
 
 		/**
-		 * @inheritDoc
+		 * {@inheritDoc}
 		 */
 		@Override
 		public String load(LoaderHelper<String, String> helper) throws CacheLoaderException {

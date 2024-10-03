@@ -99,7 +99,7 @@ public abstract class LuceneAccessor extends LuceneOperationsSupport implements 
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {

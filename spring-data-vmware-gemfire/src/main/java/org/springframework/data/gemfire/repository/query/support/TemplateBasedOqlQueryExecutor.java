@@ -53,7 +53,7 @@ public class TemplateBasedOqlQueryExecutor implements OqlQueryExecutor {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
