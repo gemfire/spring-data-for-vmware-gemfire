@@ -34,7 +34,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see org.springframework.data.mapping.context.AbstractMappingContext#createPersistentEntity(org.springframework.data.util.TypeInformation)
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class GemfireMappingContext extends AbstractMappingContext<GemfirePersist
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @see org.springframework.data.mapping.context.AbstractMappingContext#createPersistentProperty(Property, MutablePersistentEntity, SimpleTypeHolder)
 	 */
 	@Override

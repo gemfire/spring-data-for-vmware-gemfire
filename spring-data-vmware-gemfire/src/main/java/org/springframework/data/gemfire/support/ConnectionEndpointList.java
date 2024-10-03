@@ -317,7 +317,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @NonNull Iterator<ConnectionEndpoint> iterator() {
@@ -364,7 +364,7 @@ public class ConnectionEndpointList extends AbstractList<ConnectionEndpoint> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

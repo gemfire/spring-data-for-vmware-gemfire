@@ -70,7 +70,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Nullable @Override @SuppressWarnings("unchecked")
 	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {

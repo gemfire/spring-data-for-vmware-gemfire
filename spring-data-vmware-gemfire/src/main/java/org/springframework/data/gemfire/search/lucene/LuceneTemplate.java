@@ -79,7 +79,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K, V> List<LuceneResultStruct<K, V>> query(String query, String defaultField, int resultLimit) {
@@ -94,7 +94,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K, V> PageableLuceneQueryResults<K, V> query(String query, String defaultField,
@@ -111,7 +111,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K, V> List<LuceneResultStruct<K, V>> query(LuceneQueryProvider queryProvider, int resultLimit) {
@@ -126,7 +126,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K, V> PageableLuceneQueryResults<K, V> query(LuceneQueryProvider queryProvider,
@@ -143,7 +143,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K> Collection<K> queryForKeys(String query, String defaultField, int resultLimit) {
@@ -158,7 +158,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <K> Collection<K> queryForKeys(LuceneQueryProvider queryProvider, int resultLimit) {
@@ -173,7 +173,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <V> Collection<V> queryForValues(String query, String defaultField, int resultLimit) {
@@ -188,7 +188,7 @@ public class LuceneTemplate extends LuceneAccessorSupport implements LuceneOpera
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <V> Collection<V> queryForValues(LuceneQueryProvider queryProvider, int resultLimit) {

@@ -71,7 +71,7 @@ public class GatewayReceiverFactoryBean extends AbstractWANComponentFactoryBean<
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doInit() {

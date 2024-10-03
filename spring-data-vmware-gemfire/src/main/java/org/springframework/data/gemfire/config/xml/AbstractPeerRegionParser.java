@@ -29,7 +29,7 @@ import org.w3c.dom.Element;
 public abstract class AbstractPeerRegionParser extends AbstractRegionParser {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void doParseRegionConfiguration(Element element, ParserContext parserContext,
