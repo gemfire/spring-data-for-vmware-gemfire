@@ -17,7 +17,7 @@ class OnMemberFunctionExecutionBeanDefinitionBuilder extends MemberBasedFunction
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getGemfireOperationsClass() {

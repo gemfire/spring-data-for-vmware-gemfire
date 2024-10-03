@@ -44,7 +44,7 @@ public class XmlFunctionExecutionConfigurationSource extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getSource() {
@@ -52,7 +52,7 @@ public class XmlFunctionExecutionConfigurationSource extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<String> getBasePackages() {
@@ -63,7 +63,7 @@ public class XmlFunctionExecutionConfigurationSource extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<TypeFilter> getIncludeFilters() {
@@ -71,7 +71,7 @@ public class XmlFunctionExecutionConfigurationSource extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterable<TypeFilter> getExcludeFilters() {

@@ -46,6 +46,7 @@ publishingDetails {
   artifactName.set("spring-data-3.0-gemfire-${getGemFireBaseVersion()}")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
+  test.set(false)
 }
 
 dependencies {
@@ -99,6 +100,7 @@ dependencies {
   testImplementation(libs.spring.test)
   testImplementation(libs.spring.boot)
   testImplementation(libs.awaitility)
+  testImplementation(project(":spring-test-vmware-gemfire"))
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}

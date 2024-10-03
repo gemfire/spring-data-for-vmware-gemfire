@@ -20,7 +20,7 @@ class OnRegionFunctionExecutionBeanDefinitionBuilder extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected BeanDefinitionBuilder getGemfireFunctionOperationsBeanDefinitionBuilder(BeanDefinitionRegistry registry) {
@@ -36,7 +36,7 @@ class OnRegionFunctionExecutionBeanDefinitionBuilder extends AbstractFunctionExe
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<?> getFunctionProxyFactoryBeanClass() {

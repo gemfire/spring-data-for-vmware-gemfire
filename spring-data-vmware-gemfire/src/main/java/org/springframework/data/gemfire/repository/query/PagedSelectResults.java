@@ -75,7 +75,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Set<T> asSet() {
@@ -83,7 +83,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> asList() {
@@ -91,7 +91,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<T> iterator() {
@@ -99,7 +99,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int size() {

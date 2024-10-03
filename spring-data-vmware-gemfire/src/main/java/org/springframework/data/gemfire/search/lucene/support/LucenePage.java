@@ -217,7 +217,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -225,7 +225,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasPrevious() {
@@ -233,7 +233,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> getContent() {
@@ -257,7 +257,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getNumber() {
@@ -286,7 +286,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getSize() {
@@ -294,7 +294,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public long getTotalElements() {
@@ -302,7 +302,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getTotalPages() {
@@ -314,7 +314,7 @@ public class LucenePage<T, K, V> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <S> Page<S> map(Function<? super T, ? extends S> converter) {

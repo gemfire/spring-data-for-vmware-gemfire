@@ -119,7 +119,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private String regionName;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Region<K, V> createRegion(GemFireCache gemfireCache, String regionName) throws Exception {

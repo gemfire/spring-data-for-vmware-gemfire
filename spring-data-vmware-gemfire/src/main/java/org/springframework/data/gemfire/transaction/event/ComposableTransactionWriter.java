@@ -78,7 +78,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void beforeCommit(TransactionEvent event) throws TransactionWriterException {
@@ -88,7 +88,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void close() {
@@ -98,7 +98,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void init(Properties properties) {
@@ -108,7 +108,7 @@ public class ComposableTransactionWriter implements TransactionWriter {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void initialize(Cache cache, Properties properties) {

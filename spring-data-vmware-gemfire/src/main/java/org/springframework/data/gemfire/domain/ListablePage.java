@@ -76,7 +76,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasContent() {
@@ -84,7 +84,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -92,7 +92,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasPrevious() {
@@ -100,7 +100,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> getContent() {
@@ -108,7 +108,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getNumber() {
@@ -116,7 +116,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Sort getSort() {
@@ -124,7 +124,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public long getTotalElements() {
@@ -132,7 +132,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getTotalPages() {
@@ -140,7 +140,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<T> iterator() {
@@ -148,7 +148,7 @@ public class ListablePage<T> extends AbstractPageSupport<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <S> Page<S> map(Function<? super T, ? extends S> converter) {

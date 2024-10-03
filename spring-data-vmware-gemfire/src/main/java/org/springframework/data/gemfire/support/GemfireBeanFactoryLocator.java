@@ -292,7 +292,7 @@ public class GemfireBeanFactoryLocator implements BeanFactoryAware, BeanNameAwar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) {
@@ -312,7 +312,7 @@ public class GemfireBeanFactoryLocator implements BeanFactoryAware, BeanNameAwar
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBeanName(String name) {
