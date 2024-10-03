@@ -82,7 +82,7 @@ public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {

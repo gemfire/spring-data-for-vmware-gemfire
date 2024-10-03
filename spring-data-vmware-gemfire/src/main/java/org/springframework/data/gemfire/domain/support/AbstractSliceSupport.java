@@ -36,7 +36,7 @@ import org.springframework.data.gemfire.util.RuntimeExceptionFactory;
 public abstract class AbstractSliceSupport<T> implements Slice<T> {
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasContent() {
@@ -44,7 +44,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasNext() {
@@ -52,7 +52,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasPrevious() {
@@ -60,7 +60,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isFirst() {
@@ -68,7 +68,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isLast() {
@@ -76,7 +76,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<T> getContent() {
@@ -84,7 +84,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getNumber() {
@@ -105,7 +105,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getNumberOfElements() {
@@ -113,7 +113,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getSize() {
@@ -121,7 +121,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Sort getSort() {
@@ -129,7 +129,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<T> iterator() {
@@ -138,7 +138,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public <S> Slice<S> map(Function<? super T, ? extends S> converter) {
@@ -146,7 +146,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Pageable nextPageable() {
@@ -154,7 +154,7 @@ public abstract class AbstractSliceSupport<T> implements Slice<T> {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Pageable previousPageable() {

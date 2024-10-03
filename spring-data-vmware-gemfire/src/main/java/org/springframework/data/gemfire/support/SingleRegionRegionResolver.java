@@ -52,7 +52,7 @@ public class SingleRegionRegionResolver implements RegionResolver {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable <K, V> Region<K, V> resolve(@Nullable String regionName) {
