@@ -41,3 +41,4 @@ private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogB
 }
 
 include("spring-data-vmware-gemfire")
+include("spring-test-vmware-gemfire")
