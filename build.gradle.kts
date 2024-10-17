@@ -78,3 +78,7 @@ fun isPatch(candidateVersion: String, currentVersion: String): Boolean {
   }
   return false
 }
+
+gradle.projectsEvaluated {
+  project(":spring-data-vmware-gemfire").tasks["publish"].mustRunAfter(project(":spring-test-vmware-gemfire").tasks["publish"])
+}
