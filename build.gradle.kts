@@ -78,3 +78,10 @@ fun isPatch(candidateVersion: String, currentVersion: String): Boolean {
   }
   return false
 }
+
+gradle.projectsEvaluated {
+  project(":spring-data-vmware-gemfire").tasks["publishToMavenLocal"].mustRunAfter(project(":spring-test-vmware-gemfire").tasks["publishToMavenLocal"])
+  project(":spring-data-vmware-gemfire").tasks.findByName("publishMavenPublicationToGCSRepository")?.let {
+    project(":spring-data-vmware-gemfire").tasks["publishMavenPublicationToGCSRepository"].mustRunAfter(project(":spring-test-vmware-gemfire").tasks["publishMavenPublicationToGCSRepository"])
+  }
+}
