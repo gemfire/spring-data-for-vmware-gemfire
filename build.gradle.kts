@@ -80,7 +80,7 @@ fun isPatch(candidateVersion: String, currentVersion: String): Boolean {
 }
 
 gradle.projectsEvaluated {
-  project(":spring-data-vmware-gemfire").tasks["publish"].mustRunAfter(project(":spring-test-vmware-gemfire").tasks["publish"])
-  project(":spring-data-vmware-gemfire").tasks["publishToMavenLocal"].mustRunAfter(project(":spring-test-vmware-gemfire").tasks["publishToMavenLocal"])
+  project(":spring-test-vmware-gemfire").tasks["publish"].mustRunAfter(project(":spring-data-vmware-gemfire").tasks["publish"])
+  project(":spring-test-vmware-gemfire").tasks["publishToMavenLocal"].mustRunAfter(project(":spring-data-vmware-gemfire").tasks["publishToMavenLocal"])
   project(":spring-test-vmware-gemfire").tasks["publishToInternalGCS"].mustRunAfter(project(":spring-data-vmware-gemfire").tasks["publishToInternalGCS"])
 }
