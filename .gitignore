@@ -118,3 +118,4 @@ generated-pipeline.yml
 *.krf
 *.crf
 *.dat
+**/.gradle/
