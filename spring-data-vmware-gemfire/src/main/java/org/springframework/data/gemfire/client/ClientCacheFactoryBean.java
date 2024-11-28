@@ -91,8 +91,10 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	private Integer durableClientTimeout;
 	private Integer freeConnectionTimeout;
 	private Integer loadConditioningInterval;
-	private Integer maxConnections;
 	private Integer minConnections;
+	private Integer maxConnections;
+	private Integer minConnectionsPerServer;
+	private Integer maxConnectionsPerServer;
 	private Integer readTimeout;
 	private Integer retryAttempts;
 	private Integer serverConnectionTimeout;
@@ -282,8 +284,10 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		clientCacheFactory.setPoolFreeConnectionTimeout(pool.getFreeConnectionTimeout(getFreeConnectionTimeout()));
 		clientCacheFactory.setPoolIdleTimeout(pool.getIdleTimeout(getIdleTimeout()));
 		clientCacheFactory.setPoolLoadConditioningInterval(pool.getLoadConditioningInterval(getLoadConditioningInterval()));
-		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
 		clientCacheFactory.setPoolMinConnections(pool.getMinConnections(getMinConnections()));
+		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
+		clientCacheFactory.setPoolMinConnectionsPerServer(pool.getMinConnectionsPerServer(getMinConnectionsPerServer()));
+		clientCacheFactory.setPoolMaxConnectionsPerServer(pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer()));
 		clientCacheFactory.setPoolMultiuserAuthentication(pool.getMultiuserAuthentication(getMultiUserAuthentication()));
 		clientCacheFactory.setPoolPingInterval(pool.getPingInterval(getPingInterval()));
 		clientCacheFactory.setPoolPRSingleHopEnabled(pool.getPRSingleHopEnabled(getPrSingleHopEnabled()));
@@ -642,6 +646,14 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return this.locators;
 	}
 
+	public void setMinConnections(Integer minConnections) {
+		this.minConnections = minConnections;
+	}
+
+	public Integer getMinConnections() {
+		return this.minConnections;
+	}
+
 	public void setMaxConnections(Integer maxConnections) {
 		this.maxConnections = maxConnections;
 	}
@@ -650,12 +662,20 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return this.maxConnections;
 	}
 
-	public void setMinConnections(Integer minConnections) {
-		this.minConnections = minConnections;
+	public void setMinConnectionsPerServer(Integer minConnectionsPerServer) {
+		this.minConnectionsPerServer = minConnectionsPerServer;
 	}
 
-	public Integer getMinConnections() {
-		return this.minConnections;
+	public Integer getMinConnectionsPerServer() {
+		return this.minConnectionsPerServer;
+	}
+
+	public void setMaxConnectionsPerServer(Integer maxConnectionsPerServer) {
+		this.maxConnectionsPerServer = maxConnectionsPerServer;
+	}
+
+	public Integer getMaxConnectionsPerServer() {
+		return this.maxConnectionsPerServer;
 	}
 
 	public void setMultiUserAuthentication(Boolean multiUserAuthentication) {
