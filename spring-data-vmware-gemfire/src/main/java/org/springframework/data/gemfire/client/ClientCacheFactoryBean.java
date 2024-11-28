@@ -5,18 +5,6 @@
 
 package org.springframework.data.gemfire.client;
 
-import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
-
-import java.net.InetSocketAddress;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
-import java.util.stream.StreamSupport;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -47,6 +35,18 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.net.InetSocketAddress;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+import java.util.stream.StreamSupport;
+
+import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
 
 /**
  * Spring {@link FactoryBean} used to construct, configure and initialize a {@link ClientCache}.

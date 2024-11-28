@@ -19,13 +19,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.Test;
-
 import org.apache.geode.cache.TransactionListener;
 import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.util.GatewayConflictResolver;
-
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 import org.springframework.core.io.Resource;
@@ -100,6 +98,8 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setLoadConditioningInterval(120000);
 		configuration.setMaxConnections(500);
 		configuration.setMinConnections(51);
+		configuration.setMaxConnectionsPerServer(200);
+		configuration.setMinConnectionsPerServer(21);
 		configuration.setMultiUserAuthentication(false);
 		configuration.setPingInterval(15000L);
 		configuration.setPrSingleHopEnabled(true);
@@ -142,6 +142,8 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setLoadConditioningInterval(eq(120000));
 		verify(clientCacheFactoryBean, times(1)).setMaxConnections(eq(500));
 		verify(clientCacheFactoryBean, times(1)).setMinConnections(eq(51));
+		verify(clientCacheFactoryBean, times(1)).setMaxConnectionsPerServer(eq(200));
+		verify(clientCacheFactoryBean, times(1)).setMinConnectionsPerServer(eq(21));
 		verify(clientCacheFactoryBean, times(1)).setMultiUserAuthentication(eq(false));
 		verify(clientCacheFactoryBean, times(1)).setPingInterval(eq(15000L));
 		verify(clientCacheFactoryBean, times(1)).setPrSingleHopEnabled(eq(true));

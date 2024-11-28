@@ -3,16 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*
- * Copyright 2022-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
 package org.springframework.data.gemfire.client.support;
-
-import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Supplier;
 
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
@@ -20,6 +11,11 @@ import org.apache.geode.cache.query.QueryService;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.Assert;
+
+import java.net.InetSocketAddress;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * The {@link DefaultableDelegatingPoolAdapter} class is a wrapper class around {@link Pool}
