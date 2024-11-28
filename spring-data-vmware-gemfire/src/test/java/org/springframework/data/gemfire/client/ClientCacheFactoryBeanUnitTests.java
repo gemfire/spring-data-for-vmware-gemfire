@@ -1,9 +1,4 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
  * Copyright 2022-2024 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -367,7 +362,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setMaxConnections(99);
 		clientCacheFactoryBean.setMinConnections(9);
 		clientCacheFactoryBean.setMaxConnectionsPerServer(55);
-		clientCacheFactoryBean.setMinConnectionsPerServer(4);
+		clientCacheFactoryBean.setMinConnectionsPerServer(5);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPingInterval(15000L);
 		clientCacheFactoryBean.setPool(mockPool);
@@ -394,7 +389,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isEqualTo(99);
 		assertThat(clientCacheFactoryBean.getMinConnections()).isEqualTo(9);
 		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isEqualTo(55);
-		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(4);
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isEqualTo(15000L);
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
@@ -424,7 +419,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(99));
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(9));
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnectionsPerServer(eq(55));
-		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(4));
+		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(5));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
