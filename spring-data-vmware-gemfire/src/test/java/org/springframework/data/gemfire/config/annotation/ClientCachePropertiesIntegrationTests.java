@@ -10,15 +10,13 @@ import static org.mockito.Mockito.mock;
 import java.util.Properties;
 import java.util.function.Function;
 
-import org.junit.Test;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.MutablePropertySources;
@@ -138,6 +136,62 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		assertThat(resourceManager.getCriticalOffHeapPercentage()).isEqualTo(95.0f);
 		assertThat(resourceManager.getEvictionHeapPercentage()).isEqualTo(90.0f);
 		assertThat(resourceManager.getEvictionOffHeapPercentage()).isEqualTo(80.0f);
+	}
+
+	@Test
+	public void configurationWithMinMaxConnectionsPerServerProperties() {
+
+		MockPropertySource testPropertySource = new MockPropertySource()
+				.withProperty("spring.data.gemfire.pool.max-connections-per-server", 100)
+				.withProperty("spring.data.gemfire.pool.min-connections-per-server", 5);
+
+		newApplicationContext(testPropertySource, TestClientCacheSimple.class);
+
+		assertThat(containsBean("gemfireCache")).isTrue();
+
+		ClientCacheFactoryBean testClientCacheFactoryBean =
+				getBean("&gemfireCache", ClientCacheFactoryBean.class);
+
+		assertThat(testClientCacheFactoryBean).isNotNull();
+		assertThat(testClientCacheFactoryBean.isUseBeanFactoryLocator()).isFalse();
+
+		ClientCache testClientCache = getBean("gemfireCache", ClientCache.class);
+
+		assertThat(testClientCache).isNotNull();
+
+		Pool defaultPool = testClientCache.getDefaultPool();
+
+		assertThat(defaultPool).isNotNull();
+
+		assertThat(defaultPool.getMaxConnectionsPerServer()).isEqualTo(100);
+		assertThat(defaultPool.getMinConnectionsPerServer()).isEqualTo(5);
+	}
+
+	@Test
+	public void configurationWithMinMaxConnectionsPerServerAnnotation() {
+
+		MockPropertySource testPropertySource = new MockPropertySource();
+
+		newApplicationContext(testPropertySource, TestClientCacheSimple.class);
+
+		assertThat(containsBean("gemfireCache")).isTrue();
+
+		ClientCacheFactoryBean testClientCacheFactoryBean =
+				getBean("&gemfireCache", ClientCacheFactoryBean.class);
+
+		assertThat(testClientCacheFactoryBean).isNotNull();
+		assertThat(testClientCacheFactoryBean.isUseBeanFactoryLocator()).isFalse();
+
+		ClientCache testClientCache = getBean("gemfireCache", ClientCache.class);
+
+		assertThat(testClientCache).isNotNull();
+
+		Pool defaultPool = testClientCache.getDefaultPool();
+
+		assertThat(defaultPool).isNotNull();
+
+		assertThat(defaultPool.getMaxConnectionsPerServer()).isEqualTo(50);
+		assertThat(defaultPool.getMinConnectionsPerServer()).isEqualTo(10);
 	}
 
 	@Test
@@ -278,6 +332,12 @@ public class ClientCachePropertiesIntegrationTests extends SpringApplicationCont
 		PdxSerializer mockPdxSerializer() {
 			return mock(PdxSerializer.class);
 		}
+	}
+
+	@EnableGemFireMockObjects
+	@ClientCacheApplication(name = "TestClientCacheSimple",minConnectionsPerServer = 10,maxConnectionsPerServer = 50)
+	@SuppressWarnings("unused")
+	static class TestClientCacheSimple {
 	}
 
 	@EnableGemFireMockObjects
