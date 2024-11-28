@@ -4,18 +4,6 @@
  */
 package org.springframework.data.gemfire.client;
 
-import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
-
-import java.net.InetSocketAddress;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
-import java.util.stream.StreamSupport;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -24,7 +12,6 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -47,6 +34,18 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.net.InetSocketAddress;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+import java.util.stream.StreamSupport;
+
+import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
 
 /**
  * Spring {@link FactoryBean} used to construct, configure and initialize a {@link ClientCache}.
@@ -92,8 +91,10 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 	private Integer durableClientTimeout;
 	private Integer freeConnectionTimeout;
 	private Integer loadConditioningInterval;
-	private Integer maxConnections;
 	private Integer minConnections;
+	private Integer maxConnections;
+	private Integer minConnectionsPerServer;
+	private Integer maxConnectionsPerServer;
 	private Integer readTimeout;
 	private Integer retryAttempts;
 	private Integer serverConnectionTimeout;
@@ -282,8 +283,10 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		clientCacheFactory.setPoolFreeConnectionTimeout(pool.getFreeConnectionTimeout(getFreeConnectionTimeout()));
 		clientCacheFactory.setPoolIdleTimeout(pool.getIdleTimeout(getIdleTimeout()));
 		clientCacheFactory.setPoolLoadConditioningInterval(pool.getLoadConditioningInterval(getLoadConditioningInterval()));
-		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
 		clientCacheFactory.setPoolMinConnections(pool.getMinConnections(getMinConnections()));
+		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
+		clientCacheFactory.setPoolMinConnectionsPerServer(pool.getMinConnectionsPerServer(getMinConnectionsPerServer()));
+		clientCacheFactory.setPoolMaxConnectionsPerServer(pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer()));
 		clientCacheFactory.setPoolMultiuserAuthentication(pool.getMultiuserAuthentication(getMultiUserAuthentication()));
 		clientCacheFactory.setPoolPingInterval(pool.getPingInterval(getPingInterval()));
 		clientCacheFactory.setPoolPRSingleHopEnabled(pool.getPRSingleHopEnabled(getPrSingleHopEnabled()));
@@ -607,6 +610,14 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		return this.locators;
 	}
 
+	public void setMinConnections(Integer minConnections) {
+		this.minConnections = minConnections;
+	}
+
+	public Integer getMinConnections() {
+		return this.minConnections;
+	}
+
 	public void setMaxConnections(Integer maxConnections) {
 		this.maxConnections = maxConnections;
 	}
@@ -615,12 +626,20 @@ public class ClientCacheFactoryBean extends CacheFactoryBean implements Applicat
 		return this.maxConnections;
 	}
 
-	public void setMinConnections(Integer minConnections) {
-		this.minConnections = minConnections;
+	public void setMinConnectionsPerServer(Integer minConnectionsPerServer) {
+		this.minConnectionsPerServer = minConnectionsPerServer;
 	}
 
-	public Integer getMinConnections() {
-		return this.minConnections;
+	public Integer getMinConnectionsPerServer() {
+		return this.minConnectionsPerServer;
+	}
+
+	public void setMaxConnectionsPerServer(Integer maxConnectionsPerServer) {
+		this.maxConnectionsPerServer = maxConnectionsPerServer;
+	}
+
+	public Integer getMaxConnectionsPerServer() {
+		return this.maxConnectionsPerServer;
 	}
 
 	public void setMultiUserAuthentication(Boolean multiUserAuthentication) {

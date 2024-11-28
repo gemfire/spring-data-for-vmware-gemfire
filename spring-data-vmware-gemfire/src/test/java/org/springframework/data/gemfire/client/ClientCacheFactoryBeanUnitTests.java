@@ -28,8 +28,6 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.function.Supplier;
 
-import org.junit.Test;
-
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.client.ClientCache;
@@ -38,7 +36,7 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.distributed.DistributedSystem;
 import org.apache.geode.pdx.PdxSerializer;
-
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.gemfire.GemfireUtils;
@@ -362,6 +360,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setLoadConditioningInterval(120000);
 		clientCacheFactoryBean.setMaxConnections(99);
 		clientCacheFactoryBean.setMinConnections(9);
+		clientCacheFactoryBean.setMaxConnectionsPerServer(55);
+		clientCacheFactoryBean.setMinConnectionsPerServer(5);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPingInterval(15000L);
 		clientCacheFactoryBean.setPool(mockPool);
@@ -387,6 +387,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getLocators().size()).isEqualTo(2);
 		assertThat(clientCacheFactoryBean.getMaxConnections()).isEqualTo(99);
 		assertThat(clientCacheFactoryBean.getMinConnections()).isEqualTo(9);
+		assertThat(clientCacheFactoryBean.getMaxConnectionsPerServer()).isEqualTo(55);
+		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isEqualTo(15000L);
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
@@ -415,6 +417,8 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolLoadConditioningInterval(eq(120000));
 		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(99));
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(9));
+		verify(mockClientCacheFactory, times(1)).setPoolMaxConnectionsPerServer(eq(55));
+		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(5));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
