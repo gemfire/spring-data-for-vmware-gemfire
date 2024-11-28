@@ -4,18 +4,17 @@
  */
 package org.springframework.data.gemfire.client.support;
 
+import org.apache.geode.cache.client.Pool;
+import org.apache.geode.cache.client.SocketFactory;
+import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.util.CollectionUtils;
+import org.springframework.data.gemfire.util.SpringExtensions;
+import org.springframework.util.Assert;
+
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
-
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
-
-import org.springframework.data.gemfire.util.CollectionUtils;
-import org.springframework.data.gemfire.util.SpringExtensions;
-import org.springframework.util.Assert;
 
 /**
  * The {@link DefaultableDelegatingPoolAdapter} class is a wrapper class around {@link Pool}
@@ -109,12 +108,20 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfEmpty(defaultLocators, () -> getDelegate().getLocators());
 	}
 
+	public int getMinConnections(Integer defaultMinConnections) {
+		return defaultIfNull(defaultMinConnections, () -> getDelegate().getMinConnections());
+	}
+
 	public int getMaxConnections(Integer defaultMaxConnections) {
 		return defaultIfNull(defaultMaxConnections, () -> getDelegate().getMaxConnections());
 	}
 
-	public int getMinConnections(Integer defaultMinConnections) {
-		return defaultIfNull(defaultMinConnections, () -> getDelegate().getMinConnections());
+	public int getMinConnectionsPerServer(Integer defaultMinConnectionsPerServer) {
+		return defaultIfNull(defaultMinConnectionsPerServer, () -> getDelegate().getMinConnectionsPerServer());
+	}
+
+	public int getMaxConnectionsPerServer(Integer defaultMaxConnectionsPerServer) {
+		return defaultIfNull(defaultMaxConnectionsPerServer, () -> getDelegate().getMaxConnectionsPerServer());
 	}
 
 	public boolean getMultiuserAuthentication(Boolean defaultMultiUserAuthentication) {

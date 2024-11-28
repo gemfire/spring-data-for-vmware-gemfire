@@ -3441,6 +3441,16 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		}).when(clientCacheFactorySpy).setPoolMinConnections(anyInt());
 
 		doAnswer(invocation -> {
+			mockPoolFactory.setMaxConnectionsPerServer(invocation.getArgument(0));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).setPoolMaxConnectionsPerServer(anyInt());
+
+		doAnswer(invocation -> {
+			mockPoolFactory.setMinConnectionsPerServer(invocation.getArgument(0));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).setPoolMinConnectionsPerServer(anyInt());
+
+		doAnswer(invocation -> {
 			mockPoolFactory.setMultiuserAuthentication(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMultiuserAuthentication(anyBoolean());
