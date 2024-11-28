@@ -216,6 +216,24 @@ public @interface ClientCacheApplication {
 	int minConnections() default PoolFactory.DEFAULT_MIN_CONNECTIONS;
 
 	/**
+	 * Configures the minimum number of connections per server between the client and server to keep alive and available
+	 * at all times. This setting should not be set in conjunction with minConnections. Defaults to
+	 * {@link PoolFactory#DEFAULT_MIN_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.min-connections-per-server} property or the
+	 * {@literal spring.data.gemfire.pool.min-connections-per-server} property in {@literal application.properties}.
+	 */
+	int minConnectionsPerServer() default PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
+
+	/**
+	 * Configures the maximum number of connections per server between the client and server that the {@literal DEFAULT}
+	 * {@link Pool} will create. This setting should not be set in conjunction with maxConnections. Defaults to
+	 * {@link PoolFactory#DEFAULT_MAX_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@literal spring.data.gemfire.pool.default.max-connections-per-server} property or the
+	 * {@literal spring.data.gemfire.pool.max-connections-per-server} property in {@literal application.properties}.
+	 */
+	int maxConnectionsPerServer() default PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
+
+	/**
 	 * If set to {@literal true} then the {@literal DEFAULT} {@link Pool} can be used by multiple users.
 	 *
 	 * Defaults to {@link PoolFactory#DEFAULT_MULTIUSER_AUTHENTICATION}.
