@@ -108,7 +108,8 @@ generated-pipeline.yml
 
 **/build/*
 #build/*
-**/gradle/*
+.gradle/*
+**/.gradle/*
 
 
 **/*test-read-only/*
