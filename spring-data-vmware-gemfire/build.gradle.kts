@@ -70,7 +70,7 @@ dependencies {
 
   testImplementation(libs.bundles.gemfire)
 
-  testImplementation(libs.spring.test.gemfire)
+  testImplementation(project(":spring-test-vmware-gemfire"))
 
   testImplementation(libs.cdi.api) {
     exclude("javax.annotation", "jsr250-api")
