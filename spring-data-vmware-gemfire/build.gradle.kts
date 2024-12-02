@@ -68,7 +68,7 @@ dependencies {
   }
 
   testImplementation(libs.bundles.gemfire)
-  testImplementation(libs.spring.test.gemfire)
+  testImplementation(project(":spring-test-vmware-gemfire"))
   testImplementation(libs.geronimo.jcdi)
   testImplementation(libs.el.api)
   testImplementation(libs.interceptor.api)
