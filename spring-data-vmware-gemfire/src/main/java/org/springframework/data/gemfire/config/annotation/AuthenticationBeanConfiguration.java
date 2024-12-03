@@ -7,8 +7,8 @@ package org.springframework.data.gemfire.config.annotation;
 import java.lang.annotation.Annotation;
 import java.util.function.Supplier;
 
-import org.apache.shiro.util.Assert;
 
+import org.apache.shiro.lang.util.Assert;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
