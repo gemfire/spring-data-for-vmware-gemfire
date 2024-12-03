@@ -6,8 +6,6 @@ package org.springframework.data.gemfire.client.support;
 
 import org.apache.geode.cache.client.Pool;
 
-import org.apache.shiro.util.StringUtils;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -15,6 +13,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * {@link PoolResolver} implementation that uses the Spring {@link BeanFactory} to resolve managed {@link Pool} objects.

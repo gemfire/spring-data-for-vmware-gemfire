@@ -35,10 +35,8 @@ import org.apache.geode.distributed.Locator;
 import org.apache.geode.internal.InternalDataSerializer;
 import org.apache.geode.internal.cache.CacheLifecycleListener;
 import org.apache.geode.internal.cache.GemFireCacheImpl;
-import org.apache.geode.internal.cache.InternalCache;
 import org.apache.geode.internal.net.SSLConfigurationFactory;
 import org.apache.geode.internal.net.SocketCreatorFactory;
-import org.apache.shiro.util.StringUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +60,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * Abstract base class supporting integration tests with either Apache Geode or VMware Tanzu GemFire

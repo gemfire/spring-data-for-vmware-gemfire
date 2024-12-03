@@ -278,7 +278,7 @@ public class SimpleGemfireRepositoryIntegrationTests extends IntegrationTestsSup
 		}
 
 		@Bean
-		GemfireTemplate peopleRegionTemplate(Region<Object, Object> people) {
+		GemfireTemplate peopleRegionTemplate(@Qualifier("People") Region<Object, Object> people) {
 			return new GemfireTemplate(people);
 		}
 	}

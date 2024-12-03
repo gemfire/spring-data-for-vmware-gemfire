@@ -479,8 +479,8 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean
-		GemfireTemplate usersTemplate(Region<Object, Object> simple) {
-			return new GemfireTemplate(simple);
+		GemfireTemplate usersTemplate(@Qualifier("Users") Region<Object, Object> users) {
+			return new GemfireTemplate(users);
 		}
 
 		@Bean("server-pool")

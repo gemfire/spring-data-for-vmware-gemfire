@@ -82,7 +82,7 @@ public class ClientCacheNamespaceIntegrationTests extends IntegrationTestsSuppor
 			applicationContext.getBean("&client-cache-with-name", ClientCacheFactoryBean.class);
 
 		assertThat(clientCacheFactoryBean.getCacheXml()).isNull();
-		assertThat(clientCacheFactoryBean.getProperties()).isNull();
+		assertThat(clientCacheFactoryBean.getProperties()).isNullOrEmpty();
 	}
 
 	@Test
@@ -97,6 +97,6 @@ public class ClientCacheNamespaceIntegrationTests extends IntegrationTestsSuppor
 
 		assertThat(cacheXmlResource.getFilename()).isEqualTo("gemfire-client-cache.xml");
 
-		assertThat(clientCacheFactoryBean.getProperties()).isNull();
+		assertThat(clientCacheFactoryBean.getProperties()).isNullOrEmpty();
 	}
 }

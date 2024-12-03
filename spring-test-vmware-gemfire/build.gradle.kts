@@ -14,7 +14,6 @@ plugins {
     id("gemfire-repo-artifact-publishing")
     id("commercial-repositories")
     alias(libs.plugins.lombok)
-    alias(libs.plugins.dependency.management)
 }
 
 java {
@@ -30,9 +29,9 @@ tasks.named<Javadoc>("javadoc") {
 }
 
 publishingDetails {
-    artifactName.set("spring-data-3.3-gemfire-${getGemFireBaseVersion()}")
-    longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.3")
-    description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.3")
+    artifactName.set("spring-data-3.4-gemfire-${getGemFireBaseVersion()}")
+    longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.4")
+    description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.4")
     test.set(true)
 }
 

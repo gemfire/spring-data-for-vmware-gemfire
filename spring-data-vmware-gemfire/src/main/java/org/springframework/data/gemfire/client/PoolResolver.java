@@ -78,7 +78,7 @@ public interface PoolResolver {
 	 * Resolves a {@link Pool} with the given {@link String name}.
 	 *
 	 * @param poolName {@link String name} of the {@link Pool} to resolve.
-	 * @return the {@link Pool} with the given {@link String name} or {@link null} if no {@link Pool} exists with
+	 * @return the {@link Pool} with the given {@link String name} or {@literal null} if no {@link Pool} exists with
 	 * the {@link String name}.
 	 * @see Pool
 	 */
