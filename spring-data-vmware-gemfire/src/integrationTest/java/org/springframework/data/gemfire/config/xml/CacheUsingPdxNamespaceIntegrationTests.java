@@ -1,0 +1,68 @@
+/*
+ * Copyright 2022-2025 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+package org.springframework.data.gemfire.config.xml;
+
+import org.apache.geode.pdx.PdxSerializer;
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
+import org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor;
+import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
+import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+/**
+ * Integration Tests testing SDG XML namespace configuration metadata when PDX is configured in Apache Geode.
+ *
+ * @author John Blum
+ * @see org.junit.Test
+ * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
+ * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
+ * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
+ * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
+ * @see org.springframework.test.context.ContextConfiguration
+ * @see org.springframework.test.context.junit4.SpringRunner
+ * @since 1.3.3
+ */
+@RunWith(SpringRunner.class)
+@GemFireUnitTest
+@SuppressWarnings("unused")
+public class CacheUsingPdxNamespaceIntegrationTests extends IntegrationTestsSupport {
+
+	@Test
+	public void testApplicationContextHasPdxDiskStoreAwareBeanFactoryPostProcessor() {
+
+		PdxDiskStoreAwareBeanFactoryPostProcessor postProcessor =
+			requireApplicationContext().getBean(PdxDiskStoreAwareBeanFactoryPostProcessor.class);
+
+		// NOTE the postProcessor reference will not be null as the ApplicationContext.getBean(:Class) method (getting
+		// a bean by Class type) will throw a NoSuchBeanDefinitionException if no bean of type
+		// PdxDiskStoreAwareBeanFactoryPostProcessor could be found, or throw a NoUniqueBeanDefinitionException if
+		// our PdxDiskStoreAwareBeanFactoryPostProcessor bean is not unique!
+		Assertions.assertThat(postProcessor).isNotNull();
+		Assertions.assertThat(postProcessor.getPdxDiskStoreName()).isEqualTo("pdxStore");
+	}
+
+	@Test
+	public void testCachePdxConfiguration() {
+
+		ClientCacheFactoryBean cacheFactoryBean =
+			requireApplicationContext().getBean("&gemfireCache", ClientCacheFactoryBean.class);
+
+		Assertions.assertThat(cacheFactoryBean).isNotNull();
+		Assertions.assertThat(cacheFactoryBean.getPdxDiskStoreName()).isEqualTo("pdxStore");
+		Assertions.assertThat(Boolean.TRUE.equals(cacheFactoryBean.getPdxPersistent())).isTrue();
+		Assertions.assertThat(Boolean.TRUE.equals(cacheFactoryBean.getPdxReadSerialized())).isTrue();
+
+		PdxSerializer autoSerializer =
+			requireApplicationContext().getBean("autoSerializer", PdxSerializer.class);
+
+		Assertions.assertThat(autoSerializer).isNotNull();
+		Assertions.assertThat(cacheFactoryBean.getPdxSerializer()).isSameAs(autoSerializer);
+	}
+
+}

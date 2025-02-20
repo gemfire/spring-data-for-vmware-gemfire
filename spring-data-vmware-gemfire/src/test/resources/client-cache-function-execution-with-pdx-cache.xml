@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2024 Broadcom. All rights reserved.
+  ~ Copyright 2024-2025 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 
@@ -11,7 +11,7 @@
         version="1.0">
     <pdx>
         <pdx-serializer>
-            <class-name>org.springframework.data.gemfire.function.ClientCacheFunctionExecutionWithPdxIntegrationTest$PersonPdxSerializer</class-name>
+            <class-name>org.springframework.data.gemfire.function.PersonPdxSerializer</class-name>
         </pdx-serializer>
 
     </pdx>

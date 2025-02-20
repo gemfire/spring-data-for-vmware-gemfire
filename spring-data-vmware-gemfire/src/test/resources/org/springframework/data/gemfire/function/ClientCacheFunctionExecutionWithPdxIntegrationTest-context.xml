@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2022-2024 Broadcom. All rights reserved.
+  ~ Copyright 2022-2025 Broadcom. All rights reserved.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 
@@ -24,9 +24,9 @@
 		<prop key="log-level">error</prop>
 	</util:properties>
 
-	<bean id="addressPdxSerializer" class="org.springframework.data.gemfire.function.ClientCacheFunctionExecutionWithPdxIntegrationTest$AddressPdxSerializer"/>
+	<bean id="addressPdxSerializer" class="org.springframework.data.gemfire.function.AddressPdxSerializer"/>
 
-	<bean id="personPdxSerializer" class="org.springframework.data.gemfire.function.ClientCacheFunctionExecutionWithPdxIntegrationTest$PersonPdxSerializer"/>
+	<bean id="personPdxSerializer" class="org.springframework.data.gemfire.function.PersonPdxSerializer"/>
 
 	<bean id="domainBasedPdxSerializer" class="org.springframework.data.gemfire.function.ClientCacheFunctionExecutionWithPdxIntegrationTest$ComposablePdxSerializerFactoryBean">
 		<property name="pdxSerializers">

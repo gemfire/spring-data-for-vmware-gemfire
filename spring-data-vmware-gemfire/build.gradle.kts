@@ -1,11 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 
 buildscript {
@@ -25,16 +27,30 @@ plugins {
   alias(libs.plugins.lombok)
 }
 
+sourceSets {
+  register("integrationTest") {
+    compileClasspath += sourceSets.main.get().output + sourceSets.test.get().output
+    runtimeClasspath += sourceSets.main.get().output + sourceSets.test.get().output
+    java.srcDir("src/integrationTest/java")
+    resources.srcDir("src/test/resources")
+  }
+}
+
+configurations {
+  getByName("integrationTestImplementation") {
+    extendsFrom(configurations.implementation.get())
+    extendsFrom(configurations.getByName("testImplementation"))
+  }
+  getByName("integrationTestRuntimeOnly") {
+    extendsFrom(configurations.runtimeOnly.get())
+    extendsFrom(configurations.getByName("testRuntimeOnly"))
+  }
+}
+
 java {
   withJavadocJar()
   withSourcesJar()
   toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
-}
-
-tasks.register<Test>("testOn21") {
-  javaLauncher = javaToolchains.launcherFor {
-    languageVersion = JavaLanguageVersion.of(21)
-  }
 }
 
 tasks.named<Javadoc>("javadoc") {
@@ -107,76 +123,67 @@ dependencies {
   testImplementation(project(":spring-test-vmware-gemfire"))
 }
 
-tasks.register("prepareKotlinBuildScriptModel") {}
-
 tasks {
   test {
+    dependsOn("testJar")
+  }
+  this.register<Test>("integrationTest") {
+    description = "Runs the integration tests."
+    group = "verification"
+
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+
+    dependsOn("testJar")
+
     forkEvery = 1
     maxParallelForks = 2
-    val springTestGemfireDockerImage: String by project
-
-    systemProperty(
-      "java.util.logging.config.file",
-      "${project.layout.buildDirectory}/test-classes/java-util-logging.properties"
-    )
-    systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
-    systemProperty("gemfire.disableShutdownHook", "true")
-    systemProperty("logback.log.level", "error")
-    systemProperty("spring.profiles.active", "apache-geode")
-    systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
-
-    filter {
-      includeTestsMatching("*.*Tests")
-      includeTestsMatching("*.*Test")
-    }
-  }
-  getByName("testOn21", Test::class) {
-    forkEvery = 1
-//  maxParallelForks = 1
-    val springTestGemfireDockerImage: String by project
-
-    systemProperty(
-      "java.util.logging.config.file",
-      "${project.layout.buildDirectory}/test-classes/java-util-logging.properties"
-    )
-    systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
-    systemProperty("gemfire.disableShutdownHook", "true")
-    systemProperty("logback.log.level", "error")
-    systemProperty("spring.profiles.active", "apache-geode")
-    systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
-
-    filter {
-      includeTestsMatching("*.*Tests")
-      includeTestsMatching("*.*Test")
-    }
   }
 }
 
 gradle.taskGraph.whenReady {
-  tasks.withType<Test>().forEach { test ->
-    tasks.named("check").get().dependsOn(test)
-    test.jvmArgs(
-      "-XX:+HeapDumpOnOutOfMemoryError", "-ea",
-      // Product: BufferPool uses DirectBuffer
-      "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
-      // Tests: CertificateBuilder uses numerous types declared here
-      "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
-      // Product: ManagementAgent"s custom MBean servers extend types declared here
-      "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
-      // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
-      "--add-opens=java.base/java.lang=ALL-UNNAMED",
-      // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
-      "--add-opens=java.base/java.nio=ALL-UNNAMED",
-      // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
-      "--add-opens=java.base/java.util=ALL-UNNAMED",
-      // Tests: SecurityTestUtils resets SSL-related fields
-      "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
-      "-XX:+EnableDynamicAgentLoading",
-      "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED"
-    )
+  tasks.withType<Test>().forEach { testTask ->
+    with(testTask) {
+      jvmArgs(
+        "-XX:+HeapDumpOnOutOfMemoryError", "-ea",
+        // Product: BufferPool uses DirectBuffer
+        "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
+        // Tests: CertificateBuilder uses numerous types declared here
+        "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
+        // Product: ManagementAgent"s custom MBean servers extend types declared here
+        "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
+        // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
+        "--add-opens=java.base/java.nio=ALL-UNNAMED",
+        // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
+        "--add-opens=java.base/java.util=ALL-UNNAMED",
+        // Tests: SecurityTestUtils resets SSL-related fields
+        "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
+        "-XX:+EnableDynamicAgentLoading",
+        "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED"
+      )
 
-    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
-      test.jvmArgs("-XX:+UseZGC")
+      if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+        jvmArgs("-XX:+UseZGC")
+      }
+
+      val springTestGemfireDockerImage: String by project
+
+      systemProperty(
+        "java.util.logging.config.file",
+        "${project.layout.buildDirectory}/test-classes/java-util-logging.properties"
+      )
+      systemProperty("javax.net.ssl.keyStore", "${project.layout.buildDirectory}/test-classes/trusted.keystore")
+      systemProperty("gemfire.disableShutdownHook", "true")
+      systemProperty("logback.log.level", "error")
+      systemProperty("spring.profiles.active", "apache-geode")
+      systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
+
+      systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
+
+      testLogging { events(TestLogEvent.FAILED); exceptionFormat = TestExceptionFormat.FULL }
+      useJUnitPlatform()
     }
   }
 }
@@ -225,14 +232,4 @@ tasks.register<Jar>("testJar") {
   from(sourceSets.main.get().output)
   archiveFileName = "testJar.jar"
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.getByName<Test>("test") {
-  dependsOn(tasks.getByPath("testJar"))
-  systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
-}
-
-tasks.getByName<Test>("testOn21") {
-  dependsOn(tasks.getByPath("testJar"))
-  systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
 }
