@@ -33,9 +33,7 @@ dependencyResolutionManagement {
 
 private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBuilder, propertyName: String, propertiesFile: Properties): String {
   val propertyValue = providers.systemProperty(propertyName).getOrElse(propertiesFile.getProperty(propertyName))
-  return versionCatalogBuilder.version(propertyName) {
-    prefer(propertyValue)
-  }
+  return versionCatalogBuilder.version(propertyName, propertyValue)
 }
 
 private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
