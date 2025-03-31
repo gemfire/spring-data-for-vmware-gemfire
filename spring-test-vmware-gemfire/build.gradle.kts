@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2024-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,6 +13,7 @@ plugins {
     id("java-library")
     id("gemfire-repo-artifact-publishing")
     id("commercial-repositories")
+    id("gemfire-artifactory")
     alias(libs.plugins.lombok)
 }
 
