@@ -31,7 +31,7 @@ tasks.named<Javadoc>("javadoc") {
 }
 
 publishingDetails {
-    artifactName.set("spring-data-3.3-gemfire-test-framwork-${getGemFireBaseVersion()}")
+    artifactName.set("spring-data-3.3-gemfire-test-framework-${getGemFireBaseVersion()}")
     longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.3")
     description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.3")
     test.set(true)
