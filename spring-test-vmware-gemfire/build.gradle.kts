@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2024-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,6 +13,7 @@ plugins {
     id("java-library")
     id("gemfire-repo-artifact-publishing")
     id("commercial-repositories")
+    id("gemfire-artifactory")
     alias(libs.plugins.lombok)
     alias(libs.plugins.dependency.management)
 }
@@ -30,7 +31,7 @@ tasks.named<Javadoc>("javadoc") {
 }
 
 publishingDetails {
-    artifactName.set("spring-data-3.0-gemfire-${getGemFireBaseVersion()}")
+    artifactName.set("spring-data-3.0-gemfire-test-framework-${getGemFireBaseVersion()}")
     longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.0")
     description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 3.0")
     test.set(true)
