@@ -1,10 +1,12 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
+import java.io.FileInputStream
 
 
 buildscript {
@@ -138,7 +140,9 @@ fun getGemFireBaseVersion(): String {
 tasks.register("copyJavadocsToBucket") {
   dependsOn(tasks.named("javadocJar"))
   doLast {
-    val storage = StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
+    val storage =
+      StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).setCredentials(
+        GoogleCredentials.fromStream(FileInputStream(project.properties["docsGCSProjectCredentials"].toString()))).build().getService()
     val blobId = BlobId.of(project.properties["docsGCSBucket"].toString(), "${publishingDetails.artifactName.get()}/${project.version}/${tasks.named("javadocJar").get().outputs.files.singleFile.name}")
     val blobInfo = BlobInfo.newBuilder(blobId).build()
     storage.createFrom(blobInfo, tasks.named("javadocJar").get().outputs.files.singleFile.toPath())
