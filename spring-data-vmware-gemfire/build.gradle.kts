@@ -2,12 +2,14 @@
  * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import java.io.FileInputStream
 
 
 buildscript {
@@ -215,7 +217,8 @@ tasks.register("copyJavadocsToBucket") {
   dependsOn(tasks.named("javadocJar"))
   doLast {
     val storage =
-      StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).build().getService()
+      StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).setCredentials(
+        GoogleCredentials.fromStream(FileInputStream(project.properties["docsGCSProjectCredentials"].toString()))).build().getService()
     val blobId = BlobId.of(
       project.properties["docsGCSBucket"].toString(),
       "${publishingDetails.artifactName.get()}/${project.version}/${
