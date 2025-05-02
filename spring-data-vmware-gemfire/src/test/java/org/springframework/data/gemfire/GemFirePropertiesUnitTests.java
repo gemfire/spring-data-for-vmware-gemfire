@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -13,10 +13,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
 import org.apache.geode.distributed.ConfigurationProperties;
-
+import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
 
 /**
@@ -74,7 +72,8 @@ public class GemFirePropertiesUnitTests {
             "security-client-accessor-pp", // replaced by SecurityManager
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
-            "security-peer-authenticator" // replaced by SecurityManager
+				    "security-peer-authenticator", // replaced by SecurityManager
+				    "distributed-transactions" // being removed
     );
 
     private Set<String> resolveActualGemFirePropertyNames() {

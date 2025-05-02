@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -10,7 +10,6 @@ import java.io.File;
 import java.util.Arrays;
 
 import org.apache.geode.distributed.ConfigurationProperties;
-
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.lang.NonNull;
@@ -41,6 +40,7 @@ public enum GemFireProperties {
 	DISABLE_AUTO_RECONNECT(ConfigurationProperties.DISABLE_AUTO_RECONNECT, Boolean.class, false),
 	DISABLE_TCP(ConfigurationProperties.DISABLE_TCP, Boolean.class, false),
 	DISTRIBUTED_SYSTEM_ID(ConfigurationProperties.DISTRIBUTED_SYSTEM_ID, Integer.class, -1),
+	@Deprecated
 	DISTRIBUTED_TRANSACTIONS(ConfigurationProperties.DISTRIBUTED_TRANSACTIONS, Boolean.class, false),
 	DURABLE_CLIENT_ID(ConfigurationProperties.DURABLE_CLIENT_ID, String.class),
 	DURABLE_CLIENT_TIMEOUT(ConfigurationProperties.DURABLE_CLIENT_TIMEOUT, Long.class, 300L),
