@@ -106,6 +106,7 @@ public enum GemFireProperties {
 	START_LOCATOR(ConfigurationProperties.START_LOCATOR, Boolean.class),
 	STATISTIC_ARCHIVE_FILE(ConfigurationProperties.STATISTIC_ARCHIVE_FILE, File.class),
 	STATISTIC_SAMPLE_RATE(ConfigurationProperties.STATISTIC_SAMPLE_RATE, Long.class, 1000),
+	@Deprecated
 	STATISTIC_SAMPLING_ENABLED(ConfigurationProperties.STATISTIC_SAMPLING_ENABLED, Boolean.class, false),
 	TCP_PORT(ConfigurationProperties.TCP_PORT, Integer.class, 0),
 	THREAD_MONITOR_ENABLED(ConfigurationProperties.THREAD_MONITOR_ENABLED, Boolean.class, true),

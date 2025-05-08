@@ -73,7 +73,8 @@ public class GemFirePropertiesUnitTests {
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
 				    "security-peer-authenticator", // replaced by SecurityManager
-				    "distributed-transactions" // being removed
+				    "distributed-transactions", // being removed
+            "statistic-sampling-enabled"
     );
 
     private Set<String> resolveActualGemFirePropertyNames() {
