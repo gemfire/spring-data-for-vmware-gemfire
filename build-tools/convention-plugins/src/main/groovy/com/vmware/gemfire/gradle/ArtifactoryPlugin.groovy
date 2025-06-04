@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2024-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -34,7 +34,7 @@ class ArtifactoryPlugin implements Plugin<Project> {
         // clientConfig.setIncludeEnvVars(true)
 
         def buildInfo = clientConfig.info
-        buildInfo.setBuildName(project.name + "-" + project.version)
+        buildInfo.setBuildName("spring-data-3.5-gemfire-10.1-2.0.x")
         buildInfo.setBuildNumber(project.properties.getOrDefault("buildId", '0000') as String)
         buildInfo.setProject("tds-gemfire")
         buildInfo.setAgentName(System.properties['user.name'] as String)
