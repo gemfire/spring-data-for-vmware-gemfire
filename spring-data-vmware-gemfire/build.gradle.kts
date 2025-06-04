@@ -50,7 +50,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 publishingDetails {
-  artifactName.set("spring-data-3.5-gemfire-${getGemFireBaseVersion()}")
+  artifactName.set("spring-data-3.3-gemfire-${getGemFireBaseVersion()}")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
   test.set(false)
