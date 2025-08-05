@@ -1,10 +1,8 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
-
-import java.lang.reflect.Method;
 
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
@@ -19,11 +17,13 @@ import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryMethod;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.lang.reflect.Method;
 
 /**
  * {@link QueryMethod} implementation for Apache Geode.
@@ -44,7 +44,7 @@ public class GemfireQueryMethod extends QueryMethod {
 	private final Method method;
 
 	@SuppressWarnings("unused")
-	private final QueryMethodEvaluationContextProvider evaluationContextProvider;
+	private final QueryMethodValueEvaluationContextAccessor evaluationContextProvider;
 
 	/**
 	 * Constructs a new instance of {@link GemfireQueryMethod} from the given {@link Method}
@@ -97,7 +97,7 @@ public class GemfireQueryMethod extends QueryMethod {
 			@NonNull RepositoryMetadata metadata,
 			@NonNull ProjectionFactory projectionFactory,
 			@NonNull MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext,
-			@Nullable QueryMethodEvaluationContextProvider evaluationContextProvider) {
+			@Nullable QueryMethodValueEvaluationContextAccessor evaluationContextProvider) {
 
 		super(method, metadata, projectionFactory);
 

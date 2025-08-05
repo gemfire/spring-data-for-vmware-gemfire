@@ -1,18 +1,17 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.sample;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.util.ObjectUtils;
+
+import java.io.Serializable;
 
 /**
  * Abstract Data Type (ADT) modeling a Person.
@@ -37,7 +36,7 @@ public class Person implements Serializable {
 	public String firstname;
 	public String lastname;
 
-	@PersistenceConstructor
+	@PersistenceCreator
 	public Person() { }
 
 	public Person(Long id) {

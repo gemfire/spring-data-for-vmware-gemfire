@@ -1,17 +1,10 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
 
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.Optional;
-
 import org.apache.geode.cache.Region;
-
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
@@ -31,11 +24,18 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.data.repository.query.QueryLookupStrategy.Key;
 import org.springframework.data.repository.query.QueryMethod;
-import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
+import org.springframework.data.repository.query.QueryMethodValueEvaluationContextAccessor;
+import org.springframework.data.repository.query.ValueExpressionDelegate;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.Optional;
+
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
 
 /**
  * {@link RepositoryFactorySupport} implementation creating repository proxies
@@ -227,13 +227,13 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 
 	@Override
 	protected Optional<QueryLookupStrategy> getQueryLookupStrategy(Key key,
-			QueryMethodEvaluationContextProvider evaluationContextProvider) {
+                                                                 ValueExpressionDelegate valueExpressionDelegate) {
 
 		return Optional.of((Method method, RepositoryMetadata repositoryMetadata, ProjectionFactory projectionFactory,
 			NamedQueries namedQueries) -> {
 
 				GemfireQueryMethod queryMethod =
-					newQueryMethod(method, repositoryMetadata, projectionFactory, evaluationContextProvider);
+					newQueryMethod(method, repositoryMetadata, projectionFactory, valueExpressionDelegate.getEvaluationContextAccessor());
 
 				GemfireTemplate template = newTemplate(repositoryMetadata);
 
@@ -253,7 +253,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	protected <T extends QueryMethod> T newQueryMethod(Method method, RepositoryMetadata repositoryMetadata,
-			ProjectionFactory projectionFactory, QueryMethodEvaluationContextProvider evaluationContextProvider) {
+			ProjectionFactory projectionFactory, QueryMethodValueEvaluationContextAccessor evaluationContextProvider) {
 
 		return (T) new GemfireQueryMethod(method, repositoryMetadata, projectionFactory, getMappingContext(),
 			evaluationContextProvider);

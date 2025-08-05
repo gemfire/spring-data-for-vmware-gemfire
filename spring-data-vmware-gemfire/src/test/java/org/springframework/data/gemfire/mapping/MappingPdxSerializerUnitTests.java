@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -320,13 +320,13 @@ public class MappingPdxSerializerUnitTests {
 
 		GemfirePersistentProperty mockProperty = mock(GemfirePersistentProperty.class);
 
-		when(mockEntity.isConstructorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
+		when(mockEntity.isCreatorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
 		when(mockProperty.isTransient()).thenReturn(false);
 		when(mockProperty.isWritable()).thenReturn(true);
 
 		assertThat(this.pdxSerializer.isWritable(mockEntity, mockProperty)).isTrue();
 
-		verify(mockEntity, times(1)).isConstructorArgument(eq(mockProperty));
+		verify(mockEntity, times(1)).isCreatorArgument(eq(mockProperty));
 		verify(mockProperty, times(1)).isWritable();
 		verify(mockProperty, times(1)).isTransient();
 	}
@@ -338,11 +338,11 @@ public class MappingPdxSerializerUnitTests {
 
 		GemfirePersistentProperty mockProperty = mock(GemfirePersistentProperty.class);
 
-		when(mockEntity.isConstructorArgument(any(GemfirePersistentProperty.class))).thenReturn(true);
+		when(mockEntity.isCreatorArgument(any(GemfirePersistentProperty.class))).thenReturn(true);
 
 		assertThat(this.pdxSerializer.isWritable(mockEntity, mockProperty)).isFalse();
 
-		verify(mockEntity, times(1)).isConstructorArgument(eq(mockProperty));
+		verify(mockEntity, times(1)).isCreatorArgument(eq(mockProperty));
 		verify(mockProperty, never()).isWritable();
 		verify(mockProperty, never()).isTransient();
 	}
@@ -354,12 +354,12 @@ public class MappingPdxSerializerUnitTests {
 
 		GemfirePersistentProperty mockProperty = mock(GemfirePersistentProperty.class);
 
-		when(mockEntity.isConstructorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
+		when(mockEntity.isCreatorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
 		when(mockProperty.isWritable()).thenReturn(false);
 
 		assertThat(this.pdxSerializer.isWritable(mockEntity, mockProperty)).isFalse();
 
-		verify(mockEntity, times(1)).isConstructorArgument(eq(mockProperty));
+		verify(mockEntity, times(1)).isCreatorArgument(eq(mockProperty));
 		verify(mockProperty, times(1)).isWritable();
 		verify(mockProperty, never()).isTransient();
 	}
@@ -371,13 +371,13 @@ public class MappingPdxSerializerUnitTests {
 
 		GemfirePersistentProperty mockProperty = mock(GemfirePersistentProperty.class);
 
-		when(mockEntity.isConstructorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
+		when(mockEntity.isCreatorArgument(any(GemfirePersistentProperty.class))).thenReturn(false);
 		when(mockProperty.isTransient()).thenReturn(true);
 		when(mockProperty.isWritable()).thenReturn(true);
 
 		assertThat(this.pdxSerializer.isWritable(mockEntity, mockProperty)).isFalse();
 
-		verify(mockEntity, times(1)).isConstructorArgument(eq(mockProperty));
+		verify(mockEntity, times(1)).isCreatorArgument(eq(mockProperty));
 		verify(mockProperty, times(1)).isWritable();
 		verify(mockProperty, times(1)).isTransient();
 	}

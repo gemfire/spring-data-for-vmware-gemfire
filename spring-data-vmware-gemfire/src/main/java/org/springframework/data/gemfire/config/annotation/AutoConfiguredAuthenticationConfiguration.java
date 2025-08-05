@@ -1,15 +1,9 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import java.io.IOException;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.net.URI;
-import java.util.Optional;
-import java.util.Properties;
 import org.apache.geode.security.AuthInitialize;
 import org.apache.shiro.lang.util.Assert;
 import org.slf4j.Logger;
@@ -35,10 +29,17 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URI;
+import java.util.Optional;
+import java.util.Properties;
+
 /**
- * The {@link AutoConfiguredAuthenticationConfiguration} class is a Spring {@link Configuration} class
- * that auto-configures Apache Geode Authentication by providing an implementation of the {@link AuthInitialize}
- * interface along with setting the necessary Apache Geode {@link Properties}.
+ * The {@link AutoConfiguredAuthenticationConfiguration} class is a Spring {@link Configuration} class that
+ * auto-configures Apache Geode Authentication by providing an implementation of the {@link AuthInitialize} interface
+ * along with setting the necessary Apache Geode {@link Properties}.
  *
  * @author John Blum
  * @see Authenticator
@@ -68,8 +69,8 @@ public class AutoConfiguredAuthenticationConfiguration {
 
 	private static final char[] EMPTY_CHAR_ARRAY = {};
 
-	protected static final String AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD =
-		AutoConfiguredAuthenticationInitializer.class.getName().concat(".newAuthenticationInitializer");
+	protected static final String AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD = AutoConfiguredAuthenticationInitializer.class
+			.getName().concat(".newAuthenticationInitializer");
 
 	protected static final String DEFAULT_USERNAME = "test";
 	protected static final String DEFAULT_PASSWORD = DEFAULT_USERNAME;
@@ -99,11 +100,8 @@ public class AutoConfiguredAuthenticationConfiguration {
 	public @Nullable Authenticator authenticator(
 			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
 
-		return Optional.ofNullable(authentication)
-			.filter(Authentication::isRequested)
-			.map(this::newAuthenticator)
-			.map(this::registerAuthenticator)
-			.orElse(null);
+		return Optional.ofNullable(authentication).filter(Authentication::isRequested).map(this::newAuthenticator)
+				.map(this::registerAuthenticator).orElse(null);
 	}
 
 	private @NonNull Authenticator newAuthenticator(@NonNull Authentication<String, String> authentication) {
@@ -133,7 +131,8 @@ public class AutoConfiguredAuthenticationConfiguration {
 		return authenticator;
 	}
 
-	@NonNull ClientHttpRequestInterceptor loggingAwareClientHttpRequestInterceptor() {
+	@NonNull
+	ClientHttpRequestInterceptor loggingAwareClientHttpRequestInterceptor() {
 
 		return (request, body, execution) -> {
 
@@ -141,17 +140,15 @@ public class AutoConfiguredAuthenticationConfiguration {
 
 			HttpHeaders httpHeaders = request.getHeaders();
 
-			CollectionUtils.nullSafeSet(httpHeaders.keySet()).forEach(httpHeaderName ->
-				logDebug("HTTP Request Header Name [{}] Value [{}]",
-					httpHeaderName, httpHeaders.get(httpHeaderName)));
+			CollectionUtils.nullSafeSet(httpHeaders.headerSet())
+					.forEach(httpHeader -> logDebug("HTTP Request Header Name [{}] Value [{}]", httpHeader.getKey(), httpHeader.getValue()));
 
 			ClientHttpResponse response = execution.execute(request, body);
 
 			try {
-				logDebug("HTTP Response Status Code [{}] Message [{}]",
-					response.getStatusCode().value(), response.getStatusText());
-			}
-			catch (IOException cause) {
+				logDebug("HTTP Response Status Code [{}] Message [{}]", response.getStatusCode().value(),
+						response.getStatusText());
+			} catch (IOException cause) {
 				logDebug("Error occurred getting HTTP Response Status Code and Message", cause);
 			}
 
@@ -164,15 +161,15 @@ public class AutoConfiguredAuthenticationConfiguration {
 		return restTemplate -> restTemplate.getInterceptors().add(loggingAwareClientHttpRequestInterceptor());
 	}
 
-	@NonNull ClientHttpRequestInterceptor securityAwareClientHttpRequestInterceptor() {
+	@NonNull
+	ClientHttpRequestInterceptor securityAwareClientHttpRequestInterceptor() {
 
 		return (request, body, execution) -> {
 
 			URI uri = request.getURI();
 
-			PasswordAuthentication passwordAuthentication =
-				Authenticator.requestPasswordAuthentication(uri.getHost(), null, uri.getPort(),
-					HTTP_PROTOCOL, null, uri.getScheme());
+			PasswordAuthentication passwordAuthentication = Authenticator.requestPasswordAuthentication(uri.getHost(), null,
+					uri.getPort(), HTTP_PROTOCOL, null, uri.getScheme());
 
 			if (passwordAuthentication != null) {
 
@@ -209,19 +206,18 @@ public class AutoConfiguredAuthenticationConfiguration {
 	public ClientCacheConfigurer authenticationInitializingClientCacheConfigurer(
 			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
 
-		return (beanName, clientCacheFactoryBean) ->
-			initializeMemberAuthentication(clientCacheFactoryBean.getProperties(), authentication);
+		return (beanName, clientCacheFactoryBean) -> initializeMemberAuthentication(clientCacheFactoryBean.getProperties(),
+				authentication);
 	}
 
 	private void initializeMemberAuthentication(Properties gemfireProperties,
 			@Nullable Authentication<String, String> authentication) {
 
-		Optional.ofNullable(gemfireProperties)
-			.filter(properties -> isAuthenticationRequested(authentication))
-			.ifPresent(properties -> {
-				properties.setProperty(SECURITY_CLIENT_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
-				properties.setProperty(SECURITY_PEER_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
-			});
+		Optional.ofNullable(gemfireProperties).filter(properties -> isAuthenticationRequested(authentication))
+				.ifPresent(properties -> {
+					properties.setProperty(SECURITY_CLIENT_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
+					properties.setProperty(SECURITY_PEER_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
+				});
 	}
 
 	private boolean isAuthenticationRequested(@Nullable Authentication<?, ?> authentication) {
@@ -232,8 +228,7 @@ public class AutoConfiguredAuthenticationConfiguration {
 
 		public static final boolean DEFAULT_ENABLED = true;
 
-		public static final String SECURITY_AUTH_AUTO_CONFIGURATION_ENABLED =
-			"spring.data.gemfire.security.auth.auto-configuration-enabled";
+		public static final String SECURITY_AUTH_AUTO_CONFIGURATION_ENABLED = "spring.data.gemfire.security.auth.auto-configuration-enabled";
 
 		private static boolean isEnabled(@NonNull Environment environment) {
 			return environment.getProperty(SECURITY_AUTH_AUTO_CONFIGURATION_ENABLED, Boolean.class, DEFAULT_ENABLED);
@@ -246,7 +241,7 @@ public class AutoConfiguredAuthenticationConfiguration {
 
 		@Override
 		public boolean matches(@NonNull ConditionContext conditionContext,
-			@NonNull AnnotatedTypeMetadata annotatedTypeMetadata) {
+				@NonNull AnnotatedTypeMetadata annotatedTypeMetadata) {
 
 			return isEnabled(conditionContext.getEnvironment());
 		}
