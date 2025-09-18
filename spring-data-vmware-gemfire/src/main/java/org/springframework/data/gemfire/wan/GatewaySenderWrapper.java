@@ -1,16 +1,17 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.wan;
 
-import java.util.List;
-
+import org.apache.geode.cache.wan.GatewayEventFailureListener;
 import org.apache.geode.cache.wan.GatewayEventFilter;
 import org.apache.geode.cache.wan.GatewayEventSubstitutionFilter;
 import org.apache.geode.cache.wan.GatewaySender;
 import org.apache.geode.cache.wan.GatewayTransportFilter;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * {@link GatewaySenderWrapper} is an {@literal Adapter} around an Apache Geode {@link GatewaySender}
@@ -140,6 +141,11 @@ public class GatewaySenderWrapper implements GatewaySender {
 	@Override
 	public boolean getEnforceThreadsConnectSameReceiver() {
 		return this.delegate.getEnforceThreadsConnectSameReceiver();
+	}
+
+	@Override
+	public GatewayEventFailureListener getGatewayEventFailureListener() {
+		return null;
 	}
 
 	/**
