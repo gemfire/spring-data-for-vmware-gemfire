@@ -1,18 +1,12 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.xml;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Properties;
-
+import org.apache.geode.pdx.PdxSerializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.pdx.PdxSerializer;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +16,10 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Properties;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration Tests for {@link ClientCacheParser}.
@@ -82,7 +80,7 @@ public class ClientCacheNamespaceIntegrationTests extends IntegrationTestsSuppor
 			applicationContext.getBean("&client-cache-with-name", ClientCacheFactoryBean.class);
 
 		assertThat(clientCacheFactoryBean.getCacheXml()).isNull();
-		assertThat(clientCacheFactoryBean.getProperties()).isNull();
+		assertThat(clientCacheFactoryBean.getProperties()).isEmpty();
 	}
 
 	@Test
@@ -97,6 +95,6 @@ public class ClientCacheNamespaceIntegrationTests extends IntegrationTestsSuppor
 
 		assertThat(cacheXmlResource.getFilename()).isEqualTo("gemfire-client-cache.xml");
 
-		assertThat(clientCacheFactoryBean.getProperties()).isNull();
+		assertThat(clientCacheFactoryBean.getProperties()).isEmpty();
 	}
 }

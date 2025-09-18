@@ -1,26 +1,23 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.xml;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Iterator;
-
+import org.apache.geode.cache.client.Pool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.client.Pool;
-
 import org.springframework.data.gemfire.TestUtils;
 import org.springframework.data.gemfire.client.PoolAdapter;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Iterator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration Tests for {@link PoolParser} and {@link PoolFactoryBean}.
@@ -38,7 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.springframework.test.context.junit4.SpringRunner
  */
 @RunWith(SpringRunner.class)
-@GemFireUnitTest
+
 @SuppressWarnings("unused")
 public class PoolNamespaceIntegrationTests extends IntegrationTestsSupport {
 
