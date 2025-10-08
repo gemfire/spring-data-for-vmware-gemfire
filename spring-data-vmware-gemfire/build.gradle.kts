@@ -66,7 +66,9 @@ dependencies {
   api(libs.spring.context.support)
   api(libs.spring.tx)
   api(libs.spring.web)
-  api(libs.spring.data.commons)
+  api(libs.spring.data.commons){
+    exclude(group = "org.slf4j", module = "slf4j-api")
+  }
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
   implementation(libs.bundles.jackson)

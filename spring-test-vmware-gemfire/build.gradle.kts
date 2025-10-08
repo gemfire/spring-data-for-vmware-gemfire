@@ -51,13 +51,15 @@ dependencies {
 
     implementation(libs.annotation.api)
 
-    implementation(libs.logback)
+    compileOnly(libs.logback)
 
     compileOnly(libs.spring.boot) {
         exclude("org.springframework.boot", "spring-boot-starter-logging")
     }
 
     compileOnly(libs.bundles.gemfire)
+
+    testImplementation(libs.logback)
 
     testImplementation(libs.bundles.gemfire)
 
