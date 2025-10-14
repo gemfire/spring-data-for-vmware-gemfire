@@ -151,8 +151,6 @@ public class GemfirePersistentEntityUnitTests {
 
       assertThat(expected).hasMessage("Cannot create PersistentEntity for 'org.springframework.data.gemfire.mapping.GemfirePersistentEntityUnitTests$AmbiguousIdAnnotatedFieldAndIdAnnotatedPropertyEntity'").hasCause(cause);
 
-			assertThat(expected).hasNoCause();
-
 			throw expected;
 		}
 	}
