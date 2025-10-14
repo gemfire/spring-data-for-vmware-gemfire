@@ -146,10 +146,10 @@ public class GemfirePersistentEntityUnitTests {
 		}
 		catch (MappingException expected) {
 
-      assertThat(expected).hasMessage("Cannot create PersistentEntity for 'org.springframework.data.gemfire.mapping.GemfirePersistentEntityUnitTests$AmbiguousIdAnnotatedFieldAndIdAnnotatedPropertyEntity'");
+      MappingException cause = new MappingException("Attempt to add explicit id property [ssn] but already have id property [id] registered as explicit;"
+          + " Please check your object ["+entity.getClass().getName()+"] mapping configuration");
 
-			assertThat(expected.getCause()).hasMessage("Attempt to add explicit id property [ssn] but already have id property [id] registered as explicit;"
-				+ " Please check your object [%s] mapping configuration", entity.getClass().getName());
+      assertThat(expected).hasMessage("Cannot create PersistentEntity for 'org.springframework.data.gemfire.mapping.GemfirePersistentEntityUnitTests$AmbiguousIdAnnotatedFieldAndIdAnnotatedPropertyEntity'").hasCause(cause);
 
 			assertThat(expected).hasNoCause();
 
