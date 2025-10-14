@@ -1,21 +1,20 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 import org.junit.Test;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.data.mapping.IdentifierAccessor;
 import org.springframework.data.mapping.MappingException;
 import org.springframework.data.util.TypeInformation;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link GemfirePersistentEntity}.
@@ -147,7 +146,9 @@ public class GemfirePersistentEntityUnitTests {
 		}
 		catch (MappingException expected) {
 
-			assertThat(expected).hasMessage("Attempt to add explicit id property [ssn] but already have id property [id] registered as explicit;"
+      assertThat(expected).hasMessage("Cannot create PersistentEntity for 'org.springframework.data.gemfire.mapping.GemfirePersistentEntityUnitTests$AmbiguousIdAnnotatedFieldAndIdAnnotatedPropertyEntity'");
+
+			assertThat(expected.getCause()).hasMessage("Attempt to add explicit id property [ssn] but already have id property [id] registered as explicit;"
 				+ " Please check your object [%s] mapping configuration", entity.getClass().getName());
 
 			assertThat(expected).hasNoCause();
