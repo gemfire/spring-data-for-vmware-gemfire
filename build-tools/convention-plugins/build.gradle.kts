@@ -16,7 +16,7 @@ repositories {
 dependencies {
   implementation(libs.kotlin)
   implementation(gradleApi())
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.10")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
   implementation("org.jfrog.buildinfo:build-info-extractor-gradle:5.2.2")
 }
 
