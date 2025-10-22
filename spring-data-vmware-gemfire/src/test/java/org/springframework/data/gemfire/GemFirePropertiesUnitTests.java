@@ -48,7 +48,8 @@ public class GemFirePropertiesUnitTests {
         "jmx-manager-start",
         "jmx-manager-update-rate",
         "disable-jmx",
-        "ssl-jmx-alias"
+        "ssl-jmx-alias",
+        "use-udp-membership-messenger"
     );
 
     private static final Set<String> deprecatedGemFireProperties = Set.of(
