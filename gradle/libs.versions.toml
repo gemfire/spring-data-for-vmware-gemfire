@@ -1,6 +1,6 @@
 [versions]
 annotationApiVersion = "2.1.1"
-antlrVersion = "2.7.7"
+antlrVersion = "2.7.6"
 aspectJVersion = "1.9.22.1"
 assertJVersion = "3.26.3"
 awaitilityVersion = "4.2.2"
@@ -12,21 +12,19 @@ googleCloudStorageVersion = "2.45.0"
 interceptorApiVersion = "1.2.2"
 jUnitJupiterVersion = "5.11.4"
 jUnitVersion = "4.13.2"
-jacksonVersion = "2.18.2"
-log4JVersion = "2.24.2"
-logbackVersion = "1.5.19"
+jacksonVersion = "2.20.0"
+jacksonAnnotationVersion = "2.18.5"
+log4JVersion = "2.24.3"
+logbackVersion = "1.5.20"
 lombokPluginVersion = "8.11"
 lombokVersion = "1.18.42"
 mockitoVersion = "5.14.2"
 multithreadedTCVersion = "1.01"
 openWebBeansVersion = "2.0.28"
 snappyVersion = "0.4"
-springBootVersion = "3.5.6"
-springDataVersion = "3.5.4"
-springFrameworkVersion = "6.2.11"
-springDependencyManagementVersion = "1.1.7"
+springBootVersion = "3.5.7"
 springShellVersion = "1.2.0.RELEASE"
-springShiroVersion = "2.0.4"
+springShiroVersion = "2.0.5"
 versionCatalogUpdateVersion = "0.8.5"
 versionsVersion = "0.50.0"
 
@@ -43,7 +41,7 @@ spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 aspectJ = { module = "org.aspectj:aspectjweaver", version.ref = "aspectJVersion" }
-jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
+jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotationVersion" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
 antlr = { module = "antlr:antlr", version.ref = "antlrVersion" }
 cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
