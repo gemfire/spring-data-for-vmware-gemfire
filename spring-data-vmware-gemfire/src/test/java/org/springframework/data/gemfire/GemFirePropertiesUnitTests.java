@@ -4,7 +4,9 @@
  */
 package org.springframework.data.gemfire;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.geode.distributed.ConfigurationProperties;
+import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,9 +15,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.geode.distributed.ConfigurationProperties;
-import org.junit.Test;
-import org.springframework.util.ReflectionUtils;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link GemFireProperties}.
@@ -74,7 +74,8 @@ public class GemFirePropertiesUnitTests {
             "security-client-dhalgo", // use SSL instead
 				    "security-peer-authenticator", // replaced by SecurityManager
 				    "distributed-transactions", // being removed
-            "statistic-sampling-enabled"
+            "statistic-sampling-enabled",
+            "security-shiro-init"
     );
 
     private Set<String> resolveActualGemFirePropertyNames() {

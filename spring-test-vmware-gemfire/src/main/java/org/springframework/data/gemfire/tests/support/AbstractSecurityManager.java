@@ -1,15 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright 2017-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.support;
 
-import java.util.Properties;
-
 import org.apache.geode.security.AuthenticationFailedException;
 import org.apache.geode.security.ResourcePermission;
 
-import org.apache.shiro.authz.AuthorizationException;
+import java.util.Properties;
 
 /**
  * The {@link AbstractSecurityManager} class is an abstract base class supporting implementations of
@@ -23,7 +21,7 @@ import org.apache.shiro.authz.AuthorizationException;
 public abstract class AbstractSecurityManager implements org.apache.geode.security.SecurityManager {
 
 	@Override
-	public void init(Properties securityProps) { }
+	public void init(Properties securityProps) {}
 
 	@Override
 	public Object authenticate(Properties credentials) throws AuthenticationFailedException {
@@ -32,10 +30,10 @@ public abstract class AbstractSecurityManager implements org.apache.geode.securi
 
 	@Override
 	public boolean authorize(Object principal, ResourcePermission permission) {
-		throw new AuthorizationException("Not Authorized");
+		throw new AuthenticationFailedException("Not Authorized");
 	}
 
 	@Override
-	public void close() { }
+	public void close() {}
 
 }

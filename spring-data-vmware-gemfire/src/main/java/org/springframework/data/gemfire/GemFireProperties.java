@@ -4,17 +4,17 @@
  */
 package org.springframework.data.gemfire;
 
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
-import java.io.File;
-import java.util.Arrays;
-
 import org.apache.geode.distributed.ConfigurationProperties;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
+
+import java.io.File;
+import java.util.Arrays;
+
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 
 /**
  * An Enum (enumeration) of Apache Geode {@literal gemfire.properties}.
@@ -75,6 +75,7 @@ public enum GemFireProperties {
 	SECURITY_PEER_AUTH_INIT(ConfigurationProperties.SECURITY_PEER_AUTH_INIT, String.class),
 	SECURITY_PEER_VERIFY_MEMBER_TIMEOUT(ConfigurationProperties.SECURITY_PEER_VERIFY_MEMBER_TIMEOUT, Long.class, 1000L),
 	SECURITY_POST_PROCESSOR(ConfigurationProperties.SECURITY_POST_PROCESSOR, String.class),
+	@Deprecated
 	SECURITY_SHIRO_INIT(ConfigurationProperties.SECURITY_SHIRO_INIT, String.class),
 	SECURITY_UDP_DHALO(ConfigurationProperties.SECURITY_UDP_DHALGO, String.class),
 	SERIALIZABLE_OBJECT_FILTER(ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER, String.class, "!*"),
