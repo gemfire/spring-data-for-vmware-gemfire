@@ -4,23 +4,13 @@
  */
 package org.springframework.data.gemfire.mapping;
 
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Optional;
-
 import org.apache.geode.DataSerializable;
 import org.apache.geode.Instantiator;
 import org.apache.geode.cache.Cache;
@@ -40,14 +30,22 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.core.TypeInformation;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.repository.sample.Address;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.EntityInstantiator;
-import org.springframework.data.util.TypeInformation;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.Optional;
 
 /**
  * Integration Tests for {@link MappingPdxSerializer}.
