@@ -45,7 +45,7 @@ import org.springframework.data.gemfire.repository.sample.Address;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.EntityInstantiator;
-import org.springframework.data.util.TypeInformation;
+import org.springframework.data.core.TypeInformation;
 
 import com.vmware.gemfire.testcontainers.GemFireCluster;
 
