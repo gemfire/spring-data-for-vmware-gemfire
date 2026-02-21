@@ -63,7 +63,6 @@ public enum GemFireProperties {
 	MEMBER_TIMEOUT(ConfigurationProperties.MEMBER_TIMEOUT, Long.class, 5000L),
 	MEMBERSHIP_PORT_RANGE(ConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(ConfigurationProperties.NAME, String.class),
-	OFF_HEAP_MEMORY_SIZE(ConfigurationProperties.OFF_HEAP_MEMORY_SIZE, Integer.class),
 	REDUNDANCY_ZONE(ConfigurationProperties.REDUNDANCY_ZONE, String.class),
 	REMOTE_LOCATORS(ConfigurationProperties.REMOTE_LOCATORS, String.class),
 	REMOVE_UNRESPONSIVE_CLIENT(ConfigurationProperties.REMOVE_UNRESPONSIVE_CLIENT, Boolean.class, false),
