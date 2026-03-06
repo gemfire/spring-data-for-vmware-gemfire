@@ -16,8 +16,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -468,12 +469,8 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 			if (ArchiveFileFilter.INSTANCE.accept(file)) {
 				try {
 
-					File extractedArchiveDirectory =
-						new File(TEMPORARY_DIRECTORY, file.getName().replaceAll("\\.", "-"));
-
-					Assert.state(extractedArchiveDirectory.isDirectory() || extractedArchiveDirectory.mkdirs(),
-						String.format("Failed create directory (%1$s) in which to extract archive (%2$s)",
-							extractedArchiveDirectory, file));
+					String dirPrefix = file.getName().replaceAll("\\.", "-");
+					File extractedArchiveDirectory = Files.createTempDirectory(dirPrefix).toFile();
 
 					ZipFile zipFile = (ArchiveFileFilter.INSTANCE.isJarFile(file)
 						? new JarFile(file, false, JarFile.OPEN_READ)
@@ -484,15 +481,17 @@ public class SnapshotServiceFactoryBean<K, V> extends AbstractFactoryBeanSupport
 
 							DataInputStream entryInputStream = new DataInputStream(zipFile.getInputStream(entry));
 
-							DataOutputStream entryOutputStream = new DataOutputStream(new FileOutputStream(
-								new File(extractedArchiveDirectory, toSimpleFilename(entry.getName()))));
+							OutputStream entryOutputStream = Files.newOutputStream(
+								new File(extractedArchiveDirectory, toSimpleFilename(entry.getName())).toPath());
+
+							DataOutputStream dataEntryOutputStream = new DataOutputStream(entryOutputStream);
 
 							try {
-								FileCopyUtils.copy(entryInputStream, entryOutputStream);
+								FileCopyUtils.copy(entryInputStream, dataEntryOutputStream);
 							}
 							finally {
 								exceptionSuppressingClose(entryInputStream);
-								exceptionSuppressingClose(entryOutputStream);
+								exceptionSuppressingClose(dataEntryOutputStream);
 							}
 						}
 					}

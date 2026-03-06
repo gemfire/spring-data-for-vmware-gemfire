@@ -8,9 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.data.gemfire.snapshot.SnapshotServiceFactoryBean.SnapshotServiceAdapterSupport;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -69,11 +72,21 @@ public class SnapshotServiceFactoryBeanIntegrationTests {
 			assertThat(toFilenames(actualSnapshots).containsAll(Arrays.asList(
 				"accounts.snapshot", "address.snapshot", "people.snapshot"))).isTrue();
 
-			cacheSnapshotZipDirectory = new File(System.getProperty("java.io.tmpdir"),
-				cacheSnapshotZip.getName().replaceAll("\\.", "-"));
+			cacheSnapshotZipDirectory = actualSnapshots[0].getParentFile();
+			String expectedPrefix = cacheSnapshotZip.getName().replaceAll("\\.", "-");
 
 			assertThat(cacheSnapshotZipDirectory.isDirectory()).isTrue();
+			assertThat(cacheSnapshotZipDirectory.getName()).startsWith(expectedPrefix);
 			assertThat(cacheSnapshotZipDirectory.listFiles(FileSystemUtils.FileOnlyFilter.INSTANCE)).isEqualTo(actualSnapshots);
+
+			if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+				Set<PosixFilePermission> permissions = Files.getPosixFilePermissions(cacheSnapshotZipDirectory.toPath());
+				assertThat(permissions).containsExactlyInAnyOrder(
+					PosixFilePermission.OWNER_READ,
+					PosixFilePermission.OWNER_WRITE,
+					PosixFilePermission.OWNER_EXECUTE
+				);
+			}
 		}
 		finally {
 			if (cacheSnapshotZipDirectory != null && cacheSnapshotZipDirectory.isDirectory()) {
