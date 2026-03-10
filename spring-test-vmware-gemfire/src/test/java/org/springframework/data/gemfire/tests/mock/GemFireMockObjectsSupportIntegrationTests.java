@@ -102,7 +102,6 @@ public class GemFireMockObjectsSupportIntegrationTests extends IntegrationTestsS
 				GemFireMockObjectsSupport.spyOn(new ClientCacheFactory(gemfireProperties));
 
 			mockCacheFactory.set("groups", "qa,test,testers");
-			mockCacheFactory.set("conserve-sockets", "true");
 
 			ClientCache mockCache = mockCacheFactory.create();
 
@@ -112,13 +111,12 @@ public class GemFireMockObjectsSupportIntegrationTests extends IntegrationTestsS
 			Properties actualGemFireProperties = mockCache.getDistributedSystem().getProperties();
 
 			assertThat(actualGemFireProperties).isNotNull();
-			assertThat(actualGemFireProperties).hasSize(6);
+			assertThat(actualGemFireProperties).hasSize(5);
 			assertThat(actualGemFireProperties.getProperty("name")).isEqualTo("TestStoresGemFirePropertiesSuccessfully");
 			assertThat(actualGemFireProperties.getProperty("log-level")).isEqualTo("config");
 			assertThat(actualGemFireProperties.getProperty("locators")).isEqualTo("skullbox[12345]");
 			assertThat(actualGemFireProperties.getProperty("jmx-manager-port")).isEqualTo("1199");
 			assertThat(actualGemFireProperties.getProperty("groups")).isEqualTo("qa,test,testers");
-			assertThat(actualGemFireProperties.getProperty("conserve-sockets")).isEqualTo("true");
 		}
 		finally {
 			System.clearProperty("gemfire.name");

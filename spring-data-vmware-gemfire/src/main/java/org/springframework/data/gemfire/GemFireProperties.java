@@ -34,6 +34,7 @@ public enum GemFireProperties {
 	BIND_ADDRESS(ConfigurationProperties.BIND_ADDRESS, String.class),
 	CACHE_XML_FILE(ConfigurationProperties.CACHE_XML_FILE, String.class),
 	CONFLATE_EVENTS(ConfigurationProperties.CONFLATE_EVENTS, String.class, "server"),
+	@Deprecated
 	CONSERVE_SOCKETS(ConfigurationProperties.CONSERVE_SOCKETS, Boolean.class, true),
 	DELTA_PROPAGATION(ConfigurationProperties.DELTA_PROPAGATION, Boolean.class, true),
 	DEPLOY_WORKING_DIRECTORY(ConfigurationProperties.DEPLOY_WORKING_DIR, File.class, new File(".")),

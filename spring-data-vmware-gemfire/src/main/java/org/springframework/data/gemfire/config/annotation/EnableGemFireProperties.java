@@ -103,7 +103,9 @@ public @interface EnableGemFireProperties {
 	 * for GemFire members that participate in a WAN deployment.
 	 *
 	 * Defaults to {@literal true}.
+	 * @deprecated The {@literal conserve-sockets} property has been deprecated in GemFire.
 	 */
+	@Deprecated
 	boolean conserveSockets() default GemFirePropertiesConfiguration.DEFAULT_CONSERVE_SOCKETS;
 
 	/**

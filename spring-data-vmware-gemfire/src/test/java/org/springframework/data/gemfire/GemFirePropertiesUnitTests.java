@@ -73,6 +73,7 @@ public class GemFirePropertiesUnitTests {
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
 				    "security-peer-authenticator", // replaced by SecurityManager
+				    "conserve-sockets", // deprecated in GemFire 10.3
 				    "distributed-transactions", // being removed
             "statistic-sampling-enabled",
             "security-shiro-init"
