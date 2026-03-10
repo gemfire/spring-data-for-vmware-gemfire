@@ -24,6 +24,7 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  */
 public class GemFirePropertiesConfiguration extends EmbeddedServiceConfigurationSupport {
 
+	@Deprecated
 	public static final boolean DEFAULT_CONSERVE_SOCKETS = true;
 	public static final boolean DEFAULT_DELTA_PROPAGATION = true;
 	public static final boolean DEFAULT_DISABLE_TCP = false;
@@ -93,9 +94,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 		gemfireProperties.setPropertyIfNotDefault("conflate-events",
 			annotationAttributes.get("conflateEvents"), DEFAULT_CONFLATE_EVENTS);
-
-		gemfireProperties.setPropertyIfNotDefault("conserve-sockets",
-			annotationAttributes.get("conserveSockets"), DEFAULT_CONSERVE_SOCKETS);
 
 		gemfireProperties.setPropertyIfNotDefault("delta-propagation",
 			annotationAttributes.get("deltaPropagation"), DEFAULT_DELTA_PROPAGATION);
