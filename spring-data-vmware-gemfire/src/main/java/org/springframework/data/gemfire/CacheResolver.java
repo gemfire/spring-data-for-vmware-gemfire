@@ -1,29 +1,36 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import java.util.function.Supplier;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 /**
- * Strategy interface for resolving a instance reference to a {@link ClientCache}.
+ * Strategy interface for resolving a instance reference to a {@link GudClientCache}.
  *
  * @author John Blum
- * @param <T> {@link Class subclass} of {@link ClientCache}.
+ * @param <T> {@link Class subclass} of {@link GudClientCache}.
  * @see Supplier
- * @see ClientCache
- * @see org.apache.geode.cache.client.ClientCache
+ * @see GudClientCache
  * @since 2.3.0
  */
 @FunctionalInterface
-public interface CacheResolver<T extends ClientCache> extends Supplier<T> {
+public interface CacheResolver<T extends GudClientCache> extends Supplier<T> {
 
 	/**
-	 * Gets the resolved instance of the {@link ClientCache}.
+	 * Gets the resolved instance of the {@link GudClientCache}.
 	 *
-	 * @return the resolved instance of the {@link ClientCache}.
+	 * @return the resolved instance of the {@link GudClientCache}.
 	 * @see #resolve()
 	 */
 	@Override
@@ -32,9 +39,9 @@ public interface CacheResolver<T extends ClientCache> extends Supplier<T> {
 	}
 
 	/**
-	 * Resolves the instance reference to the {@link ClientCache} implementation.
+	 * Resolves the instance reference to the {@link GudClientCache} implementation.
 	 *
-	 * @return a instance reference to a {@link ClientCache} implementation.
+	 * @return a instance reference to a {@link GudClientCache} implementation.
 	 */
 	T resolve();
 

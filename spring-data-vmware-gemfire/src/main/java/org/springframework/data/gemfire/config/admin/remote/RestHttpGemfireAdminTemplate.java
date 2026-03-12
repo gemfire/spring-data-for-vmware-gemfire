@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.admin.remote;
 
 import java.io.IOException;
@@ -14,11 +22,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.execute.Function;
-
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.NetworkUtils;
@@ -43,14 +50,14 @@ import org.springframework.web.client.RestTemplate;
  * extending the {@link FunctionGemfireAdminTemplate} to support administrative (management) operations
  * on a Pivotal GemFire or Apache Geode cluster using the Management REST API interface over HTTP.
  *
- * The fallback is using {@link Function} execution if the a particular administrative (management) operation
+ * The fallback is using {@link GudFunction} execution if the a particular administrative (management) operation
  * is not supported or has not been implemented against the Management REST API interface over HTTP.
  *
  * @author John Blum
  * @see HttpURLConnection
  * @see URI
- * @see ClientCache
- * @see Function
+ * @see GudClientCache
+ * @see GudFunction
  * @see GemfireAdminOperations
  * @see FunctionGemfireAdminTemplate
  * @see HttpHeaders
@@ -65,7 +72,7 @@ import org.springframework.web.client.RestTemplate;
  * @see RestTemplate
  * @since 2.0.0
  */
-public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
+public abstract class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 
 	protected static final boolean DEFAULT_CREATE_REGION_SKIP_IF_EXISTS = true;
 	protected static final boolean DEFAULT_HTTP_FOLLOW_REDIRECTS = true;
@@ -88,28 +95,28 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	private final String managementRestApiUrl;
 
 	/**
-	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link ClientCache}
+	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link GudClientCache}
 	 * and configured with the default HTTP schema, host and port when accessing the Apache Geode or Pivotal GemFire
 	 * Management REST API interface.
 	 *
-	 * @param clientCache reference to the {@link ClientCache}.
-	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
-	 * @see #RestHttpGemfireAdminTemplate(ClientCache, String, String, int, boolean, List)
-	 * @see ClientCache
+	 * @param clientCache reference to the {@link GudClientCache}.
+	 * @throws IllegalArgumentException if {@link GudClientCache} is {@literal null}.
+	 * @see #RestHttpGemfireAdminTemplate(GudClientCache, String, String, int, boolean, List)
+	 * @see GudClientCache
 	 */
-	public RestHttpGemfireAdminTemplate(ClientCache clientCache) {
+	public RestHttpGemfireAdminTemplate(GudClientCache clientCache) {
 
 		this(clientCache, DEFAULT_SCHEME, DEFAULT_HOST, DEFAULT_PORT, DEFAULT_HTTP_FOLLOW_REDIRECTS,
 			Collections.emptyList());
 	}
 
 	/**
-	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link ClientCache}
+	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link GudClientCache}
 	 * and configured with the specified HTTP scheme, host, port, redirects and
 	 * {@link ClientHttpRequestInterceptor ClientHttpRequestInterceptors}
 	 * when accessing the Apache Geode or Pivotal GemFire Management REST API interface.
 	 *
-	 * @param clientCache reference to the {@link ClientCache}
+	 * @param clientCache reference to the {@link GudClientCache}
 	 * @param scheme {@link String} specifying the HTTP scheme to use (e.g. HTTP or HTTPS).
 	 * @param host {@link String} containing the hostname of the GemFire/Geode Manager.
 	 * @param port integer value specifying the port on which the GemFire/Geode Manager HTTP Service is listening
@@ -117,23 +124,23 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param followRedirects boolean indicating whether HTTP Redirects (with HTTP Status Code 3xx) should be followed.
 	 * @param clientHttpRequestInterceptors {@link List} of {@link ClientHttpRequestInterceptor} used to intercept
 	 * and decorate the HTTP request and HTTP response.
-	 * @throws IllegalArgumentException if the {@link ClientCache} reference is {@literal null}.
+	 * @throws IllegalArgumentException if the {@link GudClientCache} reference is {@literal null}.
 	 * @see ClientHttpRequestInterceptor
-	 * @see ClientCache
+	 * @see GudClientCache
 	 */
-	public RestHttpGemfireAdminTemplate(ClientCache clientCache, String scheme, String host, int port,
+	public RestHttpGemfireAdminTemplate(GudClientCache clientCache, String scheme, String host, int port,
 			boolean followRedirects, List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors) {
 
 		this(clientCache, scheme, host, port, followRedirects, clientHttpRequestInterceptors, Collections.emptyList());
 	}
 
 	/**
-	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link ClientCache}
+	 * Constructs a new instance of {@link RestHttpGemfireAdminTemplate} initialized with the given {@link GudClientCache}
 	 * and configured with the specified HTTP scheme, host, port, redirects and
 	 * {@link ClientHttpRequestInterceptor ClientHttpRequestInterceptors}
 	 * when accessing the Apache Geode or Pivotal GemFire Management REST API interface.
 	 *
-	 * @param clientCache reference to the {@link ClientCache}
+	 * @param clientCache reference to the {@link GudClientCache}
 	 * @param scheme {@link String} specifying the HTTP scheme to use (e.g. HTTP or HTTPS).
 	 * @param host {@link String} containing the hostname of the GemFire/Geode Manager.
 	 * @param port integer value specifying the port on which the GemFire/Geode Manager HTTP Service is listening
@@ -141,15 +148,15 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 	 * @param followRedirects boolean indicating whether HTTP Redirects (with HTTP Status Code 3xx) should be followed.
 	 * @param clientHttpRequestInterceptors {@link List} of {@link ClientHttpRequestInterceptor} used to intercept
 	 * and decorate the HTTP request and HTTP response.
-	 * @throws IllegalArgumentException if the {@link ClientCache} reference is {@literal null}.
-	 * @see ClientCache
+	 * @throws IllegalArgumentException if the {@link GudClientCache} reference is {@literal null}.
+	 * @see GudClientCache
 	 * @see RestTemplateConfigurer
 	 * @see ClientHttpRequestInterceptor
 	 * @see #newClientHttpRequestFactory(boolean)
 	 * @see #newRestOperations(ClientHttpRequestFactory, List, List)
 	 * @see #resolveManagementRestApiUrl(String, String, int)
 	 */
-	public RestHttpGemfireAdminTemplate(ClientCache clientCache, String scheme, String host, int port,
+	public RestHttpGemfireAdminTemplate(GudClientCache clientCache, String scheme, String host, int port,
 			boolean followRedirects, List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors,
 			List<RestTemplateConfigurer> restTemplateConfigurers) {
 
@@ -241,13 +248,13 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 		return (T) this.restTemplate;
 	}
 
-	public static class Builder {
+	public abstract static class Builder {
 
 		private boolean followRedirects = DEFAULT_HTTP_FOLLOW_REDIRECTS;
 
 		private int port = DEFAULT_PORT;
 
-		private ClientCache clientCache;
+		private GudClientCache clientCache;
 
 		private final List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors = new ArrayList<>();
 		private final List<RestTemplateConfigurer> restTemplateConfigurers = new ArrayList<>();
@@ -287,7 +294,7 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 			return this;
 		}
 
-		public Builder with(ClientCache clientCache) {
+		public Builder with(GudClientCache clientCache) {
 			this.clientCache = clientCache;
 			return this;
 		}
@@ -339,10 +346,34 @@ public class RestHttpGemfireAdminTemplate extends FunctionGemfireAdminTemplate {
 			return this;
 		}
 
-		public RestHttpGemfireAdminTemplate build() {
+		public abstract RestHttpGemfireAdminTemplate build();
 
-			return new RestHttpGemfireAdminTemplate(this.clientCache, this.scheme, this.hostname, this.port,
-				this.followRedirects, this.clientHttpRequestInterceptors, this.restTemplateConfigurers);
+		protected GudClientCache getClientCache() {
+			return this.clientCache;
+		}
+
+		protected String getScheme() {
+			return this.scheme;
+		}
+
+		protected String getHostname() {
+			return this.hostname;
+		}
+
+		protected int getPort() {
+			return this.port;
+		}
+
+		protected boolean isFollowRedirects() {
+			return this.followRedirects;
+		}
+
+		protected List<ClientHttpRequestInterceptor> getClientHttpRequestInterceptors() {
+			return this.clientHttpRequestInterceptors;
+		}
+
+		protected List<RestTemplateConfigurer> getRestTemplateConfigurers() {
+			return this.restTemplateConfigurers;
 		}
 	}
 

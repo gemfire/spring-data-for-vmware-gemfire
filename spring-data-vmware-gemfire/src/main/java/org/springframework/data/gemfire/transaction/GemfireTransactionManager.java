@@ -1,17 +1,26 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.transaction;
 
 import static org.springframework.data.gemfire.transaction.GemfireTransactionManager.CacheHolder.newCacheHolder;
 import static org.springframework.data.gemfire.transaction.GemfireTransactionManager.CacheTransactionObject.newCacheTransactionObject;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.TransactionId;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudTransactionId;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudTransactionException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.transaction.NoTransactionException;
@@ -26,10 +35,10 @@ import org.springframework.util.Assert;
 
 /**
  * Local Transaction Management for Pivotal GemFire. Provides a Spring {@link PlatformTransactionManager} implementation
- * for the Pivotal GemFire {@link CacheTransactionManager}.
+ * for the Pivotal GemFire {@link GudCacheTransactionManager}.
  *
- * Binds one or multiple GemFire {@link Region Regions} for the specified {@link ClientCache} to the thread,
- * potentially allowing for one {@link Region} per {@link ClientCache} model.
+ * Binds one or multiple GemFire {@link GudRegion Regions} for the specified {@link GudClientCache} to the thread,
+ * potentially allowing for one {@link GudRegion} per {@link GudClientCache} model.
  *
  * <p>
  * This local strategy is an alternative to executing cache operations within JTA transactions.
@@ -38,17 +47,16 @@ import org.springframework.util.Assert;
  * with data access.
  *
  * <p>
- * By default, to prevent dirty reads, the {@link ClientCache} is configured to return copies rather then direct references
+ * By default, to prevent dirty reads, the {@link GudClientCache} is configured to return copies rather then direct references
  * for <code>get</code> data access operations. As a workaround, one could use explicitly deep copy objects before
  * making changes to them to avoid unnecessary copying on every fetch.
  *
  * @author Costin Leau
  * @author John Blum
- * @see org.apache.geode.CopyHelper#copy(Object)
- * @see ClientCache#setCopyOnRead(boolean)
- * @see CacheTransactionManager
- * @see Region
- * @see TransactionId
+ * @see GudClientCache#setCopyOnRead(boolean)
+ * @see GudCacheTransactionManager
+ * @see GudRegion
+ * @see GudTransactionId
  * @see InitializingBean
  * @see PlatformTransactionManager
  * @see TransactionDefinition
@@ -63,7 +71,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 	protected static final TimeUnit DEFAULT_RESUME_WAIT_TIME_UNIT = TimeUnit.SECONDS;
 
-	private ClientCache cache;
+	private GudClientCache cache;
 
 	private boolean copyOnRead = true;
 
@@ -78,13 +86,13 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 	/**
 	 * Constructs an instance of the {@link GemfireTransactionManager} initialized with
-	 * the given {@link ClientCache} reference.
+	 * the given {@link GudClientCache} reference.
 	 *
-	 * @param cache reference to the {@link ClientCache} associated with cache transactions.
-	 * @see ClientCache
+	 * @param cache reference to the {@link GudClientCache} associated with cache transactions.
+	 * @see GudClientCache
 	 * @see #afterPropertiesSet()
 	 */
-	public GemfireTransactionManager(ClientCache cache) {
+	public GemfireTransactionManager(GudClientCache cache) {
 
 		this.cache = cache;
 
@@ -129,18 +137,18 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 			CacheTransactionObject cacheTransaction = (CacheTransactionObject) transaction;
 
-			ClientCache cache = getCache();
+			GudClientCache cache = getCache();
 
 			if (logger.isDebugEnabled()) {
 				logger.debug(String.format("Acquired GemFire Cache [%s] for local cache transaction", cache));
 			}
 
-			CacheTransactionManager cacheTransactionManager = getCacheTransactionManager();
+			GudCacheTransactionManager cacheTransactionManager = getCacheTransactionManager();
 
 			// begin GemFire local cache transaction
 			cacheTransactionManager.begin();
 
-			TransactionId transactionId = cacheTransactionManager.getTransactionId();
+			GudTransactionId transactionId = cacheTransactionManager.getTransactionId();
 
 			if (transactionId != null) {
 				TransactionSynchronizationManager.bindResource(cache,
@@ -167,7 +175,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 			getCacheTransactionManager().commit();
 		}
-		catch (org.apache.geode.cache.TransactionException cause) {
+		catch (GudTransactionException cause) {
 			throw new GemfireTransactionCommitException(
 				"Unexpected failure occurred on commit of local cache transaction", cause);
 		}
@@ -260,36 +268,36 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * Sets a reference to the {@link ClientCache} for which this transaction manager
+	 * Sets a reference to the {@link GudClientCache} for which this transaction manager
 	 * manages local cache transactions.
 	 *
-	 * @param cache reference to the {@link ClientCache}.
-	 * @see ClientCache
+	 * @param cache reference to the {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
-	public void setCache(ClientCache cache) {
+	public void setCache(GudClientCache cache) {
 		this.cache = cache;
 	}
 
 	/**
-	 * Returns a reference to the {@link ClientCache} for which this transaction manager
+	 * Returns a reference to the {@link GudClientCache} for which this transaction manager
 	 * manages local cache transactions.
 	 *
-	 * @return a reference to the {@link ClientCache}.
-	 * @see ClientCache
+	 * @return a reference to the {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
-	public ClientCache getCache() {
+	public GudClientCache getCache() {
 		return this.cache;
 	}
 
 	/**
-	 * Returns a reference to the {@link CacheTransactionManager} used by Apache Geode to manage local,
+	 * Returns a reference to the {@link GudCacheTransactionManager} used by Apache Geode to manage local,
 	 * cache transactions.
 	 *
-	 * @return a reference to the {@link CacheTransactionManager}.
-	 * @see CacheTransactionManager
+	 * @return a reference to the {@link GudCacheTransactionManager}.
+	 * @see GudCacheTransactionManager
 	 * @see #getCache()
 	 */
-	protected CacheTransactionManager getCacheTransactionManager() {
+	protected GudCacheTransactionManager getCacheTransactionManager() {
 		return getCache().getCacheTransactionManager();
 	}
 
@@ -298,8 +306,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * While copies imply additional work for every fetch operation, direct object references can
 	 * cause dirty reads across concurrent threads in the same VM, whether or not transactions are used.
 	 *
-	 * One could explicitly deep copy objects before making changes (for example by using
-	 * {@link org.apache.geode.CopyHelper#copy(Object)} in which case this setting
+	 * One could explicitly deep copy objects before making changes in which case this setting
 	 * can be set to <code>false</code>
 	 *
 	 * However, unless there is a measurable performance penalty, the recommendation is
@@ -323,19 +330,19 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	}
 
 	/**
-	 * Sets the GemFire cache {@link Region} as an alternative in setting in the {@link ClientCache} directly.
+	 * Sets the GemFire cache {@link GudRegion} as an alternative in setting in the {@link GudClientCache} directly.
 	 *
-	 * @param <K> {@link Class} type of the {@link Region} key.
-	 * @param <V> {@link Class} type of the {@link Region} value.
-	 * @param region GemFire cache {@link Region} directly involved in the local cache transaction.
-	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @param <K> {@link Class} type of the {@link GudRegion} key.
+	 * @param <V> {@link Class} type of the {@link GudRegion} value.
+	 * @param region GemFire cache {@link GudRegion} directly involved in the local cache transaction.
+	 * @throws IllegalArgumentException if {@link GudRegion} is {@literal null}.
+	 * @see GudRegion
 	 */
-	public <K, V> void setRegion(Region<K, V> region) {
+	public <K, V> void setRegion(GudRegion<K, V> region) {
 
 		Assert.notNull(region, "Region must not be null");
 
-		this.cache = (ClientCache) region.getRegionService();
+		this.cache = (GudClientCache) region.getRegionService();
 	}
 
 	/**
@@ -350,7 +357,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Sets the timeout used to wait for the GemFire cache transaction to resume.
 	 *
 	 * @param resumeWaitTime long value with the timeout used to wait for the GemFire cache transaction to resume.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see GudCacheTransactionManager#tryResume(GudTransactionId, long, TimeUnit)
 	 */
 	public void setResumeWaitTime(Long resumeWaitTime) {
 		this.resumeWaitTime = resumeWaitTime;
@@ -360,7 +367,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Returns the timeout used to wait for the GemFire cache transaction to resume.
 	 *
 	 * @return the long value with the timeout used to wait for the GemFire cache transaction to resume.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see GudCacheTransactionManager#tryResume(GudTransactionId, long, TimeUnit)
 	 */
 	protected Long getResumeWaitTime() {
 		return this.resumeWaitTime;
@@ -371,7 +378,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 *
 	 * @return a boolean value to indicate whether the user specified a wait time
 	 * for resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see GudCacheTransactionManager#tryResume(GudTransactionId, long, TimeUnit)
 	 * @see #getResumeWaitTime()
 	 */
 	protected boolean isResumeWaitTimeSet() {
@@ -385,7 +392,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Sets the {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
 	 *
 	 * @param resumeWaitTimeUnit {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see GudCacheTransactionManager#tryResume(GudTransactionId, long, TimeUnit)
 	 */
 	public void setResumeWaitTimeUnit(TimeUnit resumeWaitTimeUnit) {
 		this.resumeWaitTimeUnit = resumeWaitTimeUnit;
@@ -397,7 +404,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 	 * Defaults to {@link TimeUnit#SECONDS}.
 	 *
 	 * @return the {@link TimeUnit} used in the wait timeout when resuming a GemFire cache transaction.
-	 * @see CacheTransactionManager#tryResume(TransactionId, long, TimeUnit)
+	 * @see GudCacheTransactionManager#tryResume(GudTransactionId, long, TimeUnit)
 	 */
 	protected TimeUnit getResumeWaitTimeUnit() {
 		return Optional.ofNullable(this.resumeWaitTimeUnit).orElse(DEFAULT_RESUME_WAIT_TIME_UNIT);
@@ -450,9 +457,9 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 
 		private boolean rollbackOnly = false;
 
-		private TransactionId transactionId;
+		private GudTransactionId transactionId;
 
-		static CacheHolder newCacheHolder(TransactionId transactionId) {
+		static CacheHolder newCacheHolder(GudTransactionId transactionId) {
 			CacheHolder cacheHolder = new CacheHolder();
 			cacheHolder.transactionId = transactionId;
 			return cacheHolder;
@@ -466,7 +473,7 @@ public class GemfireTransactionManager extends AbstractPlatformTransactionManage
 			return this.rollbackOnly;
 		}
 
-		TransactionId getTransactionId() {
+		GudTransactionId getTransactionId() {
 			return this.transactionId;
 		}
 	}

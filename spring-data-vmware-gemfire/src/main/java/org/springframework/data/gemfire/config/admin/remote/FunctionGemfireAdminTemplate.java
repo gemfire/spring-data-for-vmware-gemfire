@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.admin.remote;
@@ -12,46 +19,41 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.management.internal.cli.domain.RegionInformation;
-import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
-
 import org.springframework.data.gemfire.config.admin.AbstractGemfireAdminOperations;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
 import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
-import org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 
 /**
  * The {@link FunctionGemfireAdminTemplate} class is an implementation of the {@link GemfireAdminOperations} interface
- * supporting the Pivotal GemFire / Apache Geode administrative functions/operations via {@link Function} execution
+ * supporting the Pivotal GemFire / Apache Geode administrative functions/operations via {@link GudFunction} execution
  * in the cluster.
  *
  * Note: any schema changing functionality does not get recorded by
  * the GemFire/Geode Cluster Configuration Service using this strategy.
  *
  * @author John Blum
- * @see ClientCache
- * @see Function
+ * @see GudClientCache
+ * @see GudFunction
  * @see AbstractGemfireAdminOperations
- * @see GemfireOnServersFunctionTemplate
  * @since 2.0.0
  */
-public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations {
+public abstract class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations {
 
-	private final ClientCache clientCache;
+	private final GudClientCache clientCache;
 
 	/**
 	 * Constructs a new instance of the {@link FunctionGemfireAdminTemplate} initialized with
-	 * a {@link ClientCache} instance.
+	 * a {@link GudClientCache} instance.
 	 *
-	 * @param clientCache reference to a {@link ClientCache} instance.
-	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
-	 * @see ClientCache
+	 * @param clientCache reference to a {@link GudClientCache} instance.
+	 * @throws IllegalArgumentException if {@link GudClientCache} is {@literal null}.
+	 * @see GudClientCache
 	 */
-	public FunctionGemfireAdminTemplate(ClientCache clientCache) {
+	public FunctionGemfireAdminTemplate(GudClientCache clientCache) {
 
 		Assert.notNull(clientCache, "ClientCache is required");
 
@@ -59,58 +61,48 @@ public class FunctionGemfireAdminTemplate extends AbstractGemfireAdminOperations
 	}
 
 	/**
-	 * Returns a reference to the configured {@link ClientCache} instance.
+	 * Returns a reference to the configured {@link GudClientCache} instance.
 	 *
-	 * @return a reference to the configured {@link ClientCache} instance.
-	 * @see ClientCache
+	 * @return a reference to the configured {@link GudClientCache} instance.
+	 * @see GudClientCache
 	 */
-	protected ClientCache getClientCache() {
+	protected GudClientCache getClientCache() {
 		return this.clientCache;
 	}
 
 	/**
-	 * Lists all available {@link Region Regions} configured for all servers in the remote Pivotal GemFire
+	 * Lists all available {@link GudRegion Regions} configured for all servers in the remote Pivotal GemFire
 	 * / Apache Geode cluster.
 	 *
-	 * @return an {@link Iterable} of servers-side {@link Region} names for all {@link Region Regions} defined
+	 * @return an {@link Iterable} of servers-side {@link GudRegion} names for all {@link GudRegion Regions} defined
 	 * across all servers in the remote GemFire/Geode cluster.
 	 * @see Iterable
 	 */
 	@Override
-	public Iterable<String> getAvailableServerRegions() {
-		try {
-			return Optional.ofNullable(execute(new GetRegionsFunction(), false))
-				.filter(this::containsRegionInformation)
-				.map(regionInformationArray ->
-					stream(nullSafeArray((Object[]) regionInformationArray, Object.class))
-						.map(regionInformation -> ((RegionInformation) regionInformation).getName())
-						.collect(Collectors.toSet())
-				)
-				.orElse(Collections.emptySet());
-		}
-		catch (Exception ignore) {
-			return Collections.emptySet();
-		}
-	}
+	public abstract Iterable<String> getAvailableServerRegions();
 
-	<T> T execute(Function gemfireFunction, Object... arguments) {
-		return newGemfireFunctionOperations().executeAndExtract(gemfireFunction, arguments);
-	}
+	/**
+	 * Executes a {@link GudFunction} with the given arguments.
+	 *
+	 * @param <T> the return type.
+	 * @param gemfireFunction the {@link GudFunction} to execute.
+	 * @param arguments the arguments for the function.
+	 * @return the result of the function execution.
+	 */
+	protected abstract <T> T execute(GudFunction gemfireFunction, Object... arguments);
 
-	protected GemfireFunctionOperations newGemfireFunctionOperations() {
-		return newGemfireFunctionOperations(getClientCache());
-	}
+	/**
+	 * Creates a new {@link GemfireFunctionOperations} for the configured {@link GudClientCache}.
+	 *
+	 * @return a new {@link GemfireFunctionOperations}.
+	 */
+	protected abstract GemfireFunctionOperations newGemfireFunctionOperations();
 
-	protected GemfireFunctionOperations newGemfireFunctionOperations(ClientCache clientCache) {
-		return new GemfireOnServersFunctionTemplate(clientCache);
-	}
-
-	boolean containsRegionInformation(Object results) {
-
-		return Optional.ofNullable(results)
-			.filter(it -> it instanceof Object[])
-			.filter(it -> ((Object[]) it).length > 0)
-			.filter(it -> ((Object[]) it)[0] instanceof RegionInformation)
-			.isPresent();
-	}
+	/**
+	 * Creates a new {@link GemfireFunctionOperations} for the given {@link GudClientCache}.
+	 *
+	 * @param clientCache the {@link GudClientCache} to use.
+	 * @return a new {@link GemfireFunctionOperations}.
+	 */
+	protected abstract GemfireFunctionOperations newGemfireFunctionOperations(GudClientCache clientCache);
 }

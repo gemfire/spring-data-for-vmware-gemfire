@@ -1,21 +1,29 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.mapping;
 
-import org.apache.geode.pdx.PdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
 
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.PropertyAccessor;
 import org.springframework.expression.TypedValue;
 
 /**
- * {@link PropertyAccessor} used to read values from a {@link PdxReader}.
+ * {@link PropertyAccessor} used to read values from a {@link GudPdxReader}.
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see PdxReader
+ * @see GudPdxReader
  * @see PropertyAccessor
  */
 enum PdxReaderPropertyAccessor implements PropertyAccessor {
@@ -27,7 +35,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	 */
 	@Override
 	public Class<?>[] getSpecificTargetClasses() {
-		return new Class<?>[] { PdxReader.class };
+		return new Class<?>[] { GudPdxReader.class };
 	}
 
 	/**
@@ -35,7 +43,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	 */
 	@Override
 	public boolean canRead(EvaluationContext evaluationContext, Object target, String name) {
-		return ((PdxReader) target).hasField(name);
+		return ((GudPdxReader) target).hasField(name);
 	}
 
 	/**
@@ -44,7 +52,7 @@ enum PdxReaderPropertyAccessor implements PropertyAccessor {
 	@Override
 	public TypedValue read(EvaluationContext evaluationContext, Object target, String name) {
 
-		Object object = ((PdxReader) target).readObject(name);
+		Object object = ((GudPdxReader) target).readObject(name);
 
 		return object != null
 			? new TypedValue(object)

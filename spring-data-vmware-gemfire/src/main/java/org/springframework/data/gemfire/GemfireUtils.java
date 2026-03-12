@@ -1,10 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.CacheFactory;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.config.support.GemfireFeature;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.util.ClassUtils;
@@ -15,7 +23,7 @@ import org.w3c.dom.Element;
  * and capabilities of Apache Geode based on version as well as other configuration meta-data.
  *
  * @author John Blum
- * @see CacheFactory
+ * @see GudClientCacheFactory
  * @see GemfireFeature
  * @see RegionUtils
  * @since 1.3.3
@@ -37,7 +45,7 @@ public abstract class GemfireUtils extends RegionUtils {
 	public static String apacheGeodeVersion() {
 
 		try {
-			return CacheFactory.getVersion();
+			return GudCacheProvider.getClientCacheFactory().getVersion();
 		}
 		catch (Throwable ignore) {
 			return UNKNOWN;

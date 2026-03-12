@@ -1,10 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query.support;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.data.repository.query.QueryMethod;
@@ -16,7 +24,7 @@ import org.springframework.util.Assert;
  * {@link String OQL queries}.
  *
  * @author John Blum
- * @see SelectResults
+ * @see GudSelectResults
  * @see GemfireTemplate
  * @see OqlQueryExecutor
  * @see QueryMethod
@@ -57,7 +65,7 @@ public class TemplateBasedOqlQueryExecutor implements OqlQueryExecutor {
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public SelectResults execute(QueryMethod queryMethod, @NonNull String query, @NonNull Object... arguments) {
+	public GudSelectResults execute(QueryMethod queryMethod, @NonNull String query, @NonNull Object... arguments) {
 		return getTemplate().find(query, arguments);
 	}
 }

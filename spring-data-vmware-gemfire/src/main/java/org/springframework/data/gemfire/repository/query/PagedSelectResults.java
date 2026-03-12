@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Collections;
@@ -10,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.gemfire.repository.query.support.PagingUtils;
@@ -19,10 +27,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * An Apache Geode {@link SelectResults} implementation with support for {@literal Paging}.
+ * An Apache Geode {@link GudSelectResults} implementation with support for {@literal Paging}.
  *
  * @author John Blum
- * @see SelectResults
+ * @see GudSelectResults
  * @see Pageable
  * @see AbstractSelectResults
  * @see PagingUtils
@@ -39,16 +47,16 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 
 	/**
 	 * Constructs a new instance of {@link PagedSelectResults} initialized with the given, required
-	 * {@link SelectResults} and {@link Pageable} object encapsulating the details of the requested page.
+	 * {@link GudSelectResults} and {@link Pageable} object encapsulating the details of the requested page.
 	 *
-	 * @param selectResults {@link SelectResults} to wrap; must not be {@literal null}.
+	 * @param selectResults {@link GudSelectResults} to wrap; must not be {@literal null}.
 	 * @param pageable {@link Pageable} object encapsulating the details of the requested page;
 	 * must not be {@literal null}.
-	 * @throws IllegalArgumentException if the {@link SelectResults} or the {@link Pageable} object is {@literal null}.
-	 * @see SelectResults
+	 * @throws IllegalArgumentException if the {@link GudSelectResults} or the {@link Pageable} object is {@literal null}.
+	 * @see GudSelectResults
 	 * @see Pageable
 	 */
-	public PagedSelectResults(@NonNull SelectResults<T> selectResults, @NonNull Pageable pageable) {
+	public PagedSelectResults(@NonNull GudSelectResults<T> selectResults, @NonNull Pageable pageable) {
 
 		super(selectResults);
 
@@ -108,7 +116,7 @@ public class PagedSelectResults<T> extends AbstractSelectResults<T> {
 
 	/**
 	 * Builder method used to allow a new {@link Pageable page request} in order to get a different page of results
-	 * from the underlying {@link SelectResults}.
+	 * from the underlying {@link GudSelectResults}.
 	 *
 	 * @param pageRequest {@link Pageable} object encapsulating the details of the requested page;
 	 * must not be {@literal null}.

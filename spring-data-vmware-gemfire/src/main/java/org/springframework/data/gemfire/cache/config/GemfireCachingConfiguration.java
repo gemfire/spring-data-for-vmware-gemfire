@@ -1,14 +1,22 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.cache.config;
 
-import org.apache.geode.cache.client.ClientCache;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.gemfire.cache.GemfireCacheManager;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 /**
  * The {@link GemfireCachingConfiguration} class is a Spring {@link Configuration @Configuration} class
@@ -23,7 +31,7 @@ import org.springframework.data.gemfire.cache.GemfireCacheManager;
  * the SDG provided {@link EnableGemfireCaching} annotation.
  *
  * @author John Blum
- * @see ClientCache
+ * @see GudClientCache
  * @see EnableCaching
  * @see Bean
  * @see Configuration
@@ -45,10 +53,10 @@ public class GemfireCachingConfiguration {
 	 *
 	 * @return an instance of {@link GemfireCacheManager}.
 	 * @see GemfireCacheManager
-	 * @see ClientCache
+	 * @see GudClientCache
 	 */
 	@Bean
-	public GemfireCacheManager cacheManager(ClientCache gemfireCache) {
+	public GemfireCacheManager cacheManager(GudClientCache gemfireCache) {
 
 		GemfireCacheManager gemfireCacheManager = new GemfireCacheManager();
 

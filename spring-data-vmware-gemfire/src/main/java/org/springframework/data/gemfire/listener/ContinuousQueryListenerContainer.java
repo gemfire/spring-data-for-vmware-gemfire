@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.listener;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeList;
@@ -19,18 +27,18 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 import java.util.stream.StreamSupport;
 
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.query.CqAttributes;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqException;
-import org.apache.geode.cache.query.CqListener;
-import org.apache.geode.cache.query.CqQuery;
-import org.apache.geode.cache.query.QueryException;
-import org.apache.geode.cache.query.QueryService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.data.gemfire.gud.api.GudCqAttributes;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqException;
+import org.springframework.data.gemfire.gud.api.GudCqListener;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudQueryException;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -63,14 +71,13 @@ import org.springframework.util.StringUtils;
  * @author Costin Leau
  * @author John Blum
  * @see Executor
- * @see RegionService
- * @see Pool
- * @see org.apache.geode.cache.client.PoolManager
- * @see CqAttributes
- * @see CqEvent
- * @see CqListener
- * @see CqQuery
- * @see QueryService
+ * @see GudRegionService
+ * @see GudPool
+ * @see GudCqAttributes
+ * @see GudCqEvent
+ * @see GudCqListener
+ * @see GudCqQuery
+ * @see GudQueryService
  * @see BeanFactory
  * @see BeanFactoryAware
  * @see BeanNameAware
@@ -120,11 +127,13 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 
 	private PoolResolver poolResolver = DEFAULT_POOL_RESOLVER;
 
-	private Queue<CqQuery> continuousQueries = new ConcurrentLinkedQueue<>();
+	private Queue<GudCqQuery> continuousQueries = new ConcurrentLinkedQueue<>();
 
-	private QueryService queryService;
+	private GudQueryService queryService;
 
 	private Set<ContinuousQueryDefinition> continuousQueryDefinitions = new LinkedHashSet<>();
+
+	private Supplier<org.springframework.data.gemfire.gud.api.GudCqAttributesFactory> cqAttributesFactorySupplier;
 
 	private String beanName;
 	private String poolName;
@@ -184,23 +193,23 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Resolves a {@link Pool} object with the given {@link String name} from the configured {@link PoolResolver}.
+	 * Resolves a {@link GudPool} object with the given {@link String name} from the configured {@link PoolResolver}.
 	 *
-	 * @param poolName {@link String name} of the {@link Pool} to resolve.
-	 * @return a resolved {@link Pool} object from the given {@link String name}.
-	 * @see Pool
+	 * @param poolName {@link String name} of the {@link GudPool} to resolve.
+	 * @return a resolved {@link GudPool} object from the given {@link String name}.
+	 * @see GudPool
 	 * @see #getPoolResolver()
 	 */
-	@Nullable Pool resolvePool(String poolName) {
+	@Nullable GudPool resolvePool(String poolName) {
 		return getPoolResolver().resolve(poolName);
 	}
 
 	/**
-	 * Resolves the name of the {@link Pool} configured to handle the registered Continuous Queries.
+	 * Resolves the name of the {@link GudPool} configured to handle the registered Continuous Queries.
 	 *
-	 * Note, the {@link Pool} must have subscription enabled.
+	 * Note, the {@link GudPool} must have subscription enabled.
 	 *
-	 * @return the {@link String name} of the {@link Pool} configured to handle the registered Continuous Queries.
+	 * @return the {@link String name} of the {@link GudPool} configured to handle the registered Continuous Queries.
 	 */
 	String resolvePoolName() {
 
@@ -208,24 +217,24 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 			.filter(StringUtils::hasText)
 			.orElseGet(() ->
 				Optional.ofNullable(getBeanFactory())
-					.filter(it -> SpringExtensions.isMatchingBean(it, GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME, Pool.class))
+					.filter(it -> SpringExtensions.isMatchingBean(it, GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME, GudPool.class))
 					.map(it -> GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME)
 					.orElse(GemfireUtils.DEFAULT_POOL_NAME));
 	}
 
 	/**
-	 * Eagerly initializes the {@link Pool} with the given {@link String name}.
+	 * Eagerly initializes the {@link GudPool} with the given {@link String name}.
 	 *
 	 * First, this method attempts to use the configured {@link BeanFactory}, if not {@literal null}, to find a bean
-	 * in the Spring container of type {@link Pool} having the given {@link String name }and fetch the bean,
-	 * thereby causing the {@link Pool} bean to be initialized.
+	 * in the Spring container of type {@link GudPool} having the given {@link String name }and fetch the bean,
+	 * thereby causing the {@link GudPool} bean to be initialized.
 	 *
 	 * However, if the {@link BeanFactory} was not configured, or no bean exists in the Spring container
-	 * with the given {@link String name} or of the {@link Pool} type, then the named {@link Pool} is looked up
-	 * in GemFire/Geode's {@link org.apache.geode.cache.client.PoolManager}.
+	 * with the given {@link String name} or of the {@link GudPool} type, then the named {@link GudPool} is looked up
+	 * via the configured PoolResolver.
 	 *
-	 * @param poolName {@link String} containing the name of the {@link Pool} to initialize.
-	 * @return the given {@link Pool} name.
+	 * @param poolName {@link String} containing the name of the {@link GudPool} to initialize.
+	 * @return the given {@link GudPool} name.
 	 */
 	String eagerlyInitializePool(String poolName) {
 
@@ -235,10 +244,10 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 		};
 
 		return Optional.ofNullable(getBeanFactory())
-			.filter(it -> SpringExtensions.isMatchingBean(it, poolName, Pool.class))
+			.filter(it -> SpringExtensions.isMatchingBean(it, poolName, GudPool.class))
 			.map(it -> {
 				try {
-					it.getBean(poolName, Pool.class);
+					it.getBean(poolName, GudPool.class);
 					return poolName;
 				}
 				catch (BeansException ignore) {
@@ -249,20 +258,20 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Initializes the {@link QueryService} used to register Continuous Queries (CQ).
+	 * Initializes the {@link GudQueryService} used to register Continuous Queries (CQ).
 	 *
-	 * @param poolName {@link String} containing the name of the {@link Pool} used obtain the {@link QueryService}
-	 * if CQs are tied to a specific {@link Pool}.
-	 * @return the initialized {@link QueryService}.
-	 * @see QueryService
+	 * @param poolName {@link String} containing the name of the {@link GudPool} used obtain the {@link GudQueryService}
+	 * if CQs are tied to a specific {@link GudPool}.
+	 * @return the initialized {@link GudQueryService}.
+	 * @see GudQueryService
 	 */
-	QueryService initQueryService(String poolName) {
+	GudQueryService initQueryService(String poolName) {
 
-		QueryService queryService = getQueryService();
+		GudQueryService queryService = getQueryService();
 
 		if (queryService == null || StringUtils.hasText(poolName)) {
 
-			Pool resolvedPool = resolvePool(poolName);
+			GudPool resolvedPool = resolvePool(poolName);
 
 			DefaultableDelegatingPoolAdapter poolAdapter =
 				DefaultableDelegatingPoolAdapter.from(DelegatingPoolAdapter.from(resolvedPool));
@@ -274,14 +283,14 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Verifies the given {@link QueryService} is valid.
+	 * Verifies the given {@link GudQueryService} is valid.
 	 *
-	 * @param queryService {@link QueryService} to validate.
-	 * @throws IllegalStateException if the {@link QueryService} is {@literal null}.
-	 * @return the given {@link QueryService}
-	 * @see QueryService
+	 * @param queryService {@link GudQueryService} to validate.
+	 * @throws IllegalStateException if the {@link GudQueryService} is {@literal null}.
+	 * @return the given {@link GudQueryService}
+	 * @see GudQueryService
 	 */
-	private QueryService validateQueryService(QueryService queryService) {
+	private GudQueryService validateQueryService(GudQueryService queryService) {
 
 		Assert.state(queryService != null, "QueryService is required");
 
@@ -326,7 +335,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Initializes all the {@link CqQuery Continuous Queries} defined by
+	 * Initializes all the {@link GudCqQuery Continuous Queries} defined by
 	 * the {@link ContinuousQueryDefinition Continuous Query Defintions}.
 	 *
 	 * @see #getContinuousQueryDefinitions()
@@ -435,20 +444,20 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Set the underlying RegionService (GemFire Cache) used for registering Queries.
 	 *
 	 * @param cache the RegionService (GemFire Cache) used for registering Queries.
-	 * @see RegionService
+	 * @see GudRegionService
 	 */
-	public void setCache(RegionService cache) {
+	public void setCache(GudRegionService cache) {
 		setQueryService(cache.getQueryService());
 	}
 
 	/**
-	 * Returns a reference to all the configured/registered {@link CqQuery Continuous Queries}.
+	 * Returns a reference to all the configured/registered {@link GudCqQuery Continuous Queries}.
 	 *
-	 * @return a reference to all the configured/registered {@link CqQuery Continuous Queries}.
-	 * @see CqQuery
+	 * @return a reference to all the configured/registered {@link GudCqQuery Continuous Queries}.
+	 * @see GudCqQuery
 	 * @see Queue
 	 */
-	protected Queue<CqQuery> getContinuousQueries() {
+	protected Queue<GudCqQuery> getContinuousQueries() {
 		return this.continuousQueries;
 	}
 
@@ -551,7 +560,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Set the name of the {@link Pool} used for performing the queries by this container.
+	 * Set the name of the {@link GudPool} used for performing the queries by this container.
 	 *
 	 * @param poolName the name of the pool to be used by the container
 	 */
@@ -569,10 +578,10 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Configures the {@link PoolResolver} to resolve {@link Pool} objects by {@link String name}
+	 * Configures the {@link PoolResolver} to resolve {@link GudPool} objects by {@link String name}
 	 * from the Apache Geode cache.
 	 *
-	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects
+	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link GudPool} objects
 	 * by {@link String name}.
 	 * @see PoolResolver
 	 */
@@ -581,7 +590,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	}
 
 	/**
-	 * Returns the configured {@link PoolResolver} used to resolve {@link Pool} object by {@link String name}.
+	 * Returns the configured {@link PoolResolver} used to resolve {@link GudPool} object by {@link String name}.
 	 *
 	 * @return the configured {@link PoolResolver}.
 	 * @see PoolResolver
@@ -605,19 +614,19 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 * Set the GemFire QueryService used by this container to create ContinuousQueries (CQ).
 	 *
 	 * @param queryService the GemFire QueryService object used by the container to create ContinuousQueries (CQ).
-	 * @see QueryService
+	 * @see GudQueryService
 	 */
-	public void setQueryService(QueryService queryService) {
+	public void setQueryService(GudQueryService queryService) {
 		this.queryService = queryService;
 	}
 
 	/**
-	 * Returns a reference to the configured {@link QueryService}.
+	 * Returns a reference to the configured {@link GudQueryService}.
 	 *
-	 * @return a reference to the configured {@link QueryService}.
-	 * @see QueryService
+	 * @return a reference to the configured {@link GudQueryService}.
+	 * @see GudQueryService
 	 */
-	public QueryService getQueryService() {
+	public GudQueryService getQueryService() {
 		return this.queryService;
 	}
 
@@ -654,7 +663,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 	 */
 	public void addListener(ContinuousQueryDefinition definition) {
 
-		CqQuery query = addContinuousQuery(definition);
+		GudCqQuery query = addContinuousQuery(definition);
 
 		if (isRunning()) {
 			execute(query);
@@ -668,40 +677,55 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 			.orElse(false);
 	}
 
-	CqQuery addContinuousQuery(ContinuousQueryDefinition definition) {
+	GudCqQuery addContinuousQuery(ContinuousQueryDefinition definition) {
 
 		try {
 
-			CqAttributes attributes = definition.toCqAttributes(this::newCqListener, definition.getExcludedEvents());
+			GudCqAttributes attributes = definition.toCqAttributes(newCqAttributesFactory(), this::newCqListener, definition.getExcludedEvents());
 
-			CqQuery query = definition.isNamed()
+			GudCqQuery query = definition.isNamed()
 				? newNamedContinuousQuery(definition, attributes)
 				: newUnnamedContinuousQuery(definition, attributes);
 
 			return manage(query);
 		}
-		catch (QueryException cause) {
+		catch (GudQueryException cause) {
 			throw new GemfireQueryException(String.format("Unable to create query [%s]", definition.getQuery()), cause);
 		}
 	}
 
-	protected CqListener newCqListener(ContinuousQueryListener listener) {
+	/**
+	 * Sets the supplier for creating {@link org.springframework.data.gemfire.gud.api.GudCqAttributesFactory} instances.
+	 *
+	 * @param supplier the supplier for creating CqAttributesFactory instances
+	 */
+	public void setCqAttributesFactorySupplier(Supplier<org.springframework.data.gemfire.gud.api.GudCqAttributesFactory> supplier) {
+		this.cqAttributesFactorySupplier = supplier;
+	}
+
+	protected org.springframework.data.gemfire.gud.api.GudCqAttributesFactory newCqAttributesFactory() {
+		Assert.state(this.cqAttributesFactorySupplier != null,
+			"A GudCqAttributesFactory supplier must be configured");
+		return this.cqAttributesFactorySupplier.get();
+	}
+
+	protected GudCqListener newCqListener(ContinuousQueryListener listener) {
 		return new EventDispatcherAdapter(listener);
 	}
 
-	private CqQuery newNamedContinuousQuery(ContinuousQueryDefinition definition, CqAttributes attributes)
-			throws QueryException {
+	private GudCqQuery newNamedContinuousQuery(ContinuousQueryDefinition definition, GudCqAttributes attributes)
+			throws GudQueryException {
 
 		return getQueryService().newCq(definition.getName(), definition.getQuery(), attributes, definition.isDurable());
 	}
 
-	private CqQuery newUnnamedContinuousQuery(ContinuousQueryDefinition definition, CqAttributes attributes)
-			throws CqException {
+	private GudCqQuery newUnnamedContinuousQuery(ContinuousQueryDefinition definition, GudCqAttributes attributes)
+			throws GudCqException {
 
 		return getQueryService().newCq(definition.getQuery(), attributes, definition.isDurable());
 	}
 
-	private CqQuery manage(CqQuery query) {
+	private GudCqQuery manage(GudCqQuery query) {
 
 		getContinuousQueries().add(query);
 
@@ -726,37 +750,37 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 		getContinuousQueries().forEach(this::execute);
 	}
 
-	private void execute(CqQuery query) {
+	private void execute(GudCqQuery query) {
 
 		try {
 			query.execute();
 		}
-		catch (QueryException cause) {
+		catch (GudCqException cause) {
 			throw new GemfireQueryException(String.format("Could not execute query [%1$s]; state is [%2$s]",
 				query.getName(), query.getState()), cause);
 		}
 	}
 
 	/**
-	 * Asynchronously dispatches the {@link CqEvent CQ event} to the targeted {@link ContinuousQueryListener}.
+	 * Asynchronously dispatches the {@link GudCqEvent CQ event} to the targeted {@link ContinuousQueryListener}.
 	 *
-	 * @param listener {@link ContinuousQueryListener} which will process/handle the {@link CqEvent CQ event}.
-	 * @param event {@link CqEvent CQ event} to process.
+	 * @param listener {@link ContinuousQueryListener} which will process/handle the {@link GudCqEvent CQ event}.
+	 * @param event {@link GudCqEvent CQ event} to process.
 	 * @see ContinuousQueryListener
-	 * @see CqEvent
+	 * @see GudCqEvent
 	 */
-	protected void dispatchEvent(ContinuousQueryListener listener, CqEvent event) {
+	protected void dispatchEvent(ContinuousQueryListener listener, GudCqEvent event) {
 		getTaskExecutor().execute(() -> notify(listener, event));
 	}
 
 	/**
-	 * Invoke the specified {@link ContinuousQueryListener listener} to process/handle the {@link CqEvent CQ event}.
+	 * Invoke the specified {@link ContinuousQueryListener listener} to process/handle the {@link GudCqEvent CQ event}.
 	 *
-	 * @param listener {@link ContinuousQueryListener} to notify of the {@link CqEvent CQ event}.
-	 * @param event {@link CqEvent CQ event} to process/handle.
+	 * @param listener {@link ContinuousQueryListener} to notify of the {@link GudCqEvent CQ event}.
+	 * @param event {@link GudCqEvent CQ event} to process/handle.
 	 * @see #handleListenerError(Throwable)
 	 */
-	private void notify(ContinuousQueryListener listener, CqEvent event) {
+	private void notify(ContinuousQueryListener listener, GudCqEvent event) {
 
 		try {
 			listener.onEvent(event);
@@ -882,7 +906,7 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 			});
 	}
 
-	protected class EventDispatcherAdapter implements CqListener {
+	protected class EventDispatcherAdapter implements GudCqListener {
 
 		private final ContinuousQueryListener listener;
 
@@ -897,11 +921,11 @@ public class ContinuousQueryListenerContainer implements BeanFactoryAware, BeanN
 			return this.listener;
 		}
 
-		public void onError(CqEvent event) {
+		public void onError(GudCqEvent event) {
 			dispatchEvent(getListener(), event);
 		}
 
-		public void onEvent(CqEvent event) {
+		public void onEvent(GudCqEvent event) {
 			dispatchEvent(getListener(), event);
 		}
 

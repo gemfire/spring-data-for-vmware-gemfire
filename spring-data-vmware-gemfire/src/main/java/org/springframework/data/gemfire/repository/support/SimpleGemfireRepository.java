@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.support;
 
 import java.util.Collections;
@@ -14,10 +22,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -48,8 +56,8 @@ import org.springframework.util.Assert;
  * @author David Turanski
  * @author John Blum
  * @author Jens Schauder
- * @see CacheTransactionManager
- * @see Region
+ * @see GudCacheTransactionManager
+ * @see GudRegion
  * @see GemfireTemplate
  * @see GemfireRepository
  * @see CrudRepository
@@ -108,13 +116,13 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * Gets the {@link Region} to which this {@link GemfireRepository} performs all data access operations.
+	 * Gets the {@link GudRegion} to which this {@link GemfireRepository} performs all data access operations.
 	 *
-	 * @return a reference to the {@link Region} on which this {@link GemfireRepository} operates.
-	 * @see Region
+	 * @return a reference to the {@link GudRegion} on which this {@link GemfireRepository} operates.
+	 * @see GudRegion
 	 * @see #getTemplate()
 	 */
-	public @NonNull Region<ID, T> getRegion() {
+	public @NonNull GudRegion<ID, T> getRegion() {
 		return getTemplate().getRegion();
 	}
 
@@ -187,11 +195,11 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * Counts the number of entities stored in the {@link Region}.
+	 * Counts the number of entities stored in the {@link GudRegion}.
 	 *
 	 * This method executes a {@literal SELECT count(*) FROM /Region} OQL query.
 	 *
-	 * @return a count of the number of entities stored in the {@link Region}.
+	 * @return a count of the number of entities stored in the {@link GudRegion}.
 	 */
 	@Override
 	public long count() {
@@ -199,10 +207,10 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 		String regionPath = getRegion().getFullPath();
 		String countQuery = String.format(SELECT_COUNT_OQL_QUERY, regionPath);
 
-		SelectResults<Integer> results = getTemplate().find(countQuery);
+		GudSelectResults<Integer> results = getTemplate().find(countQuery);
 
 		return Optional.ofNullable(results)
-			.map(SelectResults::iterator)
+			.map(GudSelectResults::iterator)
 			.filter(Iterator::hasNext)
 			.map(Iterator::next)
 			.map(Long::valueOf)
@@ -210,10 +218,10 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 	}
 
 	/**
-	 * Determines whether an entity with the given ID is stored in the {@link Region}.
+	 * Determines whether an entity with the given ID is stored in the {@link GudRegion}.
 	 *
 	 * @param id {@link Long} value identifying the entity.
-	 * @return a boolean value indicating whether an entity with the given ID is stored in the {@link Region}.
+	 * @return a boolean value indicating whether an entity with the given ID is stored in the {@link GudRegion}.
 	 * @see #findById(Object)
 	 */
 	@Override
@@ -230,7 +238,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 		String regionPath = getRegion().getFullPath();
 		String query = String.format("SELECT * FROM %s", regionPath);
 
-		SelectResults<T> selectResults = getTemplate().find(query);
+		GudSelectResults<T> selectResults = getTemplate().find(query);
 
 		return toList(selectResults);
 	}
@@ -258,7 +266,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 			.fromRegion(getRegion(), getEntityInformation().getJavaType())
 			.orderBy(sort);
 
-		SelectResults<T> selectResults = getTemplate().find(query.toString());
+		GudSelectResults<T> selectResults = getTemplate().find(query.toString());
 
 		return toList(selectResults);
 	}
@@ -356,22 +364,22 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 		getTemplate().remove(id);
 	}
 
-	boolean isTransactionPresent(@Nullable Region<?, ?> region) {
+	boolean isTransactionPresent(@Nullable GudRegion<?, ?> region) {
 
 		return region != null
-			&& region.getRegionService() instanceof ClientCache
-			&& isTransactionPresent(((ClientCache) region.getRegionService()).getCacheTransactionManager());
+			&& region.getRegionService() instanceof GudClientCache
+			&& isTransactionPresent(((GudClientCache) region.getRegionService()).getCacheTransactionManager());
 	}
 
-	boolean isTransactionPresent(@Nullable CacheTransactionManager cacheTransactionManager) {
+	boolean isTransactionPresent(@Nullable GudCacheTransactionManager cacheTransactionManager) {
 		return cacheTransactionManager != null && cacheTransactionManager.exists();
 	}
 
-	<K> void  doRegionClear(@NonNull Region<K, ?> region) {
+	<K> void  doRegionClear(@NonNull GudRegion<K, ?> region) {
 		region.removeAll(resolveRegionKeys(region));
 	}
 
-	@NonNull <K> Set<K> resolveRegionKeys(@NonNull Region<K, ?> region) {
+	@NonNull <K> Set<K> resolveRegionKeys(@NonNull GudRegion<K, ?> region) {
 
 		return RegionUtils.isClient(region) ? region.keySetOnServer()
 			: RegionUtils.isServer(region) ? region.keySet()
@@ -385,7 +393,7 @@ public class SimpleGemfireRepository<T, ID> implements GemfireRepository<T, ID> 
 				.collect(Collectors.toList());
 	}
 
-	@NonNull List<T> toList(@Nullable SelectResults<T> selectResults) {
+	@NonNull List<T> toList(@Nullable GudSelectResults<T> selectResults) {
 
 		return selectResults != null
 			? CollectionUtils.nullSafeList(selectResults.asList())

@@ -1,13 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to GUD API types
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.DataPolicy;
-
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
 
 /**
  * The DataPolicyConverter class converts String values into GemFire DataPolicy enumerated values.
@@ -15,9 +21,9 @@ import org.springframework.core.convert.converter.Converter;
  * @author David Turanski
  * @author John Blum
  * @see Converter
- * @see DataPolicy
+ * @see GudDataPolicy
  */
-public class DataPolicyConverter implements Converter<String, DataPolicy> {
+public class DataPolicyConverter implements Converter<String, GudDataPolicy> {
 
 	enum Policy {
 		DEFAULT, EMPTY, NORMAL, PRELOADED;
@@ -35,23 +41,23 @@ public class DataPolicyConverter implements Converter<String, DataPolicy> {
 			}
 		}
 
-		public DataPolicy toDataPolicy() {
+		public GudDataPolicy toDataPolicy() {
 			switch (this) {
 				case EMPTY:
-					return DataPolicy.EMPTY;
+					return GudDataPolicy.EMPTY;
 				case NORMAL:
-					return DataPolicy.NORMAL;
+					return GudDataPolicy.NORMAL;
 				case PRELOADED:
-					return DataPolicy.PRELOADED;
+					return GudDataPolicy.PRELOADED;
 				case DEFAULT:
 				default:
-					return DataPolicy.DEFAULT;
+					return GudDataPolicy.DEFAULT;
 			}
 		}
 	}
 
 	@Override
-	public DataPolicy convert(String policyValue) {
+	public GudDataPolicy convert(String policyValue) {
 		Policy policy = Policy.getValue(policyValue);
 		return (policy == null ? null : policy.toDataPolicy());
 	}

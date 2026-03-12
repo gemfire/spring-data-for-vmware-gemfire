@@ -1,12 +1,20 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client.support;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.Assert;
@@ -17,31 +25,31 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * The {@link DefaultableDelegatingPoolAdapter} class is a wrapper class around {@link Pool}
- * allowing default configuration property values to be provided in the case that the {@link Pool Pool's}
+ * The {@link DefaultableDelegatingPoolAdapter} class is a wrapper class around {@link GudPool}
+ * allowing default configuration property values to be provided in the case that the {@link GudPool GudPool's}
  * settings were {@literal null}.
  *
  * @author John Blum
- * @see Pool
+ * @see GudPool
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
 public abstract class DefaultableDelegatingPoolAdapter {
 
-	private final Pool delegate;
+	private final GudPool delegate;
 
 	private Preference preference = Preference.PREFER_POOL;
 
-	public static DefaultableDelegatingPoolAdapter from(Pool delegate) {
+	public static DefaultableDelegatingPoolAdapter from(GudPool delegate) {
 		return new DefaultableDelegatingPoolAdapter(delegate) {};
 	}
 
-	protected DefaultableDelegatingPoolAdapter(Pool delegate) {
+	protected DefaultableDelegatingPoolAdapter(GudPool delegate) {
 		Assert.notNull(delegate, "Pool delegate must not be null");
 		this.delegate = delegate;
 	}
 
-	protected Pool getDelegate() {
+	protected GudPool getDelegate() {
 		return this.delegate;
 	}
 
@@ -144,7 +152,7 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfNull(defaultPrSingleHopEnabled, () -> getDelegate().getPRSingleHopEnabled());
 	}
 
-	public QueryService getQueryService(QueryService defaultQueryService) {
+	public GudQueryService getQueryService(GudQueryService defaultQueryService) {
 		return defaultIfNull(defaultQueryService, () -> getDelegate().getQueryService());
 	}
 
@@ -176,7 +184,7 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfNull(defaultSocketConnectTimeout, () -> getDelegate().getSocketConnectTimeout());
 	}
 
-	public SocketFactory getSocketFactory(SocketFactory defaultSocketFactory) {
+	public GudSocketFactory getSocketFactory(GudSocketFactory defaultSocketFactory) {
 		return defaultIfNull(defaultSocketFactory, () -> getDelegate().getSocketFactory());
 	}
 

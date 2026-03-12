@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -12,9 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.query.CqQuery;
-import org.apache.geode.cache.query.QueryService;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
@@ -26,6 +31,9 @@ import org.springframework.context.annotation.ImportAware;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 import org.springframework.data.gemfire.listener.ContinuousQueryDefinition;
 import org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
@@ -38,9 +46,9 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see Executor
- * @see ClientCache
- * @see CqQuery
- * @see QueryService
+ * @see GudClientCache
+ * @see GudCqQuery
+ * @see GudQueryService
  * @see BeanPostProcessor
  * @see Bean
  * @see Configuration
@@ -73,10 +81,10 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 	private String taskExecutorBeanName;
 
 	/**
-	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link CqQuery Continuous Queries}
+	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link GudCqQuery Continuous Queries}
 	 * for application {@link ContinuousQuery} annotated POJO service methods.
 	 *
-	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link CqQuery Continuous Queries}
+	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link GudCqQuery Continuous Queries}
 	 * for application {@link ContinuousQuery} annotated POJO service methods.
 	 * @see EnableContinuousQueries
 	 * @see ContinuousQuery
@@ -176,7 +184,7 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 	}
 
 	@Bean
-	public ContinuousQueryListenerContainer continuousQueryListenerContainer(ClientCache gemfireCache) {
+	public ContinuousQueryListenerContainer continuousQueryListenerContainer(GudClientCache gemfireCache) {
 
 		ContinuousQueryListenerContainer container = new ContinuousQueryListenerContainer();
 
@@ -214,11 +222,11 @@ public class ContinuousQueryConfiguration extends AbstractAnnotationConfigSuppor
 		return Optional.ofNullable(getPoolName()).filter(StringUtils::hasText);
 	}
 
-	protected Optional<QueryService> resolveQueryService() {
+	protected Optional<GudQueryService> resolveQueryService() {
 
 		return Optional.ofNullable(getQueryServiceBeanName())
 			.filter(StringUtils::hasText)
-			.map(queryServiceBeanName -> getBeanFactory().getBean(queryServiceBeanName, QueryService.class));
+			.map(queryServiceBeanName -> getBeanFactory().getBean(queryServiceBeanName, GudQueryService.class));
 	}
 
 	protected Optional<Executor> resolveTaskExecutor() {

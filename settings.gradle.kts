@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -42,3 +42,6 @@ private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogB
 
 include("spring-data-vmware-gemfire")
 include("spring-test-vmware-gemfire")
+include("gud-api")
+include("gud-core")
+include("gud-driver-gemfire-10.3")

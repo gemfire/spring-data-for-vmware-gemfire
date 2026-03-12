@@ -1,13 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to GUD API types
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.RegionShortcut;
-
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -15,29 +21,29 @@ import org.springframework.util.ObjectUtils;
  * with Spring Data GemFire RegionShortcutWrapper enumerated values.
  *
  * @author John Blum
- * @see RegionShortcut
+ * @see GudRegionShortcut
  * @since 1.4.0
  */
 @SuppressWarnings("unused")
 public enum RegionShortcutWrapper {
 
-	LOCAL(RegionShortcut.LOCAL, DataPolicy.NORMAL),
-	LOCAL_HEAP_LRU(RegionShortcut.LOCAL_HEAP_LRU, DataPolicy.NORMAL),
-	LOCAL_OVERFLOW(RegionShortcut.LOCAL_OVERFLOW, DataPolicy.NORMAL),
-	LOCAL_PERSISTENT(RegionShortcut.LOCAL_PERSISTENT, DataPolicy.PERSISTENT_REPLICATE),
-	LOCAL_PERSISTENT_OVERFLOW(RegionShortcut.LOCAL_PERSISTENT_OVERFLOW, DataPolicy.PERSISTENT_REPLICATE),
+	LOCAL(GudRegionShortcut.LOCAL, GudDataPolicy.NORMAL),
+	LOCAL_HEAP_LRU(GudRegionShortcut.LOCAL_HEAP_LRU, GudDataPolicy.NORMAL),
+	LOCAL_OVERFLOW(GudRegionShortcut.LOCAL_OVERFLOW, GudDataPolicy.NORMAL),
+	LOCAL_PERSISTENT(GudRegionShortcut.LOCAL_PERSISTENT, GudDataPolicy.PERSISTENT_REPLICATE),
+	LOCAL_PERSISTENT_OVERFLOW(GudRegionShortcut.LOCAL_PERSISTENT_OVERFLOW, GudDataPolicy.PERSISTENT_REPLICATE),
 	UNSPECIFIED(null, null);
 
-	private final DataPolicy dataPolicy;
+	private final GudDataPolicy dataPolicy;
 
-	private final RegionShortcut regionShortcut;
+	private final GudRegionShortcut regionShortcut;
 
-	RegionShortcutWrapper(RegionShortcut regionShortcut, DataPolicy dataPolicy) {
+	RegionShortcutWrapper(GudRegionShortcut regionShortcut, GudDataPolicy dataPolicy) {
 		this.regionShortcut = regionShortcut;
 		this.dataPolicy = dataPolicy;
 	}
 
-	public static RegionShortcutWrapper valueOf(RegionShortcut regionShortcut) {
+	public static RegionShortcutWrapper valueOf(GudRegionShortcut regionShortcut) {
 
 		for (RegionShortcutWrapper wrapper : values()) {
 			if (ObjectUtils.nullSafeEquals(wrapper.getRegionShortcut(), regionShortcut)) {
@@ -48,11 +54,11 @@ public enum RegionShortcutWrapper {
 		return RegionShortcutWrapper.UNSPECIFIED;
 	}
 
-	public DataPolicy getDataPolicy() {
+	public GudDataPolicy getDataPolicy() {
 		return this.dataPolicy;
 	}
 
-	public RegionShortcut getRegionShortcut() {
+	public GudRegionShortcut getRegionShortcut() {
 		return this.regionShortcut;
 	}
 

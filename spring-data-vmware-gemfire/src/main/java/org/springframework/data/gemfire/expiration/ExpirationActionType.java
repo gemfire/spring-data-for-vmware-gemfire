@@ -1,38 +1,45 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.expiration;
 
-import org.apache.geode.cache.ExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
 
 /**
  * The ExpirationActionType enum is a enumeration of GemFire ExpirationActions on expired Cache Region entries.
  *
  * @author John Blum
- * @see ExpirationAction
+ * @see GudExpirationAction
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
 public enum ExpirationActionType {
 
-	DESTROY(ExpirationAction.DESTROY),
-	INVALIDATE(ExpirationAction.INVALIDATE),
-	LOCAL_DESTROY(ExpirationAction.LOCAL_DESTROY),
-	LOCAL_INVALIDATE(ExpirationAction.LOCAL_INVALIDATE);
+	DESTROY(GudExpirationAction.DESTROY),
+	INVALIDATE(GudExpirationAction.INVALIDATE),
+	LOCAL_DESTROY(GudExpirationAction.LOCAL_DESTROY),
+	LOCAL_INVALIDATE(GudExpirationAction.LOCAL_INVALIDATE);
 
 	public static final ExpirationActionType DEFAULT = ExpirationActionType.INVALIDATE;
 
-	private final ExpirationAction expirationAction;
+	private final GudExpirationAction expirationAction;
 
 	/**
 	 * Constructs an instance of the ExpirationActionType enum initialized with the matching GemFire ExpirationAction.
 	 *
 	 * @param expirationAction the matching GemFire ExpirationAction for this enumerated value.
-	 * @see ExpirationAction
+	 * @see GudExpirationAction
 	 */
-	ExpirationActionType(final ExpirationAction expirationAction) {
+	ExpirationActionType(final GudExpirationAction expirationAction) {
 		this.expirationAction = expirationAction;
 	}
 
@@ -42,9 +49,9 @@ public enum ExpirationActionType {
 	 * @param expirationActionType the ExpirationActionType enumerated value from which to extract
 	 * the corresponding GemFire ExpirationAction.
 	 * @return a GemFire ExpirationAction given the ExpirationActionType enumerated value.
-	 * @see ExpirationAction
+	 * @see GudExpirationAction
 	 */
-	public static ExpirationAction getExpirationAction(final ExpirationActionType expirationActionType) {
+	public static GudExpirationAction getExpirationAction(final ExpirationActionType expirationActionType) {
 		return expirationActionType != null ? expirationActionType.getExpirationAction() : null;
 	}
 
@@ -54,10 +61,10 @@ public enum ExpirationActionType {
 	 * @param expirationAction the GemFire ExpirationAction used to match the ExpirationActionType.
 	 * @return a matching ExpirationActionType enumerated value given a GemFire ExpirationAction
 	 * or null if no match was found.
-	 * @see ExpirationAction
+	 * @see GudExpirationAction
 	 * @see #getExpirationAction()
 	 */
-	public static ExpirationActionType valueOf(final ExpirationAction expirationAction) {
+	public static ExpirationActionType valueOf(final GudExpirationAction expirationAction) {
 
 		for (ExpirationActionType expirationActionType : values()) {
 			if (expirationActionType.getExpirationAction().equals(expirationAction)) {
@@ -92,9 +99,9 @@ public enum ExpirationActionType {
 	 * Gets the matching GemFire ExpirationAction for this enumerated value.
 	 *
 	 * @return the GemFire ExpirationAction instance corresponding to this enumerated value.
-	 * @see ExpirationAction
+	 * @see GudExpirationAction
 	 */
-	public ExpirationAction getExpirationAction() {
+	public GudExpirationAction getExpirationAction() {
 		return this.expirationAction;
 	}
 }

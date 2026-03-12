@@ -1,35 +1,43 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.InterestPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
 
 /**
  * The InterestPolicyType enum is an enumeration of all the GemFire Subscription, InterestPolicy values.
  *
  * @author Lyndon Adams
  * @author John Blum
- * @see InterestPolicy
+ * @see GudInterestPolicy
  * @since 1.3.0
  */
 @SuppressWarnings("unused")
 public enum InterestPolicyType {
-	ALL(InterestPolicy.ALL),
-	CACHE_CONTENT(InterestPolicy.CACHE_CONTENT);
+	ALL(GudInterestPolicy.ALL),
+	CACHE_CONTENT(GudInterestPolicy.CACHE_CONTENT);
 
-	public static final InterestPolicyType DEFAULT = InterestPolicyType.valueOf(InterestPolicy.DEFAULT);
+	public static final InterestPolicyType DEFAULT = InterestPolicyType.valueOf(GudInterestPolicy.DEFAULT);
 
-	private final InterestPolicy interestPolicy;
+	private final GudInterestPolicy interestPolicy;
 
 	/**
 	 * Constructs an instance of the SubscriptionType enum initialized with the matching GemFire InterestPolicy.
 	 *
 	 * @param interestPolicy a GemFire InterestPolicy corresponding to this SubscriptionType.
-	 * @see InterestPolicy
+	 * @see GudInterestPolicy
 	 */
-	InterestPolicyType(final InterestPolicy interestPolicy) {
+	InterestPolicyType(final GudInterestPolicy interestPolicy) {
 		this.interestPolicy = interestPolicy;
 	}
 
@@ -39,9 +47,9 @@ public enum InterestPolicyType {
 	 * @param interestPolicyType the InterestPolicyType enum from which to extract GemFire's InterestPolicy
 	 * @return a GemFire InterestPolicy for the given InterestPolicyType enumerated value
 	 * or null if InterestPolicyType is null.
-	 * @see InterestPolicy
+	 * @see GudInterestPolicy
 	 */
-	public static InterestPolicy getInterestPolicy(final InterestPolicyType interestPolicyType) {
+	public static GudInterestPolicy getInterestPolicy(final InterestPolicyType interestPolicyType) {
 		return (interestPolicyType != null ? interestPolicyType.getInterestPolicy() : null);
 	}
 
@@ -51,10 +59,10 @@ public enum InterestPolicyType {
 	 * @param interestPolicy the GemFire InterestPolicy used to lookup and match a SubscriptionType.
 	 * @return a SubscriptionType enumerated value matching the given GemFire InterestPolicy
 	 * or null if no matching value was found.
-	 * @see InterestPolicy
+	 * @see GudInterestPolicy
 	 * @see #getInterestPolicy()
 	 */
-	public static InterestPolicyType valueOf(final InterestPolicy interestPolicy) {
+	public static InterestPolicyType valueOf(final GudInterestPolicy interestPolicy) {
 		for (InterestPolicyType interestPolicyType : values()) {
 			if (interestPolicyType.getInterestPolicy().equals(interestPolicy)) {
 				return interestPolicyType;
@@ -87,9 +95,9 @@ public enum InterestPolicyType {
 	 * Returns the GemFire InterestPolicy corresponding to this SubscriptionType enumerated value.
 	 *
 	 * @return the GemFire InterestPolicy corresponding to this SubscriptionType.
-	 * @see InterestPolicy
+	 * @see GudInterestPolicy
 	 */
-	public InterestPolicy getInterestPolicy() {
+	public GudInterestPolicy getInterestPolicy() {
 		return interestPolicy;
 	}
 

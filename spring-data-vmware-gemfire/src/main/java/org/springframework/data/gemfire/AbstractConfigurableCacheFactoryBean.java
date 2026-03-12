@@ -1,8 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
 import java.io.File;
@@ -10,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.Properties;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
@@ -18,14 +25,14 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * Abstract base class encapsulating functionality for (externally) configuring an Apache Geode {@link ClientCache}
- * or peer {@link Cache} as a bean in the Spring context.
+ * Abstract base class encapsulating functionality for (externally) configuring an Apache Geode {@link GudClientCache}
+ * or peer Cache as a bean in the Spring context.
  *
  * @author John Blum
  * @see File
  * @see InputStream
  * @see Properties
- * @see ClientCache
+ * @see GudClientCache
  * @see BeanFactory
  * @see Resource
  * @see AbstractBasicCacheFactoryBean
@@ -242,18 +249,18 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	}
 
 	/**
-	 * Loads the configured {@literal cache.xml} to initialize the {@link ClientCache}.
+	 * Loads the configured {@literal cache.xml} to initialize the {@link GudClientCache}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @param cache {@link ClientCache} instance to initialize with {@literal cache.xml}; must not be {@literal null}.
-	 * @return the given {@link ClientCache}.
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @param cache {@link GudClientCache} instance to initialize with {@literal cache.xml}; must not be {@literal null}.
+	 * @return the given {@link GudClientCache}.
 	 * @throws RuntimeException if the configured {@literal cache.xml} file could not be loaded
-	 * into the {@link ClientCache}.
-	 * @see ClientCache#loadCacheXml(InputStream)
-	 * @see ClientCache
+	 * into the {@link GudClientCache}.
+	 * @see GudClientCache#loadCacheXml(InputStream)
+	 * @see GudClientCache
 	 * @see #getOptionalCacheXml()
 	 */
-	protected @NonNull <T extends ClientCache> T loadCacheXml(@NonNull T cache) {
+	protected @NonNull <T extends GudClientCache> T loadCacheXml(@NonNull T cache) {
 
 		// Load the cache.xml file (Resource) and initialize the cache
 		getOptionalCacheXml().ifPresent(cacheXml -> {
@@ -270,9 +277,9 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	}
 
 	/**
-	 * Resolves the Apache Geode {@link Properties} used to configure the {@link ClientCache}.
+	 * Resolves the Apache Geode {@link Properties} used to configure the {@link GudClientCache}.
 	 *
-	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link ClientCache}.
+	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link GudClientCache}.
 	 * @see #setAndGetProperties(Properties)
 	 * @see #getProperties()
 	 * @see Properties

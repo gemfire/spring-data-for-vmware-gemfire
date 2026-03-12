@@ -1,55 +1,62 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.CancelException;
-import org.apache.geode.CopyException;
-import org.apache.geode.GemFireCacheException;
-import org.apache.geode.GemFireCheckedException;
-import org.apache.geode.GemFireConfigException;
-import org.apache.geode.GemFireException;
-import org.apache.geode.GemFireIOException;
-import org.apache.geode.IncompatibleSystemException;
-import org.apache.geode.InternalGemFireException;
-import org.apache.geode.InvalidValueException;
-import org.apache.geode.NoSystemException;
-import org.apache.geode.SystemConnectException;
-import org.apache.geode.SystemIsRunningException;
-import org.apache.geode.UnmodifiableException;
-import org.apache.geode.cache.CacheException;
-import org.apache.geode.cache.CacheExistsException;
-import org.apache.geode.cache.CacheLoaderException;
-import org.apache.geode.cache.CacheRuntimeException;
-import org.apache.geode.cache.CacheWriterException;
-import org.apache.geode.cache.CacheXmlException;
-import org.apache.geode.cache.CommitConflictException;
-import org.apache.geode.cache.CommitIncompleteException;
-import org.apache.geode.cache.DiskAccessException;
-import org.apache.geode.cache.EntryDestroyedException;
-import org.apache.geode.cache.EntryExistsException;
-import org.apache.geode.cache.EntryNotFoundException;
-import org.apache.geode.cache.FailedSynchronizationException;
-import org.apache.geode.cache.OperationAbortedException;
-import org.apache.geode.cache.RegionDestroyedException;
-import org.apache.geode.cache.RegionExistsException;
-import org.apache.geode.cache.ResourceException;
-import org.apache.geode.cache.RoleException;
-import org.apache.geode.cache.StatisticsDisabledException;
-import org.apache.geode.cache.SynchronizationCommitConflictException;
-import org.apache.geode.cache.VersionException;
-import org.apache.geode.cache.client.ServerConnectivityException;
-import org.apache.geode.cache.execute.FunctionException;
-import org.apache.geode.cache.query.CqClosedException;
-import org.apache.geode.cache.query.IndexInvalidException;
-import org.apache.geode.cache.query.IndexMaintenanceException;
-import org.apache.geode.cache.query.QueryException;
-import org.apache.geode.cache.query.QueryExecutionTimeoutException;
-import org.apache.geode.cache.query.QueryInvalidException;
-import org.apache.geode.distributed.LeaseExpiredException;
-import org.apache.geode.security.GemFireSecurityException;
+import org.springframework.data.gemfire.gud.api.GudCacheException;
+import org.springframework.data.gemfire.gud.api.GudCacheExistsException;
+import org.springframework.data.gemfire.gud.api.GudCacheLoaderException;
+import org.springframework.data.gemfire.gud.api.GudCacheRuntimeException;
+import org.springframework.data.gemfire.gud.api.GudCacheWriterException;
+import org.springframework.data.gemfire.gud.api.GudCacheXmlException;
+import org.springframework.data.gemfire.gud.api.GudCancelException;
+import org.springframework.data.gemfire.gud.api.GudCommitConflictException;
+import org.springframework.data.gemfire.gud.api.GudCommitIncompleteException;
+import org.springframework.data.gemfire.gud.api.GudCopyException;
+import org.springframework.data.gemfire.gud.api.GudCqClosedException;
+import org.springframework.data.gemfire.gud.api.GudDiskAccessException;
+import org.springframework.data.gemfire.gud.api.GudEntryDestroyedException;
+import org.springframework.data.gemfire.gud.api.GudEntryExistsException;
+import org.springframework.data.gemfire.gud.api.GudEntryNotFoundException;
+import org.springframework.data.gemfire.gud.api.GudFailedSynchronizationException;
+import org.springframework.data.gemfire.gud.api.GudFunctionException;
+import org.springframework.data.gemfire.gud.api.GudGemFireCacheException;
+import org.springframework.data.gemfire.gud.api.GudGemFireCheckedException;
+import org.springframework.data.gemfire.gud.api.GudGemFireConfigException;
+import org.springframework.data.gemfire.gud.api.GudGemFireException;
+import org.springframework.data.gemfire.gud.api.GudGemFireIOException;
+import org.springframework.data.gemfire.gud.api.GudGemFireSecurityException;
+import org.springframework.data.gemfire.gud.api.GudIncompatibleSystemException;
+import org.springframework.data.gemfire.gud.api.GudIndexInvalidException;
+import org.springframework.data.gemfire.gud.api.GudIndexMaintenanceException;
+import org.springframework.data.gemfire.gud.api.GudInternalGemFireException;
+import org.springframework.data.gemfire.gud.api.GudInvalidValueException;
+import org.springframework.data.gemfire.gud.api.GudLeaseExpiredException;
+import org.springframework.data.gemfire.gud.api.GudNoSystemException;
+import org.springframework.data.gemfire.gud.api.GudOperationAbortedException;
+import org.springframework.data.gemfire.gud.api.GudQueryException;
+import org.springframework.data.gemfire.gud.api.GudQueryExecutionTimeoutException;
+import org.springframework.data.gemfire.gud.api.GudQueryInvalidException;
+import org.springframework.data.gemfire.gud.api.GudRegionDestroyedException;
+import org.springframework.data.gemfire.gud.api.GudRegionExistsException;
+import org.springframework.data.gemfire.gud.api.GudResourceException;
+import org.springframework.data.gemfire.gud.api.GudRoleException;
+import org.springframework.data.gemfire.gud.api.GudServerConnectivityException;
+import org.springframework.data.gemfire.gud.api.GudStatisticsDisabledException;
+import org.springframework.data.gemfire.gud.api.GudSynchronizationCommitConflictException;
+import org.springframework.data.gemfire.gud.api.GudSystemConnectException;
+import org.springframework.data.gemfire.gud.api.GudSystemIsRunningException;
+import org.springframework.data.gemfire.gud.api.GudUnmodifiableException;
+import org.springframework.data.gemfire.gud.api.GudVersionException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -78,7 +85,7 @@ public abstract class GemfireCacheUtils {
 		Class<?> type = null;
 
 		try {
-			type = ClassUtils.resolveClassName("org.apache.geode.cache.query.CqInvalidException",
+			type = ClassUtils.resolveClassName("org.springframework.data.gemfire.gud.api.GudCqInvalidException",
 				GemfireCacheUtils.class.getClassLoader());
 		}
 		catch (IllegalArgumentException ignore) { }
@@ -94,133 +101,123 @@ public abstract class GemfireCacheUtils {
 	 * @param cause Gemfire unchecked exception
 	 * @return new the corresponding DataAccessException instance
 	 */
-	@SuppressWarnings("deprecation")
-	public static DataAccessException convertGemfireAccessException(GemFireException cause) {
+	public static DataAccessException convertGemfireAccessException(GudGemFireException cause) {
 
-		if (cause instanceof CacheException) {
-			if (cause instanceof CacheExistsException) {
+		if (cause instanceof GudCacheException) {
+			if (cause instanceof GudCacheExistsException) {
 				return new DataIntegrityViolationException(cause.getMessage(), cause);
 			}
-			if (cause instanceof CommitConflictException) {
+			if (cause instanceof GudCommitConflictException) {
 				return new DataIntegrityViolationException(cause.getMessage(), cause);
 			}
-			if (cause instanceof CommitIncompleteException) {
+			if (cause instanceof GudCommitIncompleteException) {
 				return new DataIntegrityViolationException(cause.getMessage(), cause);
 			}
-			if (cause instanceof EntryExistsException) {
+			if (cause instanceof GudEntryExistsException) {
 				return new DuplicateKeyException(cause.getMessage(), cause);
 			}
-			if (cause instanceof EntryNotFoundException) {
+			if (cause instanceof GudEntryNotFoundException) {
 				return new DataRetrievalFailureException(cause.getMessage(), cause);
 			}
-			if (cause instanceof RegionExistsException) {
+			if (cause instanceof GudRegionExistsException) {
 				return new DataIntegrityViolationException(cause.getMessage(), cause);
 			}
 		}
 
-		if (cause instanceof CacheRuntimeException) {
-			if (cause instanceof CacheXmlException) {
+		if (cause instanceof GudCacheRuntimeException) {
+			if (cause instanceof GudCacheXmlException) {
 				return new GemfireSystemException(cause);
 			}
-			if (cause instanceof CancelException) {
-				// all cancellations go wrapped by this exception
-				return new GemfireCancellationException((CancelException) cause);
+			if (cause instanceof GudCancelException) {
+				return new GemfireCancellationException(cause);
 			}
-			if (cause instanceof CqClosedException) {
+			if (cause instanceof GudCqClosedException) {
 				return new InvalidDataAccessApiUsageException(cause.getMessage(), cause);
 			}
-			if (cause instanceof DiskAccessException) {
+			if (cause instanceof GudDiskAccessException) {
 				return new DataAccessResourceFailureException(cause.getMessage(), cause);
 			}
-			if (cause instanceof EntryDestroyedException) {
+			if (cause instanceof GudEntryDestroyedException) {
 				return new InvalidDataAccessApiUsageException(cause.getMessage(), cause);
 			}
-			if (cause instanceof FailedSynchronizationException) {
+			if (cause instanceof GudFailedSynchronizationException) {
 				return new PessimisticLockingFailureException(cause.getMessage(), cause);
 			}
-			if (cause instanceof IndexMaintenanceException) {
-				return new GemfireIndexException((IndexMaintenanceException) cause);
+			if (cause instanceof GudIndexMaintenanceException) {
+				return new GemfireIndexException((Exception) cause);
 			}
-			if (cause instanceof OperationAbortedException) {
-				// treat user exceptions first
-				if (cause instanceof CacheLoaderException) {
+			if (cause instanceof GudOperationAbortedException) {
+				if (cause instanceof GudCacheLoaderException) {
 					return new GemfireSystemException(cause);
 				}
-				if (cause instanceof CacheWriterException) {
+				if (cause instanceof GudCacheWriterException) {
 					return new GemfireSystemException(cause);
 				}
-				// the rest are treated as resource failures
 				return new DataAccessResourceFailureException(cause.getMessage(), cause);
 			}
-			if (cause instanceof QueryExecutionTimeoutException) {
-				return new GemfireQueryException((QueryExecutionTimeoutException) cause);
+			if (cause instanceof GudQueryExecutionTimeoutException) {
+				return new GemfireQueryException((Exception) cause);
 			}
-			if (cause instanceof RegionDestroyedException) {
+			if (cause instanceof GudRegionDestroyedException) {
 				return new InvalidDataAccessResourceUsageException(cause.getMessage(), cause);
 			}
-			if (cause instanceof org.apache.geode.admin.RegionNotFoundException) {
-				return new InvalidDataAccessResourceUsageException(cause.getMessage(), cause);
-			}
-			if (cause instanceof ResourceException) {
+			if (cause instanceof GudResourceException) {
 				return new DataAccessResourceFailureException(cause.getMessage(), cause);
 			}
-			if (cause instanceof RoleException) {
+			if (cause instanceof GudRoleException) {
 				return new GemfireSystemException(cause);
 			}
-			if (cause instanceof StatisticsDisabledException) {
+			if (cause instanceof GudStatisticsDisabledException) {
 				return new GemfireSystemException(cause);
 			}
-			if (cause instanceof SynchronizationCommitConflictException) {
+			if (cause instanceof GudSynchronizationCommitConflictException) {
 				return new PessimisticLockingFailureException(cause.getMessage(), cause);
 			}
 		}
 
-		if (cause instanceof CopyException) {
+		if (cause instanceof GudCopyException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof FunctionException) {
+		if (cause instanceof GudFunctionException) {
 			return new InvalidDataAccessApiUsageException(cause.getMessage(), cause);
 		}
-		if (cause instanceof GemFireCacheException) {
-			return convertGemfireAccessException(((GemFireCacheException) cause).getCacheException());
-		}
-		if (cause instanceof GemFireConfigException) {
+		if (cause instanceof GudGemFireCacheException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof GemFireIOException) {
+		if (cause instanceof GudGemFireConfigException) {
+			return new GemfireSystemException(cause);
+		}
+		if (cause instanceof GudGemFireIOException) {
 			return new DataAccessResourceFailureException(cause.getMessage(), cause);
 		}
-		if (cause instanceof GemFireSecurityException) {
+		if (cause instanceof GudGemFireSecurityException) {
 			return new PermissionDeniedDataAccessException(cause.getMessage(), cause);
 		}
-		if (cause instanceof IncompatibleSystemException) {
+		if (cause instanceof GudIncompatibleSystemException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof InternalGemFireException) {
+		if (cause instanceof GudInternalGemFireException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof InvalidValueException) {
+		if (cause instanceof GudInvalidValueException) {
 			return new TypeMismatchDataAccessException(cause.getMessage(), cause);
 		}
-		if (cause instanceof LeaseExpiredException) {
+		if (cause instanceof GudLeaseExpiredException) {
 			return new PessimisticLockingFailureException(cause.getMessage(), cause);
 		}
-		if (cause instanceof NoSystemException) {
+		if (cause instanceof GudNoSystemException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof org.apache.geode.admin.RuntimeAdminException) {
-			return new GemfireSystemException(cause);
-		}
-		if (cause instanceof ServerConnectivityException) {
+		if (cause instanceof GudServerConnectivityException) {
 			return new DataAccessResourceFailureException(cause.getMessage(), cause);
 		}
-		if (cause instanceof SystemConnectException) {
+		if (cause instanceof GudSystemConnectException) {
 			return new DataAccessResourceFailureException(cause.getMessage(), cause);
 		}
-		if (cause instanceof SystemIsRunningException) {
+		if (cause instanceof GudSystemIsRunningException) {
 			return new GemfireSystemException(cause);
 		}
-		if (cause instanceof UnmodifiableException) {
+		if (cause instanceof GudUnmodifiableException) {
 			return new GemfireSystemException(cause);
 		}
 
@@ -238,17 +235,16 @@ public abstract class GemfireCacheUtils {
 	 * Converts the given (checked) Gemfire exception to an appropriate one from the
 	 * <code>org.springframework.dao</code> hierarchy.
 	 *
-	 * @param cause Gemfire unchecked exception
+	 * @param cause Gemfire checked exception
 	 * @return new the corresponding DataAccessException instance
 	 */
-	@SuppressWarnings("deprecation")
-	public static DataAccessException convertGemfireAccessException(GemFireCheckedException cause) {
+	public static DataAccessException convertGemfireAccessException(GudGemFireCheckedException cause) {
 
-		if (cause instanceof QueryException) {
-			return new GemfireQueryException((QueryException) cause);
+		if (cause instanceof GudQueryException) {
+			return new GemfireQueryException((Exception) cause);
 		}
 
-		if (cause instanceof VersionException) {
+		if (cause instanceof GudVersionException) {
 			return new DataAccessResourceFailureException(cause.getMessage(), cause);
 		}
 
@@ -263,8 +259,8 @@ public abstract class GemfireCacheUtils {
 	 * @param cause Gemfire unchecked exception
 	 * @return new the corresponding DataAccessException instance
 	 */
-	public static DataAccessException convertGemfireAccessException(IndexInvalidException cause) {
-		return new GemfireIndexException(cause);
+	public static DataAccessException convertGemfireAccessException(GudIndexInvalidException cause) {
+		return new GemfireIndexException((Exception) cause);
 	}
 
 	/**
@@ -275,8 +271,8 @@ public abstract class GemfireCacheUtils {
 	 * @param cause Gemfire unchecked exception
 	 * @return new the corresponding DataAccessException instance
 	 */
-	public static DataAccessException convertGemfireAccessException(QueryInvalidException cause) {
-		return new GemfireQueryException(cause);
+	public static DataAccessException convertGemfireAccessException(GudQueryInvalidException cause) {
+		return new GemfireQueryException((Exception) cause);
 	}
 
 	/**
@@ -293,12 +289,12 @@ public abstract class GemfireCacheUtils {
 	 */
 	static DataAccessException convertQueryExceptions(RuntimeException cause) {
 
-		if (cause instanceof IndexInvalidException) {
-			return convertGemfireAccessException((IndexInvalidException) cause);
+		if (cause instanceof GudIndexInvalidException) {
+			return convertGemfireAccessException((GudIndexInvalidException) cause);
 		}
 
-		if (cause instanceof QueryInvalidException) {
-			return convertGemfireAccessException((QueryInvalidException) cause);
+		if (cause instanceof GudQueryInvalidException) {
+			return convertGemfireAccessException((GudQueryInvalidException) cause);
 		}
 
 		if (isCqInvalidException(cause)) {

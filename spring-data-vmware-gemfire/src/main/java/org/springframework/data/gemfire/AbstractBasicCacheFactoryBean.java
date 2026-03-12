@@ -1,22 +1,29 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import org.apache.geode.GemFireCheckedException;
-import org.apache.geode.GemFireException;
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.pdx.PdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudGemFireCheckedException;
+import org.springframework.data.gemfire.gud.api.GudGemFireException;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -91,7 +98,7 @@ import org.springframework.util.StringUtils;
  * @see AbstractFactoryBeanSupport
  * @since 2.5.0
  */
-public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanSupport<ClientCache>
+public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanSupport<GudClientCache>
 		implements DisposableBean, InitializingBean, PersistenceExceptionTranslator, Phased {
 
 	private boolean close = true;
@@ -108,51 +115,51 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	private Float criticalHeapPercentage;
 	private Float evictionHeapPercentage;
 
-	private volatile ClientCache cache;
+	private volatile GudClientCache cache;
 
-	private List<TransactionListener> transactionListeners;
+	private List<GudTransactionListener> transactionListeners;
 
-	private PdxSerializer pdxSerializer;
+	private GudPdxSerializer pdxSerializer;
 
 	private String pdxDiskStoreName;
 
-	private TransactionWriter transactionWriter;
+	private GudTransactionWriter transactionWriter;
 
 	/**
-	 * Sets a reference to the constructed, configured an initialized {@link ClientCache} instance created by
+	 * Sets a reference to the constructed, configured an initialized {@link GudClientCache} instance created by
 	 * this cache {@link FactoryBean}.
 	 *
-	 * @param cache {@link ClientCache} created by this cache {@link FactoryBean}.
-	 * @see ClientCache
+	 * @param cache {@link GudClientCache} created by this cache {@link FactoryBean}.
+	 * @see GudClientCache
 	 */
-	protected void setCache(@Nullable ClientCache cache) {
+	protected void setCache(@Nullable GudClientCache cache) {
 		this.cache = cache;
 	}
 
 	/**
-	 * Returns a reference to the constructed, configured an initialized {@link ClientCache} instance created by
+	 * Returns a reference to the constructed, configured an initialized {@link GudClientCache} instance created by
 	 * this cache {@link FactoryBean}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @return a reference to the {@link ClientCache} created by this cache {@link FactoryBean}.
-	 * @see ClientCache
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @return a reference to the {@link GudClientCache} created by this cache {@link FactoryBean}.
+	 * @see GudClientCache
 	 */
 	@SuppressWarnings("unchecked")
-	public @Nullable <T extends ClientCache> T getCache() {
+	public @Nullable <T extends GudClientCache> T getCache() {
 		return (T) this.cache;
 	}
 
 	/**
-	 * Returns an {@link Optional} reference to the constructed, configured and initialized {@link ClientCache}
+	 * Returns an {@link Optional} reference to the constructed, configured and initialized {@link GudClientCache}
 	 * instance created by this cache {@link FactoryBean}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @return an {@link Optional} reference to the {@link ClientCache} created by this {cache @link FactoryBean}.
-	 * @see ClientCache
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @return an {@link Optional} reference to the {@link GudClientCache} created by this {cache @link FactoryBean}.
+	 * @see GudClientCache
 	 * @see Optional
 	 * @see #getCache()
 	 */
-	public <T extends ClientCache> Optional<T> getOptionalCache() {
+	public <T extends GudClientCache> Optional<T> getOptionalCache() {
 		return Optional.ofNullable(getCache());
 	}
 
@@ -201,33 +208,33 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Sets the {@link ClientCache#getCopyOnRead()} property of the {@link ClientCache}.
+	 * Sets the {@link GudClientCache#getCopyOnRead()} property of the {@link GudClientCache}.
 	 *
 	 * @param copyOnRead a {@link Boolean} value to indicate whether {@link Object objects}
-	 * stored in the {@link ClientCache} are copied on read (i.e. {@link Region#get(Object)}.
+	 * stored in the {@link GudClientCache} are copied on read (i.e. {@link GudRegion#get(Object)}.
 	 */
 	public void setCopyOnRead(@Nullable Boolean copyOnRead) {
 		this.copyOnRead = copyOnRead;
 	}
 
 	/**
-	 * Returns the configuration of the {@link ClientCache#getCopyOnRead()} property set on the {@link ClientCache}.
+	 * Returns the configuration of the {@link GudClientCache#getCopyOnRead()} property set on the {@link GudClientCache}.
 	 *
 	 * @return a {@link Boolean} value to indicate whether {@link Object objects}
-	 * stored in the {@link ClientCache} are copied on read (i.e. {@link Region#get(Object)}.
+	 * stored in the {@link GudClientCache} are copied on read (i.e. {@link GudRegion#get(Object)}.
 	 */
 	public @Nullable Boolean getCopyOnRead() {
 		return this.copyOnRead;
 	}
 
 	/**
-	 * Determines whether {@link Object objects} stored in the {@link ClientCache} are copied when read
-	 * (i.e. {@link Region#get(Object)}.
+	 * Determines whether {@link Object objects} stored in the {@link GudClientCache} are copied when read
+	 * (i.e. {@link GudRegion#get(Object)}.
 	 *
 	 * Defaults to {@literal false}.
 	 *
-	 * @return a boolean value indicating whether {@link Object objects} stored in the {@link ClientCache}
-	 * are copied when read (i.e. {@link Region#get(Object)}.
+	 * @return a boolean value indicating whether {@link Object objects} stored in the {@link GudClientCache}
+	 * are copied when read (i.e. {@link GudRegion#get(Object)}.
 	 * @see #getCopyOnRead()
 	 */
 	@SuppressWarnings("unused")
@@ -236,9 +243,9 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Set the {@link ClientCache} critical heap percentage property.
+	 * Set the {@link GudClientCache} critical heap percentage property.
 	 *
-	 * @param criticalHeapPercentage {@link Float} value specifying the configuration for the {@link ClientCache}
+	 * @param criticalHeapPercentage {@link Float} value specifying the configuration for the {@link GudClientCache}
 	 * critical heap percentage.
 	 */
 	public void setCriticalHeapPercentage(@Nullable Float criticalHeapPercentage) {
@@ -246,18 +253,18 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Gets the configuration of the {@link ClientCache} critical heap percentage property.
+	 * Gets the configuration of the {@link GudClientCache} critical heap percentage property.
 	 *
-	 * @return a {@link Float} value specifying the configuration for the {@link ClientCache} critical heap percentage.
+	 * @return a {@link Float} value specifying the configuration for the {@link GudClientCache} critical heap percentage.
 	 */
 	public Float getCriticalHeapPercentage() {
 		return this.criticalHeapPercentage;
 	}
 
 	/**
-	 * Set the {@link ClientCache} eviction heap percentage property.
+	 * Set the {@link GudClientCache} eviction heap percentage property.
 	 *
-	 * @param evictionHeapPercentage {@link Float} value specifying the configuration for the {@link ClientCache}
+	 * @param evictionHeapPercentage {@link Float} value specifying the configuration for the {@link GudClientCache}
 	 * eviction heap percentage.
 	 */
 	public void setEvictionHeapPercentage(Float evictionHeapPercentage) {
@@ -265,84 +272,84 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Gets the configuration of the {@link ClientCache} eviction heap percentage property.
+	 * Gets the configuration of the {@link GudClientCache} eviction heap percentage property.
 	 *
-	 * @return a {@link Float} value specifying the configuration for the {@link ClientCache} eviction heap percentage.
+	 * @return a {@link Float} value specifying the configuration for the {@link GudClientCache} eviction heap percentage.
 	 */
 	public Float getEvictionHeapPercentage() {
 		return this.evictionHeapPercentage;
 	}
 
 	/**
-	 * Returns the {@link ClientCache cache object reference} created by this cache {@link FactoryBean}.
+	 * Returns the {@link GudClientCache cache object reference} created by this cache {@link FactoryBean}.
 	 *
-	 * @return the {@link ClientCache cache object reference} created by this cache {@link FactoryBean}.
+	 * @return the {@link GudClientCache cache object reference} created by this cache {@link FactoryBean}.
 	 * @see FactoryBean#getObject()
-	 * @see ClientCache
+	 * @see GudClientCache
 	 * @see #doGetObject()
 	 * @see #getCache()
 	 */
 	@Override
-	public ClientCache getObject() throws Exception {
+	public GudClientCache getObject() throws Exception {
 
-		ClientCache cache = getCache();
+		GudClientCache cache = getCache();
 
 		return cache != null ? cache : doGetObject();
 	}
 
 	/**
-	 * Called if {@link #getCache()} returns a {@literal null} {@link ClientCache} reference from {@link #getObject()}.
+	 * Called if {@link #getCache()} returns a {@literal null} {@link GudClientCache} reference from {@link #getObject()}.
 	 *
-	 * @return a new constructed, configured and initialized {@link ClientCache} instance.
-	 * @see ClientCache
+	 * @return a new constructed, configured and initialized {@link GudClientCache} instance.
+	 * @see GudClientCache
 	 * @see #getObject()
 	 */
-	protected abstract ClientCache doGetObject();
+	protected abstract GudClientCache doGetObject();
 
 	/**
-	 * Returns the {@link Class type} of {@link ClientCache} created by this cache {@link FactoryBean}.
+	 * Returns the {@link Class type} of {@link GudClientCache} created by this cache {@link FactoryBean}.
 	 *
-	 * @return the {@link Class type} of {@link ClientCache} created by this cache {@link FactoryBean}.
+	 * @return the {@link Class type} of {@link GudClientCache} created by this cache {@link FactoryBean}.
 	 * @see FactoryBean#getObjectType()
 	 * @see #doGetObjectType()
 	 */
 	@Override
-	public Class<? extends ClientCache> getObjectType() {
+	public Class<? extends GudClientCache> getObjectType() {
 
-		ClientCache cache = getCache();
+		GudClientCache cache = getCache();
 
 		return cache != null ? cache.getClass() : doGetObjectType();
 	}
 
 	/**
-	 * By default, returns {@link ClientCache} {@link Class}.
+	 * By default, returns {@link GudClientCache} {@link Class}.
 	 *
-	 * @return {@link ClientCache} {@link Class} by default.
-	 * @see ClientCache
+	 * @return {@link GudClientCache} {@link Class} by default.
+	 * @see GudClientCache
 	 * @see #getObjectType()
 	 * @see Class
 	 */
-	protected Class<? extends ClientCache> doGetObjectType() {
-		return ClientCache.class;
+	protected Class<? extends GudClientCache> doGetObjectType() {
+		return GudClientCache.class;
 	}
 
 	/**
-	 * Sets the {@link String name} of the Apache Geode {@link DiskStore} used to store PDX metadata.
+	 * Sets the {@link String name} of the Apache Geode {@link GudDiskStore} used to store PDX metadata.
 	 *
-	 * @param pdxDiskStoreName {@link String name} for the PDX {@link DiskStore}.
-	 * @see ClientCacheFactory#setPdxDiskStore(String)
-	 * @see DiskStore#getName()
+	 * @param pdxDiskStoreName {@link String name} for the PDX {@link GudDiskStore}.
+	 * @see GudClientCacheFactory#setPdxDiskStore(String)
+	 * @see GudDiskStore#getName()
 	 */
 	public void setPdxDiskStoreName(@Nullable String pdxDiskStoreName) {
 		this.pdxDiskStoreName = pdxDiskStoreName;
 	}
 
 	/**
-	 * Gets the {@link String name} of the Apache Geode {@link DiskStore} used to store PDX metadata.
+	 * Gets the {@link String name} of the Apache Geode {@link GudDiskStore} used to store PDX metadata.
 	 *
-	 * @return the {@link String name} of the PDX {@link DiskStore}.
-	 * @see ClientCache#getPdxDiskStore()
-	 * @see DiskStore#getName()
+	 * @return the {@link String name} of the PDX {@link GudDiskStore}.
+	 * @see GudClientCache#getPdxDiskStore()
+	 * @see GudDiskStore#getName()
 	 */
 	public @Nullable String getPdxDiskStoreName() {
 		return this.pdxDiskStoreName;
@@ -354,7 +361,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Defaults to {@literal false}.
 	 *
 	 * @param pdxIgnoreUnreadFields {@link Boolean} value controlling ignoring unread fields.
-	 * @see ClientCacheFactory#setPdxIgnoreUnreadFields(boolean)
+	 * @see GudClientCacheFactory#setPdxIgnoreUnreadFields(boolean)
 	 */
 	public void setPdxIgnoreUnreadFields(@Nullable Boolean pdxIgnoreUnreadFields) {
 		this.pdxIgnoreUnreadFields = pdxIgnoreUnreadFields;
@@ -367,7 +374,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Defaults to {@literal false}.
 	 *
 	 * @return a {@link Boolean} value controlling ignoring unread fields.
-	 * @see ClientCache#getPdxIgnoreUnreadFields()
+	 * @see GudClientCache#getPdxIgnoreUnreadFields()
 	 */
 	public @Nullable Boolean getPdxIgnoreUnreadFields() {
 		return this.pdxIgnoreUnreadFields;
@@ -379,7 +386,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 *
 	 * @param pdxPersistent {@link Boolean} value controlling whether PDX {@link Class type} metadata
 	 * will be persisted to disk.
-	 * @see ClientCacheFactory#setPdxPersistent(boolean)
+	 * @see GudClientCacheFactory#setPdxPersistent(boolean)
 	 */
 	public void setPdxPersistent(@Nullable Boolean pdxPersistent) {
 		this.pdxPersistent = pdxPersistent;
@@ -390,19 +397,19 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * to PDX will be persisted to disk.
 	 *
 	 * @return a {@link Boolean} value controlling whether PDX {@link Class type} metadata will be persisted to disk.
-	 * @see ClientCache#getPdxPersistent()
+	 * @see GudClientCache#getPdxPersistent()
 	 */
 	public @Nullable Boolean getPdxPersistent() {
 		return this.pdxPersistent;
 	}
 
 	/**
-	 * Configures whether {@link Object objects} stored in the Apache Geode {@link ClientCache cache} as PDX
-	 * will be read back as PDX bytes or (deserialized) as an {@link Object} when {@link Region#get(Object)}
+	 * Configures whether {@link Object objects} stored in the Apache Geode {@link GudClientCache cache} as PDX
+	 * will be read back as PDX bytes or (deserialized) as an {@link Object} when {@link GudRegion#get(Object)}
 	 * is called.
 	 *
 	 * @param pdxReadSerialized {@link Boolean} value controlling the PDX read serialized function.
-	 * @see ClientCacheFactory#setPdxReadSerialized(boolean)
+	 * @see GudClientCacheFactory#setPdxReadSerialized(boolean)
 	 */
 	public void setPdxReadSerialized(@Nullable Boolean pdxReadSerialized) {
 		this.pdxReadSerialized = pdxReadSerialized;
@@ -410,37 +417,37 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 
 	/**
 	 * Gets the configuration determining whether {@link Object objects} stored in the Apache Geode
-	 * {@link ClientCache cache} as PDX will be read back as PDX bytes or (deserialized) as an {@link Object}
-	 * when {@link Region#get(Object)} is called.
+	 * {@link GudClientCache cache} as PDX will be read back as PDX bytes or (deserialized) as an {@link Object}
+	 * when {@link GudRegion#get(Object)} is called.
 	 *
 	 * @return a {@link Boolean} value controlling the PDX read serialized function.
-	 * @see ClientCache#getPdxReadSerialized()
+	 * @see GudClientCache#getPdxReadSerialized()
 	 */
 	public @Nullable Boolean getPdxReadSerialized() {
 		return this.pdxReadSerialized;
 	}
 
 	/**
-	 * Configures a reference to {@link PdxSerializer} used by this cache to de/serialize {@link Object objects}
+	 * Configures a reference to {@link GudPdxSerializer} used by this cache to de/serialize {@link Object objects}
 	 * stored in the cache and distributed/transferred across the distributed system as PDX bytes.
 	 *
-	 * @param serializer {@link PdxSerializer} used by this cache to de/serialize {@link Object objects} as PDX.
-	 * @see ClientCacheFactory#setPdxSerializer(PdxSerializer)
-	 * @see PdxSerializer
+	 * @param serializer {@link GudPdxSerializer} used by this cache to de/serialize {@link Object objects} as PDX.
+	 * @see GudClientCacheFactory#setPdxSerializer(GudPdxSerializer)
+	 * @see GudPdxSerializer
 	 */
-	public void setPdxSerializer(@Nullable PdxSerializer serializer) {
+	public void setPdxSerializer(@Nullable GudPdxSerializer serializer) {
 		this.pdxSerializer = serializer;
 	}
 
 	/**
-	 * Get a reference to the configured {@link PdxSerializer} used by this cache to de/serialize {@link Object objects}
+	 * Get a reference to the configured {@link GudPdxSerializer} used by this cache to de/serialize {@link Object objects}
 	 * stored in the cache and distributed/transferred across the distributed system as PDX bytes.
 	 *
-	 * @return a reference to the configured {@link PdxSerializer}.
-	 * @see ClientCache#getPdxSerializer()
-	 * @see PdxSerializer
+	 * @return a reference to the configured {@link GudPdxSerializer}.
+	 * @see GudClientCache#getPdxSerializer()
+	 * @see GudPdxSerializer
 	 */
-	public @Nullable PdxSerializer getPdxSerializer() {
+	public @Nullable GudPdxSerializer getPdxSerializer() {
 		return this.pdxSerializer;
 	}
 
@@ -468,49 +475,49 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Configures the cache (transaction manager) with a {@link List} of {@link TransactionListener TransactionListeners}
+	 * Configures the cache (transaction manager) with a {@link List} of {@link GudTransactionListener GudTransactionListeners}
 	 * implemented by applications to listen for and receive transaction events after a transaction is processed
 	 * (i.e. committed or rolled back).
 	 *
-	 * @param transactionListeners {@link List} of application-defined {@link TransactionListener TransactionListeners}
+	 * @param transactionListeners {@link List} of application-defined {@link GudTransactionListener GudTransactionListeners}
 	 * registered with the cache to listen for and receive transaction events.
-	 * @see TransactionListener
+	 * @see GudTransactionListener
 	 */
-	public void setTransactionListeners(List<TransactionListener> transactionListeners) {
+	public void setTransactionListeners(List<GudTransactionListener> transactionListeners) {
 		this.transactionListeners = transactionListeners;
 	}
 
 	/**
-	 * Returns the {@link List} of configured, application-defined {@link TransactionListener TransactionListeners}
+	 * Returns the {@link List} of configured, application-defined {@link GudTransactionListener GudTransactionListeners}
 	 * registered with the cache (transaction manager) to enable applications to receive transaction events after a
 	 * transaction is processed (i.e. committed or rolled back).
 	 *
-	 * @return a {@link List} of application-defined {@link TransactionListener TransactionListeners} registered with
+	 * @return a {@link List} of application-defined {@link GudTransactionListener GudTransactionListeners} registered with
 	 * the cache (transaction manager) to listen for and receive transaction events.
-	 * @see TransactionListener
+	 * @see GudTransactionListener
 	 */
-	public List<TransactionListener> getTransactionListeners() {
+	public List<GudTransactionListener> getTransactionListeners() {
 		return CollectionUtils.nullSafeList(this.transactionListeners);
 	}
 
 	/**
-	 * Configures a {@link TransactionWriter} implemented by the application to receive transaction events and perform
+	 * Configures a {@link GudTransactionWriter} implemented by the application to receive transaction events and perform
 	 * a action, like a veto.
 	 *
-	 * @param transactionWriter {@link TransactionWriter} receiving transaction events.
-	 * @see TransactionWriter
+	 * @param transactionWriter {@link GudTransactionWriter} receiving transaction events.
+	 * @see GudTransactionWriter
 	 */
-	public void setTransactionWriter(@Nullable TransactionWriter transactionWriter) {
+	public void setTransactionWriter(@Nullable GudTransactionWriter transactionWriter) {
 		this.transactionWriter = transactionWriter;
 	}
 
 	/**
-	 * Return the configured {@link TransactionWriter} used to process and handle transaction events.
+	 * Return the configured {@link GudTransactionWriter} used to process and handle transaction events.
 	 *
-	 * @return the configured {@link TransactionWriter}.
-	 * @see TransactionWriter
+	 * @return the configured {@link GudTransactionWriter}.
+	 * @see GudTransactionWriter
 	 */
-	public @Nullable TransactionWriter getTransactionWriter() {
+	public @Nullable GudTransactionWriter getTransactionWriter() {
 		return this.transactionWriter;
 	}
 
@@ -534,31 +541,31 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	protected abstract void applyCacheConfigurers();
 
 	/**
-	 * Null-safe method used to close the {@link ClientCache} by calling {@link ClientCache#close()}
+	 * Null-safe method used to close the {@link GudClientCache} by calling {@link GudClientCache#close()}
 	 * iff the cache is not already closed.
 	 *
-	 * @param cache {@link ClientCache} to close.
-	 * @see ClientCache#isClosed()
-	 * @see ClientCache#close()
-	 * @see #isNotClosed(ClientCache)
+	 * @param cache {@link GudClientCache} to close.
+	 * @see GudClientCache#isClosed()
+	 * @see GudClientCache#close()
+	 * @see #isNotClosed(GudClientCache)
 	 */
-	protected void close(@Nullable ClientCache cache) {
+	protected void close(@Nullable GudClientCache cache) {
 
 		Optional.ofNullable(cache)
 			.filter(this::isNotClosed)
-			.ifPresent(ClientCache::close);
+			.ifPresent(GudClientCache::close);
 
 		setCache(null);
 	}
 
 	/**
-	 * Determines if the {@link ClientCache} has not been closed yet.
+	 * Determines if the {@link GudClientCache} has not been closed yet.
 	 *
-	 * @param cache {@link ClientCache} to evaluate.
-	 * @return a boolean value indicating if the {@link ClientCache} is not yet closed.
-	 * @see ClientCache
+	 * @param cache {@link GudClientCache} to evaluate.
+	 * @return a boolean value indicating if the {@link GudClientCache} is not yet closed.
+	 * @see GudClientCache
 	 */
-	protected boolean isNotClosed(@Nullable ClientCache cache) {
+	protected boolean isNotClosed(@Nullable GudClientCache cache) {
 		return cache != null && !cache.isClosed();
 	}
 
@@ -583,19 +590,16 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Configures the {@link ClientCache} critical and eviction heap thresholds as percentages.
+	 * Configures the {@link GudClientCache} critical and eviction heap thresholds as percentages.
 	 *
-	 * @param cache {@link ClientCache} to configure the critical and eviction heap thresholds;
+	 * @param cache {@link GudClientCache} to configure the critical and eviction heap thresholds;
 	 * must not be {@literal null}.
-	 * @return the given {@link ClientCache}.
+	 * @return the given {@link GudClientCache}.
 	 * @throws IllegalArgumentException if the critical or eviction heap thresholds are not valid percentages.
-	 * @see org.apache.geode.cache.control.ResourceManager#setCriticalHeapPercentage(float)
-	 * @see org.apache.geode.cache.control.ResourceManager#setEvictionHeapPercentage(float)
-	 * @see org.apache.geode.cache.control.ResourceManager
-	 * @see ClientCache#getResourceManager()
-	 * @see ClientCache
+	 * @see GudClientCache#getResourceManager()
+	 * @see GudClientCache
 	 */
-	protected @NonNull ClientCache configureHeapPercentages(@NonNull ClientCache cache) {
+	protected @NonNull GudClientCache configureHeapPercentages(@NonNull GudClientCache cache) {
 
 		Optional.ofNullable(getCriticalHeapPercentage()).ifPresent(criticalHeapPercentage -> {
 
@@ -644,16 +648,14 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	/**
 	 * Fetches an existing cache instance from the Apache Geode cache factory.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
 	 * @return an existing cache instance if available.
-	 * @throws org.apache.geode.cache.CacheClosedException if an existing cache instance does not exist.
-	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see ClientCache
+	 * @see GudClientCacheFactory#getAnyInstance()
+	 * @see GudClientCache
 	 * @see #doFetchCache()
 	 * @see #getCache()
 	 */
-	protected <T extends ClientCache> T fetchCache() {
+	protected <T extends GudClientCache> T fetchCache() {
 
 		T cache = getCache();
 
@@ -661,29 +663,26 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Called by {@link #fetchCache()} if the {@link ClientCache} reference returned by {@link #getCache()}
+	 * Called by {@link #fetchCache()} if the {@link GudClientCache} reference returned by {@link #getCache()}
 	 * is {@literal null}.
 	 *
-	 * This method is typically implemented by calling {@link ClientCacheFactory#getAnyInstance()}
-	 * or {@link ClientCacheFactory#getAnyInstance()} depending on the {@link ClientCache} type declared
-	 * and used in the Spring application.
+	 * This method is typically implemented by calling {@link GudClientCacheFactory#getAnyInstance()}
+	 * depending on the {@link GudClientCache} type declared and used in the Spring application.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @return a (existing) reference to a {@link ClientCache} instance.
-	 * @throws org.apache.geode.cache.CacheClosedException if a {@link ClientCache} reference does not exist.
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @return a (existing) reference to a {@link GudClientCache} instance.
 	 * @see #fetchCache()
 	 */
-	protected abstract <T extends ClientCache> T doFetchCache();
+	protected abstract <T extends GudClientCache> T doFetchCache();
 
 	/**
-	 * Initializes the given {@link ClientCacheFactory} or {@link ClientCacheFactory}
+	 * Initializes the given {@link GudClientCacheFactory}
 	 * with the configured {@link CacheFactoryInitializer}.
 	 *
-	 * @param factory {@link ClientCacheFactory} or {@link ClientCacheFactory} to initialize.
-	 * @return the initialized {@link ClientCacheFactory} or {@link ClientCacheFactory}.
+	 * @param factory {@link GudClientCacheFactory} to initialize.
+	 * @return the initialized {@link GudClientCacheFactory}.
 	 * @see CacheFactoryInitializer#initialize(Object)
-	 * @see ClientCacheFactory
-	 * @see ClientCacheFactory
+	 * @see GudClientCacheFactory
 	 * @see #getCacheFactoryInitializer()
 	 */
 	@Nullable
@@ -696,20 +695,18 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	}
 
 	/**
-	 * Registers configured, application-defined {@link TransactionListener TransactionListeners} with the cache
+	 * Registers configured, application-defined {@link GudTransactionListener GudTransactionListeners} with the cache
 	 * (transaction manager) to listen for and receive transaction events when a (cache) transaction is processed
 	 * (e.g. committed or rolled back).
 	 *
-	 * @param cache {@link ClientCache} used to register the configured, application-defined
-	 * {@link TransactionListener TransactionListeners}; must not be {@literal null}.
-	 * @return the given {@link ClientCache}.
-	 * @see ClientCache#getCacheTransactionManager()
-	 * @see org.apache.geode.cache.CacheTransactionManager#addListener(TransactionListener)
-	 * @see org.apache.geode.cache.CacheTransactionManager
-	 * @see TransactionListener
-	 * @see ClientCache
+	 * @param cache {@link GudClientCache} used to register the configured, application-defined
+	 * {@link GudTransactionListener GudTransactionListeners}; must not be {@literal null}.
+	 * @return the given {@link GudClientCache}.
+	 * @see GudClientCache#getCacheTransactionManager()
+	 * @see GudTransactionListener
+	 * @see GudClientCache
 	 */
-	protected @NonNull ClientCache registerTransactionListeners(@NonNull ClientCache cache) {
+	protected @NonNull GudClientCache registerTransactionListeners(@NonNull GudClientCache cache) {
 
 		CollectionUtils.nullSafeCollection(getTransactionListeners()).stream()
 			.filter(Objects::nonNull)
@@ -741,27 +738,26 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 			}
 		}
 
-		if (exception instanceof GemFireException) {
-			return GemfireCacheUtils.convertGemfireAccessException((GemFireException) exception);
+		if (exception instanceof GudGemFireException) {
+			return GemfireCacheUtils.convertGemfireAccessException((GudGemFireException) exception);
 		}
 
-		if (exception.getCause() instanceof GemFireException) {
-			return GemfireCacheUtils.convertGemfireAccessException((GemFireException) exception.getCause());
+		if (exception.getCause() instanceof GudGemFireException) {
+			return GemfireCacheUtils.convertGemfireAccessException((GudGemFireException) exception.getCause());
 		}
 
-		if (exception.getCause() instanceof GemFireCheckedException) {
-			return GemfireCacheUtils.convertGemfireAccessException((GemFireCheckedException) exception.getCause());
+		if (exception.getCause() instanceof GudGemFireCheckedException) {
+			return GemfireCacheUtils.convertGemfireAccessException((GudGemFireCheckedException) exception.getCause());
 		}
 
 		return null;
 	}
 
 	/**
-	 * Callback interface for initializing a {@link ClientCacheFactory} or a {@link ClientCacheFactory} instance,
-	 * which is used to create an instance of {@link ClientCache}.
+	 * Callback interface for initializing a {@link GudClientCacheFactory} instance,
+	 * which is used to create an instance of {@link GudClientCache}.
 	 *
-	 * @see ClientCacheFactory
-	 * @see ClientCacheFactory
+	 * @see GudClientCacheFactory
 	 * @see Function
 	 */
 	@FunctionalInterface
@@ -784,8 +780,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 		 *
 		 * @param cacheFactory cache factory to initialize.
 		 * @return the given cache factory.
-		 * @see ClientCacheFactory
-		 * @see ClientCacheFactory
+		 * @see GudClientCacheFactory
 		 */
 		T initialize(T cacheFactory);
 
@@ -795,9 +790,8 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 * Callback interface to configure PDX.
 	 *
 	 * @param <T> parameterized {@link Class} type capable of configuring Apache Geode PDX functionality.
-	 * @see ClientCacheFactory
-	 * @see ClientCacheFactory
-	 * @see ClientCache
+	 * @see GudClientCacheFactory
+	 * @see GudClientCache
 	 */
 	public interface PdxConfigurer<T> {
 
@@ -811,7 +805,7 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 
 		PdxConfigurer<T> setReadSerialized(Boolean readSerialized);
 
-		PdxConfigurer<T> setSerializer(PdxSerializer pdxSerializer);
+		PdxConfigurer<T> setSerializer(GudPdxSerializer pdxSerializer);
 
 	}
 }

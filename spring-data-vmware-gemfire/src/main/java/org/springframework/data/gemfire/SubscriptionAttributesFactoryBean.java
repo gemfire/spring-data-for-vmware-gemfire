@@ -1,40 +1,48 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.InterestPolicy;
-import org.apache.geode.cache.SubscriptionAttributes;
+import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
+import org.springframework.data.gemfire.gud.api.GudSubscriptionAttributes;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * Spring {@link FactoryBean} used for defining and constructing an Apache Geode {@link SubscriptionAttributes} object,
+ * Spring {@link FactoryBean} used for defining and constructing an Apache Geode {@link GudSubscriptionAttributes} object,
  * which determines the subscription policy used by cache Regions declaring their data interests.
  *
  * @author Lyndon Adams
  * @author John Blum
- * @see InterestPolicy
- * @see SubscriptionAttributes
+ * @see GudInterestPolicy
+ * @see GudSubscriptionAttributes
  * @see FactoryBean
  * @see InitializingBean
  * @since 1.3.0
  */
-public class SubscriptionAttributesFactoryBean implements FactoryBean<SubscriptionAttributes>, InitializingBean {
+public class SubscriptionAttributesFactoryBean implements FactoryBean<GudSubscriptionAttributes>, InitializingBean {
 
-	private InterestPolicy interestPolicy;
+	private GudInterestPolicy interestPolicy;
 
-	private SubscriptionAttributes subscriptionAttributes;
+	private GudSubscriptionAttributes subscriptionAttributes;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		this.subscriptionAttributes = new SubscriptionAttributes(getInterestPolicy());
+		this.subscriptionAttributes = GudSubscriptionAttributes.create(getInterestPolicy());
 	}
 
 	@Override
-	public SubscriptionAttributes getObject() throws Exception {
+	public GudSubscriptionAttributes getObject() throws Exception {
 		return this.subscriptionAttributes;
 	}
 
@@ -43,7 +51,7 @@ public class SubscriptionAttributesFactoryBean implements FactoryBean<Subscripti
 
 		return this.subscriptionAttributes != null
 			? this.subscriptionAttributes.getClass()
-			: SubscriptionAttributes.class;
+			: GudSubscriptionAttributes.class;
 	}
 
 	@Override
@@ -56,10 +64,10 @@ public class SubscriptionAttributesFactoryBean implements FactoryBean<Subscripti
 	 * the data interests and distribution of changes.
 	 *
 	 * @param interestPolicy the GemFire InterestsPolicy to set for Subscription.
-	 * @see InterestPolicy
-	 * @see SubscriptionAttributes#SubscriptionAttributes(InterestPolicy)
+	 * @see GudInterestPolicy
+	 * @see GudSubscriptionAttributes
 	 */
-	public void setInterestPolicy(InterestPolicy interestPolicy) {
+	public void setInterestPolicy(GudInterestPolicy interestPolicy) {
 		this.interestPolicy = interestPolicy;
 	}
 
@@ -68,10 +76,10 @@ public class SubscriptionAttributesFactoryBean implements FactoryBean<Subscripti
 	 * and distribution of changes.
 	 *
 	 * @return the GemFire InterestsPolicy set for Subscription.
-	 * @see InterestPolicy
-	 * @see SubscriptionAttributes#getInterestPolicy()
+	 * @see GudInterestPolicy
+	 * @see GudSubscriptionAttributes#getInterestPolicy()
 	 */
-	public InterestPolicy getInterestPolicy() {
-		return this.interestPolicy != null ? this.interestPolicy : InterestPolicy.DEFAULT;
+	public GudInterestPolicy getInterestPolicy() {
+		return this.interestPolicy != null ? this.interestPolicy : GudInterestPolicy.DEFAULT;
 	}
 }

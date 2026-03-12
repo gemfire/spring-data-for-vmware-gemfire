@@ -1,10 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.repository.query.support.OqlKeyword;
@@ -55,10 +63,10 @@ class QueryBuilder {
 
 	/**
 	 * Constructs a new instance of {@link QueryBuilder} initialized with the given {@link GemfirePersistentEntity}
-	 * and {@link PartTree} used to determine the {@link Region} to query and whether the query
+	 * and {@link PartTree} used to determine the {@link GudRegion} to query and whether the query
 	 * should capture unique results.
 	 *
-	 * @param entity {@link GemfirePersistentEntity} used to determine the {@link Region} to query.
+	 * @param entity {@link GemfirePersistentEntity} used to determine the {@link GudRegion} to query.
 	 * @param tree {@link PartTree} containing parts of the OQL Query for determining things like uniqueness.
 	 * @see GemfirePersistentEntity
 	 * @see PartTree

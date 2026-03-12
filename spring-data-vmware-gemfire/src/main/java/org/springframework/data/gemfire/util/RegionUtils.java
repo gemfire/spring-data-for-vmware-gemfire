@@ -1,16 +1,23 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.internal.cache.LocalRegion;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 
 import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
 import org.springframework.lang.NonNull;
@@ -19,27 +26,27 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * The {@link RegionUtils} class is an abstract utility class for working with {@link Region Regions}.
+ * The {@link RegionUtils} class is an abstract utility class for working with {@link GudRegion Regions}.
  *
  * @author John Blum
- * @see Region
- * @see RegionAttributes
+ * @see GudRegion
+ * @see GudRegionAttributes
  * @since 2.0.0
  */
 @SuppressWarnings("unused")
 public abstract class RegionUtils extends CacheUtils {
 
 	/**
-	 * Assert that the configuration settings for {@link ClientRegionShortcut} and the {@literal persistent} attribute
+	 * Assert that the configuration settings for {@link GudClientRegionShortcut} and the {@literal persistent} attribute
 	 * in &lt;gfe:*-region&gt; elements are compatible.
 	 *
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} resolved from the SDG XML namespace.
+	 * @param clientRegionShortcut {@link GudClientRegionShortcut} resolved from the SDG XML namespace.
 	 * @param persistent boolean indicating the value of the {@literal persistent} configuration attribute.
 	 * @see ClientRegionShortcutWrapper
-	 * @see ClientRegionShortcut
+	 * @see GudClientRegionShortcut
 	 */
 	public static void assertClientRegionShortcutAndPersistentAttributeAreCompatible(
-			ClientRegionShortcut clientRegionShortcut, Boolean persistent) {
+			GudClientRegionShortcut clientRegionShortcut, Boolean persistent) {
 
 		boolean persistentUnspecified = persistent == null;
 
@@ -54,14 +61,14 @@ public abstract class RegionUtils extends CacheUtils {
 	}
 
 	/**
-	 * Assert that the configuration settings for {@link DataPolicy} and the {@literal persistent} attribute
+	 * Assert that the configuration settings for {@link GudDataPolicy} and the {@literal persistent} attribute
 	 * in &lt;gfe:*-region&gt; elements are compatible.
 	 *
-	 * @param dataPolicy {@link DataPolicy} resolved from the SDG XML namespace.
+	 * @param dataPolicy {@link GudDataPolicy} resolved from the SDG XML namespace.
 	 * @param persistent boolean indicating the value of the {@literal persistent} configuration attribute.
-	 * @see DataPolicy
+	 * @see GudDataPolicy
 	 */
-	public static void assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy dataPolicy, Boolean persistent) {
+	public static void assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy dataPolicy, Boolean persistent) {
 
 		boolean persistentUnspecified = persistent == null;
 
@@ -76,13 +83,13 @@ public abstract class RegionUtils extends CacheUtils {
 	}
 
 	/**
-	 * Safely closes the target {@link Region}.
+	 * Safely closes the target {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to close
-	 * @return a boolean indicating whether the {@link Region} was successfully closed or not.
-	 * @see Region#close
+	 * @param region {@link GudRegion} to close
+	 * @return a boolean indicating whether the {@link GudRegion} was successfully closed or not.
+	 * @see GudRegion#close
 	 */
-	public static boolean close(Region<?, ?> region) {
+	public static boolean close(GudRegion<?, ?> region) {
 
 		try {
 
@@ -96,51 +103,51 @@ public abstract class RegionUtils extends CacheUtils {
 	}
 
 	/**
-	 * Determines whether the target {@link Region} is a {@literal client} {@link Region}.
+	 * Determines whether the target {@link GudRegion} is a {@literal client} {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to evaluate.
-	 * @return a boolean indicating whether the target {@link Region} is a {@literal client} {@link Region}.
-	 * @see Region
+	 * @param region {@link GudRegion} to evaluate.
+	 * @return a boolean indicating whether the target {@link GudRegion} is a {@literal client} {@link GudRegion}.
+	 * @see GudRegion
 	 */
-	public static boolean isClient(@Nullable Region<?, ?> region) {
+	public static boolean isClient(@Nullable GudRegion<?, ?> region) {
 
 		return Optional.ofNullable(region)
-			.map(Region::getAttributes)
-			.map(RegionAttributes::getPoolName)
+			.map(GudRegion::getAttributes)
+			.map(GudRegionAttributes::getPoolName)
 			.filter(StringUtils::hasText)
 			.isPresent();
 	}
 
 	/**
-	 * Determines whether the given {@link Region} is closeable.
+	 * Determines whether the given {@link GudRegion} is closeable.
 	 *
-	 * @param region {@link Region} to evaluate.
-	 * @return a boolean value indicating whether the {@link Region} is closeable or not.
-	 * @see Region
+	 * @param region {@link GudRegion} to evaluate.
+	 * @return a boolean value indicating whether the {@link GudRegion} is closeable or not.
+	 * @see GudRegion
 	 */
-	public static boolean isCloseable(Region<?, ?> region) {
+	public static boolean isCloseable(GudRegion<?, ?> region) {
 
 		return Optional.ofNullable(region)
-			.map(Region::getRegionService)
+			.map(GudRegion::getRegionService)
 			.filter(regionService -> !regionService.isClosed())
 			.isPresent();
 	}
 
 	/**
-	 * Determines whether the given {@link Region} is a non-distributed, {@literal local} {@link Region}.
+	 * Determines whether the given {@link GudRegion} is a non-distributed, {@literal local} {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to evaluate.
-	 * @return a boolean value indicating whether the given {@link Region} is a non-distributed,
-	 * {@literal local} {@link Region}.
-	 * @see Region
+	 * @param region {@link GudRegion} to evaluate.
+	 * @return a boolean value indicating whether the given {@link GudRegion} is a non-distributed,
+	 * {@literal local} {@link GudRegion}.
+	 * @see GudRegion
 	 */
-	public static boolean isLocal(@Nullable Region<?, ?> region) {
-		return region instanceof LocalRegion;
+	public static boolean isLocal(@Nullable GudRegion<?, ?> region) {
+		return region != null && region.isLocalRegion();
 	}
 
 	@Nullable
-	public static String toRegionName(@Nullable Region<?, ?> region) {
-		return Optional.ofNullable(region).map(Region::getName).orElse(null);
+	public static String toRegionName(@Nullable GudRegion<?, ?> region) {
+		return Optional.ofNullable(region).map(GudRegion::getName).orElse(null);
 	}
 
 	@Nullable
@@ -149,30 +156,30 @@ public abstract class RegionUtils extends CacheUtils {
 		return Optional.ofNullable(regionPath)
 			.filter(StringUtils::hasText)
 			.map(StringUtils::trimWhitespace)
-			.map(it -> it.lastIndexOf(Region.SEPARATOR))
+			.map(it -> it.lastIndexOf(GudRegion.SEPARATOR))
 			.filter(index -> index > -1)
 			.map(index -> regionPath.substring(index + 1))
 			.orElse(regionPath);
 	}
 
 	@Nullable
-	public static String toRegionPath(@Nullable Region<?, ?> region) {
-		return Optional.ofNullable(region).map(Region::getFullPath).orElse(null);
+	public static String toRegionPath(@Nullable GudRegion<?, ?> region) {
+		return Optional.ofNullable(region).map(GudRegion::getFullPath).orElse(null);
 	}
 
 	@NonNull
 	public static String toRegionPath(String regionName) {
-		return String.format("%1$s%2$s", Region.SEPARATOR, regionName);
+		return String.format("%1$s%2$s", GudRegion.SEPARATOR, regionName);
 	}
 
 	/**
-	 * Determines whether the target {@link Region} is a {@literal server-side} {@link Region}.
+	 * Determines whether the target {@link GudRegion} is a {@literal server-side} {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to evaluate.
-	 * @return a boolean indicating whether the target {@link Region} is a {@literal server-side} {@link Region}.
-	 * @see Region
+	 * @param region {@link GudRegion} to evaluate.
+	 * @return a boolean indicating whether the target {@link GudRegion} is a {@literal server-side} {@link GudRegion}.
+	 * @see GudRegion
 	 */
-	public static boolean isServer(@Nullable Region<?, ?> region) {
+	public static boolean isServer(@Nullable GudRegion<?, ?> region) {
 		return region != null && !isClient(region);
 	}
 }

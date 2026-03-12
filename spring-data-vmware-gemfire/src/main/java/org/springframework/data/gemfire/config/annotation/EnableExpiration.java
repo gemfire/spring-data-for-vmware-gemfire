@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType.IDLE_TIMEOUT;
@@ -13,21 +21,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.Region;
-
 import org.springframework.context.annotation.Import;
 import org.springframework.data.gemfire.expiration.Expiration;
 import org.springframework.data.gemfire.expiration.ExpirationActionType;
 import org.springframework.data.gemfire.expiration.IdleTimeoutExpiration;
 import org.springframework.data.gemfire.expiration.TimeToLiveExpiration;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * The {@link EnableExpiration} annotation marks a Spring {@link org.springframework.context.annotation.Configuration @Configuration}
- * annotated class to enable {@link Region} entry expiration for individual entries.  Note, this annotation does not
- * cover {@link Region} expiration; {@link Region} expiration must be configure on the {@link Region} definition itself.
+ * annotated class to enable {@link GudRegion} entry expiration for individual entries.  Note, this annotation does not
+ * cover {@link GudRegion} expiration; {@link GudRegion} expiration must be configure on the {@link GudRegion} definition itself.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see Import
  * @see ExpirationConfiguration
  * @see Expiration
@@ -47,21 +54,21 @@ import org.springframework.data.gemfire.expiration.TimeToLiveExpiration;
 public @interface EnableExpiration {
 
 	/**
-	 * Defines individual {@link Region} Expiration policies or customizes the default Expiration policy
-	 * for all {@link Region Regions}.
+	 * Defines individual {@link GudRegion} Expiration policies or customizes the default Expiration policy
+	 * for all {@link GudRegion Regions}.
 	 *
 	 * Defaults to empty.
 	 */
 	ExpirationPolicy[] policies() default {};
 
 	/**
-	 * Definition for a specific Expiration policy that can be applied to 1 or more {@link Region Regions}.
+	 * Definition for a specific Expiration policy that can be applied to 1 or more {@link GudRegion Regions}.
 	 *
 	 * An Expiration policy defines the expiration timeout and expiration action to take when
-	 * an {@link Region} entry times out.
+	 * an {@link GudRegion} entry times out.
 	 *
 	 * Additionally, the Expiration policy defines the algorithm to use (e.g. Idle Timeout (TTI) or Time-To-Live (TTL),
-	 * or both) to determine if and when an {@link Region} entry has timed out.
+	 * or both) to determine if and when an {@link GudRegion} entry has timed out.
 	 */
 	@interface ExpirationPolicy {
 
@@ -92,18 +99,18 @@ public @interface EnableExpiration {
 		ExpirationActionType action();
 
 		/**
-		 * Names of specific {@link Region Regions} on which this Expiration policy is applied.
+		 * Names of specific {@link GudRegion Regions} on which this Expiration policy is applied.
 		 *
-		 * If no {@link Region} names are specified then this Expiration policy will apply to
-		 * all {@link Region Regions} declared in the Spring context.
+		 * If no {@link GudRegion} names are specified then this Expiration policy will apply to
+		 * all {@link GudRegion Regions} declared in the Spring context.
 		 *
-		 * Defaults to all {@link Region Regions}.
+		 * Defaults to all {@link GudRegion Regions}.
 		 */
 		String[] regionNames() default {};
 
 		/**
 		 * Types of Expiration algorithms (Idle Timeout (TTI) or Time to Live (TTL)) configured and used by
-		 * {@link Region Region(s)} to expire entries.
+		 * {@link GudRegion Region(s)} to expire entries.
 		 *
 		 * Defaults to Idle Timeout (TTI).
 		 *

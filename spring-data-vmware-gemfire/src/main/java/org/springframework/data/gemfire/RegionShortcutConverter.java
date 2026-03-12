@@ -1,13 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to GUD API types
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.RegionShortcut;
-
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 
 /**
  * The RegionShortcutConverter class is a Spring Converter implementation converting String value Region Shortcut
@@ -15,11 +21,11 @@ import org.springframework.core.convert.converter.Converter;
  *
  * @author John Blum
  * @see Converter
- * @see RegionShortcut
+ * @see GudRegionShortcut
  * @since 1.3.4
  */
 @SuppressWarnings("unused")
-public class RegionShortcutConverter implements Converter<String, RegionShortcut> {
+public class RegionShortcutConverter implements Converter<String, GudRegionShortcut> {
 
 	/**
 	 * Converts the String value to upper case, trimming all whitespace.  This method guards against null values
@@ -41,11 +47,11 @@ public class RegionShortcutConverter implements Converter<String, RegionShortcut
 	 * @param source the String representation of the Region Shortcut to convert.
 	 * @return a RegionShortcut enumerated value for the String representation.
 	 * @throws IllegalArgumentException if the String source is not a valid RegionShortcut enumerated value.
-	 * @see RegionShortcut#valueOf(String)
+	 * @see GudRegionShortcut#valueOf(String)
 	 */
 	@Override
-	public RegionShortcut convert(final String source) {
-		return RegionShortcut.valueOf(toUpperCase(source));
+	public GudRegionShortcut convert(final String source) {
+		return GudRegionShortcut.valueOf(toUpperCase(source));
 	}
 
 }

@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.cdi;
 
 import java.lang.annotation.Annotation;
@@ -15,7 +23,7 @@ import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.repository.support.GemfireRepositoryFactory;
@@ -35,7 +43,7 @@ import org.springframework.data.repository.config.CustomRepositoryImplementation
  * @see GemfireRepositoryFactory
  * @see CdiRepositoryBean
  * @see CustomRepositoryImplementationDetector
- * @see Region
+ * @see GudRegion
  * @since 1.8.0
  */
 @SuppressWarnings("rawtypes")
@@ -47,11 +55,11 @@ class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
 
 	private final BeanManager beanManager;
 
-	private final Set<Bean<Region>> regionBeans;
+	private final Set<Bean<GudRegion>> regionBeans;
 
 	GemfireRepositoryBean(BeanManager beanManager, Class<T> repositoryType, Set<Annotation> qualifiers,
 			CustomRepositoryImplementationDetector detector, Bean<GemfireMappingContext> gemfireMappingContextBean,
-			Set<Bean<Region>> regionBeans) {
+			Set<Bean<GudRegion>> regionBeans) {
 
 		super(qualifiers, repositoryType, beanManager, Optional.ofNullable(detector));
 
@@ -103,12 +111,12 @@ class GemfireRepositoryBean<T> extends CdiRepositoryBean<T> {
 				targetType, bean));
 	}
 
-	Iterable<Region<?, ?>> resolveGemfireRegions() {
+	Iterable<GudRegion<?, ?>> resolveGemfireRegions() {
 
-		Set<Region<?, ?>> regions = new HashSet<>(regionBeans.size());
+		Set<GudRegion<?, ?>> regions = new HashSet<>(regionBeans.size());
 
-		for (Bean<Region> regionBean : regionBeans) {
-			regions.add(getDependencyInstance(regionBean, resolveType(regionBean, Region.class)));
+		for (Bean<GudRegion> regionBean : regionBeans) {
+			regions.add(getDependencyInstance(regionBean, resolveType(regionBean, GudRegion.class)));
 		}
 
 		return regions;

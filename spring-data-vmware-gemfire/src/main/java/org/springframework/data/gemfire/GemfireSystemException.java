@@ -1,12 +1,16 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.springframework.data.gemfire;
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to use generic exception types instead of GemFire-specific ones
+ */
 
-import org.apache.geode.GemFireCheckedException;
-import org.apache.geode.GemFireException;
+package org.springframework.data.gemfire;
 
 import org.springframework.dao.UncategorizedDataAccessException;
 
@@ -18,11 +22,7 @@ import org.springframework.dao.UncategorizedDataAccessException;
 @SuppressWarnings("serial")
 public class GemfireSystemException extends UncategorizedDataAccessException {
 
-	public GemfireSystemException(GemFireCheckedException ex) {
-		super(ex.getMessage(), ex);
-	}
-
-	public GemfireSystemException(GemFireException ex) {
+	public GemfireSystemException(Exception ex) {
 		super(ex.getMessage(), ex);
 	}
 

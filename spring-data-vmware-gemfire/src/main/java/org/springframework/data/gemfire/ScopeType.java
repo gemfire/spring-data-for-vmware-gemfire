@@ -1,37 +1,44 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.Scope;
-
+import org.springframework.data.gemfire.gud.api.GudScope;
 import org.springframework.util.StringUtils;
 
 /**
  * The ScopeType enum is an enumeration of GemFire Scopes.
  *
  * @author John Blum
- * @see Scope
+ * @see GudScope
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
 public enum ScopeType {
 
-	DISTRIBUTED_ACK(Scope.DISTRIBUTED_ACK),
-	DISTRIBUTED_NO_ACK(Scope.DISTRIBUTED_NO_ACK),
-	GLOBAL(Scope.GLOBAL),
-	LOCAL(Scope.LOCAL);
+	DISTRIBUTED_ACK(GudScope.DISTRIBUTED_ACK),
+	DISTRIBUTED_NO_ACK(GudScope.DISTRIBUTED_NO_ACK),
+	GLOBAL(GudScope.GLOBAL),
+	LOCAL(GudScope.LOCAL);
 
-	private final Scope gemfireScope;
+	private final GudScope gemfireScope;
 
 	/**
 	 * Constructs an instance of the ScopeType initialized with a matching GemFire Scope.
 	 *
 	 * @param gemfireScope the GemFire Scope paired with this enumerated value.
-	 * @see Scope
+	 * @see GudScope
 	 */
-	ScopeType(Scope gemfireScope) {
+	ScopeType(GudScope gemfireScope) {
 		this.gemfireScope = gemfireScope;
 	}
 
@@ -41,10 +48,10 @@ public enum ScopeType {
 	 *
 	 * @param scopeType the ScopeType enumerated value from which to extract the GemFire Scope.
 	 * @return the paired GemFire Scope from the given ScopeType or null if scopeType is null.
-	 * @see Scope
+	 * @see GudScope
 	 * @see #getScope()
 	 */
-	public static Scope getScope(ScopeType scopeType) {
+	public static GudScope getScope(ScopeType scopeType) {
 		return scopeType != null ? scopeType.getScope() : null;
 	}
 
@@ -53,11 +60,11 @@ public enum ScopeType {
 	 *
 	 * @param scope the GemFire Scope used to lookup and match the appropriate ScopeType.
 	 * @return a ScopeType for the given GemFire Scope or null if no match was found.
-	 * @see Scope
+	 * @see GudScope
 	 * @see #getScope()
 	 * @see #values()
 	 */
-	public static ScopeType valueOf(final Scope scope) {
+	public static ScopeType valueOf(final GudScope scope) {
 
 		for (ScopeType scopeType : values()) {
 			if (scopeType.getScope().equals(scope)) {
@@ -107,9 +114,9 @@ public enum ScopeType {
 	 * Gets the matching GemFire Scope for this enumerated value.
 	 *
 	 * @return a GemFire Scope for this enumerated value.
-	 * @see Scope
+	 * @see GudScope
 	 */
-	public Scope getScope() {
+	public GudScope getScope() {
 		return this.gemfireScope;
 	}
 }

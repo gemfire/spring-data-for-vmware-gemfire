@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
@@ -10,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
@@ -38,7 +46,7 @@ import org.springframework.util.Assert;
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see SelectResults
+ * @see GudSelectResults
  * @see Page
  * @see Pageable
  * @see Sort
@@ -227,7 +235,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 
 		String preparedQuery = prepareQuery(queryMethod, query, arguments);
 
-		SelectResults<?> selectResults =
+		GudSelectResults<?> selectResults =
 			resolveOqlQueryExecutor(queryMethod).execute(queryMethod, preparedQuery, arguments);
 
 		return processQueryResults(queryMethod, selectResults, arguments);
@@ -296,20 +304,20 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	}
 
 	/**
-	 * Processes the OQL query {@link SelectResults result set}.
+	 * Processes the OQL query {@link GudSelectResults result set}.
 	 *
 	 * @param queryMethod {@link QueryMethod} modeling the OQL query.
-	 * @param selectResults {@link SelectResults} from the execution of the OQL query.
+	 * @param selectResults {@link GudSelectResults} from the execution of the OQL query.
 	 * @return the OQL query results.
 	 * @throws IncorrectResultSizeDataAccessException if the query result does not match
 	 * the {@link QueryMethod} {@link Class return type}.
 	 * @throws IllegalStateException if the OQL query is not supported based on the return value.
 	 * @see QueryMethod
-	 * @see SelectResults
+	 * @see GudSelectResults
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected @Nullable Object processQueryResults(@NonNull QueryMethod queryMethod,
-			@NonNull SelectResults<?> selectResults, @NonNull Object... arguments) {
+			@NonNull GudSelectResults<?> selectResults, @NonNull Object... arguments) {
 
 		Collection collection = toCollection(selectResults);
 
@@ -364,13 +372,13 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * @see java.util.Arrays#asList(Object[])
 	 * @see Collection
 	 * @see org.springframework.util.CollectionUtils#arrayToList(Object)
-	 * @see SelectResults
+	 * @see GudSelectResults
 	 */
 	@SuppressWarnings("rawtypes")
 	@NonNull Collection toCollection(@Nullable Object source) {
 
 		return source == null ? Collections.emptyList()
-			: source instanceof SelectResults ? ((SelectResults) source).asList()
+			: source instanceof GudSelectResults ? ((GudSelectResults) source).asList()
 			: source instanceof Collection ? (Collection<?>) source
 			: source.getClass().isArray() ? CollectionUtils.arrayToList(source)
 			: Collections.singletonList(source);
@@ -483,21 +491,21 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		}
 
 		/**
-		 * Simply return the {@link SelectResults} as is.
+		 * Simply return the {@link GudSelectResults} as is.
 		 *
-		 * The {@link SelectResults} were already limited to the {@link Pageable requested page} in this 2-phased
+		 * The {@link GudSelectResults} were already limited to the {@link Pageable requested page} in this 2-phased
 		 * paged query implementation.
 		 *
-		 * @param selectResults {@link SelectResults} to process; must not be {@literal null}.
+		 * @param selectResults {@link GudSelectResults} to process; must not be {@literal null}.
 		 * @param pageRequest {@link Pageable} object encapsulating the details of the {@link Page requested page};
 		 * must not be {@literal null}.
-		 * @return the {@link SelectResults} as is.
-		 * @see SelectResults
+		 * @return the {@link GudSelectResults} as is.
+		 * @see GudSelectResults
 		 * @see Pageable
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		protected SelectResults processPagedQueryResults(SelectResults selectResults, Pageable pageRequest) {
+		protected GudSelectResults processPagedQueryResults(GudSelectResults selectResults, Pageable pageRequest) {
 			//return selectResults;
 			return super.processPagedQueryResults(selectResults, pageRequest);
 		}
@@ -507,10 +515,10 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	 * A {@literal smart} {@link PageLimitingOqlQueryExecutor} implementation that looks ahead at
 	 * the {@link Pageable requested page}, and if the user requested page on or the number of results needed
 	 * to satisfy the contents of the page are withing a pre-defined, configurable/tunable threshold, then the limited
-	 * {@link SelectResults OQL query result set} is returned.
+	 * {@link GudSelectResults OQL query result set} is returned.
 	 *
 	 * Alternatively, a 2-phased paged query can be used when the page number or page size is relatively large. Another
-	 * consideration is the size of the objects returned in the {@link SelectResults OQL query result set}.
+	 * consideration is the size of the objects returned in the {@link GudSelectResults OQL query result set}.
 	 *
 	 * @see PageLimitingOqlQueryExecutor
 	 */
@@ -537,7 +545,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		protected SelectResults doExecute(Pageable pageRequest, QueryMethod queryMethod, String query,
+		protected GudSelectResults doExecute(Pageable pageRequest, QueryMethod queryMethod, String query,
 			Object... arguments) {
 
 			if (isExecutable(pageRequest)) {
@@ -570,7 +578,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	/**
 	 * A {@link SimplePagedOqlQueryExecutor} implementation that applies a {@literal LIMIT} to
 	 * the {@link String OQL query statement} based on the {@link Pageable requested page} in order to limit
-	 * the {@link SelectResults query result set}, or number of {@link Object results}, returned by
+	 * the {@link GudSelectResults query result set}, or number of {@link Object results}, returned by
 	 * the {@link String OQL query}.
 	 *
 	 * @see SimplePagedOqlQueryExecutor
@@ -635,7 +643,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 	/**
 	 * Abstract base class for {@link Page paged} OQL queries and {@link OqlQueryExecutor} implementations.
 	 *
-	 * This base class implementation simply returns the entire/full (i.e. non-limited) {@link SelectResults OQL query result set}
+	 * This base class implementation simply returns the entire/full (i.e. non-limited) {@link GudSelectResults OQL query result set}
 	 * and then performs the paging logic to extract subsets of the results based on the {@link Page requested page}.
 	 *
 	 * @see TemplateBasedOqlQueryExecutor
@@ -659,7 +667,7 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		public @NonNull SelectResults execute(@NonNull QueryMethod queryMethod, @NonNull String query,
+		public @NonNull GudSelectResults execute(@NonNull QueryMethod queryMethod, @NonNull String query,
 				@NonNull Object... arguments) {
 
 			if (PagingUtils.isPagingPresent(queryMethod)) {
@@ -683,18 +691,18 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		 * must not be {@literal null} or {@literal empty}.
 		 * @param arguments array of {@link Object arguments} passed to the placeholders in
 		 * the {@link String OQL query statement}.
-		 * @return the {@link SelectResults} from executing the {@link String OQL query statement}.
-		 * @see SelectResults
+		 * @return the {@link GudSelectResults} from executing the {@link String OQL query statement}.
+		 * @see GudSelectResults
 		 * @see Pageable
 		 * @see QueryMethod
 		 */
 		@SuppressWarnings("rawtypes")
-		protected SelectResults doExecute(@NonNull Pageable pageRequest, @NonNull QueryMethod queryMethod,
+		protected GudSelectResults doExecute(@NonNull Pageable pageRequest, @NonNull QueryMethod queryMethod,
 				@NonNull String query, @NonNull Object... arguments) {
 
 			String preparedQuery = preparePagedQuery(query, pageRequest);
 
-			SelectResults selectResults = super.execute(queryMethod, preparedQuery, arguments);
+			GudSelectResults selectResults = super.execute(queryMethod, preparedQuery, arguments);
 
 			return processPagedQueryResults(selectResults, pageRequest);
 		}
@@ -712,17 +720,17 @@ public class StringBasedGemfireRepositoryQuery extends GemfireRepositoryQuery {
 		}
 
 		/**
-		 * Processes the {@link SelectResults} as a {@link Page paged} query result set.
+		 * Processes the {@link GudSelectResults} as a {@link Page paged} query result set.
 		 *
-		 * @param selectResults {@link SelectResults} to process; must not be {@literal null}.
+		 * @param selectResults {@link GudSelectResults} to process; must not be {@literal null}.
 		 * @param pageRequest {@link Pageable} object encapsulating the details of the {@link Page requested page};
 		 * must not be {@literal null}.
-		 * @return the processed {@link SelectResults}.
-		 * @see SelectResults
+		 * @return the processed {@link GudSelectResults}.
+		 * @see GudSelectResults
 		 * @see Pageable
 		 */
 		@SuppressWarnings({ "rawtypes", "unchecked" })
-		protected @NonNull SelectResults processPagedQueryResults(@NonNull SelectResults selectResults,
+		protected @NonNull GudSelectResults processPagedQueryResults(@NonNull GudSelectResults selectResults,
 				@NonNull Pageable pageRequest) {
 
 			return new PagedSelectResults(selectResults, pageRequest);

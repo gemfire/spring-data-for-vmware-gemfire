@@ -1,10 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client;
 
 import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeCollection;
+
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,15 +24,7 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.StreamSupport;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.distributed.DistributedSystem;
-import org.apache.geode.internal.datasource.ConfigProperty;
-import org.apache.geode.internal.jndi.JNDIInvoker;
-import org.apache.geode.pdx.PdxSerializer;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -37,6 +38,15 @@ import org.springframework.data.gemfire.client.support.DelegatingPoolAdapter;
 import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
+import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudConfigProperty;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudJndiBinding;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.data.gemfire.util.ArrayUtils;
@@ -49,19 +59,19 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring {@link FactoryBean} used to construct, configure and initialize a {@link ClientCache}.
+ * Spring {@link FactoryBean} used to construct, configure and initialize a {@link GudClientCache}.
  *
  * @author Costin Leau
  * @author Lyndon Adams
  * @author John Blum
  * @see InetSocketAddress
  * @see Properties
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see SocketFactory
- * @see DistributedSystem
- * @see PdxSerializer
+ * @see GudClientCache
+ * @see GudClientCacheFactory
+ * @see GudPool
+ * @see GudSocketFactory
+ * @see GudDistributedSystem
+ * @see GudPdxSerializer
  * @see FactoryBean
  * @see ApplicationContext
  * @see ApplicationListener
@@ -73,8 +83,7 @@ import org.springframework.util.StringUtils;
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
-// TODO: Refactor this class to no longer extend ClientCacheFactoryBean
-public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
+public abstract class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
 
 	protected static final PoolResolver DEFAULT_POOL_RESOLVER = new PoolManagerPoolResolver();
 
@@ -111,11 +120,11 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	private Long idleTimeout;
 	private Long pingInterval;
 
-	private Pool pool;
+	private GudPool pool;
 
 	private PoolResolver poolResolver = DEFAULT_POOL_RESOLVER;
 
-	private SocketFactory socketFactory;
+	private GudSocketFactory socketFactory;
 
 	private String durableClientId;
 	private String poolName;
@@ -127,7 +136,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	/**
 	 * Applies the composite {@link ClientCacheConfigurer ClientCacheConfigurers} to this {@link ClientCacheFactoryBean}
-	 * before the {@link ClientCache} is created.
+	 * before the {@link GudClientCache} is created.
 	 *
 	 * @see #getCompositeClientCacheConfigurer()
 	 * @see #applyClientCacheConfigurers(ClientCacheConfigurer...)
@@ -139,7 +148,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	/**
 	 * Applies the array of {@link ClientCacheConfigurer ClientCacheConfigurers} to this {@link ClientCacheFactoryBean}
-	 * before the {@link ClientCache} is created.
+	 * before the {@link GudClientCache} is created.
 	 *
 	 * @param clientCacheConfigurers array of {@link ClientCacheConfigurer ClientCacheConfigurers}
 	 * applied to this {@link ClientCacheFactoryBean}.
@@ -153,7 +162,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	/**
 	 * Apples the {@link Iterable} of {@link ClientCacheConfigurer ClientCacheConfigurers}
-	 * to this {@link ClientCacheFactoryBean} before the {@link ClientCache} is created.
+	 * to this {@link ClientCacheFactoryBean} before the {@link GudClientCache} is created.
 	 *
 	 * @param clientCacheConfigurers {@link Iterable} of {@link ClientCacheConfigurer ClientCacheConfigurers}
 	 * applied to this {@link ClientCacheFactoryBean}.
@@ -166,50 +175,50 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Fetches an existing {@link ClientCache} instance from the {@link ClientCacheFactory}.
+	 * Fetches an existing {@link GudClientCache} instance from the {@link GudClientCacheFactory}.
 	 *
-	 * @param <T> parameterized {@link Class} type extension of {@link ClientCache}.
-	 * @return an existing {@link ClientCache} instance if available.
-	 * @throws CacheClosedException if an existing {@link ClientCache} instance does not exist.
-	 * @see ClientCacheFactory#getAnyInstance()
-	 * @see ClientCache
+	 * @param <T> parameterized {@link Class} type extension of {@link GudClientCache}.
+	 * @return an existing {@link GudClientCache} instance if available.
+	 * @throws GudCacheClosedException if an existing {@link GudClientCache} instance does not exist.
+	 * @see GudClientCacheFactory#getAnyInstance()
+	 * @see GudClientCache
 	 * @see #getCache()
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <T extends ClientCache> T doFetchCache() {
-		return (T) ClientCacheFactory.getAnyInstance();
+	protected <T extends GudClientCache> T doFetchCache() {
+		return (T) getClientCacheFactory().getAnyInstance();
 	}
 
 	/**
-	 * Returns the {@link Class type} of {@link ClientCache} constructed by this {@link ClientCacheFactoryBean}.
+	 * Returns the {@link Class type} of {@link GudClientCache} constructed by this {@link ClientCacheFactoryBean}.
 	 *
-	 * Returns {@link ClientCache} {@link Class}.
+	 * Returns {@link GudClientCache} {@link Class}.
 	 *
-	 * @return the {@link Class type} of {@link ClientCache} constructed by this {@link ClientCacheFactoryBean}.
+	 * @return the {@link Class type} of {@link GudClientCache} constructed by this {@link ClientCacheFactoryBean}.
 	 * @see FactoryBean#getObjectType()
 	 */
 	@Override
-	protected Class<? extends ClientCache> doGetObjectType() {
-		return ClientCache.class;
+	protected Class<? extends GudClientCache> doGetObjectType() {
+		return GudClientCache.class;
 	}
 
 	/**
-	 * Resolves the Apache Geode {@link Properties} used to configure the {@link ClientCache}.
+	 * Resolves the Apache Geode {@link Properties} used to configure the {@link GudClientCache}.
 	 *
-	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link ClientCache}.
-	 * @see DistributedSystem#getProperties()
+	 * @return the resolved Apache Geode {@link Properties} used to configure the {@link GudClientCache}.
+	 * @see GudDistributedSystem#getProperties()
 	 */
 	@Override
 	protected @NonNull Properties resolveProperties() {
 		return resolveProperties(GemfireUtils::getDistributedSystem);
 	}
 
-	@NonNull Properties resolveProperties(@NonNull Supplier<DistributedSystem> distributedSystemSupplier) {
+	@NonNull Properties resolveProperties(@NonNull Supplier<GudDistributedSystem> distributedSystemSupplier) {
 
 		Properties gemfireProperties = super.resolveProperties();
 
-		DistributedSystem distributedSystem = distributedSystemSupplier.get();
+		GudDistributedSystem distributedSystem = distributedSystemSupplier.get();
 
 		if (GemfireUtils.isConnected(distributedSystem)) {
 			gemfireProperties = PropertiesBuilder.from(distributedSystem.getProperties())
@@ -223,60 +232,69 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Constructs a new instance of {@link ClientCacheFactory} initialized with the given Apache Geode {@link Properties}
-	 * used to construct, configure and initialize a new {@link ClientCache} instance.
+	 * Returns the {@link GudClientCacheFactory} to use for creating {@link GudClientCache} instances.
+	 * This must be provided by the driver implementation.
 	 *
-	 * @param gemfireProperties {@link Properties} used by the {@link ClientCacheFactory}
-	 * to configure the {@link ClientCache}.
-	 * @return a new instance of {@link ClientCacheFactory} initialized with the given Apache Geode {@link Properties}.
-	 * @see ClientCacheFactory
+	 * @return the {@link GudClientCacheFactory} to use.
+	 * @see GudClientCacheFactory
+	 */
+	protected abstract GudClientCacheFactory getClientCacheFactory();
+
+	/**
+	 * Constructs a new instance of {@link GudClientCacheFactory} initialized with the given Apache Geode {@link Properties}
+	 * used to construct, configure and initialize a new {@link GudClientCache} instance.
+	 *
+	 * @param gemfireProperties {@link Properties} used by the {@link GudClientCacheFactory}
+	 * to configure the {@link GudClientCache}.
+	 * @return a new instance of {@link GudClientCacheFactory} initialized with the given Apache Geode {@link Properties}.
+	 * @see GudClientCacheFactory
 	 * @see Properties
 	 */
 	@Override
 	protected @NonNull Object createFactory(@NonNull Properties gemfireProperties) {
-		return new ClientCacheFactory(gemfireProperties);
+		return getClientCacheFactory().create(gemfireProperties);
 	}
 
 	/**
-	 * Configures the {@link ClientCacheFactory} used to create the {@link ClientCache}.
+	 * Configures the {@link GudClientCacheFactory} used to create the {@link GudClientCache}.
 	 *
-	 * @param factory {@link ClientCacheFactory} used to create the {@link ClientCache}.
-	 * @return the configured {@link ClientCacheFactory}.
-	 * @see ClientCacheFactory
-	 * @see #configurePool(ClientCacheFactory)
+	 * @param factory {@link GudClientCacheFactory} used to create the {@link GudClientCache}.
+	 * @return the configured {@link GudClientCacheFactory}.
+	 * @see GudClientCacheFactory
+	 * @see #configurePool(GudClientCacheFactory)
 	 * @see #configurePdx(PdxConfigurer)
 	 */
 	@Override
 	protected @NonNull Object configureFactory(@NonNull Object factory) {
-		return configurePool(configurePdx((ClientCacheFactory) factory));
+		return configurePool(configurePdx((GudClientCacheFactory) factory));
 	}
 
 	/**
-	 * Configures the {@link ClientCache} to use PDX serialization.
+	 * Configures the {@link GudClientCache} to use PDX serialization.
 	 *
-	 * @param clientCacheFactory {@link ClientCacheFactory} to configure with PDX.
-	 * @return the given {@link ClientCacheFactory}.
+	 * @param clientCacheFactory {@link GudClientCacheFactory} to configure with PDX.
+	 * @return the given {@link GudClientCacheFactory}.
 	 * @see ClientCacheFactoryToPdxConfigurerAdapter
-	 * @see ClientCacheFactory
+	 * @see GudClientCacheFactory
 	 * @see #configurePdx(PdxConfigurer)
 	 */
-	protected @NonNull ClientCacheFactory configurePdx(@NonNull ClientCacheFactory clientCacheFactory) {
+	protected @NonNull GudClientCacheFactory configurePdx(@NonNull GudClientCacheFactory clientCacheFactory) {
 
-		PdxConfigurer<ClientCacheFactory> pdxConfigurer =
+		PdxConfigurer<GudClientCacheFactory> pdxConfigurer =
 			ClientCacheFactoryToPdxConfigurerAdapter.from(clientCacheFactory);
 
 		return configurePdx(pdxConfigurer);
 	}
 
 	/**
-	 * Configure the {@literal DEFAULT} {@link Pool} of the {@link ClientCacheFactory} using a given {@link Pool}
-	 * instance or a named {@link Pool} instance.
+	 * Configure the {@literal DEFAULT} {@link GudPool} of the {@link GudClientCacheFactory} using a given {@link GudPool}
+	 * instance or a named {@link GudPool} instance.
 	 *
-	 * @param clientCacheFactory {@link ClientCacheFactory} used to configure the {@literal DEFAULT} {@link Pool}.
-	 * @see ClientCacheFactory
-	 * @see Pool
+	 * @param clientCacheFactory {@link GudClientCacheFactory} used to configure the {@literal DEFAULT} {@link GudPool}.
+	 * @see GudClientCacheFactory
+	 * @see GudPool
 	 */
-	protected @NonNull ClientCacheFactory configurePool(@NonNull ClientCacheFactory clientCacheFactory) {
+	protected @NonNull GudClientCacheFactory configurePool(@NonNull GudClientCacheFactory clientCacheFactory) {
 
 		DefaultableDelegatingPoolAdapter pool =
 			DefaultableDelegatingPoolAdapter.from(DelegatingPoolAdapter.from(resolvePool())).preferDefault();
@@ -332,19 +350,18 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Resolves the {@link Pool} used to configure the {@link ClientCache}, {@literal DEFAULT} {@link Pool}.
+	 * Resolves the {@link GudPool} used to configure the {@link GudClientCache}, {@literal DEFAULT} {@link GudPool}.
 	 *
-	 * @return the resolved {@link Pool} used to configure the {@link ClientCache}, {@literal DEFAULT} {@link Pool}.
-	 * @see org.apache.geode.cache.client.PoolManager#find(String)
-	 * @see Pool
+	 * @return the resolved {@link GudPool} used to configure the {@link GudClientCache}, {@literal DEFAULT} {@link GudPool}.
+	 * @see GudPool
 	 * @see #getPoolName()
 	 * @see #getPool()
 	 * @see #findPool(String)
 	 * @see #isPoolNameResolvable(String)
 	 */
-	protected @Nullable Pool resolvePool() {
+	protected @Nullable GudPool resolvePool() {
 
-		Pool pool = getPool();
+		GudPool pool = getPool();
 
 		if (pool == null) {
 
@@ -385,12 +402,21 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME;
 	}
 
-	Pool findPool(String name) {
+	GudPool findPool(String name) {
 		return getPoolResolver().resolve(name);
 	}
 
+	/**
+	 * Returns the {@link GudJndiBinding} used for JNDI data source mapping.
+	 * This must be provided by the driver implementation.
+	 *
+	 * @return the {@link GudJndiBinding} to use.
+	 * @see GudJndiBinding
+	 */
+	protected abstract GudJndiBinding getJndiBinding();
+
 	@Override
-	protected @NonNull <T extends ClientCache> T postProcess(@NonNull T cache) {
+	protected @NonNull <T extends GudClientCache> T postProcess(@NonNull T cache) {
 
 		super.postProcess(cache);
 
@@ -399,7 +425,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return cache;
 	}
 
-	private ClientCache registerJndiDataSources(ClientCache cache) {
+	private GudClientCache registerJndiDataSources(GudClientCache cache) {
 
 		CollectionUtils.nullSafeCollection(getJndiDataSources()).forEach(jndiDataSource -> {
 
@@ -414,7 +440,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 			jndiDataSource.getAttributes().put("type", jndiDataSourceType.getName());
 
 			SpringExtensions.safeRunOperation(() ->
-					JNDIInvoker.mapDatasource(jndiDataSource.getAttributes(), jndiDataSource.getProps()));
+					getJndiBinding().mapDatasource(jndiDataSource.getAttributes(), jndiDataSource.getProps()));
 		});
 
 		return cache;
@@ -435,27 +461,26 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Creates a new {@link ClientCache} instance using the provided {@link ClientCacheFactory factory}.
+	 * Creates a new {@link GudClientCache} instance using the provided {@link GudClientCacheFactory factory}.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @param factory instance of {@link ClientCacheFactory}.
-	 * @return a new instance of {@link ClientCache} created by the provided factory.
-	 * @see ClientCacheFactory#create()
-	 * @see ClientCache
-	 * @see ClientCache
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @param factory instance of {@link GudClientCacheFactory}.
+	 * @return a new instance of {@link GudClientCache} created by the provided factory.
+	 * @see GudClientCacheFactory#create()
+	 * @see GudClientCache
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected @NonNull <T extends ClientCache> T createCache(@NonNull Object factory) {
-		return (T) ((ClientCacheFactory) factory).create();
+	protected @NonNull <T extends GudClientCache> T createCache(@NonNull Object factory) {
+		return (T) ((GudClientCacheFactory) factory).create();
 	}
 
 	/**
-	 * Inform the Apache Geode cluster of servers that this {@link ClientCache} is ready to receive events and updates
+	 * Inform the Apache Geode cluster of servers that this {@link GudClientCache} is ready to receive events and updates
 	 * iff the client is durable.
 	 *
 	 * @param event {@link ApplicationContextEvent} fired when the {@link ApplicationContext} is refreshed.
-	 * @see ClientCache#readyForEvents()
+	 * @see GudClientCache#readyForEvents()
 	 * @see #isReadyForEvents()
 	 * @see #fetchCache()
 	 */
@@ -464,25 +489,25 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 		if (isReadyForEvents()) {
 			try {
-				this.<ClientCache>fetchCache().readyForEvents();
+				this.<GudClientCache>fetchCache().readyForEvents();
 			}
-			catch (IllegalStateException | CacheClosedException ignore) {
-				// Exceptions are thrown when ClientCache.readyForEvents() is called on a non-durable client
-				// or when the ClientCache is closing.
+			catch (IllegalStateException | GudCacheClosedException ignore) {
+				// Exceptions are thrown when GudClientCache.readyForEvents() is called on a non-durable client
+				// or when the GudClientCache is closing.
 			}
 		}
 	}
 
 	/**
-	 * Null-safe method used to {@link ClientCache#close()} the {@link ClientCache} and preserve durability.
+	 * Null-safe method used to {@link GudClientCache#close()} the {@link GudClientCache} and preserve durability.
 	 *
-	 * @param cache {@link ClientCache} to close.
-	 * @see ClientCache#close(boolean)
+	 * @param cache {@link GudClientCache} to close.
+	 * @see GudClientCache#close(boolean)
 	 * @see #isKeepAlive()
 	 */
 	@Override
-	protected void close(@NonNull ClientCache cache) {
-		((ClientCache) cache).close(isKeepAlive());
+	protected void close(@NonNull GudClientCache cache) {
+		((GudClientCache) cache).close(isKeepAlive());
 	}
 
 	public void addLocators(ConnectionEndpoint... locators) {
@@ -687,30 +712,30 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Sets the {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
+	 * Sets the {@link GudPool} used by this {@link GudClientCache} to obtain connections to the Apache Geode cluster.
 	 *
-	 * @param pool {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
-	 * @see Pool
+	 * @param pool {@link GudPool} used by this {@link GudClientCache} to obtain connections to the Apache Geode cluster.
+	 * @see GudPool
 	 */
-	public void setPool(@Nullable Pool pool) {
+	public void setPool(@Nullable GudPool pool) {
 		this.pool = pool;
 	}
 
 	/**
-	 * Gets the {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
+	 * Gets the {@link GudPool} used by this {@link GudClientCache} to obtain connections to the Apache Geode cluster.
 	 *
-	 * @return {@link Pool} used by this {@link ClientCache} to obtain connections to the Apache Geode cluster.
-	 * @see Pool
+	 * @return {@link GudPool} used by this {@link GudClientCache} to obtain connections to the Apache Geode cluster.
+	 * @see GudPool
 	 */
-	public @Nullable Pool getPool() {
+	public @Nullable GudPool getPool() {
 		return this.pool;
 	}
 
 	/**
-	 * Sets the {@link String name} of the {@link Pool} used by this {@link ClientCache} to obtain connections to
+	 * Sets the {@link String name} of the {@link GudPool} used by this {@link GudClientCache} to obtain connections to
 	 * the Apache Geode cluster.
 	 *
-	 * @param poolName {@link String name} of the {@link Pool} used by this {@link ClientCache} to obtain connections to
+	 * @param poolName {@link String name} of the {@link GudPool} used by this {@link GudClientCache} to obtain connections to
 	 * the Apache Geode cluster.
 	 */
 	public void setPoolName(@Nullable String poolName) {
@@ -718,10 +743,10 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Gets the {@link String name} of the {@link Pool} used by this {@link ClientCache} to obtain connections to
+	 * Gets the {@link String name} of the {@link GudPool} used by this {@link GudClientCache} to obtain connections to
 	 * the Apache Geode cluster.
 	 *
-	 * @return {@link String name} of the {@link Pool} used by this {@link ClientCache} to obtain connections to
+	 * @return {@link String name} of the {@link GudPool} used by this {@link GudClientCache} to obtain connections to
 	 * the Apache Geode cluster.
 	 */
 	public @Nullable String getPoolName() {
@@ -729,11 +754,11 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Sets (configures) the {@link PoolResolver} used by this {@link ClientCache} to resolve {@link Pool} objects.
+	 * Sets (configures) the {@link PoolResolver} used by this {@link GudClientCache} to resolve {@link GudPool} objects.
 	 *
-	 * The {@link Pool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
+	 * The {@link GudPool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
 	 *
-	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link Pool}.
+	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link GudPool}.
 	 * @see PoolResolver
 	 */
 	public void setPoolResolver(@Nullable PoolResolver poolResolver) {
@@ -741,7 +766,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	}
 
 	/**
-	 * Gets the configured {@link PoolResolver} used by this {@link ClientCache} to resolve {@link Pool} objects.
+	 * Gets the configured {@link PoolResolver} used by this {@link GudClientCache} to resolve {@link GudPool} objects.
 	 *
 	 * @return the configured {@link PoolResolver}.  If no {@link PoolResolver} was configured, then return the default,
 	 * {@link PoolManagerPoolResolver}.
@@ -805,7 +830,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	 * then it takes precedence over all other considerations (e.g. durability).
 	 *
 	 * @return a boolean value indicating whether this GemFire cache client is ready for events.
-	 * @see GemfireUtils#isDurable(ClientCache)
+	 * @see GemfireUtils#isDurable(GudClientCache)
 	 * @see #getReadyForEvents()
 	 */
 	public boolean isReadyForEvents() {
@@ -869,11 +894,11 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return this.socketConnectTimeout;
 	}
 
-	public void setSocketFactory(@Nullable SocketFactory socketFactory) {
+	public void setSocketFactory(@Nullable GudSocketFactory socketFactory) {
 		this.socketFactory = socketFactory;
 	}
 
-	public @NonNull SocketFactory getSocketFactory() {
+	public @NonNull GudSocketFactory getSocketFactory() {
 		return this.socketFactory;
 	}
 
@@ -925,50 +950,50 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		return this.threadLocalConnections;
 	}
 
-	public static class ClientCacheFactoryToPdxConfigurerAdapter implements PdxConfigurer<ClientCacheFactory> {
+	public static class ClientCacheFactoryToPdxConfigurerAdapter implements PdxConfigurer<GudClientCacheFactory> {
 
-		public static ClientCacheFactoryToPdxConfigurerAdapter from(@NonNull ClientCacheFactory clientCacheFactory) {
+		public static ClientCacheFactoryToPdxConfigurerAdapter from(@NonNull GudClientCacheFactory clientCacheFactory) {
 			return new ClientCacheFactoryToPdxConfigurerAdapter(clientCacheFactory);
 		}
 
-		private final ClientCacheFactory cacheFactory;
+		private final GudClientCacheFactory cacheFactory;
 
-		protected ClientCacheFactoryToPdxConfigurerAdapter(@NonNull ClientCacheFactory cacheFactory) {
-			Assert.notNull(cacheFactory, "ClientCacheFactory must not be null");
+		protected ClientCacheFactoryToPdxConfigurerAdapter(@NonNull GudClientCacheFactory cacheFactory) {
+			Assert.notNull(cacheFactory, "GudClientCacheFactory must not be null");
 			this.cacheFactory = cacheFactory;
 		}
 
 		@Override
-		public @NonNull ClientCacheFactory getTarget() {
+		public @NonNull GudClientCacheFactory getTarget() {
 			return this.cacheFactory;
 		}
 
 		@Override
-		public @NonNull PdxConfigurer<ClientCacheFactory> setDiskStoreName(String diskStoreName) {
+		public @NonNull PdxConfigurer<GudClientCacheFactory> setDiskStoreName(String diskStoreName) {
 			getTarget().setPdxDiskStore(diskStoreName);
 			return this;
 		}
 
 		@Override
-		public @NonNull PdxConfigurer<ClientCacheFactory> setIgnoreUnreadFields(Boolean ignoreUnreadFields) {
+		public @NonNull PdxConfigurer<GudClientCacheFactory> setIgnoreUnreadFields(Boolean ignoreUnreadFields) {
 			getTarget().setPdxIgnoreUnreadFields(ignoreUnreadFields);
 			return this;
 		}
 
 		@Override
-		public @NonNull PdxConfigurer<ClientCacheFactory> setPersistent(Boolean persistent) {
+		public @NonNull PdxConfigurer<GudClientCacheFactory> setPersistent(Boolean persistent) {
 			getTarget().setPdxPersistent(persistent);
 			return this;
 		}
 
 		@Override
-		public @NonNull PdxConfigurer<ClientCacheFactory> setReadSerialized(Boolean readSerialized) {
+		public @NonNull PdxConfigurer<GudClientCacheFactory> setReadSerialized(Boolean readSerialized) {
 			getTarget().setPdxReadSerialized(readSerialized);
 			return this;
 		}
 
 		@Override
-		public @NonNull PdxConfigurer<ClientCacheFactory> setSerializer(PdxSerializer pdxSerializer) {
+		public @NonNull PdxConfigurer<GudClientCacheFactory> setSerializer(GudPdxSerializer pdxSerializer) {
 			getTarget().setPdxSerializer(pdxSerializer);
 			return this;
 		}
@@ -976,7 +1001,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	public static class JndiDataSource {
 
-		private List<ConfigProperty> configProperties;
+		private List<GudConfigProperty> configProperties;
 
 		private Map<String, String> attributes;
 
@@ -988,11 +1013,11 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 			this.attributes = attributes;
 		}
 
-		public List<ConfigProperty> getProps() {
+		public List<GudConfigProperty> getProps() {
 			return this.configProperties;
 		}
 
-		public void setProps(List<ConfigProperty> props) {
+		public void setProps(List<GudConfigProperty> props) {
 			this.configProperties = props;
 		}
 	}

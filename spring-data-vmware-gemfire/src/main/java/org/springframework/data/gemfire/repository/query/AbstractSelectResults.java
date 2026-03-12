@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.Collection;
@@ -9,35 +17,35 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.geode.cache.query.SelectResults;
-import org.apache.geode.cache.query.types.CollectionType;
-import org.apache.geode.cache.query.types.ObjectType;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
+import org.springframework.data.gemfire.gud.api.GudCollectionType;
+import org.springframework.data.gemfire.gud.api.GudObjectType;
 
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
 /**
- * An abstract base class implementation of Apache Geode's {@link SelectResults} interface and Java {@link Collection}
- * interface, which delegates to, and is backed by a given, required {@link SelectResults} instance.
+ * An abstract base class implementation of Apache Geode's {@link GudSelectResults} interface and Java {@link Collection}
+ * interface, which delegates to, and is backed by a given, required {@link GudSelectResults} instance.
  *
  * @author John Blum
  * @see Collection
- * @see SelectResults
+ * @see GudSelectResults
  * @since 2.4.0
  */
-public class AbstractSelectResults<T> implements SelectResults<T> {
+public class AbstractSelectResults<T> implements GudSelectResults<T> {
 
-	private final SelectResults<T> selectResults;
+	private final GudSelectResults<T> selectResults;
 
 	/**
-	 * Constructs a new instance of {@link SelectResults} initialized with the given, required {@link SelectResults}
+	 * Constructs a new instance of {@link GudSelectResults} initialized with the given, required {@link GudSelectResults}
 	 * instance backing this base class.
 	 *
-	 * @param selectResults {@link SelectResults} delegate backing this implementation; must not be {@literal null}.
-	 * @throws IllegalArgumentException if {@link SelectResults} is {@literal null}.
-	 * @see SelectResults
+	 * @param selectResults {@link GudSelectResults} delegate backing this implementation; must not be {@literal null}.
+	 * @throws IllegalArgumentException if {@link GudSelectResults} is {@literal null}.
+	 * @see GudSelectResults
 	 */
-	public AbstractSelectResults(@NonNull SelectResults<T> selectResults) {
+	public AbstractSelectResults(@NonNull GudSelectResults<T> selectResults) {
 
 		Assert.notNull(selectResults, "SelectResults must not be null");
 
@@ -45,13 +53,13 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	}
 
 	/**
-	 * Return the configured, underlying {@link SelectResults} used as the delegate
-	 * backing this {@link SelectResults} implementation.
+	 * Return the configured, underlying {@link GudSelectResults} used as the delegate
+	 * backing this {@link GudSelectResults} implementation.
 	 *
-	 * @return the configured, underlying {@link SelectResults}.
-	 * @see SelectResults
+	 * @return the configured, underlying {@link GudSelectResults}.
+	 * @see GudSelectResults
  	 */
-	protected @NonNull SelectResults<T> getSelectResults() {
+	protected @NonNull GudSelectResults<T> getSelectResults() {
 		return this.selectResults;
 	}
 
@@ -75,7 +83,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CollectionType getCollectionType() {
+	public GudCollectionType getCollectionType() {
 		return getSelectResults().getCollectionType();
 	}
 
@@ -99,7 +107,7 @@ public class AbstractSelectResults<T> implements SelectResults<T> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setElementType(ObjectType objectType) {
+	public void setElementType(GudObjectType objectType) {
 		getSelectResults().setElementType(objectType);
 	}
 

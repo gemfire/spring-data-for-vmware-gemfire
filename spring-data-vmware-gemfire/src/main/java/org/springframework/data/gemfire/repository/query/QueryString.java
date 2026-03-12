@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query;
 
 import java.util.ArrayList;
@@ -12,7 +20,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.gemfire.repository.query.support.OqlKeyword;
@@ -38,7 +46,7 @@ import org.springframework.util.StringUtils;
  * @author John Blum
  * @see Matcher
  * @see Pattern
- * @see Region
+ * @see GudRegion
  * @see Sort
  * @see OqlKeyword
  * @see Repository
@@ -356,25 +364,25 @@ public class QueryString {
 
 	/**
 	 * Replaces the {@link Class domain classes} referenced inside the current {@link String query}
-	 * with the given {@link Region}.
+	 * with the given {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to query; must not be {@literal null}.
+	 * @param region {@link GudRegion} to query; must not be {@literal null}.
 	 * @param domainType {@link Class type} of the persistent entity to query; must not be {@literal null}.
 	 * @return a new {@link QueryString} with an OQL {@literal SELECT statement} having a {@literal FROM clause}
-	 * based on the selected {@link Region}.
-	 * @see Region
+	 * based on the selected {@link GudRegion}.
+	 * @see GudRegion
 	 * @see Class
 	 */
 	@SuppressWarnings("unused")
-	public QueryString fromRegion(Region<?, ?> region, Class<?> domainType) {
+	public QueryString fromRegion(GudRegion<?, ?> region, Class<?> domainType) {
 		return QueryString.of(getQuery().replaceAll(REGION_PATTERN, region.getFullPath()));
 	}
 
 	/**
-	 * @deprecated use {@link #fromRegion(Region, Class)}.
+	 * @deprecated use {@link #fromRegion(GudRegion, Class)}.
 	 */
 	@Deprecated
-	public QueryString fromRegion(Class<?> domainType, Region<?, ?> region) {
+	public QueryString fromRegion(Class<?> domainType, GudRegion<?, ?> region) {
 		return fromRegion(region, domainType);
 	}
 

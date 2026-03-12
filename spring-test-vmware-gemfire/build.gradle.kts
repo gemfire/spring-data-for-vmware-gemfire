@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -39,6 +39,8 @@ publishingDetails {
 dependencies {
     api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
 
+    api(project(":gud-api"))
+
     api(libs.multithreadedtc)
     api(libs.junit)
     api(libs.assertJ)
@@ -55,8 +57,6 @@ dependencies {
     compileOnly(libs.spring.boot) {
         exclude("org.springframework.boot", "spring-boot-starter-logging")
     }
-
-    compileOnly(libs.bundles.gemfire)
 
     testImplementation(libs.bundles.gemfire)
 

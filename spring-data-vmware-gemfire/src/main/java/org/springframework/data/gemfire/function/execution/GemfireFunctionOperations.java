@@ -1,11 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.function.execution;
 
-import org.apache.geode.cache.execute.Function;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 
 /**
  *
@@ -23,7 +31,7 @@ public interface GemfireFunctionOperations {
 	 * @param args an array of Object arguments to the Function call.
 	 * @return the contents of the ResultsCollector.
 	 */
-	<T> Iterable<T> execute(Function function, Object... args);
+	<T> Iterable<T> execute(GudFunction function, Object... args);
 
 	/**
 	 * Execute a GemFire Function registered with the given ID.
@@ -42,9 +50,9 @@ public interface GemfireFunctionOperations {
 	 * @param function the GemFire Function object.
 	 * @param args an array of Object arguments to the Function call.
 	 * @return the first item in the ResultsCollector.
-	 * @see Function
+	 * @see GudFunction
      */
-	<T> T executeAndExtract(Function function, Object... args);
+	<T> T executeAndExtract(GudFunction function, Object... args);
 
 	/**
 	 * Execute a GemFire Function registered with an ID and with an expected singleton result
@@ -65,7 +73,7 @@ public interface GemfireFunctionOperations {
 	void executeWithNoResult(String functionId, Object... args);
 
     /**
-     * Execute a GemFire Function using a native GemFire {@link org.apache.geode.cache.execute.Execution} instance.
+     * Execute a GemFire Function using a native GemFire {@link GudExecution} instance.
 	 *
 	 * @param <T> type parameter specifying the result type of the Function execution.
      * @param callback a callback providing the execution instance.

@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeProductName;
@@ -9,20 +17,19 @@ import static org.springframework.data.gemfire.GemfireUtils.apacheGeodeVersion;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newRuntimeException;
 import java.util.Optional;
 import java.util.Properties;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.distributed.DistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 import org.springframework.lang.NonNull;
 
 /**
- * Abstract base class encapsulating logic to resolve or create a {@link ClientCache} instance.
+ * Abstract base class encapsulating logic to resolve or create a {@link GudClientCache} instance.
  *
  * @author John Blum
  * @see Optional
  * @see Properties
- * @see ClientCache
- * @see org.apache.geode.distributed.DistributedMember
- * @see DistributedSystem
+ * @see GudClientCache
+ * @see GudDistributedSystem
  * @see AbstractConfigurableCacheFactoryBean
  * @since 2.5.0
  */
@@ -34,20 +41,20 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected ClientCache doGetObject() {
+	protected GudClientCache doGetObject() {
 		return init();
 	}
 
 	/**
-	 * Initializes a {@link ClientCache}.
+	 * Initializes a {@link GudClientCache}.
 	 *
-	 * @return a reference to the initialized {@link ClientCache}.
-	 * @see ClientCache
-	 * @see #setCache(ClientCache)
+	 * @return a reference to the initialized {@link GudClientCache}.
+	 * @see GudClientCache
+	 * @see #setCache(GudClientCache)
 	 * @see #resolveCache()
 	 * @see #getCache()
 	 */
-	protected ClientCache init() {
+	protected GudClientCache init() {
 
 		ClassLoader currentThreadContextClassLoader = Thread.currentThread().getContextClassLoader();
 
@@ -80,7 +87,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 					apacheGeodeProductName(), apacheGeodeVersion(), cache.getName()));
 
 				Optional.ofNullable(cache.getDistributedSystem())
-					.map(DistributedSystem::getDistributedMember)
+					.map(GudDistributedSystem::getDistributedMember)
 					.ifPresent(member -> {
 
 						String message = "Connected to Distributed System [%1$s] as Member [%2$s] in Group(s) [%3$s]"
@@ -94,14 +101,13 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Resolves a {@link ClientCache} by attempting to lookup an existing {@link ClientCache} instance in the JVM,
-	 * first. If an existing {@link ClientCache} could not be found, then this method proceeds in attempting to
-	 * create a new {@link ClientCache} instance.
+	 * Resolves a {@link GudClientCache} by attempting to lookup an existing {@link GudClientCache} instance in the JVM,
+	 * first. If an existing {@link GudClientCache} could not be found, then this method proceeds in attempting to
+	 * create a new {@link GudClientCache} instance.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @return the resolved {@link ClientCache}.
-	 * @see org.apache.geode.cache.client.ClientCache
-	 * @see ClientCache
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @return the resolved {@link GudClientCache}.
+	 * @see GudClientCache
 	 * @see #fetchCache()
 	 * @see #resolveProperties()
 	 * @see #createFactory(Properties)
@@ -109,9 +115,9 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	 * @see #configureFactory(Object)
 	 * @see #postProcess(Object)
 	 * @see #createCache(Object)
-	 * @see #postProcess(ClientCache)
+	 * @see #postProcess(GudClientCache)
 	 */
-	protected <T extends ClientCache> T resolveCache() {
+	protected <T extends GudClientCache> T resolveCache() {
 
 		try {
 
@@ -123,7 +129,7 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 
 			return cache;
 		}
-		catch (CacheClosedException cause) {
+		catch (GudCacheClosedException cause) {
 
 			this.cacheResolutionMessagePrefix = "Created new";
 
@@ -145,19 +151,19 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 
 	/**
 	 * Constructs a new cache factory initialized with the given Apache Geode {@link Properties}
-	 * used to construct, configure and initialize a new {@link ClientCache}.
+	 * used to construct, configure and initialize a new {@link GudClientCache}.
 	 *
-	 * @param gemfireProperties {@link Properties} used by the cache factory to configure the {@link ClientCache};
+	 * @param gemfireProperties {@link Properties} used by the cache factory to configure the {@link GudClientCache};
 	 * must not be {@literal null}
 	 * @return a new cache factory initialized with the given Apache Geode {@link Properties}.
-	 * @see org.apache.geode.cache.client.ClientCacheFactory
+	 * @see GudClientCache
 	 * @see Properties
 	 * @see #resolveProperties()
 	 */
 	protected abstract @NonNull Object createFactory(@NonNull Properties gemfireProperties);
 
 	/**
-	 * Configures the cache factory used to create the {@link ClientCache}.
+	 * Configures the cache factory used to create the {@link GudClientCache}.
 	 *
 	 * @param factory cache factory to configure; must not be {@literal null}.
 	 * @return the given cache factory.
@@ -176,11 +182,11 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Post process the cache factory used to create the {@link ClientCache}.
+	 * Post process the cache factory used to create the {@link GudClientCache}.
 	 *
 	 * @param factory cache factory to post process; must not be {@literal null}.
 	 * @return the post processed cache factory.
-	 * @see org.apache.geode.cache.client.ClientCacheFactory
+	 * @see GudClientCache
 	 * @see #createFactory(Properties)
 	 */
 	protected @NonNull Object postProcess(@NonNull Object factory) {
@@ -188,29 +194,28 @@ public abstract class AbstractResolvableCacheFactoryBean extends AbstractConfigu
 	}
 
 	/**
-	 * Creates a new {@link ClientCache} instance using the provided {@link Object factory}.
+	 * Creates a new {@link GudClientCache} instance using the provided {@link Object factory}.
 	 *
-	 * @param <T> {@link Class Subtype} of {@link ClientCache}.
-	 * @param factory factory used to create the {@link ClientCache}.
-	 * @return a new instance of {@link ClientCache} created by the provided {@link Object factory}.
-	 * @see org.apache.geode.cache.client.ClientCacheFactory#create()
-	 * @see ClientCache
+	 * @param <T> {@link Class Subtype} of {@link GudClientCache}.
+	 * @param factory factory used to create the {@link GudClientCache}.
+	 * @return a new instance of {@link GudClientCache} created by the provided {@link Object factory}.
+	 * @see GudClientCache
 	 */
-	protected abstract @NonNull <T extends ClientCache> T createCache(@NonNull Object factory);
+	protected abstract @NonNull <T extends GudClientCache> T createCache(@NonNull Object factory);
 
 	/**
-	 * Post process the {@link ClientCache} by loading any {@literal cache.xml} file, applying custom settings
+	 * Post process the {@link GudClientCache} by loading any {@literal cache.xml} file, applying custom settings
 	 * specified in SDG XML configuration metadata, and registering appropriate Transaction Listeners, Writer
 	 * and JVM Heap configuration.
 	 *
-	 * @param <T> parameterized {@link Class} type extending {@link ClientCache}.
-	 * @param cache {@link ClientCache} to post process.
-	 * @return the given {@link ClientCache}.
-	 * @see #loadCacheXml(ClientCache)
-	 * @see #configureHeapPercentages(ClientCache)
-	 * @see #registerTransactionListeners(ClientCache)
+	 * @param <T> parameterized {@link Class} type extending {@link GudClientCache}.
+	 * @param cache {@link GudClientCache} to post process.
+	 * @return the given {@link GudClientCache}.
+	 * @see #loadCacheXml(GudClientCache)
+	 * @see #configureHeapPercentages(GudClientCache)
+	 * @see #registerTransactionListeners(GudClientCache)
 	 */
-	protected @NonNull <T extends ClientCache> T postProcess(@NonNull T cache) {
+	protected @NonNull <T extends GudClientCache> T postProcess(@NonNull T cache) {
 
 		loadCacheXml(cache);
 

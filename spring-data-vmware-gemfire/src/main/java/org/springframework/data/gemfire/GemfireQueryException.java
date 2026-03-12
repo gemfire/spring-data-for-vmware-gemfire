@@ -1,13 +1,16 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.springframework.data.gemfire;
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated to use generic Exception types for GUD compatibility
+ */
 
-import org.apache.geode.cache.query.QueryException;
-import org.apache.geode.cache.query.QueryExecutionTimeoutException;
-import org.apache.geode.cache.query.QueryInvalidException;
+package org.springframework.data.gemfire;
 
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 
@@ -20,27 +23,11 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
 @SuppressWarnings("serial")
 public class GemfireQueryException extends InvalidDataAccessResourceUsageException {
 
-	public GemfireQueryException(String message, QueryException ex) {
+	public GemfireQueryException(String message, Exception ex) {
 		super(message, ex);
 	}
 
-	public GemfireQueryException(QueryException ex) {
-		super(ex.getMessage(), ex);
-	}
-
-	public GemfireQueryException(String message, QueryExecutionTimeoutException ex) {
-		super(message, ex);
-	}
-
-	public GemfireQueryException(QueryExecutionTimeoutException ex) {
-		super(ex.getMessage(), ex);
-	}
-
-	public GemfireQueryException(String message, QueryInvalidException ex) {
-		super(message, ex);
-	}
-
-	public GemfireQueryException(QueryInvalidException ex) {
+	public GemfireQueryException(Exception ex) {
 		super(ex.getMessage(), ex);
 	}
 

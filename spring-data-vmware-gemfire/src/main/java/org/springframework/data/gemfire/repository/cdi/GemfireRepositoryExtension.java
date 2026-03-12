@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.cdi;
 
 import java.lang.annotation.Annotation;
@@ -18,7 +26,7 @@ import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.inject.spi.ProcessBean;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.repository.cdi.CdiRepositoryBean;
@@ -41,7 +49,7 @@ public class GemfireRepositoryExtension extends CdiRepositoryExtensionSupport {
 
 	final Map<Set<Annotation>, Bean<GemfireMappingContext>> mappingContexts = new HashMap<>();
 
-	final Set<Bean<Region>> regionBeans = new HashSet<>();
+	final Set<Bean<GudRegion>> regionBeans = new HashSet<>();
 
 	public GemfireRepositoryExtension() {
 		logger.info("Activating CDI extension for Spring Data Geode Repositories");
@@ -69,11 +77,11 @@ public class GemfireRepositoryExtension extends CdiRepositoryExtensionSupport {
 
 				Class<?> classType = (Class<?>) resolvedType;
 
-				if (Region.class.isAssignableFrom(classType)) {
+				if (GudRegion.class.isAssignableFrom(classType)) {
 
 					logger.debug("Found Region bean with name {}", bean.getName());
 
-					this.regionBeans.add((Bean<Region>) bean);
+					this.regionBeans.add((Bean<GudRegion>) bean);
 				}
 				else if (GemfireMappingContext.class.isAssignableFrom(classType)) {
 

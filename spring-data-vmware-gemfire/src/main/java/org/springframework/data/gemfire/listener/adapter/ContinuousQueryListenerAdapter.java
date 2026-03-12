@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.listener.adapter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.geode.cache.Operation;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqQuery;
+import org.springframework.data.gemfire.gud.api.GudOperation;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -35,22 +43,22 @@ import org.slf4j.LoggerFactory;
  * <p>Modeled as much as possible after the JMS MessageListenerAdapter in the core Spring Framework.
  *
  * <p>By default, the content of incoming GemFire/Geode CQ events gets extracted before being passed into
- * the target listener method, to let the target method operate on event content types such as Object or Operation
- * instead of the raw {@link CqEvent}.</p>
+ * the target listener method, to let the target method operate on event content types such as Object or GudOperation
+ * instead of the raw {@link GudCqEvent}.</p>
  *
  * <p>Find below some examples of method signatures compliant with this adapter class.
  *
- * This first example handles all <code>CqEvent</code> types and gets passed the contents of each
+ * This first example handles all <code>GudCqEvent</code> types and gets passed the contents of each
  * <code>event</code> type as an argument.</p>
  *
  * <pre class="code">public interface PojoListener {
- *    void handleEvent(CqEvent event);
- *    void handleEvent(Operation baseOp);
+ *    void handleEvent(GudCqEvent event);
+ *    void handleEvent(GudOperation baseOp);
  *    void handleEvent(Object key);
  *    void handleEvent(Object key, Object newValue);
  *    void handleEvent(Throwable cause);
- *    void handleEvent(CqEvent event, Operation baseOp, byte[] deltaValue);
- *    void handleEvent(CqEvent event, Operation baseOp, Operation queryOp, Object key, Object newValue);
+ *    void handleEvent(GudCqEvent event, GudOperation baseOp, byte[] deltaValue);
+ *    void handleEvent(GudCqEvent event, GudOperation baseOp, GudOperation queryOp, Object key, Object newValue);
  * }</pre>
  *
  * @author Juergen Hoeller
@@ -58,9 +66,9 @@ import org.slf4j.LoggerFactory;
  * @author Oliver Gierke
  * @author John Blum
  * @see Method
- * @see Operation
- * @see CqEvent
- * @see CqQuery
+ * @see GudOperation
+ * @see GudCqEvent
+ * @see GudCqQuery
  * @see ContinuousQueryListener
  * @since 1.1.0
  */
@@ -153,7 +161,7 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 	 * @see #setDefaultListenerMethod
 	 */
 	@SuppressWarnings("unused")
-	protected String getListenerMethodName(CqEvent event) {
+	protected String getListenerMethodName(GudCqEvent event) {
 		return getDefaultListenerMethod();
 	}
 
@@ -163,11 +171,11 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 	 * <p>Delegates the CQ event to the target listener method, with appropriate conversion of the event arguments.
 	 * In case of an exception, the {@link #handleListenerException(Throwable)} method will be invoked.
 	 *
-	 * @param event incoming {@link CqEvent CQ event}.
+	 * @param event incoming {@link GudCqEvent CQ event}.
 	 * @see #handleListenerException
 	 */
 	@Override
-	public void onEvent(CqEvent event) {
+	public void onEvent(GudCqEvent event) {
 
 		try {
 
@@ -214,7 +222,7 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 	 * @param methodName the method to invoke
 	 * @see #getListenerMethodName
 	 */
-	protected void invokeListenerMethod(CqEvent event, String methodName) {
+	protected void invokeListenerMethod(GudCqEvent event, String methodName) {
 
 		try {
 			this.invoker.invoke(event);
@@ -285,14 +293,14 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 							return false;
 						}
 					}
-					else if (Operation.class.equals(parameterType)) {
+					else if (GudOperation.class.equals(parameterType)) {
 						if (++operations > 2) {
 							return false;
 						}
 					}
 					else if (byte[].class.equals(parameterType)) { }
-					else if (CqEvent.class.equals(parameterType)) { }
-					else if (CqQuery.class.equals(parameterType)) { }
+					else if (GudCqEvent.class.equals(parameterType)) { }
+					else if (GudCqQuery.class.equals(parameterType)) { }
 					else if (Throwable.class.equals(parameterType)) { }
 					else {
 						return false;
@@ -305,14 +313,14 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 			return false;
 		}
 
-		void invoke(CqEvent event) throws IllegalAccessException, InvocationTargetException {
+		void invoke(GudCqEvent event) throws IllegalAccessException, InvocationTargetException {
 
 			for (Method method : this.methods) {
 				method.invoke(this.delegate, getMethodArguments(method, event));
 			}
 		}
 
-		private Object[] getMethodArguments(Method method, CqEvent event) {
+		private Object[] getMethodArguments(Method method, GudCqEvent event) {
 
 			Class<?>[] parameterTypes = method.getParameterTypes();
 
@@ -329,17 +337,17 @@ public class ContinuousQueryListenerAdapter implements ContinuousQueryListener {
 					args[index] = value ? event.getNewValue() : event.getKey();
 					value = true;
 				}
-				else if (Operation.class.equals(parameterType)) {
+				else if (GudOperation.class.equals(parameterType)) {
 					args[index] = query ? event.getQueryOperation() : event.getBaseOperation();
 					query = true;
 				}
 				else if (byte[].class.equals(parameterType)) {
 					args[index] = event.getDeltaValue();
 				}
-				else if (CqEvent.class.equals(parameterType)) {
+				else if (GudCqEvent.class.equals(parameterType)) {
 					args[index] = event;
 				}
-				else if (CqQuery.class.equals(parameterType)) {
+				else if (GudCqQuery.class.equals(parameterType)) {
 					args[index] = event.getCq();
 				}
 				else if (Throwable.class.equals(parameterType)) {

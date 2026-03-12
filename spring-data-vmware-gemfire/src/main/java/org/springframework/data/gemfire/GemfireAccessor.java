@@ -1,12 +1,20 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
-import org.apache.geode.GemFireCheckedException;
-import org.apache.geode.GemFireException;
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudGemFireCheckedException;
+import org.springframework.data.gemfire.gud.api.GudGemFireException;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
@@ -17,21 +25,21 @@ import org.slf4j.LoggerFactory;
 
 /**
  * {@link GemfireAccessor} is a base class for {@link GemfireTemplate} to encapsulate common operations and properties,
- * such as accessors to a {@link Region}.
+ * such as accessors to a {@link GudRegion}.
  *
  * This class is not intended to be used directly.
  *
  * @author Costin Leau
  * @author John Blum
  * @see InitializingBean
- * @see Region
+ * @see GudRegion
  */
 public class GemfireAccessor implements InitializingBean {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@SuppressWarnings("rawtypes")
-	private Region region;
+	private GudRegion region;
 
 	/**
 	 * Returns the template GemFire Cache Region.
@@ -39,10 +47,10 @@ public class GemfireAccessor implements InitializingBean {
 	 * @param <K> the Region key class type.
 	 * @param <V> the Region value class type.
 	 * @return the GemFire Cache Region.
-	 * @see Region
+	 * @see GudRegion
 	 */
 	@SuppressWarnings("unchecked")
-	public <K, V> Region<K, V> getRegion() {
+	public <K, V> GudRegion<K, V> getRegion() {
 		return this.region;
 	}
 
@@ -50,9 +58,9 @@ public class GemfireAccessor implements InitializingBean {
 	 * Sets the template GemFire Cache Region.
 	 *
 	 * @param region the GemFire Cache Region used by this template.
-	 * @see Region
+	 * @see GudRegion
 	 */
-	public void setRegion(Region<?, ?> region) {
+	public void setRegion(GudRegion<?, ?> region) {
 		this.region = region;
 	}
 
@@ -64,24 +72,24 @@ public class GemfireAccessor implements InitializingBean {
 	}
 
 	/**
-	 * Converts the given {@link GemFireCheckedException} to an appropriate exception from the
+	 * Converts the given {@link GudGemFireCheckedException} to an appropriate exception from the
 	 * <code>org.springframework.dao</code> hierarchy.
 	 * May be overridden in subclasses.
-	 * @param ex GemFireCheckedException that occurred
+	 * @param ex GudGemFireCheckedException that occurred
 	 * @return the corresponding DataAccessException instance
 	 */
-	public DataAccessException convertGemFireAccessException(GemFireCheckedException ex) {
+	public DataAccessException convertGemFireAccessException(GudGemFireCheckedException ex) {
 		return GemfireCacheUtils.convertGemfireAccessException(ex);
 	}
 
 	/**
-	 * Converts the given {@link GemFireException} to an appropriate exception from the
+	 * Converts the given {@link GudGemFireException} to an appropriate exception from the
 	 * <code>org.springframework.dao</code> hierarchy.
 	 * May be overridden in subclasses.
-	 * @param ex GemFireException that occurred
+	 * @param ex GudGemFireException that occurred
 	 * @return the corresponding DataAccessException instance
 	 */
-	public DataAccessException convertGemFireAccessException(GemFireException ex) {
+	public DataAccessException convertGemFireAccessException(GudGemFireException ex) {
 		return GemfireCacheUtils.convertGemfireAccessException(ex);
 	}
 
@@ -91,7 +99,7 @@ public class GemfireAccessor implements InitializingBean {
 	 * is called only for GemFire querying exception that do <b>NOT</b> extend from GemFire exception.
 	 * May be overridden in subclasses.
 	 *
-	 * @param ex GemFireException that occurred
+	 * @param ex GudGemFireException that occurred
 	 * @return the corresponding DataAccessException instance
 	 */
 	public DataAccessException convertGemFireQueryException(RuntimeException ex) {

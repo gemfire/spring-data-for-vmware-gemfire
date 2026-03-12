@@ -1,12 +1,20 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.mapping;
 
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -41,15 +49,15 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * {@link PdxSerializer} implementation using the Spring Data for Apache Geode {@link GemfireMappingContext}
+ * {@link GudPdxSerializer} implementation using the Spring Data for Apache Geode {@link GemfireMappingContext}
  * to read (deserialize) and write (serialize) entities from and to PDX.
  *
  * @author Oliver Gierke
  * @author David Turanski
  * @author John Blum
- * @see PdxReader
- * @see PdxSerializer
- * @see PdxWriter
+ * @see GudPdxReader
+ * @see GudPdxSerializer
+ * @see GudPdxWriter
  * @see ApplicationContext
  * @see ApplicationContextAware
  * @see ConversionService
@@ -64,7 +72,7 @@ import java.util.function.Supplier;
  * @see PersistentEntityParameterValueProvider
  * @since 1.2.0
  */
-public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAware {
+public class MappingPdxSerializer implements GudPdxSerializer, ApplicationContextAware {
 
 	protected static final String JAVA_PACKAGE_NAME = "java";
 	protected static final String COM_GEMSTONE_GEMFIRE_PACKAGE_NAME = "com.gemstone.gemfire";
@@ -198,7 +206,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private final Map<Object, PdxSerializer> customPdxSerializers = new ConcurrentHashMap<>();
+	private final Map<Object, GudPdxSerializer> customPdxSerializers = new ConcurrentHashMap<>();
 
 	private Predicate<Class<?>> excludeTypeFilters = TypeFilters.EXCLUDE_NULL_TYPES
 		.and(TypeFilters.EXCLUDE_JAVA_TYPES)
@@ -276,40 +284,40 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	}
 
 	/**
-	 * Configures custom {@link PdxSerializer PDX serializers} used to customize the serialization for specific
+	 * Configures custom {@link GudPdxSerializer PDX serializers} used to customize the serialization for specific
 	 * application {@link Class domain types}.
 	 *
-	 * @param customPdxSerializers {@link Map mapping} containing custom {@link PdxSerializer PDX serializers}
+	 * @param customPdxSerializers {@link Map mapping} containing custom {@link GudPdxSerializer PDX serializers}
 	 * used to customize the serialization of specific application {@link Class domain types}.
 	 * @throws IllegalArgumentException if the {@link Map custom PDX serializer mapping} is {@literal null}.
-	 * @see PdxSerializer
+	 * @see GudPdxSerializer
 	 * @see Map
 	 */
-	public void setCustomPdxSerializers(Map<?, PdxSerializer> customPdxSerializers) {
+	public void setCustomPdxSerializers(Map<?, GudPdxSerializer> customPdxSerializers) {
 		Optional.ofNullable(customPdxSerializers).ifPresent(this.customPdxSerializers::putAll);
 	}
 
 	/**
 	 * Returns a {@link Map mapping} of application {@link Class domain types} to custom
-	 * {@link PdxSerializer PDX serializers} used to customize the serialization
+	 * {@link GudPdxSerializer PDX serializers} used to customize the serialization
 	 * for specific application {@link Class domain types}.
 	 *
 	 * @return a {@link Map mapping} of application {@link Class domain types}
-	 * to custom {@link PdxSerializer PDX serializers}.
-	 * @see PdxSerializer
+	 * to custom {@link GudPdxSerializer PDX serializers}.
+	 * @see GudPdxSerializer
 	 * @see Map
 	 */
 	@NonNull
-	protected Map<?, PdxSerializer> getCustomPdxSerializers() {
+	protected Map<?, GudPdxSerializer> getCustomPdxSerializers() {
 		return Collections.unmodifiableMap(this.customPdxSerializers);
 	}
 
 	/**
 	 * Configures the {@link EntityInstantiator EntityInstantiators} used to create the instances
-	 * read by this {@link PdxSerializer}.
+	 * read by this {@link GudPdxSerializer}.
 	 *
 	 * @param entityInstantiators {@link EntityInstantiator EntityInstantiators} used to create the instances
-	 * read by this {@link PdxSerializer}; must not be {@literal null}.
+	 * read by this {@link GudPdxSerializer}; must not be {@literal null}.
 	 * @see EntityInstantiator
 	 */
 	public void setEntityInstantiators(@NonNull EntityInstantiators entityInstantiators) {
@@ -321,7 +329,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 
 	/**
 	 * Configures the {@link EntityInstantiator EntityInstantiators} used to create the instances
-	 * read by this {@link PdxSerializer}.
+	 * read by this {@link GudPdxSerializer}.
 	 *
 	 * @param gemfireInstantiators mapping of {@link Class types} to {@link EntityInstantiator} objects;
 	 * must not be {@literal null}.
@@ -344,7 +352,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 
 	/**
 	 * Returns a reference to the configured {@link Logger} used to log {@link String messages}
-	 * about the functions of this {@link PdxSerializer}.
+	 * about the functions of this {@link GudPdxSerializer}.
 	 *
 	 * @return a reference to the configured {@link Logger}.
 	 * @see Logger
@@ -441,13 +449,13 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	}
 
 	/**
-	 * Registers the given {@link PdxSerializerResolver}, which will be used to resolve a custom {@link PdxSerializer}
+	 * Registers the given {@link PdxSerializerResolver}, which will be used to resolve a custom {@link GudPdxSerializer}
 	 * for a entity property.
 	 *
-	 * The strategy, or criteria used to resolve the custom {@link PdxSerializer} is up to the individual resolve
+	 * The strategy, or criteria used to resolve the custom {@link GudPdxSerializer} is up to the individual resolve
 	 * and can be based on things like the property type, or fully-qualified property name, etc.
 	 *
-	 * @param pdxSerializerResolver {@link PdxSerializerResolver} used to resolve a custom {@link PdxSerializer}
+	 * @param pdxSerializerResolver {@link PdxSerializerResolver} used to resolve a custom {@link GudPdxSerializer}
 	 * for a entity property.
 	 */
 	public void register(@NonNull PdxSerializerResolver pdxSerializerResolver) {
@@ -458,38 +466,38 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	}
 
 	/**
-	 * Deserializes (reads) an {@link Object} of {@link Class type} from PDX using the {@link PdxReader}.
+	 * Deserializes (reads) an {@link Object} of {@link Class type} from PDX using the {@link GudPdxReader}.
 	 *
 	 * @param type desired {@link Class} type of the {@link Object}; must not be {@literal null}.
-	 * @param pdxReader {@link PdxReader} used to deserialize the PDX bytes back into an {@link Object}
+	 * @param pdxReader {@link GudPdxReader} used to deserialize the PDX bytes back into an {@link Object}
 	 * of the desired {@link Class} type; must not be {@literal null}.
 	 * @return an {@link Object} of {@link Class} type deserialized from PDX or {@literal null} if an {@link Object}
 	 * of {@link Class} type cannot be deserialized from PDX.
-	 * @see PdxReader
-	 * @see #doFromData(Class, PdxReader)
+	 * @see GudPdxReader
+	 * @see #doFromData(Class, GudPdxReader)
 	 * @see #getTypeFilters()
 	 * @see Class
 	 * @see Object
 	 */
 	@Override
-	public Object fromData(@NonNull Class<?> type, @NonNull PdxReader pdxReader) {
+	public Object fromData(@NonNull Class<?> type, @NonNull GudPdxReader pdxReader) {
 		return getTypeFilters().test(type) ? doFromData(type, pdxReader) : null;
 	}
 
 	/**
-	 * Deserializes (reads) the PDX bytes using the {@link PdxReader} back into an {@link Object}
+	 * Deserializes (reads) the PDX bytes using the {@link GudPdxReader} back into an {@link Object}
 	 * of the specified {@link Class} type.
 	 *
 	 * @param type desired {@link Class} type of the {@link Object}; must not be {@literal null}.
-	 * @param pdxReader {@link PdxReader} used to deserialize the PDX bytes back into an {@link Object}
+	 * @param pdxReader {@link GudPdxReader} used to deserialize the PDX bytes back into an {@link Object}
 	 * of the desired {@link Class} type; must not be {@literal null}.
 	 * @return an {@link Object} of the specified {@link Class} type deserialized from the PDX bytes.
-	 * @see PdxReader
+	 * @see GudPdxReader
 	 * @see Class
 	 * @see Object
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	Object doFromData(@NonNull Class<?> type, @NonNull PdxReader pdxReader) {
+	Object doFromData(@NonNull Class<?> type, @NonNull GudPdxReader pdxReader) {
 
 		GemfirePersistentEntity<?> entity = getPersistentEntity(type);
 
@@ -506,7 +514,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 
 				Object value = null;
 
-				PdxSerializer customPdxSerializer = resolveCustomPdxSerializer(persistentProperty);
+				GudPdxSerializer customPdxSerializer = resolveCustomPdxSerializer(persistentProperty);
 
 				Supplier<String> messageSuffix = () -> customPdxSerializer != null
 					? String.format(" using custom PdxSerializer [%s]", customPdxSerializer)
@@ -567,16 +575,16 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	 * Serialize (write) the given {@link Object} to PDX.
 	 *
 	 * @param value {@link Object} to serialize.
-	 * @param pdxWriter {@link PdxWriter} used to serialize the given {@link Object} to PDX.
-	 * @return a boolean value indicating whether this {@link PdxSerializer} was able to serialize
+	 * @param pdxWriter {@link GudPdxWriter} used to serialize the given {@link Object} to PDX.
+	 * @return a boolean value indicating whether this {@link GudPdxSerializer} was able to serialize
 	 * the given {@link Object} to PDX.
-	 * @see PdxWriter
-	 * @see #doToData(Object, PdxWriter)
+	 * @see GudPdxWriter
+	 * @see #doToData(Object, GudPdxWriter)
 	 * @see #getTypeFilters()
 	 * @see Object
 	 */
 	@Override
-	public boolean toData(@Nullable Object value, @NonNull PdxWriter pdxWriter) {
+	public boolean toData(@Nullable Object value, @NonNull GudPdxWriter pdxWriter) {
 		return getTypeFilters().test(resolveType(value)) && doToData(value, pdxWriter);
 	}
 
@@ -584,14 +592,14 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	 * Serialize (write) the given {@link Object} to PDX.
 	 *
 	 * @param value {@link Object} to serialize.
-	 * @param pdxWriter {@link PdxWriter} used to serialize the given {@link Object} to PDX.
-	 * @return a boolean value indicating whether this {@link PdxSerializer} was able to serialize
+	 * @param pdxWriter {@link GudPdxWriter} used to serialize the given {@link Object} to PDX.
+	 * @return a boolean value indicating whether this {@link GudPdxSerializer} was able to serialize
 	 * the given {@link Object} to PDX.
-	 * @see PdxWriter
+	 * @see GudPdxWriter
 	 * @see Object
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	boolean doToData(Object value, @NonNull PdxWriter pdxWriter) {
+	boolean doToData(Object value, @NonNull GudPdxWriter pdxWriter) {
 
 		GemfirePersistentEntity<?> entity = getPersistentEntity(value);
 
@@ -603,11 +611,11 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 
 			entity.doWithProperties((PropertyHandler<GemfirePersistentProperty>) persistentProperty -> {
 
-				if (isReadable(persistentProperty)) {
+			if (isReadable(persistentProperty)) {
 
-					Object propertyValue = null;
+				Object propertyValue = null;
 
-					PdxSerializer customPdxSerializer = resolveCustomPdxSerializer(persistentProperty);
+				GudPdxSerializer customPdxSerializer = resolveCustomPdxSerializer(persistentProperty);
 
 					String propertyName = persistentProperty.getName();
 
@@ -671,18 +679,18 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	}
 
 	/**
-	 * Returns a custom {@link PdxSerializer} for the given {@link PersistentEntity} {@link PersistentProperty}.
+	 * Returns a custom {@link GudPdxSerializer} for the given {@link PersistentEntity} {@link PersistentProperty}.
 	 *
-	 * @param property {@link PersistentProperty} of the entity used to resolve a custom {@link PdxSerializer}.
-	 * @return a custom {@link PdxSerializer} for the given {@link PersistentEntity} {@link PersistentProperty},
-	 * or {@literal null} if no custom {@link PdxSerializer} could be found.
+	 * @param property {@link PersistentProperty} of the entity used to resolve a custom {@link GudPdxSerializer}.
+	 * @return a custom {@link GudPdxSerializer} for the given {@link PersistentEntity} {@link PersistentProperty},
+	 * or {@literal null} if no custom {@link GudPdxSerializer} could be found.
 	 * @see PersistentProperty
-	 * @see PdxSerializer
+	 * @see GudPdxSerializer
 	 * @see #getCustomPdxSerializers()
 	 */
-	protected @Nullable PdxSerializer resolveCustomPdxSerializer(@NonNull PersistentProperty<?> property) {
+	protected @Nullable GudPdxSerializer resolveCustomPdxSerializer(@NonNull PersistentProperty<?> property) {
 
-		Map<?, PdxSerializer> customPdxSerializers = getCustomPdxSerializers();
+		Map<?, GudPdxSerializer> customPdxSerializers = getCustomPdxSerializers();
 
 		return this.pdxSerializerResolvers.stream()
 			.map(it -> it.resolve(customPdxSerializers, property))
@@ -722,7 +730,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 	@FunctionalInterface
 	public interface PdxSerializerResolver {
 
-		@Nullable PdxSerializer resolve(@NonNull Map<?, PdxSerializer> customPdxSerializers,
+		@Nullable GudPdxSerializer resolve(@NonNull Map<?, GudPdxSerializer> customPdxSerializers,
 			@NonNull PersistentProperty<?> property);
 
 	}
@@ -732,7 +740,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 		PROPERTY {
 
 			@Override
-			public PdxSerializer resolve(Map<?, PdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
+			public GudPdxSerializer resolve(Map<?, GudPdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
 				return customPdxSerializers.get(property);
 			}
 		},
@@ -740,7 +748,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 		PROPERTY_NAME {
 
 			@Override
-			public PdxSerializer resolve(Map<?, PdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
+			public GudPdxSerializer resolve(Map<?, GudPdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
 				return customPdxSerializers.get(toFullyQualifiedPropertyName(property));
 			}
 		},
@@ -748,7 +756,7 @@ public class MappingPdxSerializer implements PdxSerializer, ApplicationContextAw
 		PROPERTY_TYPE {
 
 			@Override
-			public PdxSerializer resolve(Map<?, PdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
+			public GudPdxSerializer resolve(Map<?, GudPdxSerializer> customPdxSerializers, PersistentProperty<?> property) {
 				return customPdxSerializers.get(property.getType());
 			}
 		};

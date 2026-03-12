@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.cache;
@@ -9,18 +16,19 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.support.AbstractCacheManager;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 
 /**
  * Core Spring Framework {@link CacheManager} implementation backed by a GemFire cache instance
  * (either a client or peer cache).
  *
- * Automatically discovers available caches (or GemFire {@link Region Regions}) when a cache for a given name
+ * Automatically discovers available caches (or GemFire {@link GudRegion Regions}) when a cache for a given name
  * is missing and dynamic cache lookup/creation is enabled.
  *
  * @author Costin Leau
@@ -28,23 +36,23 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see CacheManager
  * @see AbstractCacheManager
- * @see ClientCache
- * @see Region
+ * @see GudClientCache
+ * @see GudRegion
  */
 @SuppressWarnings("unused")
 public class GemfireCacheManager extends AbstractCacheManager {
 
 	private final AtomicBoolean dynamic = new AtomicBoolean(true);
 
-	private ClientCache gemfireCache;
+	private GudClientCache gemfireCache;
 
-	private Set<Region<?, ?>> regions;
+	private Set<GudRegion<?, ?>> regions;
 
 	private Set<String> cacheNames;
 
 	/* (non-Javadoc) */
 	@SuppressWarnings("all")
-	<T extends ClientCache> T assertGemFireCacheAvailable(T gemfireCache) {
+	<T extends GudClientCache> T assertGemFireCacheAvailable(T gemfireCache) {
 		Assert.state(gemfireCache != null, "A GemFire cache instance is required");
 		Assert.state(!gemfireCache.isClosed(), String.format("GemFire cache [%s] has been closed",
 			gemfireCache.getName()));
@@ -54,7 +62,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 
 	/* (non-Javadoc) */
 	@SuppressWarnings("all")
-	Region<?, ?> assertGemFireRegionAvailable(Region<?, ?> region, String cacheName) {
+	GudRegion<?, ?> assertGemFireRegionAvailable(GudRegion<?, ?> region, String cacheName) {
 		Assert.state(region != null, String.format("No Region for cache name [%s] was found", cacheName));
 		Assert.state(!region.isDestroyed(), String.format("Region [%s] has been destroyed", cacheName));
 
@@ -62,33 +70,33 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/**
-	 * Loads all configured GemFire {@link Region Regions} that will be used by this {@link CacheManager}.
+	 * Loads all configured GemFire {@link GudRegion Regions} that will be used by this {@link CacheManager}.
 	 *
-	 * Any GemFire {@link Region Regions} configured with the {@link #regions} property will take precedence over
-	 * any configured {@link #cacheNames}.  If no GemFire {@link Region Regions} were configured, then any
-	 * {@link #cacheNames} that were specified will be used to lookup existing GemFire {@link Region Regions}
+	 * Any GemFire {@link GudRegion Regions} configured with the {@link #regions} property will take precedence over
+	 * any configured {@link #cacheNames}.  If no GemFire {@link GudRegion Regions} were configured, then any
+	 * {@link #cacheNames} that were specified will be used to lookup existing GemFire {@link GudRegion Regions}
 	 * to function as Spring {@link Cache Caches}in Spring's caching infrastructure.
 	 *
 	 * However, if neither {@link #regions} nor {@link #cacheNames} were specified, then all defined GemFire
-	 * {@link Region Regions} declared in the Spring application context, as determined by
-	 * {@link ClientCache#rootRegions()}, will be used as Spring {@link Cache Caches}, and this {@link CacheManager}
-	 * will allow any dynamically created GemFire {@link Region Regions} at runtime to be found and used as a
+	 * {@link GudRegion Regions} declared in the Spring application context, as determined by
+	 * {@link GudClientCache#rootRegions()}, will be used as Spring {@link Cache Caches}, and this {@link CacheManager}
+	 * will allow any dynamically created GemFire {@link GudRegion Regions} at runtime to be found and used as a
 	 * Spring {@link Cache} as well.
 	 *
-	 * @return a {@link Collection} of GemFire {@link Region Regions} used by this {@link CacheManager}
+	 * @return a {@link Collection} of GemFire {@link GudRegion Regions} used by this {@link CacheManager}
 	 * to function as {@link Cache Caches} in Spring's caching infrastructure.
 	 * @throws IllegalStateException if a GemFire cache instance was not provided, the provided GemFire cache instance
-	 * has been closed, no GemFire {@link Region} could be found for a given cache name, or the GemFire {@link Region}
+	 * has been closed, no GemFire {@link GudRegion} could be found for a given cache name, or the GemFire {@link GudRegion}
 	 * for the given cache name has been destroyed.
 	 * @see Cache
 	 */
 	@Override
 	protected Collection<Cache> loadCaches() {
-		Set<Region<?, ?>> regions = resolveRegions(this.gemfireCache, this.regions, this.cacheNames);
+		Set<GudRegion<?, ?>> regions = resolveRegions(this.gemfireCache, this.regions, this.cacheNames);
 
 		Collection<Cache> caches = new HashSet<Cache>(regions.size());
 
-		for (Region<?, ?> region : regions) {
+		for (GudRegion<?, ?> region : regions) {
 			caches.add(newGemfireCache(region));
 		}
 
@@ -96,7 +104,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/* (non-Javadoc) */
-	Set<Region<?, ?>> resolveRegions(ClientCache gemfireCache, Set<Region<?, ?>> regions, Set<String> cacheNames) {
+	Set<GudRegion<?, ?>> resolveRegions(GudClientCache gemfireCache, Set<GudRegion<?, ?>> regions, Set<String> cacheNames) {
 		if (isSet(regions)) {
 			dynamic.set(false);
 			return regions;
@@ -104,7 +112,7 @@ public class GemfireCacheManager extends AbstractCacheManager {
 		else if (isSet(cacheNames)) {
 			dynamic.set(false);
 
-			regions = new HashSet<Region<?, ?>>(cacheNames.size());
+			regions = new HashSet<GudRegion<?, ?>>(cacheNames.size());
 
 			for (String cacheName : cacheNames) {
 				regions.add(regionFor(gemfireCache, cacheName));
@@ -123,19 +131,19 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/**
-	 * Constructs a new instance of {@link GemfireCache} initialized with the given GemFire {@link Region}.
+	 * Constructs a new instance of {@link GemfireCache} initialized with the given GemFire {@link GudRegion}.
 	 *
-	 * @param region GemFire {@link Region} to wrap (adapt).
-	 * @return an instance of {@link GemfireCache} initialized with the given GemFire {@link Region}.
+	 * @param region GemFire {@link GudRegion} to wrap (adapt).
+	 * @return an instance of {@link GemfireCache} initialized with the given GemFire {@link GudRegion}.
 	 * @see GemfireCache
-	 * @see Region
+	 * @see GudRegion
 	 */
-	protected GemfireCache newGemfireCache(Region<?, ?> region) {
+	protected GemfireCache newGemfireCache(GudRegion<?, ?> region) {
 		return GemfireCache.wrap(region);
 	}
 
 	/* (non-Javadoc) */
-	Region<?, ?> regionFor(ClientCache gemfireCache, String cacheName) {
+	GudRegion<?, ?> regionFor(GudClientCache gemfireCache, String cacheName) {
 		return assertGemFireRegionAvailable(assertGemFireCacheAvailable(gemfireCache).getRegion(cacheName), cacheName);
 	}
 
@@ -172,26 +180,26 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	/**
 	 * Sets the GemFire cache instance backing this {@link CacheManager}.
 	 *
-	 * When set, if neither {@link Region Regions} nor {@code cacheNames} were specified, then this {@link CacheManager}
-	 * is capable of creating Spring {@link Cache Caches} backed by existing GemFire {@link Region Regions} used by
+	 * When set, if neither {@link GudRegion Regions} nor {@code cacheNames} were specified, then this {@link CacheManager}
+	 * is capable of creating Spring {@link Cache Caches} backed by existing GemFire {@link GudRegion Regions} used by
 	 * the application at runtime.  However, in order to dynamically create Spring {@link Cache Caches} a reference to
 	 * an open GemFire cache instance must be set.
 	 *
 	 * @param gemfireCache the GemFire cache instance used by this {@link CacheManager}
 	 * to manage Spring {@link Cache Caches}.
-	 * @see ClientCache
+	 * @see GudClientCache
 	 */
-	public void setCache(ClientCache gemfireCache) {
+	public void setCache(GudClientCache gemfireCache) {
 		this.gemfireCache = gemfireCache;
 	}
 
 	/**
-	 * Returns the {@link ClientCache} instance backing this {@link CacheManager}.
+	 * Returns the {@link GudClientCache} instance backing this {@link CacheManager}.
 	 *
-	 * @return the {@link ClientCache} instance backing this {@link CacheManager}.
-	 * @see ClientCache
+	 * @return the {@link GudClientCache} instance backing this {@link CacheManager}.
+	 * @see GudClientCache
 	 */
-	protected ClientCache getCache() {
+	protected GudClientCache getCache() {
 		return this.gemfireCache;
 	}
 
@@ -209,29 +217,29 @@ public class GemfireCacheManager extends AbstractCacheManager {
 	}
 
 	/**
-	 * Explicitly sets the GemFire {@link Region Regions} to be used as Spring {@link Cache Caches}
+	 * Explicitly sets the GemFire {@link GudRegion Regions} to be used as Spring {@link Cache Caches}
 	 * in the application.
 	 *
 	 * When set, this disables the dynamic capability of this {@link CacheManager} to create Spring {@link Cache Caches}
-	 * at runtime by dynamically looking up existing {@link Region Regions} from the GemFire cache instance.
+	 * at runtime by dynamically looking up existing {@link GudRegion Regions} from the GemFire cache instance.
 	 *
-	 * @param regions {@link Set} of GemFire {@link Region Regions} used by this {@link CacheManager}
+	 * @param regions {@link Set} of GemFire {@link GudRegion Regions} used by this {@link CacheManager}
 	 * as Spring {@link Cache Caches}.
-	 * @see Region
+	 * @see GudRegion
 	 */
-	public void setRegions(Set<Region<?, ?>> regions) {
+	public void setRegions(Set<GudRegion<?, ?>> regions) {
 		this.regions = regions;
 	}
 
 	/**
-	 * Returns the set of GemFire {@link Region Regions} used explicitly as Spring {@link Cache Caches}
+	 * Returns the set of GemFire {@link GudRegion Regions} used explicitly as Spring {@link Cache Caches}
 	 * in Spring's caching infrastructure.
 	 *
-	 * @return the set of GemFire {@link Region Regions} functioning as Spring {@link Cache Caches}
+	 * @return the set of GemFire {@link GudRegion Regions} functioning as Spring {@link Cache Caches}
 	 * in Spring's caching infrastructure
-	 * @see Region
+	 * @see GudRegion
 	 */
-	protected Set<Region<?, ?>> getRegions() {
+	protected Set<GudRegion<?, ?>> getRegions() {
 		return this.regions;
 	}
 }

@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.support;
 
 import java.util.ArrayList;
@@ -15,8 +23,8 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +55,8 @@ import org.springframework.util.ObjectUtils;
  *
  * @author Oliver Gierke
  * @author John Blum
- * @see ClientCache
- * @see Region
+ * @see GudClientCache
+ * @see GudRegion
  * @see FactoryBean
  * @see ApplicationContext
  * @see ApplicationContextAware
@@ -69,9 +77,9 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 
 	private ApplicationContext applicationContext;
 
-	private ClientCache cache;
+	private GudClientCache cache;
 
-	private Iterable<Region<?, ?>> regions;
+	private Iterable<GudRegion<?, ?>> regions;
 
 	private MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext;
 
@@ -112,22 +120,22 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	}
 
 	/**
-	 * Set a reference to the Apache Geode {@link ClientCache}.
+	 * Set a reference to the Apache Geode {@link GudClientCache}.
 	 *
-	 * @param cache reference to the Apache Geode {@link ClientCache}.
-	 * @see ClientCache
+	 * @param cache reference to the Apache Geode {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
-	public void setCache(@Nullable ClientCache cache) {
+	public void setCache(@Nullable GudClientCache cache) {
 		this.cache = cache;
 	}
 
 	/**
-	 * Returns an {@link Optional} reference to the configured Apache Geode {@link ClientCache}.
+	 * Returns an {@link Optional} reference to the configured Apache Geode {@link GudClientCache}.
 	 *
-	 * @return an {@link Optional} reference to the configured Apache Geode {@link ClientCache}.
-	 * @see ClientCache
+	 * @return an {@link Optional} reference to the configured Apache Geode {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
-	protected Optional<ClientCache> getCache() {
+	protected Optional<GudClientCache> getCache() {
 		return Optional.ofNullable(this.cache);
 	}
 
@@ -158,15 +166,15 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	}
 
 	/**
-	 * Returns an {@link Iterable} of {@link Region Regions}defined in the Spring {@link ApplicationContext}.
+	 * Returns an {@link Iterable} of {@link GudRegion Regions}defined in the Spring {@link ApplicationContext}.
 	 *
-	 * @return a reference to all {@link Region Regions} defined in the Spring {@link ApplicationContext}.
-	 * @see Region
+	 * @return a reference to all {@link GudRegion Regions} defined in the Spring {@link ApplicationContext}.
+	 * @see GudRegion
 	 * @see Iterable
 	 */
-	protected Iterable<Region<?, ?>> getRegions() {
+	protected Iterable<GudRegion<?, ?>> getRegions() {
 
-		Iterable<Region<?, ?>> regions = this.regions;
+		Iterable<GudRegion<?, ?>> regions = this.regions;
 
 		return regions != null ? regions : CollectionUtils.emptyIterable();
 	}
@@ -189,15 +197,16 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 	}
 
 	/**
-	 * Configures a reference to a {@link Set} of all {@link Region Regions} defined, declared and registered in
-	 * the Spring {@link ApplicationContext} as well as in the Apache Geode {@link ClientCache}.
+	 * Configures a reference to a {@link Set} of all {@link GudRegion Regions} defined, declared and registered in
+	 * the Spring {@link ApplicationContext} as well as in the Apache Geode {@link GudClientCache}.
 	 */
+	@SuppressWarnings("unchecked")
 	protected void configureRegions() {
 
-		Set<Region<?, ?>> regions = new HashSet<>();
+		Set<GudRegion<?, ?>> regions = new HashSet<>();
 
 		getApplicationContext()
-			.map(applicationContext -> applicationContext.getBeansOfType(Region.class))
+			.map(applicationContext -> applicationContext.getBeansOfType(GudRegion.class))
 			.map(Map::values)
 			.orElseGet(Collections::emptySet)
 			.stream()
@@ -205,7 +214,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 			.forEach(regions::add);
 
 		getCache()
-			.map(ClientCache::rootRegions)
+			.map(GudClientCache::rootRegions)
 			.orElseGet(Collections::emptySet)
 			.stream()
 			.filter(Objects::nonNull)

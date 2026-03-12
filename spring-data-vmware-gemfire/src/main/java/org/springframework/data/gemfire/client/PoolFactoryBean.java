@@ -1,22 +1,29 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.PoolManager;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
-import org.apache.geode.distributed.DistributedSystem;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
 import org.springframework.data.gemfire.config.annotation.PoolConfigurer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
@@ -40,22 +47,21 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
 
 /**
- * Spring {@link FactoryBean} used to construct, configure and initialize a {@link Pool}.
+ * Spring {@link FactoryBean} used to construct, configure and initialize a {@link GudPool}.
  *
- * If a new {@link Pool} is created, its lifecycle is bound to that of this declaring {@link FactoryBean}
+ * If a new {@link GudPool} is created, its lifecycle is bound to that of this declaring {@link FactoryBean}
  * and indirectly, the Spring container.
  *
- * If a {@link Pool} having the configured {@link String name} already exists, then the existing {@link Pool}
+ * If a {@link GudPool} having the configured {@link String name} already exists, then the existing {@link GudPool}
  * will be returned as is without any modifications and its lifecycle will be unaffected by this {@link FactoryBean}.
  *
  * @author Costin Leau
  * @author John Blum
  * @see InetSocketAddress
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see PoolManager
- * @see DistributedSystem
+ * @see GudClientCache
+ * @see GudPool
+ * @see GudPoolFactory
+ * @see GudDistributedSystem
  * @see DisposableBean
  * @see InitializingBean
  * @see PoolResolver
@@ -65,7 +71,7 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
  * @see ConnectionEndpointList
  */
 @SuppressWarnings("unused")
-public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements DisposableBean, InitializingBean {
+public abstract class PoolFactoryBean extends AbstractFactoryBeanSupport<GudPool> implements DisposableBean, InitializingBean {
 
 	protected static final int DEFAULT_LOCATOR_PORT = DistributedSystemUtils.DEFAULT_LOCATOR_PORT;
 	protected static final int DEFAULT_SERVER_PORT = DistributedSystemUtils.DEFAULT_CACHE_SERVER_PORT;
@@ -77,29 +83,29 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	// GemFire Pool Configuration Settings
 	private boolean keepAlive = false;
-	private boolean multiUserAuthentication = PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
-	private boolean prSingleHopEnabled = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
-	private boolean subscriptionEnabled = PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
+	private boolean multiUserAuthentication = GudPoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
+	private boolean prSingleHopEnabled = GudPoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
+	private boolean subscriptionEnabled = GudPoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
 
-	private int freeConnectionTimeout = PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
-	private int loadConditioningInterval = PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
-	private int maxConnections = PoolFactory.DEFAULT_MAX_CONNECTIONS;
-	private int minConnections = PoolFactory.DEFAULT_MIN_CONNECTIONS;
-	private int maxConnectionsPerServer = PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
-	private int minConnectionsPerServer = PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
-	private int readTimeout = PoolFactory.DEFAULT_READ_TIMEOUT;
-	private int retryAttempts = PoolFactory.DEFAULT_RETRY_ATTEMPTS;
-	private int serverConnectionTimeout = PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
-	private int socketBufferSize = PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE;
-	private int socketConnectTimeout = PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT;
-	private int statisticInterval = PoolFactory.DEFAULT_STATISTIC_INTERVAL;
-	private int subscriptionAckInterval = PoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL;
-	private int subscriptionMessageTrackingTimeout = PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT;
-	private int subscriptionRedundancy = PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
-	private int subscriptionTimeoutMultiplier = PoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER;
+	private int freeConnectionTimeout = GudPoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
+	private int loadConditioningInterval = GudPoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
+	private int maxConnections = GudPoolFactory.DEFAULT_MAX_CONNECTIONS;
+	private int minConnections = GudPoolFactory.DEFAULT_MIN_CONNECTIONS;
+	private int maxConnectionsPerServer = GudPoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
+	private int minConnectionsPerServer = GudPoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
+	private int readTimeout = GudPoolFactory.DEFAULT_READ_TIMEOUT;
+	private int retryAttempts = GudPoolFactory.DEFAULT_RETRY_ATTEMPTS;
+	private int serverConnectionTimeout = GudPoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
+	private int socketBufferSize = GudPoolFactory.DEFAULT_SOCKET_BUFFER_SIZE;
+	private int socketConnectTimeout = GudPoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT;
+	private int statisticInterval = GudPoolFactory.DEFAULT_STATISTIC_INTERVAL;
+	private int subscriptionAckInterval = GudPoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL;
+	private int subscriptionMessageTrackingTimeout = GudPoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT;
+	private int subscriptionRedundancy = GudPoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
+	private int subscriptionTimeoutMultiplier = GudPoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER;
 
-	private long idleTimeout = PoolFactory.DEFAULT_IDLE_TIMEOUT;
-	private long pingInterval = PoolFactory.DEFAULT_PING_INTERVAL;
+	private long idleTimeout = GudPoolFactory.DEFAULT_IDLE_TIMEOUT;
+	private long pingInterval = GudPoolFactory.DEFAULT_PING_INTERVAL;
 
 	private final ConnectionEndpointList locators = new ConnectionEndpointList();
 	private final ConnectionEndpointList servers = new ConnectionEndpointList();
@@ -108,7 +114,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	private List<PoolConfigurer> poolConfigurers = Collections.emptyList();
 
-	private volatile Pool pool;
+	private volatile GudPool pool;
 
 	private final PoolConfigurer xmlDeclaredServersPoolConfigurer = (beanName, bean) ->
 		bean.addServers(this.xmlDeclaredServers);
@@ -132,18 +138,17 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	private PoolResolver poolResolver = DEFAULT_POOL_RESOLVER;
 
-	private SocketFactory socketFactory;
+	private GudSocketFactory socketFactory;
 
 	private String name;
-	private String serverGroup = PoolFactory.DEFAULT_SERVER_GROUP;
+	private String serverGroup = GudPoolFactory.DEFAULT_SERVER_GROUP;
 
 	/**
-	 * Prepares the construction, configuration and initialization of a new {@link Pool}.
+	 * Prepares the construction, configuration and initialization of a new {@link GudPool}.
 	 *
-	 * @throws Exception if {@link Pool} initialization fails.
-	 * @see PoolManager
-	 * @see PoolFactory
-	 * @see Pool
+	 * @throws Exception if {@link GudPool} initialization fails.
+	 * @see GudPoolFactory
+	 * @see GudPool
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -151,12 +156,12 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Initializes the given {@link Pool}
+	 * Initializes the given {@link GudPool}
 	 *
-	 * @param existingPool {@link Pool} to initialize.
-	 * @see Pool
+	 * @param existingPool {@link GudPool} to initialize.
+	 * @see GudPool
 	 */
-	private void init(@Nullable Pool existingPool) {
+	private void init(@Nullable GudPool existingPool) {
 
 		if (existingPool != null) {
 
@@ -172,7 +177,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 		}
 	}
 
-	private Pool resolvePool(String name) {
+	private GudPool resolvePool(String name) {
 		return getPoolResolver().resolve(name);
 	}
 
@@ -224,7 +229,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Releases all system resources and destroys the {@link Pool} when created by this {@link PoolFactoryBean}.
+	 * Releases all system resources and destroys the {@link GudPool} when created by this {@link PoolFactoryBean}.
 	 *
 	 * @see DisposableBean#destroy()
 	 */
@@ -241,19 +246,19 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			});
 	}
 
-	private boolean isSpringManagedPool(Pool pool) {
+	private boolean isSpringManagedPool(GudPool pool) {
 		return this.springManagedPool;
 	}
 
 	/**
-	 * Returns an object reference to the {@link Pool} created by this {@link PoolFactoryBean}.
+	 * Returns an object reference to the {@link GudPool} created by this {@link PoolFactoryBean}.
 	 *
-	 * @return an object reference to the {@link Pool} created by this {@link PoolFactoryBean}.
+	 * @return an object reference to the {@link GudPool} created by this {@link PoolFactoryBean}.
 	 * @see FactoryBean#getObject()
-	 * @see Pool
+	 * @see GudPool
 	 */
 	@Override
-	public Pool getObject() throws Exception {
+	public GudPool getObject() throws Exception {
 
 		return Optional.ofNullable(this.pool).orElseGet(() -> {
 
@@ -261,7 +266,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 			String poolName = getName();
 
-			Pool namedPool = resolvePool(poolName);
+			GudPool namedPool = resolvePool(poolName);
 
 			this.pool = namedPool != null ? namedPool
 				: postProcess(create(postProcess(configure(initialize(createPoolFactory()))), poolName));
@@ -271,58 +276,48 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Attempts to eagerly initialize the {@link ClientCache} if not already present so that a single
-	 * {@link DistributedSystem} will exist, which is required to create a {@link Pool} instance.
+	 * Attempts to eagerly initialize the {@link GudClientCache} if not already present so that a single
+	 * {@link GudDistributedSystem} will exist, which is required to create a {@link GudPool} instance.
 	 *
 	 * @see org.springframework.beans.factory.BeanFactory#getBean(Class)
-	 * @see ClientCache
-	 * @see DistributedSystem
+	 * @see GudClientCache
+	 * @see GudDistributedSystem
 	 * @see #isClientCachePresent()
 	 */
 	private void eagerlyInitializeClientCache() {
 
 		if (!isClientCachePresent()) {
-			getBeanFactory().getBean(ClientCache.class);
+			getBeanFactory().getBean(GudClientCache.class);
 		}
 	}
 
 	/**
-	 * Determines whether the {@link ClientCache} exists yet or not.
+	 * Determines whether the {@link GudClientCache} exists yet or not.
 	 *
-	 * @return a boolean value indicating whether the single {@link ClientCache} instance
+	 * @return a boolean value indicating whether the single {@link GudClientCache} instance
 	 * has been created yet.
 	 * @see GemfireUtils#getClientCache()
-	 * @see DistributedSystem
-	 * @see ClientCache
+	 * @see GudDistributedSystem
+	 * @see GudClientCache
 	 */
-	boolean isClientCachePresent() {
-
-		return Optional.ofNullable(GemfireUtils.getClientCache())
-			.filter(clientCache -> !clientCache.isClosed())
-			.map(ClientCache::getDistributedSystem)
-			.filter(GemfireUtils::isConnected)
-			.isPresent();
-	}
+	abstract boolean isClientCachePresent();
 
 	/**
-	 * Creates an instance of the {@link PoolFactory} interface to construct, configure and initialize a {@link Pool}.
+	 * Creates an instance of the {@link GudPoolFactory} interface to construct, configure and initialize a {@link GudPool}.
 	 *
-	 * @return a {@link PoolFactory} implementation to create a {@link Pool}.
-	 * @see PoolManager#createFactory()
-	 * @see PoolFactory
+	 * @return a {@link GudPoolFactory} implementation to create a {@link GudPool}.
+	 * @see GudPoolFactory
 	 */
-	protected PoolFactory createPoolFactory() {
-		return PoolManager.createFactory();
-	}
+	protected abstract GudPoolFactory createPoolFactory();
 
 	/**
-	 * Configures the given {@link PoolFactory} from this {@link PoolFactoryBean}.
+	 * Configures the given {@link GudPoolFactory} from this {@link PoolFactoryBean}.
 	 *
-	 * @param poolFactory {@link PoolFactory} to configure.
-	 * @return the given {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @param poolFactory {@link GudPoolFactory} to configure.
+	 * @return the given {@link GudPoolFactory}.
+	 * @see GudPoolFactory
 	 */
-	protected PoolFactory configure(PoolFactory poolFactory) {
+	protected GudPoolFactory configure(GudPoolFactory poolFactory) {
 
 		Optional.ofNullable(poolFactory).ifPresent(it -> {
 
@@ -361,13 +356,13 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Initializes the given {@link PoolFactory} with any configured {@link PoolFactoryInitializer}.
+	 * Initializes the given {@link GudPoolFactory} with any configured {@link PoolFactoryInitializer}.
 	 *
-	 * @param poolFactory {@link PoolFactory} to initialize.
-	 * @return the initialized {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @param poolFactory {@link GudPoolFactory} to initialize.
+	 * @return the initialized {@link GudPoolFactory}.
+	 * @see GudPoolFactory
 	 */
-	protected PoolFactory initialize(PoolFactory poolFactory) {
+	protected GudPoolFactory initialize(GudPoolFactory poolFactory) {
 
 		return Optional.ofNullable(this.poolFactoryInitializer)
 			.map(initializer -> initializer.initialize(poolFactory))
@@ -375,59 +370,59 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Post processes the fully configured {@link PoolFactory}.
+	 * Post processes the fully configured {@link GudPoolFactory}.
 	 *
-	 * @param poolFactory {@link PoolFactory} to post process.
-	 * @return the post processed {@link PoolFactory}.
-	 * @see PoolFactory
+	 * @param poolFactory {@link GudPoolFactory} to post process.
+	 * @return the post processed {@link GudPoolFactory}.
+	 * @see GudPoolFactory
 	 */
-	protected PoolFactory postProcess(PoolFactory poolFactory) {
+	protected GudPoolFactory postProcess(GudPoolFactory poolFactory) {
 		return poolFactory;
 	}
 
 	/**
-	 * @deprecated Use {@link #createPool(PoolFactory, String)} instead.
+	 * @deprecated Use {@link #createPool(GudPoolFactory, String)} instead.
 	 */
 	@Deprecated
-	protected Pool create(PoolFactory poolFactory, String poolName) {
+	protected GudPool create(GudPoolFactory poolFactory, String poolName) {
 		return createPool(poolFactory, poolName);
 	}
 
 	/**
-	 * Creates a {@link Pool} with the given {@link String name} using the provided {@link PoolFactory}.
+	 * Creates a {@link GudPool} with the given {@link String name} using the provided {@link GudPoolFactory}.
 	 *
-	 * @param poolFactory {@link PoolFactory} used to create the {@link Pool}.
-	 * @param poolName {@link String name} of the new {@link Pool}.
-	 * @return a new instance of {@link Pool} with the given {@link String name}.
-	 * @see PoolFactory#create(String)
-	 * @see Pool
+	 * @param poolFactory {@link GudPoolFactory} used to create the {@link GudPool}.
+	 * @param poolName {@link String name} of the new {@link GudPool}.
+	 * @return a new instance of {@link GudPool} with the given {@link String name}.
+	 * @see GudPoolFactory#create(String)
+	 * @see GudPool
 	 */
-	protected Pool createPool(PoolFactory poolFactory, String poolName) {
+	protected GudPool createPool(GudPoolFactory poolFactory, String poolName) {
 		return poolFactory.create(poolName);
 	}
 
 	/**
-	 * Post processes the {@link Pool} created by this {@link PoolFactoryBean}.
+	 * Post processes the {@link GudPool} created by this {@link PoolFactoryBean}.
 	 *
-	 * @param pool {@link Pool} to post process.
-	 * @return the post processed {@link Pool}.
-	 * @see Pool
+	 * @param pool {@link GudPool} to post process.
+	 * @return the post processed {@link GudPool}.
+	 * @see GudPool
 	 */
-	protected Pool postProcess(Pool pool) {
+	protected GudPool postProcess(GudPool pool) {
 		return pool;
 	}
 
 	/**
-	 * Returns the {@link Class type} of {@link Pool} produced by this {@link PoolFactoryBean}.
+	 * Returns the {@link Class type} of {@link GudPool} produced by this {@link PoolFactoryBean}.
 	 *
-	 * @return the {@link Class type} of {@link Pool} produced by this {@link PoolFactoryBean}.
+	 * @return the {@link Class type} of {@link GudPool} produced by this {@link PoolFactoryBean}.
 	 * @see FactoryBean#getObjectType()
-	 * @see Pool
+	 * @see GudPool
 	 * @see Class
 	 */
 	@Override
 	public Class<?> getObjectType() {
-		return this.pool != null ? this.pool.getClass() : Pool.class;
+		return this.pool != null ? this.pool.getClass() : GudPool.class;
 	}
 
 	public void addLocators(ConnectionEndpoint... locators) {
@@ -458,9 +453,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Configures the {@link String name} of the {@link Pool} bean.
+	 * Configures the {@link String name} of the {@link GudPool} bean.
 	 *
-	 * @param name {@link String} containing the name for the {@link Pool} bean.
+	 * @param name {@link String} containing the name for the {@link GudPool} bean.
 	 * @see #getName()
 	 */
 	public void setName(String name) {
@@ -468,9 +463,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Gets the configured {@link String name} of the {@link Pool} bean.
+	 * Gets the configured {@link String name} of the {@link GudPool} bean.
 	 *
-	 * @return the configured {@link String name} of the {@link Pool} bean.
+	 * @return the configured {@link String name} of the {@link GudPool} bean.
 	 * @see #getBeanName()
 	 * @see #setName(String)
 	 */
@@ -479,34 +474,34 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Configures the {@link Pool} to be returned by this {@link PoolFactoryBean}.
+	 * Configures the {@link GudPool} to be returned by this {@link PoolFactoryBean}.
 	 *
-	 * @param pool the {@link Pool} to be returned by this {@link PoolFactoryBean}.
-	 * @see Pool
+	 * @param pool the {@link GudPool} to be returned by this {@link PoolFactoryBean}.
+	 * @see GudPool
 	 */
-	public void setPool(@Nullable Pool pool) {
+	public void setPool(@Nullable GudPool pool) {
 		this.pool = pool;
 	}
 
 	/**
-	 * Gets the {@link Pool} configured and built by this {@link PoolFactoryBean}.
+	 * Gets the {@link GudPool} configured and built by this {@link PoolFactoryBean}.
 	 *
-	 * May return a proxy {@link Pool} if the actual {@link Pool} has not yet been configured and built by
-	 * this {@link PoolFactoryBean}. In this case, the proxy {@link Pool} object will have the same configuration
-	 * as the final {@link Pool} built by this {@link PoolFactoryBean}.
+	 * May return a proxy {@link GudPool} if the actual {@link GudPool} has not yet been configured and built by
+	 * this {@link PoolFactoryBean}. In this case, the proxy {@link GudPool} object will have the same configuration
+	 * as the final {@link GudPool} built by this {@link PoolFactoryBean}.
 	 *
-	 * @return the {@link Pool} configured and built by this {@link PoolFactoryBean}.
-	 * @see Pool
-	 * @see #setPool(Pool)
+	 * @return the {@link GudPool} configured and built by this {@link PoolFactoryBean}.
+	 * @see GudPool
+	 * @see #setPool(GudPool)
 	 */
-	public @NonNull Pool getPool() {
+	public @NonNull GudPool getPool() {
 
 		return Optional.ofNullable(this.pool).orElseGet(() -> new PoolAdapter() {
 
 			@Override
 			public boolean isDestroyed() {
 
-				Pool pool = PoolFactoryBean.this.pool;
+				GudPool pool = PoolFactoryBean.this.pool;
 
 				return pool != null && pool.isDestroyed();
 			}
@@ -535,7 +530,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			public List<InetSocketAddress> getOnlineLocators() {
 
 				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getOnlineLocators)
+					.map(GudPool::getOnlineLocators)
 					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
@@ -576,7 +571,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			public int getPendingEventCount() {
 
 				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getPendingEventCount)
+					.map(GudPool::getPendingEventCount)
 					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
@@ -591,10 +586,10 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			}
 
 			@Override
-			public QueryService getQueryService() {
+			public GudQueryService getQueryService() {
 
 				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getQueryService)
+					.map(GudPool::getQueryService)
 					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
@@ -634,7 +629,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			}
 
 			@Override
-			public SocketFactory getSocketFactory() {
+			public GudSocketFactory getSocketFactory() {
 				return PoolFactoryBean.this.getSocketFactory();
 			}
 
@@ -766,11 +761,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Sets the {@link PoolFactoryInitializer} to initialize the {@link PoolFactory} used by
-	 * this {@link PoolFactoryBean} to create a {@link Pool}.
+	 * Sets the {@link PoolFactoryInitializer} to initialize the {@link GudPoolFactory} used by
+	 * this {@link PoolFactoryBean} to create a {@link GudPool}.
 	 *
 	 * @param poolFactoryInitializer {@link PoolFactoryInitializer} user provided callback interface invoked
-	 * by this {@link PoolFactoryBean} to initialize the {@link PoolFactory} constructed to create the {@link Pool}.
+	 * by this {@link PoolFactoryBean} to initialize the {@link GudPoolFactory} constructed to create the {@link GudPool}.
 	 * @see PoolFactoryInitializer
 	 */
 	public void setPoolFactoryInitializer(PoolFactoryInitializer poolFactoryInitializer) {
@@ -778,10 +773,10 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Configures the {@link PoolResolver} to resolve {@link Pool} objects by {@link String name}
-	 * from the Apache Geode cache.
+	 * Configures the {@link PoolResolver} to resolve {@link GudPool} objects by {@link String name}
+	 * from the cache.
 	 *
-	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects
+	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link GudPool} objects
 	 * by {@link String name}.
 	 * @see PoolResolver
 	 */
@@ -790,7 +785,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Returns the configured {@link PoolResolver} used to resolve {@link Pool} object by {@link String name}.
+	 * Returns the configured {@link PoolResolver} used to resolve {@link GudPool} object by {@link String name}.
 	 *
 	 * @return the configured {@link PoolResolver}.
 	 * @see PoolResolver
@@ -843,12 +838,12 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 		this.socketConnectTimeout = socketConnectTimeout;
 	}
 
-	public void setSocketFactory(SocketFactory socketFactory) {
+	public void setSocketFactory(GudSocketFactory socketFactory) {
 		this.socketFactory = socketFactory;
 	}
 
-	protected SocketFactory getSocketFactory() {
-		return this.socketFactory != null ? this.socketFactory : PoolFactory.DEFAULT_SOCKET_FACTORY;
+	protected GudSocketFactory getSocketFactory() {
+		return this.socketFactory != null ? this.socketFactory : GudPoolFactory.DEFAULT_SOCKET_FACTORY;
 	}
 
 	public void setStatisticInterval(int statisticInterval) {
@@ -884,21 +879,21 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Callback interface to initialize the {@link PoolFactory} used by this {@link PoolFactoryBean}
-	 * to create a {@link Pool} by providing additional or alternative configuration for the factory.
+	 * Callback interface to initialize the {@link GudPoolFactory} used by this {@link PoolFactoryBean}
+	 * to create a {@link GudPool} by providing additional or alternative configuration for the factory.
 	 *
-	 * @see PoolFactory
+	 * @see GudPoolFactory
 	 */
 	public interface PoolFactoryInitializer {
 
 		/**
-		 * Initializes the given {@link PoolFactory}.
+		 * Initializes the given {@link GudPoolFactory}.
 		 *
-		 * @param poolFactory {@link PoolFactory} to initialize.
-		 * @return the given {@link PoolFactory}.
-		 * @see PoolFactory
+		 * @param poolFactory {@link GudPoolFactory} to initialize.
+		 * @return the given {@link GudPoolFactory}.
+		 * @see GudPoolFactory
 		 */
-		PoolFactory initialize(PoolFactory poolFactory);
+		GudPoolFactory initialize(GudPoolFactory poolFactory);
 
 	}
 }

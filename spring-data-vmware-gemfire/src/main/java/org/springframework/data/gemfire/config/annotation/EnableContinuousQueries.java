@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.annotation;
@@ -13,11 +20,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.concurrent.Executor;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.query.QueryService;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 import org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer;
 import org.springframework.util.ErrorHandler;
 
@@ -31,8 +37,8 @@ import org.springframework.util.ErrorHandler;
  * @see Retention
  * @see Target
  * @see Executor
- * @see Pool
- * @see QueryService
+ * @see GudPool
+ * @see GudQueryService
  * @see Configuration
  * @see Import
  * @see ContinuousQueryConfiguration
@@ -64,14 +70,14 @@ public @interface EnableContinuousQueries {
 	int phase() default 0;
 
 	/**
-	 * Refers to the name of the {@link Pool} over which CQs are registered and CQ events are received.
+	 * Refers to the name of the {@link GudPool} over which CQs are registered and CQ events are received.
 	 *
 	 * Defaults to unset.
 	 */
 	String poolName() default "";
 
 	/**
-	 * Refers to the name of the {@link QueryService} bean used to define CQs.
+	 * Refers to the name of the {@link GudQueryService} bean used to define CQs.
 	 *
 	 * Defaults to unset.
 	 */

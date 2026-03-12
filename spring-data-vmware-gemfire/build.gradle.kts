@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.auth.oauth2.GoogleCredentials
@@ -75,7 +75,7 @@ dependencies {
   api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
   api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
 
-  compileOnly(libs.bundles.gemfire)
+  api(project(":gud-api"))
 
   implementation(libs.cache.api)
   api("org.springframework:spring-context-support")

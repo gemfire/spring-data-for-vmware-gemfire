@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import java.util.Collection;
@@ -9,23 +17,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.Query;
-import org.apache.geode.cache.query.QueryService;
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.gemfire.util.CollectionUtils;
 
 /**
- * {@link GemfireOperations} defines the {{@link Region} data access operations that can be performed
+ * {@link GemfireOperations} defines the {@link GudRegion} data access operations that can be performed
  * using the {@literal Template software design pattern}.
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see QueryService
+ * @see GudRegion
+ * @see GudQueryService
  */
 public interface GemfireOperations {
 
@@ -82,13 +90,13 @@ public interface GemfireOperations {
 	 * @param <E> type parameter specifying the type of the select results.
 	 * @param query the OQL query statement to execute.
 	 * @param params an array of Object values used as arguments to bind to the OQL query parameters (such as $1).
-	 * @return A {@link SelectResults} instance holding the objects matching the query
-	 * @throws InvalidDataAccessApiUsageException in case the query returns a single result (not a {@link SelectResults}).
-	 * @see QueryService#newQuery(String)
-	 * @see Query#execute(Object[])
-	 * @see SelectResults
+	 * @return A {@link GudSelectResults} instance holding the objects matching the query
+	 * @throws InvalidDataAccessApiUsageException in case the query returns a single result (not a {@link GudSelectResults}).
+	 * @see GudQueryService#newQuery(String)
+	 * @see GudQuery#execute(Object[])
+	 * @see GudSelectResults
 	 */
-	<E> SelectResults<E> find(String query, Object... params) throws InvalidDataAccessApiUsageException;
+	<E> GudSelectResults<E> find(String query, Object... params) throws InvalidDataAccessApiUsageException;
 
 	/**
 	 * Executes a GemFire query with the given (optional) parameters and returns the result. Note this method expects the query to return a single result; for queries that return multiple
@@ -103,14 +111,14 @@ public interface GemfireOperations {
 	 * @param query the OQL query statement to execute.
 	 * @param params an array of Object values used as arguments to bind to the OQL query parameters (such as $1).
 	 * @return The (single) object that represents the result of the query.
-	 * @throws InvalidDataAccessApiUsageException in case the query returns multiple objects (through {@link SelectResults}).
-	 * @see QueryService#newQuery(String)
-	 * @see Query#execute(Object[])
+	 * @throws InvalidDataAccessApiUsageException in case the query returns multiple objects (through {@link GudSelectResults}).
+	 * @see GudQueryService#newQuery(String)
+	 * @see GudQuery#execute(Object[])
 	 */
 	<T> T findUnique(String query, Object... params) throws InvalidDataAccessApiUsageException;
 
 	/**
-	 * Shortcut for {@link Region#query(String)} method. Filters the values of this region using the predicate given as a string with the syntax of the WHERE clause of the query language.
+	 * Shortcut for {@link GudRegion#query(String)} method. Filters the values of this region using the predicate given as a string with the syntax of the WHERE clause of the query language.
 	 * The predefined variable this may be used inside the predicate to denote the current element being filtered.
 	 * This method evaluates the passed in where clause and returns results. It is supported on servers as well as clients.
 	 * When executed on a client, this method always runs on the server and returns results.
@@ -118,10 +126,10 @@ public interface GemfireOperations {
 	 *
 	 * @param <E> type parameter specifying the type of the select results.
 	 * @param query an OQL Query language boolean query predicate.
-	 * @return A SelectResults containing the values of this Region that match the predicate.
-	 * @see Region#query(String)
+	 * @return A GudSelectResults containing the values of this Region that match the predicate.
+	 * @see GudRegion#query(String)
 	 */
-	<E> SelectResults<E> query(String query);
+	<E> GudSelectResults<E> query(String query);
 
 	/**
 	 * Execute the action specified by the given action object within a Region.

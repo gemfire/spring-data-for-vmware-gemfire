@@ -1,63 +1,72 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.cache;
 
 import java.util.concurrent.Callable;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 
 /**
- * Spring Framework {@link Cache} implementation backed by a GemFire {@link Region}.
+ * Spring Framework {@link Cache} implementation backed by a GemFire {@link GudRegion}.
  *
  * @author Costin Leau
  * @author John Blum
  * @author Oliver Gierke
- * @see Region
+ * @see GudRegion
  */
 @SuppressWarnings("rawtypes")
 public class GemfireCache implements Cache {
 
-	private final Region region;
+	private final GudRegion region;
 
 	/**
-	 * Wraps a GemFire {@link Region} in an instance of {@link GemfireCache} to adapt the GemFire {@link Region}
+	 * Wraps a GemFire {@link GudRegion} in an instance of {@link GemfireCache} to adapt the GemFire {@link GudRegion}
 	 * to function as a Spring {@link Cache} in Spring's caching infrastructure.
 	 *
-	 * @param region GemFire {@link Region} to wrap.
-	 * @return an instance of {@link GemfireCache} backed by the provided GemFire {@link Region}.
-	 * @see Region
+	 * @param region GemFire {@link GudRegion} to wrap.
+	 * @return an instance of {@link GemfireCache} backed by the provided GemFire {@link GudRegion}.
+	 * @see GudRegion
 	 * @see Cache
-	 * @see #GemfireCache(Region)
+	 * @see #GemfireCache(GudRegion)
 	 */
-	public static GemfireCache wrap(Region<?, ?> region) {
+	public static GemfireCache wrap(GudRegion<?, ?> region) {
 		return new GemfireCache(region);
 	}
 
 	/**
-	 * Constructs an instance of {@link ClientCache} initialized with the given GemFire {@link Region}.
-	 * The {@link Region} will function as the backing store and implementation for
+	 * Constructs an instance of {@link GudClientCache} initialized with the given GemFire {@link GudRegion}.
+	 * The {@link GudRegion} will function as the backing store and implementation for
 	 * the Spring {@link Cache} interface.
 	 *
-	 * @param region GemFire {@link Region} backing the Spring {@link Cache}.
-	 * @throws IllegalArgumentException if {@link Region} is null.
+	 * @param region GemFire {@link GudRegion} backing the Spring {@link Cache}.
+	 * @throws IllegalArgumentException if {@link GudRegion} is null.
 	 */
-	public GemfireCache(Region<?, ?> region) {
+	public GemfireCache(GudRegion<?, ?> region) {
 		Assert.notNull(region, "GemFire Region must not be null");
 		this.region = region;
 	}
 
 	/**
-	 * Returns the GemFire {@link Region} used as the implementation for this Spring {@link Cache}.
+	 * Returns the GemFire {@link GudRegion} used as the implementation for this Spring {@link Cache}.
 	 *
-	 * @return the GemFire {@link Region} used as the implementation for this Spring {@link Cache}.
-	 * @see Region
+	 * @return the GemFire {@link GudRegion} used as the implementation for this Spring {@link Cache}.
+	 * @see GudRegion
 	 */
-	public Region getNativeCache() {
+	public GudRegion getNativeCache() {
 		return this.region;
 	}
 
@@ -65,7 +74,7 @@ public class GemfireCache implements Cache {
 	 * Returns the name of this Spring {@link Cache}.
 	 *
 	 * @return the name of this Spring {@link Cache}.
-	 * @see Region#getName()
+	 * @see GudRegion#getName()
 	 */
 	public String getName() {
 		return getNativeCache().getName();
@@ -74,7 +83,7 @@ public class GemfireCache implements Cache {
 	/**
 	 * Clears the entire contents of this Spring {@link Cache}.
 	 *
-	 * @see Region#clear()
+	 * @see GudRegion#clear()
 	 */
 	public void clear() {
 		getNativeCache().clear();
@@ -84,7 +93,7 @@ public class GemfireCache implements Cache {
 	 * Evicts (destroys) the entry (key/value) mapped to the given key from this Spring {@link Cache}.
 	 *
 	 * @param key key used to identify the cache entry to evict.
-	 * @see Region#destroy(Object)
+	 * @see GudRegion#remove(Object)
 	 */
 	public void evict(Object key) {
 		getNativeCache().remove(key);
@@ -97,7 +106,7 @@ public class GemfireCache implements Cache {
 	 * @param key key identifying the the value to retrieve from the cache.
 	 * @return the value cached with the given key.
 	 * @see ValueWrapper
-	 * @see Region#get(Object)
+	 * @see GudRegion#get(Object)
 	 */
 	public ValueWrapper get(Object key) {
 
@@ -114,7 +123,7 @@ public class GemfireCache implements Cache {
 	 * @param type desired {@link Class} type of the value.
 	 * @return the cache value for the given key cast to the specified {@link Class} type.
 	 * @throws IllegalStateException if the value is not null and not an instance of the desired type.
-	 * @see Region#get(Object)
+	 * @see GudRegion#get(Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(Object key, Class<T> type) {
@@ -175,7 +184,7 @@ public class GemfireCache implements Cache {
 	 *
 	 * @param key key used to reference the value in the cache.
 	 * @param value value to store in the cache referenced by the key.
-	 * @see Region#put(Object, Object)
+	 * @see GudRegion#put(Object, Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public void put(Object key, Object value) {
@@ -192,7 +201,7 @@ public class GemfireCache implements Cache {
 	 *
 	 * @return the existing value if the given key is already mapped to a value.
 	 * @see Cache#putIfAbsent(Object, Object)
-	 * @see Region#putIfAbsent(Object, Object)
+	 * @see GudRegion#putIfAbsent(Object, Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public ValueWrapper putIfAbsent(Object key, Object value) {

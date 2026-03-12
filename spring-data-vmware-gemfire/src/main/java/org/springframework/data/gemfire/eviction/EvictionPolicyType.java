@@ -1,11 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.eviction;
 
-import org.apache.geode.cache.EvictionAlgorithm;
+import org.springframework.data.gemfire.gud.api.GudEvictionAlgorithm;
 
 /**
  * The EvictionPolicyType enum is an enumeration of all GemFire Eviction policies, where the Eviction 'policy'
@@ -13,26 +20,26 @@ import org.apache.geode.cache.EvictionAlgorithm;
  *
  * @author Costin Leau
  * @author John Blum
- * @see EvictionAlgorithm
+ * @see GudEvictionAlgorithm
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
 public enum EvictionPolicyType {
 
-	ENTRY_COUNT(EvictionAlgorithm.LRU_ENTRY),
-	HEAP_PERCENTAGE(EvictionAlgorithm.LRU_HEAP),
-	MEMORY_SIZE(EvictionAlgorithm.LRU_MEMORY),
-	NONE(EvictionAlgorithm.NONE);
+	ENTRY_COUNT(GudEvictionAlgorithm.LRU_ENTRY),
+	HEAP_PERCENTAGE(GudEvictionAlgorithm.LRU_HEAP),
+	MEMORY_SIZE(GudEvictionAlgorithm.LRU_MEMORY),
+	NONE(GudEvictionAlgorithm.NONE);
 
-	private final EvictionAlgorithm evictionAlgorithm;
+	private final GudEvictionAlgorithm evictionAlgorithm;
 
 	/**
 	 * Constructs an instance of the EvictionPolicyType enum initialized with the matching GemFire EvictionAlgorithm.
 	 *
 	 * @param evictionAlgorithm the GemFire EvictionAlgorithm represented by this EvictionPolicyType enumerated value.
-	 * @see EvictionAlgorithm
+	 * @see GudEvictionAlgorithm
 	 */
-	EvictionPolicyType(final EvictionAlgorithm evictionAlgorithm) {
+	EvictionPolicyType(final GudEvictionAlgorithm evictionAlgorithm) {
 		this.evictionAlgorithm = evictionAlgorithm;
 	}
 
@@ -41,10 +48,10 @@ public enum EvictionPolicyType {
 	 *
 	 * @param evictionPolicyType the EvictionPolicyType from which to extract the GemFire EvictionAlgorithm.
 	 * @return the GemFire EvictionAlgorithm for the corresponding EvictionPolicyType or null if evictionType is null.
-	 * @see EvictionAlgorithm
+	 * @see GudEvictionAlgorithm
 	 * @see #getEvictionAlgorithm()
 	 */
-	public static EvictionAlgorithm getEvictionAlgorithm(final EvictionPolicyType evictionPolicyType) {
+	public static GudEvictionAlgorithm getEvictionAlgorithm(final EvictionPolicyType evictionPolicyType) {
 		return evictionPolicyType != null ? evictionPolicyType.getEvictionAlgorithm() : null;
 	}
 
@@ -53,10 +60,10 @@ public enum EvictionPolicyType {
 	 *
 	 * @param evictionAlgorithm the GemFire EvictionAlgorithm used to lookup and match the EvictionPolicyType.
 	 * @return an EvictionPolicyType matching the specified GemFire EvictionAlgorithm or null if no match was found.
-	 * @see EvictionAlgorithm
+	 * @see GudEvictionAlgorithm
 	 * @see #getEvictionAlgorithm()
 	 */
-	public static EvictionPolicyType valueOf(final EvictionAlgorithm evictionAlgorithm) {
+	public static EvictionPolicyType valueOf(final GudEvictionAlgorithm evictionAlgorithm) {
 
 		for (EvictionPolicyType evictionPolicyType : values()) {
 			if (evictionPolicyType.getEvictionAlgorithm().equals(evictionAlgorithm)) {
@@ -90,9 +97,9 @@ public enum EvictionPolicyType {
 	 * Gets the GemFire EvictionAlgorithm represented by this enumerated value.
 	 *
 	 * @return the GemFire EvictionAlgorithm represented by this enum.
-	 * @see EvictionAlgorithm
+	 * @see GudEvictionAlgorithm
 	 */
-	public EvictionAlgorithm getEvictionAlgorithm() {
+	public GudEvictionAlgorithm getEvictionAlgorithm() {
 		return this.evictionAlgorithm;
 	}
 }

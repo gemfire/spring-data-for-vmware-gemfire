@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
@@ -10,10 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.server.CacheServer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,9 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.support.ClientRegionPoolBeanFactoryPostProcessor;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.lang.NonNull;
@@ -33,14 +40,13 @@ import org.springframework.util.StringUtils;
 
 /**
  * Spring {@link Configuration} class used to construct, configure and initialize
- * a {@link ClientCache} instance in a Spring application context.
+ * a {@link GudClientCache} instance in a Spring application context.
  *
  * @author John Blum
  * @see Annotation
- * @see ClientCache
- * @see Pool
- * @see SocketFactory
- * @see CacheServer
+ * @see GudClientCache
+ * @see GudPool
+ * @see GudSocketFactory
  * @see BeanFactory
  * @see BeanDefinition
  * @see BeanDefinitionBuilder
@@ -57,7 +63,7 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @SuppressWarnings("unused")
-public class ClientCacheConfiguration extends AbstractCacheConfiguration {
+public abstract class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	private static final AtomicBoolean INFRASTRUCTURE_COMPONENTS_REGISTERED =
 		new AtomicBoolean(false);
@@ -105,12 +111,11 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	private String socketFactoryBeanName;
 
 	/**
-	 * Bean declaration for a single, peer {@link ClientCache} instance.
+	 * Bean declaration for a single, peer {@link GudClientCache} instance.
 	 *
-	 * @return a new instance of a peer {@link ClientCache}.
+	 * @return a new instance of a peer {@link GudClientCache}.
 	 * @see ClientCacheFactoryBean
-	 * @see ClientCache
-	 * @see org.apache.geode.cache.client.ClientCache
+	 * @see GudClientCache
 	 * @see #constructCacheFactoryBean()
 	 */
 	@Bean
@@ -152,20 +157,20 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		return gemfireCache;
 	}
 
-	@NonNull SocketFactory resolveSocketFactory() {
+	@NonNull GudSocketFactory resolveSocketFactory() {
 
 		BeanFactory beanFactory = getBeanFactory();
 
 		return Optional.ofNullable(getSocketFactoryBeanName())
 			.filter(StringUtils::hasText)
-			.filter(socketFactoryBeanName -> beanFactory.isTypeMatch(socketFactoryBeanName, SocketFactory.class))
-			.map(socketFactoryBeanName -> beanFactory.getBean(socketFactoryBeanName, SocketFactory.class))
+			.filter(socketFactoryBeanName -> beanFactory.isTypeMatch(socketFactoryBeanName, GudSocketFactory.class))
+			.map(socketFactoryBeanName -> beanFactory.getBean(socketFactoryBeanName, GudSocketFactory.class))
 			.orElseGet(() -> {
 
 				String socketFactoryBeanName = getSocketFactoryBeanName();
 
 				if (StringUtils.hasText(socketFactoryBeanName) && beanFactory.containsBean(socketFactoryBeanName)) {
-					throw new BeanNotOfRequiredTypeException(socketFactoryBeanName, SocketFactory.class,
+					throw new BeanNotOfRequiredTypeException(socketFactoryBeanName, GudSocketFactory.class,
 						beanFactory.getType(socketFactoryBeanName));
 				}
 
@@ -182,7 +187,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	}
 
 	/**
-	 * Constructs a new instance of {@link ClientCacheFactoryBean} used to create a peer {@link ClientCache}.
+	 * Constructs a new instance of {@link ClientCacheFactoryBean} used to create a peer {@link GudClientCache}.
 	 *
 	 * @param <T> {@link Class} sub-type of {@link ClientCacheFactoryBean}.
 	 * @return a new instance of {@link ClientCacheFactoryBean}.
@@ -190,9 +195,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <T extends ClientCacheFactoryBean> T newCacheFactoryBean() {
-		return (T) new ClientCacheFactoryBean();
-	}
+	protected abstract <T extends ClientCacheFactoryBean> T newCacheFactoryBean();
 
 	/**
 	 * Configures Spring container infrastructure components and beans used by Spring Data GemFire
@@ -378,9 +381,9 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	/**
 	 * Uses the list of Pivotal GemFire/Apache Geode Locator and Server connection endpoint definitions and meta-data
-	 * to configure the client {@link Pool} used to communicate with the servers in the cluster.
+	 * to configure the client {@link GudPool} used to communicate with the servers in the cluster.
 	 *
-	 * @param clientCacheApplicationAttributes {@link ClientCacheApplication} annotation containing {@link Pool}
+	 * @param clientCacheApplicationAttributes {@link ClientCacheApplication} annotation containing {@link GudPool}
 	 * Locator/Server connection endpoint meta-data.
 	 * @see ClientCacheApplication
 	 * @see Map
@@ -420,7 +423,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 			String[] serverHostsPorts = serversFromProperty.split(",");
 
-			poolServers = ConnectionEndpointList.parse(CacheServer.DEFAULT_PORT, serverHostsPorts);
+			poolServers = ConnectionEndpointList.parse(getDefaultCacheServerPort(), serverHostsPorts);
 		}
 		else {
 
@@ -435,6 +438,13 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 		setPoolServers(poolServers);
 	}
+
+	/**
+	 * Returns the default port for cache servers.
+	 *
+	 * @return the default cache server port.
+	 */
+	protected abstract int getDefaultCacheServerPort();
 
 	protected ConnectionEndpoint newConnectionEndpoint(String host, Integer port) {
 		return new ConnectionEndpoint(host, port);
@@ -690,10 +700,10 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	/**
 	 * Returns a {@link String} containing the name of the Spring-configured Apache Geode
-	 * {@link ClientCache} application.
+	 * {@link GudClientCache} application.
 	 *
 	 * @return a {@link String} containing the name of the Spring-configured Apache Geode
-	 * {@link ClientCache} application.
+	 * {@link GudClientCache} application.
 	 * @see Object#toString()
 	 */
 	@Override

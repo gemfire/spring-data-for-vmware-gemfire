@@ -1,10 +1,18 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.support;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.mapping.GemfirePersistentProperty;
@@ -65,9 +73,9 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 
 	/**
 	 * Constructs a new instance of {@link GemfireRepositoryFactory} initialized with the given collection
-	 * of configured {@link Region Regions} and the {@link MappingContext}.
+	 * of configured {@link GudRegion Regions} and the {@link MappingContext}.
 	 *
-	 * @param regions {@link Iterable} collection of configured {@link Region Regions} used by this application;
+	 * @param regions {@link Iterable} collection of configured {@link GudRegion Regions} used by this application;
 	 * must not be {@literal null}.
 	 * @param mappingContext {@link MappingContext} used to map entities to the underlying data store,
 	 * must not be {@literal null}.
@@ -76,7 +84,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	 * @see Regions
 	 * @see MappingContext
 	 */
-	public GemfireRepositoryFactory(@NonNull Iterable<Region<?, ?>> regions,
+	public GemfireRepositoryFactory(@NonNull Iterable<GudRegion<?, ?>> regions,
 			@NonNull MappingContext<? extends GemfirePersistentEntity<?>, GemfirePersistentProperty> mappingContext) {
 
 		Assert.notNull(regions, "Regions are required");
@@ -99,9 +107,9 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	/**
-	 * Returns a reference to the configured, application-defined {@link Region Regions}.
+	 * Returns a reference to the configured, application-defined {@link GudRegion Regions}.
 	 *
-	 * @return a reference to the configured, application-defined {@link Region Regions}.
+	 * @return a reference to the configured, application-defined {@link GudRegion Regions}.
 	 * @see Regions
 	 */
 	protected Regions getRegions() {
@@ -139,17 +147,17 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 	}
 
 	/**
-	 * Constructs a new instance of {@link GemfireTemplate} initialized with the identified {@link Region}
+	 * Constructs a new instance of {@link GemfireTemplate} initialized with the identified {@link GudRegion}
 	 * used to back all persistent, data access operations defined by the {@link Repository}.
 	 *
 	 * @param repositoryMetadata {@link RepositoryMetadata} containing meta-data about the {@link Repository}.
-	 * @return a new instance of {@link GemfireTemplate} initialized with the identified {@link Region}.
+	 * @return a new instance of {@link GemfireTemplate} initialized with the identified {@link GudRegion}.
 	 * @see #resolvePersistentEntity(Class)
 	 * @see #resolveRegion(RepositoryMetadata, GemfirePersistentEntity)
-	 * @see #validate(RepositoryMetadata, GemfirePersistentEntity, Region)
+	 * @see #validate(RepositoryMetadata, GemfirePersistentEntity, GudRegion)
 	 * @see RepositoryMetadata
 	 * @see GemfireTemplate
-	 * @see Region
+	 * @see GudRegion
 	 */
 	protected GemfireTemplate newTemplate(RepositoryMetadata repositoryMetadata) {
 
@@ -164,7 +172,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 		return (GemfirePersistentEntity<T>) getMappingContext().getPersistentEntity(domainType);
 	}
 
-	private Region<?, ?> resolveRegion(RepositoryMetadata repositoryMetadata, GemfirePersistentEntity<?> entity) {
+	private GudRegion<?, ?> resolveRegion(RepositoryMetadata repositoryMetadata, GemfirePersistentEntity<?> entity) {
 
 		String resolvedRegionName = getRepositoryRegionName(repositoryMetadata)
 			.orElseGet(() -> getEntityRegionName(repositoryMetadata, entity));
@@ -196,7 +204,7 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 			.filter(StringUtils::hasText);
 	}
 
-	Region<?, ?> resolveRegion(@NonNull RepositoryMetadata repositoryMetadata, String regionNamePath) {
+	GudRegion<?, ?> resolveRegion(@NonNull RepositoryMetadata repositoryMetadata, String regionNamePath) {
 
 		return Optional.ofNullable(getRegions().getRegion(regionNamePath))
 			.orElseThrow(() -> newIllegalStateException(REGION_NOT_FOUND,
@@ -204,8 +212,8 @@ public class GemfireRepositoryFactory extends RepositoryFactorySupport {
 				repositoryMetadata.getRepositoryInterface().getName()));
 	}
 
-	private Region<?, ?> validate(RepositoryMetadata repositoryMetadata, GemfirePersistentEntity<?> entity,
-			Region<?, ?> region) {
+	private GudRegion<?, ?> validate(RepositoryMetadata repositoryMetadata, GemfirePersistentEntity<?> entity,
+			GudRegion<?, ?> region) {
 
 		Assert.notNull(region, "Region must not be null");
 

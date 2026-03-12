@@ -1,10 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.repository.query.support;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.repository.query.QueryMethod;
 import org.springframework.lang.NonNull;
@@ -13,7 +21,7 @@ import org.springframework.lang.NonNull;
  * A Strategy interface for executing Apache Geode OQL queries (e.g. {@literal SELECT} statements).
  *
  * @author John Blum
- * @see SelectResults
+ * @see GudSelectResults
  * @see QueryMethod
  * @since 2.4.0
  */
@@ -28,14 +36,14 @@ public interface OqlQueryExecutor {
 	 * @param queryMethod {@link QueryMethod} modeling the OQl query.
 	 * @param query {@link String} containing the Apache Geode OQL query.
 	 * @param arguments array of {@link Object arguments} used for the bind in OQL query parameters.
-	 * @return the {@link SelectResults OQL query result set}.
+	 * @return the {@link GudSelectResults OQL query result set}.
 	 * @throws UnsupportedQueryExecutionException if this {@link OqlQueryExecutor} cannot execute (i.e. handle)
 	 * the OQL query.
 	 * @see QueryMethod
-	 * @see SelectResults
+	 * @see GudSelectResults
 	 */
 	@SuppressWarnings("rawtypes")
-	SelectResults execute(QueryMethod queryMethod, String query, Object... arguments);
+	GudSelectResults execute(QueryMethod queryMethod, String query, Object... arguments);
 
 	/**
 	 * Constructs a new instance of {@link UnsupportedQueryExecutionException} initialized with a canned message

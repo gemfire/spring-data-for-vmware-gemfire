@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import static java.util.stream.StreamSupport.stream;
@@ -14,40 +22,40 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.DiskStoreFactory;
-import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudDiskStoreFactory;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring {@link FactoryBean} used to create a {@link DiskStore}.
+ * Spring {@link FactoryBean} used to create a {@link GudDiskStore}.
  *
  * @author David Turanski
  * @author John Blum
  * @see File
- * @see DiskStore
- * @see DiskStoreFactory
- * @see ClientCache
+ * @see GudDiskStore
+ * @see GudDiskStoreFactory
+ * @see GudClientCache
  * @see FactoryBean
  * @see InitializingBean
  * @see DiskStoreConfigurer
  * @see AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
-public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> implements InitializingBean {
+public abstract class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<GudDiskStore> implements InitializingBean {
 
 	private Boolean allowForceCompaction;
 	private Boolean autoCompact;
 
-	private DiskStore diskStore;
+	private GudDiskStore diskStore;
 
-	private ClientCache cache;
+	private GudClientCache cache;
 
 	private Integer compactionThreshold;
 	private Integer queueSize;
@@ -75,9 +83,9 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 
 		applyDiskStoreConfigurers(diskStoreName);
 
-		ClientCache cache = resolveCache(diskStoreName);
+		GudClientCache cache = resolveCache(diskStoreName);
 
-		DiskStoreFactory diskStoreFactory = postProcess(configure(createDiskStoreFactory(cache)));
+		GudDiskStoreFactory diskStoreFactory = postProcess(configure(createDiskStoreFactory(cache)));
 
 		this.diskStore = postProcess(newDiskStore(diskStoreFactory, diskStoreName));
 	}
@@ -117,7 +125,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	}
 
 	/* (non-Javadoc) */
-	private ClientCache resolveCache(String diskStoreName) {
+	private GudClientCache resolveCache(String diskStoreName) {
 		return Optional.ofNullable(this.cache)
 			.orElseThrow(() -> newIllegalStateException("Cache is required to create DiskStore [%s]", diskStoreName));
 	}
@@ -125,31 +133,36 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	/* (non-Javadoc) */
 	final String resolveDiskStoreName() {
 		return Optional.ofNullable(getBeanName()).filter(StringUtils::hasText)
-			.orElse(DiskStoreFactory.DEFAULT_DISK_STORE_NAME);
+			.orElse(getDefaultDiskStoreName());
 	}
 
 	/**
-	 * Creates an instance of {@link DiskStoreFactory} using the given {@link ClientCache} in order to
-	 * construct, configure and initialize a new {@link DiskStore}.
+	 * Returns the default disk store name.
 	 *
-	 * @param cache reference to the {@link ClientCache} used to create the {@link DiskStoreFactory}.
-	 * @return a new instance of {@link DiskStoreFactory}.
-	 * @see ClientCache#createDiskStoreFactory()
-	 * @see DiskStoreFactory
+	 * @return the default disk store name.
 	 */
-	protected DiskStoreFactory createDiskStoreFactory(ClientCache cache) {
-		return cache.createDiskStoreFactory();
-	}
+	protected abstract String getDefaultDiskStoreName();
 
 	/**
-	 * Configures the given {@link DiskStoreFactory} with the configuration settings present
+	 * Creates an instance of {@link GudDiskStoreFactory} using the given {@link GudClientCache} in order to
+	 * construct, configure and initialize a new {@link GudDiskStore}.
+	 *
+	 * @param cache reference to the {@link GudClientCache} used to create the {@link GudDiskStoreFactory}.
+	 * @return a new instance of {@link GudDiskStoreFactory}.
+	 * @see GudClientCache#createDiskStoreFactory()
+	 * @see GudDiskStoreFactory
+	 */
+	protected abstract GudDiskStoreFactory createDiskStoreFactory(GudClientCache cache);
+
+	/**
+	 * Configures the given {@link GudDiskStoreFactory} with the configuration settings present
 	 * on this {@link DiskStoreFactoryBean}
 	 *
-	 * @param diskStoreFactory {@link DiskStoreFactory} to configure.
-	 * @return the given {@link DiskStoreFactory}
-	 * @see DiskStoreFactory
+	 * @param diskStoreFactory {@link GudDiskStoreFactory} to configure.
+	 * @return the given {@link GudDiskStoreFactory}
+	 * @see GudDiskStoreFactory
 	 */
-	protected DiskStoreFactory configure(DiskStoreFactory diskStoreFactory) {
+	protected GudDiskStoreFactory configure(GudDiskStoreFactory diskStoreFactory) {
 
 		Optional.ofNullable(this.allowForceCompaction).ifPresent(diskStoreFactory::setAllowForceCompaction);
 		Optional.ofNullable(this.autoCompact).ifPresent(diskStoreFactory::setAutoCompact);
@@ -172,7 +185,7 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 					DiskDir diskDir = diskDirs.get(index);
 					diskDirFiles[index] = new File(diskDir.location);
 					diskDirSizes[index] = Optional.ofNullable(diskDir.maxSize)
-						.orElse(DiskStoreFactory.DEFAULT_DISK_DIR_SIZE);
+						.orElse(getDefaultDiskDirSize());
 				}
 
 				diskStoreFactory.setDiskDirsAndSizes(diskDirFiles, diskDirSizes);
@@ -182,40 +195,47 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	}
 
 	/**
-	 * Constructs a new instance of {@link DiskStore} with the given {@link String name}
-	 * using the provided {@link DiskStoreFactory}
+	 * Returns the default disk directory size.
 	 *
-	 * @param diskStoreFactory {@link DiskStoreFactory} used to create the {@link DiskStore}.
-	 * @param diskStoreName {@link String} containing the name of the new {@link DiskStore}.
-	 * @return a new instance of {@link DiskStore} with the given {@link String name}.
-	 * @see DiskStoreFactory
-	 * @see DiskStore
+	 * @return the default disk directory size.
 	 */
-	protected DiskStore newDiskStore(DiskStoreFactory diskStoreFactory, String diskStoreName) {
+	protected abstract int getDefaultDiskDirSize();
+
+	/**
+	 * Constructs a new instance of {@link GudDiskStore} with the given {@link String name}
+	 * using the provided {@link GudDiskStoreFactory}
+	 *
+	 * @param diskStoreFactory {@link GudDiskStoreFactory} used to create the {@link GudDiskStore}.
+	 * @param diskStoreName {@link String} containing the name of the new {@link GudDiskStore}.
+	 * @return a new instance of {@link GudDiskStore} with the given {@link String name}.
+	 * @see GudDiskStoreFactory
+	 * @see GudDiskStore
+	 */
+	protected GudDiskStore newDiskStore(GudDiskStoreFactory diskStoreFactory, String diskStoreName) {
 		return diskStoreFactory.create(diskStoreName);
 	}
 
 	/**
-	 * Post-process the {@link DiskStoreFactory} with any custom {@link DiskStoreFactory} or {@link DiskStore}
+	 * Post-process the {@link GudDiskStoreFactory} with any custom {@link GudDiskStoreFactory} or {@link GudDiskStore}
 	 * configuration settings as required by the application.
 	 *
-	 * @param diskStoreFactory {@link DiskStoreFactory} to process.
-	 * @return the given {@link DiskStoreFactory}.
-	 * @see DiskStoreFactory
+	 * @param diskStoreFactory {@link GudDiskStoreFactory} to process.
+	 * @return the given {@link GudDiskStoreFactory}.
+	 * @see GudDiskStoreFactory
 	 */
-	protected DiskStoreFactory postProcess(DiskStoreFactory diskStoreFactory) {
+	protected GudDiskStoreFactory postProcess(GudDiskStoreFactory diskStoreFactory) {
 		return diskStoreFactory;
 	}
 
 	/**
-	 * Post-process the provided {@link DiskStore} constructed, configured and initialized
+	 * Post-process the provided {@link GudDiskStore} constructed, configured and initialized
 	 * by this {@link DiskStoreFactoryBean}.
 	 *
-	 * @param diskStore {@link DiskStore} to process.
-	 * @return the given {@link DiskStore}.
-	 * @see DiskStore
+	 * @param diskStore {@link GudDiskStore} to process.
+	 * @return the given {@link GudDiskStore}.
+	 * @see GudDiskStore
 	 */
-	protected DiskStore postProcess(DiskStore diskStore) {
+	protected GudDiskStore postProcess(GudDiskStore diskStore) {
 		return diskStore;
 	}
 
@@ -231,16 +251,16 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<DiskStore> 
 	}
 
 	@Override
-	public DiskStore getObject() throws Exception {
+	public GudDiskStore getObject() throws Exception {
 		return this.diskStore;
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return this.diskStore != null ? this.diskStore.getClass() : DiskStore.class;
+		return this.diskStore != null ? this.diskStore.getClass() : GudDiskStore.class;
 	}
 
-	public void setCache(ClientCache cache) {
+	public void setCache(GudClientCache cache) {
 		this.cache = cache;
 	}
 

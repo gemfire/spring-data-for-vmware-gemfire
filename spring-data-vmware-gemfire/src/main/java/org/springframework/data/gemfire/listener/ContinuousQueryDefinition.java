@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.listener;
 
 import java.lang.reflect.Method;
@@ -11,20 +19,19 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.apache.geode.cache.query.CqAttributes;
-import org.apache.geode.cache.query.CqAttributesFactory;
-import org.apache.geode.cache.query.CqListener;
-import org.apache.geode.cache.query.CqQuery;
-
-import org.apache.geode.cache.query.ExcludedEvent;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.gemfire.gud.api.GudCqAttributes;
+import org.springframework.data.gemfire.gud.api.GudCqAttributesFactory;
+import org.springframework.data.gemfire.gud.api.GudCqListener;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudExcludedEvent;
 import org.springframework.data.gemfire.listener.adapter.ContinuousQueryListenerAdapter;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Class type for defining a {@link CqQuery}.
+ * Class type for defining a {@link GudCqQuery}.
  *
  * @author Costin Leau
  * @author John Blum
@@ -168,9 +175,7 @@ public class ContinuousQueryDefinition implements InitializingBean {
 		Assert.notNull(listener, "Listener is required");
 	}
 
-	public CqAttributes toCqAttributes(Function<ContinuousQueryListener, CqListener> listenerFunction, Set<CQEvent> excludedEvents) {
-
-		CqAttributesFactory attributesFactory = new CqAttributesFactory();
+	public GudCqAttributes toCqAttributes(GudCqAttributesFactory attributesFactory, Function<ContinuousQueryListener, GudCqListener> listenerFunction, Set<CQEvent> excludedEvents) {
 
 		attributesFactory.addCqListener(listenerFunction.apply(getListener()));
 		attributesFactory.setExcludedEvents(excludedEvents.stream().map(this::mapCQEventToExcludedEvent).collect(Collectors.toSet()));
@@ -178,12 +183,12 @@ public class ContinuousQueryDefinition implements InitializingBean {
 		return attributesFactory.create();
 	}
 
-	private ExcludedEvent mapCQEventToExcludedEvent(CQEvent cqEvent) {
+	private GudExcludedEvent mapCQEventToExcludedEvent(CQEvent cqEvent) {
         return switch (cqEvent) {
-            case UPDATE -> ExcludedEvent.UPDATE;
-            case CREATE -> ExcludedEvent.CREATE;
-            case INVALIDATE -> ExcludedEvent.INVALIDATE;
-            case DESTROY -> ExcludedEvent.DESTROY;
+            case UPDATE -> GudExcludedEvent.UPDATE;
+            case CREATE -> GudExcludedEvent.CREATE;
+            case INVALIDATE -> GudExcludedEvent.INVALIDATE;
+            case DESTROY -> GudExcludedEvent.DESTROY;
         };
 	}
 }

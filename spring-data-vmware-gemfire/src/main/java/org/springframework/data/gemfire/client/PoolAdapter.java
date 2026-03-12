@@ -1,32 +1,40 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client;
 
 import java.net.InetSocketAddress;
 import java.util.List;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 
 /**
  * The {@link PoolAdapter} class is an abstract base class and default, no-op implementation of
- * the {@link Pool} interface that conveniently enables implementing classes to extend this adapter
- * and choose which {@link Pool} methods/operations are supported by this implementation.
+ * the {@link GudPool} interface that conveniently enables implementing classes to extend this adapter
+ * and choose which {@link GudPool} methods/operations are supported by this implementation.
  *
  * For instance, one possible implementation is Spring Data GemFire's {@link PoolFactoryBean}, which can act as
- * a {@link Pool} in a context where only the {@link Pool}'s "configuration" and meta-data are required,
+ * a {@link GudPool} in a context where only the {@link GudPool}'s "configuration" and meta-data are required,
  * but no actual connections or operating state information (e.g. pendingEventCount) is needed.
  *
  * @author John Blum
  * @see PoolFactoryBean
- * @see Pool
+ * @see GudPool
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
-public abstract class PoolAdapter implements Pool {
+public abstract class PoolAdapter implements GudPool {
 
 	public static final String NOT_IMPLEMENTED = "Not Implemented";
 
@@ -82,7 +90,7 @@ public abstract class PoolAdapter implements Pool {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
-	public QueryService getQueryService() {
+	public GudQueryService getQueryService() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
@@ -115,7 +123,7 @@ public abstract class PoolAdapter implements Pool {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
-	public SocketFactory getSocketFactory() {
+	public GudSocketFactory getSocketFactory() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 

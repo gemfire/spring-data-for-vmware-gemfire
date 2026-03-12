@@ -1,15 +1,23 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-11: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.transaction.config;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +40,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * to manage local, cache transactions for either Pivotal GemFire or Apache Geode.
  *
  * @author John Blum
- * @see ClientCache
- * @see TransactionListener
- * @see TransactionWriter
+ * @see GudClientCache
+ * @see GudTransactionListener
+ * @see GudTransactionWriter
  * @see ApplicationEventPublisher
  * @see Bean
  * @see Configuration
@@ -79,13 +87,13 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	 * Declares and registers SDG's {@link GemfireTransactionManager} as the {@literal transactionManager}
 	 * in Spring's Transaction Management infrastructure to manage local, GemFire/Geode cache transactions.
 	 *
-	 * @param gemfireCache reference to the {@link ClientCache}.
-	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link ClientCache}.
+	 * @param gemfireCache reference to the {@link GudClientCache}.
+	 * @return a new instance of {@link GemfireTransactionManager} initialized with the given {@link GudClientCache}.
 	 * @see GemfireTransactionManager
-	 * @see ClientCache
+	 * @see GudClientCache
 	 */
 	@Bean
-	public GemfireTransactionManager transactionManager(ClientCache gemfireCache) {
+	public GemfireTransactionManager transactionManager(GudClientCache gemfireCache) {
 		return new GemfireTransactionManager(gemfireCache);
 	}
 
@@ -118,9 +126,9 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	}
 
 	private void registerGemFireCacheTransactionListener(ClientCacheFactoryBean bean,
-			TransactionListener transactionListener) {
+			GudTransactionListener transactionListener) {
 
-		List<TransactionListener> transactionListeners = new ArrayList<>(bean.getTransactionListeners());
+		List<GudTransactionListener> transactionListeners = new ArrayList<>(bean.getTransactionListeners());
 
 		transactionListeners.add(transactionListener);
 
@@ -128,11 +136,11 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 	}
 
 	private void registerGemFireCacheTransactionWriter(ClientCacheFactoryBean bean,
-			TransactionWriter transactionWriter) {
+			GudTransactionWriter transactionWriter) {
 
-		TransactionWriter existingTransactionWriter = bean.getTransactionWriter();
+		GudTransactionWriter existingTransactionWriter = bean.getTransactionWriter();
 
-		TransactionWriter compositeTransactionWriter =
+		GudTransactionWriter compositeTransactionWriter =
 			ComposableTransactionWriter.compose(existingTransactionWriter, transactionWriter);
 
 		bean.setTransactionWriter(compositeTransactionWriter);
