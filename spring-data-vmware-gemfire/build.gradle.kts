@@ -2,6 +2,11 @@
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
@@ -76,6 +81,7 @@ dependencies {
   api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
 
   api(project(":gud-api"))
+  implementation(project(":gud-core"))
 
   implementation(libs.cache.api)
   api("org.springframework:spring-context-support")

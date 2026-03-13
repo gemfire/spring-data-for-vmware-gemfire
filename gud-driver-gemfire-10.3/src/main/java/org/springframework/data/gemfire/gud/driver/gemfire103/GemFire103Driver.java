@@ -4,10 +4,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GemFire 10.3 driver implementation
+ * 2026-03-13: Added factory creation methods for cache creation
  */
 
 package org.springframework.data.gemfire.gud.driver.gemfire103;
@@ -18,7 +24,9 @@ import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 
 import org.springframework.data.gemfire.gud.api.GudCache;
+import org.springframework.data.gemfire.gud.api.GudCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.core.GudDriver;
@@ -40,6 +48,16 @@ public class GemFire103Driver implements GudDriver {
     @Override
     public String getSupportedVersion() {
         return SUPPORTED_VERSION;
+    }
+
+    @Override
+    public GudClientCacheFactory createClientCacheFactory() {
+        return new GemFire103ClientCacheFactory();
+    }
+
+    @Override
+    public GudCacheFactory createCacheFactory() {
+        return new GemFire103CacheFactory();
     }
 
     @Override

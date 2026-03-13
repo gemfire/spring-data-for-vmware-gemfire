@@ -13,7 +13,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudClientCacheFactory interface for cache creation and lookup
- * 2026-03-13: Changed to abstract class with static factory methods
+ * 2026-03-13: Changed to interface to allow driver implementations
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -22,36 +22,20 @@ import java.util.Properties;
 
 /**
  * GUD API abstraction for GemFire ClientCacheFactory.
- * Provides methods to create and retrieve client cache instances.
+ * Provides methods to create and configure client cache instances.
+ * 
+ * Obtain instances via {@code GudDriverManager.getDefaultDriver().createClientCacheFactory()}.
  */
-public abstract class GudClientCacheFactory {
+public interface GudClientCacheFactory {
 
     /**
-     * Gets any existing client cache instance.
+     * Sets a property on the cache.
      *
-     * @return the existing client cache, or null if none exists
-     * @throws GudCacheClosedException if the cache is closed
+     * @param name the property name
+     * @param value the property value
+     * @return this factory for chaining
      */
-    public static GudClientCache getAnyInstance() {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
-
-    /**
-     * Gets the GemFire product version.
-     *
-     * @return the version string
-     */
-    public static String getVersion() {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
-
-    /**
-     * Creates a new client cache with the given properties.
-     *
-     * @param properties the GemFire properties
-     * @return the created client cache
-     */
-    public abstract GudClientCache create(Properties properties);
+    GudClientCacheFactory set(String name, String value);
 
     /**
      * Sets a PDX serializer for the cache.
@@ -59,7 +43,7 @@ public abstract class GudClientCacheFactory {
      * @param serializer the PDX serializer
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory setPdxSerializer(GudPdxSerializer serializer);
+    GudClientCacheFactory setPdxSerializer(GudPdxSerializer serializer);
 
     /**
      * Sets whether PDX should be read serialized.
@@ -67,7 +51,7 @@ public abstract class GudClientCacheFactory {
      * @param readSerialized true to read PDX as serialized
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory setPdxReadSerialized(boolean readSerialized);
+    GudClientCacheFactory setPdxReadSerialized(boolean readSerialized);
 
     /**
      * Sets the PDX disk store name.
@@ -75,7 +59,7 @@ public abstract class GudClientCacheFactory {
      * @param diskStoreName the disk store name
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory setPdxDiskStore(String diskStoreName);
+    GudClientCacheFactory setPdxDiskStore(String diskStoreName);
 
     /**
      * Sets whether PDX is persistent.
@@ -83,7 +67,7 @@ public abstract class GudClientCacheFactory {
      * @param persistent true if persistent
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory setPdxPersistent(boolean persistent);
+    GudClientCacheFactory setPdxPersistent(boolean persistent);
 
     /**
      * Sets whether to ignore unread PDX fields.
@@ -91,7 +75,7 @@ public abstract class GudClientCacheFactory {
      * @param ignoreUnreadFields true to ignore
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory setPdxIgnoreUnreadFields(boolean ignoreUnreadFields);
+    GudClientCacheFactory setPdxIgnoreUnreadFields(boolean ignoreUnreadFields);
 
     /**
      * Adds a pool locator.
@@ -100,7 +84,7 @@ public abstract class GudClientCacheFactory {
      * @param port the locator port
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory addPoolLocator(String host, int port);
+    GudClientCacheFactory addPoolLocator(String host, int port);
 
     /**
      * Adds a pool server.
@@ -109,36 +93,59 @@ public abstract class GudClientCacheFactory {
      * @param port the server port
      * @return this factory for chaining
      */
-    public abstract GudClientCacheFactory addPoolServer(String host, int port);
+    GudClientCacheFactory addPoolServer(String host, int port);
 
     // Pool configuration methods
-    public abstract GudClientCacheFactory setPoolFreeConnectionTimeout(int timeout);
-    public abstract GudClientCacheFactory setPoolIdleTimeout(long timeout);
-    public abstract GudClientCacheFactory setPoolLoadConditioningInterval(int interval);
-    public abstract GudClientCacheFactory setPoolMinConnections(int minConnections);
-    public abstract GudClientCacheFactory setPoolMaxConnections(int maxConnections);
-    public abstract GudClientCacheFactory setPoolMinConnectionsPerServer(int minConnections);
-    public abstract GudClientCacheFactory setPoolMaxConnectionsPerServer(int maxConnections);
-    public abstract GudClientCacheFactory setPoolMultiuserAuthentication(boolean multiuser);
-    public abstract GudClientCacheFactory setPoolPingInterval(long interval);
-    public abstract GudClientCacheFactory setPoolPRSingleHopEnabled(boolean enabled);
-    public abstract GudClientCacheFactory setPoolReadTimeout(int timeout);
-    public abstract GudClientCacheFactory setPoolRetryAttempts(int retryAttempts);
-    public abstract GudClientCacheFactory setPoolServerConnectionTimeout(int timeout);
-    public abstract GudClientCacheFactory setPoolServerGroup(String group);
-    public abstract GudClientCacheFactory setPoolSocketBufferSize(int size);
-    public abstract GudClientCacheFactory setPoolSocketConnectTimeout(int timeout);
-    public abstract GudClientCacheFactory setPoolSocketFactory(GudSocketFactory factory);
-    public abstract GudClientCacheFactory setPoolStatisticInterval(int interval);
-    public abstract GudClientCacheFactory setPoolSubscriptionAckInterval(int interval);
-    public abstract GudClientCacheFactory setPoolSubscriptionEnabled(boolean enabled);
-    public abstract GudClientCacheFactory setPoolSubscriptionMessageTrackingTimeout(int timeout);
-    public abstract GudClientCacheFactory setPoolSubscriptionRedundancy(int redundancy);
+    GudClientCacheFactory setPoolFreeConnectionTimeout(int timeout);
+    GudClientCacheFactory setPoolIdleTimeout(long timeout);
+    GudClientCacheFactory setPoolLoadConditioningInterval(int interval);
+    GudClientCacheFactory setPoolMinConnections(int minConnections);
+    GudClientCacheFactory setPoolMaxConnections(int maxConnections);
+    GudClientCacheFactory setPoolMinConnectionsPerServer(int minConnections);
+    GudClientCacheFactory setPoolMaxConnectionsPerServer(int maxConnections);
+    GudClientCacheFactory setPoolMultiuserAuthentication(boolean multiuser);
+    GudClientCacheFactory setPoolPingInterval(long interval);
+    GudClientCacheFactory setPoolPRSingleHopEnabled(boolean enabled);
+    GudClientCacheFactory setPoolReadTimeout(int timeout);
+    GudClientCacheFactory setPoolRetryAttempts(int retryAttempts);
+    GudClientCacheFactory setPoolServerConnectionTimeout(int timeout);
+    GudClientCacheFactory setPoolServerGroup(String group);
+    GudClientCacheFactory setPoolSocketBufferSize(int size);
+    GudClientCacheFactory setPoolSocketConnectTimeout(int timeout);
+    GudClientCacheFactory setPoolSocketFactory(GudSocketFactory factory);
+    GudClientCacheFactory setPoolStatisticInterval(int interval);
+    GudClientCacheFactory setPoolSubscriptionAckInterval(int interval);
+    GudClientCacheFactory setPoolSubscriptionEnabled(boolean enabled);
+    GudClientCacheFactory setPoolSubscriptionMessageTrackingTimeout(int timeout);
+    GudClientCacheFactory setPoolSubscriptionRedundancy(int redundancy);
 
     /**
      * Creates the client cache.
      *
      * @return the created client cache
      */
-    public abstract GudClientCache create();
+    GudClientCache create();
+
+    /**
+     * Creates the client cache with the given properties.
+     *
+     * @param properties the GemFire properties
+     * @return the created client cache
+     */
+    GudClientCache create(Properties properties);
+
+    /**
+     * Gets any existing client cache instance.
+     *
+     * @return the existing client cache
+     * @throws GudCacheClosedException if no cache exists or it is closed
+     */
+    GudClientCache getAnyInstance();
+
+    /**
+     * Gets the GemFire product version.
+     *
+     * @return the version string
+     */
+    String getVersion();
 }

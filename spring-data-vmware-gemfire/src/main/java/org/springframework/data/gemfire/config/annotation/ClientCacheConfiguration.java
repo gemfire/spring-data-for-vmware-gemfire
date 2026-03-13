@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -63,7 +68,7 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @SuppressWarnings("unused")
-public abstract class ClientCacheConfiguration extends AbstractCacheConfiguration {
+public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	private static final AtomicBoolean INFRASTRUCTURE_COMPONENTS_REGISTERED =
 		new AtomicBoolean(false);
@@ -195,7 +200,9 @@ public abstract class ClientCacheConfiguration extends AbstractCacheConfiguratio
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected abstract <T extends ClientCacheFactoryBean> T newCacheFactoryBean();
+	protected <T extends ClientCacheFactoryBean> T newCacheFactoryBean() {
+		return (T) new ClientCacheFactoryBean();
+	}
 
 	/**
 	 * Configures Spring container infrastructure components and beans used by Spring Data GemFire
@@ -444,7 +451,9 @@ public abstract class ClientCacheConfiguration extends AbstractCacheConfiguratio
 	 *
 	 * @return the default cache server port.
 	 */
-	protected abstract int getDefaultCacheServerPort();
+	protected int getDefaultCacheServerPort() {
+		return GemfireUtils.DEFAULT_CACHE_SERVER_PORT;
+	}
 
 	protected ConnectionEndpoint newConnectionEndpoint(String host, Integer port) {
 		return new ConnectionEndpoint(host, port);

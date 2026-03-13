@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import java.io.FileInputStream
 import java.util.*
 
@@ -45,3 +50,4 @@ include("spring-test-vmware-gemfire")
 include("gud-api")
 include("gud-core")
 include("gud-driver-gemfire-10.3")
+include("TestCachingApp")

@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -39,6 +44,7 @@ import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
 import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudConfigProperty;
@@ -83,7 +89,7 @@ import org.springframework.util.StringUtils;
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
-public abstract class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
+public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean implements ApplicationListener<ContextRefreshedEvent> {
 
 	protected static final PoolResolver DEFAULT_POOL_RESOLVER = new PoolManagerPoolResolver();
 
@@ -233,12 +239,15 @@ public abstract class ClientCacheFactoryBean extends AbstractResolvableCacheFact
 
 	/**
 	 * Returns the {@link GudClientCacheFactory} to use for creating {@link GudClientCache} instances.
-	 * This must be provided by the driver implementation.
+	 * Uses {@link GudCacheProvider} to obtain the factory from the driver discovered via ServiceLoader.
 	 *
 	 * @return the {@link GudClientCacheFactory} to use.
+	 * @see GudCacheProvider#createClientCacheFactory()
 	 * @see GudClientCacheFactory
 	 */
-	protected abstract GudClientCacheFactory getClientCacheFactory();
+	protected GudClientCacheFactory getClientCacheFactory() {
+		return GudCacheProvider.createClientCacheFactory();
+	}
 
 	/**
 	 * Constructs a new instance of {@link GudClientCacheFactory} initialized with the given Apache Geode {@link Properties}
@@ -252,7 +261,14 @@ public abstract class ClientCacheFactoryBean extends AbstractResolvableCacheFact
 	 */
 	@Override
 	protected @NonNull Object createFactory(@NonNull Properties gemfireProperties) {
-		return getClientCacheFactory().create(gemfireProperties);
+		GudClientCacheFactory factory = getClientCacheFactory();
+		
+		// Apply properties to the factory
+		for (String propertyName : gemfireProperties.stringPropertyNames()) {
+			factory.set(propertyName, gemfireProperties.getProperty(propertyName));
+		}
+		
+		return factory;
 	}
 
 	/**
@@ -408,12 +424,15 @@ public abstract class ClientCacheFactoryBean extends AbstractResolvableCacheFact
 
 	/**
 	 * Returns the {@link GudJndiBinding} used for JNDI data source mapping.
-	 * This must be provided by the driver implementation.
+	 * Uses {@link GudCacheProvider} to obtain the binding from the driver discovered via ServiceLoader.
 	 *
 	 * @return the {@link GudJndiBinding} to use.
+	 * @see GudCacheProvider#getJndiBinding()
 	 * @see GudJndiBinding
 	 */
-	protected abstract GudJndiBinding getJndiBinding();
+	protected GudJndiBinding getJndiBinding() {
+		return GudCacheProvider.getJndiBinding();
+	}
 
 	@Override
 	protected @NonNull <T extends GudClientCache> T postProcess(@NonNull T cache) {

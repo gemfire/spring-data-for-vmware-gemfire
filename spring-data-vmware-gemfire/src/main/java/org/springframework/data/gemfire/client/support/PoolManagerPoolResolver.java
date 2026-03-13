@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -13,6 +18,7 @@
 package org.springframework.data.gemfire.client.support;
 
 import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudPoolManager;
 import org.springframework.data.gemfire.gud.api.GudRegion;
@@ -42,7 +48,8 @@ public class PoolManagerPoolResolver implements PoolResolver {
 	 */
 	@Override
 	public @Nullable GudPool resolve(@Nullable GudRegion<?, ?> region) {
-		return region != null ? GudPoolManager.find(region) : null;
+		GudPoolManager poolManager = GudCacheProvider.getPoolManager();
+		return region != null && poolManager != null ? poolManager.find(region) : null;
 	}
 
 	/**
@@ -56,6 +63,7 @@ public class PoolManagerPoolResolver implements PoolResolver {
 	 */
 	@Override
 	public @Nullable GudPool resolve(@Nullable String poolName) {
-		return StringUtils.hasText(poolName) ? GudPoolManager.find(poolName) : null;
+		GudPoolManager poolManager = GudCacheProvider.getPoolManager();
+		return StringUtils.hasText(poolName) && poolManager != null ? poolManager.find(poolName) : null;
 	}
 }

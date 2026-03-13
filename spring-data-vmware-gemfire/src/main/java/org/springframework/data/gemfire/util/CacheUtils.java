@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -14,6 +19,7 @@ package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
 import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
@@ -98,8 +104,12 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	public static boolean closeCache() {
 
 		try {
-			GudClientCacheFactory.getAnyInstance().close();
-			return true;
+			GudClientCache cache = GudCacheProvider.getAnyClientCache();
+			if (cache != null) {
+				cache.close();
+				return true;
+			}
+			return false;
 		}
 		catch (Exception ignore) {
 			return false;
@@ -109,8 +119,12 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	public static boolean closeClientCache() {
 
 		try {
-			GudClientCacheFactory.getAnyInstance().close();
-			return true;
+			GudClientCache cache = GudCacheProvider.getAnyClientCache();
+			if (cache != null) {
+				cache.close();
+				return true;
+			}
+			return false;
 		}
 		catch (Exception ignore) {
 			return false;
@@ -120,7 +134,7 @@ public abstract class CacheUtils extends DistributedSystemUtils {
 	public static GudClientCache getClientCache() {
 
 		try {
-			return GudClientCacheFactory.getAnyInstance();
+			return GudCacheProvider.getAnyClientCache();
 		}
 		catch (GudCacheClosedException | IllegalStateException ignore) {
 			return null;

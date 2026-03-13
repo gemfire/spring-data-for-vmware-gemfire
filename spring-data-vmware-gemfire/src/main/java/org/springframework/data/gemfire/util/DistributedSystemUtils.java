@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -14,6 +19,7 @@ package org.springframework.data.gemfire.util;
 
 import java.util.Optional;
 import java.util.Properties;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 import org.springframework.data.gemfire.GemFireProperties;
@@ -71,7 +77,7 @@ public abstract class DistributedSystemUtils extends SpringExtensions {
 
 	@SuppressWarnings("unchecked")
 	public static @Nullable <T extends GudDistributedSystem> T getDistributedSystem() {
-		return (T) GudDistributedSystem.getAnyInstance();
+		return (T) GudCacheProvider.getDistributedSystem();
 	}
 
 	@SuppressWarnings("unchecked")

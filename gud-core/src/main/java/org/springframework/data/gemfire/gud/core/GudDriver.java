@@ -4,16 +4,24 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudDriver interface for driver abstraction
+ * 2026-03-13: Added factory creation methods for cache creation without native dependencies
  */
 
 package org.springframework.data.gemfire.gud.core;
 
 import org.springframework.data.gemfire.gud.api.GudCache;
+import org.springframework.data.gemfire.gud.api.GudCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 
@@ -37,6 +45,22 @@ public interface GudDriver {
      * @return the supported GemFire version
      */
     String getSupportedVersion();
+
+    /**
+     * Creates a new client cache factory for building client caches.
+     * This allows applications to create caches without referencing native GemFire types.
+     *
+     * @return a new GudClientCacheFactory instance
+     */
+    GudClientCacheFactory createClientCacheFactory();
+
+    /**
+     * Creates a new cache factory for building peer caches.
+     * This allows applications to create caches without referencing native GemFire types.
+     *
+     * @return a new GudCacheFactory instance
+     */
+    GudCacheFactory createCacheFactory();
 
     /**
      * Wraps a native cache object with the GUD API.

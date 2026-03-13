@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -22,30 +27,44 @@ import java.util.Map;
 
 /**
  * GUD API abstraction for GemFire PoolManager.
+ * This is an interface that drivers implement to provide pool management.
+ * Use {@link GudCacheProvider#getPoolManager()} to get an instance.
  */
-public abstract class GudPoolManager {
+public interface GudPoolManager {
 
-    public static GudPoolFactory createFactory() {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Creates a new pool factory.
+     */
+    GudPoolFactory createFactory();
     
-    public static GudPool find(String name) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Finds a pool by name.
+     * @param name the pool name
+     * @return the pool or null if not found
+     */
+    GudPool find(String name);
     
-    public static GudPool find(GudRegion<?, ?> region) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Finds the pool associated with a region.
+     * @param region the region
+     * @return the pool or null if not found
+     */
+    GudPool find(GudRegion<?, ?> region);
     
-    public static Map<String, GudPool> getAll() {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Gets all pools.
+     * @return a map of pool name to pool
+     */
+    Map<String, GudPool> getAll();
     
-    public static void close() {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Closes all pools.
+     */
+    void close();
     
-    public static void close(boolean keepAlive) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
-    }
+    /**
+     * Closes all pools with keepAlive option.
+     * @param keepAlive whether to keep connections alive
+     */
+    void close(boolean keepAlive);
 }

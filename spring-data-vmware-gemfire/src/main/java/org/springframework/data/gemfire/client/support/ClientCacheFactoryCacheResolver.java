@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -13,17 +18,18 @@
 package org.springframework.data.gemfire.client.support;
 
 import org.springframework.data.gemfire.CacheResolver;
+import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.support.AbstractCachingCacheResolver;
 
 /**
  * Cacheable {@link CacheResolver} implementation resolving a {@link GudClientCache}
- * using the {@link GudClientCacheFactory} API.
+ * using the {@link GudCacheProvider} API.
  *
  * @author John Blum
  * @see GudClientCache
- * @see GudClientCacheFactory
+ * @see GudCacheProvider
  * @see CacheResolver
  * @see AbstractCachingCacheResolver
  * @since 2.3.0.
@@ -34,6 +40,6 @@ public class ClientCacheFactoryCacheResolver extends AbstractCachingCacheResolve
 
 	@Override
 	protected GudClientCache doResolve() {
-		return GudClientCacheFactory.getAnyInstance();
+		return GudCacheProvider.getAnyClientCache();
 	}
 }

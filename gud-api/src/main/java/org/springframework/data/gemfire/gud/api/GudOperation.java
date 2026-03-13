@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -66,7 +71,8 @@ public enum GudOperation {
     CONTAINS_VALUE,
     CONTAINS_VALUE_FOR_KEY,
     FUNCTION_EXECUTION,
-    MARKER;
+    MARKER,
+    UNKNOWN;
 
     public boolean isCreate() {
         return name().contains("CREATE");

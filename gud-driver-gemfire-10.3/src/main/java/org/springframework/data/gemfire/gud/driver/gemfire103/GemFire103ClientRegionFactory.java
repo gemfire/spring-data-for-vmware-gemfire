@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -67,8 +72,9 @@ public class GemFire103ClientRegionFactory<K, V> implements GudClientRegionFacto
     @Override
     @SuppressWarnings("unchecked")
     public GudClientRegionFactory<K, V> addCacheListener(GudCacheListener<K, V> cacheListener) {
-        if (cacheListener instanceof NativeWrapper) {
-            nativeFactory.addCacheListener(((NativeWrapper<org.apache.geode.cache.CacheListener<K, V>>) cacheListener).getNative());
+        if (cacheListener != null) {
+            // Wrap the GUD listener in an adapter for native use
+            nativeFactory.addCacheListener(new GemFire103CacheListenerAdapter<>(cacheListener));
         }
         return this;
     }
@@ -79,8 +85,8 @@ public class GemFire103ClientRegionFactory<K, V> implements GudClientRegionFacto
         if (cacheListeners != null) {
             org.apache.geode.cache.CacheListener<K, V>[] nativeListeners = new org.apache.geode.cache.CacheListener[cacheListeners.length];
             for (int i = 0; i < cacheListeners.length; i++) {
-                if (cacheListeners[i] instanceof NativeWrapper) {
-                    nativeListeners[i] = ((NativeWrapper<org.apache.geode.cache.CacheListener<K, V>>) cacheListeners[i]).getNative();
+                if (cacheListeners[i] != null) {
+                    nativeListeners[i] = new GemFire103CacheListenerAdapter<>(cacheListeners[i]);
                 }
             }
             nativeFactory.initCacheListeners(nativeListeners);

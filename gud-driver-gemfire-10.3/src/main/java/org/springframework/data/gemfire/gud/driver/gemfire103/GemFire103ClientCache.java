@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -46,7 +51,7 @@ public class GemFire103ClientCache implements GudClientCache, NativeWrapper<Clie
 
     @Override
     public GudDistributedSystem getDistributedSystem() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return new GemFire103DistributedSystem(nativeClientCache.getDistributedSystem());
     }
 
     @Override
@@ -61,7 +66,23 @@ public class GemFire103ClientCache implements GudClientCache, NativeWrapper<Clie
 
     @Override
     public <K, V> GudClientRegionFactory<K, V> createClientRegionFactory(GudClientRegionShortcut shortcut) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        org.apache.geode.cache.client.ClientRegionShortcut nativeShortcut = toNativeClientRegionShortcut(shortcut);
+        return new GemFire103ClientRegionFactory<>(nativeClientCache.createClientRegionFactory(nativeShortcut));
+    }
+    
+    private org.apache.geode.cache.client.ClientRegionShortcut toNativeClientRegionShortcut(GudClientRegionShortcut shortcut) {
+        switch (shortcut) {
+            case PROXY: return org.apache.geode.cache.client.ClientRegionShortcut.PROXY;
+            case CACHING_PROXY: return org.apache.geode.cache.client.ClientRegionShortcut.CACHING_PROXY;
+            case CACHING_PROXY_HEAP_LRU: return org.apache.geode.cache.client.ClientRegionShortcut.CACHING_PROXY_HEAP_LRU;
+            case CACHING_PROXY_OVERFLOW: return org.apache.geode.cache.client.ClientRegionShortcut.CACHING_PROXY_OVERFLOW;
+            case LOCAL: return org.apache.geode.cache.client.ClientRegionShortcut.LOCAL;
+            case LOCAL_HEAP_LRU: return org.apache.geode.cache.client.ClientRegionShortcut.LOCAL_HEAP_LRU;
+            case LOCAL_OVERFLOW: return org.apache.geode.cache.client.ClientRegionShortcut.LOCAL_OVERFLOW;
+            case LOCAL_PERSISTENT: return org.apache.geode.cache.client.ClientRegionShortcut.LOCAL_PERSISTENT;
+            case LOCAL_PERSISTENT_OVERFLOW: return org.apache.geode.cache.client.ClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW;
+            default: return org.apache.geode.cache.client.ClientRegionShortcut.PROXY;
+        }
     }
 
     @Override
@@ -126,12 +147,13 @@ public class GemFire103ClientCache implements GudClientCache, NativeWrapper<Clie
 
     @Override
     public GudDiskStoreFactory createDiskStoreFactory() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return new GemFire103DiskStoreFactory(nativeClientCache.createDiskStoreFactory());
     }
 
     @Override
     public GudDiskStore findDiskStore(String name) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        org.apache.geode.cache.DiskStore diskStore = nativeClientCache.findDiskStore(name);
+        return diskStore != null ? new GemFire103DiskStore(diskStore) : null;
     }
 
     @Override
@@ -192,7 +214,12 @@ public class GemFire103ClientCache implements GudClientCache, NativeWrapper<Clie
 
     @Override
     public Set<GudRegion<?, ?>> rootRegions() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Set<org.apache.geode.cache.Region<?, ?>> nativeRegions = nativeClientCache.rootRegions();
+        Set<GudRegion<?, ?>> result = new java.util.HashSet<>();
+        for (org.apache.geode.cache.Region<?, ?> region : nativeRegions) {
+            result.add(new GemFire103Region<>(region));
+        }
+        return result;
     }
 
     @Override

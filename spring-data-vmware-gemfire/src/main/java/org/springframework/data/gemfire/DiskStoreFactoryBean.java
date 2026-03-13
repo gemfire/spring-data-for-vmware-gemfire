@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -48,7 +53,7 @@ import org.springframework.util.StringUtils;
  * @see AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
-public abstract class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<GudDiskStore> implements InitializingBean {
+public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<GudDiskStore> implements InitializingBean {
 
 	private Boolean allowForceCompaction;
 	private Boolean autoCompact;
@@ -141,7 +146,9 @@ public abstract class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<Gu
 	 *
 	 * @return the default disk store name.
 	 */
-	protected abstract String getDefaultDiskStoreName();
+	protected String getDefaultDiskStoreName() {
+		return "DEFAULT";
+	}
 
 	/**
 	 * Creates an instance of {@link GudDiskStoreFactory} using the given {@link GudClientCache} in order to
@@ -152,7 +159,9 @@ public abstract class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<Gu
 	 * @see GudClientCache#createDiskStoreFactory()
 	 * @see GudDiskStoreFactory
 	 */
-	protected abstract GudDiskStoreFactory createDiskStoreFactory(GudClientCache cache);
+	protected GudDiskStoreFactory createDiskStoreFactory(GudClientCache cache) {
+		return cache.createDiskStoreFactory();
+	}
 
 	/**
 	 * Configures the given {@link GudDiskStoreFactory} with the configuration settings present
@@ -196,10 +205,13 @@ public abstract class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<Gu
 
 	/**
 	 * Returns the default disk directory size.
+	 * Default is Integer.MAX_VALUE (unlimited).
 	 *
 	 * @return the default disk directory size.
 	 */
-	protected abstract int getDefaultDiskDirSize();
+	protected int getDefaultDiskDirSize() {
+		return Integer.MAX_VALUE;
+	}
 
 	/**
 	 * Constructs a new instance of {@link GudDiskStore} with the given {@link String name}
