@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -174,6 +179,33 @@ public class GemFire103Pool implements GudPool, NativeWrapper<Pool> {
 
     @Override
     public GudQueryService getQueryService() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return new GemFire103QueryService(nativePool.getQueryService());
+    }
+
+    @Override
+    public int getServerConnectionTimeout() {
+        return nativePool.getServerConnectionTimeout();
+    }
+
+    @Override
+    public int getMinConnectionsPerServer() {
+        // Not available in 10.3
+        return 0;
+    }
+
+    @Override
+    public int getMaxConnectionsPerServer() {
+        // Not available in 10.3
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public int getStatisticInterval() {
+        return nativePool.getStatisticInterval();
+    }
+
+    @Override
+    public boolean getSubscriptionEnabled() {
+        return nativePool.getSubscriptionEnabled();
     }
 }

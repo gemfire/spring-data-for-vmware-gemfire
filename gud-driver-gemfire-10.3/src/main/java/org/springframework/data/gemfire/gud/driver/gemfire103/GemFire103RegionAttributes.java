@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -194,5 +199,15 @@ public class GemFire103RegionAttributes<K, V> implements GudRegionAttributes<K, 
     @Override
     public GudCompressor getCompressor() {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public boolean getEnableSubscriptionConflation() {
+        return nativeAttributes.getEnableSubscriptionConflation();
+    }
+
+    @Override
+    public boolean getIgnoreJTA() {
+        return nativeAttributes.getIgnoreJTA();
     }
 }

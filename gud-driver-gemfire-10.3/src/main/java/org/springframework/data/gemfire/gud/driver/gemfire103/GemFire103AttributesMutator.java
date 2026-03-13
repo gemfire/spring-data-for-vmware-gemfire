@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -120,5 +125,15 @@ public class GemFire103AttributesMutator<K, V> implements GudAttributesMutator<K
     @Override
     public void removeAsyncEventQueueId(String asyncEventQueueId) {
         nativeMutator.removeAsyncEventQueueId(asyncEventQueueId);
+    }
+
+    @Override
+    public GudEvictionAttributesMutator getEvictionAttributesMutator() {
+        return new GemFire103EvictionAttributesMutator(nativeMutator.getEvictionAttributesMutator());
+    }
+
+    @Override
+    public boolean getCloningEnabled() {
+        return nativeMutator.getCloningEnabled();
     }
 }

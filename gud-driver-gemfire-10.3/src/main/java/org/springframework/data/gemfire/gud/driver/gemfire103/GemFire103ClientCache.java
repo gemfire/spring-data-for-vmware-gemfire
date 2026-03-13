@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -193,5 +198,30 @@ public class GemFire103ClientCache implements GudClientCache, NativeWrapper<Clie
     @Override
     public GudPdxInstanceFactory createPdxInstanceFactory(String className) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public GudResourceManager getResourceManager() {
+        return new GemFire103ResourceManager(nativeClientCache.getResourceManager());
+    }
+
+    @Override
+    public void loadCacheXml(java.io.InputStream inputStream) {
+        nativeClientCache.loadCacheXml(inputStream);
+    }
+
+    @Override
+    public void readyForEvents() {
+        nativeClientCache.readyForEvents();
+    }
+
+    @Override
+    public GudQueryService getLocalQueryService() {
+        return new GemFire103QueryService(nativeClientCache.getLocalQueryService());
+    }
+
+    @Override
+    public java.util.Set<?> getCurrentServers() {
+        return nativeClientCache.getCurrentServers();
     }
 }
