@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -59,6 +64,12 @@ public interface GudRegionAttributes<K, V> {
     // Membership
     GudMembershipAttributes getMembershipAttributes();
     GudSubscriptionAttributes getSubscriptionAttributes();
+    
+    // Subscription conflation
+    boolean getEnableSubscriptionConflation();
+    
+    // JTA
+    boolean getIgnoreJTA();
 
     // Partitioning
     GudPartitionAttributes<K, V> getPartitionAttributes();

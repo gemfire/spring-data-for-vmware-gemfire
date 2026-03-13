@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -35,6 +40,10 @@ public interface GudEvictionAttributes {
 
     GudObjectSizer getObjectSizer();
 
+    static GudEvictionAttributes createLRUHeapAttributes() {
+        return createLRUHeapAttributes(null, GudEvictionAction.DEFAULT_EVICTION_ACTION);
+    }
+
     static GudEvictionAttributes createLRUHeapAttributes(GudObjectSizer sizer, GudEvictionAction action) {
         throw new UnsupportedOperationException("Must be implemented by driver");
     }
@@ -45,6 +54,10 @@ public interface GudEvictionAttributes {
 
     static GudEvictionAttributes createLRUMemoryAttributes(GudObjectSizer sizer, GudEvictionAction action) {
         throw new UnsupportedOperationException("Must be implemented by driver");
+    }
+
+    static GudEvictionAttributes createLRUEntryAttributes() {
+        return createLRUEntryAttributes(DEFAULT_ENTRIES_MAXIMUM, GudEvictionAction.DEFAULT_EVICTION_ACTION);
     }
 
     static GudEvictionAttributes createLRUEntryAttributes(int maximum, GudEvictionAction action) {

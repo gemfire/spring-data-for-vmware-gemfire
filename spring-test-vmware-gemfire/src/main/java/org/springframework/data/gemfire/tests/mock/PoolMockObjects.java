@@ -1,8 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
 package org.springframework.data.gemfire.tests.mock;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -15,16 +21,16 @@ import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 
 /**
  * The {@link PoolMockObjects} class is a mock objects class allowing users to manually mock Apache Geode
- * or VMware GemFire client {@link Pool} objects and related objects in the {@literal org.apache.geode.cache.client}
+ * or VMware GemFire client {@link GudPool} objects and related objects in the {@literal org.apache.geode.cache.client}
  * package.
  *
  * @author John Blum
- * @see Pool
+ * @see GudPool
  * @see org.mockito.Mockito
  * @see MockObjectsSupport
  * @since 1.0.0
@@ -32,11 +38,11 @@ import org.apache.geode.cache.query.QueryService;
 @SuppressWarnings("unused")
 public abstract class PoolMockObjects extends MockObjectsSupport {
 
-	public static Pool mockPool(String name, boolean initialDestroyedState, int freeConnectionTimeout, long idleTimeout,
+	public static GudPool mockGudPool(String name, boolean initialDestroyedState, int freeConnectionTimeout, long idleTimeout,
 			int loadConditioningInterval, List<InetSocketAddress> locators, int maxConnections, int minConnections,
 			int maxConnectionsPerServer, int minConnectionsPerServer, boolean multiUserAuthentication,
 			List<InetSocketAddress> onlineLocators, int pendingEventCount, long pingInterval,
-			boolean prSingleHopEnabled, QueryService queryService, int readTimeout, int retryAttempts,
+			boolean prSingleHopEnabled, GudQueryService queryService, int readTimeout, int retryAttempts,
 			String serverGroup, List<InetSocketAddress> servers, int socketBufferSize, int socketConnectTimeout,
 			int statisticInterval, int subscriptionAckInterval, boolean subscriptionEnabled,
 			int subscriptionMessageTrackingTimeout, int subscriptionRedundancy, int subscriptionTimeoutMultiplier,
@@ -44,39 +50,39 @@ public abstract class PoolMockObjects extends MockObjectsSupport {
 
 		AtomicBoolean destroyed = new AtomicBoolean(initialDestroyedState);
 
-		Pool mockPool = mock(Pool.class, withSettings().name(name).lenient());
+		GudPool mockGudPool = mock(GudPool.class, withSettings().name(name).lenient());
 
-		when(mockPool.isDestroyed()).thenAnswer(newGetter(destroyed));
-		when(mockPool.getFreeConnectionTimeout()).thenReturn(freeConnectionTimeout);
-		when(mockPool.getIdleTimeout()).thenReturn(idleTimeout);
-		when(mockPool.getLoadConditioningInterval()).thenReturn(loadConditioningInterval);
-		when(mockPool.getLocators()).thenReturn(locators);
-		when(mockPool.getMaxConnections()).thenReturn(maxConnections);
-		when(mockPool.getMinConnections()).thenReturn(minConnections);
-		when(mockPool.getMaxConnectionsPerServer()).thenReturn(maxConnectionsPerServer);
-		when(mockPool.getMinConnectionsPerServer()).thenReturn(minConnectionsPerServer);
-		when(mockPool.getMultiuserAuthentication()).thenReturn(multiUserAuthentication);
-		when(mockPool.getName()).thenReturn(name);
-		when(mockPool.getOnlineLocators()).thenReturn(onlineLocators);
-		when(mockPool.getPendingEventCount()).thenReturn(pendingEventCount);
-		when(mockPool.getPingInterval()).thenReturn(pingInterval);
-		when(mockPool.getPRSingleHopEnabled()).thenReturn(prSingleHopEnabled);
-		when(mockPool.getQueryService()).thenReturn(queryService);
-		when(mockPool.getReadTimeout()).thenReturn(readTimeout);
-		when(mockPool.getRetryAttempts()).thenReturn(retryAttempts);
-		when(mockPool.getServerGroup()).thenReturn(serverGroup);
-		when(mockPool.getServers()).thenReturn(servers);
-		when(mockPool.getSocketBufferSize()).thenReturn(socketBufferSize);
-		//when(mockPool.getSocketConnectTimeout()).thenReturn(socketConnectTimeout);
-		when(mockPool.getStatisticInterval()).thenReturn(statisticInterval);
-		when(mockPool.getSubscriptionAckInterval()).thenReturn(subscriptionAckInterval);
-		when(mockPool.getSubscriptionEnabled()).thenReturn(subscriptionEnabled);
-		when(mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(subscriptionMessageTrackingTimeout);
-		when(mockPool.getSubscriptionRedundancy()).thenReturn(subscriptionRedundancy);
+		when(mockGudPool.isDestroyed()).thenAnswer(newGetter(destroyed));
+		when(mockGudPool.getFreeConnectionTimeout()).thenReturn(freeConnectionTimeout);
+		when(mockGudPool.getIdleTimeout()).thenReturn(idleTimeout);
+		when(mockGudPool.getLoadConditioningInterval()).thenReturn(loadConditioningInterval);
+		when(mockGudPool.getLocators()).thenReturn(locators);
+		when(mockGudPool.getMaxConnections()).thenReturn(maxConnections);
+		when(mockGudPool.getMinConnections()).thenReturn(minConnections);
+		when(mockGudPool.getMaxConnectionsPerServer()).thenReturn(maxConnectionsPerServer);
+		when(mockGudPool.getMinConnectionsPerServer()).thenReturn(minConnectionsPerServer);
+		when(mockGudPool.getMultiuserAuthentication()).thenReturn(multiUserAuthentication);
+		when(mockGudPool.getName()).thenReturn(name);
+		when(mockGudPool.getOnlineLocators()).thenReturn(onlineLocators);
+		when(mockGudPool.getPendingEventCount()).thenReturn(pendingEventCount);
+		when(mockGudPool.getPingInterval()).thenReturn(pingInterval);
+		when(mockGudPool.getPRSingleHopEnabled()).thenReturn(prSingleHopEnabled);
+		when(mockGudPool.getQueryService()).thenReturn(queryService);
+		when(mockGudPool.getReadTimeout()).thenReturn(readTimeout);
+		when(mockGudPool.getRetryAttempts()).thenReturn(retryAttempts);
+		when(mockGudPool.getServerGroup()).thenReturn(serverGroup);
+		when(mockGudPool.getServers()).thenReturn(servers);
+		when(mockGudPool.getSocketBufferSize()).thenReturn(socketBufferSize);
+		//when(mockGudPool.getSocketConnectTimeout()).thenReturn(socketConnectTimeout);
+		when(mockGudPool.getStatisticInterval()).thenReturn(statisticInterval);
+		when(mockGudPool.getSubscriptionAckInterval()).thenReturn(subscriptionAckInterval);
+		when(mockGudPool.getSubscriptionEnabled()).thenReturn(subscriptionEnabled);
+		when(mockGudPool.getSubscriptionMessageTrackingTimeout()).thenReturn(subscriptionMessageTrackingTimeout);
+		when(mockGudPool.getSubscriptionRedundancy()).thenReturn(subscriptionRedundancy);
 
-		doAnswer(newSetter(destroyed, true)).when(mockPool).destroy();
-		doAnswer(newSetter(destroyed, true)).when(mockPool).destroy(anyBoolean());
+		doAnswer(newSetter(destroyed, true)).when(mockGudPool).destroy();
+		doAnswer(newSetter(destroyed, true)).when(mockGudPool).destroy(anyBoolean());
 
-		return mockPool;
+		return mockGudPool;
 	}
 }

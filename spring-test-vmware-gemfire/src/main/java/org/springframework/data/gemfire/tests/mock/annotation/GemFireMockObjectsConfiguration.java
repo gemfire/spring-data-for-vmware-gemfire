@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.mock.annotation;
 
@@ -8,7 +15,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Optional;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -130,7 +137,7 @@ public class GemFireMockObjectsConfiguration extends AbstractAnnotationConfigSup
 			}
 
 			@SuppressWarnings("unchecked")
-			private Optional<Region<?, ?>> getRegion(@Nullable Object bean) {
+			private Optional<GudRegion<?, ?>> getRegion(@Nullable Object bean) {
 
 				return Optional.ofNullable(bean)
 					.map(AopProxyUtils::getSingletonTarget)
@@ -146,16 +153,16 @@ public class GemFireMockObjectsConfiguration extends AbstractAnnotationConfigSup
 
 		private static final String COUNT_METHOD_NAME = "count";
 
-		private final Region region;
+		private final GudRegion region;
 
-		private CountMethodInterceptor(@NonNull Region region) {
+		private CountMethodInterceptor(@NonNull GudRegion region) {
 
-			Assert.notNull(region, "Region must not be null");
+			Assert.notNull(region, "GudRegion must not be null");
 
 			this.region = region;
 		}
 
-		private @NonNull Region<?, ?> getRegion() {
+		private @NonNull GudRegion<?, ?> getRegion() {
 			return this.region;
 		}
 

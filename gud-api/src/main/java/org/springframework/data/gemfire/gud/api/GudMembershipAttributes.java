@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -32,8 +37,14 @@ public class GudMembershipAttributes {
     private final GudLossAction lossAction;
     private final GudResumptionAction resumptionAction;
 
+    public GudMembershipAttributes() {
+        this.requiredRoles = new HashSet<>();
+        this.lossAction = GudLossAction.NO_ACCESS;
+        this.resumptionAction = GudResumptionAction.NONE;
+    }
+
     public GudMembershipAttributes(String[] requiredRoles, GudLossAction lossAction, GudResumptionAction resumptionAction) {
-        this.requiredRoles = new HashSet<>(Arrays.asList(requiredRoles));
+        this.requiredRoles = requiredRoles != null ? new HashSet<>(Arrays.asList(requiredRoles)) : new HashSet<>();
         this.lossAction = lossAction;
         this.resumptionAction = resumptionAction;
     }

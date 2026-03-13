@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -365,7 +370,7 @@ public class GemFireResourceCollectorApplicationListener
 	protected void collectGemFireDiskStoreFiles() {
 
 		getApplicationContext()
-			.map(it -> it.getBeansOfType(DiskStore.class))
+			.map(it -> it.getBeansOfType(GudDiskStore.class))
 			.map(Map::values)
 			.ifPresent(diskStores -> diskStores.stream()
 				.filter(Objects::nonNull)

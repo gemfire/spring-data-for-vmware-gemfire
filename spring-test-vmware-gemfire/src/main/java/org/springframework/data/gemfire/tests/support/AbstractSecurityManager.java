@@ -1,36 +1,44 @@
 /*
- * Copyright 2017-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.support;
 
-import org.apache.geode.security.AuthenticationFailedException;
-import org.apache.geode.security.ResourcePermission;
+import org.springframework.data.gemfire.gud.api.GudAuthenticationFailedException;
+import org.springframework.data.gemfire.gud.api.GudResourcePermission;
+import org.springframework.data.gemfire.gud.api.GudSecurityManager;
 
 import java.util.Properties;
 
 /**
  * The {@link AbstractSecurityManager} class is an abstract base class supporting implementations of
- * {@link org.apache.geode.security.SecurityManager}.
+ * {@link GudSecurityManager}.
  *
  * @author John Blum
- * @see org.apache.geode.security.SecurityManager
+ * @see GudSecurityManager
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
-public abstract class AbstractSecurityManager implements org.apache.geode.security.SecurityManager {
+public abstract class AbstractSecurityManager implements GudSecurityManager {
 
 	@Override
 	public void init(Properties securityProps) {}
 
 	@Override
-	public Object authenticate(Properties credentials) throws AuthenticationFailedException {
-		throw new AuthenticationFailedException("Access Denied");
+	public Object authenticate(Properties credentials) throws GudAuthenticationFailedException {
+		throw new GudAuthenticationFailedException("Access Denied");
 	}
 
 	@Override
-	public boolean authorize(Object principal, ResourcePermission permission) {
-		throw new AuthenticationFailedException("Not Authorized");
+	public boolean authorize(Object principal, GudResourcePermission permission) {
+		throw new GudAuthenticationFailedException("Not Authorized");
 	}
 
 	@Override

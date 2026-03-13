@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.mock.beans.factory.config;
 
@@ -9,11 +16,10 @@ import static org.mockito.Mockito.doReturn;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.distributed.DistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -30,11 +36,11 @@ import org.springframework.lang.Nullable;
  *
  * @author John Blum
  * @see Properties
- * @see ClientCacheFactory
- * @see ClientCache
- * @see ClientCacheFactory
- * @see PoolFactory
- * @see DistributedSystem
+ * @see GudClientCacheFactory
+ * @see GudClientCache
+ * @see GudClientCacheFactory
+ * @see GudPoolFactory
+ * @see GudDistributedSystem
  * @see BeanPostProcessor
  * @see ClientCacheFactoryBean
  * @see ClientCacheFactoryBean
@@ -99,11 +105,11 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	public @Nullable Object postProcessAfterInitialization(@Nullable Object bean, @NonNull String beanName)
 			throws BeansException {
 
-		if (bean instanceof ClientCache) {
+		if (bean instanceof GudClientCache) {
 
-			ClientCache gemfireCache = (ClientCache) bean;
+			GudClientCache gemfireCache = (GudClientCache) bean;
 
-			DistributedSystem distributedSystem = gemfireCache.getDistributedSystem();
+			GudDistributedSystem distributedSystem = gemfireCache.getDistributedSystem();
 
 			Properties distributedSystemProperties = distributedSystem.getProperties();
 
@@ -148,7 +154,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	private @NonNull Object spyOnCacheFactoryBean(@NonNull ClientCacheFactoryBean bean, boolean useSingletonCache) {
 
 		return bean instanceof ClientCacheFactoryBean
-			? SpyingClientCacheFactoryInitializer.spyOn((ClientCacheFactoryBean) bean, useSingletonCache)
+			? SpyingGudClientCacheFactoryInitializer.spyOn((ClientCacheFactoryBean) bean, useSingletonCache)
 			: SpyingCacheFactoryInitializer.spyOn(bean, useSingletonCache);
 	}
 
@@ -157,7 +163,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	protected static class SpyingCacheFactoryInitializer
-			implements ClientCacheFactoryBean.CacheFactoryInitializer<ClientCacheFactory> {
+			implements ClientCacheFactoryBean.CacheFactoryInitializer<GudClientCacheFactory> {
 
 		protected static ClientCacheFactoryBean spyOn(ClientCacheFactoryBean cacheFactoryBean, boolean useSingletonCache) {
 
@@ -177,26 +183,26 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 		}
 
 		@Override
-		public ClientCacheFactory initialize(ClientCacheFactory cacheFactory) {
+		public GudClientCacheFactory initialize(GudClientCacheFactory cacheFactory) {
 			return GemFireMockObjectsSupport.spyOn(cacheFactory, isUsingSingletonCache());
 		}
 	}
 
-	protected static class SpyingClientCacheFactoryInitializer
-			implements ClientCacheFactoryBean.CacheFactoryInitializer<ClientCacheFactory> {
+	protected static class SpyingGudClientCacheFactoryInitializer
+			implements ClientCacheFactoryBean.CacheFactoryInitializer<GudClientCacheFactory> {
 
 		protected static ClientCacheFactoryBean spyOn(ClientCacheFactoryBean clientCacheFactoryBean,
 				boolean useSingletonCache) {
 
 			clientCacheFactoryBean
-				.setCacheFactoryInitializer(new SpyingClientCacheFactoryInitializer(useSingletonCache));
+				.setCacheFactoryInitializer(new SpyingGudClientCacheFactoryInitializer(useSingletonCache));
 
 			return clientCacheFactoryBean;
 		}
 
 		private final boolean useSingletonCache;
 
-		protected SpyingClientCacheFactoryInitializer(boolean useSingletonCache) {
+		protected SpyingGudClientCacheFactoryInitializer(boolean useSingletonCache) {
 			this.useSingletonCache = useSingletonCache;
 		}
 
@@ -205,7 +211,7 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 		}
 
 		@Override
-		public ClientCacheFactory initialize(ClientCacheFactory clientCacheFactory) {
+		public GudClientCacheFactory initialize(GudClientCacheFactory clientCacheFactory) {
 			return GemFireMockObjectsSupport.spyOn(clientCacheFactory, isUsingSingletonCache());
 		}
 	}
@@ -220,8 +226,8 @@ public class GemFireMockObjectsBeanPostProcessor implements BeanPostProcessor {
 		}
 
 		@Override
-		public PoolFactory initialize(PoolFactory poolFactory) {
-			return GemFireMockObjectsSupport.mockPoolFactory();
+		public GudPoolFactory initialize(GudPoolFactory poolFactory) {
+			return GemFireMockObjectsSupport.mockGudPoolFactory();
 		}
 	}
 }

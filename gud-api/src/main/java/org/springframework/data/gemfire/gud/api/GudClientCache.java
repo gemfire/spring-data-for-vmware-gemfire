@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -86,4 +91,7 @@ public interface GudClientCache extends GudRegionService {
 
     // Local query service
     GudQueryService getLocalQueryService();
+
+    // Current servers
+    java.util.Set<?> getCurrentServers();
 }

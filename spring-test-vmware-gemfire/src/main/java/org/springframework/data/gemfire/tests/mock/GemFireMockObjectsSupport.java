@@ -1,72 +1,80 @@
 /*
- * Copyright 2017-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.mock;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.CacheCallback;
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.CacheWriter;
-import org.apache.geode.cache.CacheWriterException;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.DiskStoreFactory;
-import org.apache.geode.cache.EntryEvent;
-import org.apache.geode.cache.EntryNotFoundException;
-import org.apache.geode.cache.EvictionAction;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.EvictionAttributesMutator;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.MembershipAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionExistsException;
-import org.apache.geode.cache.RegionFactory;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.SubscriptionAttributes;
-import org.apache.geode.cache.TransactionId;
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.ClientRegionFactory;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.PoolManager;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.control.ResourceManager;
-import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.cache.execute.RegionFunctionContext;
-import org.apache.geode.cache.query.CqAttributes;
-import org.apache.geode.cache.query.CqQuery;
-import org.apache.geode.cache.query.Index;
-import org.apache.geode.cache.query.IndexStatistics;
-import org.apache.geode.cache.query.Query;
-import org.apache.geode.cache.query.QueryService;
-import org.apache.geode.cache.query.QueryStatistics;
-import org.apache.geode.cache.query.SelectResults;
-import org.apache.geode.cache.query.types.CollectionType;
-import org.apache.geode.cache.query.types.ObjectType;
-import org.apache.geode.cache.server.CacheServer;
-import org.apache.geode.cache.server.ClientSubscriptionConfig;
-import org.apache.geode.cache.server.ServerLoadProbe;
-import org.apache.geode.compression.Compressor;
-import org.apache.geode.distributed.DistributedMember;
-import org.apache.geode.distributed.DistributedSystem;
-import org.apache.geode.distributed.internal.DistributionConfig;
-import org.apache.geode.internal.cache.PoolManagerImpl;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudCacheCallback;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudCacheWriterException;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudDiskStoreFactory;
+import org.springframework.data.gemfire.gud.api.GudEntryEvent;
+import org.springframework.data.gemfire.gud.api.GudEntryNotFoundException;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
+import org.springframework.data.gemfire.gud.api.GudMembershipAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionExistsException;
+import org.springframework.data.gemfire.gud.api.GudRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudScope;
+import org.springframework.data.gemfire.gud.api.GudSubscriptionAttributes;
+import org.springframework.data.gemfire.gud.api.GudTransactionId;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudPoolManager;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudResourceManager;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
+import org.springframework.data.gemfire.gud.api.GudRegionFunctionContext;
+import org.springframework.data.gemfire.gud.api.GudCqAttributes;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudIndex;
+import org.springframework.data.gemfire.gud.api.GudIndexStatistics;
+import org.springframework.data.gemfire.gud.api.GudQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudQueryStatistics;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
+import org.springframework.data.gemfire.gud.api.GudCollectionType;
+import org.springframework.data.gemfire.gud.api.GudObjectType;
+import org.springframework.data.gemfire.gud.api.GudCacheServer;
+import org.springframework.data.gemfire.gud.api.GudClientSubscriptionConfig;
+import org.springframework.data.gemfire.gud.api.GudServerLoadProbe;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudDistributedMember;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudConfigurationProperties;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.mockito.ArgumentMatchers;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
@@ -140,7 +148,7 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newU
 
 /**
  * The {@link GemFireMockObjectsSupport} class is an abstract base class encapsulating factory methods for creating
- * Apache Geode or VMware (Pivotal) GemFire Mock Objects, {@link ClientCache}, {@link Region}, and so on).
+ * Apache Geode or VMware (Pivotal) GemFire Mock Objects, {@link GudClientCache}, {@link GudRegion}, and so on).
  *
  * @author John Blum
  * @see File
@@ -152,49 +160,49 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newU
  * @see Properties
  * @see Random
  * @see UUID
- * @see AttributesMutator
- * @see ClientCacheFactory
- * @see CacheListener
- * @see CacheLoader
- * @see CacheWriter
- * @see CustomExpiry
- * @see DataPolicy
- * @see DiskStore
- * @see DiskStoreFactory
- * @see EvictionAttributes
- * @see EvictionAttributesMutator
- * @see ExpirationAttributes
- * @see ClientCache
- * @see MembershipAttributes
- * @see Region
- * @see RegionAttributes
- * @see RegionFactory
- * @see RegionService
- * @see Scope
- * @see SubscriptionAttributes
- * @see ClientCache
- * @see ClientCacheFactory
- * @see ClientRegionFactory
- * @see ClientRegionShortcut
- * @see Pool
- * @see PoolFactory
- * @see PoolManager
- * @see ResourceManager
- * @see RegionFunctionContext
- * @see CqAttributes
- * @see CqQuery
- * @see Index
- * @see IndexStatistics
- * @see Query
- * @see QueryService
- * @see QueryStatistics
- * @see CacheServer
- * @see ClientSubscriptionConfig
- * @see ServerLoadProbe
- * @see Compressor
- * @see DistributedMember
- * @see DistributedSystem
- * @see PdxSerializer
+ * @see GudAttributesMutator
+ * @see GudClientCacheFactory
+ * @see GudCacheListener
+ * @see GudCacheLoader
+ * @see GudCacheWriter
+ * @see GudCustomExpiry
+ * @see GudDataPolicy
+ * @see GudDiskStore
+ * @see GudDiskStoreFactory
+ * @see GudEvictionAttributes
+ * @see GudEvictionAttributesMutator
+ * @see GudExpirationAttributes
+ * @see GudClientCache
+ * @see GudMembershipAttributes
+ * @see GudRegion
+ * @see GudRegionAttributes
+ * @see GudRegionFactory
+ * @see GudRegionService
+ * @see GudScope
+ * @see GudSubscriptionAttributes
+ * @see GudClientCache
+ * @see GudClientCacheFactory
+ * @see GudClientRegionFactory
+ * @see GudClientRegionShortcut
+ * @see GudPool
+ * @see GudPoolFactory
+ * @see GudPoolManager
+ * @see GudResourceManager
+ * @see GudRegionFunctionContext
+ * @see GudCqAttributes
+ * @see GudCqQuery
+ * @see GudIndex
+ * @see GudIndexStatistics
+ * @see GudQuery
+ * @see GudQueryService
+ * @see GudQueryStatistics
+ * @see GudCacheServer
+ * @see GudClientSubscriptionConfig
+ * @see GudServerLoadProbe
+ * @see GudCompressor
+ * @see GudDistributedMember
+ * @see GudDistributedSystem
+ * @see GudPdxSerializer
  * @see org.mockito.Mockito
  * @see DisposableBean
  * @see MockObjectsSupport
@@ -205,19 +213,19 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 	private static final boolean DEFAULT_USE_SINGLETON_CACHE = false;
 
-	private static final AtomicReference<ClientCache> cacheReference = new AtomicReference<>(null);
-	private static final AtomicReference<ClientCache> singletonCache = new AtomicReference<>(null);
+	private static final AtomicReference<GudClientCache> cacheReference = new AtomicReference<>(null);
+	private static final AtomicReference<GudClientCache> singletonCache = new AtomicReference<>(null);
 	private static final AtomicReference<Properties> gemfireProperties = new AtomicReference<>(new Properties());
 
 	private static final List<Object> cachedGemFireObjects = Collections.synchronizedList(new ArrayList<>());
 
-	private static final Map<String, DiskStore> diskStores = new ConcurrentHashMap<>();
+	private static final Map<String, GudDiskStore> diskStores = new ConcurrentHashMap<>();
 
-	private static final Map<String, Region<Object, Object>> regions = new ConcurrentHashMap<>();
+	private static final Map<String, GudRegion<Object, Object>> regions = new ConcurrentHashMap<>();
 
-	private static final Map<String, RegionAttributes<Object, Object>> regionAttributes = new ConcurrentHashMap<>();
+	private static final Map<String, GudRegionAttributes<Object, Object>> regionAttributes = new ConcurrentHashMap<>();
 
-	private static final Set<String> registeredPoolNames = new ConcurrentSkipListSet<>();
+	private static final Set<String> registeredGudPoolNames = new ConcurrentSkipListSet<>();
 
 	private static final String CACHE_FACTORY_DS_PROPS_FIELD_NAME = "dsProps";
 	private static final String CACHE_FACTORY_INTERNAL_CACHE_BUILDER_FIELD_NAME = "internalCacheBuilder";
@@ -225,7 +233,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	private static final String INTERNAL_CACHE_BUILDER_CONFIG_PROPERTIES_FIELD_NAME = "configProperties";
 	private static final String GEMFIRE_SYSTEM_PROPERTY_PREFIX = "gemfire.";
 	private static final String FROM_KEYWORD = "FROM";
-	private static final String REPEATING_REGION_SEPARATOR = Region.SEPARATOR + "{2,}";
+	private static final String REPEATING_REGION_SEPARATOR = GudRegion.SEPARATOR + "{2,}";
 	private static final String USE_SINGLETON_CACHE_PROPERTY = "spring.data.gemfire.test.cache.singleton";
 	private static final String WHERE_KEYWORD = "WHERE";
 
@@ -233,7 +241,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			"security-post-processor", };
 
 	private static final String[] SPRING_DATA_GEODE_TEST_PROPERTIES = { USE_SINGLETON_CACHE_PROPERTY, };
-	private static final Logger log = LogManager.getLogger(GemFireMockObjectsSupport.class);
+	private static final Logger log = LoggerFactory.getLogger(GemFireMockObjectsSupport.class);
 
 	/**
 	 * Destroys all mock object state.
@@ -248,8 +256,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		regionAttributes.clear();
 
 		unregisterFunctions();
-		unregisterManagedPools();
-		closePools();
+		unregisterManagedGudPools();
+		closeGudPools();
 		destroyGemFireObjects();
 		clearSpringDataGeodeTestProperties();
 	}
@@ -265,16 +273,16 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Closes all {@link Pool Pools}.
+	 * Closes all {@link GudPool GudPools}.
 	 *
-	 * @see Pool
-	 * @see PoolManager
+	 * @see GudPool
+	 * @see GudPoolManager
 	 */
-	static void closePools() {
+	static void closeGudPools() {
 
 		// TODO: add support for keepAlive (??)
 		ObjectUtils.doOperationSafely(() -> {
-			PoolManager.close();
+			GudPoolManager.close();
 			return null;
 		}, null);
 	}
@@ -298,29 +306,29 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Unregisters all {@link Function Functions} registered with the {@link FunctionService} by Spring.
+	 * Unregisters all {@link Function Functions} registered with the {@link GudFunctionService} by Spring.
 	 *
-	 * @see org.apache.geode.cache.execute.Function
-	 * @see FunctionService
+	 * @see GudFunction
+	 * @see GudFunctionService
 	 */
 	static synchronized void unregisterFunctions() {
 
-		CollectionUtils.nullSafeMap(FunctionService.getRegisteredFunctions())
-				.forEach((functionId, function) -> FunctionService.unregisterFunction(functionId));
+		CollectionUtils.nullSafeMap(GudFunctionService.getRegisteredFunctions())
+				.forEach((functionId, function) -> GudFunctionService.unregisterFunction(functionId));
 	}
 
 	/**
-	 * Unrigsters all {@link Pool Pools} registered with Apache Geode and managed by Spring.
+	 * Unrigsters all {@link GudPool GudPools} registered with Apache Geode and managed by Spring.
 	 *
-	 * @see Pool
-	 * @see PoolManager
+	 * @see GudPool
+	 * @see GudPoolManager
 	 */
-	static synchronized void unregisterManagedPools() {
+	static synchronized void unregisterManagedGudPools() {
 
-		CollectionUtils.nullSafeMap(PoolManager.getAll()).values().stream().filter(Objects::nonNull)
-				.filter(pool -> registeredPoolNames.contains(pool.getName())).forEach(GemFireMockObjectsSupport::unregister);
+		CollectionUtils.nullSafeMap(GudPoolManager.getAll()).values().stream().filter(Objects::nonNull)
+				.filter(pool -> registeredGudPoolNames.contains(pool.getName())).forEach(GemFireMockObjectsSupport::unregister);
 
-		registeredPoolNames.clear();
+		registeredGudPoolNames.clear();
 	}
 
 	/**
@@ -337,12 +345,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 * Instantiates all Apache Geode/VMware GemFire objects which have been declared
 	 * via {@link System#getProperties() System properties}.
 	 *
-	 * @param <T> {@link Class type} of the {@link ClientCache}.
-	 * @param gemfireCache reference to the {@link ClientCache} instance.
-	 * @return the given {@link ClientCache} instance.
-	 * @see ClientCache
+	 * @param <T> {@link Class type} of the {@link GudClientCache}.
+	 * @param gemfireCache reference to the {@link GudClientCache} instance.
+	 * @return the given {@link GudClientCache} instance.
+	 * @see GudClientCache
 	 */
-	private static <T extends ClientCache> T constructGemFireObjects(T gemfireCache) {
+	private static <T extends GudClientCache> T constructGemFireObjects(T gemfireCache) {
 
 		Properties localGemfireProperties = gemfireProperties.get();
 
@@ -363,17 +371,17 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Converts the given {@link ClientRegionShortcut} into a corresponding {@link DataPolicy}.
+	 * Converts the given {@link GudClientRegionShortcut} into a corresponding {@link GudDataPolicy}.
 	 *
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} to convert.
-	 * @return a {@link DataPolicy} from the {@link ClientRegionShortcut}.
-	 * @see ClientRegionShortcut
-	 * @see DataPolicy
+	 * @param clientGudRegionShortcut {@link GudClientRegionShortcut} to convert.
+	 * @return a {@link GudDataPolicy} from the {@link GudClientRegionShortcut}.
+	 * @see GudClientRegionShortcut
+	 * @see GudDataPolicy
 	 */
 	@SuppressWarnings("unchecked")
-	private static DataPolicy convert(ClientRegionShortcut clientRegionShortcut) {
+	private static GudDataPolicy convert(GudClientRegionShortcut clientGudRegionShortcut) {
 
-		return Optional.ofNullable(clientRegionShortcut).map(shortcut -> {
+		return Optional.ofNullable(clientGudRegionShortcut).map(shortcut -> {
 
 			switch (shortcut) {
 				case CACHING_PROXY:
@@ -382,29 +390,29 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				case LOCAL:
 				case LOCAL_HEAP_LRU:
 				case LOCAL_OVERFLOW:
-					return DataPolicy.NORMAL;
+					return GudDataPolicy.NORMAL;
 				case LOCAL_PERSISTENT:
 				case LOCAL_PERSISTENT_OVERFLOW:
-					return DataPolicy.PERSISTENT_REPLICATE;
+					return GudDataPolicy.PERSISTENT_REPLICATE;
 				case PROXY:
-					return DataPolicy.EMPTY;
+					return GudDataPolicy.EMPTY;
 				default:
 					return null;
 			}
 
-		}).orElse(DataPolicy.DEFAULT);
+		}).orElse(GudDataPolicy.DEFAULT);
 	}
 
 	/**
-	 * Converts the given {@link RegionShortcut} into a corresponding {@link DataPolicy}.
+	 * Converts the given {@link GudRegionShortcut} into a corresponding {@link GudDataPolicy}.
 	 *
-	 * @param regionShortcut {@link RegionShortcut} to convert.
-	 * @return a {@link DataPolicy} from the {@link RegionShortcut}.
-	 * @see RegionShortcut
-	 * @see DataPolicy
+	 * @param regionShortcut {@link GudRegionShortcut} to convert.
+	 * @return a {@link GudDataPolicy} from the {@link GudRegionShortcut}.
+	 * @see GudRegionShortcut
+	 * @see GudDataPolicy
 	 */
 	@SuppressWarnings("unchecked")
-	private static DataPolicy convert(RegionShortcut regionShortcut) {
+	private static GudDataPolicy convert(GudRegionShortcut regionShortcut) {
 
 		return Optional.ofNullable(regionShortcut).map(shortcut -> {
 
@@ -412,46 +420,46 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				case LOCAL:
 				case LOCAL_HEAP_LRU:
 				case LOCAL_OVERFLOW:
-					return DataPolicy.NORMAL;
+					return GudDataPolicy.NORMAL;
 				case REPLICATE:
 				case REPLICATE_HEAP_LRU:
 				case REPLICATE_OVERFLOW:
-					return DataPolicy.REPLICATE;
+					return GudDataPolicy.REPLICATE;
 				case LOCAL_PERSISTENT:
 				case LOCAL_PERSISTENT_OVERFLOW:
 				case REPLICATE_PERSISTENT:
 				case REPLICATE_PERSISTENT_OVERFLOW:
-					return DataPolicy.PERSISTENT_REPLICATE;
+					return GudDataPolicy.PERSISTENT_REPLICATE;
 				case REPLICATE_PROXY:
-					return DataPolicy.EMPTY;
+					return GudDataPolicy.EMPTY;
 				default:
 					return null;
 			}
 
-		}).orElse(DataPolicy.DEFAULT);
+		}).orElse(GudDataPolicy.DEFAULT);
 	}
 
 	/**
-	 * Determines whether the given {@link Region} is a root {@link Region}.
+	 * Determines whether the given {@link GudRegion} is a root {@link GudRegion}.
 	 *
-	 * @param region {@link Region} to evaluate.
-	 * @return a boolean value indicating whether the {@link Region} is a root {@link Region}.
-	 * @see Region
+	 * @param region {@link GudRegion} to evaluate.
+	 * @return a boolean value indicating whether the {@link GudRegion} is a root {@link GudRegion}.
+	 * @see GudRegion
 	 * @see #isRootRegion(String)
 	 */
-	private static boolean isRootRegion(Region<?, ?> region) {
+	private static boolean isRootRegion(GudRegion<?, ?> region) {
 		return isRootRegion(region.getFullPath());
 	}
 
 	/**
-	 * Determines whether the {@link Region} identified by the given {@link String path} is a root {@link Region}.
+	 * Determines whether the {@link GudRegion} identified by the given {@link String path} is a root {@link GudRegion}.
 	 *
-	 * @param regionPath {@link String path} identifying the {@link Region} to evaluate.
-	 * @return a boolean value indicating whether the {@link Region} identified by the given {@link String path} is a root
-	 *         {@link Region}.
+	 * @param regionPath {@link String path} identifying the {@link GudRegion} to evaluate.
+	 * @return a boolean value indicating whether the {@link GudRegion} identified by the given {@link String path} is a root
+	 *         {@link GudRegion}.
 	 */
 	private static boolean isRootRegion(String regionPath) {
-		return regionPath.lastIndexOf(Region.SEPARATOR) <= 0;
+		return regionPath.lastIndexOf(GudRegion.SEPARATOR) <= 0;
 	}
 
 	/**
@@ -471,46 +479,46 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Normalizes the given {@link Region#getFullPath() Regon path} by removing all duplicate, repeating
-	 * {@link Region#SEPARATOR} characters between path segments as well as removing the trailing
-	 * {@link Region#SEPARATOR}.
+	 * Normalizes the given {@link GudRegion#getFullPath() Regon path} by removing all duplicate, repeating
+	 * {@link GudRegion#SEPARATOR} characters between path segments as well as removing the trailing
+	 * {@link GudRegion#SEPARATOR}.
 	 *
-	 * @param regionPath {@link Region#getFullPath()} to normalize.
-	 * @return a normalized version of the given {@link Region#getFullPath()}.
+	 * @param regionPath {@link GudRegion#getFullPath()} to normalize.
+	 * @return a normalized version of the given {@link GudRegion#getFullPath()}.
 	 */
 	private static String normalizeRegionPath(String regionPath) {
 
-		regionPath = regionPath.replaceAll(REPEATING_REGION_SEPARATOR, Region.SEPARATOR);
+		regionPath = regionPath.replaceAll(REPEATING_REGION_SEPARATOR, GudRegion.SEPARATOR);
 
-		regionPath = regionPath.endsWith(Region.SEPARATOR) ? regionPath.substring(0, regionPath.length() - 1) : regionPath;
+		regionPath = regionPath.endsWith(GudRegion.SEPARATOR) ? regionPath.substring(0, regionPath.length() - 1) : regionPath;
 
 		return regionPath;
 	}
 
 	/**
-	 * Stores a reference to the given {@link ClientCache} object.
+	 * Stores a reference to the given {@link GudClientCache} object.
 	 *
-	 * @param <T> {@link Class type} of {@link ClientCache} (e.g. client or peer).
-	 * @param gemfireCache reference to the {@link ClientCache} object to store; maybe {@literal null}.
-	 * @return the given {@link ClientCache} object.
-	 * @see ClientCache
+	 * @param <T> {@link Class type} of {@link GudClientCache} (e.g. client or peer).
+	 * @param gemfireCache reference to the {@link GudClientCache} object to store; maybe {@literal null}.
+	 * @return the given {@link GudClientCache} object.
+	 * @see GudClientCache
 	 */
 	@SuppressWarnings("unchecked")
-	private static @Nullable <T extends ClientCache> T referTo(@Nullable T gemfireCache) {
+	private static @Nullable <T extends GudClientCache> T referTo(@Nullable T gemfireCache) {
 		return (T) cacheReference.updateAndGet(currentCacheReference -> gemfireCache);
 	}
 
 	/**
-	 * Remembers the given mock {@link ClientCache} object, which may be a {@link ClientCache}.
+	 * Remembers the given mock {@link GudClientCache} object, which may be a {@link GudClientCache}.
 	 *
-	 * @param <T> {@link Class sub-type} of the {@link ClientCache} instance.
-	 * @param mockedGemFireCache {@link ClientCache} to remember.
-	 * @param useSingletonCache boolean value indicating whether the {@link ClientCache} is a Singleton.
-	 * @return the given {@link ClientCache}.
-	 * @throws IllegalArgumentException if {@link ClientCache} is {@literal null}.
-	 * @see ClientCache
+	 * @param <T> {@link Class sub-type} of the {@link GudClientCache} instance.
+	 * @param mockedGemFireCache {@link GudClientCache} to remember.
+	 * @param useSingletonCache boolean value indicating whether the {@link GudClientCache} is a Singleton.
+	 * @return the given {@link GudClientCache}.
+	 * @throws IllegalArgumentException if {@link GudClientCache} is {@literal null}.
+	 * @see GudClientCache
 	 */
-	private static <T extends ClientCache> T rememberMockedGemFireCache(T mockedGemFireCache, boolean useSingletonCache) {
+	private static <T extends GudClientCache> T rememberMockedGemFireCache(T mockedGemFireCache, boolean useSingletonCache) {
 
 		return Optional.ofNullable(mockedGemFireCache).map(it -> {
 
@@ -519,165 +527,165 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			}
 
 			return it;
-		}).orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
+		}).orElseThrow(() -> newIllegalArgumentException("GudClientCache is required"));
 	}
 
 	/**
-	 * Remembers the given mock {@link Region}.
+	 * Remembers the given mock {@link GudRegion}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param mockRegion {@link Region} to remember.
-	 * @throws IllegalArgumentException if the given {@link Region} is {@literal null}.
-	 * @throws RegionExistsException if the given {@link Region} already exists.
-	 * @return the given {@link Region}.
-	 * @see Region
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param mockRegion {@link GudRegion} to remember.
+	 * @throws IllegalArgumentException if the given {@link GudRegion} is {@literal null}.
+	 * @throws GudRegionExistsException if the given {@link GudRegion} already exists.
+	 * @return the given {@link GudRegion}.
+	 * @see GudRegion
 	 */
 	@SuppressWarnings("unchecked")
-	private static <K, V> Region<K, V> rememberMockedRegion(Region<K, V> mockRegion) {
+	private static <K, V> GudRegion<K, V> rememberMockedRegion(GudRegion<K, V> mockRegion) {
 
-		String mockRegionPath = Optional.ofNullable(mockRegion).map(Region::getFullPath)
+		String mockRegionPath = Optional.ofNullable(mockRegion).map(GudRegion::getFullPath)
 				.orElseThrow(() -> newIllegalArgumentException("Region is required"));
 
-		if (regions.putIfAbsent(mockRegionPath, (Region) mockRegion) != null) {
-			throw new RegionExistsException(mockRegion);
+		if (regions.putIfAbsent(mockRegionPath, (GudRegion) mockRegion) != null) {
+			throw new GudRegionExistsException(mockRegion);
 		}
 
-		assertThat(regions).containsValue((Region) mockRegion);
+		assertThat(regions).containsValue((GudRegion) mockRegion);
 
 		return mockRegion;
 	}
 
 	/**
-	 * Resolves any {@link ClientCache} object created by the Spring Test for Apache Geode mock objects test framework. If
+	 * Resolves any {@link GudClientCache} object created by the Spring Test for Apache Geode mock objects test framework. If
 	 * {@literal Singleton} caches are not used (default is {@literal false}), then the reference will store the last mock
-	 * {@link ClientCache} object created by the Apache Geode mock objects test framework.
+	 * {@link GudClientCache} object created by the Apache Geode mock objects test framework.
 	 *
-	 * @param <T> {@link Class type} of {@link ClientCache} (e.g. client or peer).
-	 * @return a reference to any (and the last) {@ink ClientCache} object created by this test framework.
-	 * @see ClientCache
+	 * @param <T> {@link Class type} of {@link GudClientCache} (e.g. client or peer).
+	 * @return a reference to any (and the last) {@ink GudClientCache} object created by this test framework.
+	 * @see GudClientCache
 	 * @see Optional
 	 */
-	private static <T extends ClientCache> Optional<T> resolveAnyGemFireCache() {
+	private static <T extends GudClientCache> Optional<T> resolveAnyGemFireCache() {
 		return Optional.ofNullable((T) cacheReference.get());
 	}
 
 	/**
-	 * Resolves the single, remembered {@link ClientCache} if using GemFire in Singleton-mode.
+	 * Resolves the single, remembered {@link GudClientCache} if using GemFire in Singleton-mode.
 	 *
-	 * @param <T> {@link Class sub-type} of the {@link ClientCache} instance.
+	 * @param <T> {@link Class sub-type} of the {@link GudClientCache} instance.
 	 * @param useSingletonCache boolean value indicating if mock infrastructure is using GemFire Singletons.
-	 * @return an {@link Optional}, single remembered instance of the {@link ClientCache}.
-	 * @see ClientCache
+	 * @return an {@link Optional}, single remembered instance of the {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T extends ClientCache> Optional<T> resolveMockedGemFireCache(boolean useSingletonCache) {
+	private static <T extends GudClientCache> Optional<T> resolveMockedGemFireCache(boolean useSingletonCache) {
 
 		return Optional.ofNullable((T) singletonCache.get()).filter(it -> useSingletonCache);
 	}
 
 	/**
-	 * Resolves the {@link RegionAttributes} identified by the given {@link String id}.
+	 * Resolves the {@link GudRegionAttributes} identified by the given {@link String id}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionAttributesId {@link String id} identifying the {@link RegionAttributes} to resolve.
-	 * @return the resolved {@link RegionAttributes} identified by the given {@link String id}.
-	 * @throws IllegalStateException if {@link RegionAttributes} could not be resolved from the given {@link String id}.
-	 * @see RegionAttributes
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param regionAttributesId {@link String id} identifying the {@link GudRegionAttributes} to resolve.
+	 * @return the resolved {@link GudRegionAttributes} identified by the given {@link String id}.
+	 * @throws IllegalStateException if {@link GudRegionAttributes} could not be resolved from the given {@link String id}.
+	 * @see GudRegionAttributes
 	 */
 	@SuppressWarnings("unchecked")
 	@NonNull
-	private static <K, V> RegionAttributes<K, V> resolveRegionAttributes(String regionAttributesId) {
+	private static <K, V> GudRegionAttributes<K, V> resolveGudRegionAttributes(String regionAttributesId) {
 
-		return (RegionAttributes<K, V>) Optional.ofNullable(regionAttributes.get(regionAttributesId)).orElseThrow(
-				() -> newIllegalStateException("RegionAttributes with ID [%s] cannot be found", regionAttributesId));
+		return (GudRegionAttributes<K, V>) Optional.ofNullable(regionAttributes.get(regionAttributesId)).orElseThrow(
+				() -> newIllegalStateException("GudRegionAttributes with ID [%s] cannot be found", regionAttributesId));
 	}
 
 	/**
-	 * Constructs, configures and initializes {@link RegionAttributes} from a given {@link ClientRegionShortcut}.
+	 * Constructs, configures and initializes {@link GudRegionAttributes} from a given {@link GudClientRegionShortcut}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to construct, configure and initialize
-	 *          {@link RegionAttributes}.
-	 * @return a {@link RegionAttributes} object created from the given {@link ClientRegionShortcut} or {@literal null} if
-	 *         the {@link ClientRegionShortcut} is {@literal null}.
-	 * @see ClientRegionShortcut
-	 * @see RegionAttributes
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param clientGudRegionShortcut {@link GudClientRegionShortcut} used to construct, configure and initialize
+	 *          {@link GudRegionAttributes}.
+	 * @return a {@link GudRegionAttributes} object created from the given {@link GudClientRegionShortcut} or {@literal null} if
+	 *         the {@link GudClientRegionShortcut} is {@literal null}.
+	 * @see GudClientRegionShortcut
+	 * @see GudRegionAttributes
 	 */
 	@SuppressWarnings("unchecked")
-	private static <K, V> RegionAttributes<K, V> resolveRegionAttributesFromClientRegionShortcut(
-			@Nullable ClientRegionShortcut clientRegionShortcut) {
+	private static <K, V> GudRegionAttributes<K, V> resolveGudRegionAttributesFromGudClientRegionShortcut(
+			@Nullable GudClientRegionShortcut clientGudRegionShortcut) {
 
-		RegionAttributes<K, V> mockRegionAttributes = null;
+		GudRegionAttributes<K, V> mockGudRegionAttributes = null;
 
-		if (clientRegionShortcut != null) {
+		if (clientGudRegionShortcut != null) {
 
 			ClientRegionShortcutWrapper clientRegionShortcutWrapper = ClientRegionShortcutWrapper
-					.valueOf(clientRegionShortcut);
+					.valueOf(clientGudRegionShortcut);
 
-			mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
+			mockGudRegionAttributes = mock(GudRegionAttributes.class, withSettings().lenient());
 
-			doReturn(convert(clientRegionShortcut)).when(mockRegionAttributes).getDataPolicy();
+			doReturn(convert(clientGudRegionShortcut)).when(mockGudRegionAttributes).getDataPolicy();
 
 			if (clientRegionShortcutWrapper.isHeapLru()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();
+				doReturn(GudEvictionAttributes.createLRUHeapAttributes()).when(mockGudRegionAttributes).getEvictionAttributes();
 			} else if (clientRegionShortcutWrapper.isOverflow()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes(null, EvictionAction.OVERFLOW_TO_DISK))
-						.when(mockRegionAttributes).getEvictionAttributes();
+				doReturn(GudEvictionAttributes.createLRUHeapAttributes(null, GudEvictionAction.OVERFLOW_TO_DISK))
+						.when(mockGudRegionAttributes).getEvictionAttributes();
 			}
 		}
 
-		return mockRegionAttributes;
+		return mockGudRegionAttributes;
 	}
 
 	/**
-	 * Constructs, configures and initializes {@link RegionAttributes} from a given {@link RegionShortcut}.
+	 * Constructs, configures and initializes {@link GudRegionAttributes} from a given {@link GudRegionShortcut}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionShortcut {@link RegionShortcut} used to construct, configure and initialize {@link RegionAttributes}.
-	 * @return a {@link RegionAttributes} object created from the given {@link RegionShortcut} or {@literal null} if the
-	 *         {@link RegionShortcut} is {@literal null}.
-	 * @see RegionAttributes
-	 * @see RegionShortcut
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param regionShortcut {@link GudRegionShortcut} used to construct, configure and initialize {@link GudRegionAttributes}.
+	 * @return a {@link GudRegionAttributes} object created from the given {@link GudRegionShortcut} or {@literal null} if the
+	 *         {@link GudRegionShortcut} is {@literal null}.
+	 * @see GudRegionAttributes
+	 * @see GudRegionShortcut
 	 */
 	@Nullable
 	@SuppressWarnings("unchecked")
-	private static <K, V> RegionAttributes<K, V> resolveRegionAttributesFromRegionShortcut(
-			@Nullable RegionShortcut regionShortcut) {
+	private static <K, V> GudRegionAttributes<K, V> resolveGudRegionAttributesFromGudRegionShortcut(
+			@Nullable GudRegionShortcut regionShortcut) {
 
-		RegionAttributes<K, V> mockRegionAttributes = null;
+		GudRegionAttributes<K, V> mockGudRegionAttributes = null;
 
 		if (regionShortcut != null) {
 
 			RegionShortcutWrapper regionShortcutWrapper = RegionShortcutWrapper.valueOf(regionShortcut);
 
-			mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
+			mockGudRegionAttributes = mock(GudRegionAttributes.class, withSettings().lenient());
 
-			doReturn(convert(regionShortcut)).when(mockRegionAttributes).getDataPolicy();
+			doReturn(convert(regionShortcut)).when(mockGudRegionAttributes).getDataPolicy();
 
 			if (regionShortcutWrapper.isHeapLru()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();
+				doReturn(GudEvictionAttributes.createLRUHeapAttributes()).when(mockGudRegionAttributes).getEvictionAttributes();
 			} else if (regionShortcutWrapper.isOverflow()) {
-				doReturn(EvictionAttributes.createLRUHeapAttributes(null, EvictionAction.OVERFLOW_TO_DISK))
-						.when(mockRegionAttributes).getEvictionAttributes();
+				doReturn(GudEvictionAttributes.createLRUHeapAttributes(null, GudEvictionAction.OVERFLOW_TO_DISK))
+						.when(mockGudRegionAttributes).getEvictionAttributes();
 			}
 
 			if (regionShortcutWrapper.isLocal()) {
-				doReturn(Scope.LOCAL).when(mockRegionAttributes).getScope();
+				doReturn(GudScope.LOCAL).when(mockGudRegionAttributes).getScope();
 			}
 		}
 
-		return mockRegionAttributes;
+		return mockGudRegionAttributes;
 	}
 
 	/**
-	 * Converts the given {@link String Region name} into a proper {@link Region#getName() Region name}.
+	 * Converts the given {@link String Region name} into a proper {@link GudRegion#getName() Region name}.
 	 *
 	 * @param regionName {@link String Region name} to evaluate.
-	 * @return a proper {@link Region#getName() Region name} from the given {@link String Region name}.
+	 * @return a proper {@link GudRegion#getName() Region name} from the given {@link String Region name}.
 	 * @throws IllegalArgumentException if {@link String Region name} is {@literal null} or {@link String#isEmpty()
 	 *           empty}.
 	 * @see String
@@ -686,7 +694,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		return Optional.ofNullable(regionName).map(String::trim).map(it -> {
 
-			int lastIndexOfRegionSeparator = it.lastIndexOf(Region.SEPARATOR);
+			int lastIndexOfRegionSeparator = it.lastIndexOf(GudRegion.SEPARATOR);
 
 			return lastIndexOfRegionSeparator < 0 ? it : it.substring(lastIndexOfRegionSeparator + 1);
 		}).filter(it -> !it.isEmpty())
@@ -694,10 +702,10 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	/**
-	 * Converts the given {@link String Region path} into a proper {@link Region#getFullPath() Region path}.
+	 * Converts the given {@link String Region path} into a proper {@link GudRegion#getFullPath() Region path}.
 	 *
 	 * @param regionPath {@link String Region path} to evaluate.
-	 * @return a proper {@link Region#getFullPath() Region path} from the given {@link String Region path}.
+	 * @return a proper {@link GudRegion#getFullPath() Region path} from the given {@link String Region path}.
 	 * @throws IllegalArgumentException if {@link String Region path} is {@literal null} or {@link String#isEmpty()
 	 *           empty}.
 	 * @see String
@@ -705,66 +713,70 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	private static String toRegionPath(String regionPath) {
 
 		return Optional.ofNullable(regionPath).map(String::trim)
-				.map(it -> it.startsWith(Region.SEPARATOR) ? it : String.format("%1$s%2$s", Region.SEPARATOR, it))
+				.map(it -> it.startsWith(GudRegion.SEPARATOR) ? it : String.format("%1$s%2$s", GudRegion.SEPARATOR, it))
 				.map(GemFireMockObjectsSupport::normalizeRegionPath).filter(it -> !it.isEmpty())
 				.orElseThrow(() -> newIllegalArgumentException("Region path [%s] is required", regionPath));
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends ClientCache> T mockCacheApi(T mockGemFireCache) {
+	private static <T extends GudClientCache> T mockCacheApi(T mockGemFireCache) {
 
 		AtomicBoolean copyOnRead = new AtomicBoolean(false);
 
-		CacheTransactionManager mockCacheTransactionManager = mockCacheTransactionManager();
+		GudCacheTransactionManager mockGudCacheTransactionManager = mockGudCacheTransactionManager();
 
-		DistributedSystem mockDistributedSystem = mockDistributedSystem();
+		GudDistributedSystem mockGudDistributedSystem = mockGudDistributedSystem();
 
-		ResourceManager mockResourceManager = mockResourceManager();
+		GudResourceManager mockGudResourceManager = mockGudResourceManager();
 
 		doAnswer(newSetter(copyOnRead, null)).when(mockGemFireCache).setCopyOnRead(anyBoolean());
 
-		doAnswer(newSetter(regionAttributes, null)).when(mockGemFireCache).setRegionAttributes(anyString(),
-				any(RegionAttributes.class));
+		// TODO: Server-side Cache methods not available in GUD API (client-focused)
+		// doAnswer(newSetter(regionAttributes, null)).when(mockGemFireCache).setRegionAttributes(anyString(),
+		//		any(GudRegionAttributes.class));
 
-		when(mockGemFireCache.getCacheTransactionManager()).thenReturn(mockCacheTransactionManager);
+		when(mockGemFireCache.getCacheTransactionManager()).thenReturn(mockGudCacheTransactionManager);
 
 		when(mockGemFireCache.getCopyOnRead()).thenAnswer(newGetter(copyOnRead));
 
-		when(mockGemFireCache.getDistributedSystem()).thenReturn(mockDistributedSystem);
+		when(mockGemFireCache.getDistributedSystem()).thenReturn(mockGudDistributedSystem);
 
 		when(mockGemFireCache.getName()).thenAnswer(invocation -> Optional.ofNullable(gemfireProperties)
-				.map(AtomicReference::get).map(properties -> properties.getProperty(DistributionConfig.NAME_NAME))
+				.map(AtomicReference::get).map(properties -> properties.getProperty(GudConfigurationProperties.NAME_NAME))
 				.filter(StringUtils::hasText).orElse(null));
 
-		when(mockGemFireCache.getRegionAttributes(anyString()))
-				.thenAnswer(invocation -> regionAttributes.get(invocation.<String> getArgument(0)));
+		// TODO: Server-side Cache methods not available in GUD API (client-focused)
+		// when(mockGemFireCache.getRegionAttributes(anyString()))
+		//		.thenAnswer(invocation -> regionAttributes.get(invocation.<String> getArgument(0)));
 
-		when(mockGemFireCache.getResourceManager()).thenReturn(mockResourceManager);
+		when(mockGemFireCache.getResourceManager()).thenReturn(mockGudResourceManager);
 
-		when(mockGemFireCache.createDiskStoreFactory()).thenAnswer(invocation -> mockDiskStoreFactory());
+		when(mockGemFireCache.createDiskStoreFactory()).thenAnswer(invocation -> mockGudDiskStoreFactory());
 
 		when(mockGemFireCache.findDiskStore(anyString()))
 				.thenAnswer(invocation -> diskStores.get(invocation.<String> getArgument(0)));
 
-		when(mockGemFireCache.listRegionAttributes()).thenReturn(Collections.unmodifiableMap(regionAttributes));
+		// TODO: Server-side Cache methods not available in GUD API (client-focused)
+		// when(mockGemFireCache.listRegionAttributes()).thenReturn(Collections.unmodifiableMap(regionAttributes));
 
 		doThrow(newUnsupportedOperationException(NOT_SUPPORTED)).when(mockGemFireCache)
 				.loadCacheXml(any(InputStream.class));
 
-		return mockRegionServiceApi(mockGemFireCache);
+		return mockGudRegionServiceApi(mockGemFireCache);
 	}
 
-	private static <T extends RegionService> T mockRegionServiceApi(T mockRegionService) {
+	private static <T extends GudRegionService> T mockGudRegionServiceApi(T mockGudRegionService) {
 
 		AtomicBoolean closed = new AtomicBoolean(false);
 
-		doAnswer(newSetter(closed, true, null)).when(mockRegionService).close();
+		doAnswer(newSetter(closed, true, null)).when(mockGudRegionService).close();
 
-		when(mockRegionService.isClosed()).thenAnswer(newGetter(closed));
+		when(mockGudRegionService.isClosed()).thenAnswer(newGetter(closed));
 
-		when(mockRegionService.getCancelCriterion()).thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
+		// TODO: getCancelCriterion is server-side, not in GUD API
+		// when(mockGudRegionService.getCancelCriterion()).thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 
-		when(mockRegionService.getRegion(anyString())).thenAnswer(invocation -> {
+		when(mockGudRegionService.getRegion(anyString())).thenAnswer(invocation -> {
 
 			String regionPath = invocation.getArgument(0);
 
@@ -775,282 +787,284 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			return regions.get(resolvedRegionPath);
 		});
 
-		when(mockRegionService.createPdxEnum(anyString(), anyString(), anyInt()))
+		// TODO: createPdxEnum is server-side, not in GUD API
+		// when(mockGudRegionService.createPdxEnum(anyString(), anyString(), anyInt()))
+		//		.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
+
+		when(mockGudRegionService.createPdxInstanceFactory(anyString()))
 				.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
 
-		when(mockRegionService.createPdxInstanceFactory(anyString()))
-				.thenThrow(newUnsupportedOperationException(NOT_SUPPORTED));
-
-		when(mockRegionService.rootRegions()).thenAnswer(invocation -> regions.values().stream()
+		when(mockGudRegionService.rootRegions()).thenAnswer(invocation -> regions.values().stream()
 				.filter(GemFireMockObjectsSupport::isRootRegion).collect(Collectors.toSet()));
 
-		return mockRegionService;
+		return mockGudRegionService;
 	}
 
-	public static ClientCache mockClientCache() {
+	public static GudClientCache mockGudClientCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockGudClientCache = mock(GudClientCache.class);
 
-		doAnswer(newVoidAnswer(invocation -> mockClientCache.close())).when(mockClientCache).close(anyBoolean());
+		doAnswer(newVoidAnswer(invocation -> mockGudClientCache.close())).when(mockGudClientCache).close(anyBoolean());
 
-		when(mockClientCache.createClientRegionFactory(any(ClientRegionShortcut.class))).thenAnswer(
-				invocation -> mockClientRegionFactory(mockClientCache, invocation.<ClientRegionShortcut> getArgument(0)));
+		when(mockGudClientCache.createClientRegionFactory(any(GudClientRegionShortcut.class))).thenAnswer(
+				invocation -> mockGudClientRegionFactory(mockGudClientCache, invocation.<GudClientRegionShortcut> getArgument(0)));
 
-		when(mockClientCache.createClientRegionFactory(anyString()))
-				.thenAnswer(invocation -> mockClientRegionFactory(mockClientCache, invocation.<String> getArgument(0)));
+		// TODO: GudClientCache doesn't have createClientRegionFactory(String) - GUD API uses enum shortcuts
+		// when(mockGudClientCache.createClientRegionFactory(anyString()))
+		//		.thenAnswer(invocation -> mockGudClientRegionFactory(mockGudClientCache, invocation.<String> getArgument(0)));
 
-		return referTo(mockQueryService(mockCacheApi(mockClientCache)));
+		return referTo(mockGudQueryService(mockCacheApi(mockGudClientCache)));
 	}
 
-	public static ClientCache mockGemFireCache() {
+	public static GudClientCache mockGemFireCache() {
 
-		ClientCache mockGemFireCache = mock(ClientCache.class);
+		GudClientCache mockGemFireCache = mock(GudClientCache.class);
 
-		return referTo(mockQueryService(mockCacheApi(mockGemFireCache)));
+		return referTo(mockGudQueryService(mockCacheApi(mockGemFireCache)));
 	}
 
-	public static CacheTransactionManager mockCacheTransactionManager() {
+	public static GudCacheTransactionManager mockGudCacheTransactionManager() {
 
-		CacheTransactionManager mockCacheTransactionManager = mock(CacheTransactionManager.class);
+		GudCacheTransactionManager mockGudCacheTransactionManager = mock(GudCacheTransactionManager.class);
 
 		AtomicBoolean distributed = new AtomicBoolean(false);
 
-		AtomicReference<TransactionWriter> transactionWriter = new AtomicReference<>(null);
+		AtomicReference<GudTransactionWriter> transactionWriter = new AtomicReference<>(null);
 
-		List<TransactionListener> transactionListeners = new CopyOnWriteArrayList<>();
+		List<GudTransactionListener> transactionListeners = new CopyOnWriteArrayList<>();
 
-		doReturn(false).when(mockCacheTransactionManager).exists();
-		doReturn(false).when(mockCacheTransactionManager).exists(any(TransactionId.class));
-		doAnswer(newGetter(distributed)).when(mockCacheTransactionManager).isDistributed();
-		doReturn(false).when(mockCacheTransactionManager).isSuspended(any(TransactionId.class));
+		doReturn(false).when(mockGudCacheTransactionManager).exists();
+		doReturn(false).when(mockGudCacheTransactionManager).exists(any(GudTransactionId.class));
+		doAnswer(newGetter(distributed)).when(mockGudCacheTransactionManager).isDistributed();
+		doReturn(false).when(mockGudCacheTransactionManager).isSuspended(any(GudTransactionId.class));
 
-		doAnswer(invocation -> transactionListeners.add(invocation.getArgument(0))).when(mockCacheTransactionManager)
-				.addListener(any(TransactionListener.class));
+		doAnswer(invocation -> transactionListeners.add(invocation.getArgument(0))).when(mockGudCacheTransactionManager)
+				.addListener(any(GudTransactionListener.class));
 
-		doAnswer(invocation -> transactionListeners.toArray(new TransactionListener[0])).when(mockCacheTransactionManager)
+		doAnswer(invocation -> transactionListeners.toArray(new GudTransactionListener[0])).when(mockGudCacheTransactionManager)
 				.getListeners();
 
-		doAnswer(newGetter(transactionWriter)).when(mockCacheTransactionManager).getWriter();
+		doAnswer(newGetter(transactionWriter)).when(mockGudCacheTransactionManager).getWriter();
 
 		doAnswer(invocation -> {
 
-			TransactionListener[] newTransactionListeners = invocation.getArgument(0);
+			GudTransactionListener[] newGudTransactionListeners = invocation.getArgument(0);
 
-			transactionListeners.forEach(CacheCallback::close);
+			transactionListeners.forEach(GudCacheCallback::close);
 			transactionListeners.clear();
 
-			Collections.addAll(transactionListeners, newTransactionListeners);
+			Collections.addAll(transactionListeners, newGudTransactionListeners);
 
 			return null;
 
-		}).when(mockCacheTransactionManager).initListeners(any(TransactionListener[].class));
+		}).when(mockGudCacheTransactionManager).initListeners(any(GudTransactionListener[].class));
 
-		doAnswer(invocation -> transactionListeners.remove(invocation.getArgument(0))).when(mockCacheTransactionManager)
-				.removeListener(any(TransactionListener.class));
+		doAnswer(invocation -> transactionListeners.remove(invocation.getArgument(0))).when(mockGudCacheTransactionManager)
+				.removeListener(any(GudTransactionListener.class));
 
-		doAnswer(newSetter(distributed, null)).when(mockCacheTransactionManager).setDistributed(anyBoolean());
+		doAnswer(newSetter(distributed, null)).when(mockGudCacheTransactionManager).setDistributed(anyBoolean());
 
-		doAnswer(newSetter(transactionWriter)).when(mockCacheTransactionManager).setWriter(any(TransactionWriter.class));
+		doAnswer(newSetter(transactionWriter)).when(mockGudCacheTransactionManager).setWriter(any(GudTransactionWriter.class));
 
-		return mockCacheTransactionManager;
+		return mockGudCacheTransactionManager;
 	}
 
-	public static <K, V> ClientRegionFactory<K, V> mockClientRegionFactory(ClientCache mockClientCache,
-			ClientRegionShortcut clientRegionShortcut) {
+	public static <K, V> GudClientRegionFactory<K, V> mockGudClientRegionFactory(GudClientCache mockGudClientCache,
+			GudClientRegionShortcut clientGudRegionShortcut) {
 
-		return mockClientRegionFactory(mockClientCache,
-				resolveRegionAttributesFromClientRegionShortcut(clientRegionShortcut), clientRegionShortcut);
+		return mockGudClientRegionFactory(mockGudClientCache,
+				resolveGudRegionAttributesFromGudClientRegionShortcut(clientGudRegionShortcut), clientGudRegionShortcut);
 	}
 
-	public static <K, V> ClientRegionFactory<K, V> mockClientRegionFactory(ClientCache mockClientCache,
+	public static <K, V> GudClientRegionFactory<K, V> mockGudClientRegionFactory(GudClientCache mockGudClientCache,
 			String regionAttributesId) {
 
-		return mockClientRegionFactory(mockClientCache, resolveRegionAttributes(regionAttributesId), null);
+		return mockGudClientRegionFactory(mockGudClientCache, resolveGudRegionAttributes(regionAttributesId), null);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <K, V> ClientRegionFactory<K, V> mockClientRegionFactory(ClientCache mockClientCache,
-			RegionAttributes<K, V> regionAttributes, ClientRegionShortcut clientRegionShortcut) {
+	public static <K, V> GudClientRegionFactory<K, V> mockGudClientRegionFactory(GudClientCache mockGudClientCache,
+			GudRegionAttributes<K, V> regionAttributes, GudClientRegionShortcut clientGudRegionShortcut) {
 
-		ClientRegionFactory<K, V> mockClientRegionFactory = mock(ClientRegionFactory.class,
-				mockObjectIdentifier("MockClientRegionFactory"));
+		GudClientRegionFactory<K, V> mockGudClientRegionFactory = mock(GudClientRegionFactory.class,
+				mockObjectIdentifier("MockGudClientRegionFactory"));
 
-		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
+		GudExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = GudExpirationAttributes.of(0, GudExpirationAction.INVALIDATE);
 
-		Optional<RegionAttributes<K, V>> optionalRegionAttributes = Optional.ofNullable(regionAttributes);
+		Optional<GudRegionAttributes<K, V>> optionalGudRegionAttributes = Optional.ofNullable(regionAttributes);
 
 		AtomicBoolean cloningEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getCloningEnabled).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCloningEnabled).orElse(false));
 
 		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getConcurrencyChecksEnabled).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getConcurrencyChecksEnabled).orElse(false));
 
 		AtomicBoolean diskSynchronous = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::isDiskSynchronous).orElse(true));
+				optionalGudRegionAttributes.map(GudRegionAttributes::isDiskSynchronous).orElse(true));
 
 		AtomicBoolean statisticsEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getStatisticsEnabled).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getStatisticsEnabled).orElse(false));
 
 		AtomicInteger concurrencyLevel = new AtomicInteger(
-				optionalRegionAttributes.map(RegionAttributes::getConcurrencyLevel).orElse(16));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getConcurrencyLevel).orElse(16));
 
 		AtomicInteger initialCapacity = new AtomicInteger(
-				optionalRegionAttributes.map(RegionAttributes::getInitialCapacity).orElse(16));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getInitialCapacity).orElse(16));
 
-		AtomicReference<Compressor> compressor = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCompressor).orElse(null));
+		AtomicReference<GudCompressor> compressor = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCompressor).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCustomEntryIdleTimeout).orElse(null));
+		AtomicReference<GudCustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCustomEntryIdleTimeout).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCustomEntryTimeToLive).orElse(null));
+		AtomicReference<GudCustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCustomEntryTimeToLive).orElse(null));
 
-		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getDataPolicy).orElseGet(() -> convert(clientRegionShortcut)));
+		AtomicReference<GudDataPolicy> dataPolicy = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getDataPolicy).orElseGet(() -> convert(clientGudRegionShortcut)));
 
 		AtomicReference<String> diskStoreName = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getDiskStoreName).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getDiskStoreName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<EvictionAttributes> evictionAttributes = new AtomicReference<>(optionalRegionAttributes
-				.map(RegionAttributes::getEvictionAttributes).orElseGet(EvictionAttributes::createLRUEntryAttributes));
+		AtomicReference<GudEvictionAttributes> evictionAttributes = new AtomicReference<>(optionalGudRegionAttributes
+				.map(GudRegionAttributes::getEvictionAttributes).orElseGet(GudEvictionAttributes::createLRUEntryAttributes));
 
 		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getKeyConstraint).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getKeyConstraint).orElse(null));
 
 		AtomicReference<Float> loadFactor = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getLoadFactor).orElse(0.75f));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getLoadFactor).orElse(0.75f));
 
 		AtomicReference<String> poolName = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getPoolName).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getPoolName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
 		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getValueConstraint).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getValueConstraint).orElse(null));
 
-		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
-				optionalRegionAttributes.map(RegionAttributes::getCacheListeners).orElse(null), CacheListener.class)));
+		List<GudCacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCacheListeners).orElse(null), GudCacheListener.class)));
 
-		when(mockClientRegionFactory.addCacheListener(any(CacheListener.class)))
-				.thenAnswer(newAdder(cacheListeners, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.addCacheListener(any(GudCacheListener.class)))
+				.thenAnswer(newAdder(cacheListeners, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.initCacheListeners(any(CacheListener[].class))).thenAnswer(invocation -> {
+		when(mockGudClientRegionFactory.initCacheListeners(any(GudCacheListener[].class))).thenAnswer(invocation -> {
 			cacheListeners.clear();
 			Collections.addAll(cacheListeners, invocation.getArgument(0));
-			return mockClientRegionFactory;
+			return mockGudClientRegionFactory;
 		});
 
-		when(mockClientRegionFactory.setCloningEnabled(anyBoolean()))
-				.thenAnswer(newSetter(cloningEnabled, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setCloningEnabled(anyBoolean()))
+				.thenAnswer(newSetter(cloningEnabled, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setCompressor(any(Compressor.class)))
-				.thenAnswer(newSetter(compressor, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setCompressor(any(GudCompressor.class)))
+				.thenAnswer(newSetter(compressor, () -> mockGudClientRegionFactory));
 
-		doAnswer(newSetter(concurrencyChecksEnabled, mockClientRegionFactory)).when(mockClientRegionFactory)
+		doAnswer(newSetter(concurrencyChecksEnabled, mockGudClientRegionFactory)).when(mockGudClientRegionFactory)
 				.setConcurrencyChecksEnabled(anyBoolean());
 
-		when(mockClientRegionFactory.setConcurrencyLevel(anyInt()))
-				.thenAnswer(newSetter(concurrencyLevel, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setConcurrencyLevel(anyInt()))
+				.thenAnswer(newSetter(concurrencyLevel, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setCustomEntryIdleTimeout(any(CustomExpiry.class)))
-				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setCustomEntryIdleTimeout(any(GudCustomExpiry.class)))
+				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setCustomEntryTimeToLive(any(CustomExpiry.class)))
-				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setCustomEntryTimeToLive(any(GudCustomExpiry.class)))
+				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setDiskStoreName(anyString()))
-				.thenAnswer(newSetter(diskStoreName, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setDiskStoreName(anyString()))
+				.thenAnswer(newSetter(diskStoreName, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setDiskSynchronous(anyBoolean()))
-				.thenAnswer(newSetter(diskSynchronous, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setDiskSynchronous(anyBoolean()))
+				.thenAnswer(newSetter(diskSynchronous, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setEntryIdleTimeout(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(entryIdleTimeout, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setEntryIdleTimeout(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(entryIdleTimeout, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setEntryTimeToLive(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(entryTimeToLive, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setEntryTimeToLive(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(entryTimeToLive, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setEvictionAttributes(any(EvictionAttributes.class)))
-				.thenAnswer(newSetter(evictionAttributes, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setEvictionAttributes(any(GudEvictionAttributes.class)))
+				.thenAnswer(newSetter(evictionAttributes, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setInitialCapacity(anyInt()))
-				.thenAnswer(newSetter(initialCapacity, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setInitialCapacity(anyInt()))
+				.thenAnswer(newSetter(initialCapacity, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setKeyConstraint(any(Class.class)))
-				.thenAnswer(newSetter(keyConstraint, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setKeyConstraint(any(Class.class)))
+				.thenAnswer(newSetter(keyConstraint, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setLoadFactor(anyFloat()))
-				.thenAnswer(newSetter(loadFactor, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setLoadFactor(anyFloat()))
+				.thenAnswer(newSetter(loadFactor, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setPoolName(anyString()))
-				.thenAnswer(newSetter(poolName, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setPoolName(anyString()))
+				.thenAnswer(newSetter(poolName, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setRegionIdleTimeout(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(regionIdleTimeout, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setRegionIdleTimeout(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(regionIdleTimeout, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setRegionTimeToLive(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(regionTimeToLive, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setRegionTimeToLive(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(regionTimeToLive, () -> mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setStatisticsEnabled(anyBoolean()))
-				.thenAnswer(newSetter(statisticsEnabled, mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setStatisticsEnabled(anyBoolean()))
+				.thenAnswer(newSetter(statisticsEnabled, mockGudClientRegionFactory));
 
-		when(mockClientRegionFactory.setValueConstraint(any(Class.class)))
-				.thenAnswer(newSetter(valueConstraint, () -> mockClientRegionFactory));
+		when(mockGudClientRegionFactory.setValueConstraint(any(Class.class)))
+				.thenAnswer(newSetter(valueConstraint, () -> mockGudClientRegionFactory));
 
-		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class,
-				mockObjectIdentifier("MockRegionAttributes"));
+		GudRegionAttributes<K, V> mockGudRegionAttributes = mock(GudRegionAttributes.class,
+				mockObjectIdentifier("MockGudRegionAttributes"));
 
-		when(mockRegionAttributes.getCacheListeners())
-				.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
+		when(mockGudRegionAttributes.getCacheListeners())
+				.thenAnswer(newGetter(() -> cacheListeners.toArray(new GudCacheListener[cacheListeners.size()])));
 
-		when(mockRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled));
-		when(mockRegionAttributes.getCompressor()).thenAnswer(newGetter(compressor));
-		when(mockRegionAttributes.getConcurrencyChecksEnabled()).thenAnswer(newGetter(concurrencyChecksEnabled));
-		when(mockRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(concurrencyLevel));
-		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout));
-		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive));
-		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(dataPolicy));
-		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
-		when(mockRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
-		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
-		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
-		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
-		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
-		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
-		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
-		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
-		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
-		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive));
-		when(mockRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(statisticsEnabled));
-		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
+		when(mockGudRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled));
+		when(mockGudRegionAttributes.getCompressor()).thenAnswer(newGetter(compressor));
+		when(mockGudRegionAttributes.getConcurrencyChecksEnabled()).thenAnswer(newGetter(concurrencyChecksEnabled));
+		when(mockGudRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(concurrencyLevel));
+		when(mockGudRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout));
+		when(mockGudRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive));
+		when(mockGudRegionAttributes.getDataPolicy()).thenAnswer(newGetter(dataPolicy));
+		when(mockGudRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
+		when(mockGudRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
+		when(mockGudRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
+		when(mockGudRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
+		when(mockGudRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
+		when(mockGudRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
+		when(mockGudRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
+		when(mockGudRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
+		when(mockGudRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
+		when(mockGudRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
+		when(mockGudRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive));
+		when(mockGudRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(statisticsEnabled));
+		when(mockGudRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
 
-		when(mockClientRegionFactory.create(anyString()))
-				.thenAnswer(invocation -> mockRegion(mockClientCache, invocation.getArgument(0), mockRegionAttributes));
+		when(mockGudClientRegionFactory.create(anyString()))
+				.thenAnswer(invocation -> mockRegion(mockGudClientCache, invocation.getArgument(0), mockGudRegionAttributes));
 
-		when(mockClientRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(
-				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
+		when(mockGudClientRegionFactory.createSubregion(any(GudRegion.class), anyString())).thenAnswer(
+				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockGudRegionAttributes));
 
-		return mockClientRegionFactory;
+		return mockGudClientRegionFactory;
 	}
 
-	public static ClientSubscriptionConfig mockClientSubscriptionConfig() {
+	public static GudClientSubscriptionConfig mockGudClientSubscriptionConfig() {
 
-		ClientSubscriptionConfig mockClientSubscriptionConfig = mock(ClientSubscriptionConfig.class);
+		GudClientSubscriptionConfig mockGudClientSubscriptionConfig = mock(GudClientSubscriptionConfig.class);
 
-		AtomicInteger subscriptionCapacity = new AtomicInteger(ClientSubscriptionConfig.DEFAULT_CAPACITY);
+		AtomicInteger subscriptionCapacity = new AtomicInteger(GudClientSubscriptionConfig.DEFAULT_CAPACITY);
 
-		AtomicReference<String> subscriptionDiskStoreName = new AtomicReference<>("");
+		AtomicReference<String> subscriptionGudDiskStoreName = new AtomicReference<>("");
 
 		AtomicReference<SubscriptionEvictionPolicy> subscriptionEvictionPolicy = new AtomicReference<>(
 				SubscriptionEvictionPolicy.DEFAULT);
@@ -1061,379 +1075,377 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		Function<SubscriptionEvictionPolicy, String> subscriptionEvictionPolicyToStringConverter = arg -> Optional
 				.ofNullable(arg).map(Object::toString).map(String::toLowerCase).orElse(null);
 
-		doAnswer(newSetter(subscriptionCapacity, null)).when(mockClientSubscriptionConfig).setCapacity(anyInt());
+		doAnswer(newSetter(subscriptionCapacity, null)).when(mockGudClientSubscriptionConfig).setCapacity(anyInt());
 
-		doAnswer(newSetter(subscriptionDiskStoreName, () -> null)).when(mockClientSubscriptionConfig)
+		doAnswer(newSetter(subscriptionGudDiskStoreName, () -> null)).when(mockGudClientSubscriptionConfig)
 				.setDiskStoreName(anyString());
 
 		doAnswer(newSetter(subscriptionEvictionPolicy, stringToSubscriptionEvictionPolicyConverter, () -> null))
-				.when(mockClientSubscriptionConfig).setEvictionPolicy(anyString());
+				.when(mockGudClientSubscriptionConfig).setEvictionPolicy(anyString());
 
-		when(mockClientSubscriptionConfig.getCapacity()).thenAnswer(newGetter(subscriptionCapacity));
-		when(mockClientSubscriptionConfig.getDiskStoreName()).thenAnswer(newGetter(subscriptionDiskStoreName));
-		when(mockClientSubscriptionConfig.getEvictionPolicy())
+		when(mockGudClientSubscriptionConfig.getCapacity()).thenAnswer(newGetter(subscriptionCapacity));
+		when(mockGudClientSubscriptionConfig.getDiskStoreName()).thenAnswer(newGetter(subscriptionGudDiskStoreName));
+		when(mockGudClientSubscriptionConfig.getEvictionPolicy())
 				.thenAnswer(newGetter(subscriptionEvictionPolicy, subscriptionEvictionPolicyToStringConverter));
 
-		return mockClientSubscriptionConfig;
+		return mockGudClientSubscriptionConfig;
 	}
 
-	public static DiskStoreFactory mockDiskStoreFactory() {
+	public static GudDiskStoreFactory mockGudDiskStoreFactory() {
 
-		DiskStoreFactory mockDiskStoreFactory = mock(DiskStoreFactory.class);
+		GudDiskStoreFactory mockGudDiskStoreFactory = mock(GudDiskStoreFactory.class);
 
-		AtomicBoolean allowForceCompaction = new AtomicBoolean(DiskStoreFactory.DEFAULT_ALLOW_FORCE_COMPACTION);
-		AtomicBoolean autoCompact = new AtomicBoolean(DiskStoreFactory.DEFAULT_AUTO_COMPACT);
+		AtomicBoolean allowForceCompaction = new AtomicBoolean(GudDiskStoreFactory.DEFAULT_ALLOW_FORCE_COMPACTION);
+		AtomicBoolean autoCompact = new AtomicBoolean(GudDiskStoreFactory.DEFAULT_AUTO_COMPACT);
 
-		AtomicInteger compactionThreshold = new AtomicInteger(DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD);
-		AtomicInteger queueSize = new AtomicInteger(DiskStoreFactory.DEFAULT_QUEUE_SIZE);
-		AtomicInteger writeBufferSize = new AtomicInteger(DiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE);
-		AtomicInteger segments = new AtomicInteger(DiskStoreFactory.DEFAULT_SEGMENTS);
+		AtomicInteger compactionThreshold = new AtomicInteger(GudDiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD);
+		AtomicInteger queueSize = new AtomicInteger(GudDiskStoreFactory.DEFAULT_QUEUE_SIZE);
+		AtomicInteger writeBufferSize = new AtomicInteger(GudDiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE);
+		AtomicInteger segments = new AtomicInteger(GudDiskStoreFactory.DEFAULT_SEGMENTS);
 
-		AtomicLong maxOplogSize = new AtomicLong(DiskStoreFactory.DEFAULT_MAX_OPLOG_SIZE);
-		AtomicLong timeInterval = new AtomicLong(DiskStoreFactory.DEFAULT_TIME_INTERVAL);
+		AtomicLong maxOplogSize = new AtomicLong(GudDiskStoreFactory.DEFAULT_MAX_OPLOG_SIZE);
+		AtomicLong timeInterval = new AtomicLong(GudDiskStoreFactory.DEFAULT_TIME_INTERVAL);
 
 		AtomicReference<File[]> diskDirectories = new AtomicReference<>(new File[] { FileSystemUtils.WORKING_DIRECTORY });
 
 		AtomicReference<int[]> diskDiretorySizes = new AtomicReference<>(new int[0]);
 
 		AtomicReference<Float> diskUsageCriticalPercentage = new AtomicReference<>(
-				DiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE);
+				GudDiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE);
 
 		AtomicReference<Float> diskUsageWarningPercentage = new AtomicReference<>(
-				DiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE);
+				GudDiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE);
 
-		when(mockDiskStoreFactory.setAllowForceCompaction(anyBoolean()))
-				.thenAnswer(newSetter(allowForceCompaction, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setAllowForceCompaction(anyBoolean()))
+				.thenAnswer(newSetter(allowForceCompaction, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setAutoCompact(anyBoolean())).thenAnswer(newSetter(autoCompact, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setAutoCompact(anyBoolean())).thenAnswer(newSetter(autoCompact, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setCompactionThreshold(anyInt()))
-				.thenAnswer(newSetter(compactionThreshold, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setCompactionThreshold(anyInt()))
+				.thenAnswer(newSetter(compactionThreshold, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setDiskDirs(any(File[].class))).thenAnswer(invocation -> {
+		when(mockGudDiskStoreFactory.setDiskDirs(any(File[].class))).thenAnswer(invocation -> {
 
 			File[] resolveDiskDirectories = nullSafeArray(invocation.getArgument(0), File.class);
 
 			int[] resolvedDiskDirectorySizes = new int[resolveDiskDirectories.length];
 
-			Arrays.fill(resolvedDiskDirectorySizes, DiskStoreFactory.DEFAULT_DISK_DIR_SIZE);
+			Arrays.fill(resolvedDiskDirectorySizes, GudDiskStoreFactory.DEFAULT_DISK_DIR_SIZE);
 
 			diskDirectories.set(resolveDiskDirectories);
 			diskDiretorySizes.set(resolvedDiskDirectorySizes);
 
-			return mockDiskStoreFactory;
+			return mockGudDiskStoreFactory;
 		});
 
-		when(mockDiskStoreFactory.setDiskDirsAndSizes(any(File[].class), any(int[].class))).thenAnswer(invocation -> {
+		when(mockGudDiskStoreFactory.setDiskDirsAndSizes(any(File[].class), any(int[].class))).thenAnswer(invocation -> {
 
 			diskDirectories.set(invocation.getArgument(0));
 			diskDiretorySizes.set(invocation.getArgument(1));
 
-			return mockDiskStoreFactory;
+			return mockGudDiskStoreFactory;
 		});
 
-		when(mockDiskStoreFactory.setDiskUsageCriticalPercentage(anyFloat()))
-				.thenAnswer(newSetter(diskUsageCriticalPercentage, () -> mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setDiskUsageCriticalPercentage(anyFloat()))
+				.thenAnswer(newSetter(diskUsageCriticalPercentage, () -> mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setDiskUsageWarningPercentage(anyFloat()))
-				.thenAnswer(newSetter(diskUsageWarningPercentage, () -> mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setDiskUsageWarningPercentage(anyFloat()))
+				.thenAnswer(newSetter(diskUsageWarningPercentage, () -> mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setMaxOplogSize(anyLong())).thenAnswer(newSetter(maxOplogSize, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setMaxOplogSize(anyLong())).thenAnswer(newSetter(maxOplogSize, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setQueueSize(anyInt())).thenAnswer(newSetter(queueSize, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setQueueSize(anyInt())).thenAnswer(newSetter(queueSize, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setTimeInterval(anyLong())).thenAnswer(newSetter(timeInterval, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setTimeInterval(anyLong())).thenAnswer(newSetter(timeInterval, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setWriteBufferSize(anyInt()))
-				.thenAnswer(newSetter(writeBufferSize, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setWriteBufferSize(anyInt()))
+				.thenAnswer(newSetter(writeBufferSize, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.setSegments(anyInt())).thenAnswer(newSetter(segments, mockDiskStoreFactory));
+		when(mockGudDiskStoreFactory.setSegments(anyInt())).thenAnswer(newSetter(segments, mockGudDiskStoreFactory));
 
-		when(mockDiskStoreFactory.create(anyString())).thenAnswer(invocation -> {
+		when(mockGudDiskStoreFactory.create(anyString())).thenAnswer(invocation -> {
 
 			String name = invocation.getArgument(0);
 
-			DiskStore mockDiskStore = mock(DiskStore.class, name);
+			GudDiskStore mockGudDiskStore = mock(GudDiskStore.class, name);
 
-			when(mockDiskStore.getAllowForceCompaction()).thenReturn(allowForceCompaction.get());
-			when(mockDiskStore.getAutoCompact()).thenReturn(autoCompact.get());
-			when(mockDiskStore.getCompactionThreshold()).thenReturn(compactionThreshold.get());
-			when(mockDiskStore.getDiskDirs()).thenReturn(diskDirectories.get());
-			when(mockDiskStore.getDiskDirSizes()).thenReturn(diskDiretorySizes.get());
-			when(mockDiskStore.getDiskUsageCriticalPercentage()).thenReturn(diskUsageCriticalPercentage.get());
-			when(mockDiskStore.getDiskUsageWarningPercentage()).thenReturn(diskUsageWarningPercentage.get());
-			when(mockDiskStore.getDiskStoreUUID()).thenReturn(UUID.randomUUID());
-			when(mockDiskStore.getMaxOplogSize()).thenReturn(maxOplogSize.get());
-			when(mockDiskStore.getName()).thenReturn(name);
-			when(mockDiskStore.getQueueSize()).thenReturn(queueSize.get());
-			when(mockDiskStore.getTimeInterval()).thenReturn(timeInterval.get());
-			when(mockDiskStore.getWriteBufferSize()).thenReturn(writeBufferSize.get());
-			when(mockDiskStore.getSegments()).thenReturn(segments.get());
+			when(mockGudDiskStore.getAllowForceCompaction()).thenReturn(allowForceCompaction.get());
+			when(mockGudDiskStore.getAutoCompact()).thenReturn(autoCompact.get());
+			when(mockGudDiskStore.getCompactionThreshold()).thenReturn(compactionThreshold.get());
+			when(mockGudDiskStore.getDiskDirs()).thenReturn(diskDirectories.get());
+			when(mockGudDiskStore.getDiskDirSizes()).thenReturn(diskDiretorySizes.get());
+			when(mockGudDiskStore.getDiskUsageCriticalPercentage()).thenReturn(diskUsageCriticalPercentage.get());
+			when(mockGudDiskStore.getDiskUsageWarningPercentage()).thenReturn(diskUsageWarningPercentage.get());
+			when(mockGudDiskStore.getDiskStoreUUID()).thenReturn(UUID.randomUUID());
+			when(mockGudDiskStore.getMaxOplogSize()).thenReturn(maxOplogSize.get());
+			when(mockGudDiskStore.getName()).thenReturn(name);
+			when(mockGudDiskStore.getQueueSize()).thenReturn(queueSize.get());
+			when(mockGudDiskStore.getTimeInterval()).thenReturn(timeInterval.get());
+			when(mockGudDiskStore.getWriteBufferSize()).thenReturn(writeBufferSize.get());
+			when(mockGudDiskStore.getSegments()).thenReturn(new int[] { segments.get() });
 
-			diskStores.put(name, mockDiskStore);
+			diskStores.put(name, mockGudDiskStore);
 
-			return mockDiskStore;
+			return mockGudDiskStore;
 		});
 
-		return mockDiskStoreFactory;
+		return mockGudDiskStoreFactory;
 	}
 
-	public static DistributedMember mockDistributedMember() {
+	public static GudDistributedMember mockGudDistributedMember() {
 
-		DistributedMember mockDistributedMember = mock(DistributedMember.class);
+		GudDistributedMember mockGudDistributedMember = mock(GudDistributedMember.class);
 
-		when(mockDistributedMember.getGroups()).thenAnswer(invocation -> new ArrayList<>(
-				StringUtils.commaDelimitedListToSet(gemfireProperties.get().getProperty(DistributionConfig.GROUPS_NAME))));
+		when(mockGudDistributedMember.getGroups()).thenAnswer(invocation -> new ArrayList<>(
+				StringUtils.commaDelimitedListToSet(gemfireProperties.get().getProperty(GudConfigurationProperties.GROUPS))));
 
-		when(mockDistributedMember.getHost())
+		when(mockGudDistributedMember.getHost())
 				.thenReturn(ObjectUtils.doOperationSafely(() -> InetAddress.getLocalHost().getHostName(), null));
 
-		when(mockDistributedMember.getName())
-				.thenAnswer(invocation -> gemfireProperties.get().getProperty(DistributionConfig.NAME_NAME));
+		when(mockGudDistributedMember.getName())
+				.thenAnswer(invocation -> gemfireProperties.get().getProperty(GudConfigurationProperties.NAME_NAME));
 
-		return mockDistributedMember;
+		return mockGudDistributedMember;
 	}
 
-	public static DistributedSystem mockDistributedSystem() {
+	public static GudDistributedSystem mockGudDistributedSystem() {
 
-		DistributedMember mockDistributedMember = mockDistributedMember();
+		GudDistributedMember mockGudDistributedMember = mockGudDistributedMember();
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockGudDistributedSystem = mock(GudDistributedSystem.class);
 
-		doAnswer(invocation -> gemfireProperties.get().getProperty(DistributionConfig.NAME_NAME))
-				.when(mockDistributedSystem).getName();
+		doAnswer(invocation -> gemfireProperties.get().getProperty(GudConfigurationProperties.NAME_NAME))
+				.when(mockGudDistributedSystem).getName();
 
-		when(mockDistributedSystem.getDistributedMember()).thenReturn(mockDistributedMember);
-		when(mockDistributedSystem.getProperties()).thenAnswer(invocation -> gemfireProperties.get());
-		when(mockDistributedSystem.getReconnectedSystem()).thenAnswer(invocation -> mockDistributedSystem());
+		when(mockGudDistributedSystem.getDistributedMember()).thenReturn(mockGudDistributedMember);
+		when(mockGudDistributedSystem.getProperties()).thenAnswer(invocation -> gemfireProperties.get());
+		when(mockGudDistributedSystem.getReconnectedSystem()).thenAnswer(invocation -> mockGudDistributedSystem());
 
-		return mockDistributedSystem;
+		return mockGudDistributedSystem;
 	}
 
-	public static PoolFactory mockPoolFactory() {
+	public static GudPoolFactory mockGudPoolFactory() {
 
-		PoolFactory mockPoolFactory = mock(PoolFactory.class);
+		GudPoolFactory mockGudPoolFactory = mock(GudPoolFactory.class);
 
-		AtomicBoolean multiuserAuthentication = new AtomicBoolean(PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION);
-		AtomicBoolean prSingleHopEnabled = new AtomicBoolean(PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED);
-		AtomicBoolean subscriptionEnabled = new AtomicBoolean(PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED);
-		// AtomicBoolean threadLocalConnections = new AtomicBoolean(PoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
+		AtomicBoolean multiuserAuthentication = new AtomicBoolean(GudPoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION);
+		AtomicBoolean prSingleHopEnabled = new AtomicBoolean(GudPoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED);
+		AtomicBoolean subscriptionEnabled = new AtomicBoolean(GudPoolFactory.DEFAULT_SUBSCRIPTION_ENABLED);
+		// AtomicBoolean threadLocalConnections = new AtomicBoolean(GudPoolFactory.DEFAULT_THREAD_LOCAL_CONNECTIONS);
 
-		AtomicInteger freeConnectionTimeout = new AtomicInteger(PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT);
-		AtomicInteger loadConditioningInterval = new AtomicInteger(PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL);
-		AtomicInteger maxConnections = new AtomicInteger(PoolFactory.DEFAULT_MAX_CONNECTIONS);
-		AtomicInteger minConnections = new AtomicInteger(PoolFactory.DEFAULT_MIN_CONNECTIONS);
-		AtomicInteger maxConnectionsPerServer = new AtomicInteger(PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER);
-		AtomicInteger minConnectionsPerServer = new AtomicInteger(PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER);
-		AtomicInteger readTimeout = new AtomicInteger(PoolFactory.DEFAULT_READ_TIMEOUT);
-		AtomicInteger retryAttempts = new AtomicInteger(PoolFactory.DEFAULT_RETRY_ATTEMPTS);
-		AtomicInteger serverConnectionTimeout = new AtomicInteger(PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
-		AtomicInteger socketBufferSize = new AtomicInteger(PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
-		AtomicInteger socketConnectTimeout = new AtomicInteger(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
-		AtomicInteger statisticInterval = new AtomicInteger(PoolFactory.DEFAULT_STATISTIC_INTERVAL);
-		AtomicInteger subscriptionAckInterval = new AtomicInteger(PoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL);
+		AtomicInteger freeConnectionTimeout = new AtomicInteger(GudPoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT);
+		AtomicInteger loadConditioningInterval = new AtomicInteger(GudPoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL);
+		AtomicInteger maxConnections = new AtomicInteger(GudPoolFactory.DEFAULT_MAX_CONNECTIONS);
+		AtomicInteger minConnections = new AtomicInteger(GudPoolFactory.DEFAULT_MIN_CONNECTIONS);
+		AtomicInteger maxConnectionsPerServer = new AtomicInteger(GudPoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER);
+		AtomicInteger minConnectionsPerServer = new AtomicInteger(GudPoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER);
+		AtomicInteger readTimeout = new AtomicInteger(GudPoolFactory.DEFAULT_READ_TIMEOUT);
+		AtomicInteger retryAttempts = new AtomicInteger(GudPoolFactory.DEFAULT_RETRY_ATTEMPTS);
+		AtomicInteger serverConnectionTimeout = new AtomicInteger(GudPoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
+		AtomicInteger socketBufferSize = new AtomicInteger(GudPoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
+		AtomicInteger socketConnectTimeout = new AtomicInteger(GudPoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
+		AtomicInteger statisticInterval = new AtomicInteger(GudPoolFactory.DEFAULT_STATISTIC_INTERVAL);
+		AtomicInteger subscriptionAckInterval = new AtomicInteger(GudPoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL);
 		AtomicInteger subscriptionMessageTrackingTimeout = new AtomicInteger(
-				PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
-		AtomicInteger subscriptionRedundancy = new AtomicInteger(PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
+				GudPoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
+		AtomicInteger subscriptionRedundancy = new AtomicInteger(GudPoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
 
-		AtomicLong idleTimeout = new AtomicLong(PoolFactory.DEFAULT_IDLE_TIMEOUT);
-		AtomicLong pingInterval = new AtomicLong(PoolFactory.DEFAULT_PING_INTERVAL);
+		AtomicLong idleTimeout = new AtomicLong(GudPoolFactory.DEFAULT_IDLE_TIMEOUT);
+		AtomicLong pingInterval = new AtomicLong(GudPoolFactory.DEFAULT_PING_INTERVAL);
 
-		AtomicReference<SocketFactory> socketFactory = new AtomicReference<>(PoolFactory.DEFAULT_SOCKET_FACTORY);
-		AtomicReference<String> serverGroup = new AtomicReference<>(PoolFactory.DEFAULT_SERVER_GROUP);
+		AtomicReference<GudSocketFactory> socketFactory = new AtomicReference<>(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
+		AtomicReference<String> serverGroup = new AtomicReference<>(GudPoolFactory.DEFAULT_SERVER_GROUP);
 
 		List<InetSocketAddress> locators = new ArrayList<>();
 		List<InetSocketAddress> servers = new ArrayList<>();
 
-		when(mockPoolFactory.addLocator(anyString(), anyInt())).thenAnswer(invocation -> {
+		when(mockGudPoolFactory.addLocator(anyString(), anyInt())).thenAnswer(invocation -> {
 			locators.add(new InetSocketAddress(invocation.<String> getArgument(0), invocation.getArgument(1)));
-			return mockPoolFactory;
+			return mockGudPoolFactory;
 		});
 
-		when(mockPoolFactory.addServer(anyString(), anyInt())).thenAnswer(invocation -> {
+		when(mockGudPoolFactory.addServer(anyString(), anyInt())).thenAnswer(invocation -> {
 			servers.add(new InetSocketAddress(invocation.<String> getArgument(0), invocation.getArgument(1)));
-			return mockPoolFactory;
+			return mockGudPoolFactory;
 		});
 
-		when(mockPoolFactory.setFreeConnectionTimeout(anyInt()))
-				.thenAnswer(newSetter(freeConnectionTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setFreeConnectionTimeout(anyInt()))
+				.thenAnswer(newSetter(freeConnectionTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setIdleTimeout(anyLong())).thenAnswer(newSetter(idleTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setIdleTimeout(anyLong())).thenAnswer(newSetter(idleTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setLoadConditioningInterval(anyInt()))
-				.thenAnswer(newSetter(loadConditioningInterval, mockPoolFactory));
+		when(mockGudPoolFactory.setLoadConditioningInterval(anyInt()))
+				.thenAnswer(newSetter(loadConditioningInterval, mockGudPoolFactory));
 
-		when(mockPoolFactory.setMaxConnections(anyInt())).thenAnswer(newSetter(maxConnections, mockPoolFactory));
+		when(mockGudPoolFactory.setMaxConnections(anyInt())).thenAnswer(newSetter(maxConnections, mockGudPoolFactory));
 
-		when(mockPoolFactory.setMinConnections(anyInt())).thenAnswer(newSetter(minConnections, mockPoolFactory));
+		when(mockGudPoolFactory.setMinConnections(anyInt())).thenAnswer(newSetter(minConnections, mockGudPoolFactory));
 
-		when(mockPoolFactory.setMaxConnectionsPerServer(anyInt()))
-				.thenAnswer(newSetter(maxConnectionsPerServer, mockPoolFactory));
+		when(mockGudPoolFactory.setMaxConnectionsPerServer(anyInt()))
+				.thenAnswer(newSetter(maxConnectionsPerServer, mockGudPoolFactory));
 
-		when(mockPoolFactory.setMinConnectionsPerServer(anyInt()))
-				.thenAnswer(newSetter(minConnectionsPerServer, mockPoolFactory));
+		when(mockGudPoolFactory.setMinConnectionsPerServer(anyInt()))
+				.thenAnswer(newSetter(minConnectionsPerServer, mockGudPoolFactory));
 
-		when(mockPoolFactory.setMultiuserAuthentication(anyBoolean()))
-				.thenAnswer(newSetter(multiuserAuthentication, mockPoolFactory));
+		when(mockGudPoolFactory.setMultiuserAuthentication(anyBoolean()))
+				.thenAnswer(newSetter(multiuserAuthentication, mockGudPoolFactory));
 
-		when(mockPoolFactory.setPingInterval(anyLong())).thenAnswer(newSetter(pingInterval, mockPoolFactory));
+		when(mockGudPoolFactory.setPingInterval(anyLong())).thenAnswer(newSetter(pingInterval, mockGudPoolFactory));
 
-		when(mockPoolFactory.setPRSingleHopEnabled(anyBoolean()))
-				.thenAnswer(newSetter(prSingleHopEnabled, mockPoolFactory));
+		when(mockGudPoolFactory.setPRSingleHopEnabled(anyBoolean()))
+				.thenAnswer(newSetter(prSingleHopEnabled, mockGudPoolFactory));
 
-		when(mockPoolFactory.setReadTimeout(anyInt())).thenAnswer(newSetter(readTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setReadTimeout(anyInt())).thenAnswer(newSetter(readTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setRetryAttempts(anyInt())).thenAnswer(newSetter(retryAttempts, mockPoolFactory));
+		when(mockGudPoolFactory.setRetryAttempts(anyInt())).thenAnswer(newSetter(retryAttempts, mockGudPoolFactory));
 
-		when(mockPoolFactory.setServerConnectionTimeout(anyInt()))
-				.thenAnswer(newSetter(serverConnectionTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setServerConnectionTimeout(anyInt()))
+				.thenAnswer(newSetter(serverConnectionTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setServerGroup(anyString())).thenAnswer(newSetter(serverGroup, () -> mockPoolFactory));
+		when(mockGudPoolFactory.setServerGroup(anyString())).thenAnswer(newSetter(serverGroup, () -> mockGudPoolFactory));
 
-		when(mockPoolFactory.setSocketBufferSize(anyInt())).thenAnswer(newSetter(socketBufferSize, mockPoolFactory));
+		when(mockGudPoolFactory.setSocketBufferSize(anyInt())).thenAnswer(newSetter(socketBufferSize, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSocketConnectTimeout(anyInt()))
-				.thenAnswer(newSetter(socketConnectTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setSocketConnectTimeout(anyInt()))
+				.thenAnswer(newSetter(socketConnectTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSocketFactory(any(SocketFactory.class)))
-				.thenAnswer(newSetter(socketFactory, () -> mockPoolFactory));
+		when(mockGudPoolFactory.setSocketFactory(any(GudSocketFactory.class)))
+				.thenAnswer(newSetter(socketFactory, () -> mockGudPoolFactory));
 
-		when(mockPoolFactory.setStatisticInterval(anyInt())).thenAnswer(newSetter(statisticInterval, mockPoolFactory));
+		when(mockGudPoolFactory.setStatisticInterval(anyInt())).thenAnswer(newSetter(statisticInterval, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSubscriptionAckInterval(anyInt()))
-				.thenAnswer(newSetter(subscriptionAckInterval, mockPoolFactory));
+		when(mockGudPoolFactory.setSubscriptionAckInterval(anyInt()))
+				.thenAnswer(newSetter(subscriptionAckInterval, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSubscriptionEnabled(anyBoolean()))
-				.thenAnswer(newSetter(subscriptionEnabled, mockPoolFactory));
+		when(mockGudPoolFactory.setSubscriptionEnabled(anyBoolean()))
+				.thenAnswer(newSetter(subscriptionEnabled, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSubscriptionMessageTrackingTimeout(anyInt()))
-				.thenAnswer(newSetter(subscriptionMessageTrackingTimeout, mockPoolFactory));
+		when(mockGudPoolFactory.setSubscriptionMessageTrackingTimeout(anyInt()))
+				.thenAnswer(newSetter(subscriptionMessageTrackingTimeout, mockGudPoolFactory));
 
-		when(mockPoolFactory.setSubscriptionRedundancy(anyInt()))
-				.thenAnswer(newSetter(subscriptionRedundancy, mockPoolFactory));
+		when(mockGudPoolFactory.setSubscriptionRedundancy(anyInt()))
+				.thenAnswer(newSetter(subscriptionRedundancy, mockGudPoolFactory));
 
-		// when(mockPoolFactory.setThreadLocalConnections(anyBoolean()))
-		// .thenAnswer(newSetter(threadLocalConnections, mockPoolFactory));
+		// when(mockGudPoolFactory.setThreadLocalConnections(anyBoolean()))
+		// .thenAnswer(newSetter(threadLocalConnections, mockGudPoolFactory));
 
-		when(mockPoolFactory.create(anyString())).thenAnswer(invocation -> {
+		when(mockGudPoolFactory.create(anyString())).thenAnswer(invocation -> {
 
 			String name = invocation.getArgument(0);
 
-			Pool mockPool = mock(Pool.class, name);
+			GudPool mockGudPool = mock(GudPool.class, name);
 
-			AtomicReference<QueryService> queryService = new AtomicReference<>(null);
+			AtomicReference<GudQueryService> queryService = new AtomicReference<>(null);
 
 			AtomicBoolean destroyed = new AtomicBoolean(false);
 
 			doAnswer(invocationOnMock -> {
 				destroyed.set(true);
 				return null;
-			}).when(mockPool).destroy();
+			}).when(mockGudPool).destroy();
 
 			doAnswer(invocationOnMock -> {
 				destroyed.set(true);
 				return null;
-			}).when(mockPool).destroy(anyBoolean());
+			}).when(mockGudPool).destroy(anyBoolean());
 
-			when(mockPool.isDestroyed()).thenAnswer(newGetter(destroyed));
-			when(mockPool.getFreeConnectionTimeout()).thenReturn(freeConnectionTimeout.get());
-			when(mockPool.getIdleTimeout()).thenReturn(idleTimeout.get());
-			when(mockPool.getLoadConditioningInterval()).thenReturn(loadConditioningInterval.get());
-			when(mockPool.getLocators()).thenReturn(locators);
-			when(mockPool.getMaxConnections()).thenReturn(maxConnections.get());
-			when(mockPool.getMinConnections()).thenReturn(minConnections.get());
-			when(mockPool.getMaxConnectionsPerServer()).thenReturn(maxConnectionsPerServer.get());
-			when(mockPool.getMinConnectionsPerServer()).thenReturn(minConnectionsPerServer.get());
-			when(mockPool.getMultiuserAuthentication()).thenReturn(multiuserAuthentication.get());
-			when(mockPool.getName()).thenReturn(name);
-			when(mockPool.getPingInterval()).thenReturn(pingInterval.get());
-			when(mockPool.getPRSingleHopEnabled()).thenReturn(prSingleHopEnabled.get());
-			when(mockPool.getReadTimeout()).thenReturn(readTimeout.get());
-			when(mockPool.getRetryAttempts()).thenReturn(retryAttempts.get());
-			when(mockPool.getServerConnectionTimeout()).thenReturn(serverConnectionTimeout.get());
-			when(mockPool.getServerGroup()).thenReturn(serverGroup.get());
-			when(mockPool.getServers()).thenReturn(servers);
-			when(mockPool.getSocketBufferSize()).thenReturn(socketBufferSize.get());
-			when(mockPool.getSocketConnectTimeout()).thenReturn(socketConnectTimeout.get());
-			when(mockPool.getSocketFactory()).thenReturn(socketFactory.get());
-			when(mockPool.getStatisticInterval()).thenReturn(statisticInterval.get());
-			when(mockPool.getSubscriptionAckInterval()).thenReturn(subscriptionAckInterval.get());
-			when(mockPool.getSubscriptionEnabled()).thenReturn(subscriptionEnabled.get());
-			when(mockPool.getSubscriptionMessageTrackingTimeout()).thenReturn(subscriptionMessageTrackingTimeout.get());
-			when(mockPool.getSubscriptionRedundancy()).thenReturn(subscriptionRedundancy.get());
-			// when(mockPool.getThreadLocalConnections()).thenReturn(threadLocalConnections.get());
+			when(mockGudPool.isDestroyed()).thenAnswer(newGetter(destroyed));
+			when(mockGudPool.getFreeConnectionTimeout()).thenReturn(freeConnectionTimeout.get());
+			when(mockGudPool.getIdleTimeout()).thenReturn(idleTimeout.get());
+			when(mockGudPool.getLoadConditioningInterval()).thenReturn(loadConditioningInterval.get());
+			when(mockGudPool.getLocators()).thenReturn(locators);
+			when(mockGudPool.getMaxConnections()).thenReturn(maxConnections.get());
+			when(mockGudPool.getMinConnections()).thenReturn(minConnections.get());
+			when(mockGudPool.getMaxConnectionsPerServer()).thenReturn(maxConnectionsPerServer.get());
+			when(mockGudPool.getMinConnectionsPerServer()).thenReturn(minConnectionsPerServer.get());
+			when(mockGudPool.getMultiuserAuthentication()).thenReturn(multiuserAuthentication.get());
+			when(mockGudPool.getName()).thenReturn(name);
+			when(mockGudPool.getPingInterval()).thenReturn(pingInterval.get());
+			when(mockGudPool.getPRSingleHopEnabled()).thenReturn(prSingleHopEnabled.get());
+			when(mockGudPool.getReadTimeout()).thenReturn(readTimeout.get());
+			when(mockGudPool.getRetryAttempts()).thenReturn(retryAttempts.get());
+			when(mockGudPool.getServerConnectionTimeout()).thenReturn(serverConnectionTimeout.get());
+			when(mockGudPool.getServerGroup()).thenReturn(serverGroup.get());
+			when(mockGudPool.getServers()).thenReturn(servers);
+			when(mockGudPool.getSocketBufferSize()).thenReturn(socketBufferSize.get());
+			when(mockGudPool.getSocketConnectTimeout()).thenReturn(socketConnectTimeout.get());
+			when(mockGudPool.getSocketFactory()).thenReturn(socketFactory.get());
+			when(mockGudPool.getStatisticInterval()).thenReturn(statisticInterval.get());
+			when(mockGudPool.getSubscriptionAckInterval()).thenReturn(subscriptionAckInterval.get());
+			when(mockGudPool.getSubscriptionEnabled()).thenReturn(subscriptionEnabled.get());
+			when(mockGudPool.getSubscriptionMessageTrackingTimeout()).thenReturn(subscriptionMessageTrackingTimeout.get());
+			when(mockGudPool.getSubscriptionRedundancy()).thenReturn(subscriptionRedundancy.get());
+			// when(mockGudPool.getThreadLocalConnections()).thenReturn(threadLocalConnections.get());
 
-			doAnswer(getQueryServiceInvocation -> resolveAnyGemFireCache().map(ClientCache::getQueryService)
-					.orElseGet(() -> queryService.updateAndGet(it -> it != null ? it : mockQueryService()))).when(mockPool)
+			doAnswer(getGudQueryServiceInvocation -> resolveAnyGemFireCache().map(GudClientCache::getQueryService)
+					.orElseGet(() -> queryService.updateAndGet(it -> it != null ? it : mockGudQueryService()))).when(mockGudPool)
 					.getQueryService();
 
-			register(mockPool);
+			register(mockGudPool);
 
-			return mockPool;
+			return mockGudPool;
 		});
 
-		return mockPoolFactory;
+		return mockGudPoolFactory;
 	}
 
-	private static Pool register(Pool pool) {
+	private static GudPool register(GudPool pool) {
+		// TODO: GUD API doesn't expose internal PoolManagerImpl for registration
+		// In test environment, pools are managed through mocking
+		registeredGudPoolNames.add(pool.getName());
+		return pool;
+	}
 
-		if (registeredPoolNames.add(pool.getName())) {
-			PoolManagerImpl.getPMI().register(pool);
-		}
+	private static GudPool unregister(GudPool pool) {
+		// TODO: GUD API doesn't expose internal PoolManagerImpl for unregistration
+		// In test environment, pools are managed through mocking
+		registeredGudPoolNames.remove(pool.getName());
+		return pool;
+	}
+
+	public static GudPool mockGudQueryService(GudPool pool) {
+
+		GudQueryService mockGudQueryService = mockGudQueryService();
+
+		when(pool.getQueryService()).thenReturn(mockGudQueryService);
 
 		return pool;
 	}
 
-	private static Pool unregister(Pool pool) {
+	public static <T extends GudRegionService> T mockGudQueryService(T regionService) {
 
-		PoolManagerImpl.getPMI().unregister(pool);
+		GudQueryService mockGudQueryService = mockGudQueryService();
 
-		return pool;
-	}
+		doReturn(mockGudQueryService).when(regionService).getQueryService();
 
-	public static Pool mockQueryService(Pool pool) {
-
-		QueryService mockQueryService = mockQueryService();
-
-		when(pool.getQueryService()).thenReturn(mockQueryService);
-
-		return pool;
-	}
-
-	public static <T extends RegionService> T mockQueryService(T regionService) {
-
-		QueryService mockQueryService = mockQueryService();
-
-		doReturn(mockQueryService).when(regionService).getQueryService();
-
-		if (regionService instanceof ClientCache) {
-			doReturn(mockQueryService).when((ClientCache) regionService).getLocalQueryService();
-			doReturn(mockQueryService).when((ClientCache) regionService).getQueryService(anyString());
+		if (regionService instanceof GudClientCache) {
+			doReturn(mockGudQueryService).when((GudClientCache) regionService).getLocalQueryService();
+			doReturn(mockGudQueryService).when((GudClientCache) regionService).getQueryService(anyString());
 		}
 
 		return regionService;
 	}
 
-	// TODO: write additional mocking logic for the QueryService interface
-	public static QueryService mockQueryService() {
+	// TODO: write additional mocking logic for the GudQueryService interface
+	public static GudQueryService mockGudQueryService() {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockGudQueryService = mock(GudQueryService.class);
 
-		Set<CqQuery> cqQueries = Collections.synchronizedSet(new HashSet<>());
-		Set<Index> indexes = Collections.synchronizedSet(new HashSet<>());
+		Set<GudCqQuery> cqQueries = Collections.synchronizedSet(new HashSet<>());
+		Set<GudIndex> indexes = Collections.synchronizedSet(new HashSet<>());
 
 		try {
 
-			when(mockQueryService.getCq(anyString())).thenAnswer(invocation -> cqQueries.stream()
-					.filter(cqQuery -> invocation.getArgument(0).equals(cqQuery.getName())).findFirst().orElse(null));
+			when(mockGudQueryService.getCq(anyString())).thenAnswer(invocation -> cqQueries.stream()
+					.filter(cqGudQuery -> invocation.getArgument(0).equals(cqGudQuery.getName())).findFirst().orElse(null));
 
-			when(mockQueryService.getCqs()).thenAnswer(invocation -> cqQueries.toArray(new CqQuery[cqQueries.size()]));
+			when(mockGudQueryService.getCqs()).thenAnswer(invocation -> cqQueries.toArray(new GudCqQuery[cqQueries.size()]));
 
-			when(mockQueryService.getCqs(anyString())).thenAnswer(invocation -> {
+			when(mockGudQueryService.getCqs(anyString())).thenAnswer(invocation -> {
 
-				List<CqQuery> cqQueriesByRegion = cqQueries.stream().filter(cqQuery -> {
+				List<GudCqQuery> cqQueriesByRegion = cqQueries.stream().filter(cqGudQuery -> {
 
-					String queryString = cqQuery.getQueryString();
+					String queryString = cqGudQuery.getQueryString();
 
 					int indexOfFromClause = queryString.indexOf(FROM_KEYWORD);
 					int indexOfWhereClause = queryString.indexOf(WHERE_KEYWORD);
@@ -1443,92 +1455,92 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 					queryString = (indexOfWhereClause > 0 ? queryString.substring(0, indexOfWhereClause) : queryString);
 
-					queryString = (queryString.startsWith(Region.SEPARATOR) ? queryString.substring(1) : queryString);
+					queryString = (queryString.startsWith(GudRegion.SEPARATOR) ? queryString.substring(1) : queryString);
 
 					return invocation.getArgument(0).equals(queryString.trim());
 
 				}).collect(Collectors.toList());
 
-				return cqQueriesByRegion.toArray(new CqQuery[cqQueriesByRegion.size()]);
+				return cqQueriesByRegion.toArray(new GudCqQuery[cqQueriesByRegion.size()]);
 			});
 
-			when(mockQueryService.getIndex(any(Region.class), anyString())).thenAnswer(invocation -> {
+			when(mockGudQueryService.getIndex(any(GudRegion.class), anyString())).thenAnswer(invocation -> {
 
-				Region<?, ?> region = invocation.getArgument(0);
+				GudRegion<?, ?> region = invocation.getArgument(0);
 
 				String indexName = invocation.getArgument(1);
 
-				Collection<Index> indexesForRegion = mockQueryService.getIndexes(region);
+				Collection<GudIndex> indexesForRegion = mockGudQueryService.getIndexes(region);
 
 				return indexesForRegion.stream().filter(index -> index.getName().equals(indexName)).findFirst().orElse(null);
 
 			});
 
-			when(mockQueryService.getIndexes()).thenReturn(indexes);
+			when(mockGudQueryService.getIndexes()).thenReturn(indexes);
 
-			when(mockQueryService.getIndexes(any(Region.class))).thenAnswer(invocation -> {
+			when(mockGudQueryService.getIndexes(any(GudRegion.class))).thenAnswer(invocation -> {
 
-				Region<?, ?> region = invocation.getArgument(0);
+				GudRegion<?, ?> region = invocation.getArgument(0);
 
 				return indexes.stream().filter(index -> index.getRegion().equals(region)).collect(Collectors.toList());
 
 			});
 
-			when(mockQueryService.newCq(anyString(), any(CqAttributes.class))).thenAnswer(
-					invocation -> add(cqQueries, mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), false)));
+			when(mockGudQueryService.newCq(anyString(), any(GudCqAttributes.class))).thenAnswer(
+					invocation -> add(cqQueries, mockGudCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), false)));
 
-			when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
+			when(mockGudQueryService.newCq(anyString(), any(GudCqAttributes.class), anyBoolean()))
 					.thenAnswer(invocation -> add(cqQueries,
-							mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2))));
+							mockGudCqQuery(null, invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2))));
 
-			when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class)))
+			when(mockGudQueryService.newCq(anyString(), anyString(), any(GudCqAttributes.class)))
 					.thenAnswer(invocation -> add(cqQueries,
-							mockCqQuery(invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2), false)));
+							mockGudCqQuery(invocation.getArgument(0), invocation.getArgument(1), invocation.getArgument(2), false)));
 
-			when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class), anyBoolean()))
-					.thenAnswer(invocation -> add(cqQueries, mockCqQuery(invocation.getArgument(0), invocation.getArgument(1),
+			when(mockGudQueryService.newCq(anyString(), anyString(), any(GudCqAttributes.class), anyBoolean()))
+					.thenAnswer(invocation -> add(cqQueries, mockGudCqQuery(invocation.getArgument(0), invocation.getArgument(1),
 							invocation.getArgument(2), invocation.getArgument(3))));
 
-			when(mockQueryService.newQuery(anyString())).thenAnswer(invocation -> mockQuery(invocation.getArgument(0)));
+			when(mockGudQueryService.newQuery(anyString())).thenAnswer(invocation -> mockGudQuery(invocation.getArgument(0)));
 
 		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
-		return mockQueryService;
+		return mockGudQueryService;
 	}
 
-	private static CqQuery add(Collection<CqQuery> cqQueries, CqQuery cqQuery) {
+	private static GudCqQuery add(Collection<GudCqQuery> cqQueries, GudCqQuery cqGudQuery) {
 
-		cqQueries.add(cqQuery);
+		cqQueries.add(cqGudQuery);
 
-		return cqQuery;
+		return cqGudQuery;
 	}
 
-	private static Index add(Collection<Index> indexes, Index index) {
+	private static GudIndex add(Collection<GudIndex> indexes, GudIndex index) {
 
 		indexes.add(index);
 
 		return index;
 	}
 
-	private static CqQuery mockCqQuery(String name, String queryString, CqAttributes cqAttributes, boolean durable) {
+	private static GudCqQuery mockGudCqQuery(String name, String queryString, GudCqAttributes cqAttributes, boolean durable) {
 
-		CqQuery mockCqQuery = mock(CqQuery.class);
+		GudCqQuery mockGudCqQuery = mock(GudCqQuery.class);
 
-		Query mockQuery = mockQuery(queryString);
+		GudQuery mockGudQuery = mockGudQuery(queryString);
 
 		AtomicBoolean closed = new AtomicBoolean(false);
 		AtomicBoolean running = new AtomicBoolean(false);
 		AtomicBoolean stopped = new AtomicBoolean(true);
 
-		when(mockCqQuery.getCqAttributes()).thenReturn(cqAttributes);
-		when(mockCqQuery.getName()).thenReturn(name);
-		when(mockCqQuery.getQuery()).thenReturn(mockQuery);
-		when(mockCqQuery.getQueryString()).thenReturn(queryString);
+		when(mockGudCqQuery.getCqAttributes()).thenReturn(cqAttributes);
+		when(mockGudCqQuery.getName()).thenReturn(name);
+		when(mockGudCqQuery.getQuery()).thenReturn(mockGudQuery);
+		when(mockGudCqQuery.getQueryString()).thenReturn(queryString);
 
 		try {
-			doAnswer(newSetter(closed, true, null)).when(mockCqQuery).close();
+			doAnswer(newSetter(closed, true, null)).when(mockGudCqQuery).close();
 
 			doAnswer(invocation -> {
 
@@ -1537,7 +1549,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				return null;
 
-			}).when(mockCqQuery).execute();
+			}).when(mockGudCqQuery).execute();
 
 			doAnswer(invocation -> {
 
@@ -1546,45 +1558,46 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 				return null;
 
-			}).when(mockCqQuery).stop();
+			}).when(mockGudCqQuery).stop();
 		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
-		when(mockCqQuery.isClosed()).thenAnswer(newGetter(closed));
-		when(mockCqQuery.isDurable()).thenReturn(durable);
-		when(mockCqQuery.isRunning()).thenAnswer(newGetter(running));
-		when(mockCqQuery.isStopped()).thenAnswer(newGetter(stopped));
+		when(mockGudCqQuery.isClosed()).thenAnswer(newGetter(closed));
+		when(mockGudCqQuery.isDurable()).thenReturn(durable);
+		when(mockGudCqQuery.isRunning()).thenAnswer(newGetter(running));
+		when(mockGudCqQuery.isStopped()).thenAnswer(newGetter(stopped));
 
-		return mockCqQuery;
+		return mockGudCqQuery;
 	}
 
-	private static Query mockQuery(String queryString) {
+	private static GudQuery mockGudQuery(String queryString) {
 
-		Query mockQuery = mock(Query.class);
+		GudQuery mockGudQuery = mock(GudQuery.class);
 
-		QueryStatistics mockQueryStatistics = mockQueryStatistics(mockQuery);
+		GudQueryStatistics mockGudQueryStatistics = mockGudQueryStatistics(mockGudQuery);
 
-		SelectResults<?> mockSelectResults = mockSelectResults();
+		GudSelectResults<?> mockGudSelectResults = mockGudSelectResults();
 
-		doReturn(queryString).when(mockQuery).getQueryString();
-		doReturn(mockQueryStatistics).when(mockQuery).getStatistics();
+		doReturn(queryString).when(mockGudQuery).getQueryString();
+		doReturn(mockGudQueryStatistics).when(mockGudQuery).getStatistics();
 
 		try {
-			doReturn(mockSelectResults).when(mockQuery).execute();
-			doReturn(mockSelectResults).when(mockQuery).execute(any(Object.class));
-			doReturn(mockSelectResults).when(mockQuery).execute(any(RegionFunctionContext.class));
-			doReturn(mockSelectResults).when(mockQuery).execute(any(RegionFunctionContext.class), any());
+			doReturn(mockGudSelectResults).when(mockGudQuery).execute();
+			doReturn(mockGudSelectResults).when(mockGudQuery).execute(any(Object[].class));
+			// TODO: GudQuery doesn't have execute(GudRegionFunctionContext) - server-side function execution
+			// doReturn(mockGudSelectResults).when(mockGudQuery).execute(any(GudRegionFunctionContext.class));
+			// doReturn(mockGudSelectResults).when(mockGudQuery).execute(any(GudRegionFunctionContext.class), any());
 		} catch (Throwable cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
-		return mockQuery;
+		return mockGudQuery;
 	}
 
-	private static QueryStatistics mockQueryStatistics(Query query) {
+	private static GudQueryStatistics mockGudQueryStatistics(GudQuery query) {
 
-		QueryStatistics mockQueryStatistics = mock(QueryStatistics.class);
+		GudQueryStatistics mockGudQueryStatistics = mock(GudQueryStatistics.class);
 
 		AtomicLong numberOfExecutions = new AtomicLong(0L);
 
@@ -1596,46 +1609,47 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		try {
 			when(query.execute()).thenAnswer(executeAnswer);
 			when(query.execute(any(Object[].class))).thenAnswer(executeAnswer);
-			when(query.execute(any(RegionFunctionContext.class))).thenAnswer(executeAnswer);
-			when(query.execute(any(RegionFunctionContext.class), any(Object[].class))).thenAnswer(executeAnswer);
+			// TODO: GudQuery doesn't have execute(GudRegionFunctionContext) - server-side function execution
+			// when(query.execute(any(GudRegionFunctionContext.class))).thenAnswer(executeAnswer);
+			// when(query.execute(any(GudRegionFunctionContext.class), any(Object[].class))).thenAnswer(executeAnswer);
 		} catch (Exception cause) {
 			throw new MockObjectInvocationException(cause);
 		}
 
-		when(mockQueryStatistics.getNumExecutions()).thenAnswer(newGetter(numberOfExecutions));
-		when(mockQueryStatistics.getTotalExecutionTime()).thenReturn(0L);
+		when(mockGudQueryStatistics.getNumExecutions()).thenAnswer(newGetter(numberOfExecutions));
+		when(mockGudQueryStatistics.getTotalExecutionTime()).thenReturn(0L);
 
-		return mockQueryStatistics;
+		return mockGudQueryStatistics;
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T> SelectResults<T> mockSelectResults() {
+	private static <T> GudSelectResults<T> mockGudSelectResults() {
 
-		ObjectType mockObjectType = mock(ObjectType.class, withSettings().lenient());
+		GudObjectType mockGudObjectType = mock(GudObjectType.class, withSettings().lenient());
 
-		doReturn(Object.class.getSimpleName()).when(mockObjectType).getSimpleClassName();
-		doReturn(false).when(mockObjectType).isCollectionType();
-		doReturn(false).when(mockObjectType).isMapType();
-		doReturn(false).when(mockObjectType).isStructType();
-		doReturn(Object.class).when(mockObjectType).resolveClass();
+		doReturn(Object.class.getSimpleName()).when(mockGudObjectType).getSimpleClassName();
+		doReturn(false).when(mockGudObjectType).isCollectionType();
+		doReturn(false).when(mockGudObjectType).isMapType();
+		doReturn(false).when(mockGudObjectType).isStructType();
+		doReturn(Object.class).when(mockGudObjectType).resolveClass();
 
-		CollectionType mockCollectionType = mock(CollectionType.class, withSettings().lenient());
+		GudCollectionType mockGudCollectionType = mock(GudCollectionType.class, withSettings().lenient());
 
-		doReturn(false).when(mockCollectionType).allowsDuplicates();
-		doReturn(mockObjectType).when(mockCollectionType).getElementType();
-		doReturn(false).when(mockCollectionType).isOrdered();
+		doReturn(false).when(mockGudCollectionType).allowsDuplicates();
+		doReturn(mockGudObjectType).when(mockGudCollectionType).getElementType();
+		doReturn(false).when(mockGudCollectionType).isOrdered();
 
-		SelectResults<T> mockSelectResults = mock(SelectResults.class, withSettings().lenient());
+		GudSelectResults<T> mockGudSelectResults = mock(GudSelectResults.class, withSettings().lenient());
 
-		doReturn(Collections.emptyList()).when(mockSelectResults).asList();
-		doReturn(Collections.emptySet()).when(mockSelectResults).asSet();
-		doReturn(mockCollectionType).when(mockSelectResults).getCollectionType();
-		doReturn(false).when(mockSelectResults).isModifiable();
-		doReturn(Collections.emptyIterator()).when(mockSelectResults).iterator();
-		doReturn(0).when(mockSelectResults).occurrences(any());
-		doNothing().when(mockSelectResults).setElementType(any(ObjectType.class));
+		doReturn(Collections.emptyList()).when(mockGudSelectResults).asList();
+		doReturn(Collections.emptySet()).when(mockGudSelectResults).asSet();
+		doReturn(mockGudCollectionType).when(mockGudSelectResults).getCollectionType();
+		doReturn(false).when(mockGudSelectResults).isModifiable();
+		doReturn(Collections.emptyIterator()).when(mockGudSelectResults).iterator();
+		doReturn(0).when(mockGudSelectResults).occurrences(any());
+		doNothing().when(mockGudSelectResults).setElementType(any(GudObjectType.class));
 
-		return mockSelectResults;
+		return mockGudSelectResults;
 	}
 
 	private static String fromClauseToRegionPath(String fromClause) {
@@ -1645,7 +1659,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		int indexOfDot = regionName.indexOf(".");
 		int indexOfSpace = regionName.indexOf(" ");
 
-		regionName = regionName.startsWith(Region.SEPARATOR) ? regionName : GemfireUtils.toRegionPath(regionName);
+		regionName = regionName.startsWith(GudRegion.SEPARATOR) ? regionName : GemfireUtils.toRegionPath(regionName);
 		regionName = indexOfSpace > -1 ? regionName.substring(0, indexOfSpace) : regionName;
 		regionName = indexOfDot > -1 ? regionName.substring(0, indexOfDot) : regionName;
 
@@ -1653,20 +1667,20 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <K, V> Region<K, V> mockRegion(RegionService regionService, String name,
-			RegionAttributes<K, V> regionAttributes) {
+	public static <K, V> GudRegion<K, V> mockRegion(GudRegionService regionService, String name,
+			GudRegionAttributes<K, V> regionAttributes) {
 
-		Region<K, V> mockRegion = mock(Region.class, withSettings().name(name).lenient());
+		GudRegion<K, V> mockRegion = mock(GudRegion.class, withSettings().name(name).lenient());
 
-		RegionAttributes<K, V> mockRegionAttributes = mockRegionAttributes(mockRegion, regionAttributes);
+		GudRegionAttributes<K, V> mockGudRegionAttributes = mockGudRegionAttributes(mockRegion, regionAttributes);
 
-		Set<Region<?, ?>> subRegions = new CopyOnWriteArraySet<>();
+		Set<GudRegion<?, ?>> subRegions = new CopyOnWriteArraySet<>();
 
 		when(mockRegion.getFullPath()).thenReturn(toRegionPath(name));
 		when(mockRegion.getName()).thenReturn(toRegionName(name));
 		when(mockRegion.getRegionService()).thenReturn(regionService);
 
-		mockRegionDataAccessOperations(mockRegion, mockRegionAttributes);
+		mockRegionDataAccessOperations(mockRegion, mockGudRegionAttributes);
 
 		doAnswer(invocation -> {
 
@@ -1691,154 +1705,154 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <K, V> RegionAttributes<K, V> mockRegionAttributes(Region<K, V> mockRegion,
-			RegionAttributes<K, V> baseRegionAttributes) {
+	private static <K, V> GudRegionAttributes<K, V> mockGudRegionAttributes(GudRegion<K, V> mockRegion,
+			GudRegionAttributes<K, V> baseGudRegionAttributes) {
 
-		AttributesMutator<K, V> mockAttributesMutator = mock(AttributesMutator.class, withSettings().lenient());
+		GudAttributesMutator<K, V> mockGudAttributesMutator = mock(GudAttributesMutator.class, withSettings().lenient());
 
-		EvictionAttributesMutator mockEvictionAttributesMutator = mock(EvictionAttributesMutator.class,
+		GudEvictionAttributesMutator mockGudEvictionAttributesMutator = mock(GudEvictionAttributesMutator.class,
 				withSettings().lenient());
 
-		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
+		GudRegionAttributes<K, V> mockGudRegionAttributes = mock(GudRegionAttributes.class, withSettings().lenient());
 
-		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
-		when(mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
-		when(mockAttributesMutator.getEvictionAttributesMutator()).thenReturn(mockEvictionAttributesMutator);
-		when(mockAttributesMutator.getRegion()).thenReturn(mockRegion);
+		when(mockRegion.getAttributes()).thenReturn(mockGudRegionAttributes);
+		when(mockRegion.getAttributesMutator()).thenReturn(mockGudAttributesMutator);
+		when(mockGudAttributesMutator.getEvictionAttributesMutator()).thenReturn(mockGudEvictionAttributesMutator);
+		when(mockGudAttributesMutator.getRegion()).thenReturn(mockRegion);
 
-		AtomicBoolean cloningEnabled = new AtomicBoolean(baseRegionAttributes.getCloningEnabled());
+		AtomicBoolean cloningEnabled = new AtomicBoolean(baseGudRegionAttributes.getCloningEnabled());
 
-		AtomicInteger evictionMaximum = new AtomicInteger(Optional.ofNullable(baseRegionAttributes.getEvictionAttributes())
-				.map(EvictionAttributes::getMaximum).orElse(EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM));
+		AtomicInteger evictionMaximum = new AtomicInteger(Optional.ofNullable(baseGudRegionAttributes.getEvictionAttributes())
+				.map(GudEvictionAttributes::getMaximum).orElse(GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM));
 
-		AtomicReference<CacheLoader<K, V>> cacheLoader = new AtomicReference<>(baseRegionAttributes.getCacheLoader());
+		AtomicReference<GudCacheLoader<K, V>> cacheLoader = new AtomicReference<>(baseGudRegionAttributes.getCacheLoader());
 
-		AtomicReference<CacheWriter<K, V>> cacheWriter = new AtomicReference<>(baseRegionAttributes.getCacheWriter());
+		AtomicReference<GudCacheWriter<K, V>> cacheWriter = new AtomicReference<>(baseGudRegionAttributes.getCacheWriter());
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
-				baseRegionAttributes.getCustomEntryIdleTimeout());
+		AtomicReference<GudCustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				baseGudRegionAttributes.getCustomEntryIdleTimeout());
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
-				baseRegionAttributes.getCustomEntryTimeToLive());
+		AtomicReference<GudCustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				baseGudRegionAttributes.getCustomEntryTimeToLive());
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
-				baseRegionAttributes.getEntryIdleTimeout());
+		AtomicReference<GudExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				baseGudRegionAttributes.getEntryIdleTimeout());
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
-				baseRegionAttributes.getEntryTimeToLive());
+		AtomicReference<GudExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				baseGudRegionAttributes.getEntryTimeToLive());
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
-				baseRegionAttributes.getRegionIdleTimeout());
+		AtomicReference<GudExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				baseGudRegionAttributes.getRegionIdleTimeout());
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
-				baseRegionAttributes.getRegionTimeToLive());
+		AtomicReference<GudExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				baseGudRegionAttributes.getRegionTimeToLive());
 
-		List<CacheListener<K, V>> cacheListeners = new CopyOnWriteArrayList<>(
-				nullSafeArray(baseRegionAttributes.getCacheListeners(), CacheListener.class));
+		List<GudCacheListener<K, V>> cacheListeners = new CopyOnWriteArrayList<>(
+				nullSafeArray(baseGudRegionAttributes.getCacheListeners(), GudCacheListener.class));
 
-		doAnswer(newAdder(cacheListeners, null)).when(mockAttributesMutator).addCacheListener(any(CacheListener.class));
+		doAnswer(newAdder(cacheListeners, null)).when(mockGudAttributesMutator).addCacheListener(any(GudCacheListener.class));
 
-		when(mockAttributesMutator.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
+		when(mockGudAttributesMutator.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
 
 		doAnswer(invocation -> {
 
-			CacheListener<K, V>[] cacheListenersArgument = nullSafeArray(invocation.getArgument(0), CacheListener.class);
+			GudCacheListener<K, V>[] cacheListenersArgument = nullSafeArray(invocation.getArgument(0), GudCacheListener.class);
 
 			Arrays.stream(cacheListenersArgument)
-					.forEach(it -> Assert.notNull(it, "The CacheListener[] must not contain null elements"));
+					.forEach(it -> Assert.notNull(it, "The GudCacheListener[] must not contain null elements"));
 
-			cacheListeners.forEach(CacheListener::close);
+			cacheListeners.forEach(GudCacheListener::close);
 			cacheListeners.addAll(Arrays.asList(cacheListenersArgument));
 
 			return null;
 
-		}).when(mockAttributesMutator).initCacheListeners(any(CacheListener[].class));
+		}).when(mockGudAttributesMutator).initCacheListeners(any(GudCacheListener[].class));
 
-		doAnswer(invocation -> cacheListeners.remove(invocation.getArgument(0))).when(mockAttributesMutator)
-				.removeCacheListener(any(CacheListener.class));
+		doAnswer(invocation -> cacheListeners.remove(invocation.getArgument(0))).when(mockGudAttributesMutator)
+				.removeCacheListener(any(GudCacheListener.class));
 
-		doAnswer(newSetter(cacheLoader)).when(mockAttributesMutator).setCacheLoader(any(CacheLoader.class));
+		doAnswer(newSetter(cacheLoader)).when(mockGudAttributesMutator).setCacheLoader(any(GudCacheLoader.class));
 
-		doAnswer(newSetter(cacheWriter)).when(mockAttributesMutator).setCacheWriter(any(CacheWriter.class));
+		doAnswer(newSetter(cacheWriter)).when(mockGudAttributesMutator).setCacheWriter(any(GudCacheWriter.class));
 
-		doAnswer(newSetter(cloningEnabled, null)).when(mockAttributesMutator).setCloningEnabled(anyBoolean());
+		doAnswer(newSetter(cloningEnabled, null)).when(mockGudAttributesMutator).setCloningEnabled(anyBoolean());
 
-		doAnswer(newSetter(customEntryIdleTimeout)).when(mockAttributesMutator)
-				.setCustomEntryIdleTimeout(any(CustomExpiry.class));
+		doAnswer(newSetter(customEntryIdleTimeout)).when(mockGudAttributesMutator)
+				.setCustomEntryIdleTimeout(any(GudCustomExpiry.class));
 
-		doAnswer(newSetter(customEntryTimeToLive)).when(mockAttributesMutator)
-				.setCustomEntryTimeToLive(any(CustomExpiry.class));
+		doAnswer(newSetter(customEntryTimeToLive)).when(mockGudAttributesMutator)
+				.setCustomEntryTimeToLive(any(GudCustomExpiry.class));
 
-		doAnswer(newSetter(entryIdleTimeout)).when(mockAttributesMutator)
-				.setEntryIdleTimeout(any(ExpirationAttributes.class));
+		doAnswer(newSetter(entryIdleTimeout)).when(mockGudAttributesMutator)
+				.setEntryIdleTimeout(any(GudExpirationAttributes.class));
 
-		doAnswer(newSetter(entryTimeToLive)).when(mockAttributesMutator)
-				.setEntryTimeToLive(any(ExpirationAttributes.class));
+		doAnswer(newSetter(entryTimeToLive)).when(mockGudAttributesMutator)
+				.setEntryTimeToLive(any(GudExpirationAttributes.class));
 
-		doAnswer(newSetter(regionIdleTimeout)).when(mockAttributesMutator)
-				.setRegionIdleTimeout(any(ExpirationAttributes.class));
+		doAnswer(newSetter(regionIdleTimeout)).when(mockGudAttributesMutator)
+				.setRegionIdleTimeout(any(GudExpirationAttributes.class));
 
-		doAnswer(newSetter(regionTimeToLive)).when(mockAttributesMutator)
-				.setRegionTimeToLive(any(ExpirationAttributes.class));
+		doAnswer(newSetter(regionTimeToLive)).when(mockGudAttributesMutator)
+				.setRegionTimeToLive(any(GudExpirationAttributes.class));
 
-		// Mock EvictionAttributesMutator
-		doAnswer(newSetter(evictionMaximum, null)).when(mockEvictionAttributesMutator).setMaximum(anyInt());
+		// Mock GudEvictionAttributesMutator
+		doAnswer(newSetter(evictionMaximum, null)).when(mockGudEvictionAttributesMutator).setMaximum(anyInt());
 
-		// Mock RegionAttributes
-		when(mockRegionAttributes.getCacheListeners())
-				.thenAnswer(invocation -> cacheListeners.toArray(new CacheListener[cacheListeners.size()]));
+		// Mock GudRegionAttributes
+		when(mockGudRegionAttributes.getCacheListeners())
+				.thenAnswer(invocation -> cacheListeners.toArray(new GudCacheListener[cacheListeners.size()]));
 
-		when(mockRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader::get));
-		when(mockRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter::get));
-		when(mockRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
-		when(mockRegionAttributes.getCompressor()).thenAnswer(newGetter(baseRegionAttributes::getCompressor));
-		when(mockRegionAttributes.getConcurrencyChecksEnabled())
-				.thenAnswer(newGetter(baseRegionAttributes::getConcurrencyChecksEnabled));
-		when(mockRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(baseRegionAttributes::getConcurrencyLevel));
-		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout::get));
-		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive::get));
-		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(baseRegionAttributes::getDataPolicy));
-		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(baseRegionAttributes::getDiskStoreName));
-		when(mockRegionAttributes.getEnableSubscriptionConflation())
-				.thenAnswer(newGetter(baseRegionAttributes::getEnableSubscriptionConflation));
-		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout::get));
-		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive::get));
+		when(mockGudRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader::get));
+		when(mockGudRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter::get));
+		when(mockGudRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled::get));
+		when(mockGudRegionAttributes.getCompressor()).thenAnswer(newGetter(baseGudRegionAttributes::getCompressor));
+		when(mockGudRegionAttributes.getConcurrencyChecksEnabled())
+				.thenAnswer(newGetter(baseGudRegionAttributes::getConcurrencyChecksEnabled));
+		when(mockGudRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(baseGudRegionAttributes::getConcurrencyLevel));
+		when(mockGudRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout::get));
+		when(mockGudRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive::get));
+		when(mockGudRegionAttributes.getDataPolicy()).thenAnswer(newGetter(baseGudRegionAttributes::getDataPolicy));
+		when(mockGudRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(baseGudRegionAttributes::getDiskStoreName));
+		when(mockGudRegionAttributes.getEnableSubscriptionConflation())
+				.thenAnswer(newGetter(baseGudRegionAttributes::getEnableSubscriptionConflation));
+		when(mockGudRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout::get));
+		when(mockGudRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive::get));
 
-		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(invocation -> {
+		when(mockGudRegionAttributes.getEvictionAttributes()).thenAnswer(invocation -> {
 
-			EvictionAttributes mockEvictionAttibutes = mock(EvictionAttributes.class);
-			EvictionAttributes regionEvictionAttributes = baseRegionAttributes.getEvictionAttributes();
+			GudEvictionAttributes mockEvictionAttibutes = mock(GudEvictionAttributes.class);
+			GudEvictionAttributes regionGudEvictionAttributes = baseGudRegionAttributes.getEvictionAttributes();
 
-			when(mockEvictionAttibutes.getAction()).thenAnswer(newGetter(regionEvictionAttributes::getAction));
-			when(mockEvictionAttibutes.getAlgorithm()).thenAnswer(newGetter(regionEvictionAttributes::getAlgorithm));
+			when(mockEvictionAttibutes.getAction()).thenAnswer(newGetter(regionGudEvictionAttributes::getAction));
+			when(mockEvictionAttibutes.getAlgorithm()).thenAnswer(newGetter(regionGudEvictionAttributes::getAlgorithm));
 			when(mockEvictionAttibutes.getMaximum()).thenAnswer(newGetter(evictionMaximum));
-			when(mockEvictionAttibutes.getObjectSizer()).thenAnswer(newGetter(regionEvictionAttributes::getObjectSizer));
+			when(mockEvictionAttibutes.getObjectSizer()).thenAnswer(newGetter(regionGudEvictionAttributes::getObjectSizer));
 
 			return mockEvictionAttibutes;
 		});
 
-		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(baseRegionAttributes::getInitialCapacity));
-		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseRegionAttributes::getKeyConstraint));
-		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseRegionAttributes::getLoadFactor));
-		when(mockRegionAttributes.getMembershipAttributes())
-				.thenAnswer(newGetter(baseRegionAttributes::getMembershipAttributes));
-		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(baseRegionAttributes::getPoolName));
-		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
-		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive::get));
-		when(mockRegionAttributes.getScope()).thenAnswer(newGetter(baseRegionAttributes::getScope));
-		when(mockRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(baseRegionAttributes::getStatisticsEnabled));
-		when(mockRegionAttributes.getSubscriptionAttributes())
-				.thenAnswer(newGetter(baseRegionAttributes::getSubscriptionAttributes));
-		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(baseRegionAttributes::getValueConstraint));
-		when(mockRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(baseRegionAttributes::isDiskSynchronous));
-		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(baseRegionAttributes::isLockGrantor));
+		when(mockGudRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(baseGudRegionAttributes::getInitialCapacity));
+		when(mockGudRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(baseGudRegionAttributes::getKeyConstraint));
+		when(mockGudRegionAttributes.getLoadFactor()).thenAnswer(newGetter(baseGudRegionAttributes::getLoadFactor));
+		when(mockGudRegionAttributes.getMembershipAttributes())
+				.thenAnswer(newGetter(baseGudRegionAttributes::getMembershipAttributes));
+		when(mockGudRegionAttributes.getPoolName()).thenAnswer(newGetter(baseGudRegionAttributes::getPoolName));
+		when(mockGudRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout::get));
+		when(mockGudRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive::get));
+		when(mockGudRegionAttributes.getScope()).thenAnswer(newGetter(baseGudRegionAttributes::getScope));
+		when(mockGudRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(baseGudRegionAttributes::getStatisticsEnabled));
+		when(mockGudRegionAttributes.getSubscriptionAttributes())
+				.thenAnswer(newGetter(baseGudRegionAttributes::getSubscriptionAttributes));
+		when(mockGudRegionAttributes.getValueConstraint()).thenAnswer(newGetter(baseGudRegionAttributes::getValueConstraint));
+		when(mockGudRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(baseGudRegionAttributes::isDiskSynchronous));
+		when(mockGudRegionAttributes.isLockGrantor()).thenAnswer(newGetter(baseGudRegionAttributes::isLockGrantor));
 
-		return mockRegionAttributes;
+		return mockGudRegionAttributes;
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <K, V> void mockRegionDataAccessOperations(Region<K, V> mockRegion,
-			RegionAttributes<K, V> mockRegionAttributes) {
+	private static <K, V> void mockRegionDataAccessOperations(GudRegion<K, V> mockRegion,
+			GudRegionAttributes<K, V> mockGudRegionAttributes) {
 
 		Map<K, V> data = new ConcurrentHashMap<>();
 
@@ -1885,15 +1899,15 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			if (value == null) {
 
-				value = Optional.ofNullable(mockRegionAttributes.getCacheLoader()).map(cacheLoader -> {
+				value = Optional.ofNullable(mockGudRegionAttributes.getCacheLoader()).map(cacheLoader -> {
 
-					LoaderHelper<K, V> mockLoaderHelper = mock(LoaderHelper.class, withSettings().lenient());
+					GudLoaderHelper<K, V> mockGudLoaderHelper = mock(GudLoaderHelper.class, withSettings().lenient());
 
-					when(mockLoaderHelper.getArgument()).thenReturn(null);
-					when(mockLoaderHelper.getKey()).thenReturn(key);
-					when(mockLoaderHelper.getRegion()).thenReturn(mockRegion);
+					when(mockGudLoaderHelper.getArgument()).thenReturn(null);
+					when(mockGudLoaderHelper.getKey()).thenReturn(key);
+					when(mockGudLoaderHelper.getRegion()).thenReturn(mockRegion);
 
-					return cacheLoader.load(mockLoaderHelper);
+					return cacheLoader.load(mockGudLoaderHelper);
 
 				}).map(loadedValue -> {
 
@@ -1958,20 +1972,20 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			K key = invocation.getArgument(0);
 
 			if (!data.containsKey(key)) {
-				throw new EntryNotFoundException(String.format("Entry with key [%s] not found", key));
+				throw new GudEntryNotFoundException(String.format("Entry with key [%s] not found", key));
 			}
 
 			if (invalidatedKeys.add(key)) {
 
-				EntryEvent<K, V> mockEntryEvent = mock(EntryEvent.class, withSettings().lenient());
+				GudEntryEvent<K, V> mockGudEntryEvent = mock(GudEntryEvent.class, withSettings().lenient());
 
-				when(mockEntryEvent.getKey()).thenReturn(key);
-				when(mockEntryEvent.getNewValue()).thenReturn(null);
-				when(mockEntryEvent.getOldValue()).thenReturn(data.get(key));
-				when(mockEntryEvent.getRegion()).thenReturn(mockRegion);
+				when(mockGudEntryEvent.getKey()).thenReturn(key);
+				when(mockGudEntryEvent.getNewValue()).thenReturn(null);
+				when(mockGudEntryEvent.getOldValue()).thenReturn(data.get(key));
+				when(mockGudEntryEvent.getRegion()).thenReturn(mockRegion);
 
-				Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
-						.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterInvalidate(mockEntryEvent));
+				Arrays.stream(ArrayUtils.nullSafeArray(mockGudRegionAttributes.getCacheListeners(), GudCacheListener.class))
+						.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterInvalidate(mockGudEntryEvent));
 			}
 
 			return null;
@@ -2006,38 +2020,38 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			boolean entryExists = data.containsKey(key);
 
-			EntryEvent<K, V> mockEntryEvent = mock(EntryEvent.class, withSettings().lenient());
+			GudEntryEvent<K, V> mockGudEntryEvent = mock(GudEntryEvent.class, withSettings().lenient());
 
 			V entryEventValue = invalidatedKeys.contains(key) ? null : data.get(key);
 
-			when(mockEntryEvent.getKey()).thenReturn(key);
-			when(mockEntryEvent.getNewValue()).thenReturn(newValue);
-			when(mockEntryEvent.getOldValue()).thenReturn(entryEventValue);
-			when(mockEntryEvent.getRegion()).thenReturn(mockRegion);
+			when(mockGudEntryEvent.getKey()).thenReturn(key);
+			when(mockGudEntryEvent.getNewValue()).thenReturn(newValue);
+			when(mockGudEntryEvent.getOldValue()).thenReturn(entryEventValue);
+			when(mockGudEntryEvent.getRegion()).thenReturn(mockRegion);
 
-			CacheWriter<K, V> cacheWriter = mockRegionAttributes.getCacheWriter();
+			GudCacheWriter<K, V> cacheWriter = mockGudRegionAttributes.getCacheWriter();
 
 			if (cacheWriter != null) {
 				try {
 					if (entryExists) {
-						cacheWriter.beforeUpdate(mockEntryEvent);
+						cacheWriter.beforeUpdate(mockGudEntryEvent);
 					} else {
-						cacheWriter.beforeCreate(mockEntryEvent);
+						cacheWriter.beforeCreate(mockGudEntryEvent);
 					}
 				} catch (Throwable cause) {
-					throw new CacheWriterException("Create/Update Error", cause);
+					throw new GudCacheWriterException("Create/Update Error", cause);
 				}
 			}
 
 			V existingValue = data.put(key, newValue);
 
-			Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
+			Arrays.stream(ArrayUtils.nullSafeArray(mockGudRegionAttributes.getCacheListeners(), GudCacheListener.class))
 					.filter(Objects::nonNull).forEach(cacheListener -> {
 
 						if (entryExists) {
-							cacheListener.afterUpdate(mockEntryEvent);
+							cacheListener.afterUpdate(mockGudEntryEvent);
 						} else {
-							cacheListener.afterCreate(mockEntryEvent);
+							cacheListener.afterCreate(mockGudEntryEvent);
 						}
 					});
 
@@ -2064,29 +2078,29 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 			K key = invocation.getArgument(0);
 
-			EntryEvent<K, V> mockEntryEvent = mock(EntryEvent.class, withSettings().lenient());
+			GudEntryEvent<K, V> mockGudEntryEvent = mock(GudEntryEvent.class, withSettings().lenient());
 
 			V entryEventValue = invalidatedKeys.contains(key) ? null : data.get(key);
 
-			when(mockEntryEvent.getKey()).thenReturn(key);
-			when(mockEntryEvent.getNewValue()).thenReturn(null);
-			when(mockEntryEvent.getOldValue()).thenReturn(entryEventValue);
-			when(mockEntryEvent.getRegion()).thenReturn(mockRegion);
+			when(mockGudEntryEvent.getKey()).thenReturn(key);
+			when(mockGudEntryEvent.getNewValue()).thenReturn(null);
+			when(mockGudEntryEvent.getOldValue()).thenReturn(entryEventValue);
+			when(mockGudEntryEvent.getRegion()).thenReturn(mockRegion);
 
-			CacheWriter<K, V> cacheWriter = mockRegionAttributes.getCacheWriter();
+			GudCacheWriter<K, V> cacheWriter = mockGudRegionAttributes.getCacheWriter();
 
 			if (cacheWriter != null) {
 				try {
-					cacheWriter.beforeDestroy(mockEntryEvent);
+					cacheWriter.beforeDestroy(mockGudEntryEvent);
 				} catch (Throwable cause) {
-					throw new CacheWriterException("Destroy Error", cause);
+					throw new GudCacheWriterException("Destroy Error", cause);
 				}
 			}
 
 			V value = data.remove(key);
 
-			Arrays.stream(ArrayUtils.nullSafeArray(mockRegionAttributes.getCacheListeners(), CacheListener.class))
-					.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterDestroy(mockEntryEvent));
+			Arrays.stream(ArrayUtils.nullSafeArray(mockGudRegionAttributes.getCacheListeners(), GudCacheListener.class))
+					.filter(Objects::nonNull).forEach(cacheListener -> cacheListener.afterDestroy(mockGudEntryEvent));
 
 			return invalidatedKeys.remove(key) ? null : value;
 
@@ -2117,12 +2131,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		doAnswer(invocation -> Collections.unmodifiableCollection(data.values())).when(mockRegion).values();
 	}
 
-	public static <K, V> Region<K, V> mockSubRegion(Region<K, V> parent, String name,
-			RegionAttributes<K, V> regionAttributes) {
+	public static <K, V> GudRegion<K, V> mockSubRegion(GudRegion<K, V> parent, String name,
+			GudRegionAttributes<K, V> regionAttributes) {
 
 		String subRegionName = String.format("%1$s%2$s", parent.getFullPath(), toRegionPath(name));
 
-		Region<K, V> mockSubRegion = mockRegion(parent.getRegionService(), subRegionName, regionAttributes);
+		GudRegion<K, V> mockSubRegion = mockRegion(parent.getRegionService(), subRegionName, regionAttributes);
 
 		doReturn(parent).when(mockSubRegion).getParentRegion();
 
@@ -2131,266 +2145,266 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		return mockSubRegion;
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache) {
-		return mockRegionFactory(mockCache, null, null);
+	public static <K, V> GudRegionFactory<K, V> mockGudRegionFactory(GudClientCache mockCache) {
+		return mockGudRegionFactory(mockCache, null, null);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache,
-			RegionAttributes<K, V> regionAttributes) {
+	public static <K, V> GudRegionFactory<K, V> mockGudRegionFactory(GudClientCache mockCache,
+			GudRegionAttributes<K, V> regionAttributes) {
 
-		return mockRegionFactory(mockCache, regionAttributes, null);
+		return mockGudRegionFactory(mockCache, regionAttributes, null);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache, RegionShortcut regionShortcut) {
-		return mockRegionFactory(mockCache, resolveRegionAttributesFromRegionShortcut(regionShortcut), regionShortcut);
+	public static <K, V> GudRegionFactory<K, V> mockGudRegionFactory(GudClientCache mockCache, GudRegionShortcut regionShortcut) {
+		return mockGudRegionFactory(mockCache, resolveGudRegionAttributesFromGudRegionShortcut(regionShortcut), regionShortcut);
 	}
 
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache, String regionAttributesId) {
-		return mockRegionFactory(mockCache, resolveRegionAttributes(regionAttributesId), null);
+	public static <K, V> GudRegionFactory<K, V> mockGudRegionFactory(GudClientCache mockCache, String regionAttributesId) {
+		return mockGudRegionFactory(mockCache, resolveGudRegionAttributes(regionAttributesId), null);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <K, V> RegionFactory<K, V> mockRegionFactory(ClientCache mockCache,
-			RegionAttributes<K, V> regionAttributes, RegionShortcut regionShortcut) {
+	public static <K, V> GudRegionFactory<K, V> mockGudRegionFactory(GudClientCache mockCache,
+			GudRegionAttributes<K, V> regionAttributes, GudRegionShortcut regionShortcut) {
 
-		RegionFactory<K, V> mockRegionFactory = mock(RegionFactory.class, mockObjectIdentifier("MockRegionFactory"));
+		GudRegionFactory<K, V> mockGudRegionFactory = mock(GudRegionFactory.class, mockObjectIdentifier("MockGudRegionFactory"));
 
-		Optional<RegionAttributes<K, V>> optionalRegionAttributes = Optional.ofNullable(regionAttributes);
+		Optional<GudRegionAttributes<K, V>> optionalGudRegionAttributes = Optional.ofNullable(regionAttributes);
 
-		ExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = new ExpirationAttributes(0, ExpirationAction.INVALIDATE);
+		GudExpirationAttributes DEFAULT_EXPIRATION_ATTRIBUTES = GudExpirationAttributes.of(0, GudExpirationAction.INVALIDATE);
 
 		AtomicBoolean cloningEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getCloningEnabled).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCloningEnabled).orElse(false));
 
 		AtomicBoolean concurrencyChecksEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getConcurrencyChecksEnabled).orElse(true));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getConcurrencyChecksEnabled).orElse(true));
 
 		AtomicBoolean diskSynchronous = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::isDiskSynchronous).orElse(true));
+				optionalGudRegionAttributes.map(GudRegionAttributes::isDiskSynchronous).orElse(true));
 
 		AtomicBoolean enableSubscriptionConflation = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getEnableSubscriptionConflation).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getEnableSubscriptionConflation).orElse(false));
 
 		AtomicBoolean ignoreJta = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getIgnoreJTA).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getIgnoreJTA).orElse(false));
 
 		AtomicBoolean lockGrantor = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::isLockGrantor).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::isLockGrantor).orElse(false));
 
 		AtomicBoolean statisticsEnabled = new AtomicBoolean(
-				optionalRegionAttributes.map(RegionAttributes::getStatisticsEnabled).orElse(false));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getStatisticsEnabled).orElse(false));
 
 		AtomicInteger concurrencyLevel = new AtomicInteger(
-				optionalRegionAttributes.map(RegionAttributes::getConcurrencyLevel).orElse(16));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getConcurrencyLevel).orElse(16));
 
 		AtomicInteger initialCapacity = new AtomicInteger(
-				optionalRegionAttributes.map(RegionAttributes::getInitialCapacity).orElse(16));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getInitialCapacity).orElse(16));
 
-		AtomicReference<CacheLoader> cacheLoader = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCacheLoader).orElse(null));
+		AtomicReference<GudCacheLoader> cacheLoader = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCacheLoader).orElse(null));
 
-		AtomicReference<CacheWriter> cacheWriter = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCacheWriter).orElse(null));
+		AtomicReference<GudCacheWriter> cacheWriter = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCacheWriter).orElse(null));
 
-		AtomicReference<Compressor> compressor = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCompressor).orElse(null));
+		AtomicReference<GudCompressor> compressor = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCompressor).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCustomEntryIdleTimeout).orElse(null));
+		AtomicReference<GudCustomExpiry<K, V>> customEntryIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCustomEntryIdleTimeout).orElse(null));
 
-		AtomicReference<CustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getCustomEntryTimeToLive).orElse(null));
+		AtomicReference<GudCustomExpiry<K, V>> customEntryTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCustomEntryTimeToLive).orElse(null));
 
-		AtomicReference<DataPolicy> dataPolicy = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getDataPolicy).orElseGet(() -> convert(regionShortcut)));
+		AtomicReference<GudDataPolicy> dataPolicy = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getDataPolicy).orElseGet(() -> convert(regionShortcut)));
 
 		AtomicReference<String> diskStoreName = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getDiskStoreName).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getDiskStoreName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> entryIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getEntryIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> entryTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> entryTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getEntryTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<EvictionAttributes> evictionAttributes = new AtomicReference<>(optionalRegionAttributes
-				.map(RegionAttributes::getEvictionAttributes).orElseGet(EvictionAttributes::createLRUEntryAttributes));
+		AtomicReference<GudEvictionAttributes> evictionAttributes = new AtomicReference<>(optionalGudRegionAttributes
+				.map(GudRegionAttributes::getEvictionAttributes).orElseGet(GudEvictionAttributes::createLRUEntryAttributes));
 
 		AtomicReference<Class<K>> keyConstraint = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getKeyConstraint).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getKeyConstraint).orElse(null));
 
 		AtomicReference<Float> loadFactor = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getLoadFactor).orElse(0.75f));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getLoadFactor).orElse(0.75f));
 
-		AtomicReference<MembershipAttributes> membershipAttributes = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getMembershipAttributes).orElseGet(MembershipAttributes::new));
+		AtomicReference<GudMembershipAttributes> membershipAttributes = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getMembershipAttributes).orElseGet(GudMembershipAttributes::new));
 
 		AtomicReference<String> poolName = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getPoolName).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getPoolName).orElse(null));
 
-		AtomicReference<ExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> regionIdleTimeout = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getRegionIdleTimeout).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<ExpirationAttributes> regionTimeToLive = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
+		AtomicReference<GudExpirationAttributes> regionTimeToLive = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
-		AtomicReference<Scope> scope = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getScope).orElse(Scope.DISTRIBUTED_NO_ACK));
+		AtomicReference<GudScope> scope = new AtomicReference<>(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getScope).orElse(GudScope.DISTRIBUTED_NO_ACK));
 
-		AtomicReference<SubscriptionAttributes> subscriptionAttributes = new AtomicReference<>(optionalRegionAttributes
-				.map(RegionAttributes::getSubscriptionAttributes).orElseGet(SubscriptionAttributes::new));
+		AtomicReference<GudSubscriptionAttributes> subscriptionAttributes = new AtomicReference<>(optionalGudRegionAttributes
+				.map(GudRegionAttributes::getSubscriptionAttributes).orElseGet(() -> GudSubscriptionAttributes.create(GudInterestPolicy.DEFAULT)));
 
 		AtomicReference<Class<V>> valueConstraint = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getValueConstraint).orElse(null));
+				optionalGudRegionAttributes.map(GudRegionAttributes::getValueConstraint).orElse(null));
 
-		List<CacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
-				optionalRegionAttributes.map(RegionAttributes::getCacheListeners).orElse(null), CacheListener.class)));
+		List<GudCacheListener> cacheListeners = new ArrayList<>(Arrays.asList(nullSafeArray(
+				optionalGudRegionAttributes.map(GudRegionAttributes::getCacheListeners).orElse(null), GudCacheListener.class)));
 
-		when(mockRegionFactory.addCacheListener(any(CacheListener.class)))
-				.thenAnswer(newAdder(cacheListeners, mockRegionFactory));
+		when(mockGudRegionFactory.addCacheListener(any(GudCacheListener.class)))
+				.thenAnswer(newAdder(cacheListeners, mockGudRegionFactory));
 
-		when(mockRegionFactory.initCacheListeners(any(CacheListener[].class))).thenAnswer(invocation -> {
+		when(mockGudRegionFactory.initCacheListeners(any(GudCacheListener[].class))).thenAnswer(invocation -> {
 			cacheListeners.clear();
 			Collections.addAll(cacheListeners, invocation.getArgument(0));
-			return mockRegionFactory;
+			return mockGudRegionFactory;
 		});
 
-		when(mockRegionFactory.setCacheLoader(any(CacheLoader.class)))
-				.thenAnswer(newSetter(cacheLoader, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setCacheLoader(any(GudCacheLoader.class)))
+				.thenAnswer(newSetter(cacheLoader, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setCacheWriter(any(CacheWriter.class)))
-				.thenAnswer(newSetter(cacheWriter, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setCacheWriter(any(GudCacheWriter.class)))
+				.thenAnswer(newSetter(cacheWriter, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setCloningEnabled(anyBoolean())).thenAnswer(newSetter(cloningEnabled, mockRegionFactory));
+		when(mockGudRegionFactory.setCloningEnabled(anyBoolean())).thenAnswer(newSetter(cloningEnabled, mockGudRegionFactory));
 
-		when(mockRegionFactory.setCompressor(any(Compressor.class)))
-				.thenAnswer(newSetter(compressor, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setCompressor(any(GudCompressor.class)))
+				.thenAnswer(newSetter(compressor, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setConcurrencyChecksEnabled(anyBoolean()))
-				.then(newSetter(concurrencyChecksEnabled, mockRegionFactory));
+		when(mockGudRegionFactory.setConcurrencyChecksEnabled(anyBoolean()))
+				.then(newSetter(concurrencyChecksEnabled, mockGudRegionFactory));
 
-		when(mockRegionFactory.setConcurrencyLevel(anyInt())).thenAnswer(newSetter(concurrencyLevel, mockRegionFactory));
+		when(mockGudRegionFactory.setConcurrencyLevel(anyInt())).thenAnswer(newSetter(concurrencyLevel, mockGudRegionFactory));
 
-		when(mockRegionFactory.setCustomEntryIdleTimeout(any(CustomExpiry.class)))
-				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setCustomEntryIdleTimeout(any(GudCustomExpiry.class)))
+				.thenAnswer(newSetter(customEntryIdleTimeout, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setCustomEntryTimeToLive(any(CustomExpiry.class)))
-				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setCustomEntryTimeToLive(any(GudCustomExpiry.class)))
+				.thenAnswer(newSetter(customEntryTimeToLive, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setDataPolicy(any(DataPolicy.class)))
-				.thenAnswer(newSetter(dataPolicy, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setDataPolicy(any(GudDataPolicy.class)))
+				.thenAnswer(newSetter(dataPolicy, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setDiskStoreName(anyString())).thenAnswer(newSetter(diskStoreName, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setDiskStoreName(anyString())).thenAnswer(newSetter(diskStoreName, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setDiskSynchronous(anyBoolean())).thenAnswer(newSetter(diskSynchronous, mockRegionFactory));
+		when(mockGudRegionFactory.setDiskSynchronous(anyBoolean())).thenAnswer(newSetter(diskSynchronous, mockGudRegionFactory));
 
-		when(mockRegionFactory.setEnableSubscriptionConflation(anyBoolean()))
-				.thenAnswer(newSetter(enableSubscriptionConflation, mockRegionFactory));
+		when(mockGudRegionFactory.setEnableSubscriptionConflation(anyBoolean()))
+				.thenAnswer(newSetter(enableSubscriptionConflation, mockGudRegionFactory));
 
-		when(mockRegionFactory.setEntryIdleTimeout(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(entryIdleTimeout, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setEntryIdleTimeout(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(entryIdleTimeout, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setEntryTimeToLive(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(entryTimeToLive, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setEntryTimeToLive(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(entryTimeToLive, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setEvictionAttributes(any(EvictionAttributes.class)))
-				.thenAnswer(newSetter(evictionAttributes, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setEvictionAttributes(any(GudEvictionAttributes.class)))
+				.thenAnswer(newSetter(evictionAttributes, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setIgnoreJTA(anyBoolean())).thenAnswer(newSetter(ignoreJta, mockRegionFactory));
+		when(mockGudRegionFactory.setIgnoreJTA(anyBoolean())).thenAnswer(newSetter(ignoreJta, mockGudRegionFactory));
 
-		when(mockRegionFactory.setInitialCapacity(anyInt())).thenAnswer(newSetter(initialCapacity, mockRegionFactory));
+		when(mockGudRegionFactory.setInitialCapacity(anyInt())).thenAnswer(newSetter(initialCapacity, mockGudRegionFactory));
 
-		when(mockRegionFactory.setKeyConstraint(any(Class.class)))
-				.thenAnswer(newSetter(keyConstraint, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setKeyConstraint(any(Class.class)))
+				.thenAnswer(newSetter(keyConstraint, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setLoadFactor(anyFloat())).thenAnswer(newSetter(loadFactor, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setLoadFactor(anyFloat())).thenAnswer(newSetter(loadFactor, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setLockGrantor(anyBoolean())).thenAnswer(newSetter(lockGrantor, mockRegionFactory));
+		when(mockGudRegionFactory.setLockGrantor(anyBoolean())).thenAnswer(newSetter(lockGrantor, mockGudRegionFactory));
 
-		when(mockRegionFactory.setMembershipAttributes(any(MembershipAttributes.class)))
-				.thenAnswer(newSetter(membershipAttributes, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setMembershipAttributes(any(GudMembershipAttributes.class)))
+				.thenAnswer(newSetter(membershipAttributes, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setPoolName(anyString())).thenAnswer(newSetter(poolName, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setPoolName(anyString())).thenAnswer(newSetter(poolName, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setRegionIdleTimeout(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(regionIdleTimeout, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setRegionIdleTimeout(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(regionIdleTimeout, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setRegionTimeToLive(any(ExpirationAttributes.class)))
-				.thenAnswer(newSetter(regionTimeToLive, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setRegionTimeToLive(any(GudExpirationAttributes.class)))
+				.thenAnswer(newSetter(regionTimeToLive, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setScope(any(Scope.class))).thenAnswer(newSetter(scope, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setScope(any(GudScope.class))).thenAnswer(newSetter(scope, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setStatisticsEnabled(anyBoolean()))
-				.thenAnswer(newSetter(statisticsEnabled, mockRegionFactory));
+		when(mockGudRegionFactory.setStatisticsEnabled(anyBoolean()))
+				.thenAnswer(newSetter(statisticsEnabled, mockGudRegionFactory));
 
-		when(mockRegionFactory.setSubscriptionAttributes(any(SubscriptionAttributes.class)))
-				.thenAnswer(newSetter(subscriptionAttributes, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setSubscriptionAttributes(any(GudSubscriptionAttributes.class)))
+				.thenAnswer(newSetter(subscriptionAttributes, () -> mockGudRegionFactory));
 
-		when(mockRegionFactory.setValueConstraint(any(Class.class)))
-				.thenAnswer(newSetter(valueConstraint, () -> mockRegionFactory));
+		when(mockGudRegionFactory.setValueConstraint(any(Class.class)))
+				.thenAnswer(newSetter(valueConstraint, () -> mockGudRegionFactory));
 
-		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class,
-				mockObjectIdentifier("MockRegionAttributes"));
+		GudRegionAttributes<K, V> mockGudRegionAttributes = mock(GudRegionAttributes.class,
+				mockObjectIdentifier("MockGudRegionAttributes"));
 
-		when(mockRegionAttributes.getCacheListeners())
-				.thenAnswer(newGetter(() -> cacheListeners.toArray(new CacheListener[cacheListeners.size()])));
+		when(mockGudRegionAttributes.getCacheListeners())
+				.thenAnswer(newGetter(() -> cacheListeners.toArray(new GudCacheListener[cacheListeners.size()])));
 
-		when(mockRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader));
-		when(mockRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter));
-		when(mockRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled));
-		when(mockRegionAttributes.getCompressor()).thenAnswer(newGetter(compressor));
-		when(mockRegionAttributes.getConcurrencyChecksEnabled()).thenAnswer(newGetter(concurrencyChecksEnabled));
-		when(mockRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(concurrencyLevel));
-		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout));
-		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive));
-		when(mockRegionAttributes.getDataPolicy()).thenAnswer(newGetter(dataPolicy));
-		when(mockRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
-		when(mockRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
-		when(mockRegionAttributes.getEnableSubscriptionConflation()).thenAnswer(newGetter(enableSubscriptionConflation));
-		when(mockRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
-		when(mockRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
-		when(mockRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
-		when(mockRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
-		when(mockRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
-		when(mockRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
-		when(mockRegionAttributes.isLockGrantor()).thenAnswer(newGetter(lockGrantor));
-		when(mockRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(membershipAttributes));
-		when(mockRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
-		when(mockRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
-		when(mockRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive));
-		when(mockRegionAttributes.getScope()).thenAnswer(newGetter(scope));
-		when(mockRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(statisticsEnabled));
-		when(mockRegionAttributes.getSubscriptionAttributes()).thenAnswer(newGetter(subscriptionAttributes));
-		when(mockRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
+		when(mockGudRegionAttributes.getCacheLoader()).thenAnswer(newGetter(cacheLoader));
+		when(mockGudRegionAttributes.getCacheWriter()).thenAnswer(newGetter(cacheWriter));
+		when(mockGudRegionAttributes.getCloningEnabled()).thenAnswer(newGetter(cloningEnabled));
+		when(mockGudRegionAttributes.getCompressor()).thenAnswer(newGetter(compressor));
+		when(mockGudRegionAttributes.getConcurrencyChecksEnabled()).thenAnswer(newGetter(concurrencyChecksEnabled));
+		when(mockGudRegionAttributes.getConcurrencyLevel()).thenAnswer(newGetter(concurrencyLevel));
+		when(mockGudRegionAttributes.getCustomEntryIdleTimeout()).thenAnswer(newGetter(customEntryIdleTimeout));
+		when(mockGudRegionAttributes.getCustomEntryTimeToLive()).thenAnswer(newGetter(customEntryTimeToLive));
+		when(mockGudRegionAttributes.getDataPolicy()).thenAnswer(newGetter(dataPolicy));
+		when(mockGudRegionAttributes.getDiskStoreName()).thenAnswer(newGetter(diskStoreName));
+		when(mockGudRegionAttributes.isDiskSynchronous()).thenAnswer(newGetter(diskSynchronous));
+		when(mockGudRegionAttributes.getEnableSubscriptionConflation()).thenAnswer(newGetter(enableSubscriptionConflation));
+		when(mockGudRegionAttributes.getEntryIdleTimeout()).thenAnswer(newGetter(entryIdleTimeout));
+		when(mockGudRegionAttributes.getEntryTimeToLive()).thenAnswer(newGetter(entryTimeToLive));
+		when(mockGudRegionAttributes.getEvictionAttributes()).thenAnswer(newGetter(evictionAttributes));
+		when(mockGudRegionAttributes.getInitialCapacity()).thenAnswer(newGetter(initialCapacity));
+		when(mockGudRegionAttributes.getKeyConstraint()).thenAnswer(newGetter(keyConstraint));
+		when(mockGudRegionAttributes.getLoadFactor()).thenAnswer(newGetter(loadFactor));
+		when(mockGudRegionAttributes.isLockGrantor()).thenAnswer(newGetter(lockGrantor));
+		when(mockGudRegionAttributes.getMembershipAttributes()).thenAnswer(newGetter(membershipAttributes));
+		when(mockGudRegionAttributes.getPoolName()).thenAnswer(newGetter(poolName));
+		when(mockGudRegionAttributes.getRegionIdleTimeout()).thenAnswer(newGetter(regionIdleTimeout));
+		when(mockGudRegionAttributes.getRegionTimeToLive()).thenAnswer(newGetter(regionTimeToLive));
+		when(mockGudRegionAttributes.getScope()).thenAnswer(newGetter(scope));
+		when(mockGudRegionAttributes.getStatisticsEnabled()).thenAnswer(newGetter(statisticsEnabled));
+		when(mockGudRegionAttributes.getSubscriptionAttributes()).thenAnswer(newGetter(subscriptionAttributes));
+		when(mockGudRegionAttributes.getValueConstraint()).thenAnswer(newGetter(valueConstraint));
 
-		when(mockRegionFactory.create(anyString()))
-				.thenAnswer(invocation -> mockRegion(mockCache, invocation.getArgument(0), mockRegionAttributes));
+		when(mockGudRegionFactory.create(anyString()))
+				.thenAnswer(invocation -> mockRegion(mockCache, invocation.getArgument(0), mockGudRegionAttributes));
 
-		when(mockRegionFactory.createSubregion(any(Region.class), anyString())).thenAnswer(
-				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockRegionAttributes));
+		when(mockGudRegionFactory.createSubregion(any(GudRegion.class), anyString())).thenAnswer(
+				invocation -> mockSubRegion(invocation.getArgument(0), invocation.getArgument(1), mockGudRegionAttributes));
 
-		return mockRegionFactory;
+		return mockGudRegionFactory;
 	}
 
-	public static ResourceManager mockResourceManager() {
+	public static GudResourceManager mockGudResourceManager() {
 
-		ResourceManager mockResourceManager = mock(ResourceManager.class);
+		GudResourceManager mockGudResourceManager = mock(GudResourceManager.class);
 
-		AtomicReference<Float> criticalHeapPercentage = new AtomicReference<>(ResourceManager.DEFAULT_CRITICAL_PERCENTAGE);
+		AtomicReference<Float> criticalHeapPercentage = new AtomicReference<>(GudResourceManager.DEFAULT_CRITICAL_PERCENTAGE);
 
-		AtomicReference<Float> evictionHeapPercentage = new AtomicReference<>(ResourceManager.DEFAULT_EVICTION_PERCENTAGE);
+		AtomicReference<Float> evictionHeapPercentage = new AtomicReference<>(GudResourceManager.DEFAULT_EVICTION_PERCENTAGE);
 
-		doAnswer(newSetter(criticalHeapPercentage, () -> null)).when(mockResourceManager)
+		doAnswer(newSetter(criticalHeapPercentage, () -> null)).when(mockGudResourceManager)
 				.setCriticalHeapPercentage(anyFloat());
 
-		doAnswer(newSetter(evictionHeapPercentage, () -> null)).when(mockResourceManager)
+		doAnswer(newSetter(evictionHeapPercentage, () -> null)).when(mockGudResourceManager)
 				.setEvictionHeapPercentage(anyFloat());
 
-		when(mockResourceManager.getCriticalHeapPercentage()).thenAnswer(newGetter(criticalHeapPercentage));
-		when(mockResourceManager.getEvictionHeapPercentage()).thenAnswer(newGetter(evictionHeapPercentage));
-		when(mockResourceManager.getRebalanceOperations()).thenReturn(Collections.emptySet());
+		when(mockGudResourceManager.getCriticalHeapPercentage()).thenAnswer(newGetter(criticalHeapPercentage));
+		when(mockGudResourceManager.getEvictionHeapPercentage()).thenAnswer(newGetter(evictionHeapPercentage));
+		when(mockGudResourceManager.getRebalanceOperations()).thenReturn(Collections.emptySet());
 
-		return mockResourceManager;
+		return mockGudResourceManager;
 	}
 
 	public static boolean resolveUseSingletonCache() {
@@ -2398,22 +2412,22 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				.parseBoolean(System.getProperty(USE_SINGLETON_CACHE_PROPERTY, String.valueOf(DEFAULT_USE_SINGLETON_CACHE)));
 	}
 
-	public static ClientCacheFactory spyOn(ClientCacheFactory clientCacheFactory) {
+	public static GudClientCacheFactory spyOn(GudClientCacheFactory clientCacheFactory) {
 		return spyOn(clientCacheFactory, resolveUseSingletonCache());
 	}
 
-	public static ClientCacheFactory spyOn(ClientCacheFactory clientCacheFactory, boolean useSingletonCache) {
+	public static GudClientCacheFactory spyOn(GudClientCacheFactory clientCacheFactory, boolean useSingletonCache) {
 
 		AtomicBoolean pdxIgnoreUnreadFields = new AtomicBoolean(false);
 		AtomicBoolean pdxPersistent = new AtomicBoolean(false);
 		AtomicBoolean pdxReadSerialized = new AtomicBoolean(false);
 
-		AtomicReference<String> pdxDiskStoreName = new AtomicReference<>(null);
-		AtomicReference<PdxSerializer> pdxSerializer = new AtomicReference<>(null);
+		AtomicReference<String> pdxGudDiskStoreName = new AtomicReference<>(null);
+		AtomicReference<GudPdxSerializer> pdxSerializer = new AtomicReference<>(null);
 
-		ClientCacheFactory clientCacheFactorySpy = spy(clientCacheFactory);
+		GudClientCacheFactory clientCacheFactorySpy = spy(clientCacheFactory);
 
-		doAnswer(newSetter(pdxDiskStoreName, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
+		doAnswer(newSetter(pdxGudDiskStoreName, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
 				.setPdxDiskStore(anyString());
 
 		doAnswer(newSetter(pdxIgnoreUnreadFields, clientCacheFactorySpy)).when(clientCacheFactorySpy)
@@ -2426,167 +2440,167 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				.setPdxReadSerialized(anyBoolean());
 
 		doAnswer(newSetter(pdxSerializer, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
-				.setPdxSerializer(any(PdxSerializer.class));
+				.setPdxSerializer(any(GudPdxSerializer.class));
 
-		PoolFactory mockPoolFactory = mockPoolFactory();
+		GudPoolFactory mockGudPoolFactory = mockGudPoolFactory();
 
 		doAnswer(invocation -> {
-			mockPoolFactory.addLocator(invocation.getArgument(0), invocation.getArgument(1));
+			mockGudPoolFactory.addLocator(invocation.getArgument(0), invocation.getArgument(1));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).addPoolLocator(anyString(), anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.addServer(invocation.getArgument(0), invocation.getArgument(1));
+			mockGudPoolFactory.addServer(invocation.getArgument(0), invocation.getArgument(1));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).addPoolServer(anyString(), anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setFreeConnectionTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setFreeConnectionTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolFreeConnectionTimeout(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setIdleTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setIdleTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolIdleTimeout(anyLong());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setLoadConditioningInterval(invocation.getArgument(0));
+			mockGudPoolFactory.setLoadConditioningInterval(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolLoadConditioningInterval(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setMaxConnections(invocation.getArgument(0));
+			mockGudPoolFactory.setMaxConnections(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMaxConnections(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setMinConnections(invocation.getArgument(0));
+			mockGudPoolFactory.setMinConnections(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMinConnections(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setMaxConnectionsPerServer(invocation.getArgument(0));
+			mockGudPoolFactory.setMaxConnectionsPerServer(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMaxConnectionsPerServer(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setMinConnectionsPerServer(invocation.getArgument(0));
+			mockGudPoolFactory.setMinConnectionsPerServer(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMinConnectionsPerServer(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setMultiuserAuthentication(invocation.getArgument(0));
+			mockGudPoolFactory.setMultiuserAuthentication(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolMultiuserAuthentication(anyBoolean());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setPingInterval(invocation.getArgument(0));
+			mockGudPoolFactory.setPingInterval(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolPingInterval(anyLong());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setPRSingleHopEnabled(invocation.getArgument(0));
+			mockGudPoolFactory.setPRSingleHopEnabled(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolPRSingleHopEnabled(anyBoolean());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setReadTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setReadTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolReadTimeout(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setRetryAttempts(invocation.getArgument(0));
+			mockGudPoolFactory.setRetryAttempts(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolRetryAttempts(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setServerConnectionTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setServerConnectionTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolServerConnectionTimeout(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setServerGroup(invocation.getArgument(0));
+			mockGudPoolFactory.setServerGroup(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolServerGroup(anyString());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSocketBufferSize(invocation.getArgument(0));
+			mockGudPoolFactory.setSocketBufferSize(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSocketBufferSize(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSocketConnectTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setSocketConnectTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSocketConnectTimeout(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSocketFactory(invocation.getArgument(0));
+			mockGudPoolFactory.setSocketFactory(invocation.getArgument(0));
 			return clientCacheFactorySpy;
-		}).when(clientCacheFactorySpy).setPoolSocketFactory(any(SocketFactory.class));
+		}).when(clientCacheFactorySpy).setPoolSocketFactory(any(GudSocketFactory.class));
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setStatisticInterval(invocation.getArgument(0));
+			mockGudPoolFactory.setStatisticInterval(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolStatisticInterval(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSubscriptionAckInterval(invocation.getArgument(0));
+			mockGudPoolFactory.setSubscriptionAckInterval(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSubscriptionAckInterval(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSubscriptionEnabled(invocation.getArgument(0));
+			mockGudPoolFactory.setSubscriptionEnabled(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSubscriptionEnabled(anyBoolean());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSubscriptionMessageTrackingTimeout(invocation.getArgument(0));
+			mockGudPoolFactory.setSubscriptionMessageTrackingTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSubscriptionMessageTrackingTimeout(anyInt());
 
 		doAnswer(invocation -> {
-			mockPoolFactory.setSubscriptionRedundancy(invocation.getArgument(0));
+			mockGudPoolFactory.setSubscriptionRedundancy(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolSubscriptionRedundancy(anyInt());
 
 		// doAnswer(invocation -> {
-		// mockPoolFactory.setThreadLocalConnections(invocation.getArgument(0));
+		// mockGudPoolFactory.setThreadLocalConnections(invocation.getArgument(0));
 		// return clientCacheFactorySpy;
 		// }).when(clientCacheFactorySpy).setPoolThreadLocalConnections(anyBoolean());
 
-		Supplier<ClientCache> resolvedMockedClientCache = () -> GemFireMockObjectsSupport
-				.<ClientCache> resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
+		Supplier<GudClientCache> resolvedMockedGudClientCache = () -> GemFireMockObjectsSupport
+				.<GudClientCache> resolveMockedGemFireCache(useSingletonCache).orElseGet(() -> {
 
-					ClientCache mockClientCache = mockClientCache();
+					GudClientCache mockGudClientCache = mockGudClientCache();
 
-					Pool mockDefaultPool = mockPoolFactory.create("DEFAULT");
+					GudPool mockDefaultGudPool = mockGudPoolFactory.create("DEFAULT");
 
-					doAnswer(invocation -> mockClientCache.getQueryService()).when(mockDefaultPool).getQueryService();
+					doAnswer(invocation -> mockGudClientCache.getQueryService()).when(mockDefaultGudPool).getQueryService();
 
-					when(mockClientCache.getCurrentServers()).thenAnswer(
-							invocation -> Collections.unmodifiableSet(new HashSet<>(mockClientCache.getDefaultPool().getServers())));
+					when(mockGudClientCache.getCurrentServers()).thenAnswer(
+							invocation -> Collections.unmodifiableSet(new HashSet<>(mockGudClientCache.getDefaultPool().getServers())));
 
-					when(mockClientCache.getDefaultPool()).thenReturn(mockDefaultPool);
+					when(mockGudClientCache.getDefaultPool()).thenReturn(mockDefaultGudPool);
 
-					when(mockClientCache.getPdxDiskStore()).thenAnswer(newGetter(pdxDiskStoreName));
-					when(mockClientCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
-					when(mockClientCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
-					when(mockClientCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
-					when(mockClientCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
+					when(mockGudClientCache.getPdxDiskStore()).thenAnswer(newGetter(pdxGudDiskStoreName));
+					when(mockGudClientCache.getPdxIgnoreUnreadFields()).thenAnswer(newGetter(pdxIgnoreUnreadFields));
+					when(mockGudClientCache.getPdxPersistent()).thenAnswer(newGetter(pdxPersistent));
+					when(mockGudClientCache.getPdxReadSerialized()).thenAnswer(newGetter(pdxReadSerialized));
+					when(mockGudClientCache.getPdxSerializer()).thenAnswer(newGetter(pdxSerializer));
 
-					return mockClientCache;
+					return mockGudClientCache;
 				});
 
 		doAnswer(invocation -> {
 			storeConfiguration(clientCacheFactory);
-			return rememberMockedGemFireCache(constructGemFireObjects(resolvedMockedClientCache.get()), useSingletonCache);
+			return rememberMockedGemFireCache(constructGemFireObjects(resolvedMockedGudClientCache.get()), useSingletonCache);
 		}).when(clientCacheFactorySpy).create();
 
 		return clientCacheFactorySpy;
 	}
 
-	private static void storeConfiguration(ClientCacheFactory clientCacheFactory) {
+	private static void storeConfiguration(GudClientCacheFactory clientCacheFactory) {
 		storeConfiguration(clientCacheFactory, CLIENT_CACHE_FACTORY_DS_PROPS_FIELD_NAME);
 	}
 

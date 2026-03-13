@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -19,6 +24,7 @@ package org.springframework.data.gemfire.gud.api;
 public interface GudConfigurationProperties {
 
     String NAME = "name";
+    String NAME_NAME = NAME;
     String LOG_LEVEL = "log-level";
     String LOG_FILE = "log-file";
     String LOG_FILE_SIZE_LIMIT = "log-file-size-limit";

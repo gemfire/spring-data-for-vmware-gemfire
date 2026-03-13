@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.mock.annotation;
 
@@ -11,7 +18,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Import;
@@ -25,7 +32,7 @@ import org.springframework.test.context.event.AfterTestClassEvent;
  * @see Inherited
  * @see Retention
  * @see Target
- * @see ClientCache
+ * @see GudClientCache
  * @see ApplicationEvent
  * @see Import
  * @since 0.0.1
@@ -50,11 +57,11 @@ public @interface EnableGemFireMockObjects {
 	Class<? extends ApplicationEvent>[] destroyOnEvents() default { AfterTestClassEvent.class };
 
 	/**
-	 * Configures whether the mock {@link ClientCache} created for Unit Testing is a Singleton.
+	 * Configures whether the mock {@link GudClientCache} created for Unit Testing is a Singleton.
 	 *
 	 * Defaults to {@literal false}.
 	 *
-	 * @return a boolean value indicating whether the mock {@link ClientCache} created for Unit Testing
+	 * @return a boolean value indicating whether the mock {@link GudClientCache} created for Unit Testing
 	 * is a Singleton.
 	 */
 	boolean useSingletonCache() default GemFireMockObjectsConfiguration.DEFAULT_USE_SINGLETON_CACHE;

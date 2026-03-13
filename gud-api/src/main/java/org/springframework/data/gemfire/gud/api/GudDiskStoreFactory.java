@@ -9,6 +9,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -36,6 +41,7 @@ public interface GudDiskStoreFactory {
     int DEFAULT_WRITE_BUFFER_SIZE = 32768;
     int DEFAULT_QUEUE_SIZE = 0;
     int DEFAULT_SEGMENTS = 1;
+    int DEFAULT_DISK_DIR_SIZE = Integer.MAX_VALUE;
 
     GudDiskStoreFactory setAutoCompact(boolean autoCompact);
     GudDiskStoreFactory setDiskUsageWarningPercentage(float warningPercentage);

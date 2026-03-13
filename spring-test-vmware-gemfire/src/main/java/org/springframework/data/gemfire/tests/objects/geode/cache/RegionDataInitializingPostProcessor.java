@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.objects.geode.cache;
 
@@ -11,7 +18,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -21,12 +28,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- * Spring {@link Component} used to initialize an Apache Geode {@link Region} with data.
+ * Spring {@link Component} used to initialize an Apache Geode {@link GudRegion} with data.
  *
  * @author John Blum
  * @see Map
  * @see Function
- * @see Region
+ * @see GudRegion
  * @see org.springframework.beans.factory.config.BeanPostProcessor
  * @see ApplicationContext
  * @see ContextRefreshedEvent
@@ -38,7 +45,7 @@ import org.springframework.util.Assert;
 @SuppressWarnings("unused")
 public class RegionDataInitializingPostProcessor<T> {
 
-	public static <T> EntityIdentifierBuilder<T> withRegion(@NonNull String regionBeanName) {
+	public static <T> EntityIdentifierBuilder<T> withGudRegion(@NonNull String regionBeanName) {
 		return new EntityIdentifierBuilder<>(new RegionDataInitializingPostProcessor<>(regionBeanName));
 	}
 
@@ -50,7 +57,7 @@ public class RegionDataInitializingPostProcessor<T> {
 
 	protected RegionDataInitializingPostProcessor(@NonNull String regionBeanName) {
 
-		Assert.hasText(regionBeanName, String.format("Region bean name [%s] must be specified", regionBeanName));
+		Assert.hasText(regionBeanName, String.format("GudRegion bean name [%s] must be specified", regionBeanName));
 
 		this.regionBeanName = regionBeanName;
 	}
@@ -68,7 +75,7 @@ public class RegionDataInitializingPostProcessor<T> {
 	}
 
 	protected boolean isTargetRegion(Object bean, String beanName) {
-		return bean instanceof Region && getRegionBeanName().equals(beanName);
+		return bean instanceof GudRegion && getRegionBeanName().equals(beanName);
 	}
 
 	@EventListener(ContextRefreshedEvent.class)
@@ -88,11 +95,11 @@ public class RegionDataInitializingPostProcessor<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected Optional<Region<Object, T>> resolveTargetRegion(@NonNull ContextRefreshedEvent event) {
+	protected Optional<GudRegion<Object, T>> resolveTargetRegion(@NonNull ContextRefreshedEvent event) {
 
-		Region<Object, T> resolvedTargetRegion = resolveApplicationContext(event)
-			.map(applicationContext -> applicationContext.getBean(getRegionBeanName(), Region.class))
-			.orElseThrow(() -> newIllegalStateException("Failed to resolve Region bean [%s] from ApplicationContext",
+		GudRegion<Object, T> resolvedTargetRegion = resolveApplicationContext(event)
+			.map(applicationContext -> applicationContext.getBean(getRegionBeanName(), GudRegion.class))
+			.orElseThrow(() -> newIllegalStateException("Failed to resolve GudRegion bean [%s] from ApplicationContext",
 				getRegionBeanName()));
 
 		return Optional.of(resolvedTargetRegion);
@@ -120,7 +127,7 @@ public class RegionDataInitializingPostProcessor<T> {
 		private final RegionDataInitializingPostProcessor<T> postProcessor;
 
 		private EntityIdentifierBuilder(@NonNull RegionDataInitializingPostProcessor<T> postProcessor) {
-			Assert.notNull(postProcessor, "RegionDataInitializingPostProcess must not be null");
+			Assert.notNull(postProcessor, "GudRegionDataInitializingPostProcess must not be null");
 			this.postProcessor = postProcessor;
 		}
 

@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -48,6 +53,9 @@ public interface GudRegionFactory<K, V> {
 
     GudRegionFactory<K, V> setDiskStoreName(String name);
     GudRegionFactory<K, V> setDiskSynchronous(boolean isSynchronous);
+    
+    GudRegionFactory<K, V> setEnableSubscriptionConflation(boolean enableSubscriptionConflation);
+    GudRegionFactory<K, V> setIgnoreJTA(boolean ignoreJTA);
 
     GudRegionFactory<K, V> setPoolName(String poolName);
 
