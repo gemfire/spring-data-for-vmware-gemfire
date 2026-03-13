@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.client;
@@ -9,13 +16,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.geode.cache.InterestResultPolicy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.Constants;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 import org.springframework.util.Assert;
 
 /**
@@ -24,9 +29,8 @@ import org.springframework.util.Assert;
  * @author Costin Leau
  * @author John Blum
  * @see Pattern
- * @see InterestResultPolicy
+ * @see GudInterestResultPolicy
  * @see InitializingBean
- * @see Constants
  * @since 1.0.0
  */
 @SuppressWarnings("unused")
@@ -37,14 +41,12 @@ public class Interest<K> implements InitializingBean {
 	protected static final boolean DEFAULT_DURABLE = false;
 	protected static final boolean DEFAULT_RECEIVE_VALUES = true;
 
-	private static final Constants constants = new Constants(InterestResultPolicy.class);
-
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private boolean durable = false;
 	private boolean receiveValues = true;
 
-	private InterestResultPolicy policy = InterestResultPolicy.DEFAULT;
+	private GudInterestResultPolicy policy = GudInterestResultPolicy.DEFAULT;
 
 	private K key;
 
@@ -64,54 +66,54 @@ public class Interest<K> implements InitializingBean {
 
 	/**
 	 * Constructs an instance of non-durable {@link Interest} initialized with the given key to register interest in,
-	 * using the {@link InterestResultPolicy#DEFAULT} to initialize the client cache and receiving values by default.
+	 * using the {@link GudInterestResultPolicy#DEFAULT} to initialize the client cache and receiving values by default.
 	 *
 	 * @param key key(s) of interest.
-	 * @see #Interest(Object, InterestResultPolicy, boolean, boolean)
+	 * @see #Interest(Object, GudInterestResultPolicy, boolean, boolean)
 	 */
 	public Interest(K key) {
-		this(key, InterestResultPolicy.DEFAULT, DEFAULT_DURABLE, DEFAULT_RECEIVE_VALUES);
+		this(key, GudInterestResultPolicy.DEFAULT, DEFAULT_DURABLE, DEFAULT_RECEIVE_VALUES);
 	}
 
 	/**
 	 * Constructs an instance of non-durable {@link Interest} initialized with the given key to register interest in,
-	 * the given {@link InterestResultPolicy} used to initialize the client cache, receiving values by default.
+	 * the given {@link GudInterestResultPolicy} used to initialize the client cache, receiving values by default.
 	 *
 	 * @param key key(s) of interest.
-	 * @param policy initial {@link InterestResultPolicy} used to initialize the client cache.
-	 * @see #Interest(Object, InterestResultPolicy, boolean, boolean)
+	 * @param policy initial {@link GudInterestResultPolicy} used to initialize the client cache.
+	 * @see #Interest(Object, GudInterestResultPolicy, boolean, boolean)
 	 */
-	public Interest(K key, InterestResultPolicy policy) {
+	public Interest(K key, GudInterestResultPolicy policy) {
 		this(key, policy, DEFAULT_DURABLE, DEFAULT_RECEIVE_VALUES);
 	}
 
 	/**
 	 * Constructs an instance of {@link Interest} initialized with the given key to register interest in,
-	 * the given {@link InterestResultPolicy} used to initialize the client cache, the given boolean value
+	 * the given {@link GudInterestResultPolicy} used to initialize the client cache, the given boolean value
 	 * to indicate whether interest registration should be durable, receiving values by default.
 	 *
 	 * @param key key(s) of interest.
-	 * @param policy initial {@link InterestResultPolicy} used to initialize the client cache.
+	 * @param policy initial {@link GudInterestResultPolicy} used to initialize the client cache.
 	 * @param durable boolean value to indicate whether the interest registration should be durable.
-	 * @see #Interest(Object, InterestResultPolicy, boolean, boolean)
+	 * @see #Interest(Object, GudInterestResultPolicy, boolean, boolean)
 	 */
-	public Interest(K key, InterestResultPolicy policy, boolean durable) {
+	public Interest(K key, GudInterestResultPolicy policy, boolean durable) {
 		this(key, policy, durable, DEFAULT_RECEIVE_VALUES);
 	}
 
 	/**
 	 * Constructs an instance of {@link Interest} initialized with the given key to register interest in,
-	 * the given {@link InterestResultPolicy} used to initialize the client cache and the given boolean values
+	 * the given {@link GudInterestResultPolicy} used to initialize the client cache and the given boolean values
 	 * indicating whether interest registration should be durable and whether to receive values during notifications.
 	 *
 	 * @param key key(s) of interest.
-	 * @param policy initial {@link InterestResultPolicy} used to initialize the client cache.
+	 * @param policy initial {@link GudInterestResultPolicy} used to initialize the client cache.
 	 * @param durable boolean value to indicate whether the interest registration should be durable.
 	 * @param receiveValues boolean value to indicate whether to receive value in notifications.
-	 * @see #Interest(Object, InterestResultPolicy, boolean, boolean)
+	 * @see #Interest(Object, GudInterestResultPolicy, boolean, boolean)
 	 * @see #afterPropertiesSet()
 	 */
-	public Interest(K key, InterestResultPolicy policy, boolean durable, boolean receiveValues) {
+	public Interest(K key, GudInterestResultPolicy policy, boolean durable, boolean receiveValues) {
 
 		this.key = key;
 		this.policy = policy;
@@ -147,7 +149,7 @@ public class Interest<K> implements InitializingBean {
 	 *
 	 * If the given {@code key} is {@literal "ALL_KEYS"}, a {@link List} or only contains letters, numbers and spaces,
 	 * then the {@code key} is not considered a Regular Expression by GemFire, and can be handled with normal
-	 * interest registration using {@link org.apache.geode.cache.Region#registerInterest(Object)}.
+	 * interest registration using {@link org.springframework.data.gemfire.gud.api.GudRegion#registerInterest(Object)}.
 	 *
 	 * @param key {@link Object} to evaluate.
 	 * @return a boolean value indicating whether the given {@link Object} {@code key} is a Regular Expression.
@@ -162,7 +164,7 @@ public class Interest<K> implements InitializingBean {
 	 *
 	 * If the given {@code value} contains at least 1 special character (e.g. *) and can be compiled
 	 * using {@link Pattern#compile(String)}, then the {@code key} is considered a Regular Expression
-	 * and interest will be registered using {@link org.apache.geode.cache.Region#registerInterestRegex(String)}.
+	 * and interest will be registered using {@link org.springframework.data.gemfire.gud.api.GudRegion#registerInterestRegex(String)}.
 	 *
 	 * @param value {@link String} to evaluate.
 	 * @return a boolean value indicating whether the given {@link String} {@code value} is a Regular Expression.
@@ -260,33 +262,33 @@ public class Interest<K> implements InitializingBean {
 	}
 
 	/**
-	 * Returns the {@link InterestResultPolicy} used when interest is registered and determines whether KEYS,
+	 * Returns the {@link GudInterestResultPolicy} used when interest is registered and determines whether KEYS,
 	 * KEYS_VALUES or nothing (NONE) is initially fetched on initial registration.
 	 *
 	 * @return the policy
 	 */
-	public InterestResultPolicy getPolicy() {
+	public GudInterestResultPolicy getPolicy() {
 		return this.policy;
 	}
 
 	/**
-	 * Sets the initial {@link InterestResultPolicy} used when interest is first registered and determines whether KEYS,
+	 * Sets the initial {@link GudInterestResultPolicy} used when interest is first registered and determines whether KEYS,
 	 * KEYS_VALUE or nothing (NONE) is initially fetched.
 	 *
-	 * The argument is set as an {@link Object} to be able to accept both {@link InterestResultPolicy}
+	 * The argument is set as an {@link Object} to be able to accept both {@link GudInterestResultPolicy}
 	 * and {@link String Strings}, used in XML configuration meta-data.
 	 *
-	 * @param policy initial {@link InterestResultPolicy} to set.
+	 * @param policy initial {@link GudInterestResultPolicy} to set.
 	 * @throws IllegalArgumentException if the given {@code policy} is not a valid type.
-	 * @see InterestResultPolicy
+	 * @see GudInterestResultPolicy
 	 */
 	public void setPolicy(Object policy) {
 
-		if (policy instanceof InterestResultPolicy) {
-			this.policy = (InterestResultPolicy) policy;
+		if (policy instanceof GudInterestResultPolicy) {
+			this.policy = (GudInterestResultPolicy) policy;
 		}
 		else if (policy instanceof String) {
-			this.policy = (InterestResultPolicy) constants.asObject(String.valueOf(policy));
+			this.policy = GudInterestResultPolicy.valueOf(String.valueOf(policy).toUpperCase());
 		}
 		else {
 			throw new IllegalArgumentException(String.format("Unknown argument type [%s] for property policy", policy));
@@ -401,14 +403,14 @@ public class Interest<K> implements InitializingBean {
 	}
 
 	/**
-	 * Builder method to set the {@link InterestResultPolicy} used to initialize the cache.
+	 * Builder method to set the {@link GudInterestResultPolicy} used to initialize the cache.
 	 *
-	 * @param policy {@link InterestResultPolicy}.
+	 * @param policy {@link GudInterestResultPolicy}.
 	 * @return this {@link Interest}.
-	 * @see InterestResultPolicy
+	 * @see GudInterestResultPolicy
 	 * @see #setPolicy(Object)
 	 */
-	public Interest usingPolicy(InterestResultPolicy policy) {
+	public Interest usingPolicy(GudInterestResultPolicy policy) {
 		setPolicy(policy);
 		return this;
 	}

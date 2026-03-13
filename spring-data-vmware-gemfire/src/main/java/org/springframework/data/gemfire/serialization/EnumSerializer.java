@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.serialization;
@@ -13,8 +20,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.geode.DataSerializer;
-import org.apache.geode.internal.InternalDataSerializer;
+import org.springframework.data.gemfire.gud.api.GudDataSerializer;
+import org.springframework.data.gemfire.gud.api.GudInternalDataSerializer;
 
 /**
  * Generic serializer for all Java Enums. The class needs to be registered only once.  Custom enums will then
@@ -23,9 +30,9 @@ import org.apache.geode.internal.InternalDataSerializer;
  * @author Costin Leau
  * @author John Blum
  * @see Serializable
- * @see DataSerializer
+ * @see GudDataSerializer
  */
-public class EnumSerializer extends DataSerializer implements Serializable {
+public class EnumSerializer extends GudDataSerializer implements Serializable {
 
 	private static final long serialVersionUID = -7069461993489626976L;
 
@@ -40,7 +47,7 @@ public class EnumSerializer extends DataSerializer implements Serializable {
 
 	/* (non-Javadoc) */
 	private boolean serialize(Enum<?> enumeratedValue, DataOutput out) throws IOException {
-		DataSerializer.writeClass(registerEnumType(enumeratedValue), out);
+		GudDataSerializer.writeClass(registerEnumType(enumeratedValue), out);
 		out.writeInt(enumeratedValue.ordinal());
 		return true;
 	}
@@ -52,7 +59,7 @@ public class EnumSerializer extends DataSerializer implements Serializable {
 
 	@Override
 	public Object fromData(DataInput in) throws IOException, ClassNotFoundException {
-		Class<?> type = DataSerializer.readClass(in);
+		Class<?> type = GudDataSerializer.readClass(in);
 
 		return Optional.ofNullable(type).filter(Class::isEnum).map(enumType -> {
 			int ordinal = safeReadInt(in);
@@ -84,9 +91,9 @@ public class EnumSerializer extends DataSerializer implements Serializable {
 	// TODO refactor the use of the Apache Geode internal class
 	// if registered then re-register this serializer to propagate and distribute the changes
 	private void potentiallyReRegisterThisSerializer() {
-		if (InternalDataSerializer.getSerializer(getId()) != null) {
-			InternalDataSerializer.unregister(getId());
-			DataSerializer.register(getClass());
+		if (GudInternalDataSerializer.getSerializer(getId()) != null) {
+			GudInternalDataSerializer.unregister(getId());
+			GudDataSerializer.register(getClass());
 		}
 	}
 

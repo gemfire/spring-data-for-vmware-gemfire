@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -239,16 +244,29 @@ public abstract class GemfireCacheUtils {
 	 * @return new the corresponding DataAccessException instance
 	 */
 	public static DataAccessException convertGemfireAccessException(GudGemFireCheckedException cause) {
-
-		if (cause instanceof GudQueryException) {
-			return new GemfireQueryException((Exception) cause);
-		}
-
-		if (cause instanceof GudVersionException) {
-			return new DataAccessResourceFailureException(cause.getMessage(), cause);
-		}
-
 		return new GemfireSystemException(cause);
+	}
+
+	/**
+	 * Converts the given GudQueryException to an appropriate one from the
+	 * <code>org.springframework.dao</code> hierarchy.
+	 *
+	 * @param cause GudQueryException
+	 * @return new the corresponding DataAccessException instance
+	 */
+	public static DataAccessException convertGemfireAccessException(GudQueryException cause) {
+		return new GemfireQueryException(cause);
+	}
+
+	/**
+	 * Converts the given GudVersionException to an appropriate one from the
+	 * <code>org.springframework.dao</code> hierarchy.
+	 *
+	 * @param cause GudVersionException
+	 * @return new the corresponding DataAccessException instance
+	 */
+	public static DataAccessException convertGemfireAccessException(GudVersionException cause) {
+		return new DataAccessResourceFailureException(cause.getMessage(), cause);
 	}
 
 	/**

@@ -1,30 +1,36 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.dao;
 
-import org.apache.geode.cache.Region;
-
 import org.springframework.dao.support.DaoSupport;
 import org.springframework.data.gemfire.GemfireOperations;
 import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 
 /**
  * Convenient super class for GemFire Data Access Objects (DAO) implementing the Spring
  * {@link DaoSupport} abstract class. Intended for use with {@link GemfireTemplate}.
  *
- * Requires a GemFire {@link Region} to be set, providing a {@link GemfireTemplate} based on it to subclasses.
+ * Requires a GemFire {@link GudRegion} to be set, providing a {@link GemfireTemplate} based on it to subclasses.
  * Can alternatively be initialized directly via a {@link GemfireTemplate} reusing the template's  settings.
  *
- * This class will create its own {@link GemfireTemplate} if a GemFire {@link Region} reference is passed in.
+ * This class will create its own {@link GemfireTemplate} if a GemFire {@link GudRegion} reference is passed in.
  * A custom {@link GemfireTemplate} instance can be used through overriding <code>createGemfireTemplate</code>.
  *
  * @author Costin Leau
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see DaoSupport
  * @see GemfireTemplate
  */
@@ -60,10 +66,10 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 * an instance of the GemfireTemplate for the given Region.
 	 *
 	 * @param region the GemFire Cache Region upon which this DAO operates.
-	 * @see Region
-	 * @see #createGemfireTemplate(Region)
+	 * @see GudRegion
+	 * @see #createGemfireTemplate(GudRegion)
 	 */
-	public void setRegion(Region<?, ?> region) {
+	public void setRegion(GudRegion<?, ?> region) {
 		this.gemfireTemplate = createGemfireTemplate(region);
 	}
 
@@ -74,10 +80,10 @@ public abstract class GemfireDaoSupport extends DaoSupport {
 	 *
 	 * @param region the GemFire Cache Region for which the GemfireTemplate is created.
 	 * @return a new GemfireTemplate instance configured with the given GemFire Cache Region.
-	 * @see Region
+	 * @see GudRegion
 	 * @see #setRegion
 	 */
-	protected GemfireTemplate createGemfireTemplate(Region<?, ?> region) {
+	protected GemfireTemplate createGemfireTemplate(GudRegion<?, ?> region) {
 		return new GemfireTemplate(region);
 	}
 

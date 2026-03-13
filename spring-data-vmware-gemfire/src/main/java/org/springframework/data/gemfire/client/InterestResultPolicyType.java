@@ -1,39 +1,46 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.client;
 
-import org.apache.geode.cache.InterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 
 /**
  * The InterestResultPolicyType enum is an enumeration of all client Register Interests (result) policy values.
  *
  * @author John Blum
- * @see InterestResultPolicy
+ * @see GudInterestResultPolicy
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
 public enum InterestResultPolicyType {
-	KEYS(InterestResultPolicy.KEYS),
-	KEYS_VALUES(InterestResultPolicy.KEYS_VALUES),
-	NONE(InterestResultPolicy.NONE);
+	KEYS(GudInterestResultPolicy.KEYS),
+	KEYS_VALUES(GudInterestResultPolicy.KEYS_VALUES),
+	NONE(GudInterestResultPolicy.NONE);
 
 	public static final InterestResultPolicyType DEFAULT = InterestResultPolicyType.valueOf(
-		InterestResultPolicy.DEFAULT);
+		GudInterestResultPolicy.DEFAULT);
 
-	private final InterestResultPolicy interestResultPolicy;
+	private final GudInterestResultPolicy interestResultPolicy;
 
-	InterestResultPolicyType(final InterestResultPolicy interestResultPolicy) {
+	InterestResultPolicyType(final GudInterestResultPolicy interestResultPolicy) {
 		this.interestResultPolicy = interestResultPolicy;
 	}
 
-	public static InterestResultPolicy getInterestResultPolicy(final InterestResultPolicyType interestResultPolicyType) {
+	public static GudInterestResultPolicy getInterestResultPolicy(final InterestResultPolicyType interestResultPolicyType) {
 		return (interestResultPolicyType != null ? interestResultPolicyType.getInterestResultPolicy() : null);
 	}
 
-	public static InterestResultPolicyType valueOf(final InterestResultPolicy interestResultPolicy) {
+	public static InterestResultPolicyType valueOf(final GudInterestResultPolicy interestResultPolicy) {
 		for (InterestResultPolicyType interestResultPolicyType : values()) {
 			if (interestResultPolicyType.getInterestResultPolicy().equals(interestResultPolicy)) {
 				return interestResultPolicyType;
@@ -53,7 +60,7 @@ public enum InterestResultPolicyType {
 		return null;
 	}
 
-	public InterestResultPolicy getInterestResultPolicy() {
+	public GudInterestResultPolicy getInterestResultPolicy() {
 		return interestResultPolicy;
 	}
 

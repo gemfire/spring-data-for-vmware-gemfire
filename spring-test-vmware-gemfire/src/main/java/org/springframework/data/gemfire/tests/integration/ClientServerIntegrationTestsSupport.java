@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration;
 
@@ -21,9 +28,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.AfterClass;
 
-import org.apache.geode.cache.server.CacheServer;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.gemfire.gud.api.GudCacheServer;
 import org.springframework.data.gemfire.tests.process.ProcessWrapper;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.data.gemfire.tests.util.SocketUtils;
@@ -43,7 +49,7 @@ import org.springframework.lang.Nullable;
  * @see Socket
  * @see java.time.LocalDateTime
  * @see TimeUnit
- * @see CacheServer
+ * @see GudCacheServer
  * @see org.springframework.context.ApplicationContext
  * @see AnnotationConfigApplicationContext
  * @see IntegrationTestsSupport
@@ -170,11 +176,11 @@ public abstract class ClientServerIntegrationTestsSupport extends IntegrationTes
 			.orElse(true);
 	}
 
-	protected static boolean waitForCacheServerToStart(@NonNull CacheServer cacheServer) {
+	protected static boolean waitForCacheServerToStart(@NonNull GudCacheServer cacheServer) {
 		return waitForServerToStart(cacheServer.getBindAddress(), cacheServer.getPort(), DEFAULT_WAIT_DURATION);
 	}
 
-	protected static boolean waitForCacheServerToStart(@NonNull CacheServer cacheServer, long duration) {
+	protected static boolean waitForCacheServerToStart(@NonNull GudCacheServer cacheServer, long duration) {
 		return waitForServerToStart(cacheServer.getBindAddress(), cacheServer.getPort(), duration);
 	}
 

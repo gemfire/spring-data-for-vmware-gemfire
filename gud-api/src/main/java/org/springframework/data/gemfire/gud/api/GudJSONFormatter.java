@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -15,9 +20,13 @@ package org.springframework.data.gemfire.gud.api;
 /**
  * GUD API abstraction for GemFire JSONFormatter.
  */
-public interface GudJSONFormatter {
+public abstract class GudJSONFormatter {
 
-    GudPdxInstance fromJSON(String json);
+    public static GudPdxInstance fromJSON(String json) {
+        throw new UnsupportedOperationException("Must be implemented by driver");
+    }
     
-    String toJSON(GudPdxInstance pdxInstance);
+    public static String toJSON(GudPdxInstance pdxInstance) {
+        throw new UnsupportedOperationException("Must be implemented by driver");
+    }
 }

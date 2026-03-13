@@ -1,43 +1,50 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.execution;
 
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.FunctionService;
-
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
 import org.springframework.util.Assert;
 
 /**
- * Constructs an {@link Execution} using {@link FunctionService#onServers(RegionService)}.
+ * Constructs an {@link GudExecution} using {@link GudFunctionService#onServers(GudRegionService)}.
  *
  * @author David Turanski
  * @author John Blum
- * @see RegionService
- * @see Execution
- * @see FunctionService
+ * @see GudRegionService
+ * @see GudExecution
+ * @see GudFunctionService
  * @see AbstractFunctionExecution
  */
 class OnServersUsingRegionServiceFunctionExecution extends AbstractFunctionExecution {
 
-	private final RegionService regionService;
+	private final GudRegionService regionService;
 
-	OnServersUsingRegionServiceFunctionExecution(RegionService regionService) {
+	OnServersUsingRegionServiceFunctionExecution(GudRegionService regionService) {
 
 		Assert.notNull(regionService, "RegionService must not be null");
 
 		this.regionService = regionService;
 	}
 
-	protected RegionService getRegionService() {
+	protected GudRegionService getRegionService() {
 		return regionService;
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected Execution getExecution() {
-		return FunctionService.onServers(getRegionService());
+	protected GudExecution getExecution() {
+		return GudFunctionService.onServers(getRegionService());
 	}
 }

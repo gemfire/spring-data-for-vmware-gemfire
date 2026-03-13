@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -11,28 +19,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.util.ObjectSizer;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.gemfire.eviction.EvictionActionType;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * The {@link EnableEviction} annotation marks a Spring {@link Configuration @Configuration} annotated class
- * to enable {@link Region} Eviction.
+ * to enable {@link GudRegion} Eviction.
  *
  * @author John Blum
- * @see EvictionAttributes
- * @see Region
- * @see ObjectSizer
+ * @see GudEvictionAttributes
+ * @see GudRegion
+ * @see GudObjectSizer
  * @see Import
  * @see EvictionConfiguration
  * @see EvictionActionType
  * @see EvictionPolicyType
- * @see Region
+ * @see GudRegion
  * @since 1.9.0
  */
 @Target(ElementType.TYPE)
@@ -44,18 +51,18 @@ import org.springframework.data.gemfire.eviction.EvictionPolicyType;
 public @interface EnableEviction {
 
 	/**
-	 * Defines individual {@link Region} Eviction policies or customizes the default Eviction policy applied
-	 * to all {@link Region Regions}.
+	 * Defines individual {@link GudRegion} Eviction policies or customizes the default Eviction policy applied
+	 * to all {@link GudRegion Regions}.
 	 *
 	 * Defaults to empty.
 	 */
 	EvictionPolicy[] policies() default {};
 
 	/**
-	 * Definition for a specific Eviction policy that can be applied to 1 or more {@link Region Regions}.
+	 * Definition for a specific Eviction policy that can be applied to 1 or more {@link GudRegion Regions}.
 	 *
-	 * An Eviction policy defines the maximum (a.k.a. threshold) along with {@link ObjectSizer} used to size
-	 * {@link Region} entry values and the action applied when {@link Region} entries are to be evicted.
+	 * An Eviction policy defines the maximum (a.k.a. threshold) along with {@link GudObjectSizer} used to size
+	 * {@link GudRegion} entry values and the action applied when {@link GudRegion} entries are to be evicted.
 	 *
 	 * Additionally, the Eviction policy defines the algorithm used (eviction based on entry count, JVM Heap percentage
 	 * or system memory size used) to determine when an Eviction should occur.
@@ -63,7 +70,7 @@ public @interface EnableEviction {
 	@interface EvictionPolicy {
 
 		/**
-		 * Action to take on an {@link Region} entry when evicted.
+		 * Action to take on an {@link GudRegion} entry when evicted.
 		 *
 		 * Defaults to {@link EvictionActionType#LOCAL_DESTROY}.
 		 *
@@ -74,22 +81,22 @@ public @interface EnableEviction {
 		/**
 		 * Threshold applied for entry count Eviction.
 		 *
-		 * Defaults to {@link EvictionAttributes#DEFAULT_ENTRIES_MAXIMUM}
+		 * Defaults to {@link GudEvictionAttributes#DEFAULT_ENTRIES_MAXIMUM}
 		 */
-		int maximum() default EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM;
+		int maximum() default GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM;
 
 		/**
-		 * Name of a Spring bean of type {@link ObjectSizer} defined in the Spring application context
-		 * used to size {@link Region} entry values.
+		 * Name of a Spring bean of type {@link GudObjectSizer} defined in the Spring application context
+		 * used to size {@link GudRegion} entry values.
 		 *
 		 * Defaults to empty.
 		 *
-		 * @see ObjectSizer
+		 * @see GudObjectSizer
 		 */
 		String objectSizerName() default "";
 
 		/**
-		 * Names of all the {@link Region Regions} in which this Eviction policy will be applied.
+		 * Names of all the {@link GudRegion Regions} in which this Eviction policy will be applied.
 		 *
 		 * Defaults to empty.
 		 */

@@ -1,15 +1,22 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.pdx.PdxSerializer;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -22,6 +29,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.MappingPdxSerializer;
 import org.springframework.data.gemfire.support.NoOpBeanFactoryPostProcessor;
@@ -31,11 +40,11 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link PdxConfiguration} class is a Spring {@link Configuration} class that configures PDX
- * on a {@link ClientCache} instance.
+ * on a {@link GudClientCache} instance.
  *
  * @author John Blum
- * @see ClientCache
- * @see PdxSerializer
+ * @see GudClientCache
+ * @see GudPdxSerializer
  * @see BeanFactory
  * @see BeanFactoryPostProcessor
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
@@ -231,20 +240,20 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	}
 
 	/**
-	 * Resolves the {@link PdxSerializer} used to configure the cache for PDX Serialization.
+	 * Resolves the {@link GudPdxSerializer} used to configure the cache for PDX Serialization.
 	 *
-	 * implementing the {@link PdxSerializer} interface.
-	 * @return the resolved {@link PdxSerializer} from configuration.
-	 * @see PdxSerializer
+	 * implementing the {@link GudPdxSerializer} interface.
+	 * @return the resolved {@link GudPdxSerializer} from configuration.
+	 * @see GudPdxSerializer
 	 * @see #getBeanFactory()
 	 */
-	protected @NonNull PdxSerializer resolvePdxSerializer() {
+	protected @NonNull GudPdxSerializer resolvePdxSerializer() {
 
 		BeanFactory beanFactory = getBeanFactory();
 
-		PdxSerializer serializer = getSerializerBeanName()
+		GudPdxSerializer serializer = getSerializerBeanName()
 			.filter(beanFactory::containsBean)
-			.map(beanName -> beanFactory.getBean(beanName, PdxSerializer.class))
+			.map(beanName -> beanFactory.getBean(beanName, GudPdxSerializer.class))
 			.orElseGet(this::newPdxSerializer);
 
 		if (serializer instanceof MappingPdxSerializer mappingSerializer) {
@@ -255,14 +264,14 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 	}
 
 	/**
-	 * Constructs a new instance of {@link PdxSerializer}.
+	 * Constructs a new instance of {@link GudPdxSerializer}.
 	 *
-	 * @param <T> {@link Class} type of the {@link PdxSerializer}.
-	 * @return a new instance of {@link PdxSerializer}.
-	 * @see PdxSerializer
+	 * @param <T> {@link Class} type of the {@link GudPdxSerializer}.
+	 * @return a new instance of {@link GudPdxSerializer}.
+	 * @see GudPdxSerializer
 	 */
 	@SuppressWarnings("unchecked")
-	protected @NonNull <T extends PdxSerializer> T newPdxSerializer() {
+	protected @NonNull <T extends GudPdxSerializer> T newPdxSerializer() {
 
 		return (T) MappingPdxSerializer.create(resolveMappingContext().orElse(null),
 			resolveConversionService().orElse(null));

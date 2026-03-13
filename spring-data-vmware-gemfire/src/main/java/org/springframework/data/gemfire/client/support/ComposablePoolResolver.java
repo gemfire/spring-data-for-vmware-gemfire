@@ -1,14 +1,21 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client.support;
 
 import java.util.Arrays;
 
-import org.apache.geode.cache.client.Pool;
-
 import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
@@ -19,7 +26,7 @@ import org.springframework.util.Assert;
  * Composite of {@link PoolResolver PoolResolvers} functioning as a single {@link PoolResolver}.
  *
  * @author John Blum
- * @see Pool
+ * @see GudPool
  * @see PoolResolver
  * @since 2.3.0
  */
@@ -120,25 +127,25 @@ public class ComposablePoolResolver implements PoolResolver {
 	}
 
 	/**
-	 * Attempts to resolve a {@link Pool} with the given {@link String name} by delegating to the composed
+	 * Attempts to resolve a {@link GudPool} with the given {@link String name} by delegating to the composed
 	 * {@link PoolResolver} objects.
 	 *
-	 * The first {@link PoolResolver} in the composition to resolve a {@link Pool} with the given {@link String name}
-	 * stops the resolution process and returns the target {@link Pool}.  If no {@link Pool} with the given
+	 * The first {@link PoolResolver} in the composition to resolve a {@link GudPool} with the given {@link String name}
+	 * stops the resolution process and returns the target {@link GudPool}.  If no {@link GudPool} with the given
 	 * {@link String name} can be resolved by any {@link PoolResolver} in the composition, then {@literal null}
 	 * will be returned.
 	 *
-	 * @param poolName {@link String name} of the {@link Pool} to resolve.
-	 * @return the resolved {@link Pool} or {@literal null} if a {@link Pool} with {@link String name}
+	 * @param poolName {@link String name} of the {@link GudPool} to resolve.
+	 * @return the resolved {@link GudPool} or {@literal null} if a {@link GudPool} with {@link String name}
 	 * cannot be resolved.
-	 * @see Pool
+	 * @see GudPool
 	 * @see #getPoolResolverOne()
 	 * @see #getPoolResolverTwo()
 	 */
 	@Nullable @Override
-	public Pool resolve(@Nullable String poolName) {
+	public GudPool resolve(@Nullable String poolName) {
 
-		Pool pool = getPoolResolverOne().resolve(poolName);
+		GudPool pool = getPoolResolverOne().resolve(poolName);
 
 		return pool != null ? pool : getPoolResolverTwo().resolve(poolName);
 	}

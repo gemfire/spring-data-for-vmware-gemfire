@@ -1,26 +1,33 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.Region;
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
+package org.springframework.data.gemfire.support;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.data.gemfire.RegionResolver;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * {@link RegionResolver} implementation used to resolve a {@link Region} by {@link String name}
+ * {@link RegionResolver} implementation used to resolve a {@link GudRegion} by {@link String name}
  * from a Spring {@link BeanFactory}.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see BeanFactory
  * @see BeanFactoryAware
  * @see RegionResolver
@@ -34,7 +41,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	/**
 	 * Constructs a new instance of {@link BeanFactoryRegionResolver} initialized with the given {@link BeanFactory}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link Region Regions}.
+	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link GudRegion Regions}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @see BeanFactory
 	 * @see #setBeanFactory(BeanFactory)
@@ -44,9 +51,9 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	}
 
 	/**
-	 * Sets a reference to the {@link BeanFactory} used to resolve cache {@link Region Regions}.
+	 * Sets a reference to the {@link BeanFactory} used to resolve cache {@link GudRegion Regions}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link Region Regions}.
+	 * @param beanFactory {@link BeanFactory} used to resolve cache {@link GudRegion Regions}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @throws BeansException if configuration of the {@link BeanFactory} fails.
 	 * @see BeanFactory
@@ -60,7 +67,7 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	}
 
 	/**
-	 * Returns the configured reference to the {@link BeanFactory} used to resolve cache {@link Region Regions}.
+	 * Returns the configured reference to the {@link BeanFactory} used to resolve cache {@link GudRegion Regions}.
 	 *
 	 * @return a reference to the configured {@link BeanFactory}.
 	 * @see BeanFactory
@@ -73,12 +80,12 @@ public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver imp
 	 * {@inheritDoc}
 	 */
 	@Nullable @Override @SuppressWarnings("unchecked")
-	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {
+	protected <K, V> GudRegion<K, V> doResolve(@Nullable String regionName) {
 
 		BeanFactory beanFactory = getBeanFactory();
 
 		return StringUtils.hasText(regionName) && beanFactory.containsBean(regionName)
-			? beanFactory.getBean(regionName, Region.class)
+			? beanFactory.getBean(regionName, GudRegion.class)
 			: null;
 	}
 }

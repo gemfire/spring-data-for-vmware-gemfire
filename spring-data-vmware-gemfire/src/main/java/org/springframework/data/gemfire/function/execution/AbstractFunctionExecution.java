@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Collections;
@@ -10,14 +18,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionException;
-import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.cache.execute.ResultCollector;
-
 import org.springframework.data.gemfire.function.ExecutionTimeoutFunctionException;
 import org.springframework.data.gemfire.function.UncategorizedFunctionException;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionException;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
+import org.springframework.data.gemfire.gud.api.GudResultCollector;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.data.gemfire.util.SpringExtensions.ValueReturningThrowableOperation;
 import org.springframework.util.Assert;
@@ -27,16 +34,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for creating a {@link Function} {@link Execution} using the {@link FunctionService}.
+ * Abstract base class for creating a {@link GudFunction} {@link GudExecution} using the {@link GudFunctionService}.
  *
  * @author David Turanski
  * @author John Blum
  * @author Patrick Johnson
  * @see TimeUnit
- * @see Execution
- * @see Function
- * @see FunctionService
- * @see ResultCollector
+ * @see GudExecution
+ * @see GudFunction
+ * @see GudFunctionService
+ * @see GudResultCollector
  */
 @SuppressWarnings("unused")
 abstract class AbstractFunctionExecution {
@@ -52,18 +59,18 @@ abstract class AbstractFunctionExecution {
 	private long timeout;
 
 	@SuppressWarnings("rawtypes")
-	private Function function;
+	private GudFunction function;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Object[] arguments;
 
-	private volatile ResultCollector<?, ?> resultCollector;
+	private volatile GudResultCollector<?, ?> resultCollector;
 
 	private String functionId;
 
 	@SuppressWarnings("rawtypes")
-	public AbstractFunctionExecution(Function function, Object... arguments) {
+	public AbstractFunctionExecution(GudFunction function, Object... arguments) {
 
 		Assert.notNull(function, "Function cannot be null");
 
@@ -88,10 +95,10 @@ abstract class AbstractFunctionExecution {
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected abstract Execution getExecution();
+	protected abstract GudExecution getExecution();
 
 	@SuppressWarnings("rawtypes")
-	protected Function getFunction() {
+	protected GudFunction getFunction() {
 		return this.function;
 	}
 
@@ -107,7 +114,7 @@ abstract class AbstractFunctionExecution {
 		return this.logger;
 	}
 
-	protected ResultCollector<?, ?> getResultCollector() {
+	protected GudResultCollector<?, ?> getResultCollector() {
 		return this.resultCollector;
 	}
 
@@ -123,10 +130,10 @@ abstract class AbstractFunctionExecution {
 	}
 
 	/**
-	 * Executes the configured {@link Function}.
+	 * Executes the configured {@link GudFunction}.
 	 *
 	 * @param <T> {@link Class type} of the result.
-	 * @return an {@link Iterable} containing the results from the {@link Function} {@link Execution}.
+	 * @return an {@link Iterable} containing the results from the {@link GudFunction} {@link GudExecution}.
 	 * @see Iterable
 	 * @see #execute(Boolean)
 	 */
@@ -135,27 +142,27 @@ abstract class AbstractFunctionExecution {
 	}
 
 	/**
-	 * Executes the configured {@link Function}.
+	 * Executes the configured {@link GudFunction}.
 	 *
 	 * @param <T> {@link Class type} of the result.
-	 * @param returnResult boolean value indicating whether the {@link Function} should return a result
-	 * from the {@link Execution}.
-	 * @return an {@link Iterable} containing the results from the {@link Function} {@link Execution}.
+	 * @param returnResult boolean value indicating whether the {@link GudFunction} should return a result
+	 * from the {@link GudExecution}.
+	 * @return an {@link Iterable} containing the results from the {@link GudFunction} {@link GudExecution}.
 	 * @see Iterable
 	 * @see #getExecution()
 	 * @see #getFunction()
 	 * @see #getFunctionId()
 	 * @see #getTimeout()
-	 * @see #prepare(Execution)
+	 * @see #prepare(GudExecution)
 	 */
 	@SuppressWarnings({ "rawtypes" })
 	<T> Iterable<T> execute(Boolean returnResult) {
 
-		Execution execution = prepare(getExecution());
+		GudExecution execution = prepare(getExecution());
 
-		Function function = getFunction();
+		GudFunction function = getFunction();
 
-		ResultCollector<?, ?> resultCollector = function != null
+		GudResultCollector<?, ?> resultCollector = function != null
 			? execution.execute(function)
 			: execution.execute(getFunctionId());
 
@@ -181,7 +188,7 @@ abstract class AbstractFunctionExecution {
 
 			return results;
 		}
-		catch (FunctionException cause) {
+		catch (GudFunctionException cause) {
 
 			// TODO: Use a more reliable way to determine that the Function does not return a result!
 			//  This only applies to Functions registered by ID!
@@ -194,7 +201,7 @@ abstract class AbstractFunctionExecution {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected Execution prepare(Execution execution) {
+	protected GudExecution prepare(GudExecution execution) {
 
 		execution = execution.setArguments(getArguments());
 		execution = getResultCollector() != null ? execution.withCollector(getResultCollector()) : execution;
@@ -204,18 +211,18 @@ abstract class AbstractFunctionExecution {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private boolean hasResult(boolean returnResult, Function function, ResultCollector resultCollector) {
+	private boolean hasResult(boolean returnResult, GudFunction function, GudResultCollector resultCollector) {
 		return returnResult && (function == null || function.hasResult());
 	}
 
 	@SuppressWarnings("rawtypes")
-	private boolean hasNoResult(boolean returnResult, Function function, ResultCollector resultCollector) {
+	private boolean hasNoResult(boolean returnResult, GudFunction function, GudResultCollector resultCollector) {
 		return !hasResult(returnResult, function, resultCollector);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private <T> ValueReturningThrowableOperation<T> getResultWithTimeoutThrowableOperation(
-		ResultCollector resultCollector, long timeout) {
+		GudResultCollector resultCollector, long timeout) {
 
 		return () -> (T) resultCollector.getResult(timeout, TimeUnit.MILLISECONDS);
 	}
@@ -224,8 +231,8 @@ abstract class AbstractFunctionExecution {
 
 		return cause -> {
 
-			if (cause instanceof FunctionException) {
-				throw (FunctionException) cause;
+			if (cause instanceof GudFunctionException) {
+				throw (GudFunctionException) cause;
 			}
 			else if (cause instanceof InterruptedException) {
 
@@ -283,10 +290,10 @@ abstract class AbstractFunctionExecution {
 	}
 
 	/**
-	 * Executes the configured {@link Function} and extracts the result as a single value.
+	 * Executes the configured {@link GudFunction} and extracts the result as a single value.
 	 *
 	 * @param <T> {@link Class type} of the result.
-	 * @return the result of the {@link Function} {@link Execution} as a single value.
+	 * @return the result of the {@link GudFunction} {@link GudExecution} as a single value.
 	 * @see #execute()
 	 */
 	<T> T executeAndExtract() {
@@ -310,13 +317,13 @@ abstract class AbstractFunctionExecution {
 
 		if (result instanceof Throwable) {
 
-			Function<?> function = getFunction();
+			GudFunction function = getFunction();
 
 			String message = String.format("Execution of Function [%s] failed", function != null
 				? function.getClass().getName()
 				: String.format("with ID [%s]", getFunctionId()));
 
-			throw new FunctionException(message, (Throwable) result);
+			throw new GudFunctionException(message, (Throwable) result);
 		}
 
 		return result;
@@ -333,7 +340,7 @@ abstract class AbstractFunctionExecution {
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected AbstractFunctionExecution setFunction(Function function) {
+	protected AbstractFunctionExecution setFunction(GudFunction function) {
 		this.function = function;
 		return this;
 	}
@@ -343,7 +350,7 @@ abstract class AbstractFunctionExecution {
 		return this;
 	}
 
-	protected AbstractFunctionExecution setResultCollector(ResultCollector<?, ?> resultCollector) {
+	protected AbstractFunctionExecution setResultCollector(GudResultCollector<?, ?> resultCollector) {
 		this.resultCollector = resultCollector;
 		return this;
 	}

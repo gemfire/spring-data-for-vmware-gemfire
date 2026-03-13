@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -16,10 +24,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.compression.Compressor;
-import org.apache.geode.compression.SnappyCompressor;
-
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -31,16 +35,19 @@ import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudSnappyCompressor;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.StringUtils;
 
 /**
  * The {@link CompressionConfiguration} class is a Spring {@link ImportAware} implementation capable of
- * enabling Pivotal GemFire/Apache Geode cache {@link Region Regions} data compression.
+ * enabling Pivotal GemFire/Apache Geode cache {@link GudRegion Regions} data compression.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see BeanFactoryPostProcessor
  * @see Bean
  * @see Configuration
@@ -109,8 +116,8 @@ public class CompressionConfiguration extends AbstractAnnotationConfigSupport im
 	}
 
 	@Bean(SNAPPY_COMPRESSOR_BEAN_NAME)
-	Compressor snappyCompressor() {
-		return new SnappyCompressor();
+	GudCompressor snappyCompressor() {
+		return new GudSnappyCompressor();
 	}
 
 	@Bean

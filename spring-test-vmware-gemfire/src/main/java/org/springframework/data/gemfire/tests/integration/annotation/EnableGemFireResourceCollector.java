@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration.annotation;
 
@@ -12,10 +19,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.DiskStore;
-
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
 import org.springframework.test.context.event.AfterTestClassEvent;
 
 /**
@@ -28,7 +34,7 @@ import org.springframework.test.context.event.AfterTestClassEvent;
  * @see Inherited
  * @see Retention
  * @see Target
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.springframework.data.gemfire.gud.api.GudClientCache
  * @see Import
  * @since 0.0.17
  */
@@ -53,10 +59,10 @@ public @interface EnableGemFireResourceCollector {
 	Class<? extends ApplicationEvent>[] collectOnEvents() default { AfterTestClassEvent.class };
 
 	/**
-	 * Tries to cleanup all the {@link File Files} left behind by GemFire/Geode {@link DiskStore DiskStores}.
+	 * Tries to cleanup all the {@link File Files} left behind by GemFire/Geode {@link GudDiskStore DiskStores}.
 	 *
 	 * @return a boolean value indicating whether the GemFire Resource Collector should cleanup all {@link File Files}
-	 * left behind by GemFire/Geode {@link DiskStore DiskStores}, whether for persistence or overflow;
+	 * left behind by GemFire/Geode {@link GudDiskStore DiskStores}, whether for persistence or overflow;
 	 * defaults to {@literal false}.
 	 */
 	boolean tryCleanDiskStoreFiles() default GemFireResourceCollectorConfiguration.DEFAULT_CLEAN_DISK_STORE_FILES;

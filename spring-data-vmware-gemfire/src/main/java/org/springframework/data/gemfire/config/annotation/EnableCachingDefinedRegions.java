@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -11,20 +19,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.gemfire.cache.config.EnableGemfireCaching;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
 
 /**
  * The {@link EnableCachingDefinedRegions} annotation marks a Spring {@link Configuration @Configuration} application
- * annotated class to enable the creation of GemFire/Geode {@link Region Regions} based on Spring's Cache Abstraction
+ * annotated class to enable the creation of GemFire/Geode {@link GudRegion Regions} based on Spring's Cache Abstraction
  * Annotations applied to application service methods and types.
  *
  * Additionally, this annotation enables Spring's Cache Abstraction with SDG's {@link EnableGemfireCaching} annotation,
@@ -36,10 +43,10 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see Inherited
  * @see Retention
  * @see Target
- * @see Region
- * @see RegionShortcut
- * @see ClientRegionShortcut
- * @see Pool
+ * @see GudRegion
+ * @see GudRegionShortcut
+ * @see GudClientRegionShortcut
+ * @see GudPool
  * @see Configuration
  * @see Import
  * @see EnableGemfireCaching
@@ -57,17 +64,17 @@ public @interface EnableCachingDefinedRegions {
 
 	/**
 	 * When this annotation is applied to a cache client application, the {@literal clientRegionShortcut} attribute
-	 * specifies the data management policy applied to client {@link Region Regions} where persistent entities are
+	 * specifies the data management policy applied to client {@link GudRegion Regions} where persistent entities are
 	 * only annotated with the generic {@link org.springframework.data.gemfire.mapping.annotation.Region}
 	 * mapping annotation, or the non-data policy specific mapping annotation.
 	 *
-	 * Defaults to {@link ClientRegionShortcut#PROXY}.
+	 * Defaults to {@link GudClientRegionShortcut#PROXY}.
 	 */
-	ClientRegionShortcut clientRegionShortcut() default ClientRegionShortcut.PROXY;
+	GudClientRegionShortcut clientRegionShortcut() default GudClientRegionShortcut.PROXY;
 
 	/**
 	 * When this annotation is applied to a cache client application, the {@literal poolName} attribute refers to
-	 * the default name of the GemFire/Geode {@link Pool} assigned to client {@link Region Region(s)}.
+	 * the default name of the GemFire/Geode {@link GudPool} assigned to client {@link GudRegion Region(s)}.
 	 *
 	 * This value can be overridden by annotating entities with the {@link ClientRegion} annotation.
 	 *
@@ -77,12 +84,12 @@ public @interface EnableCachingDefinedRegions {
 
 	/**
 	 * When this annotation is applied to a peer cache application, the {@literal serverRegionShortcut} attribute
-	 * specifies the data management policy applied to server {@link Region Regions} where persistent entities are
+	 * specifies the data management policy applied to server {@link GudRegion Regions} where persistent entities are
 	 * only annotated with the generic {@link org.springframework.data.gemfire.mapping.annotation.Region}
 	 * mapping annotation, or the non-data policy specific mapping annotation.
 	 *
-	 * Defaults to {@link RegionShortcut#REPLICATE}.
+	 * Defaults to {@link GudRegionShortcut#REPLICATE}.
 	 */
-	RegionShortcut serverRegionShortcut() default RegionShortcut.REPLICATE;
+	GudRegionShortcut serverRegionShortcut() default GudRegionShortcut.REPLICATE;
 
 }

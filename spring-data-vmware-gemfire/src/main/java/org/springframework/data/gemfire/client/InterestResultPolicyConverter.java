@@ -1,12 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.client;
 
-import org.apache.geode.cache.InterestResultPolicy;
-
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport;
 
 /**
@@ -15,10 +21,10 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  *
  * @author John Blum
  * @see AbstractPropertyEditorConverterSupport
- * @see InterestResultPolicy
+ * @see GudInterestResultPolicy
  * @since 1.6.0
  */
-public class InterestResultPolicyConverter extends AbstractPropertyEditorConverterSupport<InterestResultPolicy> {
+public class InterestResultPolicyConverter extends AbstractPropertyEditorConverterSupport<GudInterestResultPolicy> {
 
 	/**
 	 * Converts the given String into an instance of GemFire InterestResultPolicy.
@@ -29,12 +35,12 @@ public class InterestResultPolicyConverter extends AbstractPropertyEditorConvert
 	 * @see InterestResultPolicyType#getInterestResultPolicy(InterestResultPolicyType)
 	 * @see InterestResultPolicyType#valueOfIgnoreCase(String)
 	 * @see #assertConverted(String, Object, Class)
-	 * @see InterestResultPolicy
+	 * @see GudInterestResultPolicy
 	 */
 	@Override
-	public InterestResultPolicy convert(final String source) {
+	public GudInterestResultPolicy convert(final String source) {
 		return assertConverted(source, InterestResultPolicyType.getInterestResultPolicy(
-			InterestResultPolicyType.valueOfIgnoreCase(source)), InterestResultPolicy.class);
+			InterestResultPolicyType.valueOfIgnoreCase(source)), GudInterestResultPolicy.class);
 	}
 
 }

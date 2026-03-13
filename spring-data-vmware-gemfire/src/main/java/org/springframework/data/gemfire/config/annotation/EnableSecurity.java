@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -11,10 +19,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.security.AuthInitialize;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.gemfire.gud.api.GudAuthInitialize;
 
 /**
  * The {@link EnableSecurity} annotation marks a Spring {@link Configuration @Configuration} annotated {@link Class}
@@ -23,9 +30,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author John Blum
  * @see java.lang.annotation.Annotation
- * @see AuthInitialize
- * @see org.apache.geode.security.SecurityManager
- * @see org.apache.geode.security.PostProcessor
+ * @see GudAuthInitialize
  * @see Import
  * @see ApacheShiroSecurityConfiguration
  * @see AuthenticationBeanConfiguration
@@ -48,7 +53,7 @@ import org.springframework.context.annotation.Import;
 public @interface EnableSecurity {
 
 	/**
-	 * Used for authentication. Static creation method returning an {@link AuthInitialize} object,
+	 * Used for authentication. Static creation method returning a {@link GudAuthInitialize} object,
 	 * which obtains credentials for clients.
 	 *
 	 * Defaults to unset.
@@ -59,7 +64,7 @@ public @interface EnableSecurity {
 	String clientAuthenticationInitializer() default "";
 
 	/**
-	 * Used with authentication. Static creation method returning an {@link AuthInitialize} object, which obtains
+	 * Used with authentication. Static creation method returning a {@link GudAuthInitialize} object, which obtains
 	 * credentials for peers in a distributed system.
 	 *
 	 * Defaults to unset.
@@ -71,7 +76,7 @@ public @interface EnableSecurity {
 
 	/**
 	 * Specifies the application {@link Class} type implementing the Apache Geode
-	 * {@link org.apache.geode.security.SecurityManager} interface to enable security in Apache Geode.
+	 * SecurityManager interface to enable security in Apache Geode.
 	 *
 	 * Defaults to {@link Void}.
 	 */
@@ -79,7 +84,7 @@ public @interface EnableSecurity {
 
 	/**
 	 * Specifies the fully-qualified class name of the application {@link Class} implementing the Apache Geode
-	 * {@link org.apache.geode.security.SecurityManager} interface to enable security in Apache Geode.
+	 * SecurityManager interface to enable security in Apache Geode.
 	 *
 	 * Use this Annotation attribute if you are uncertain whether the application class is on the classpath or not.
 	 *
@@ -91,7 +96,7 @@ public @interface EnableSecurity {
 
 	/**
 	 * Specifies the application {@link Class} type implementing the Apache Geode
-	 * {@link org.apache.geode.security.PostProcessor} interface, which used to transform sensitive data
+	 * PostProcessor interface, which used to transform sensitive data
 	 * returned from secure data access operations.
 	 *
 	 * Defaults to {@link Void}.
@@ -100,7 +105,7 @@ public @interface EnableSecurity {
 
 	/**
 	 * Specifies the fully-qualified class name of the application {@link Class} implementing the Apache Geode
-	 * {@link org.apache.geode.security.PostProcessor} interface, which used to transform sensitive data
+	 * PostProcessor interface, which used to transform sensitive data
 	 * returned from secure data access operations.
 	 *
 	 * Use this Annotation attribute if you are uncertain whether the application class is on the classpath or not.

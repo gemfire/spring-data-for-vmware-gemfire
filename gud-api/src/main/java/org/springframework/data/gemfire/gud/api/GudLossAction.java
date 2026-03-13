@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -22,6 +27,10 @@ public enum GudLossAction {
     LIMITED_ACCESS,
     FULL_ACCESS,
     RECONNECT;
+
+    public static GudLossAction fromName(String name) {
+        return valueOf(name);
+    }
 
     public boolean isNoAccess() {
         return this == NO_ACCESS;

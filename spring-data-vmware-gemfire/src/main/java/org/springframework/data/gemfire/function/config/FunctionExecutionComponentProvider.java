@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.config;
 
 import java.io.IOException;
@@ -11,9 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.AnnotationMetadata;
@@ -21,6 +26,8 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AbstractTypeHierarchyTraversingFilter;
 import org.springframework.core.type.filter.TypeFilter;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
@@ -42,7 +49,7 @@ class FunctionExecutionComponentProvider extends ClassPathScanningCandidateCompo
 	 * @param includeFilters the {@link TypeFilter}s to select function execution interfaces to consider;
 	 * must not be {@literal null}.
 	 * @param functionExecutionAnnotationTypes {@link Set} of {@link Annotation} types denoting Apache Geode
-	 * {@link Function} {@link Execution Executions}.
+	 * {@link GudFunction} {@link GudExecution Executions}.
 	 */
 	public FunctionExecutionComponentProvider(@NonNull Iterable<? extends TypeFilter> includeFilters,
 			@NonNull Set<Class<? extends Annotation>> functionExecutionAnnotationTypes) {

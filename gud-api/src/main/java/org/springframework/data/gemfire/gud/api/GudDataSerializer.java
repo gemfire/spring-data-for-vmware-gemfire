@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -28,4 +33,16 @@ public abstract class GudDataSerializer {
     public abstract int getId();
     
     public abstract Class<?>[] getSupportedClasses();
+
+    public static void writeClass(Class<?> type, DataOutput out) throws IOException {
+        throw new UnsupportedOperationException("Must be implemented by driver");
+    }
+
+    public static Class<?> readClass(DataInput in) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException("Must be implemented by driver");
+    }
+
+    public static void register(Class<? extends GudDataSerializer> serializerClass) {
+        throw new UnsupportedOperationException("Must be implemented by driver");
+    }
 }

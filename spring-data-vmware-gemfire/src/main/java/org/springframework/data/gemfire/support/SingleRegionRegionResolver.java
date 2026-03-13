@@ -1,37 +1,44 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.Region;
-
 import org.springframework.data.gemfire.RegionResolver;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * {@link RegionResolver} implementation resolving a single, configured {@link Region} object.
+ * {@link RegionResolver} implementation resolving a single, configured {@link GudRegion} object.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see RegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings("rawtypes")
 public class SingleRegionRegionResolver implements RegionResolver {
 
-	private final Region region;
+	private final GudRegion region;
 
 	/**
-	 * Constructs a new instance of {@link SingleRegionRegionResolver} with the given {@link Region}.
+	 * Constructs a new instance of {@link SingleRegionRegionResolver} with the given {@link GudRegion}.
 	 *
-	 * @param region {@link Region} returned in the resolution process; must not be {@literal null}.
-	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @param region {@link GudRegion} returned in the resolution process; must not be {@literal null}.
+	 * @throws IllegalArgumentException if {@link GudRegion} is {@literal null}.
+	 * @see GudRegion
 	 */
-	public SingleRegionRegionResolver(@NonNull Region region) {
+	public SingleRegionRegionResolver(@NonNull GudRegion region) {
 
 		Assert.notNull(region, "Region must not be null");
 
@@ -39,15 +46,15 @@ public class SingleRegionRegionResolver implements RegionResolver {
 	}
 
 	/**
-	 * Returns a reference to the configured {@link Region}.
+	 * Returns a reference to the configured {@link GudRegion}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @return a reference to the configured {@link Region}.
-	 * @see Region
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @return a reference to the configured {@link GudRegion}.
+	 * @see GudRegion
 	 */
 	@SuppressWarnings("unchecked")
-	protected @NonNull <K, V> Region<K, V> getRegion() {
+	protected @NonNull <K, V> GudRegion<K, V> getRegion() {
 		return this.region;
 	}
 
@@ -55,9 +62,9 @@ public class SingleRegionRegionResolver implements RegionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public @Nullable <K, V> Region<K, V> resolve(@Nullable String regionName) {
+	public @Nullable <K, V> GudRegion<K, V> resolve(@Nullable String regionName) {
 
-		Region<K, V> region = getRegion();
+		GudRegion<K, V> region = getRegion();
 
 		return region.getName().equals(regionName) ? region : null;
 	}

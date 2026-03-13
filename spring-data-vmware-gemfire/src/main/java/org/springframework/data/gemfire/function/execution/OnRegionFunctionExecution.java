@@ -1,38 +1,45 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.execution;
 
 import java.util.Set;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionService;
-
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.util.Assert;
 
 /**
- * Creates an {@literal OnRegion} {@link Function} {@link Execution} initialized with a {@link Region}
- * using {@link FunctionService#onRegion(Region)}.
+ * Creates an {@literal OnRegion} {@link GudFunction} {@link GudExecution} initialized with a {@link GudRegion}
+ * using {@link GudFunctionService#onRegion(GudRegion)}.
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see Execution
- * @see Function
- * @see FunctionService
+ * @see GudRegion
+ * @see GudExecution
+ * @see GudFunction
+ * @see GudFunctionService
  * @see AbstractFunctionExecution
  */
 class OnRegionFunctionExecution extends AbstractFunctionExecution {
 
-	private final Region<?, ?> region;
+	private final GudRegion<?, ?> region;
 
 	private volatile Set<?> keys;
 
-	public OnRegionFunctionExecution(Region<?, ?> region) {
+	public OnRegionFunctionExecution(GudRegion<?, ?> region) {
 
 		Assert.notNull(region, "Region must not be null");
 
@@ -48,15 +55,15 @@ class OnRegionFunctionExecution extends AbstractFunctionExecution {
 		return this.keys;
 	}
 
-	protected Region<?, ?> getRegion() {
+	protected GudRegion<?, ?> getRegion() {
 		return this.region;
 	}
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected Execution getExecution() {
+	protected GudExecution getExecution() {
 
-		Execution execution = FunctionService.onRegion(getRegion());
+		GudExecution execution = GudFunctionService.onRegion(getRegion());
 
 		Set<?> keys = getKeys();
 

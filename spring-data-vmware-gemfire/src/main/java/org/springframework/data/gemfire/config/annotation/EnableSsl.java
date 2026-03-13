@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -14,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Arrays;
 
-import org.apache.geode.security.SecurableCommunicationChannels;
+import org.springframework.data.gemfire.gud.api.GudSecurableCommunicationChannels;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -27,7 +35,7 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @author Srikanth Manvi
  * @see java.lang.annotation.Annotation
- * @see SecurableCommunicationChannels
+ * @see GudSecurableCommunicationChannels
  * @see Import
  * @see SslConfiguration
  * @since 1.9.0
@@ -238,12 +246,12 @@ public @interface EnableSsl {
 
 	enum Component {
 
-		ALL(SecurableCommunicationChannels.ALL),
-		CLUSTER(SecurableCommunicationChannels.CLUSTER),
-		GATEWAY(SecurableCommunicationChannels.GATEWAY),
-		LOCATOR(SecurableCommunicationChannels.LOCATOR),
-		SERVER(SecurableCommunicationChannels.SERVER),
-		WEB(SecurableCommunicationChannels.WEB);
+		ALL(GudSecurableCommunicationChannels.ALL),
+		CLUSTER(GudSecurableCommunicationChannels.CLUSTER),
+		GATEWAY(GudSecurableCommunicationChannels.GATEWAY),
+		LOCATOR(GudSecurableCommunicationChannels.LOCATOR),
+		SERVER(GudSecurableCommunicationChannels.SERVER),
+		WEB(GudSecurableCommunicationChannels.WEB);
 
 		public static Component valueOfName(String name) {
 

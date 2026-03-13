@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function;
 
 import java.lang.reflect.Array;
@@ -11,14 +19,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.ResultSender;
-
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudResultSender;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
- * Sends {@link Collection} {@link Function} results using a {@link ResultSender} in chunks
+ * Sends {@link Collection} {@link GudFunction} results using a {@link GudResultSender} in chunks
  * determined by {@code batchSize}.
  *
  * @author David Turanski
@@ -30,19 +37,19 @@ class BatchingResultSender {
 
 	private final int batchSize;
 
-	private ResultSender<Object> resultSender;
+	private GudResultSender<Object> resultSender;
 
 	/**
 	 * Constructs a new instance of {@link BatchingResultSender} initialized with the given {@link Integer batch size}
-	 * and {@link ResultSender} object used to delegate all send operations.
+	 * and {@link GudResultSender} object used to delegate all send operations.
 	 *
 	 * @param batchSize {@link Integer} specifying the configured batch size.
-	 * @param resultSender {@link ResultSender} used to delegate all send operations.
-	 * @throws IllegalArgumentException if {@link ResultSender} is {@literal null}
+	 * @param resultSender {@link GudResultSender} used to delegate all send operations.
+	 * @throws IllegalArgumentException if {@link GudResultSender} is {@literal null}
 	 * or {@code batchSize} is less than {@literal 0}.
-	 * @see ResultSender
+	 * @see GudResultSender
 	 */
-	public BatchingResultSender(int batchSize, ResultSender<Object> resultSender) {
+	public BatchingResultSender(int batchSize, GudResultSender<Object> resultSender) {
 
 		Assert.notNull(resultSender, "ResultSender must not be null");
 		Assert.isTrue(batchSize >= 0, "batchSize must be greater than equal to 0");
@@ -52,22 +59,22 @@ class BatchingResultSender {
 	}
 
 	/**
-	 * Returns the configured {@link Integer batchSize} of this batching {@link ResultSender}.
+	 * Returns the configured {@link Integer batchSize} of this batching {@link GudResultSender}.
 	 *
 	 * @return an {@link Integer} value specifying the configured {@link Integer batchSize}
-	 * of this batching {@link ResultSender}.
+	 * of this batching {@link GudResultSender}.
 	 */
 	public int getBatchSize() {
 		return this.batchSize;
 	}
 
 	/**
-	 * Returns a reference to the configured {@link ResultSender} used to send {@link Function} results.
+	 * Returns a reference to the configured {@link GudResultSender} used to send {@link GudFunction} results.
 	 *
-	 * @return a reference to the configured {@link ResultSender} used to send {@link Function} results.
-	 * @see ResultSender
+	 * @return a reference to the configured {@link GudResultSender} used to send {@link GudFunction} results.
+	 * @see GudResultSender
 	 */
-	public ResultSender<Object> getResultSender() {
+	public GudResultSender<Object> getResultSender() {
 		return this.resultSender;
 	}
 
@@ -85,7 +92,7 @@ class BatchingResultSender {
 
 	public void sendResults(Iterable<?> result) {
 
-		ResultSender<Object> resultSender = getResultSender();
+		GudResultSender<Object> resultSender = getResultSender();
 
 		if (doNotSendChunks(!result.iterator().hasNext())) {
 			resultSender.lastResult(result);
@@ -124,7 +131,7 @@ class BatchingResultSender {
 
 		int arrayLength = Array.getLength(result);
 
-		ResultSender<Object> resultSender = getResultSender();
+		GudResultSender<Object> resultSender = getResultSender();
 
 		if (doNotSendChunks(arrayLength == 0)) {
 			resultSender.lastResult(result);

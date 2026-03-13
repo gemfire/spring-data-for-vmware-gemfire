@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.annotation;
@@ -23,20 +30,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.DiskStore;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * The {@link EnableDiskStore} annotation marks a Spring {@link Configuration @Configuration} annotated {@link Class}
- * to configure a single GemFire/Geode {@link DiskStore} bean in the Spring application context
- * in which to persist or overflow data from 1 or more cache {@link org.apache.geode.cache.Region Regions}.
+ * to configure a single GemFire/Geode {@link GudDiskStore} bean in the Spring application context
+ * in which to persist or overflow data from 1 or more cache {@link GudRegion Regions}.
  *
  * @author John Blum
- * @see DiskStore
- * @see org.apache.geode.cache.Region
+ * @see GudDiskStore
+ * @see GudRegion
  * @see Import
  * @see AliasFor
  * @see DiskStoreConfiguration
@@ -53,7 +60,7 @@ import org.springframework.core.annotation.AliasFor;
 public @interface EnableDiskStore {
 
 	/**
-	 * Name of the {@link DiskStore}.
+	 * Name of the {@link GudDiskStore}.
 	 *
 	 * Required!
 	 */
@@ -61,11 +68,11 @@ public @interface EnableDiskStore {
 	String value() default "";
 
 	/**
-	 * Name of the {@link DiskStore}.
+	 * Name of the {@link GudDiskStore}.
 	 *
 	 * Required!
 	 *
-	 * This value of this attribute is also used to resolve {@link DiskStore} specific properties defined in
+	 * This value of this attribute is also used to resolve {@link GudDiskStore} specific properties defined in
 	 * {@literal application.properties}.
 	 */
 	@AliasFor(attribute = "value")
@@ -108,7 +115,7 @@ public @interface EnableDiskStore {
 	int compactionThreshold() default DEFAULT_COMPACTION_THRESHOLD;
 
 	/**
-	 * File system directory location(s) in which the {@link DiskStore} files are stored.
+	 * File system directory location(s) in which the {@link GudDiskStore} files are stored.
 	 *
 	 * Defaults to current working directory with 2 petabytes of storage capacity maximum size.
 	 *

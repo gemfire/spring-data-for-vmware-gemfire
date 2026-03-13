@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
@@ -13,11 +21,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.util.ObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -45,12 +52,12 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link EvictionConfiguration} class is a Spring {@link Configuration @Configuration} annotated class to enable
- * Eviction policy configuration on cache {@link Region Regions}.
+ * Eviction policy configuration on cache {@link GudRegion Regions}.
  *
  * @author John Blum
- * @see EvictionAttributes
- * @see Region
- * @see ObjectSizer
+ * @see GudEvictionAttributes
+ * @see GudRegion
+ * @see GudObjectSizer
  * @see BeanPostProcessor
  * @see ApplicationContext
  * @see ApplicationContextAware
@@ -137,7 +144,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 
 	/**
 	 * Returns a reference to the configured {@link EvictionPolicyConfigurer} used to configure the Eviction policy
-	 * of a {@link Region}.
+	 * of a {@link GudRegion}.
 	 *
 	 * @return a reference to the configured {@link EvictionPolicyConfigurer}.
 	 * @see EvictionPolicyConfigurer
@@ -167,13 +174,13 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 
 		ApplicationContext applicationContext = event.getApplicationContext();
 
-		for (Region<?, ?> region : applicationContext.getBeansOfType(Region.class).values()) {
+		for (GudRegion<?, ?> region : applicationContext.getBeansOfType(GudRegion.class).values()) {
 			getEvictionPolicyConfigurer().configure(region);
 		}
 	}
 
 	/**
-	 * {@link EvictionPolicyConfigurer} configures the Eviction policy of an Apache Geode {@link Region}.
+	 * {@link EvictionPolicyConfigurer} configures the Eviction policy of an Apache Geode {@link GudRegion}.
 	 *
 	 * @see FunctionalInterface
 	 */
@@ -182,10 +189,10 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 
 		/**
 		 * Configure the Eviction policy on the given SDG {@link ClientRegionFactoryBean}
-		 * or {@link ClientRegionFactoryBean} used to create an Apache Geode {@link Region}.
+		 * or {@link ClientRegionFactoryBean} used to create an Apache Geode {@link GudRegion}.
 		 *
 		 * @param regionBean {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean} used to create
-		 * an Apache Geode {@link Region}.
+		 * an Apache Geode {@link GudRegion}.
 		 * @return the given {@code regionFactoryBean}.
 		 * @see ClientRegionFactoryBean
 		 * @see ClientRegionFactoryBean
@@ -193,13 +200,13 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		Object configure(Object regionBean);
 
 		/**
-		 * Configures the Eviction policy of the given Apache Geode {@link Region}.
+		 * Configures the Eviction policy of the given Apache Geode {@link GudRegion}.
 		 *
-		 * @param region {@link Region} on which to configure the Eviction policy.
-		 * @return the given {@link Region}.
-		 * @see Region
+		 * @param region {@link GudRegion} on which to configure the Eviction policy.
+		 * @return the given {@link GudRegion}.
+		 * @see GudRegion
 		 */
-		default Region<?, ?> configure(Region<?, ?> region) {
+		default GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 			return region;
 		}
 	}
@@ -294,7 +301,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Region<?, ?> configure(Region<?, ?> region) {
+		public GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 			return this.two.configure(this.one.configure(region));
 		}
 	}
@@ -324,7 +331,7 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		protected static EvictionPolicyMetaData from(EvictionPolicyType type, int maximum, EvictionActionType action,
-				ObjectSizer objectSizer, String... regionNames) {
+				GudObjectSizer objectSizer, String... regionNames) {
 
 			EvictionAttributesFactoryBean factoryBean = new EvictionAttributesFactoryBean();
 
@@ -338,15 +345,23 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		protected static EvictionPolicyMetaData fromDefaults() {
-			return new EvictionPolicyMetaData(EvictionAttributes.createLRUEntryAttributes());
+			return new EvictionPolicyMetaData(createDefaultEvictionAttributes());
 		}
 
-		protected static ObjectSizer resolveObjectSizer(String objectSizerName, ApplicationContext applicationContext) {
+		private static GudEvictionAttributes createDefaultEvictionAttributes() {
+			EvictionAttributesFactoryBean factoryBean = new EvictionAttributesFactoryBean();
+			factoryBean.setType(EvictionPolicyType.ENTRY_COUNT);
+			factoryBean.setThreshold(GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM);
+			factoryBean.afterPropertiesSet();
+			return factoryBean.getObject();
+		}
+
+		protected static GudObjectSizer resolveObjectSizer(String objectSizerName, ApplicationContext applicationContext) {
 
 			boolean resolvable = StringUtils.hasText(objectSizerName)
 				&& applicationContext.containsBean(objectSizerName);
 
-			return resolvable ? applicationContext.getBean(objectSizerName, ObjectSizer.class) : null;
+			return resolvable ? applicationContext.getBean(objectSizerName, GudObjectSizer.class) : null;
 		}
 
 		/**
@@ -365,33 +380,33 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 			return EvictionPolicyType.HEAP_PERCENTAGE.equals(type) ? null : maximum;
 		}
 
-		private final EvictionAttributes evictionAttributes;
+		private final GudEvictionAttributes evictionAttributes;
 
 		private final Set<String> regionNames = new HashSet<>();
 
 		/**
 		 * Constructs an instance of {@link EvictionPolicyMetaData} initialized with the given
-		 * {@link EvictionAttributes} applying to all {@link Region Regions}.
+		 * {@link GudEvictionAttributes} applying to all {@link GudRegion Regions}.
 		 *
-		 * @param evictionAttributes {@link EvictionAttributes} specifying the Eviction policy configuration
-		 * for a {@link Region}.
-		 * @see EvictionAttributes
-		 * @see #EvictionPolicyMetaData(EvictionAttributes, String[])
+		 * @param evictionAttributes {@link GudEvictionAttributes} specifying the Eviction policy configuration
+		 * for a {@link GudRegion}.
+		 * @see GudEvictionAttributes
+		 * @see #EvictionPolicyMetaData(GudEvictionAttributes, String[])
 		 */
-		protected EvictionPolicyMetaData(EvictionAttributes evictionAttributes) {
+		protected EvictionPolicyMetaData(GudEvictionAttributes evictionAttributes) {
 			this(evictionAttributes, ALL_REGIONS);
 		}
 
 		/**
 		 * Constructs an instance of {@link EvictionPolicyMetaData} initialized with the given
-		 * {@link EvictionAttributes} to apply to the specific {@link Region Regions}.
+		 * {@link GudEvictionAttributes} to apply to the specific {@link GudRegion Regions}.
 		 *
-		 * @param evictionAttributes {@link EvictionAttributes} specifying the Eviction policy configuration
-		 * for a {@link Region}.
-		 * @param regionNames names of {@link Region Regions} on which the Eviction policy is applied.
-		 * @see EvictionAttributes
+		 * @param evictionAttributes {@link GudEvictionAttributes} specifying the Eviction policy configuration
+		 * for a {@link GudRegion}.
+		 * @param regionNames names of {@link GudRegion Regions} on which the Eviction policy is applied.
+		 * @see GudEvictionAttributes
 		 */
-		protected EvictionPolicyMetaData(EvictionAttributes evictionAttributes, String[] regionNames) {
+		protected EvictionPolicyMetaData(GudEvictionAttributes evictionAttributes, String[] regionNames) {
 
 			Assert.notNull(evictionAttributes, "EvictionAttributes must not be null");
 
@@ -414,33 +429,33 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		/**
-		 * Determines whether the given {@link Region} is accepted for Eviction policy configuration.
+		 * Determines whether the given {@link GudRegion} is accepted for Eviction policy configuration.
 		 *
-		 * @param region {@link Region} evaluated for Eviction policy configuration.
-		 * @return a boolean value indicating whether the given {@link Region} is accepted for
+		 * @param region {@link GudRegion} evaluated for Eviction policy configuration.
+		 * @return a boolean value indicating whether the given {@link GudRegion} is accepted for
 		 * Eviction policy configuration.
-		 * @see Region
+		 * @see GudRegion
 		 * @see #accepts(Supplier)
 		 */
-		protected boolean accepts(@Nullable Region<?, ?> region) {
+		protected boolean accepts(@Nullable GudRegion<?, ?> region) {
 			return region != null && accepts(() -> region.getName());
 		}
 
 		/**
-		 * Determine whether the {@link Region} identified by name is accepted for Eviction policy configuration.
+		 * Determine whether the {@link GudRegion} identified by name is accepted for Eviction policy configuration.
 		 *
-		 * @param regionName name of the {@link Region} targeted for Eviction policy configuration.
-		 * @return a boolean value if the named {@link Region} is accepted for Eviction policy configuration.
+		 * @param regionName name of the {@link GudRegion} targeted for Eviction policy configuration.
+		 * @return a boolean value if the named {@link GudRegion} is accepted for Eviction policy configuration.
 		 */
 		protected boolean accepts(Supplier<String> regionName) {
 			return this.regionNames.isEmpty() || this.regionNames.contains(regionName.get());
 		}
 
 		/**
-		 * Resolves the name of a given {@link Region} from the corresponding {@link ResolvableRegionFactoryBean} object.
+		 * Resolves the name of a given {@link GudRegion} from the corresponding {@link ResolvableRegionFactoryBean} object.
 		 *
-		 * @param regionFactoryBean {@link ResolvableRegionFactoryBean} from which to resolve the {@link Region} name.
-		 * @return the resolved name of the {@link Region} created from the given {@link ResolvableRegionFactoryBean}.
+		 * @param regionFactoryBean {@link ResolvableRegionFactoryBean} from which to resolve the {@link GudRegion} name.
+		 * @return the resolved name of the {@link GudRegion} created from the given {@link ResolvableRegionFactoryBean}.
 		 * @see ResolvableRegionFactoryBean#resolveRegionName()
 		 */
 		protected String resolveRegionName(Object regionFactoryBean) {
@@ -451,14 +466,14 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		/**
-		 * Sets the {@link EvictionAttributes} on the {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean}
-		 * used to create the targeted {@link Region}.
+		 * Sets the {@link GudEvictionAttributes} on the {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean}
+		 * used to create the targeted {@link GudRegion}.
 		 *
 		 * @param regionFactoryBean {@link ClientRegionFactoryBean} or {@link ClientRegionFactoryBean} on which to
-		 * set the {@link EvictionAttributes} encapsulating the Eviction policy for the targeted {@link Region}.
+		 * set the {@link GudEvictionAttributes} encapsulating the Eviction policy for the targeted {@link GudRegion}.
 		 * @return the {@code regionFactoryBean}.
-		 * @see EvictingRegionFactoryBean#setEvictionAttributes(EvictionAttributes)
-		 * @see EvictionAttributes
+		 * @see EvictingRegionFactoryBean#setEvictionAttributes(GudEvictionAttributes)
+		 * @see GudEvictionAttributes
 		 * @see #getEvictionAttributes()
 		 */
 		protected EvictingRegionFactoryBean setEvictionAttributes(EvictingRegionFactoryBean regionFactoryBean) {
@@ -469,15 +484,15 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		}
 
 		/**
-		 * Returns an instance of the {@link EvictionAttributes} specifying the Eviction policy configuration
+		 * Returns an instance of the {@link GudEvictionAttributes} specifying the Eviction policy configuration
 		 * captured in this Eviction policy meta-data.
 		 *
-		 * @return an instance of the {@link EvictionAttributes} specifying the {@link Region}
+		 * @return an instance of the {@link GudEvictionAttributes} specifying the {@link GudRegion}
 		 * Eviction policy configuration.
-		 * @throws IllegalStateException if the {@link EvictionAttributes} were not properly initialized.
-		 * @see EvictionAttributes
+		 * @throws IllegalStateException if the {@link GudEvictionAttributes} were not properly initialized.
+		 * @see GudEvictionAttributes
 		 */
-		protected EvictionAttributes getEvictionAttributes() {
+		protected GudEvictionAttributes getEvictionAttributes() {
 
 			return Optional.ofNullable(this.evictionAttributes).orElseThrow(() ->
 				newIllegalStateException("EvictionAttributes was not properly configured and initialized"));
@@ -498,29 +513,28 @@ public class EvictionConfiguration extends AbstractAnnotationConfigSupport
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Region<?, ?> configure(Region<?, ?> region) {
+		public GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 
 			Optional.ofNullable(region)
 				.filter(this::accepts)
 				.filter(this::isDefaultEvictionEntryMaximum)
-				.map(Region::getAttributesMutator)
-				.map(AttributesMutator::getEvictionAttributesMutator)
-				.ifPresent(evictionAttributesMutator ->
-					evictionAttributesMutator.setMaximum(getEvictionAttributes().getMaximum()));
+				.map(GudRegion::getAttributesMutator)
+				.ifPresent(attributesMutator ->
+					attributesMutator.setEvictionMaximum(getEvictionAttributes().getMaximum()));
 
 			return region;
 		}
 
-		private boolean isDefaultEvictionEntryMaximum(Region<?, ?> region) {
+		private boolean isDefaultEvictionEntryMaximum(GudRegion<?, ?> region) {
 			return region != null && isDefaultEvictionEntryMaximum(region.getAttributes());
 		}
 
-		private boolean isDefaultEvictionEntryMaximum(RegionAttributes<?, ?> regionAttributes) {
+		private boolean isDefaultEvictionEntryMaximum(GudRegionAttributes<?, ?> regionAttributes) {
 			return regionAttributes != null && isDefaultEvictionEntryMaximum(regionAttributes.getEvictionAttributes());
 		}
 
-		private boolean isDefaultEvictionEntryMaximum(EvictionAttributes evictionAttributes) {
-			return EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM == evictionAttributes.getMaximum();
+		private boolean isDefaultEvictionEntryMaximum(GudEvictionAttributes evictionAttributes) {
+			return GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM == evictionAttributes.getMaximum();
 		}
 	}
 }

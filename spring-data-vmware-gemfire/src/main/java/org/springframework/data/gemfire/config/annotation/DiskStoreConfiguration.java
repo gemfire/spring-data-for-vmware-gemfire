@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -14,9 +22,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.DiskStoreFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -28,14 +33,16 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.DiskStoreFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudDiskStoreFactory;
 import org.springframework.util.StringUtils;
 
 /**
  * The {@link DiskStoreConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} used to register
- * a GemFire/Geode {@link DiskStore} bean definition.
+ * a GemFire/Geode {@link GudDiskStore} bean definition.
  *
  * @author John Blum
- * @see DiskStore
+ * @see GudDiskStore
  * @see BeanDefinition
  * @see BeanDefinitionBuilder
  * @see BeanDefinitionRegistry
@@ -50,30 +57,30 @@ import org.springframework.util.StringUtils;
 public class DiskStoreConfiguration extends AbstractAnnotationConfigSupport
 		implements ImportBeanDefinitionRegistrar {
 
-	protected static final boolean DEFAULT_ALLOW_FORCE_COMPACTION = DiskStoreFactory.DEFAULT_ALLOW_FORCE_COMPACTION;
-	protected static final boolean DEFAULT_AUTO_COMPACT = DiskStoreFactory.DEFAULT_AUTO_COMPACT;
+	protected static final boolean DEFAULT_ALLOW_FORCE_COMPACTION = GudDiskStoreFactory.DEFAULT_ALLOW_FORCE_COMPACTION;
+	protected static final boolean DEFAULT_AUTO_COMPACT = GudDiskStoreFactory.DEFAULT_AUTO_COMPACT;
 
 	protected static final float DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE =
-		DiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE;
+		GudDiskStoreFactory.DEFAULT_DISK_USAGE_CRITICAL_PERCENTAGE;
 
 	protected static final float DEFAULT_DISK_USAGE_WARNING_PERCENTAGE =
-		DiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE;
+		GudDiskStoreFactory.DEFAULT_DISK_USAGE_WARNING_PERCENTAGE;
 
-	protected static final int DEFAULT_COMPACTION_THRESHOLD = DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD;
-	protected static final int DEFAULT_QUEUE_SIZE = DiskStoreFactory.DEFAULT_QUEUE_SIZE;
-	protected static final int DEFAULT_WRITE_BUFFER_SIZE = DiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE;
-	protected static final int DEFAULT_SEGMENTS = DiskStoreFactory.DEFAULT_SEGMENTS;
+	protected static final int DEFAULT_COMPACTION_THRESHOLD = GudDiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD;
+	protected static final int DEFAULT_QUEUE_SIZE = GudDiskStoreFactory.DEFAULT_QUEUE_SIZE;
+	protected static final int DEFAULT_WRITE_BUFFER_SIZE = GudDiskStoreFactory.DEFAULT_WRITE_BUFFER_SIZE;
+	protected static final int DEFAULT_SEGMENTS = GudDiskStoreFactory.DEFAULT_SEGMENTS;
 
 	protected static final long DEFAULT_MAX_OPLOG_SIZE = 1024L;
-	protected static final long DEFAULT_TIME_INTERVAL = DiskStoreFactory.DEFAULT_TIME_INTERVAL;
+	protected static final long DEFAULT_TIME_INTERVAL = GudDiskStoreFactory.DEFAULT_TIME_INTERVAL;
 
 	@Autowired(required = false)
 	private List<DiskStoreConfigurer> diskStoreConfigurers = Collections.emptyList();
 
 	/**
-	 * Returns the {@link DiskStore} {@link Annotation} type specified in configuration.
+	 * Returns the {@link GudDiskStore} {@link Annotation} type specified in configuration.
 	 *
-	 * @return the {@link DiskStore} {@link Annotation} type specified in configuration.
+	 * @return the {@link GudDiskStore} {@link Annotation} type specified in configuration.
 	 * @see EnableDiskStores
 	 * @see EnableDiskStore
 	 */

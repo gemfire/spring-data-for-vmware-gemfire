@@ -1,16 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.expiration;
 
 import java.lang.annotation.Annotation;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -22,6 +25,10 @@ import org.springframework.context.expression.EnvironmentAccessor;
 import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
@@ -34,9 +41,9 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
- * The {@link AnnotationBasedExpiration} class is an implementation of the {@link CustomExpiry} interface
- * that determines the Time-To-Live (TTL) or Idle-Timeout (TTI) expiration policy of a {@link Region} entry
- * by introspecting the {@link Region} entry's class type and reflecting on any {@link Region} entries annotated
+ * The {@link AnnotationBasedExpiration} class is an implementation of the {@link GudCustomExpiry} interface
+ * that determines the Time-To-Live (TTL) or Idle-Timeout (TTI) expiration policy of a {@link GudRegion} entry
+ * by introspecting the {@link GudRegion} entry's class type and reflecting on any {@link GudRegion} entries annotated
  * with SDG's Expiration-based Annotations.
  *
  * @author John Blum
@@ -47,14 +54,14 @@ import org.springframework.util.ObjectUtils;
  * @see Expiration
  * @see IdleTimeoutExpiration
  * @see TimeToLiveExpiration
- * @see CustomExpiry
- * @see ExpirationAction
- * @see ExpirationAttributes
- * @see Region
+ * @see GudCustomExpiry
+ * @see GudExpirationAction
+ * @see GudExpirationAttributes
+ * @see GudRegion
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
-public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, CustomExpiry<K, V> {
+public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, GudCustomExpiry<K, V> {
 
 	protected static final AtomicReference<BeanFactory> BEAN_FACTORY_REFERENCE =
 		new AtomicReference<>(null);
@@ -62,8 +69,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	protected static final AtomicReference<StandardEvaluationContext> EVALUATION_CONTEXT_REFERENCE
 		= new AtomicReference<>(null);
 
-	//private ExpirationAttributes defaultExpirationAttributes = ExpirationAttributes.DEFAULT;
-	private ExpirationAttributes defaultExpirationAttributes;
+	private GudExpirationAttributes defaultExpirationAttributes;
 
 	/**
 	 * Constructs a new instance of the AnnotationBasedExpiration class with no default expiration policy.
@@ -77,24 +83,24 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * expiration policy.
 	 *
 	 * @param defaultExpirationAttributes expiration settings used as the default expiration policy.
-	 * @see ExpirationAttributes
+	 * @see GudExpirationAttributes
 	 */
-	public AnnotationBasedExpiration(ExpirationAttributes defaultExpirationAttributes) {
+	public AnnotationBasedExpiration(GudExpirationAttributes defaultExpirationAttributes) {
 		this.defaultExpirationAttributes = defaultExpirationAttributes;
 	}
 
 	/**
 	 * Factory method used to construct an instance of {@link AnnotationBasedExpiration} having no default
-	 * {@link ExpirationAttributes} to process expired annotated {@link Region} entries
+	 * {@link GudExpirationAttributes} to process expired annotated {@link GudRegion} entries
 	 * using Idle Timeout (TTI) Expiration.
 	 *
-	 * @param <K> {@link Class} type of the {@link Region} entry key.
-	 * @param <V> {@link Class} type of the {@link Region} entry value.
-	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link Region} entries
+	 * @param <K> {@link Class} type of the {@link GudRegion} entry key.
+	 * @param <V> {@link Class} type of the {@link GudRegion} entry value.
+	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link GudRegion} entries
 	 * using Idle Timeout expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see IdleTimeoutExpiration
-	 * @see #forIdleTimeout(ExpirationAttributes)
+	 * @see #forIdleTimeout(GudExpirationAttributes)
 	 */
 	public static <K, V> AnnotationBasedExpiration<K, V> forIdleTimeout() {
 		return forIdleTimeout(null);
@@ -102,25 +108,25 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 
 	/**
 	 * Factory method used to construct an instance of {@link AnnotationBasedExpiration} initialized with
-	 * default {@link ExpirationAttributes} to process expired annotated {@link Region} entries
+	 * default {@link GudExpirationAttributes} to process expired annotated {@link GudRegion} entries
 	 * using Idle Timeout (TTI) expiration.
 	 *
-	 * @param <K> {@link Class} type of the {@link Region} entry key.
-	 * @param <V> {@link Class} type of the {@link Region} entry value.
-	 * @param defaultExpirationAttributes {@link ExpirationAttributes} used by default if no expiration policy
-	 * was specified on the {@link Region}.
-	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link Region} entries
+	 * @param <K> {@link Class} type of the {@link GudRegion} entry key.
+	 * @param <V> {@link Class} type of the {@link GudRegion} entry value.
+	 * @param defaultExpirationAttributes {@link GudExpirationAttributes} used by default if no expiration policy
+	 * was specified on the {@link GudRegion}.
+	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link GudRegion} entries
 	 * using Idle Timeout expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see IdleTimeoutExpiration
-	 * @see #AnnotationBasedExpiration(ExpirationAttributes)
+	 * @see #AnnotationBasedExpiration(GudExpirationAttributes)
 	 */
-	public static <K, V> AnnotationBasedExpiration<K, V> forIdleTimeout(ExpirationAttributes defaultExpirationAttributes) {
+	public static <K, V> AnnotationBasedExpiration<K, V> forIdleTimeout(GudExpirationAttributes defaultExpirationAttributes) {
 
 		return new AnnotationBasedExpiration<K, V>(defaultExpirationAttributes) {
 
 			@Override
-			protected ExpirationMetaData getExpirationMetaData(Region.Entry<K, V> entry) {
+			protected ExpirationMetaData getExpirationMetaData(GudRegion.Entry<K, V> entry) {
 
 				return isIdleTimeoutConfigured(entry)
 					? ExpirationMetaData.from(getIdleTimeout(entry))
@@ -131,16 +137,16 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 
 	/**
 	 * Factory method used to construct an instance of {@link AnnotationBasedExpiration} having no default
-	 * {@link ExpirationAttributes} to process expired annotated {@link Region} entries
+	 * {@link GudExpirationAttributes} to process expired annotated {@link GudRegion} entries
 	 * using Time-To-Live (TTL) Expiration.
 	 *
-	 * @param <K> {@link Class} type of the {@link Region} entry key.
-	 * @param <V> {@link Class} type of the {@link Region} entry value.
-	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link Region} entries
+	 * @param <K> {@link Class} type of the {@link GudRegion} entry key.
+	 * @param <V> {@link Class} type of the {@link GudRegion} entry value.
+	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link GudRegion} entries
 	 * using Time-To-Live expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see TimeToLiveExpiration
-	 * @see #forTimeToLive(ExpirationAttributes)
+	 * @see #forTimeToLive(GudExpirationAttributes)
 	 */
 	public static <K, V> AnnotationBasedExpiration<K, V> forTimeToLive() {
 		return forTimeToLive(null);
@@ -148,25 +154,25 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 
 	/**
 	 * Factory method used to construct an instance of {@link AnnotationBasedExpiration} initialized with
-	 * default {@link ExpirationAttributes} to process expired annotated {@link Region} entries
+	 * default {@link GudExpirationAttributes} to process expired annotated {@link GudRegion} entries
 	 * using Time-To-Live (TTL) expiration.
 	 *
-	 * @param <K> {@link Class} type of the {@link Region} entry key.
-	 * @param <V> {@link Class} type of the {@link Region} entry value.
-	 * @param defaultExpirationAttributes {@link ExpirationAttributes} used by default if no expiration policy
-	 * was specified on the {@link Region}.
-	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link Region} entries
+	 * @param <K> {@link Class} type of the {@link GudRegion} entry key.
+	 * @param <V> {@link Class} type of the {@link GudRegion} entry value.
+	 * @param defaultExpirationAttributes {@link GudExpirationAttributes} used by default if no expiration policy
+	 * was specified on the {@link GudRegion}.
+	 * @return an {@link AnnotationBasedExpiration} instance to process expired annotated {@link GudRegion} entries
 	 * using Time-To-Live expiration.
 	 * @see AnnotationBasedExpiration
 	 * @see TimeToLiveExpiration
-	 * @see #AnnotationBasedExpiration(ExpirationAttributes)
+	 * @see #AnnotationBasedExpiration(GudExpirationAttributes)
 	 */
-	public static <K, V> AnnotationBasedExpiration<K, V> forTimeToLive(ExpirationAttributes defaultExpirationAttributes) {
+	public static <K, V> AnnotationBasedExpiration<K, V> forTimeToLive(GudExpirationAttributes defaultExpirationAttributes) {
 
 		return new AnnotationBasedExpiration<K, V>(defaultExpirationAttributes) {
 
 			@Override
-			protected ExpirationMetaData getExpirationMetaData(Region.Entry<K, V> entry) {
+			protected ExpirationMetaData getExpirationMetaData(GudRegion.Entry<K, V> entry) {
 
 				return isTimeToLiveConfigured(entry)
 					? ExpirationMetaData.from(getTimeToLive(entry))
@@ -246,9 +252,9 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 *
 	 * @param defaultExpirationAttributes expiration settings used as the default expiration policy.
 	 * @see #getDefaultExpirationAttributes()
-	 * @see ExpirationAttributes
+	 * @see GudExpirationAttributes
 	 */
-	public void setDefaultExpirationAttributes(ExpirationAttributes defaultExpirationAttributes) {
+	public void setDefaultExpirationAttributes(GudExpirationAttributes defaultExpirationAttributes) {
 		this.defaultExpirationAttributes = defaultExpirationAttributes;
 	}
 
@@ -256,59 +262,58 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * Gets the expiration policy used by default when no application domain object specific expiration meta-data
 	 * has been specified.
 	 *
-	 * @return an instance of ExpirationAttributes with expiration settings defining the default expiration policy.
-	 * @see #setDefaultExpirationAttributes(ExpirationAttributes)
-	 * @see ExpirationAttributes
+	 * @return an instance of GudExpirationAttributes with expiration settings defining the default expiration policy.
+	 * @see #setDefaultExpirationAttributes(GudExpirationAttributes)
+	 * @see GudExpirationAttributes
 	 */
-	protected ExpirationAttributes getDefaultExpirationAttributes() {
-		//return (defaultExpirationAttributes != null ? defaultExpirationAttributes : ExpirationAttributes.DEFAULT);
+	protected GudExpirationAttributes getDefaultExpirationAttributes() {
 		return this.defaultExpirationAttributes;
 	}
 
 	/**
 	 * Calculate the expiration for a given entry. Returning {@literal null} indicates that the default
-	 * for the {@link Region} should be used. The entry parameter should not be used after this method
+	 * for the {@link GudRegion} should be used. The entry parameter should not be used after this method
 	 * invocation completes.
 	 *
 	 * @param entry the entry used to determine the appropriate expiration policy.
 	 * @return the expiration configuration to be used or {@literal null} if the Region's defaults should be used.
-	 * @see ExpirationAttributes
-	 * @see Region
-	 * @see #getExpirationMetaData(Region.Entry)
+	 * @see GudExpirationAttributes
+	 * @see GudRegion
+	 * @see #getExpirationMetaData(GudRegion.Entry)
 	 * @see #newExpirationAttributes(ExpirationMetaData)
 	 */
 	@Override
-	public ExpirationAttributes getExpiry(Region.Entry<K, V> entry) {
+	public GudExpirationAttributes getExpiry(GudRegion.Entry<K, V> entry) {
 		return newExpirationAttributes(getExpirationMetaData(entry));
 	}
 
 	/**
-	 * Gets custom expiration (Annotation-based) policy meta-data for the given {@link Region} entry.
+	 * Gets custom expiration (Annotation-based) policy meta-data for the given {@link GudRegion} entry.
 	 *
-	 * @param entry {@link Region} entry used as the source of the expiration policy meta-data.
-	 * @return {@link ExpirationMetaData} extracted from the {@link Region} entry or {@literal null}
-	 * if the expiration policy meta-data could not be determined from the {@link Region} entry.
+	 * @param entry {@link GudRegion} entry used as the source of the expiration policy meta-data.
+	 * @return {@link ExpirationMetaData} extracted from the {@link GudRegion} entry or {@literal null}
+	 * if the expiration policy meta-data could not be determined from the {@link GudRegion} entry.
 	 * @see ExpirationMetaData
 	 */
-	protected ExpirationMetaData getExpirationMetaData(Region.Entry<K, V> entry) {
+	protected ExpirationMetaData getExpirationMetaData(GudRegion.Entry<K, V> entry) {
 		return isExpirationConfigured(entry) ? ExpirationMetaData.from(getExpiration(entry)) : null;
 	}
 
 	/**
-	 * Constructs a new instance of {@link ExpirationAttributes} configured with the application domain object
+	 * Constructs a new instance of {@link GudExpirationAttributes} configured with the application domain object
 	 * specific expiration policy.  If the application domain object type has not been annotated with
 	 * custom expiration meta-data, then the default expiration settings are used.
 	 *
 	 * @param expirationMetaData application domain object specific expiration policy meta-data used to construct
-	 * the {@link ExpirationAttributes}.
-	 * @return custom {@link ExpirationAttributes} configured from the application domain object specific
+	 * the {@link GudExpirationAttributes}.
+	 * @return custom {@link GudExpirationAttributes} configured from the application domain object specific
 	 * expiration policy or the default expiration settings if the application domain object has not been
 	 * annotated with custom expiration meta-data.
 	 * @see ExpirationMetaData
-	 * @see ExpirationAttributes
+	 * @see GudExpirationAttributes
 	 * @see #getDefaultExpirationAttributes()
 	 */
-	protected ExpirationAttributes newExpirationAttributes(ExpirationMetaData expirationMetaData) {
+	protected GudExpirationAttributes newExpirationAttributes(ExpirationMetaData expirationMetaData) {
 
 		return expirationMetaData != null
 			? expirationMetaData.toExpirationAttributes()
@@ -318,12 +323,12 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Determines whether the Region Entry has been annotated with the Expiration Annotation.
 	 *
-	 * @param entry the Region.Entry to evaluate for the presence of the Expiration Annotation.
+	 * @param entry the GudRegion.Entry to evaluate for the presence of the Expiration Annotation.
 	 * @return a boolean value indicating whether the Region Entry has been annotated with @Expiration.
 	 * @see Expiration
 	 * @see #isAnnotationPresent(Object, Class)
 	 */
-	protected boolean isExpirationConfigured(Region.Entry<K, V> entry) {
+	protected boolean isExpirationConfigured(GudRegion.Entry<K, V> entry) {
 		return entry != null && isExpirationConfigured(entry.getValue());
 	}
 
@@ -334,13 +339,13 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Gets the Expiration Annotation meta-data from the Region Entry.
 	 *
-	 * @param entry the Region.Entry from which to extract the Expiration Annotation meta-data.
+	 * @param entry the GudRegion.Entry from which to extract the Expiration Annotation meta-data.
 	 * @return the Expiration Annotation meta-data for the given Region Entry or {@code null}
 	 * if the Region Entry has not been annotated with @Expiration.
 	 * @see Expiration
 	 * @see #getAnnotation(Object, Class)
 	 */
-	protected Expiration getExpiration(Region.Entry<K, V> entry) {
+	protected Expiration getExpiration(GudRegion.Entry<K, V> entry) {
 		return getExpiration(entry.getValue());
 	}
 
@@ -351,12 +356,12 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Determines whether the Region Entry has been annotated with the IdleTimeoutExpiration Annotation.
 	 *
-	 * @param entry the Region.Entry to evaluate for the presence of the IdleTimeoutExpiration Annotation.
+	 * @param entry the GudRegion.Entry to evaluate for the presence of the IdleTimeoutExpiration Annotation.
 	 * @return a boolean value indicating whether the Region Entry has been annotated with @IdleTimeoutExpiration.
 	 * @see IdleTimeoutExpiration
 	 * @see #isAnnotationPresent(Object, Class)
 	 */
-	protected boolean isIdleTimeoutConfigured(Region.Entry<K, V> entry) {
+	protected boolean isIdleTimeoutConfigured(GudRegion.Entry<K, V> entry) {
 		return entry != null && isIdleTimeoutConfigured(entry.getValue());
 	}
 
@@ -367,13 +372,13 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Gets the IdleTimeoutExpiration Annotation meta-data from the Region Entry.
 	 *
-	 * @param entry the Region.Entry from which to extract the IdleTimeoutExpiration Annotation meta-data.
+	 * @param entry the GudRegion.Entry from which to extract the IdleTimeoutExpiration Annotation meta-data.
 	 * @return the IdleTimeoutExpiration Annotation meta-data for the given Region Entry or {@code null}
 	 * if the Region Entry has not been annotated with @IdleTimeoutExpiration.
 	 * @see IdleTimeoutExpiration
 	 * @see #getAnnotation(Object, Class)
 	 */
-	protected IdleTimeoutExpiration getIdleTimeout(Region.Entry<K, V> entry) {
+	protected IdleTimeoutExpiration getIdleTimeout(GudRegion.Entry<K, V> entry) {
 		return getIdleTimeout(entry.getValue());
 	}
 
@@ -384,12 +389,12 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Determines whether the Region Entry has been annotated with the TimeToLiveExpiration Annotation.
 	 *
-	 * @param entry the Region.Entry to evaluate for the presence of the TimeToLiveExpiration Annotation.
+	 * @param entry the GudRegion.Entry to evaluate for the presence of the TimeToLiveExpiration Annotation.
 	 * @return a boolean value indicating whether the Region Entry has been annotated with @TimeToLiveExpiration.
 	 * @see TimeToLiveExpiration
 	 * @see #isAnnotationPresent(Object, Class)
 	 */
-	protected boolean isTimeToLiveConfigured(Region.Entry<K, V> entry) {
+	protected boolean isTimeToLiveConfigured(GudRegion.Entry<K, V> entry) {
 		return entry != null && isTimeToLiveConfigured(entry.getValue());
 	}
 
@@ -400,13 +405,13 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	/**
 	 * Gets the TimeToLiveExpiration Annotation meta-data from the Region Entry.
 	 *
-	 * @param entry the Region.Entry from which to extract the TimeToLiveExpiration Annotation meta-data.
+	 * @param entry the GudRegion.Entry from which to extract the TimeToLiveExpiration Annotation meta-data.
 	 * @return the TimeToLiveExpiration Annotation meta-data for the given Region Entry or {@code null}
 	 * if the Region Entry has not been annotated with @TimeToLiveExpiration.
 	 * @see TimeToLiveExpiration
 	 * @see #getAnnotation(Object, Class)
 	 */
-	protected TimeToLiveExpiration getTimeToLive(Region.Entry<K, V> entry) {
+	protected TimeToLiveExpiration getTimeToLive(GudRegion.Entry<K, V> entry) {
 		return getTimeToLive(entry.getValue());
 	}
 
@@ -433,7 +438,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 	 * The ExpirationMetaData class encapsulates the settings constituting the expiration policy including
 	 * the expiration timeout and the action performed when expiration occurs.
 	 *
-	 * @see ExpirationAttributes
+	 * @see GudExpirationAttributes
 	 */
 	protected static class ExpirationMetaData {
 
@@ -448,7 +453,7 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 			this.action = action;
 		}
 
-		protected static ExpirationMetaData from(ExpirationAttributes expirationAttributes) {
+		protected static ExpirationMetaData from(GudExpirationAttributes expirationAttributes) {
 			return new ExpirationMetaData(expirationAttributes.getTimeout(), ExpirationActionType.valueOf(
 				expirationAttributes.getAction()));
 		}
@@ -465,8 +470,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 			return new ExpirationMetaData(parseTimeout(expiration.timeout()), parseAction(expiration.action()));
 		}
 
-		public ExpirationAttributes toExpirationAttributes() {
-			return new ExpirationAttributes(timeout(), expirationAction());
+		public GudExpirationAttributes toExpirationAttributes() {
+			return GudExpirationAttributes.of(timeout(), expirationAction());
 		}
 
 		@SuppressWarnings("all")
@@ -519,8 +524,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 						return ExpirationActionType.valueOf(EXPIRATION_ACTION_CONVERTER
 							.convert(expression.getValue(evaluationContext, String.class)));
 					}
-					else if (ExpirationAction.class.equals(valueType)) {
-						return ExpirationActionType.valueOf(expression.getValue(evaluationContext, ExpirationAction.class));
+					else if (GudExpirationAction.class.equals(valueType)) {
+						return ExpirationActionType.valueOf(expression.getValue(evaluationContext, GudExpirationAction.class));
 					}
 					else if (ExpirationActionType.class.equals(valueType)) {
 						return expression.getValue(evaluationContext, ExpirationActionType.class);
@@ -552,8 +557,8 @@ public class AnnotationBasedExpiration<K, V> implements BeanFactoryAware, Custom
 			return action;
 		}
 
-		public ExpirationAction expirationAction() {
-			return action().getExpirationAction();
+		public GudExpirationAction expirationAction() {
+			return action().getGudExpirationAction();
 		}
 
 		public int timeout() {

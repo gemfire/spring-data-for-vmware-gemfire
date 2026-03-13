@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.schema;
@@ -10,16 +17,15 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
 import java.io.Serializable;
 import java.util.Optional;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.Index;
-
 import org.springframework.core.Ordered;
 import org.springframework.data.gemfire.config.admin.GemfireAdminOperations;
+import org.springframework.data.gemfire.gud.api.GudIndex;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.StringUtils;
 
 /**
  * {@link SchemaObjectDefinition} is an Abstract Data Type (ADT) encapsulating the definition of a single Apache Geode
- * or Pivotal GemFire schema object (e.g. {@link Region} or {@link Index}).
+ * or Pivotal GemFire schema object (e.g. {@link GudRegion} or {@link GudIndex}).
  *
  * @author John Blum
  * @see Serializable

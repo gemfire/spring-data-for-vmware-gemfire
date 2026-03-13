@@ -1,17 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
-
-import org.apache.geode.cache.Cache;
-import org.apache.geode.cache.CacheCallback;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.Declarable;
-import org.apache.geode.cache.LoaderHelper;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -20,20 +22,25 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.data.gemfire.gud.api.GudCache;
+import org.springframework.data.gemfire.gud.api.GudCacheCallback;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudDeclarable;
+import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * Implementation of Apache Geode's {@link Declarable} interface that enables support for wiring Apache Geode components
+ * Implementation of Apache Geode's {@link GudDeclarable} interface that enables support for wiring Apache Geode components
  * with Spring bean dependencies defined in a Spring {@link ApplicationContext}.
  *
  * @author John Blum
  * @see Properties
- * @see Cache
- * @see CacheCallback
- * @see Declarable
+ * @see GudCache
+ * @see GudCacheCallback
+ * @see GudDeclarable
  * @see BeanFactory
  * @see DisposableBean
  * @see ApplicationContext
@@ -58,9 +65,9 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * Constructs a new instance of the {@link LazyWiringDeclarableSupport} class registered with the
 	 * {@link SpringContextBootstrappingInitializer} as a Spring {@link ApplicationListener}.
 	 *
-	 * This {@link Declarable} object will receive notifications from the {@link SpringContextBootstrappingInitializer}
+	 * This {@link GudDeclarable} object will receive notifications from the {@link SpringContextBootstrappingInitializer}
 	 * when the Spring context is created and initialized (refreshed).  The notification is necessary in order for
-	 * this {@link Declarable} object to be properly configured and initialized with any required,
+	 * this {@link GudDeclarable} object to be properly configured and initialized with any required,
 	 * Spring-defined dependencies.
 	 *
 	 * @see SpringContextBootstrappingInitializer
@@ -71,14 +78,14 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Asserts that this {@link Declarable} object has been properly configured and initialized by the Spring container
-	 * after has GemFire constructed this {@link Declarable} object during startup.
+	 * Asserts that this {@link GudDeclarable} object has been properly configured and initialized by the Spring container
+	 * after has GemFire constructed this {@link GudDeclarable} object during startup.
 	 *
-	 * This method is recommended to be called before any of this {@link Declarable} object's {@link CacheCallback}
-	 * methods (e.g. {@link CacheLoader#load(LoaderHelper)} are invoked in order to ensure that this {@link Declarable}
+	 * This method is recommended to be called before any of this {@link GudDeclarable} object's {@link GudCacheCallback}
+	 * methods (e.g. {@link GudCacheLoader#load(GudLoaderHelper)} are invoked in order to ensure that this {@link GudDeclarable}
 	 * object was properly constructed, configured and initialized by the Spring container before hand.
 	 *
-	 * @throws IllegalStateException if this {@link Declarable} object was not been properly constructed, configured
+	 * @throws IllegalStateException if this {@link GudDeclarable} object was not been properly constructed, configured
 	 * and initialized by the Spring container.
 	 * @see #init(Properties)
 	 * @see #isInitialized()
@@ -91,7 +98,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Asserts that this {@link Declarable} object has not yet been used, or activated prior to being fully constructed,
+	 * Asserts that this {@link GudDeclarable} object has not yet been used, or activated prior to being fully constructed,
 	 * configured and initialized by the Spring container.
 	 *
 	 * It is possible, though rare, that the {@link #init(Properties)} method might be called multiple times by GemFire
@@ -110,10 +117,10 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Determines whether this {@link Declarable} object has been properly configured and initialized
+	 * Determines whether this {@link GudDeclarable} object has been properly configured and initialized
 	 * by the Spring container.
 	 *
-	 * @return a boolean value indicating whether this {@link Declarable} object has been properly configured
+	 * @return a boolean value indicating whether this {@link GudDeclarable} object has been properly configured
 	 * and initialized by the Spring container.
 	 * @see #doInit(BeanFactory, Properties)
 	 * @see #assertInitialized()
@@ -123,10 +130,10 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Determines whether this {@link Declarable} object has been properly configured and initialized
+	 * Determines whether this {@link GudDeclarable} object has been properly configured and initialized
 	 * by the Spring container.
 	 *
-	 * @return a boolean value indicating whether this {@link Declarable} object has been properly configured
+	 * @return a boolean value indicating whether this {@link GudDeclarable} object has been properly configured
 	 * and initialized by the Spring container.
 	 * @see #doInit(BeanFactory, Properties)
 	 * @see #isInitialized()
@@ -136,17 +143,17 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Initialization method called by GemFire with the configured parameters once this {@link Declarable} object
+	 * Initialization method called by GemFire with the configured parameters once this {@link GudDeclarable} object
 	 * has been constructed by GemFire and the &lt;initalizer&gt; element is parsed
 	 * in GemFire's configuration meta-data during startup.
 	 *
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
-	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
+	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link GudDeclarable} object.
 	 * @see #doInit(BeanFactory, Properties)
 	 * @see Properties
 	 */
 	@Override
-	public final void initialize(@Nullable Cache cache, @NonNull Properties parameters) {
+	public final void initialize(@Nullable GudCache cache, @NonNull Properties parameters) {
 
 		// Set a reference to the Apache Geode (configuration) Properties
 		setParameters(parameters);
@@ -157,13 +164,13 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Performs the actual configuration and initialization of this {@link Declarable} object before use.
+	 * Performs the actual configuration and initialization of this {@link GudDeclarable} object before use.
 	 *
 	 * This method is triggered by the Spring {@link ApplicationContext}, Spring application
 	 * {@link ContextRefreshedEvent}) indicating that the Spring container (context) has been created and refreshed.
 	 *
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
-	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
+	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link GudDeclarable} object.
 	 * @throws IllegalArgumentException if the {@literal bean-name} parameter was specified in GemFire's
 	 * configuration meta-data but no bean with the specified name could be found in the Spring context.
 	 * @see #init(Properties)
@@ -192,11 +199,11 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	protected void doPostInit(@NonNull Properties parameters) { }
 
 	/**
-	 * Null-safe operation to return the parameters passed to this {@link Declarable} object when created by GemFire
+	 * Null-safe operation to return the parameters passed to this {@link GudDeclarable} object when created by GemFire
 	 * from it's own configuration meta-data (e.g. {@literal cache.xml}).
 	 *
 	 * @return a {@link Properties} containing the configured parameters parsed from GemFire's configuration meta-data
-	 * (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
+	 * (e.g. {@literal cache.xml}) and passed to this {@link GudDeclarable} object.
 	 * @see Properties
 	 */
 	protected @NonNull Properties nullSafeGetParameters() {
@@ -207,10 +214,10 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * Stores a reference to the {@link Properties parameters} passed to the {@link Declarable#init(Properties)} method.
+	 * Stores a reference to the {@link Properties parameters} passed to the {@link GudDeclarable#init(Properties)} method.
 	 *
 	 * @param parameters {@link Properties} containing the configured parameters parsed from GemFire's
-	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link Declarable} object.
+	 * configuration meta-data (e.g. {@literal cache.xml}) and passed to this {@link GudDeclarable} object.
 	 * @see Properties
 	 */
 	protected void setParameters(@Nullable Properties parameters) {
@@ -244,7 +251,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	}
 
 	/**
-	 * When this {@link Declarable} object/bean gets destroyed by the Spring container, {@code destroy()} will
+	 * When this {@link GudDeclarable} object/bean gets destroyed by the Spring container, {@code destroy()} will
 	 * make sure this component gets unregistered from the {@link SpringContextBootstrappingInitializer} properly.
 	 *
 	 * @throws Exception if bean destruction is unsuccessful.

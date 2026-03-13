@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration.config;
 
@@ -8,10 +15,6 @@ import static org.springframework.data.gemfire.tests.integration.ClientServerInt
 
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.server.CacheServer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +25,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
+import org.springframework.data.gemfire.gud.api.GudCacheServer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.util.ClassUtils;
 
@@ -30,16 +36,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The {@link ClientServerIntegrationTestsConfiguration} class is a Spring {@link Configuration} class that registers
- * a {@link ClientCacheConfigurer} used to configure the {@link ClientCache} {@literal DEFAULT} {@link Pool} port
+ * a {@link ClientCacheConfigurer} used to configure the {@link GudClientCache} {@literal DEFAULT} {@link GudPool} port
  * to connect to the launched Apache Geode/VMware GemFire Server during integration testing.
  *
  * Finally, this class provides a Spring {@link Configuration} class enable the embedded Locator and Manager services
  * in a server providing the {@literal locator-manager} Spring profile is activated.
  *
  * @author John Blum
- * @see ClientCache
- * @see Pool
- * @see CacheServer
+ * @see GudClientCache
+ * @see GudPool
+ * @see GudCacheServer
  * @see Bean
  * @see Configuration
  * @see org.springframework.context.annotation.Profile
@@ -50,7 +56,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("unused")
 public class ClientServerIntegrationTestsConfiguration {
 
-	private static final int DEFAULT_PORT = CacheServer.DEFAULT_PORT;
+	private static final int DEFAULT_PORT = GudCacheServer.DEFAULT_PORT;
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 

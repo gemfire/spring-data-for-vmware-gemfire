@@ -1,29 +1,38 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
-import org.apache.geode.cache.Region;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.RegionConfigurer;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 
 /**
  * {@link ConfigurableRegionFactoryBean} is an abstract base class encapsulating functionality common
- * to all configurable {@link Region} {@link FactoryBean FactoryBeans}.
+ * to all configurable {@link GudRegion} {@link FactoryBean FactoryBeans}.
  *
- * A {@literal configurable} {@link Region} {@link FactoryBean} includes all {@link FactoryBean FactoryBeans}
- * that create a {@link Region} and allow additional configuration to be applied via a {@link RegionConfigurer}.
+ * A {@literal configurable} {@link GudRegion} {@link FactoryBean} includes all {@link FactoryBean FactoryBeans}
+ * that create a {@link GudRegion} and allow additional configuration to be applied via a {@link RegionConfigurer}.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see FactoryBean
  * @see ResolvableRegionFactoryBean
  * @see RegionConfigurer
@@ -97,7 +106,7 @@ public abstract class ConfigurableRegionFactoryBean<K, V> extends ResolvableRegi
 	 * Null-safe operation to apply the composite {@link RegionConfigurer RegionConfigurers}
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 *
-	 * @param regionName {@link String} containing the name of the {@link Region}.
+	 * @param regionName {@link String} containing the name of the {@link GudRegion}.
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 * @see RegionConfigurer
 	 * @see #applyRegionConfigurers(String, Iterable)
@@ -111,7 +120,7 @@ public abstract class ConfigurableRegionFactoryBean<K, V> extends ResolvableRegi
 	 * Null-safe operation to apply the given array of {@link RegionConfigurer RegionConfigurers}
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 *
-	 * @param regionName {@link String} containing the name of the {@link Region}.
+	 * @param regionName {@link String} containing the name of the {@link GudRegion}.
 	 * @param regionConfigurers array of {@link RegionConfigurer RegionConfigurers} applied
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 * @see RegionConfigurer
@@ -125,7 +134,7 @@ public abstract class ConfigurableRegionFactoryBean<K, V> extends ResolvableRegi
 	 * Null-safe operation to apply the given {@link Iterable} of {@link RegionConfigurer RegionConfigurers}
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 *
-	 * @param regionName {@link String} containing the name of the {@link Region}.
+	 * @param regionName {@link String} containing the name of the {@link GudRegion}.
 	 * @param regionConfigurers {@link Iterable} of {@link RegionConfigurer RegionConfigurers} applied
 	 * to this {@link ConfigurableRegionFactoryBean}.
 	 * @see RegionConfigurer

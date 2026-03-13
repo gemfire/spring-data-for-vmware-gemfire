@@ -1,11 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.client;
 
-import org.apache.geode.cache.InterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 
 /**
  * Cache Region interest based on individual keys.
@@ -21,15 +28,15 @@ public class KeyInterest<K> extends Interest<K> {
 		super(key);
 	}
 
-	public KeyInterest(K key, InterestResultPolicy policy) {
+	public KeyInterest(K key, GudInterestResultPolicy policy) {
 		super(key, policy);
 	}
 
-	public KeyInterest(K key, InterestResultPolicy policy, boolean durable) {
+	public KeyInterest(K key, GudInterestResultPolicy policy, boolean durable) {
 		super(key, policy, durable);
 	}
 
-	public KeyInterest(K key, InterestResultPolicy policy, boolean durable, boolean receiveValues) {
+	public KeyInterest(K key, GudInterestResultPolicy policy, boolean durable, boolean receiveValues) {
 		super(key, policy, durable, receiveValues);
 	}
 

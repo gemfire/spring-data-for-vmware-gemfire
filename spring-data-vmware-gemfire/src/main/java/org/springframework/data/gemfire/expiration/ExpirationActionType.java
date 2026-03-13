@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -102,6 +107,16 @@ public enum ExpirationActionType {
 	 * @see GudExpirationAction
 	 */
 	public GudExpirationAction getExpirationAction() {
+		return this.expirationAction;
+	}
+
+	/**
+	 * Gets the GUD API ExpirationAction for this enumerated value.
+	 *
+	 * @return the GudExpirationAction instance corresponding to this enumerated value.
+	 * @see GudExpirationAction
+	 */
+	public GudExpirationAction getGudExpirationAction() {
 		return this.expirationAction;
 	}
 }

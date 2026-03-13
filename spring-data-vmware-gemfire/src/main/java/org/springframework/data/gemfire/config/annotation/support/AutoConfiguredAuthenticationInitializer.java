@@ -1,26 +1,32 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation.support;
 
 import java.util.Optional;
 import java.util.Properties;
 
-import org.apache.geode.security.AuthInitialize;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.GemfireUtils;
+import org.springframework.data.gemfire.gud.api.GudAuthInitialize;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * The {@link AutoConfiguredAuthenticationInitializer} class is an {@link AuthInitialize} implementation,
+ * The {@link AutoConfiguredAuthenticationInitializer} class is a {@link GudAuthInitialize} implementation,
  * which auto-configures security, and specifically authentication, for Apache Geode/Pivotal GemFire.
  *
  * @author John Blum
  * @see Properties
- * @see AuthInitialize
+ * @see GudAuthInitialize
  * @see Authentication
  * @since 2.0.0
  */

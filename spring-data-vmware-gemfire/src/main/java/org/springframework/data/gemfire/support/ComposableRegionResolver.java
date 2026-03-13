@@ -1,16 +1,23 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
 import java.util.function.Function;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionDestroyedException;
-
 import org.springframework.data.gemfire.RegionResolver;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionDestroyedException;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.lang.NonNull;
@@ -21,7 +28,7 @@ import org.springframework.util.Assert;
  * {@link RegionResolver} implementation used to compose a collection of {@link RegionResolver RegionResolvers}.
  *
  * @author John Blum
- * @see Region
+ * @see GudRegion
  * @see RegionResolver
  * @see AbstractCachingRegionResolver
  * @since 2.3.0
@@ -122,31 +129,31 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 	}
 
 	/**
-	 * Resolves the first {@literal non-null} reference to cache {@link Region} identified by
+	 * Resolves the first {@literal non-null} reference to cache {@link GudRegion} identified by
 	 * the given {@link String name}, handling any {@link Exception Exceptions} throwing by
-	 * the composed {@link RegionResolver RegionResolvers}, such as a {@link RegionDestroyedException}.
+	 * the composed {@link RegionResolver RegionResolvers}, such as a {@link GudRegionDestroyedException}.
 	 *
 	 * This method may ultimately still result in a thrown {@link Exception}, but it will make a best effort to
 	 * exhaustively consult all composed {@link RegionResolver RegionResolvers}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionName {@link String name} of the {@link Region} to resolve.
-	 * @return the first, resolved reference to a cache {@link Region} identified by the given {@link String name}.
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param regionName {@link String name} of the {@link GudRegion} to resolve.
+	 * @return the first, resolved reference to a cache {@link GudRegion} identified by the given {@link String name}.
 	 * @see RegionResolver#resolve(String)
-	 * @see Region
+	 * @see GudRegion
 	 * @see Function
 	 * @see #getRegionResolverOne()
 	 * @see #getRegionResolverTwo()
 	 */
 	@Nullable @Override
-	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {
+	protected <K, V> GudRegion<K, V> doResolve(@Nullable String regionName) {
 
-		Function<String, Region<K, V>> regionResolverFunction = getRegionResolverTwo()::resolve;
+		Function<String, GudRegion<K, V>> regionResolverFunction = getRegionResolverTwo()::resolve;
 
 		try {
 
-			Region<K, V> region = getRegionResolverOne().resolve(regionName);
+			GudRegion<K, V> region = getRegionResolverOne().resolve(regionName);
 
 			return region != null ? region : regionResolverFunction.apply(regionName);
 		}

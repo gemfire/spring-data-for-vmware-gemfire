@@ -1,16 +1,25 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import java.util.Optional;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.data.gemfire.support.GemfireFunctions;
 import org.springframework.lang.NonNull;
@@ -19,21 +28,21 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring {@link FactoryBean} used to look up or create {@link Region Regions}.
+ * Spring {@link FactoryBean} used to look up or create {@link GudRegion Regions}.
  *
- * For declaring and configuring new {@literal client} {@link Region Regions}, see {@link ClientRegionFactoryBean}.
+ * For declaring and configuring new {@literal client} {@link GudRegion Regions}, see {@link ClientRegionFactoryBean}.
  * and {@link Class subclasses}.
  *
  * @author Costin Leau
  * @author John Blum
- * @see ClientCache
- * @see Region
+ * @see GudClientCache
+ * @see GudRegion
  * @see FactoryBean
  * @see InitializingBean
  * @see AbstractFactoryBeanSupport
  */
 @SuppressWarnings("unused")
-public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryBeanSupport<Region<K, V>>
+public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryBeanSupport<GudRegion<K, V>>
 		implements InitializingBean {
 
 	protected static final String CREATING_REGION_LOG_MESSAGE = "Creating Region [%1$s] in Cache [%2$s]";
@@ -42,11 +51,11 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 
 	private Boolean lookupEnabled = false;
 
-	private ClientCache cache;
+	private GudClientCache cache;
 
-	private Region<?, ?> parent;
+	private GudRegion<?, ?> parent;
 
-	private volatile Region<K, V> region;
+	private volatile GudRegion<K, V> region;
 
 	private String name;
 	private String regionName;
@@ -56,13 +65,13 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	 *
 	 * @throws Exception if initialization fails.
 	 * @see InitializingBean#afterPropertiesSet()
-	 * @see #createRegion(ClientCache, String)
+	 * @see #createRegion(GudClientCache, String)
 	 */
 	@Override
 	@SuppressWarnings("all")
 	public void afterPropertiesSet() throws Exception {
 
-		ClientCache cache = requireCache();
+		GudClientCache cache = requireCache();
 
 		String regionName = requireRegionName();
 
@@ -79,9 +88,9 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 		}
 	}
 
-	private @NonNull ClientCache requireCache() {
+	private @NonNull GudClientCache requireCache() {
 
-		ClientCache cache = getCache();
+		GudClientCache cache = getCache();
 
 		Assert.notNull(cache, "Cache is required");
 
@@ -97,20 +106,20 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 		return regionName;
 	}
 
-	private @Nullable Region<K, V> resolveRegion(@NonNull ClientCache cache, @NonNull String regionName) {
+	private @Nullable GudRegion<K, V> resolveRegion(@NonNull GudClientCache cache, @NonNull String regionName) {
 
 		return isLookupEnabled()
 			? Optional.ofNullable(getParent())
-				.<Region<K, V>>map(GemfireFunctions.getSubregionFromRegion(regionName))
+				.<GudRegion<K, V>>map(GemfireFunctions.getSubregionFromRegion(regionName))
 				.orElseGet(GemfireFunctions.getRegionFromCache(cache, regionName))
 			: null;
 	}
 
 	/**
-	 * Resolves the configured {@link String name} of the {@link Region}.
+	 * Resolves the configured {@link String name} of the {@link GudRegion}.
 	 *
-	 * @return a {@link String} containing the {@literal name} of the {@link Region}.
-	 * @see Region#getName()
+	 * @return a {@link String} containing the {@literal name} of the {@link GudRegion}.
+	 * @see GudRegion#getName()
 	 */
 	public String resolveRegionName() {
 
@@ -123,77 +132,77 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	}
 
 	/**
-	 * Creates a new {@link Region} with the given {@link String name}.
+	 * Creates a new {@link GudRegion} with the given {@link String name}.
 	 *
-	 * This method gets called when a {@link Region} with the specified {@link String name} does not already exist.
+	 * This method gets called when a {@link GudRegion} with the specified {@link String name} does not already exist.
 	 * By default, this method implementation throws a {@link BeanInitializationException} and it is expected
 	 * that {@link Class subclasses} will override this method.
 	 *
-	 * @param cache reference to the {@link ClientCache}.
-	 * @param regionName {@link String name} of the new {@link Region}.
-	 * @return a new {@link Region} with the given {@link String name}.
+	 * @param cache reference to the {@link GudClientCache}.
+	 * @param regionName {@link String name} of the new {@link GudRegion}.
+	 * @return a new {@link GudRegion} with the given {@link String name}.
 	 * @throws BeanInitializationException by default unless a {@link Class subclass} overrides this method.
-	 * @see ClientCache
-	 * @see Region
+	 * @see GudClientCache
+	 * @see GudRegion
 	 */
-	protected Region<K, V> createRegion(ClientCache cache, String regionName) throws Exception {
+	protected GudRegion<K, V> createRegion(GudClientCache cache, String regionName) throws Exception {
 		throw new BeanInitializationException(String.format(REGION_NOT_FOUND_ERROR_MESSAGE, regionName, cache));
 	}
 
 	/**
-	 * Post-process the {@link Region} created by this {@link ClientRegionFactoryBean}.
+	 * Post-process the {@link GudRegion} created by this {@link ClientRegionFactoryBean}.
 	 *
-	 * @param region {@link Region} to process.
-	 * @see Region
+	 * @param region {@link GudRegion} to process.
+	 * @see GudRegion
 	 */
-	protected Region<K, V> postProcess(Region<K, V> region) {
+	protected GudRegion<K, V> postProcess(GudRegion<K, V> region) {
 		return region;
 	}
 
 	/**
-	 * Returns an object reference to the {@link Region} created by this {@link ResolvableRegionFactoryBean}.
+	 * Returns an object reference to the {@link GudRegion} created by this {@link ResolvableRegionFactoryBean}.
 	 *
-	 * @return an object reference to the {@link Region} created by this {@link ResolvableRegionFactoryBean}.
+	 * @return an object reference to the {@link GudRegion} created by this {@link ResolvableRegionFactoryBean}.
 	 * @see FactoryBean#getObject()
-	 * @see Region
+	 * @see GudRegion
 	 * @see #getRegion()
 	 */
 	@Override
-	public Region<K, V> getObject() throws Exception {
+	public GudRegion<K, V> getObject() throws Exception {
 		return getRegion();
 	}
 
 	/**
-	 * Returns the {@link Class} type of the {@link Region} produced by this {@link ResolvableRegionFactoryBean}.
+	 * Returns the {@link Class} type of the {@link GudRegion} produced by this {@link ResolvableRegionFactoryBean}.
 	 *
-	 * @return the {@link Class} type of the {@link Region} produced by this {@link ResolvableRegionFactoryBean}.
+	 * @return the {@link Class} type of the {@link GudRegion} produced by this {@link ResolvableRegionFactoryBean}.
 	 * @see FactoryBean#getObjectType()
 	 */
 	@Override
 	public Class<?> getObjectType() {
 
-		Region<?, ?> region = getRegion();
+		GudRegion<?, ?> region = getRegion();
 
-		return region != null ? region.getClass() : Region.class;
+		return region != null ? region.getClass() : GudRegion.class;
 	}
 
 	/**
-	 * Returns a reference to the {@link ClientCache} used to create the {@link Region}.
+	 * Returns a reference to the {@link GudClientCache} used to create the {@link GudRegion}.
 	 *
-	 * @return a reference to the {@link ClientCache} used to create the {@link Region}.
-	 * @see ClientCache
+	 * @return a reference to the {@link GudClientCache} used to create the {@link GudRegion}.
+	 * @see GudClientCache
 	 */
-	public ClientCache getCache() {
+	public GudClientCache getCache() {
 		return this.cache;
 	}
 
 	/**
-	 * Sets a reference to the {@link ClientCache} used to create the {@link Region}.
+	 * Sets a reference to the {@link GudClientCache} used to create the {@link GudRegion}.
 	 *
-	 * @param cache reference to the {@link ClientCache}.
-	 * @see ClientCache
+	 * @param cache reference to the {@link GudClientCache}.
+	 * @see GudClientCache
 	 */
-	public void setCache(ClientCache cache) {
+	public void setCache(GudClientCache cache) {
 		this.cache = cache;
 	}
 
@@ -210,69 +219,69 @@ public abstract class ResolvableRegionFactoryBean<K, V> extends AbstractFactoryB
 	}
 
 	/**
-	 * Sets the name of the cache {@link Region} based on the bean 'name' attribute.  If no {@link Region} is found
+	 * Sets the name of the cache {@link GudRegion} based on the bean 'name' attribute.  If no {@link GudRegion} is found
 	 * with the given name, a new one will be created.  If no name is given, the value of the 'beanName' property
 	 * will be used.
 	 *
-	 * @param name {@link Region} name.
+	 * @param name {@link GudRegion} name.
 	 * @see #setBeanName(String)
-	 * @see Region#getFullPath()
+	 * @see GudRegion#getFullPath()
 	 */
 	public void setName(@NonNull String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Sets a reference to the parent {@link Region} making this {@link FactoryBean}
-	 * represent a cache {@link Region Sub-Region}.
+	 * Sets a reference to the parent {@link GudRegion} making this {@link FactoryBean}
+	 * represent a cache {@link GudRegion Sub-Region}.
 	 *
-	 * @param parent reference to the parent {@link Region}.
-	 * @see Region
+	 * @param parent reference to the parent {@link GudRegion}.
+	 * @see GudRegion
 	 */
-	public void setParent(@Nullable Region<?, ?> parent) {
+	public void setParent(@Nullable GudRegion<?, ?> parent) {
 		this.parent = parent;
 	}
 
 	/**
-	 * Returns a reference to the parent {@link Region} making this {@link FactoryBean}
-	 * represent a cache {@link Region Sub-Region}.
+	 * Returns a reference to the parent {@link GudRegion} making this {@link FactoryBean}
+	 * represent a cache {@link GudRegion Sub-Region}.
 	 *
-	 * @return a reference to the parent {@link Region}, or {@literal null} if this {@link Region}
-	 * is not a {@link Region Sub-Region}.
-	 * @see Region
+	 * @return a reference to the parent {@link GudRegion}, or {@literal null} if this {@link GudRegion}
+	 * is not a {@link GudRegion Sub-Region}.
+	 * @see GudRegion
 	 */
-	protected @Nullable Region<?, ?> getParent() {
+	protected @Nullable GudRegion<?, ?> getParent() {
 		return this.parent;
 	}
 
 	/**
-	 * Sets a reference to the {@link Region} to be resolved by this Spring {@link FactoryBean}.
+	 * Sets a reference to the {@link GudRegion} to be resolved by this Spring {@link FactoryBean}.
 	 *
-	 * @param region reference to the resolvable {@link Region}.
-	 * @see Region
+	 * @param region reference to the resolvable {@link GudRegion}.
+	 * @see GudRegion
 	 */
-	protected void setRegion(@Nullable Region<K, V> region) {
+	protected void setRegion(@Nullable GudRegion<K, V> region) {
 		this.region = region;
 	}
 
 	/**
-	 * Returns a reference to the {@link Region} resolved by this Spring {@link FactoryBean}
-	 * during the lookup operation; maybe a new {@link Region}.
+	 * Returns a reference to the {@link GudRegion} resolved by this Spring {@link FactoryBean}
+	 * during the lookup operation; maybe a new {@link GudRegion}.
 	 *
-	 * @return a reference to the {@link Region} resolved during lookup.
-	 * @see Region
+	 * @return a reference to the {@link GudRegion} resolved during lookup.
+	 * @see GudRegion
 	 */
-	public @Nullable Region<K, V> getRegion() {
+	public @Nullable GudRegion<K, V> getRegion() {
 		return this.region;
 	}
 
 	/**
-	 * Sets the name of the cache {@link Region}.  If no {@link Region} is found with the given name,
+	 * Sets the name of the cache {@link GudRegion}.  If no {@link GudRegion} is found with the given name,
 	 * a new one will be created.  If no name is given, the value of the 'name' property will be used.
 	 *
-	 * @param regionName name of the {@link Region}.
+	 * @param regionName name of the {@link GudRegion}.
 	 * @see #setName(String)
-	 * @see Region#getName()
+	 * @see GudRegion#getName()
 	 */
 	public void setRegionName(@Nullable String regionName) {
 		this.regionName = regionName;

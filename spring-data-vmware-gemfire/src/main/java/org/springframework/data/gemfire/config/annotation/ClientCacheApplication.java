@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Documented;
@@ -11,35 +19,33 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.AllConnectionsInUseException;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.control.ResourceManager;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.gemfire.GemfireUtils;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudResourceManager;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
 
 /**
  * The {@link ClientCacheApplication} annotation enables a Spring Data for Apache Geode based application
- * to become an Apache Geode cache client by creating a {@link ClientCache} instance.
+ * to become an Apache Geode cache client by creating a {@link GudClientCache} instance.
  *
  * @author John Blum
  * @see Documented
  * @see Inherited
  * @see Retention
  * @see Target
- * @see Region
- * @see ClientCache
- * @see Pool
- * @see PoolFactory
- * @see SocketFactory
- * @see ResourceManager
+ * @see GudRegion
+ * @see GudClientCache
+ * @see GudPool
+ * @see GudPoolFactory
+ * @see GudSocketFactory
+ * @see GudResourceManager
  * @see BeanFactory
  * @see Configuration
  * @see Import
@@ -69,11 +75,11 @@ public @interface ClientCacheApplication {
 	 * Configures the percentage of heap at or above which the cache is considered to be in danger
 	 * of becoming inoperable.
 	 *
-	 * Defaults to {@link ResourceManager#DEFAULT_CRITICAL_PERCENTAGE}.
+	 * Defaults to {@link GudResourceManager#DEFAULT_CRITICAL_PERCENTAGE}.
 	 *
 	 * Use {@literal spring.data.gemfire.cache.critical-heap-percentage} property in {@literal application.properties}.
 	 */
-	float criticalHeapPercentage() default ResourceManager.DEFAULT_CRITICAL_PERCENTAGE;
+	float criticalHeapPercentage() default GudResourceManager.DEFAULT_CRITICAL_PERCENTAGE;
 
 	/**
 	 * Configures the ID for a durable client in a client/server topology.
@@ -101,33 +107,33 @@ public @interface ClientCacheApplication {
 	 * Configures the percentage of heap at or above which eviction should begin on Regions configured
 	 * for {@literal Heap LRU eviction}.
 	 *
-	 * Defaults to {@link ResourceManager#DEFAULT_EVICTION_PERCENTAGE}.
+	 * Defaults to {@link GudResourceManager#DEFAULT_EVICTION_PERCENTAGE}.
 	 *
 	 * Use {@literal spring.data.gemfire.cache.eviction-heap-percentage} property in {@literal application.properties}.
 	 */
-	float evictionHeapPercentage() default ResourceManager.DEFAULT_EVICTION_PERCENTAGE;
+	float evictionHeapPercentage() default GudResourceManager.DEFAULT_EVICTION_PERCENTAGE;
 
 	/**
-	 * Configures the free connection timeout for the {@literal DEFAULT} {@link Pool}.
+	 * Configures the free connection timeout for the {@literal DEFAULT} {@link GudPool}.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_FREE_CONNECTION_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_FREE_CONNECTION_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.free-connection-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.free-connection-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	int freeConnectionTimeout() default PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
+	int freeConnectionTimeout() default GudPoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
 
 	/**
 	 * Configures the amount of time that a connection can remain idle before expiring the connection.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_IDLE_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_IDLE_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.idle-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.idle-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	long idleTimeout() default PoolFactory.DEFAULT_IDLE_TIMEOUT;
+	long idleTimeout() default GudPoolFactory.DEFAULT_IDLE_TIMEOUT;
 
 	/**
 	 * Configures whether to keep the client event queues alive on the server when the client is disconnected.
@@ -139,18 +145,18 @@ public @interface ClientCacheApplication {
 	boolean keepAlive() default false;
 
 	/**
-	 * Configures the load conditioning interval for the {@literal DEFAULT} {@link Pool}.
+	 * Configures the load conditioning interval for the {@literal DEFAULT} {@link GudPool}.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_LOAD_CONDITIONING_INTERVAL}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_LOAD_CONDITIONING_INTERVAL}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.load-conditioning-interval} property
 	 * or the {@literal spring.data.gemfire.pool.load-conditioning-interval} property
 	 * in {@literal application.properties}.
 	 */
-	int loadConditioningInterval() default PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
+	int loadConditioningInterval() default GudPoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
 
 	/**
-	 * Configures the {@link org.apache.geode.distributed.Locator Locators} to which this cache client will connect.
+	 * Configures the Locators to which this cache client will connect.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.locators} property
 	 * or the {@literal spring.data.gemfire.pool.locators} property
@@ -171,56 +177,56 @@ public @interface ClientCacheApplication {
 
 	/**
 	 * Configures the maximum number of connections between the client and server that the {@literal DEFAULT}
-	 * {@link Pool} will create.
+	 * {@link GudPool} will create.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MAX_CONNECTIONS}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_MAX_CONNECTIONS}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.max-connections} property
 	 * or the {@literal spring.data.gemfire.pool.max-connections} property
 	 * in {@literal application.properties}.
 	 */
-	int maxConnections() default PoolFactory.DEFAULT_MAX_CONNECTIONS;
+	int maxConnections() default GudPoolFactory.DEFAULT_MAX_CONNECTIONS;
 
 	/**
 	 * Configures the minimum number of connections between the client and server to keep alive and available
 	 * at all times.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MIN_CONNECTIONS}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_MIN_CONNECTIONS}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.min-connections} property
 	 * or the {@literal spring.data.gemfire.pool.min-connections} property
 	 * in {@literal application.properties}.
 	 */
-	int minConnections() default PoolFactory.DEFAULT_MIN_CONNECTIONS;
+	int minConnections() default GudPoolFactory.DEFAULT_MIN_CONNECTIONS;
 
 	/**
 	 * Configures the minimum number of connections per server between the client and server to keep alive and available
 	 * at all times. This setting should not be set in conjunction with minConnections. Defaults to
-	 * {@link PoolFactory#DEFAULT_MIN_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@link GudPoolFactory#DEFAULT_MIN_CONNECTIONS_PER_SERVER}. Use either the
 	 * {@literal spring.data.gemfire.pool.default.min-connections-per-server} property or the
 	 * {@literal spring.data.gemfire.pool.min-connections-per-server} property in {@literal application.properties}.
 	 */
-	int minConnectionsPerServer() default PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
+	int minConnectionsPerServer() default GudPoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
 
 	/**
 	 * Configures the maximum number of connections per server between the client and server that the {@literal DEFAULT}
-	 * {@link Pool} will create. This setting should not be set in conjunction with maxConnections. Defaults to
-	 * {@link PoolFactory#DEFAULT_MAX_CONNECTIONS_PER_SERVER}. Use either the
+	 * {@link GudPool} will create. This setting should not be set in conjunction with maxConnections. Defaults to
+	 * {@link GudPoolFactory#DEFAULT_MAX_CONNECTIONS_PER_SERVER}. Use either the
 	 * {@literal spring.data.gemfire.pool.default.max-connections-per-server} property or the
 	 * {@literal spring.data.gemfire.pool.max-connections-per-server} property in {@literal application.properties}.
 	 */
-	int maxConnectionsPerServer() default PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
+	int maxConnectionsPerServer() default GudPoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
 
 	/**
-	 * If set to {@literal true} then the {@literal DEFAULT} {@link Pool} can be used by multiple users.
+	 * If set to {@literal true} then the {@literal DEFAULT} {@link GudPool} can be used by multiple users.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_MULTIUSER_AUTHENTICATION}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_MULTIUSER_AUTHENTICATION}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.multi-user-authentication} property
 	 * or the {@literal spring.data.gemfire.pool.multi-user-authentication} property
 	 * in {@literal application.properties}.
 	 */
-	boolean multiUserAuthentication() default PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
+	boolean multiUserAuthentication() default GudPoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
 
 	/**
 	 * Configures the name of {@literal this} Apache Geode member in the cluster (distributed system).
@@ -235,39 +241,39 @@ public @interface ClientCacheApplication {
 	/**
 	 * Configures how often to ping servers and verify that the servers are still alive and responsive.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_PING_INTERVAL}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_PING_INTERVAL}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.ping-interval} property
 	 * or the {@literal spring.data.gemfire.pool.ping-interval} property
 	 * in {@literal application.properties}.
 	 */
-	long pingInterval() default PoolFactory.DEFAULT_PING_INTERVAL;
+	long pingInterval() default GudPoolFactory.DEFAULT_PING_INTERVAL;
 
 	/**
-	 * Configures {@code prSingleHopEnabled} functionality for the {@literal DEFAULT} {@link Pool}.
+	 * Configures {@code prSingleHopEnabled} functionality for the {@literal DEFAULT} {@link GudPool}.
 	 *
 	 * When {@literal true} the client will be aware of the location of all partitions on servers
-	 * hosting {@link org.apache.geode.cache.DataPolicy#PARTITION} {@link Region Regions}.
+	 * hosting PARTITION {@link GudRegion Regions}.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_PR_SINGLE_HOP_ENABLED}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_PR_SINGLE_HOP_ENABLED}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.pr-single-hop-enabled} property
 	 * or the {@literal spring.data.gemfire.pool.pr-single-hop-enabled} property
 	 * in {@literal application.properties}.
 	 */
-	boolean prSingleHopEnabled() default PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
+	boolean prSingleHopEnabled() default GudPoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
 
 	/**
 	 * Configures the number of milliseconds to wait for a response from a server before timing out the operation
 	 * and trying another server (if any are available).
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_READ_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_READ_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.read-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.read-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	int readTimeout() default PoolFactory.DEFAULT_READ_TIMEOUT;
+	int readTimeout() default GudPoolFactory.DEFAULT_READ_TIMEOUT;
 
 	/**
 	 * Configures whether to notify servers (cluster) at runtime after startup that this durable client is ready
@@ -285,47 +291,46 @@ public @interface ClientCacheApplication {
 	 * Configures the number of times to retry a request after timeout or an {@link Exception} occurs while performing
 	 * the cache operation between the client and server.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_RETRY_ATTEMPTS}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_RETRY_ATTEMPTS}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.retry-attempts} property
 	 * or the {@literal spring.data.gemfire.pool.retry-attempts} property
 	 * in {@literal application.properties}.
 	 */
-	int retryAttempts() default PoolFactory.DEFAULT_RETRY_ATTEMPTS;
+	int retryAttempts() default GudPoolFactory.DEFAULT_RETRY_ATTEMPTS;
 
 	/**
 	 * Configures the server connection timeout for the {@literal DEFAULT} {@literal Pool}.
 	 *
-	 * If the {@link Pool} has a max connections setting, operations will block if there are no free connections to
+	 * If the {@link GudPool} has a max connections setting, operations will block if there are no free connections to
 	 * a specific server. The server connection timeout specifies how long those operations will block waiting for
-	 * a free connection tro a specific server before receiving an {@link AllConnectionsInUseException}. If max
+	 * a free connection to a specific server before receiving an AllConnectionsInUseException. If max
 	 * connections is not set then this setting has no effect. This setting differs from {@link #freeConnectionTimeout()},
-	 * which sets the wait time for any server connection in the {@literal DEFAULT} {@link Pool}, whereas this setting
+	 * which sets the wait time for any server connection in the {@literal DEFAULT} {@link GudPool}, whereas this setting
 	 * sets the wait time for a free connection to a specific server.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SERVER_CONNECTION_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SERVER_CONNECTION_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.server-connection-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.server-connection-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	int serverConnectionTimeout() default PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
+	int serverConnectionTimeout() default GudPoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
 
 	/**
-	 * Configures the {@link String name} of the group that all servers in which the {@literal DEFAULT} {@link Pool}
+	 * Configures the {@link String name} of the group that all servers in which the {@literal DEFAULT} {@link GudPool}
 	 * connects to must belong to.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SERVER_GROUP}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SERVER_GROUP}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.server-group} property
 	 * or the {@literal spring.data.gemfire.pool.server-group} property
 	 * in {@literal application.properties}.
 	 */
-	String serverGroup() default PoolFactory.DEFAULT_SERVER_GROUP;
+	String serverGroup() default GudPoolFactory.DEFAULT_SERVER_GROUP;
 
 	/**
-	 * Configures the {@link org.apache.geode.cache.server.CacheServer CacheServers} to which this cache client
-	 * will connect.
+	 * Configures the CacheServers to which this cache client will connect.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.servers} property
 	 * or the {@literal spring.data.gemfire.pool.servers} property
@@ -335,35 +340,35 @@ public @interface ClientCacheApplication {
 
 	/**
 	 * Configures the {@link java.net.Socket} buffer size used for each connection made in
-	 * the {@literal DEFAULT} {@link Pool}.
+	 * the {@literal DEFAULT} {@link GudPool}.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SOCKET_BUFFER_SIZE}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SOCKET_BUFFER_SIZE}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.socket-buffer-size} property
 	 * or the {@literal spring.data.gemfire.pool.socket-buffer-size} property
 	 * in {@literal application.properties}.
 	 */
-	int socketBufferSize() default PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE;
+	int socketBufferSize() default GudPoolFactory.DEFAULT_SOCKET_BUFFER_SIZE;
 
 	/**
-	 * Configures the {@link java.net.Socket} connect timeout used by the {@literal DEFAULT} {@link Pool}.
+	 * Configures the {@link java.net.Socket} connect timeout used by the {@literal DEFAULT} {@link GudPool}.
 	 *
 	 * Configures the number of milliseconds used as the {@link java.net.Socket} timeout when the client connects to
 	 * the servers and Locators in the cluster. A timeout of zero is interpreted as an infinite timeout. The connection
 	 * will then block until established or an error occurs.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SOCKET_CONNECT_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SOCKET_CONNECT_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.socket-connect-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.socket-connect-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	int socketConnectTimeout() default PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT;
+	int socketConnectTimeout() default GudPoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT;
 
 	/**
-	 * Configures the {@link SocketFactory} {@link String bean name} used by the {@literal DEFAULT} {@link Pool}
+	 * Configures the {@link GudSocketFactory} {@link String bean name} used by the {@literal DEFAULT} {@link GudPool}
 	 * to create {@link java.net.Socket} connections to both Locators (if configured using {@link #locators()})
-	 * and Servers in the Apache Geodce cluster.
+	 * and Servers in the Apache Geode cluster.
 	 *
 	 * Defaults to unset.
 	 *
@@ -376,60 +381,60 @@ public @interface ClientCacheApplication {
 	/**
 	 * Configures how often to send client statistics to the server.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_STATISTIC_INTERVAL}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_STATISTIC_INTERVAL}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.statistic-interval} property
 	 * or the {@literal spring.data.gemfire.pool.statistic-interval} property
 	 * in {@literal application.properties}.
 	 */
-	int statisticInterval() default PoolFactory.DEFAULT_STATISTIC_INTERVAL;
+	int statisticInterval() default GudPoolFactory.DEFAULT_STATISTIC_INTERVAL;
 
 	/**
 	 * Configures the interval in milliseconds to wait before sending acknowledgements from the client to the server
 	 * for events received from server subscriptions.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SUBSCRIPTION_ACK_INTERVAL}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SUBSCRIPTION_ACK_INTERVAL}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.subscription-ack-interval} property
 	 * or the {@literal spring.data.gemfire.pool.subscription-ack-interval} property
 	 * in {@literal application.properties}.
 	 */
-	int subscriptionAckInterval() default PoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL;
+	int subscriptionAckInterval() default GudPoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL;
 
 	/**
 	 * Configures server-to-client subscriptions when set to {@literal true} (enabled)
 	 * in the {@literal DEFAULT} {@link Pool}.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SUBSCRIPTION_ENABLED}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SUBSCRIPTION_ENABLED}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.subscription-enabled} property
 	 * or the {@literal spring.data.gemfire.pool.subscription-enabled} property
 	 * in {@literal application.properties}.
 	 */
-	boolean subscriptionEnabled() default PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
+	boolean subscriptionEnabled() default GudPoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
 
 	/**
 	 * Configures the message tracking timeout attribute of the {@literal DEFAULT} {@link Pool}, which is
 	 * the time-to-live period in milliseconds for subscription events the client has received from the server.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.subscription-message-tracking-timeout} property
 	 * or the {@literal spring.data.gemfire.pool.subscription-message-tracking-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	int subscriptionMessageTrackingTimeout() default PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT;
+	int subscriptionMessageTrackingTimeout() default GudPoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT;
 
 	/**
 	 * Configures the redundancy-level for the {@literal DEFAULT} {@link Pool}'s server-to-client subscriptions.
 	 *
-	 * Defaults to {@link PoolFactory#DEFAULT_SUBSCRIPTION_REDUNDANCY}.
+	 * Defaults to {@link GudPoolFactory#DEFAULT_SUBSCRIPTION_REDUNDANCY}.
 	 *
 	 * Use either the {@literal spring.data.gemfire.pool.default.subscription-redundancy} property
 	 * or the {@literal spring.data.gemfire.pool.subscription-redundancy} property
 	 * in {@literal application.properties}.
 	 */
-	int subscriptionRedundancy() default PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
+	int subscriptionRedundancy() default GudPoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY;
 
 	/**
 	 * Configures whether the {@link GemfireBeanFactoryLocator} should be enabled to lookup the Spring

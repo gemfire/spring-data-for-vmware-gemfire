@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -30,6 +35,7 @@ public interface GudDiskStoreFactory {
     long DEFAULT_TIME_INTERVAL = 1000L;
     int DEFAULT_WRITE_BUFFER_SIZE = 32768;
     int DEFAULT_QUEUE_SIZE = 0;
+    int DEFAULT_SEGMENTS = 1;
 
     GudDiskStoreFactory setAutoCompact(boolean autoCompact);
     GudDiskStoreFactory setDiskUsageWarningPercentage(float warningPercentage);
@@ -42,6 +48,7 @@ public interface GudDiskStoreFactory {
     GudDiskStoreFactory setQueueSize(int queueSize);
     GudDiskStoreFactory setDiskDirs(File[] diskDirs);
     GudDiskStoreFactory setDiskDirsAndSizes(File[] diskDirs, int[] diskDirSizes);
+    GudDiskStoreFactory setSegments(int segments);
 
     GudDiskStore create(String name);
 }

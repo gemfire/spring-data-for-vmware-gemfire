@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.asList;
@@ -20,11 +28,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,17 +61,17 @@ import org.springframework.util.StringUtils;
 /**
  * The {@link CachingDefinedRegionsConfiguration} class is a Spring {@link Configuration @Configuration} class
  * that applies configuration to a Spring (Data GemFire/Geode) application to create GemFire/Geode cache
- * {@link Region Regions} based on the use of Spring's Cache Abstraction to enable caching for application
+ * {@link GudRegion Regions} based on the use of Spring's Cache Abstraction to enable caching for application
  * service classes and methods.
  *
  * @author John Blum
  * @see Annotation
  * @see AnnotatedElement
- * @see ClientCache
- * @see Region
- * @see RegionShortcut
- * @see ClientRegionShortcut
- * @see Pool
+ * @see GudClientCache
+ * @see GudRegion
+ * @see GudRegionShortcut
+ * @see GudClientRegionShortcut
+ * @see GudPool
  * @see org.springframework.beans.factory.annotation.AnnotatedBeanDefinition
  * @see org.springframework.beans.factory.config.BeanDefinition
  * @see BeanPostProcessor
@@ -101,22 +109,22 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 			.flatMap(cacheNameResolver -> cacheNameResolver.resolveCacheNames(type).stream())
 			.collect(Collectors.toSet());
 
-	private ClientRegionShortcut clientRegionShortcut = ClientRegionShortcut.PROXY;
+	private GudClientRegionShortcut clientRegionShortcut = GudClientRegionShortcut.PROXY;
 
 	private final CompositeLifecycle compositeLifecycle = new CompositeLifecycle();
 
 	@Autowired(required = false)
 	private final List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
-	private RegionShortcut serverRegionShortcut = RegionShortcut.REPLICATE;
+	private GudRegionShortcut serverRegionShortcut = GudRegionShortcut.REPLICATE;
 
 	private String poolName = ClientRegionFactoryBean.DEFAULT_POOL_NAME;
 
 	/**
-	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
+	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link GudRegion Regions}
 	 * for application service {@link Method Methods} that are annotated with Spring's Cache Abstraction Annotations.
 	 *
-	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
+	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link GudRegion Regions}
 	 * for application service {@link Method Methods} that are annotated with Spring's Cache Abstraction Annotations.
 	 * @see EnableCachingDefinedRegions
 	 * @see Annotation
@@ -139,61 +147,61 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	/**
-	 * Configures the {@link ClientRegionShortcut} specifying the data management policy to use
-	 * when creating a client {@link Region}.
+	 * Configures the {@link GudClientRegionShortcut} specifying the data management policy to use
+	 * when creating a client {@link GudRegion}.
 	 *
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} specifying the data management policy
-	 * to use when creating a client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @param clientRegionShortcut {@link GudClientRegionShortcut} specifying the data management policy
+	 * to use when creating a client {@link GudRegion}.
+	 * @see GudClientRegionShortcut
 	 */
-	public void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
+	public void setClientRegionShortcut(GudClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
 	}
 
 	/**
-	 * Returns the configured {@link ClientRegionShortcut} specifying the data management policy to use
-	 * when creating a client {@link Region}.
+	 * Returns the configured {@link GudClientRegionShortcut} specifying the data management policy to use
+	 * when creating a client {@link GudRegion}.
 	 *
-	 * @return an {@link Optional} {@link ClientRegionShortcut} specifying the data management policy to use
-	 * when creating a client {@link Region}.
-	 * @see ClientRegionShortcut
-	 * @see #setClientRegionShortcut(ClientRegionShortcut)
+	 * @return an {@link Optional} {@link GudClientRegionShortcut} specifying the data management policy to use
+	 * when creating a client {@link GudRegion}.
+	 * @see GudClientRegionShortcut
+	 * @see #setClientRegionShortcut(GudClientRegionShortcut)
 	 * @see Optional
 	 */
-	protected Optional<ClientRegionShortcut> getClientRegionShortcut() {
+	protected Optional<GudClientRegionShortcut> getClientRegionShortcut() {
 		return Optional.ofNullable(this.clientRegionShortcut);
 	}
 
 	/**
-	 * Resolves the {@link ClientRegionShortcut} specifying the data management policy to use
-	 * when creating a client {@link Region}; defaults to {@link ClientRegionShortcut#PROXY}.
+	 * Resolves the {@link GudClientRegionShortcut} specifying the data management policy to use
+	 * when creating a client {@link GudRegion}; defaults to {@link GudClientRegionShortcut#PROXY}.
 	 *
-	 * @return the resolved {@link ClientRegionShortcut} specifying the data management policy to use
-	 * when creating a client {@link Region}; defaults to {@link ClientRegionShortcut#PROXY}.
-	 * @see ClientRegionShortcut
+	 * @return the resolved {@link GudClientRegionShortcut} specifying the data management policy to use
+	 * when creating a client {@link GudRegion}; defaults to {@link GudClientRegionShortcut#PROXY}.
+	 * @see GudClientRegionShortcut
 	 * @see #getClientRegionShortcut()
 	 */
-	protected ClientRegionShortcut resolveClientRegionShortcut() {
-		return getClientRegionShortcut().orElse(ClientRegionShortcut.PROXY);
+	protected GudClientRegionShortcut resolveClientRegionShortcut() {
+		return getClientRegionShortcut().orElse(GudClientRegionShortcut.PROXY);
 	}
 
 	/**
-	 * Configures the name of the dedicated {@link Pool} used by all caching-defined client {@link Region Regions}
+	 * Configures the name of the dedicated {@link GudPool} used by all caching-defined client {@link GudRegion Regions}
 	 * to send and receive data between the client and server.
 	 *
-	 * @param poolName {@link String} containing the name of the dedicated {@link Pool} for all
-	 * caching-defined client {@link Region Regions}.
+	 * @param poolName {@link String} containing the name of the dedicated {@link GudPool} for all
+	 * caching-defined client {@link GudRegion Regions}.
 	 */
 	public void setPoolName(String poolName) {
 		this.poolName = poolName;
 	}
 
 	/**
-	 * Returns the name of the dedicated {@link Pool} used by all caching-defined client {@link Region Regions}
+	 * Returns the name of the dedicated {@link GudPool} used by all caching-defined client {@link GudRegion Regions}
 	 * to send and receive data between the client and server.
 	 *
-	 * @return an {@link Optional} {@link String name} of the dedicated {@link Pool} used by all caching-defined
-	 * client {@link Region Regions}.
+	 * @return an {@link Optional} {@link String name} of the dedicated {@link GudPool} used by all caching-defined
+	 * client {@link GudRegion Regions}.
 	 * @see #setPoolName(String)
 	 * @see Optional
 	 */
@@ -202,11 +210,11 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	/**
-	 * Resolves the name of the dedicated {@link Pool} used by all caching-defined client {@link Region Regions}
+	 * Resolves the name of the dedicated {@link GudPool} used by all caching-defined client {@link GudRegion Regions}
 	 * to send and receive data between the client and server; defaults to {@literal DEFAULT}.
 	 *
-	 * @return the {@link String name} of the dedicated {@link Pool} used by all caching-defined
-	 * client {@link Region Regions}; defaults to {@literal DEFAULT}.
+	 * @return the {@link String name} of the dedicated {@link GudPool} used by all caching-defined
+	 * client {@link GudRegion Regions}; defaults to {@literal DEFAULT}.
 	 * @see #getPoolName()
 	 */
 	protected String resolvePoolName() {
@@ -214,42 +222,42 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	/**
-	 * Configures the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
+	 * Configures the {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}.
 	 *
-	 * @param serverRegionShortcut {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 * @see RegionShortcut
+	 * @param serverRegionShortcut {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}.
+	 * @see GudRegionShortcut
 	 */
-	public void setServerRegionShortcut(RegionShortcut serverRegionShortcut) {
+	public void setServerRegionShortcut(GudRegionShortcut serverRegionShortcut) {
 		this.serverRegionShortcut = serverRegionShortcut;
 	}
 
 	/**
-	 * Returns the configured {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
+	 * Returns the configured {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}.
 	 *
-	 * @return an {@link Optional} {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 * @see #setServerRegionShortcut(RegionShortcut)
-	 * @see RegionShortcut
+	 * @return an {@link Optional} {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}.
+	 * @see #setServerRegionShortcut(GudRegionShortcut)
+	 * @see GudRegionShortcut
 	 * @see Optional
 	 */
-	protected Optional<RegionShortcut> getServerRegionShortcut() {
+	protected Optional<GudRegionShortcut> getServerRegionShortcut() {
 		return Optional.ofNullable(this.serverRegionShortcut);
 	}
 
 	/**
-	 * Resolves the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
+	 * Resolves the {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}; defaults to {@link GudRegionShortcut#REPLICATE}.
 	 *
-	 * @return the resolved {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
-	 * @see RegionShortcut
+	 * @return the resolved {@link GudRegionShortcut} specifying the data management policy to use
+	 * when creating a server (peer) {@link GudRegion}; defaults to {@link GudRegionShortcut#REPLICATE}.
+	 * @see GudRegionShortcut
 	 * @see #getServerRegionShortcut()
 	 */
-	protected RegionShortcut resolveServerRegionShortcut() {
-		return getServerRegionShortcut().orElse(RegionShortcut.REPLICATE);
+	protected GudRegionShortcut resolveServerRegionShortcut() {
+		return getServerRegionShortcut().orElse(GudRegionShortcut.REPLICATE);
 	}
 
 	@Override
@@ -293,7 +301,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 					CacheTypeAwareRegionFactoryBean<?, ?> regionFactoryBean = new CacheTypeAwareRegionFactoryBean<>();
 
-					ClientCache gemfireCache = beanFactory.getBean(ClientCache.class);
+					GudClientCache gemfireCache = beanFactory.getBean(GudClientCache.class);
 
 					regionFactoryBean.setBeanFactory(beanFactory);
 					regionFactoryBean.setCache(gemfireCache);
@@ -317,7 +325,7 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 						.ifPresent(region -> beanFactory.registerSingleton(cacheName, region));
 				}
 				catch (Exception cause) {
-					throw new BeanInstantiationException(Region.class,
+					throw new BeanInstantiationException(GudRegion.class,
 						String.format("Failed to create Region for cache [%s]", cacheName), cause);
 				}
 			}

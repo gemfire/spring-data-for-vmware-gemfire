@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationPolicy;
@@ -14,12 +22,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
@@ -36,6 +38,12 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 import org.springframework.data.gemfire.expiration.AnnotationBasedExpiration;
 import org.springframework.data.gemfire.expiration.ExpirationActionType;
 import org.springframework.data.gemfire.expiration.ExpiringRegionFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
@@ -44,14 +52,14 @@ import org.springframework.util.Assert;
 
 /**
  * {@link ExpirationConfiguration} is a Spring {@link Configuration} class used to configure expiration policies
- * for GemFire/Geode {@link Region Regions}.
+ * for GemFire/Geode {@link GudRegion Regions}.
  *
  * @author John Blum
  * @see Configuration
  * @see ImportAware
  * @see EnableExpiration
- * @see ExpirationAttributes
- * @see Region
+ * @see GudExpirationAttributes
+ * @see GudRegion
  * @since 1.9.0
  */
 @Configuration
@@ -141,13 +149,13 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 
 		ApplicationContext applicationContext = event.getApplicationContext();
 
-		for (Region<?, ?> region : applicationContext.getBeansOfType(Region.class).values()) {
+		for (GudRegion<?, ?> region : applicationContext.getBeansOfType(GudRegion.class).values()) {
 			getExpirationPolicyConfigurer().configure(region);
 		}
 	}
 
 	/**
-	 * Interface defining a contract for implementations that configure a {@link Region Region's} expiration policy.
+	 * Interface defining a contract for implementations that configure a {@link GudRegion Region's} expiration policy.
 	 *
 	 * @see FunctionalInterface
 	 */
@@ -155,22 +163,22 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 	protected interface ExpirationPolicyConfigurer {
 
 		/**
-		 * Configures the expiration policy for the given {@link Region}.
+		 * Configures the expiration policy for the given {@link GudRegion}.
 		 *
-		 * @param regionBean {@link Region} object who's expiration policy will be configured.
-		 * @return the given {@link Region} object.
-		 * @see Region
+		 * @param regionBean {@link GudRegion} object who's expiration policy will be configured.
+		 * @return the given {@link GudRegion} object.
+		 * @see GudRegion
 		 */
 		Object configure(Object regionBean);
 
 		/**
-		 * Configures the expiration policy for the given {@link Region}.
+		 * Configures the expiration policy for the given {@link GudRegion}.
 		 *
-		 * @param region {@link Region} who's expiration policy will be configured.
-		 * @return the given {@link Region}.
-		 * @see Region
+		 * @param region {@link GudRegion} who's expiration policy will be configured.
+		 * @return the given {@link GudRegion}.
+		 * @see GudRegion
 		 */
-		default Region<?, ?> configure(Region<?, ?> region) {
+		default GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 			return region;
 		}
 	}
@@ -263,7 +271,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Region<?, ?> configure(Region<?, ?> region) {
+		public GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 			return this.two.configure(this.one.configure(region));
 		}
 	}
@@ -271,7 +279,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 	/**
 	 * {@link ExpirationPolicyMetaData} is a {@link ExpirationPolicyConfigurer} implementation that encapsulates
 	 * the expiration configuration meta-data (e.g. expiration timeout and action) necessary to configure
-	 * a {@link Region Regions's} expiration policy and behavior.
+	 * a {@link GudRegion Regions's} expiration policy and behavior.
 	 *
 	 * This class is meant to capture the expiration configuration meta-data specified in the {@link ExpirationPolicy}
 	 * nested annotation in the application-level {@link EnableExpiration} annotation.
@@ -334,32 +342,32 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Factory method used to construct a new instance of the {@link ExpirationAttributes} initialized with
-		 * the given expiration timeout and action that is taken when an {@link Region} entry times out.
+		 * Factory method used to construct a new instance of the {@link GudExpirationAttributes} initialized with
+		 * the given expiration timeout and action that is taken when an {@link GudRegion} entry times out.
 		 *
 		 * @param timeout int value indicating the expiration timeout in seconds.
-		 * @param action expiration action to take when the {@link Region} entry times out.
-		 * @return a new instance of {@link ExpirationAttributes} initialized with the given expiration timeout
+		 * @param action expiration action to take when the {@link GudRegion} entry times out.
+		 * @return a new instance of {@link GudExpirationAttributes} initialized with the given expiration timeout
 		 * and action.
-		 * @see ExpirationAttributes
-		 * @see #newExpirationAttributes(int, ExpirationAction)
+		 * @see GudExpirationAttributes
+		 * @see #newExpirationAttributes(int, GudExpirationAction)
 		 */
-		protected static ExpirationAttributes newExpirationAttributes(int timeout, ExpirationActionType action) {
-			return newExpirationAttributes(timeout, action.getExpirationAction());
+		protected static GudExpirationAttributes newExpirationAttributes(int timeout, ExpirationActionType action) {
+			return newExpirationAttributes(timeout, action.getGudExpirationAction());
 		}
 
 		/**
-		 * Factory method used to construct a new instance of the {@link ExpirationAttributes} initialized with
-		 * the given expiration timeout and action that is taken when an {@link Region} entry times out.
+		 * Factory method used to construct a new instance of the {@link GudExpirationAttributes} initialized with
+		 * the given expiration timeout and action that is taken when an {@link GudRegion} entry times out.
 		 *
 		 * @param timeout int value indicating the expiration timeout in seconds.
-		 * @param action expiration action to take when the {@link Region} entry times out.
-		 * @return a new instance of {@link ExpirationAttributes} initialized with the given expiration timeout
+		 * @param action expiration action to take when the {@link GudRegion} entry times out.
+		 * @return a new instance of {@link GudExpirationAttributes} initialized with the given expiration timeout
 		 * and action.
-		 * @see ExpirationAttributes
+		 * @see GudExpirationAttributes
 		 */
-		protected static ExpirationAttributes newExpirationAttributes(int timeout, ExpirationAction action) {
-			return new ExpirationAttributes(timeout, action);
+		protected static GudExpirationAttributes newExpirationAttributes(int timeout, GudExpirationAction action) {
+			return GudExpirationAttributes.of(timeout, action);
 		}
 
 		/**
@@ -367,15 +375,15 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		 * the given expiration policy meta-data.
 		 *
 		 * @param timeout int value indicating the expiration timeout in seconds.
-		 * @param action expiration action taken when the {@link Region} entry expires.
-		 * @param regionNames names of {@link Region Regions} configured with the expiration policy meta-data.
-		 * @param types type of expiration algorithm/behavior (TTI/TTL) configured for the {@link Region}.
+		 * @param action expiration action taken when the {@link GudRegion} entry expires.
+		 * @param regionNames names of {@link GudRegion Regions} configured with the expiration policy meta-data.
+		 * @param types type of expiration algorithm/behavior (TTI/TTL) configured for the {@link GudRegion}.
 		 * @return an instance of {@link ExpirationPolicyMetaData} initialized with the given expiration policy
 		 * meta-data.
 		 * @throws IllegalArgumentException if the {@link ExpirationType} array is empty.
 		 * @see ExpirationType
 		 * @see ExpirationActionType
-		 * @see #ExpirationPolicyMetaData(ExpirationAttributes, Set, Set)
+		 * @see #ExpirationPolicyMetaData(GudExpirationAttributes, Set, Set)
 		 * @see #newExpirationAttributes(int, ExpirationActionType)
 		 */
 		protected static ExpirationPolicyMetaData newExpirationPolicyMetaData(int timeout, ExpirationActionType action,
@@ -387,7 +395,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Resolves the {@link ExpirationAction} used in the expiration policy.  Defaults to
+		 * Resolves the {@link GudExpirationAction} used in the expiration policy.  Defaults to
 		 * {@link ExpirationActionType#INVALIDATE} if {@code action} is {@literal null}.
 		 *
 		 * @param action given {@link ExpirationActionType} to evaluate.
@@ -409,7 +417,7 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 			return Math.max(timeout, DEFAULT_TIMEOUT);
 		}
 
-		private final ExpirationAttributes defaultExpirationAttributes;
+		private final GudExpirationAttributes defaultExpirationAttributes;
 
 		private final Set<String> regionNames = new HashSet<>();
 
@@ -417,16 +425,16 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 
 		/**
 		 * Constructs an instance of {@link ExpirationPolicyMetaData} initialized with the given expiration policy
-		 * configuraiton meta-data and {@link Region} expiration settings.
+		 * configuraiton meta-data and {@link GudRegion} expiration settings.
 		 *
 		 * @param timeout int value indicating the expiration timeout in seconds.
-		 * @param action expiration action taken when the {@link Region} entry expires.
-		 * @param regionNames names of {@link Region Regions} configured with the expiration policy meta-data.
-		 * @param types type of expiration algorithm/behavior (TTI/TTL) configured for the {@link Region}.
+		 * @param action expiration action taken when the {@link GudRegion} entry expires.
+		 * @param regionNames names of {@link GudRegion Regions} configured with the expiration policy meta-data.
+		 * @param types type of expiration algorithm/behavior (TTI/TTL) configured for the {@link GudRegion}.
 		 * @throws IllegalArgumentException if the {@link ExpirationType} {@link Set} is empty.
 		 * @see ExpirationType
 		 * @see ExpirationActionType
-		 * @see #ExpirationPolicyMetaData(ExpirationAttributes, Set, Set)
+		 * @see #ExpirationPolicyMetaData(GudExpirationAttributes, Set, Set)
 		 * @see #newExpirationAttributes(int, ExpirationActionType)
 		 * @see #resolveAction(ExpirationActionType)
 		 * @see #resolveTimeout(int)
@@ -440,17 +448,17 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 
 		/**
 		 * Constructs an instance of {@link ExpirationPolicyMetaData} initialized with the given expiration policy
-		 * configuraiton meta-data and {@link Region} expiration settings.
+		 * configuraiton meta-data and {@link GudRegion} expiration settings.
 		 *
-		 * @param expirationAttributes {@link ExpirationAttributes} specifying the expiration timeout in seconds
-		 * and expiration action taken when the {@link Region} entry expires.
-		 * @param regionNames names of {@link Region Regions} configured with the expiration policy meta-data.
-		 * @param types type of expiration algorithm/behaviors (TTI/TTL) configured for the {@link Region}.
+		 * @param expirationAttributes {@link GudExpirationAttributes} specifying the expiration timeout in seconds
+		 * and expiration action taken when the {@link GudRegion} entry expires.
+		 * @param regionNames names of {@link GudRegion Regions} configured with the expiration policy meta-data.
+		 * @param types type of expiration algorithm/behaviors (TTI/TTL) configured for the {@link GudRegion}.
 		 * @throws IllegalArgumentException if the {@link ExpirationType} {@link Set} is empty.
 		 * @see ExpirationType
-		 * @see ExpirationAttributes
+		 * @see GudExpirationAttributes
 		 */
-		protected ExpirationPolicyMetaData(ExpirationAttributes expirationAttributes, Set<String> regionNames,
+		protected ExpirationPolicyMetaData(GudExpirationAttributes expirationAttributes, Set<String> regionNames,
 				Set<ExpirationType> types) {
 
 			Assert.notEmpty(types, "At least one ExpirationPolicy type [TTI, TTL] is required");
@@ -474,23 +482,23 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Determines whether the given {@link Region} is accepted for Eviction policy configuration.
+		 * Determines whether the given {@link GudRegion} is accepted for Eviction policy configuration.
 		 *
-		 * @param region {@link Region} being evaluated as a Eviction policy configuration candidate.
-		 * @return a boolean value indicated whether the given {@link Region} is accepted as an Expiration policy
+		 * @param region {@link GudRegion} being evaluated as a Eviction policy configuration candidate.
+		 * @return a boolean value indicated whether the given {@link GudRegion} is accepted as an Expiration policy
 		 * configuration candidate.
-		 * @see Region
+		 * @see GudRegion
 		 * @see #accepts(Supplier)
 		 */
-		protected boolean accepts(Region<?, ?> region) {
+		protected boolean accepts(GudRegion<?, ?> region) {
 			return region != null && accepts(() -> region.getName());
 		}
 
 		/**
-		 * Determines whether to apply this expiration policy to the given {@link Region} identified by name.
+		 * Determines whether to apply this expiration policy to the given {@link GudRegion} identified by name.
 		 *
-		 * @param regionName name of the {@link Region} to evaluate.
-		 * @return a boolean value indicating whether the expiration policy applies to the given {@link Region}
+		 * @param regionName name of the {@link GudRegion} to evaluate.
+		 * @return a boolean value indicating whether the expiration policy applies to the given {@link GudRegion}
 		 * identified by name.
 		 */
 		protected boolean accepts(Supplier<String> regionName) {
@@ -518,10 +526,10 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Resolves the name of a given {@link Region} from the corresponding {@link ResolvableRegionFactoryBean} object.
+		 * Resolves the name of a given {@link GudRegion} from the corresponding {@link ResolvableRegionFactoryBean} object.
 		 *
-		 * @param regionFactoryBean {@link ResolvableRegionFactoryBean} from which to resolve the {@link Region} name.
-		 * @return the resolved name of the {@link Region} created from the given {@link ResolvableRegionFactoryBean}.
+		 * @param regionFactoryBean {@link ResolvableRegionFactoryBean} from which to resolve the {@link GudRegion} name.
+		 * @return the resolved name of the {@link GudRegion} created from the given {@link ResolvableRegionFactoryBean}.
 		 * @see ResolvableRegionFactoryBean#resolveRegionName()
 		 */
 		protected String resolveRegionName(Object regionFactoryBean) {
@@ -536,15 +544,15 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		 *
 		 * @param regionFactoryBean {@link ExpiringRegionFactoryBean} to configure.
 		 * @return the given {@link ExpiringRegionFactoryBean}.
-		 * @see AnnotationBasedExpiration#forIdleTimeout(ExpirationAttributes)
-		 * @see AnnotationBasedExpiration#forTimeToLive(ExpirationAttributes)
+		 * @see AnnotationBasedExpiration#forIdleTimeout(GudExpirationAttributes)
+		 * @see AnnotationBasedExpiration#forTimeToLive(GudExpirationAttributes)
 		 * @see ExpiringRegionFactoryBean
 		 * @see #defaultExpirationAttributes()
 		 */
 		protected ExpiringRegionFactoryBean<?, ?> setExpirationAttributes(
 				ExpiringRegionFactoryBean<?, ?> regionFactoryBean) {
 
-			ExpirationAttributes defaultExpirationAttributes = defaultExpirationAttributes();
+			GudExpirationAttributes defaultExpirationAttributes = defaultExpirationAttributes();
 
 			if (isIdleTimeout()) {
 				regionFactoryBean.setCustomEntryIdleTimeout(
@@ -574,20 +582,20 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Region<?, ?> configure(Region<?, ?> region) {
+		public GudRegion<?, ?> configure(GudRegion<?, ?> region) {
 
 			if (accepts(region)) {
 
-				RegionAttributes<?, ?> regionAttributes = region.getAttributes();
+				GudRegionAttributes<?, ?> regionAttributes = region.getAttributes();
 
-				ExpirationAttributes expirationAttributes = defaultExpirationAttributes();
+				GudExpirationAttributes expirationAttributes = defaultExpirationAttributes();
 
-				AttributesMutator<?, ?> regionAttributesMutator = region.getAttributesMutator();
+				GudAttributesMutator<?, ?> regionAttributesMutator = region.getAttributesMutator();
 
 				if (SpringExtensions.areNotNull(regionAttributes, regionAttributesMutator)) {
 
-					CustomExpiry<?, ?> customEntryIdleTimeout = regionAttributes.getCustomEntryIdleTimeout();
-					CustomExpiry<?, ?> customEntryTimeToLive = regionAttributes.getCustomEntryTimeToLive();
+					GudCustomExpiry<?, ?> customEntryIdleTimeout = regionAttributes.getCustomEntryIdleTimeout();
+					GudCustomExpiry<?, ?> customEntryTimeToLive = regionAttributes.getCustomEntryTimeToLive();
 
 					if (isIdleTimeout() && customEntryIdleTimeout == null) {
 						regionAttributesMutator.setCustomEntryIdleTimeout(
@@ -605,12 +613,12 @@ public class ExpirationConfiguration extends AbstractAnnotationConfigSupport imp
 		}
 
 		/**
-		 * Returns the default {@link ExpirationAttributes}.
+		 * Returns the default {@link GudExpirationAttributes}.
 		 *
-		 * @return an {@link ExpirationAttributes} containing the defaults.
-		 * @see ExpirationAttributes
+		 * @return an {@link GudExpirationAttributes} containing the defaults.
+		 * @see GudExpirationAttributes
 		 */
-		protected ExpirationAttributes defaultExpirationAttributes() {
+		protected GudExpirationAttributes defaultExpirationAttributes() {
 			return this.defaultExpirationAttributes;
 		}
 	}

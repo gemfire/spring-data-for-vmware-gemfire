@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -273,16 +278,14 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <E> GudSelectResults<E> query(String query) {
 
 		try {
-			return getRegion().query(query);
+			return (GudSelectResults<E>) getRegion().query(query);
 		}
 		catch (GudIndexInvalidException | GudQueryInvalidException cause) {
 			throw convertGemFireQueryException(cause);
-		}
-		catch (GudGemFireCheckedException cause) {
-			throw convertGemFireAccessException(cause);
 		}
 		catch (GudGemFireException cause) {
 			throw convertGemFireAccessException(cause);
@@ -323,9 +326,6 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 		}
 		catch (GudIndexInvalidException | GudQueryInvalidException cause) {
 			throw convertGemFireQueryException(cause);
-		}
-		catch (GudGemFireCheckedException cause) {
-			throw convertGemFireAccessException(cause);
 		}
 		catch (GudGemFireException cause) {
 			throw convertGemFireAccessException(cause);
@@ -374,9 +374,6 @@ public class GemfireTemplate extends GemfireAccessor implements GemfireOperation
 		}
 		catch (GudIndexInvalidException | GudQueryInvalidException cause) {
 			throw convertGemFireQueryException(cause);
-		}
-		catch (GudGemFireCheckedException cause) {
-			throw convertGemFireAccessException(cause);
 		}
 		catch (GudGemFireException cause) {
 			throw convertGemFireAccessException(cause);

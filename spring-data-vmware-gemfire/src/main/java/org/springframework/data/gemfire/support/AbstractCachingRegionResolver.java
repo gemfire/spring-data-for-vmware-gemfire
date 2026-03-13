@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -9,13 +17,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionEvent;
-import org.apache.geode.cache.util.CacheListenerAdapter;
-
 import org.springframework.data.gemfire.RegionResolver;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheListenerAdapter;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionEvent;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
@@ -24,24 +31,24 @@ import org.springframework.util.StringUtils;
  * {@link RegionResolver} implementation capable of caching the results of a Region resolution (lookup) operation.
  *
  * @author John Blum
- * @see Region
- * @see CacheListener
- * @see CacheListenerAdapter
+ * @see GudRegion
+ * @see GudCacheListener
+ * @see GudCacheListenerAdapter
  * @see RegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings("rawtypes")
-public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter implements RegionResolver {
+public abstract class AbstractCachingRegionResolver extends GudCacheListenerAdapter implements RegionResolver {
 
-	private final Map<String, Region> nameToRegionCache = new ConcurrentHashMap<>();
+	private final Map<String, GudRegion> nameToRegionCache = new ConcurrentHashMap<>();
 
 	/**
-	 * Internal, utility method to cache a {@link Region} by {@link Region#getName() name},
-	 * overriding any existing cache entry for the given {@link Region} if it already exists.
+	 * Internal, utility method to cache a {@link GudRegion} by {@link GudRegion#getName() name},
+	 * overriding any existing cache entry for the given {@link GudRegion} if it already exists.
 	 *
-	 * @param region {@link Region} to cache.
+	 * @param region {@link GudRegion} to cache.
 	 */
-	synchronized void cache(@Nullable Region region) {
+	synchronized void cache(@Nullable GudRegion region) {
 		Optional.ofNullable(region)
 			.filter(it -> StringUtils.hasText(region.getName()))
 			.ifPresent(it -> this.nameToRegionCache.put(region.getName(), region));
@@ -51,7 +58,7 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	 * {@inheritDoc}
 	 */
 	@Nullable @Override @SuppressWarnings("unchecked")
-	public synchronized <K, V> Region<K, V> resolve(@Nullable String regionName) {
+	public synchronized <K, V> GudRegion<K, V> resolve(@Nullable String regionName) {
 
 		return StringUtils.hasText(regionName)
 			? this.nameToRegionCache.computeIfAbsent(regionName, this::doResolveAndRegisterResolverAsCacheListener)
@@ -59,24 +66,24 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	}
 
 	/**
-	 * Performs the actual {@link Region} resolution operation to resolve a {@link Region} with
+	 * Performs the actual {@link GudRegion} resolution operation to resolve a {@link GudRegion} with
 	 * the given {@link String name} by calling {@link #doResolve(String)} and then registers
-	 * this {@link RegionResolver} as a {@link CacheListener} with the resolved {@link Region}.
+	 * this {@link RegionResolver} as a {@link GudCacheListener} with the resolved {@link GudRegion}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionName {@link String name} of the {@link Region} to resolve.
-	 * @return the resolved {@link Region} with the given {@link String name}; may be {@literal null}.
-	 * @see Region
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param regionName {@link String name} of the {@link GudRegion} to resolve.
+	 * @return the resolved {@link GudRegion} with the given {@link String name}; may be {@literal null}.
+	 * @see GudRegion
 	 * @see String
 	 * @see #doResolve(String)
 	 */
 	@SuppressWarnings("unchecked")
-	<K, V> Region<K, V> doResolveAndRegisterResolverAsCacheListener(String regionName) {
+	<K, V> GudRegion<K, V> doResolveAndRegisterResolverAsCacheListener(String regionName) {
 
-		return Optional.<Region<K, V>>ofNullable(doResolve(regionName))
+		return Optional.<GudRegion<K, V>>ofNullable(doResolve(regionName))
 			//.filter(this::isResolverNotRegisteredAsCacheListener)
-			.map(Region::getAttributesMutator)
+			.map(GudRegion::getAttributesMutator)
 			.map(attributesMutator -> {
 				attributesMutator.addCacheListener(AbstractCachingRegionResolver.this);
 				return attributesMutator.getRegion();
@@ -85,55 +92,55 @@ public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter
 	}
 
 	@SuppressWarnings("unused")
-	private boolean isResolverNotRegisteredAsCacheListener(Region region) {
+	private boolean isResolverNotRegisteredAsCacheListener(GudRegion region) {
 		return region != null && !isResolverRegisteredAsCacheListener(region);
 	}
 
-	private boolean isResolverRegisteredAsCacheListener(Region region) {
+	private boolean isResolverRegisteredAsCacheListener(GudRegion region) {
 
 		return Optional.ofNullable(region)
-			.map(Region::getAttributes)
-			.map(RegionAttributes::getCacheListeners)
+			.map(GudRegion::getAttributes)
+			.map(GudRegionAttributes::getCacheListeners)
 			.map(Arrays::asList)
 			.filter(cacheListeners -> cacheListeners.contains(this))
 			.isPresent();
 	}
 
 	/**
-	 * Performs the actual {@link Region} resolution operation to resolve a {@link Region} with
+	 * Performs the actual {@link GudRegion} resolution operation to resolve a {@link GudRegion} with
 	 * the given {@link String name}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionName {@link String name} of the {@link Region} to resolve.
-	 * @return the resolved {@link Region} with the given {@link String name}; may be {@literal null}.
-	 * @see Region
+	 * @param <K> {@link Class type} of the {@link GudRegion} key.
+	 * @param <V> {@link Class type} of the {@link GudRegion} value.
+	 * @param regionName {@link String name} of the {@link GudRegion} to resolve.
+	 * @return the resolved {@link GudRegion} with the given {@link String name}; may be {@literal null}.
+	 * @see GudRegion
 	 * @see String
 	 */
 	@Nullable
-	protected abstract <K, V> Region<K, V> doResolve(@Nullable String regionName);
+	protected abstract <K, V> GudRegion<K, V> doResolve(@Nullable String regionName);
 
 	/**
-	 * Clears the cache entry for the {@link Region} identified by the {@link RegionEvent}.
+	 * Clears the cache entry for the {@link GudRegion} identified by the {@link GudRegionEvent}.
 	 *
-	 * @param event {@link RegionEvent} object capturing the details of the {@link Region} destroyed event.
-	 * @see RegionEvent
+	 * @param event {@link GudRegionEvent} object capturing the details of the {@link GudRegion} destroyed event.
+	 * @see GudRegionEvent
 	 * @see #remove(String)
 	 */
 	@Override
-	public void afterRegionDestroy(@Nullable RegionEvent event) {
+	public void afterRegionDestroy(@Nullable GudRegionEvent event) {
 
 		Optional.ofNullable(event)
-			.map(RegionEvent::getRegion)
-			.map(Region::getName)
+			.map(GudRegionEvent::getRegion)
+			.map(GudRegion::getName)
 			.filter(StringUtils::hasText)
 			.ifPresent(this::remove);
 	}
 
 	/**
-	 * Removes the cache entry for the cached {@link Region} with the given {@link String name}.
+	 * Removes the cache entry for the cached {@link GudRegion} with the given {@link String name}.
 	 *
-	 * @param regionName {@link String name} of the {@link Region} to remove from the cache.
+	 * @param regionName {@link String name} of the {@link GudRegion} to remove from the cache.
 	 * @see ConcurrentHashMap#remove(Object)
 	 */
 	synchronized void remove(@NonNull String regionName) {

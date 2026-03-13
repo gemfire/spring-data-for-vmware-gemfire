@@ -1,16 +1,22 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.eviction;
 
-import org.apache.geode.cache.EvictionAction;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.util.ObjectSizer;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 
 /**
  * Simple utility class used for defining nested factory-method like definitions w/o polluting the container with useless beans.
@@ -19,25 +25,25 @@ import org.springframework.beans.factory.InitializingBean;
  * @author John Blum
  * @see FactoryBean
  * @see InitializingBean
- * @see EvictionAttributes
- * @see ObjectSizer
+ * @see GudEvictionAttributes
+ * @see GudObjectSizer
  */
 @SuppressWarnings("unused")
-public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttributes>, InitializingBean {
+public class EvictionAttributesFactoryBean implements FactoryBean<GudEvictionAttributes>, InitializingBean {
 
-	protected static final int DEFAULT_LRU_MAXIMUM_ENTRIES = EvictionAttributes.DEFAULT_ENTRIES_MAXIMUM;
+	protected static final int DEFAULT_LRU_MAXIMUM_ENTRIES = GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM;
 
-	protected static final int DEFAULT_MEMORY_MAXIMUM_SIZE = EvictionAttributes.DEFAULT_MEMORY_MAXIMUM;
+	protected static final int DEFAULT_MEMORY_MAXIMUM_SIZE = GudEvictionAttributes.DEFAULT_MEMORY_MAXIMUM;
 
-	private EvictionAction action = null;
+	private GudEvictionAction action = null;
 
-	private EvictionAttributes evictionAttributes;
+	private GudEvictionAttributes evictionAttributes;
 
 	private EvictionPolicyType type = EvictionPolicyType.ENTRY_COUNT;
 
 	private Integer threshold = null;
 
-	private ObjectSizer objectSizer = null;
+	private GudObjectSizer objectSizer = null;
 
 	/**
 	 * {@inheritDoc}
@@ -46,28 +52,28 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 		evictionAttributes = createAttributes();
 	}
 
-	EvictionAttributes createAttributes() {
+	GudEvictionAttributes createAttributes() {
 		switch (type) {
 			case HEAP_PERCENTAGE:
 				if (threshold != null) {
 					throw new IllegalArgumentException("HEAP_PERCENTAGE (LRU_HEAP algorithm) does not support threshold (a.k.a. maximum)");
 				}
 
-				return EvictionAttributes.createLRUHeapAttributes(getObjectSizer(), getAction());
+				return GudEvictionAttributes.createLRUHeapAttributes(getObjectSizer(), getAction());
 			case MEMORY_SIZE:
-				return (threshold != null ? EvictionAttributes.createLRUMemoryAttributes(getThreshold(), getObjectSizer(), getAction())
-					: EvictionAttributes.createLRUMemoryAttributes(getObjectSizer(), getAction()));
+				return (threshold != null ? GudEvictionAttributes.createLRUMemoryAttributes(getThreshold(), getObjectSizer(), getAction())
+					: GudEvictionAttributes.createLRUMemoryAttributes(getObjectSizer(), getAction()));
 			case ENTRY_COUNT:
 			default:
-				return (threshold != null ? EvictionAttributes.createLRUEntryAttributes(getThreshold(), getAction())
-					: EvictionAttributes.createLRUEntryAttributes(DEFAULT_LRU_MAXIMUM_ENTRIES, getAction()));
+				return (threshold != null ? GudEvictionAttributes.createLRUEntryAttributes(getThreshold(), getAction())
+					: GudEvictionAttributes.createLRUEntryAttributes(DEFAULT_LRU_MAXIMUM_ENTRIES, getAction()));
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public EvictionAttributes getObject() {
+	public GudEvictionAttributes getObject() {
 		return evictionAttributes;
 	}
 
@@ -75,7 +81,7 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * {@inheritDoc}
 	 */
 	public Class<?> getObjectType() {
-		return (evictionAttributes != null ? evictionAttributes.getClass() : EvictionAttributes.class);
+		return (evictionAttributes != null ? evictionAttributes.getClass() : GudEvictionAttributes.class);
 	}
 
 	/**
@@ -89,9 +95,9 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Sets the action to perform on the Region when Eviction occurs.
 	 *
 	 * @param action the specified EvictionAction taken on the Region.
-	 * @see EvictionAction
+	 * @see GudEvictionAction
 	 */
-	public void setAction(final EvictionAction action) {
+	public void setAction(final GudEvictionAction action) {
 		this.action = action;
 	}
 
@@ -99,19 +105,19 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Gets the action performed on the Region when Eviction occurs.
 	 *
 	 * @return the EvictionAction taken on the Region.
-	 * @see EvictionAction
+	 * @see GudEvictionAction
 	 */
-	public EvictionAction getAction() {
-		return (action != null ? action : EvictionAction.DEFAULT_EVICTION_ACTION);
+	public GudEvictionAction getAction() {
+		return (action != null ? action : GudEvictionAction.DEFAULT_EVICTION_ACTION);
 	}
 
 	/**
 	 * Sets the GemFire ObjectSizer used in determining object sizes of data stored in the Cache.
 	 *
 	 * @param objectSizer the ObjectSizer used in sizing object data stored in the Cache.
-	 * @see ObjectSizer
+	 * @see GudObjectSizer
 	 */
-	public void setObjectSizer(final ObjectSizer objectSizer) {
+	public void setObjectSizer(final GudObjectSizer objectSizer) {
 		this.objectSizer = objectSizer;
 	}
 
@@ -119,9 +125,9 @@ public class EvictionAttributesFactoryBean implements FactoryBean<EvictionAttrib
 	 * Gets the GemFire ObjectSizer used in determining object sizes of data stored in the Cache.
 	 *
 	 * @return the ObjectSizer used in sizing object data stored in the Cache.
-	 * @see ObjectSizer
+	 * @see GudObjectSizer
 	 */
-	public ObjectSizer getObjectSizer() {
+	public GudObjectSizer getObjectSizer() {
 		return objectSizer;
 	}
 

@@ -1,17 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.support;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
-
-import org.apache.geode.cache.EvictionAction;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.InterestPolicy;
-import org.apache.geode.cache.InterestResultPolicy;
-import org.apache.geode.cache.Scope;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyEditorRegistrar;
@@ -27,6 +29,11 @@ import org.springframework.data.gemfire.eviction.EvictionActionConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
 import org.springframework.data.gemfire.expiration.ExpirationActionConverter;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudScope;
 import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 import org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConverter;
 import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport;
@@ -74,12 +81,12 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			beanFactory.registerCustomEditor(ConnectionEndpoint.class, StringToConnectionEndpointConverter.class);
 			//beanFactory.registerCustomEditor(ConnectionEndpoint[].class, ConnectionEndpointArrayToIterableConverter.class);
 			beanFactory.registerCustomEditor(ConnectionEndpointList.class, StringToConnectionEndpointListConverter.class);
-			beanFactory.registerCustomEditor(EvictionAction.class, EvictionActionConverter.class);
+			beanFactory.registerCustomEditor(GudEvictionAction.class, EvictionActionConverter.class);
 			beanFactory.registerCustomEditor(EvictionPolicyType.class, EvictionPolicyConverter.class);
-			beanFactory.registerCustomEditor(ExpirationAction.class, ExpirationActionConverter.class);
-			beanFactory.registerCustomEditor(InterestPolicy.class, InterestPolicyConverter.class);
-			beanFactory.registerCustomEditor(InterestResultPolicy.class, InterestResultPolicyConverter.class);
-			beanFactory.registerCustomEditor(Scope.class, ScopeConverter.class);
+			beanFactory.registerCustomEditor(GudExpirationAction.class, ExpirationActionConverter.class);
+			beanFactory.registerCustomEditor(GudInterestPolicy.class, InterestPolicyConverter.class);
+			beanFactory.registerCustomEditor(GudInterestResultPolicy.class, InterestResultPolicyConverter.class);
+			beanFactory.registerCustomEditor(GudScope.class, ScopeConverter.class);
 			beanFactory.registerCustomEditor(SubscriptionEvictionPolicy.class, SubscriptionEvictionPolicyConverter.class);
 		}
 	}
@@ -93,12 +100,12 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 				registry.registerCustomEditor(ConnectionEndpoint.class, new StringToConnectionEndpointConverter());
 				//registry.registerCustomEditor(ConnectionEndpoint[].class, new ConnectionEndpointArrayToIterableConverter()));
 				registry.registerCustomEditor(ConnectionEndpointList.class, new StringToConnectionEndpointListConverter());
-				registry.registerCustomEditor(EvictionAction.class, new EvictionActionConverter());
+				registry.registerCustomEditor(GudEvictionAction.class, new EvictionActionConverter());
 				registry.registerCustomEditor(EvictionPolicyType.class, new EvictionPolicyConverter());
-				registry.registerCustomEditor(ExpirationAction.class, new ExpirationActionConverter());
-				registry.registerCustomEditor(InterestPolicy.class, new InterestPolicyConverter());
-				registry.registerCustomEditor(InterestResultPolicy.class, new InterestResultPolicyConverter());
-				registry.registerCustomEditor(Scope.class, new ScopeConverter());
+				registry.registerCustomEditor(GudExpirationAction.class, new ExpirationActionConverter());
+				registry.registerCustomEditor(GudInterestPolicy.class, new InterestPolicyConverter());
+				registry.registerCustomEditor(GudInterestResultPolicy.class, new InterestResultPolicyConverter());
+				registry.registerCustomEditor(GudScope.class, new ScopeConverter());
 				registry.registerCustomEditor(SubscriptionEvictionPolicy.class, new SubscriptionEvictionPolicyConverter());
 			}
 		}

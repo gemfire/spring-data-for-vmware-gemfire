@@ -1,13 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
-import org.apache.geode.cache.LossAction;
-import org.apache.geode.cache.MembershipAttributes;
-import org.apache.geode.cache.ResumptionAction;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -20,6 +25,9 @@ import org.springframework.data.gemfire.SubscriptionAttributesFactoryBean;
 import org.springframework.data.gemfire.config.support.GemfireFeature;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
 import org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudLossAction;
+import org.springframework.data.gemfire.gud.api.GudMembershipAttributes;
+import org.springframework.data.gemfire.gud.api.GudResumptionAction;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
@@ -345,18 +353,18 @@ abstract class ParsingUtils {
 
 			String lossActionValue = membershipAttributes.getAttribute("loss-action");
 
-			LossAction lossAction = StringUtils.hasText(lossActionValue)
-				? LossAction.fromName(lossActionValue.toUpperCase().replace("-", "_"))
-				: LossAction.NO_ACCESS;
+			GudLossAction lossAction = StringUtils.hasText(lossActionValue)
+				? GudLossAction.fromName(lossActionValue.toUpperCase().replace("-", "_"))
+				: GudLossAction.NO_ACCESS;
 
 			String resumptionActionValue = membershipAttributes.getAttribute("resumption-action");
 
-			ResumptionAction resumptionAction = StringUtils.hasText(resumptionActionValue)
-				? ResumptionAction.fromName(resumptionActionValue.toUpperCase().replace("-", "_"))
-				: ResumptionAction.REINITIALIZE;
+			GudResumptionAction resumptionAction = StringUtils.hasText(resumptionActionValue)
+				? GudResumptionAction.fromName(resumptionActionValue.toUpperCase().replace("-", "_"))
+				: GudResumptionAction.REINITIALIZE;
 
 			regionAttributesBuilder.addPropertyValue("membershipAttributes",
-				new MembershipAttributes(requiredRoles, lossAction, resumptionAction));
+				new GudMembershipAttributes(requiredRoles, lossAction, resumptionAction));
 		}
 	}
 

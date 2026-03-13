@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static java.util.Arrays.stream;
@@ -19,9 +27,9 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.BeanFactory;
@@ -57,13 +65,13 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link EntityDefinedRegionsConfiguration} class is Spring {@link ImportBeanDefinitionRegistrar} used in
- * the {@link EnableEntityDefinedRegions} annotation to dynamically create GemFire/Geode {@link Region Regions}
+ * the {@link EnableEntityDefinedRegions} annotation to dynamically create GemFire/Geode {@link GudRegion Regions}
  * based on the application persistent entity classes.
  *
  * @author John Blum
  * @see ClassLoader
  * @see Annotation
- * @see Region
+ * @see GudRegion
  * @see BeanDefinition
  * @see BeanDefinitionBuilder
  * @see BeanDefinitionRegistry
@@ -84,9 +92,9 @@ import org.springframework.util.StringUtils;
 public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigSupport
 		implements ImportBeanDefinitionRegistrar {
 
-	protected static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY;
+	protected static final GudClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = GudClientRegionShortcut.PROXY;
 
-	protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.REPLICATE;
+	protected static final GudRegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = GudRegionShortcut.REPLICATE;
 
 	@Autowired(required = false)
 	private GemfireMappingContext mappingContext;
@@ -96,10 +104,10 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	private List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
 	/**
-	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
+	 * Returns the {@link Annotation} {@link Class type} that configures and creates {@link GudRegion Regions}
 	 * for application persistent entities.
 	 *
-	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link Region Regions}
+	 * @return the {@link Annotation} {@link Class type} that configures and creates {@link GudRegion Regions}
 	 * for application persistent entities.
 	 * @see EnableEntityDefinedRegions
 	 * @see Annotation
@@ -111,11 +119,11 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	}
 
 	/**
-	 * Registers {@link Region} bean definitions in the Spring context for all application domain object
+	 * Registers {@link GudRegion} bean definitions in the Spring context for all application domain object
 	 * that have been identified as {@link GemfirePersistentEntity persistent entities}.
 	 *
 	 * @param importingClassMetadata {@link Class} with the {@link EnableEntityDefinedRegions} annotation.
-	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link Region} bean definitions
+	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link GudRegion} bean definitions
 	 * in the Spring context.
 	 * @see BeanDefinitionRegistry
 	 * @see AnnotationMetadata
@@ -299,11 +307,11 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	}
 
 	/**
-	 * Registers an individual bean definition in the Spring container for the {@link Region} determined from
+	 * Registers an individual bean definition in the Spring container for the {@link GudRegion} determined from
 	 * the application domain object, {@link GemfirePersistentEntity persistent entity}.
 	 *
-	 * @param regionMetadata {@link RegionBeanDefinitionMetadata} used to configure the {@link Region} bean definition.
-	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link Region} bean definition
+	 * @param regionMetadata {@link RegionBeanDefinitionMetadata} used to configure the {@link GudRegion} bean definition.
+	 * @param registry {@link BeanDefinitionRegistry} used to register the {@link GudRegion} bean definition
 	 * in the Spring context.
 	 * @see BeanDefinitionRegistry
 	 * @see GemfirePersistentEntity
@@ -387,7 +395,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 		return regionFactoryBeanBuilder;
 	}
 
-	protected ClientRegionShortcut resolveClientRegionShortcut(RegionBeanDefinitionMetadata regionMetadata,
+	protected GudClientRegionShortcut resolveClientRegionShortcut(RegionBeanDefinitionMetadata regionMetadata,
 			Annotation regionAnnotation, AnnotationAttributes regionAnnotationAttributes) {
 
 		return ClientRegion.class.equals(regionAnnotation.annotationType())
@@ -443,7 +451,7 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 	}
 
 	/**
-	 * The {@link RegionBeanDefinitionMetadata} class encapsulates details for creating a {@link Region}
+	 * The {@link RegionBeanDefinitionMetadata} class encapsulates details for creating a {@link GudRegion}
 	 * from application persistent entities.  The details are captured during a persistent entity component scan.
 	 *
 	 * @see GemfirePersistentEntity
@@ -461,11 +469,11 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		private boolean strict;
 
-		private ClientRegionShortcut clientRegionShortcut;
+		private GudClientRegionShortcut clientRegionShortcut;
 
 		private final GemfirePersistentEntity<?> persistentEntity;
 
-		private RegionShortcut serverRegionShortcut;
+		private GudRegionShortcut serverRegionShortcut;
 
 		private String poolName;
 
@@ -478,11 +486,11 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 			return this.strict;
 		}
 
-		protected Optional<ClientRegionShortcut> getClientRegionShortcut() {
+		protected Optional<GudClientRegionShortcut> getClientRegionShortcut() {
 			return Optional.ofNullable(this.clientRegionShortcut);
 		}
 
-		protected ClientRegionShortcut resolveClientRegionShortcut(ClientRegionShortcut defaultClientRegionShortcut) {
+		protected GudClientRegionShortcut resolveClientRegionShortcut(GudClientRegionShortcut defaultClientRegionShortcut) {
 			return getClientRegionShortcut().orElse(defaultClientRegionShortcut);
 		}
 
@@ -523,11 +531,11 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 				.orElse((Class) Object.class);
 		}
 
-		protected Optional<RegionShortcut> getServerRegionShortcut() {
+		protected Optional<GudRegionShortcut> getServerRegionShortcut() {
 			return Optional.ofNullable(this.serverRegionShortcut);
 		}
 
-		protected RegionShortcut resolveServerRegionShortcut(RegionShortcut defaultServerRegionShortcut) {
+		protected GudRegionShortcut resolveServerRegionShortcut(GudRegionShortcut defaultServerRegionShortcut) {
 			return getServerRegionShortcut().orElse(defaultServerRegionShortcut);
 		}
 
@@ -541,20 +549,20 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 			return Optional.ofNullable(enableEntityDefinedRegionsAttributes)
 				.map(it ->
-					this.using(it.<ClientRegionShortcut>getEnum("clientRegionShortcut"))
+					this.using(it.<GudClientRegionShortcut>getEnum("clientRegionShortcut"))
 						.using(it.getString("poolName"))
-						.using(it.<RegionShortcut>getEnum("serverRegionShortcut"))
+						.using(it.<GudRegionShortcut>getEnum("serverRegionShortcut"))
 						.is(it.getBoolean("strict"))
 				)
 				.orElse(this);
 		}
 
-		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable ClientRegionShortcut clientRegionShortcut) {
+		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable GudClientRegionShortcut clientRegionShortcut) {
 			this.clientRegionShortcut = clientRegionShortcut;
 			return this;
 		}
 
-		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable RegionShortcut serverRegionShortcut) {
+		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable GudRegionShortcut serverRegionShortcut) {
 			this.serverRegionShortcut = serverRegionShortcut;
 			return this;
 		}

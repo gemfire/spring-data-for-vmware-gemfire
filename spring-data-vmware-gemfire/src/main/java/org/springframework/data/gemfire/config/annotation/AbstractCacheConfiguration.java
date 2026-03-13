@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.client.ClientCacheFactoryBean.JndiDataSource;
@@ -13,10 +21,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.server.CacheServer;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +34,10 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 import org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.config.support.DefinedIndexesApplicationListener;
 import org.springframework.data.gemfire.config.support.DiskStoreDirectoryBeanPostProcessor;
+import org.springframework.data.gemfire.gud.api.GudCacheServer;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
 import org.springframework.data.gemfire.util.PropertiesBuilder;
 import org.springframework.util.StringUtils;
 
@@ -38,15 +46,14 @@ import org.springframework.util.StringUtils;
  * client or peer-based cache instance using Spring's Java-based, Annotation {@link Configuration} support.
  *
  * This class encapsulates configuration settings common to both Pivotal GemFire/Apache Geode
- * {@link Cache peer caches}
- * and {@link ClientCache client caches}.
+ * {@link GudClientCache peer caches}
+ * and {@link GudClientCache client caches}.
  *
  * @author John Blum
  * @see Annotation
  * @see Properties
- * @see org.apache.geode.cache.client.ClientCache
- * @see ClientCache
- * @see CacheServer
+ * @see GudClientCache
+ * @see GudCacheServer
  * @see org.springframework.beans.factory.BeanFactory
  * @see BeanDefinition
  * @see BeanDefinitionBuilder
@@ -96,7 +103,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private Float evictionHeapPercentage;
 
 	private List<JndiDataSource> jndiDataSources;
-	private List<TransactionListener> transactionListeners;
+	private List<GudTransactionListener> transactionListeners;
 
 	private final PropertiesBuilder customGemFireProperties = PropertiesBuilder.create();
 
@@ -106,7 +113,7 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private String logLevel = DEFAULT_LOG_LEVEL;
 	private String name;
 
-	private TransactionWriter transactionWriter;
+	private GudTransactionWriter transactionWriter;
 
 	/**
 	 * Returns a {@link Properties} object containing Pivotal GemFire/Apache Geode properties used to configure
@@ -405,19 +412,19 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		return Optional.ofNullable(this.name).filter(StringUtils::hasText).orElseGet(this::toString);
 	}
 
-	void setTransactionListeners(List<TransactionListener> transactionListeners) {
+	void setTransactionListeners(List<GudTransactionListener> transactionListeners) {
 		this.transactionListeners = transactionListeners;
 	}
 
-	protected List<TransactionListener> getTransactionListeners() {
+	protected List<GudTransactionListener> getTransactionListeners() {
 		return nullSafeList(this.transactionListeners);
 	}
 
-	void setTransactionWriter(TransactionWriter transactionWriter) {
+	void setTransactionWriter(GudTransactionWriter transactionWriter) {
 		this.transactionWriter = transactionWriter;
 	}
 
-	protected TransactionWriter getTransactionWriter() {
+	protected GudTransactionWriter getTransactionWriter() {
 		return this.transactionWriter;
 	}
 

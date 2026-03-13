@@ -1,22 +1,30 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.client.ClientCache;
 import org.springframework.data.gemfire.CacheResolver;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 /**
  * Thread-safe, abstract {@link CacheResolver} implementation to "cache" the instance reference to the (single)
- * {@link ClientCache} so that the {@link ClientCache} object is only ever resolved once.
+ * {@link GudClientCache} so that the {@link GudClientCache} object is only ever resolved once.
  *
  * @author John Blum
- * @see ClientCache
+ * @see GudClientCache
  * @see CacheResolver
  * @since 2.3.0
  */
-public abstract class AbstractCachingCacheResolver<T extends ClientCache> implements CacheResolver<T> {
+public abstract class AbstractCachingCacheResolver<T extends GudClientCache> implements CacheResolver<T> {
 
 	private T cacheReference;
 
@@ -34,7 +42,7 @@ public abstract class AbstractCachingCacheResolver<T extends ClientCache> implem
 	}
 
 	/**
-	 * Performs the actual resolution process of the {@link ClientCache} object iff the cache reference
+	 * Performs the actual resolution process of the {@link GudClientCache} object iff the cache reference
 	 * is not already cached.
 	 *
 	 * @see #resolve()

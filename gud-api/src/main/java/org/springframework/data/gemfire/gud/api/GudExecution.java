@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -27,6 +32,8 @@ public interface GudExecution<IN, OUT, AGG> {
     GudExecution<IN, OUT, AGG> withFilter(Set<?> filter);
 
     GudExecution<IN, OUT, AGG> withArgs(IN args);
+
+    GudExecution<IN, OUT, AGG> setArguments(Object args);
 
     GudExecution<IN, OUT, AGG> withCollector(GudResultCollector<OUT, AGG> collector);
 

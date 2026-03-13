@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -17,6 +22,9 @@ package org.springframework.data.gemfire.gud.api;
  * Manages cache resources like memory.
  */
 public interface GudResourceManager {
+
+    float DEFAULT_CRITICAL_PERCENTAGE = 0.0f;
+    float DEFAULT_EVICTION_PERCENTAGE = 0.0f;
 
     float getCriticalHeapPercentage();
     void setCriticalHeapPercentage(float percentage);

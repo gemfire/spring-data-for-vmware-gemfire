@@ -1,21 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionFactory;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.management.internal.cli.domain.RegionInformation;
-import org.apache.geode.management.internal.cli.functions.GetRegionsFunction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,11 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.data.gemfire.function.execution.GemfireOnServersFunctionTemplate;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
 
@@ -36,24 +38,25 @@ import org.springframework.util.ObjectUtils;
  * an Apache Geode or Pivotal GemFire DataSource. If the Region is already defined, the bean definition
  * will not be overridden.
  *
+ * This class is abstract because it requires driver-specific implementations for executing functions
+ * and retrieving region information from the server cluster.
+ *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see ClientCache
- * @see ClientRegionFactory
- * @see ClientRegionShortcut
- * @see Function
- * @see GetRegionsFunction
+ * @see GudRegion
+ * @see GudClientCache
+ * @see GudClientRegionFactory
+ * @see GudClientRegionShortcut
+ * @see GudFunction
  * @see BeanFactoryPostProcessor
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see GemfireOnServersFunctionTemplate
  * @since 1.2.0
  */
 public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPostProcessor {
 
-	private static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY;
+	private static final GudClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = GudClientRegionShortcut.PROXY;
 
-	private ClientRegionShortcut clientRegionShortcut;
+	private GudClientRegionShortcut clientRegionShortcut;
 
 	private ConfigurableBeanFactory beanFactory;
 
@@ -89,36 +92,36 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	}
 
 	/**
-	 * Set the data policy used to configure the client {@link Region}.
+	 * Set the data policy used to configure the client {@link GudRegion}.
 	 *
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to define the data policy
-	 * used by the client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @param clientRegionShortcut {@link GudClientRegionShortcut} used to define the data policy
+	 * used by the client {@link GudRegion}.
+	 * @see GudClientRegionShortcut
 	 */
-	public void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
+	public void setClientRegionShortcut(GudClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
 	}
 
 	/**
-	 * Returns the data policy used to configure the client {@link Region}.
+	 * Returns the data policy used to configure the client {@link GudRegion}.
 	 *
-	 * @return the configured {@link ClientRegionShortcut} used to define the data policy
-	 * used by the client {@link Region}.
-	 * @see ClientRegionShortcut
+	 * @return the configured {@link GudClientRegionShortcut} used to define the data policy
+	 * used by the client {@link GudRegion}.
+	 * @see GudClientRegionShortcut
 	 * @see Optional
 	 */
-	public Optional<ClientRegionShortcut> getClientRegionShortcut() {
+	public Optional<GudClientRegionShortcut> getClientRegionShortcut() {
 		return Optional.ofNullable(this.clientRegionShortcut);
 	}
 
 	/**
-	 * Resolves the {@link ClientRegionShortcut} used to configure and create client {@link Region Regions}.
+	 * Resolves the {@link GudClientRegionShortcut} used to configure and create client {@link GudRegion Regions}.
 	 *
-	 * @return the resolved {@link ClientRegionShortcut}.
-	 * @see ClientRegionShortcut
+	 * @return the resolved {@link GudClientRegionShortcut}.
+	 * @see GudClientRegionShortcut
 	 * @see #getClientRegionShortcut()
 	 */
-	protected ClientRegionShortcut resolveClientRegionShortcut() {
+	protected GudClientRegionShortcut resolveClientRegionShortcut() {
 		return getClientRegionShortcut().orElse(DEFAULT_CLIENT_REGION_SHORTCUT);
 	}
 
@@ -135,9 +138,9 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 	@Nullable @Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-		if (bean instanceof ClientCache) {
+		if (bean instanceof GudClientCache) {
 
-			ClientCache clientCache = (ClientCache) bean;
+			GudClientCache clientCache = (GudClientCache) bean;
 
 			getBeanFactory().ifPresent(it -> createClientProxyRegions(it, clientCache, regionNames(clientCache)));
 		}
@@ -145,53 +148,39 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 		return bean;
 	}
 
-
-	// TODO: remove this logic and delegate to o.s.d.g.config.remote.GemfireAdminOperations
-	Iterable<String> regionNames(ClientCache clientCache) {
-		try {
-
-			// adding false as an argument due to behavior change in GemFire 10.1
-			Object results = execute(clientCache, new GetRegionsFunction(), false);
-
-			List<String> regionNames = Collections.emptyList();
-
-			if (containsRegionInformation(results)) {
-
-				Object[] resultsArray = (Object[]) results;
-
-				regionNames = new ArrayList<>(resultsArray.length);
-
-				for (Object result : resultsArray) {
-					regionNames.add(((RegionInformation) result).getName());
-				}
-			}
-
-			return regionNames;
-		}
-		catch (Exception cause) {
-			logDebug("Failed to determine the Regions available on the Server: %n%s", cause);
-			return Collections.emptyList();
-		}
+	/**
+	 * Retrieves the names of all regions accessible from the server cluster.
+	 * Subclasses may override this to provide driver-specific implementations.
+	 *
+	 * @param clientCache the client cache to query for region names
+	 * @return an iterable of region names available on the server
+	 */
+	protected Iterable<String> regionNames(GudClientCache clientCache) {
+		return Collections.emptyList();
 	}
 
-	<T> T execute(ClientCache clientCache, Function gemfireFunction, Object... arguments) {
-		return new GemfireOnServersFunctionTemplate(clientCache).executeAndExtract(gemfireFunction, arguments);
+	/**
+	 * Executes a function on the server cluster.
+	 * Subclasses may override this to provide driver-specific implementations.
+	 *
+	 * @param <T> the expected return type
+	 * @param clientCache the client cache to use for function execution
+	 * @param gemfireFunction the function to execute
+	 * @param arguments the arguments to pass to the function
+	 * @return the result of the function execution
+	 */
+	protected <T> T execute(GudClientCache clientCache, GudFunction gemfireFunction, Object... arguments) {
+		throw new UnsupportedOperationException("Must be implemented by driver-specific subclass");
 	}
 
-	boolean containsRegionInformation(Object results) {
-
-		return results instanceof Object[] && ((Object[]) results).length > 0
-			&& ((Object[]) results)[0] instanceof RegionInformation;
-	}
-
-	void createClientProxyRegions(ConfigurableBeanFactory beanFactory, ClientCache clientCache,
+	void createClientProxyRegions(ConfigurableBeanFactory beanFactory, GudClientCache clientCache,
 			Iterable<String> regionNames) {
 
 		if (regionNames.iterator().hasNext()) {
 
-			ClientRegionShortcut resolvedClientRegionShortcut = resolveClientRegionShortcut();
+			GudClientRegionShortcut resolvedClientRegionShortcut = resolveClientRegionShortcut();
 
-			ClientRegionFactory<?, ?> clientRegionFactory =
+			GudClientRegionFactory<?, ?> clientRegionFactory =
 				clientCache.createClientRegionFactory(resolvedClientRegionShortcut);
 
 			for (String regionName : regionNames) {
@@ -238,7 +227,7 @@ public class GemfireDataSourcePostProcessor implements BeanFactoryAware, BeanPos
 		}
 	}
 
-	public GemfireDataSourcePostProcessor using(ClientRegionShortcut clientRegionShortcut) {
+	public GemfireDataSourcePostProcessor using(GudClientRegionShortcut clientRegionShortcut) {
 
 		setClientRegionShortcut(clientRegionShortcut);
 

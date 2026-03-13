@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
@@ -10,10 +18,10 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
-import org.apache.geode.cache.Declarable;
-import org.apache.geode.cache.client.ClientCache;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ApplicationListener;
@@ -26,6 +34,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDeclarable;
 import org.springframework.data.gemfire.util.CacheUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.util.Assert;
@@ -37,11 +47,11 @@ import org.springframework.util.StringUtils;
  * a Spring {@link ApplicationContext} inside a GemFire Server JVM-based process.  This enables a GemFire Server
  * resource to be mostly configured with Spring Data GemFire's configuration meta-data.  The GemFire Cache
  * itself is the only resource that cannot be configured and initialized in a Spring context since the initializer
- * is not invoked until after GemFire creates and initializes the GemFire {@link ClientCache} for use.
+ * is not invoked until after GemFire creates and initializes the GemFire {@link GudClientCache} for use.
  *
  * @author John Blum
  * @see Properties
- * @see Declarable
+ * @see GudDeclarable
  * @see ApplicationContext
  * @see ApplicationListener
  * @see ConfigurableApplicationContext
@@ -55,7 +65,7 @@ import org.springframework.util.StringUtils;
  * @since 1.4.0
  */
 @SuppressWarnings("unused")
-public class SpringContextBootstrappingInitializer implements ApplicationListener<ApplicationContextEvent>, Declarable {
+public class SpringContextBootstrappingInitializer implements ApplicationListener<ApplicationContextEvent>, GudDeclarable {
 
 	public static final String BASE_PACKAGES_PARAMETER = "basePackages";
 	public static final String CONTEXT_CONFIG_LOCATIONS_PARAMETER = "contextConfigLocations";
@@ -407,8 +417,8 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 *
 	 * @param parameters {@link Properties} object containing the configuration parameters and settings defined in the
 	 * Apache Geode/Pivotal GemFire {@literal cache.xml} &lt;initializer&gt; block for the declared
-	 * {@link SpringContextBootstrappingInitializer} Apache Geode/Pivotal GemFire {@link Declarable} object.
-	 * @param cache reference to the {@link ClientCache}.
+	 * {@link SpringContextBootstrappingInitializer} Apache Geode/Pivotal GemFire {@link GudDeclarable} object.
+	 * @param cache reference to the {@link GudClientCache}.
 	 * @throws ApplicationContextException if the Spring {@link ApplicationContext}
 	 * could not be successfully constructed, configured and initialized.
 	 * @see #createApplicationContext(String[], String[])
@@ -416,7 +426,7 @@ public class SpringContextBootstrappingInitializer implements ApplicationListene
 	 * @see #refreshApplicationContext(ConfigurableApplicationContext)
 	 * @see Properties
 	 */
-	public void init(ClientCache cache, Properties parameters) {
+	public void init(GudClientCache cache, Properties parameters) {
 
 		try {
 			synchronized (SpringContextBootstrappingInitializer.class) {

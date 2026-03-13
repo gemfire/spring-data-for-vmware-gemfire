@@ -1,47 +1,54 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client.support;
 
 import java.util.Optional;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * {@link PoolResolver} implementation used to resolve the {@literal DEFAULT} {@link Pool} from a {@link ClientCache}
- * instance by lazily resolving the {@link ClientCache} instance and calling {@link ClientCache#getDefaultPool()}
- * on {@literal DEFAULT} {@link Pool} resolution.
+ * {@link PoolResolver} implementation used to resolve the {@literal DEFAULT} {@link GudPool} from a {@link GudClientCache}
+ * instance by lazily resolving the {@link GudClientCache} instance and calling {@link GudClientCache#getDefaultPool()}
+ * on {@literal DEFAULT} {@link GudPool} resolution.
  *
  * @author John Blum
- * @see ClientCache
- * @see Pool
+ * @see GudClientCache
+ * @see GudPool
  * @see CacheResolver
  * @see PoolResolver
  * @since 2.3.0
  */
 public class ClientCacheDefaultPoolResolver implements PoolResolver {
 
-	private final CacheResolver<ClientCache> clientCacheResolver;
+	private final CacheResolver<GudClientCache> clientCacheResolver;
 
 	/**
 	 * Constructs a new instance of {@link ClientCacheDefaultPoolResolver} initialized with a {@link CacheResolver}
-	 * used to lazily resolve the {@link ClientCache} instance on {@link Pool} resolution.
+	 * used to lazily resolve the {@link GudClientCache} instance on {@link GudPool} resolution.
 	 *
-	 * @param clientCacheResolver {@link CacheResolver} used to lazily resolve the {@link ClientCache} instance;
+	 * @param clientCacheResolver {@link CacheResolver} used to lazily resolve the {@link GudClientCache} instance;
 	 * must not be {@literal null}.
 	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
-	 * @see ClientCache
+	 * @see GudClientCache
 	 * @see CacheResolver
 	 */
-	public ClientCacheDefaultPoolResolver(@NonNull CacheResolver<ClientCache> clientCacheResolver) {
+	public ClientCacheDefaultPoolResolver(@NonNull CacheResolver<GudClientCache> clientCacheResolver) {
 
 		Assert.notNull(clientCacheResolver, "CacheResolver for ClientCache must not be null");
 
@@ -50,13 +57,13 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 
 	/**
 	 * Returns a reference to the configured {@link CacheResolver} used to (lazily) resolve
-	 * the {@link ClientCache} instance.
+	 * the {@link GudClientCache} instance.
 	 *
-	 * @return the configured {@link CacheResolver} used to resolve the {@link ClientCache} instance.
-	 * @see ClientCache
+	 * @return the configured {@link CacheResolver} used to resolve the {@link GudClientCache} instance.
+	 * @see GudClientCache
 	 * @see CacheResolver
 	 */
-	protected @NonNull CacheResolver<ClientCache> getClientCacheResolver() {
+	protected @NonNull CacheResolver<GudClientCache> getClientCacheResolver() {
 		return this.clientCacheResolver;
 	}
 
@@ -64,12 +71,12 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	 * {@inheritDoc}
 	 */
 	@Nullable @Override
-	public Pool resolve(@Nullable String poolName) {
+	public GudPool resolve(@Nullable String poolName) {
 
 		return Optional.of(getClientCacheResolver())
 			.filter(it -> DEFAULT_POOL_NAME.equals(poolName))
 			.map(CacheResolver::resolve)
-			.map(ClientCache::getDefaultPool)
+			.map(GudClientCache::getDefaultPool)
 			.orElse(null);
 	}
 }

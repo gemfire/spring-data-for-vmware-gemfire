@@ -1,12 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
 import java.util.Optional;
-import org.apache.geode.internal.datasource.ConfigProperty;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -24,6 +31,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.support.CustomEditorBeanFactoryPostProcessor;
 import org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor;
+import org.springframework.data.gemfire.gud.api.GudConfigProperty;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
@@ -206,7 +214,7 @@ class ClientCacheParser extends AbstractSingleBeanDefinitionParser {
 
 						type = (StringUtils.hasText(type) ? type : String.class.getName());
 
-						props.add(BeanDefinitionBuilder.genericBeanDefinition(ConfigProperty.class)
+						props.add(BeanDefinitionBuilder.genericBeanDefinition(GudConfigProperty.class)
 								.addConstructorArgValue(key)
 								.addConstructorArgValue(value)
 								.addConstructorArgValue(type)

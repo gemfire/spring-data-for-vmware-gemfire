@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -161,4 +166,22 @@ public interface GudRegion<K, V> extends ConcurrentMap<K, V> {
     // Disk operations (deprecated but included for compatibility)
     void writeToDisk();
     void forceRolling();
+
+    /**
+     * Interface representing an entry in a GudRegion.
+     * Used for iteration and callbacks.
+     *
+     * @param <K> the type of the key
+     * @param <V> the type of the value
+     */
+    interface Entry<K, V> {
+        K getKey();
+        V getValue();
+        GudRegion<K, V> getRegion();
+        boolean isLocal();
+        GudCacheStatistics getStatistics();
+        Object getUserAttribute();
+        Object setUserAttribute(Object userAttribute);
+        boolean isDestroyed();
+    }
 }

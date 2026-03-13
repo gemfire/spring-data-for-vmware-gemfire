@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -54,6 +59,10 @@ public interface GudPoolFactory {
     GudPoolFactory setThreadLocalConnections(boolean threadLocalConnections);
     GudPoolFactory setMinConnections(int minConnections);
     GudPoolFactory setMaxConnections(int maxConnections);
+    GudPoolFactory setMinConnectionsPerServer(int minConnections);
+    GudPoolFactory setMaxConnectionsPerServer(int maxConnections);
+    GudPoolFactory setServerConnectionTimeout(int timeout);
+    GudPoolFactory setStatisticInterval(int interval);
     GudPoolFactory setIdleTimeout(long idleTimeout);
     GudPoolFactory setPingInterval(long pingInterval);
     GudPoolFactory setRetryAttempts(int retryAttempts);

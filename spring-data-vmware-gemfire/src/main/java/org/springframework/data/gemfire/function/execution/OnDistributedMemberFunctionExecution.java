@@ -1,45 +1,52 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.execution;
 
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.distributed.DistributedMember;
-
+import org.springframework.data.gemfire.gud.api.GudDistributedMember;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
 import org.springframework.util.Assert;
 
 /**
- * Creates an {@literal OnMember} {@link Function} {@link Execution} initialized with a {@link DistributedMember}
- * using {@link FunctionService#onMember(DistributedMember)}.
+ * Creates an {@literal OnMember} {@link GudFunction} {@link GudExecution} initialized with a {@link GudDistributedMember}
+ * using {@link GudFunctionService#onMember(GudDistributedMember)}.
  *
  * @author David Turanski
  * @author John Blum
- * @see Execution
- * @see Function
- * @see FunctionService
- * @see DistributedMember
+ * @see GudExecution
+ * @see GudFunction
+ * @see GudFunctionService
+ * @see GudDistributedMember
  */
 class OnDistributedMemberFunctionExecution extends AbstractFunctionExecution {
 
-	private final DistributedMember distributedMember;
+	private final GudDistributedMember distributedMember;
 
-	public OnDistributedMemberFunctionExecution(DistributedMember distributedMember) {
+	public OnDistributedMemberFunctionExecution(GudDistributedMember distributedMember) {
 
 		Assert.notNull(distributedMember, "DistributedMember must not be null");
 
 		this.distributedMember = distributedMember;
 	}
 
-	protected DistributedMember getDistributedMember() {
+	protected GudDistributedMember getDistributedMember() {
 		return this.distributedMember;
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected Execution getExecution() {
-		return FunctionService.onMember(getDistributedMember());
+	protected GudExecution getExecution() {
+		return GudFunctionService.onMember(getDistributedMember());
 	}
 }

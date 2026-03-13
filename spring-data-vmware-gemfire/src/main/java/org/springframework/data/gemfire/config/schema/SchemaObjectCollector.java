@@ -1,14 +1,21 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.schema;
 
 import java.util.Collections;
 import java.util.Set;
-import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 /**
  * The {@link SchemaObjectCollector} interface defines a contract for implementing objects to search for
@@ -18,7 +25,7 @@ import org.springframework.context.ApplicationContext;
  * to the schema object instances of a particular type.
  *
  * @author John Blum
- * @see ClientCache
+ * @see GudClientCache
  * @see ApplicationContext
  * @since 2.0.0
  */
@@ -39,15 +46,15 @@ public interface SchemaObjectCollector<T> {
 	}
 
 	/**
-	 * Collects all schema objects of type {@link T} defined in the {@link ClientCache}.
+	 * Collects all schema objects of type {@link T} defined in the {@link GudClientCache}.
 	 *
-	 * @param gemfireCache {@link ClientCache} from which to collect schema objects of type {@link T}.
-	 * @return a {@link Set} of all schema objects of type {@link T} defined in the {@link ClientCache};
+	 * @param gemfireCache {@link GudClientCache} from which to collect schema objects of type {@link T}.
+	 * @return a {@link Set} of all schema objects of type {@link T} defined in the {@link GudClientCache};
 	 * returns an empty {@link Set} if no schema object of type {@link T} could be found.
-	 * @see ClientCache
+	 * @see GudClientCache
 	 * @see Iterable
 	 */
-	default Iterable<T> collectFrom(ClientCache gemfireCache) {
+	default Iterable<T> collectFrom(GudClientCache gemfireCache) {
 		return Collections.emptySet();
 	}
 }

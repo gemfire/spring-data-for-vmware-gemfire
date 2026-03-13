@@ -1,24 +1,31 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.domain.support;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.Index;
-import org.apache.geode.cache.query.IndexStatistics;
-import org.apache.geode.cache.query.IndexType;
+import org.springframework.data.gemfire.gud.api.GudIndex;
+import org.springframework.data.gemfire.gud.api.GudIndexStatistics;
+import org.springframework.data.gemfire.gud.api.GudIndexType;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * {@link AbstractIndexSupport} is an abstract base class supporting the implementation
- * of the Pivotal GemFire / Apache Geode {@link Index} interface.
+ * of the Pivotal GemFire / Apache Geode {@link GudIndex} interface.
  *
  * @author John Blum
- * @see Index
+ * @see GudIndex
  * @since 2.0.0
  */
-public abstract class AbstractIndexSupport implements Index {
+public abstract class AbstractIndexSupport implements GudIndex {
 
 	private static final String NOT_IMPLEMENTED = "Not Implemented";
 
@@ -58,18 +65,18 @@ public abstract class AbstractIndexSupport implements Index {
 	}
 
 	@Override
-	public Region<?, ?> getRegion() {
+	public GudRegion<?, ?> getRegion() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
-	public IndexStatistics getStatistics() {
+	public GudIndexStatistics getStatistics() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IndexType getType() {
+	public GudIndexType getType() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 }

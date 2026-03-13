@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -12,13 +20,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheWriter;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -27,7 +34,7 @@ import org.springframework.util.StringUtils;
  * &gt;gfe:lookup-region/&lt; SDG XML namespace (XSD) elements.
  *
  * @author John Blum
- * @see org.apache.geode.cache.AttributesMutator
+ * @see org.springframework.data.gemfire.gud.api.GudAttributesMutator
  * @see ResolvableRegionFactoryBean
  * @since 1.6.0
  */
@@ -37,19 +44,19 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 	private Boolean cloningEnabled;
 	private Boolean enableStatistics;
 
-	private CacheListener<K, V>[] cacheListeners;
+	private GudCacheListener<K, V>[] cacheListeners;
 
-	private CacheLoader<K, V> cacheLoader;
+	private GudCacheLoader<K, V> cacheLoader;
 
-	private CacheWriter<K, V> cacheWriter;
+	private GudCacheWriter<K, V> cacheWriter;
 
-	private CustomExpiry<K, V> customEntryIdleTimeout;
-	private CustomExpiry<K, V> customEntryTimeToLive;
+	private GudCustomExpiry<K, V> customEntryIdleTimeout;
+	private GudCustomExpiry<K, V> customEntryTimeToLive;
 
-	private ExpirationAttributes entryIdleTimeout;
-	private ExpirationAttributes entryTimeToLive;
-	private ExpirationAttributes regionIdleTimeout;
-	private ExpirationAttributes regionTimeToLive;
+	private GudExpirationAttributes entryIdleTimeout;
+	private GudExpirationAttributes entryTimeToLive;
+	private GudExpirationAttributes regionIdleTimeout;
+	private GudExpirationAttributes regionTimeToLive;
 
 	private Integer evictionMaximum;
 
@@ -61,7 +68,7 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 		Optional.ofNullable(getRegion().getAttributesMutator()).ifPresent(attributesMutator -> {
 
 			// CacheListeners
-			Arrays.stream(nullSafeArray(this.cacheListeners, CacheListener.class))
+			Arrays.stream(nullSafeArray(this.cacheListeners, GudCacheListener.class))
 				.forEach(attributesMutator::addCacheListener);
 
 			Optional.ofNullable(this.cacheLoader).ifPresent(attributesMutator::setCacheLoader);
@@ -93,15 +100,15 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 		return true;
 	}
 
-	public void setCacheListeners(CacheListener<K, V>[] cacheListeners) {
+	public void setCacheListeners(GudCacheListener<K, V>[] cacheListeners) {
 		this.cacheListeners = cacheListeners;
 	}
 
-	public void setCacheLoader(CacheLoader<K, V> cacheLoader) {
+	public void setCacheLoader(GudCacheLoader<K, V> cacheLoader) {
 		this.cacheLoader = cacheLoader;
 	}
 
-	public void setCacheWriter(CacheWriter<K, V> cacheWriter) {
+	public void setCacheWriter(GudCacheWriter<K, V> cacheWriter) {
 		this.cacheWriter = cacheWriter;
 	}
 
@@ -109,22 +116,22 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 		this.cloningEnabled = cloningEnabled;
 	}
 
-	public void setCustomEntryIdleTimeout(CustomExpiry<K, V> customEntryIdleTimeout) {
+	public void setCustomEntryIdleTimeout(GudCustomExpiry<K, V> customEntryIdleTimeout) {
 		setStatisticsEnabled(customEntryIdleTimeout != null);
 		this.customEntryIdleTimeout = customEntryIdleTimeout;
 	}
 
-	public void setCustomEntryTimeToLive(CustomExpiry<K, V> customEntryTimeToLive) {
+	public void setCustomEntryTimeToLive(GudCustomExpiry<K, V> customEntryTimeToLive) {
 		setStatisticsEnabled(customEntryTimeToLive != null);
 		this.customEntryTimeToLive = customEntryTimeToLive;
 	}
 
-	public void setEntryIdleTimeout(ExpirationAttributes entryIdleTimeout) {
+	public void setEntryIdleTimeout(GudExpirationAttributes entryIdleTimeout) {
 		setStatisticsEnabled(entryIdleTimeout != null);
 		this.entryIdleTimeout = entryIdleTimeout;
 	}
 
-	public void setEntryTimeToLive(ExpirationAttributes entryTimeToLive) {
+	public void setEntryTimeToLive(GudExpirationAttributes entryTimeToLive) {
 		setStatisticsEnabled(entryTimeToLive != null);
 		this.entryTimeToLive = entryTimeToLive;
 	}
@@ -133,12 +140,12 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 		this.evictionMaximum = evictionMaximum;
 	}
 
-	public void setRegionIdleTimeout(ExpirationAttributes regionIdleTimeout) {
+	public void setRegionIdleTimeout(GudExpirationAttributes regionIdleTimeout) {
 		setStatisticsEnabled(regionIdleTimeout != null);
 		this.regionIdleTimeout = regionIdleTimeout;
 	}
 
-	public void setRegionTimeToLive(ExpirationAttributes regionTimeToLive) {
+	public void setRegionTimeToLive(GudExpirationAttributes regionTimeToLive) {
 		setStatisticsEnabled(regionTimeToLive != null);
 		this.regionTimeToLive = regionTimeToLive;
 	}
@@ -153,7 +160,7 @@ public class LookupRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K
 
 	private void assertStatisticsEnabled() {
 
-		Region localRegion = getRegion();
+		GudRegion<K, V> localRegion = getRegion();
 
 		Assert.state(localRegion.getAttributes().getStatisticsEnabled(),
 			String.format("Statistics for Region [%s] must be enabled to change Entry & Region TTL/TTI Expiration settings",

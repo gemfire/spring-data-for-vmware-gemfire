@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.support;
@@ -11,28 +18,27 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import org.apache.geode.cache.Region;
-
-import org.apache.geode.cache.client.ClientCache;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
  * The {@link AutoRegionLookupBeanPostProcessor} class is a Spring {@link BeanPostProcessor} that post processes
- * a {@link ClientCache} by registering all cache {@link Region Regions} that have not been explicitly defined
+ * a {@link GudClientCache} by registering all cache {@link GudRegion Regions} that have not been explicitly defined
  * in the Spring application context.
  *
- * This is usually the case for {@link Region Regions} that have been defined in GemFire's native {@literal cache.xml}.
+ * This is usually the case for {@link GudRegion Regions} that have been defined in GemFire's native {@literal cache.xml}.
  *
  * @author John Blum
- * @see ClientCache
- * @see Region
+ * @see GudClientCache
+ * @see GudRegion
  * @see BeanFactory
  * @see BeanFactoryAware
  * @see BeanPostProcessor
@@ -78,18 +84,18 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-		if (bean instanceof ClientCache clientCacheBean) {
+		if (bean instanceof GudClientCache clientCacheBean) {
 			registerCacheRegionsAsBeans(clientCacheBean);
 		}
 
 		return bean;
 	}
 
-	void registerCacheRegionsAsBeans(ClientCache cache) {
+	void registerCacheRegionsAsBeans(GudClientCache cache) {
 		cache.rootRegions().forEach(this::registerCacheRegionAsBean);
 	}
 
-	void registerCacheRegionAsBean(Region<?, ?> region) {
+	void registerCacheRegionAsBean(GudRegion<?, ?> region) {
 
 		if (region != null) {
 
@@ -99,21 +105,21 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 				getBeanFactory().registerSingleton(regionBeanName, region);
 			}
 
-			for (Region<?, ?> subregion : nullSafeSubregions(region)) {
+			for (GudRegion<?, ?> subregion : nullSafeSubregions(region)) {
 				registerCacheRegionAsBean(subregion);
 			}
 		}
 	}
 
-	String getBeanName(Region<?, ?> region) {
+	String getBeanName(GudRegion<?, ?> region) {
 
 		return Optional.ofNullable(region.getFullPath())
 			.filter(StringUtils::hasText)
-			.filter(regionFullPath -> regionFullPath.lastIndexOf(Region.SEPARATOR) > 0)
+			.filter(regionFullPath -> regionFullPath.lastIndexOf(GudRegion.SEPARATOR) > 0)
 			.orElseGet(region::getName);
 	}
 
-	Set<Region<?, ?>> nullSafeSubregions(Region<?, ?> parentRegion) {
+	Set<GudRegion<?, ?>> nullSafeSubregions(GudRegion<?, ?> parentRegion) {
 		return Optional.ofNullable(parentRegion.subregions(false)).orElse(Collections.emptySet());
 	}
 }

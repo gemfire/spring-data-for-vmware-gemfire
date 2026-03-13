@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -20,6 +25,10 @@ public enum GudResumptionAction {
 
     NONE,
     REINITIALIZE;
+
+    public static GudResumptionAction fromName(String name) {
+        return valueOf(name);
+    }
 
     public boolean isNone() {
         return this == NONE;

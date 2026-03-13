@@ -1,54 +1,61 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client.support;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolManager;
-
 import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolManager;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
- * {@link PoolManagerPoolResolver} is an implementation of {@link PoolResolver} that delegates all {@link Pool}
- * resolution logic to the Apache Geode {@link PoolManager}.
+ * {@link PoolManagerPoolResolver} is an implementation of {@link PoolResolver} that delegates all {@link GudPool}
+ * resolution logic to the Apache Geode {@link GudPoolManager}.
  *
  * @author John Blum
- * @see Region
- * @see Pool
- * @see PoolManager
+ * @see GudRegion
+ * @see GudPool
+ * @see GudPoolManager
  * @see PoolResolver
  * @since 2.3.0
  */
 public class PoolManagerPoolResolver implements PoolResolver {
 
 	/**
-	 * Resolves the {@link Pool} used by the given {@link Region} by delegating to {@link PoolManager#find(Region)}.
+	 * Resolves the {@link GudPool} used by the given {@link GudRegion} by delegating to {@link GudPoolManager#find(GudRegion)}.
 	 *
-	 * @param region {@link Region} from which to resolve the associated {@link Pool}.
-	 * @return the {@link Pool} used by the given {@link Region}.
-	 * @see PoolManager#find(Region)
-	 * @see Pool
+	 * @param region {@link GudRegion} from which to resolve the associated {@link GudPool}.
+	 * @return the {@link GudPool} used by the given {@link GudRegion}.
+	 * @see GudPoolManager#find(GudRegion)
+	 * @see GudPool
 	 */
 	@Override
-	public @Nullable Pool resolve(@Nullable Region<?, ?> region) {
-		return region != null ? PoolManager.find(region) : null;
+	public @Nullable GudPool resolve(@Nullable GudRegion<?, ?> region) {
+		return region != null ? GudPoolManager.find(region) : null;
 	}
 
 	/**
-	 * Resolves the {@link Pool} with the given {@link String name} by delegating to {@link PoolManager#find(String)}.
+	 * Resolves the {@link GudPool} with the given {@link String name} by delegating to {@link GudPoolManager#find(String)}.
 	 *
-	 * @param poolName {@link String name} of the {@link Pool} to resolve.
-	 * @return the {@link Pool} with the given {@link String name} or {@literal null} if no {@link Pool} exists with
+	 * @param poolName {@link String name} of the {@link GudPool} to resolve.
+	 * @return the {@link GudPool} with the given {@link String name} or {@literal null} if no {@link GudPool} exists with
 	 * the {@link String name}.
-	 * @see PoolManager#find(String)
-	 * @see Pool
+	 * @see GudPoolManager#find(String)
+	 * @see GudPool
 	 */
 	@Override
-	public @Nullable Pool resolve(@Nullable String poolName) {
-		return StringUtils.hasText(poolName) ? PoolManager.find(poolName) : null;
+	public @Nullable GudPool resolve(@Nullable String poolName) {
+		return StringUtils.hasText(poolName) ? GudPoolManager.find(poolName) : null;
 	}
 }

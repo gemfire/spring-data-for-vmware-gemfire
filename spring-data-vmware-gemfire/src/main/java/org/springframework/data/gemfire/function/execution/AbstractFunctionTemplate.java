@@ -1,23 +1,30 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.execution;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.ResultCollector;
-
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudResultCollector;
 
 /**
- * Abstract base class for all {@link Function} templates, containing operations common to invoking Apache Geode
- * or Pivotal GemFire {@link Function Functions}.
+ * Abstract base class for all {@link GudFunction} templates, containing operations common to invoking Apache Geode
+ * or Pivotal GemFire {@link GudFunction Functions}.
  *
  * @author David Turanski
  * @author John Blum
- * @see org.apache.geode.cache.execute.Execution
- * @see Function
- * @see ResultCollector
+ * @see org.springframework.data.gemfire.gud.api.GudExecution
+ * @see GudFunction
+ * @see GudResultCollector
  * @see InitializingBean
  * @see GemfireFunctionOperations
  * @see AbstractFunctionExecution
@@ -26,14 +33,14 @@ abstract class AbstractFunctionTemplate implements GemfireFunctionOperations, In
 
 	private volatile long timeout;
 
-	private volatile ResultCollector<?, ?> resultCollector;
+	private volatile GudResultCollector<?, ?> resultCollector;
 
 	@Override
 	public void afterPropertiesSet() throws Exception { }
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public <T> Iterable<T> execute(Function function, Object... args) {
+	public <T> Iterable<T> execute(GudFunction function, Object... args) {
 
 		AbstractFunctionExecution functionExecution = getFunctionExecution()
 			.setArguments(args)
@@ -44,7 +51,7 @@ abstract class AbstractFunctionTemplate implements GemfireFunctionOperations, In
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public <T> T executeAndExtract(Function function, Object... args) {
+	public <T> T executeAndExtract(GudFunction function, Object... args) {
 
 		AbstractFunctionExecution functionExecution = getFunctionExecution()
 			.setArguments(args)
@@ -109,11 +116,11 @@ abstract class AbstractFunctionTemplate implements GemfireFunctionOperations, In
 
 	protected abstract AbstractFunctionExecution getFunctionExecution();
 
-	public void setResultCollector(ResultCollector<?,?> resultCollector) {
+	public void setResultCollector(GudResultCollector<?,?> resultCollector) {
 		this.resultCollector = resultCollector;
 	}
 
-	public ResultCollector<?,?> getResultCollector() {
+	public GudResultCollector<?,?> getResultCollector() {
 		return this.resultCollector;
 	}
 

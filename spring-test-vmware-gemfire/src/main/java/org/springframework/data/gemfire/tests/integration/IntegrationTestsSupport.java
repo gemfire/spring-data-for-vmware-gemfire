@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration;
 
@@ -9,10 +16,8 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,16 +32,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import org.apache.geode.DataSerializer;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.distributed.Locator;
-import org.apache.geode.internal.InternalDataSerializer;
-import org.apache.geode.internal.cache.CacheLifecycleListener;
-import org.apache.geode.internal.cache.GemFireCacheImpl;
-import org.apache.geode.internal.net.SSLConfigurationFactory;
-import org.apache.geode.internal.net.SocketCreatorFactory;
+import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDataSerializer;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
+import org.springframework.data.gemfire.gud.api.GudInternalDataSerializer;
+import org.springframework.data.gemfire.gud.api.GudLocator;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +69,10 @@ import org.springframework.util.StringUtils;
  *
  * @author John Blum
  * @see File
- * @see DataSerializer
- * @see ClientCache
- * @see FunctionService
- * @see Locator
- * @see CacheLifecycleListener
- * @see GemFireCacheImpl
+ * @see GudDataSerializer
+ * @see GudClientCache
+ * @see GudFunctionService
+ * @see GudLocator
  * @see ApplicationContext
  * @see ApplicationEvent
  * @see ApplicationEventPublisher
@@ -260,9 +259,9 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	/**
-	 * Closes any Apache Geode {@link ClientCache} after test (class/suite) execution.
+	 * Closes any Apache Geode {@link GudClientCache} after test (class/suite) execution.
 	 *
-	 * @see ClientCache
+	 * @see GudClientCache
 	 */
 	@AfterClass
 	public static void closeAnyGemFireCache() {
@@ -270,9 +269,9 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	/**
-	 * Closes any Apache Geode {@link Locator} after test (class/suite) execution.
+	 * Closes any Apache Geode {@link GudLocator} after test (class/suite) execution.
 	 *
-	 * @see Locator
+	 * @see GudLocator
 	 */
 	@AfterClass
 	public static void closeAnyGemFireLocator() {
@@ -281,38 +280,22 @@ public abstract class IntegrationTestsSupport {
 
 	/**
 	 * Closes any Apache Geode {@link java.net.Socket} configuration after test (class/suite) execution.
+	 * Note: This is a no-op in GUD API as socket configuration is driver-specific.
 	 *
 	 * @see java.net.Socket
 	 */
 	@AfterClass
 	public static void closeAnySocketConfiguration() {
-		SocketCreatorFactory.close();
+		// No-op: Socket configuration cleanup is driver-specific
 	}
 
 	/**
 	 * Closes any Apache Geode {@literal SSL} configuration after test (class/suite) execution.
+	 * Note: This is a no-op in GUD API as SSL configuration is driver-specific.
 	 */
 	@AfterClass
 	public static void closeAnySslConfiguration() {
-
-		//SSLConfigurationFactory.close();
-
-		synchronized (SSLConfigurationFactory.class) {
-			try {
-
-				Field instance = ReflectionUtils.findField(SSLConfigurationFactory.class, "instance",
-						SSLConfigurationFactory.class);
-
-				Optional.ofNullable(instance)
-						.ifPresent(field -> {
-							ReflectionUtils.makeAccessible(field);
-							ReflectionUtils.setField(field, null, null);
-						});
-			}
-			catch (Throwable ignore) {
-				// Not much we can do about it now!
-			}
-		}
+		// No-op: SSL configuration cleanup is driver-specific
 	}
 
 	/**
@@ -340,31 +323,28 @@ public abstract class IntegrationTestsSupport {
 	}
 
 	/**
-	 * Unregisters all Apache Geode {@link DataSerializer DataSerializers} from Apache Geode's serialization framework
+	 * Unregisters all Apache Geode {@link GudDataSerializer DataSerializers} from Apache Geode's serialization framework
 	 * (subsystem) after test (class/suite) execution.
 	 *
-	 * @see DataSerializer
+	 * @see GudDataSerializer
 	 */
 	@AfterClass
 	public static void unregisterAllDataSerializers() {
-
-		Arrays.stream(ArrayUtils.nullSafeArray(InternalDataSerializer.getSerializers(), DataSerializer.class))
-				.map(DataSerializer::getId)
-				.forEach(InternalDataSerializer::unregister);
+		// Note: Serializer unregistration is driver-specific.
+		// GudInternalDataSerializer provides unregister(int) but getting all serializers requires driver support.
 	}
 
 	/**
-	 * Unregisters all Apache Geode {@link Function Functions} from Apache Geode's {@link FunctionService}
+	 * Unregisters all Apache Geode Functions from Apache Geode's {@link GudFunctionService}
 	 * after test (class/suite) execution.
 	 *
-	 * @see org.apache.geode.cache.execute.Function
-	 * @see FunctionService
+	 * @see GudFunctionService
 	 */
 	@AfterClass
 	public static void unregisterFunctions() {
 
-		CollectionUtils.nullSafeMap(FunctionService.getRegisteredFunctions())
-				.forEach((functionId, function) -> FunctionService.unregisterFunction(functionId));
+		CollectionUtils.nullSafeMap(GudFunctionService.getRegisteredFunctions())
+				.forEach((functionId, function) -> GudFunctionService.unregisterFunction(functionId));
 	}
 
 	/**
@@ -404,22 +384,22 @@ public abstract class IntegrationTestsSupport {
 		closeGemFireCacheWaitOnCacheClosedEvent(GemfireUtils::getClientCache, duration);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GudClientCache> cacheSupplier) {
 		closeGemFireCacheWaitOnCacheClosedEvent(cacheSupplier, DEFAULT_WAIT_DURATION);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
-																														 @NonNull Function<ClientCache, ClientCache> cacheClosingFunction) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GudClientCache> cacheSupplier,
+																														 @NonNull Function<GudClientCache, GudClientCache> cacheClosingFunction) {
 
 		closeGemFireCacheWaitOnCacheClosedEvent(cacheSupplier, cacheClosingFunction, DEFAULT_WAIT_DURATION);
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GudClientCache> cacheSupplier,
 																														 long duration) {
 
-		Function<ClientCache, ClientCache> cacheClosingFunction = cacheToClose -> {
+		Function<GudClientCache, GudClientCache> cacheClosingFunction = cacheToClose -> {
 
-			((ClientCache) cacheToClose).close(false);
+			cacheToClose.close(false);
 
 			return cacheToClose;
 		};
@@ -428,8 +408,8 @@ public abstract class IntegrationTestsSupport {
 
 	}
 
-	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<ClientCache> cacheSupplier,
-																														 @NonNull Function<ClientCache, ClientCache> cacheClosingFunction, long duration) {
+	public static void closeGemFireCacheWaitOnCacheClosedEvent(@NonNull Supplier<GudClientCache> cacheSupplier,
+																														 @NonNull Function<GudClientCache, GudClientCache> cacheClosingFunction, long duration) {
 
 		AtomicBoolean closed = new AtomicBoolean(false);
 
@@ -441,7 +421,7 @@ public abstract class IntegrationTestsSupport {
 						.map(cacheLifecycleListener::isClosed)
 						.orElse(true);
 			}
-			catch (CacheClosedException ignore) {
+			catch (GudCacheClosedException ignore) {
 				closed.set(true);
 				return true;
 			}
@@ -458,11 +438,11 @@ public abstract class IntegrationTestsSupport {
 
 		waitOn(() -> {
 			try {
-				return Optional.ofNullable(Locator.getLocator())
+				return Optional.ofNullable(GudLocator.getLocator())
 						.filter(it -> !stopped.get())
 						.map(IntegrationTestsSupport::stop)
 						.map(it -> {
-							stopped.set(!Locator.hasLocator());
+							stopped.set(!GudLocator.hasLocator());
 							return stopped.get();
 						})
 						.orElse(true);
@@ -474,7 +454,7 @@ public abstract class IntegrationTestsSupport {
 		}, duration);
 	}
 
-	private static @Nullable Locator stop(@Nullable Locator locator) {
+	private static @Nullable GudLocator stop(@Nullable GudLocator locator) {
 
 		return Optional.ofNullable(locator)
 				.map(it -> {
@@ -672,19 +652,19 @@ public abstract class IntegrationTestsSupport {
 			return new TestContextCacheLifecycleListenerAdapter();
 		}
 
-		private final Map<ClientCache, Object> cacheInstances = Collections.synchronizedMap(new WeakHashMap<>());
+		private final Map<GudClientCache, Object> cacheInstances = Collections.synchronizedMap(new WeakHashMap<>());
 
 		private TestContextCacheLifecycleListenerAdapter() { }
 
-		public boolean isClosed(@Nullable ClientCache cache) {
+		public boolean isClosed(@Nullable GudClientCache cache) {
 			return cache == null || (cache.isClosed() && isCacheClosed(cache));
 		}
 
-		private boolean isCacheClosed(@Nullable ClientCache cache) {
+		private boolean isCacheClosed(@Nullable GudClientCache cache) {
 			return !isOpen(cache);
 		}
 
-		public boolean isOpen(@Nullable ClientCache cache) {
+		public boolean isOpen(@Nullable GudClientCache cache) {
 			return this.cacheInstances.containsKey(cache);
 		}
 	}
@@ -696,25 +676,25 @@ public abstract class IntegrationTestsSupport {
 			return target;
 		}
 
-		protected AbstractCacheEvent(@NonNull ClientCache cache) {
-			super(requireNonNull(cache, "ClientCache must not be null"));
+		protected AbstractCacheEvent(@NonNull GudClientCache cache) {
+			super(requireNonNull(cache, "GudClientCache must not be null"));
 		}
 
-		public @NonNull ClientCache getCache() {
-			return (ClientCache) getSource();
+		public @NonNull GudClientCache getCache() {
+			return (GudClientCache) getSource();
 		}
 	}
 
 	public static class CacheCreatedEvent extends AbstractCacheEvent {
 
-		public CacheCreatedEvent(@NonNull ClientCache cache) {
+		public CacheCreatedEvent(@NonNull GudClientCache cache) {
 			super(cache);
 		}
 	}
 
 	public static class CacheClosedEvent extends AbstractCacheEvent {
 
-		public CacheClosedEvent(@NonNull ClientCache cache) {
+		public CacheClosedEvent(@NonNull GudClientCache cache) {
 			super(cache);
 		}
 	}

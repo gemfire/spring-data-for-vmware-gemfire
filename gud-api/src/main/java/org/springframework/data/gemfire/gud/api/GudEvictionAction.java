@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -18,10 +23,12 @@ package org.springframework.data.gemfire.gud.api;
  */
 public enum GudEvictionAction {
 
-    DEFAULT,
     NONE,
     LOCAL_DESTROY,
     OVERFLOW_TO_DISK;
+
+    public static final GudEvictionAction DEFAULT = LOCAL_DESTROY;
+    public static final GudEvictionAction DEFAULT_EVICTION_ACTION = LOCAL_DESTROY;
 
     public boolean isNone() {
         return this == NONE;

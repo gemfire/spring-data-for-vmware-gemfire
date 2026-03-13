@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -21,5 +26,5 @@ package org.springframework.data.gemfire.gud.api;
  */
 public interface GudCustomExpiry<K, V> extends GudCacheCallback {
 
-    GudExpirationAttributes getExpiry(GudRegionEntry<K, V> entry);
+    GudExpirationAttributes getExpiry(GudRegion.Entry<K, V> entry);
 }

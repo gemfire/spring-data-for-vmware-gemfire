@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation.support;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -9,17 +17,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.compression.Compressor;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudScope;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.data.gemfire.ResolvableRegionFactoryBean;
@@ -32,22 +40,22 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link CacheTypeAwareRegionFactoryBean} class is a smart Spring {@link FactoryBean} that knows how to
- * create a client or server {@link Region} depending on whether the {@link ClientCache} is a {@link ClientCache}
- * or a peer {@link Cache}.
+ * create a client or server {@link GudRegion} depending on whether the {@link GudClientCache} is a {@link GudClientCache}
+ * or a peer cache.
  *
  * @author John Blum
- * @see CustomExpiry
- * @see DataPolicy
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see ClientCache
- * @see Region
- * @see RegionAttributes
- * @see RegionShortcut
- * @see Scope
- * @see ClientCache
- * @see ClientRegionShortcut
- * @see Compressor
+ * @see GudCustomExpiry
+ * @see GudDataPolicy
+ * @see GudEvictionAttributes
+ * @see GudExpirationAttributes
+ * @see GudClientCache
+ * @see GudRegion
+ * @see GudRegionAttributes
+ * @see GudRegionShortcut
+ * @see GudScope
+ * @see GudClientCache
+ * @see GudClientRegionShortcut
+ * @see GudCompressor
  * @see GenericRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see ResolvableRegionFactoryBean
@@ -61,7 +69,7 @@ import org.springframework.util.StringUtils;
 public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFactoryBean<K, V>
 		implements EvictingRegionFactoryBean, ExpiringRegionFactoryBean<K, V>, SmartLifecycle {
 
-	private ClientCache gemfireCache;
+	private GudClientCache gemfireCache;
 
 	private Boolean close = false;
 	private Boolean statisticsEnabled = false;
@@ -69,31 +77,31 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private Class<K> keyConstraint;
 	private Class<V> valueConstraint;
 
-	private ClientRegionShortcut clientRegionShortcut = ClientRegionShortcut.PROXY;
+	private GudClientRegionShortcut clientRegionShortcut = GudClientRegionShortcut.PROXY;
 
-	private Compressor compressor;
+	private GudCompressor compressor;
 
-	private CustomExpiry<K, V> customEntryIdleTimeout;
-	private CustomExpiry<K, V> customEntryTimeToLive;
+	private GudCustomExpiry<K, V> customEntryIdleTimeout;
+	private GudCustomExpiry<K, V> customEntryTimeToLive;
 
-	private DataPolicy dataPolicy = DataPolicy.DEFAULT;
+	private GudDataPolicy dataPolicy = GudDataPolicy.DEFAULT;
 
-	private EvictionAttributes evictionAttributes;
+	private GudEvictionAttributes evictionAttributes;
 
-	private ExpirationAttributes entryIdleTimeout;
-	private ExpirationAttributes entryTimeToLive;
-	private ExpirationAttributes regionIdleTimeout;
-	private ExpirationAttributes regionTimeToLive;
+	private GudExpirationAttributes entryIdleTimeout;
+	private GudExpirationAttributes entryTimeToLive;
+	private GudExpirationAttributes regionIdleTimeout;
+	private GudExpirationAttributes regionTimeToLive;
 
 	private Interest<K>[] interests;
 
 	private List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
-	private RegionAttributes<K, V> regionAttributes;
+	private GudRegionAttributes<K, V> regionAttributes;
 
-	private RegionShortcut serverRegionShortcut;
+	private GudRegionShortcut serverRegionShortcut;
 
-	private Scope scope;
+	private GudScope scope;
 
 	private volatile SmartLifecycle smartLifecycleComponent;
 
@@ -105,25 +113,25 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Region<K, V> createRegion(ClientCache gemfireCache, String regionName) throws Exception {
+	public GudRegion<K, V> createRegion(GudClientCache gemfireCache, String regionName) throws Exception {
 
 		return newClientRegion(gemfireCache, regionName);
 	}
 
 	/**
-	 * Constructs, configures and initialize\s a new client {@link Region} using the {@link ClientRegionFactoryBean}.
+	 * Constructs, configures and initialize\s a new client {@link GudRegion} using the {@link ClientRegionFactoryBean}.
 	 *
-	 * @param gemfireCache reference to the {@link ClientCache} used to create/initialize the factory
-	 * used to create the client {@link Region}.
-	 * @param regionName name given to the client {@link Region}.
-	 * @return a new instance of a client {@link Region} with the given {@code regionName}.
-	 * @throws Exception if the client {@link Region} could not be created.
+	 * @param gemfireCache reference to the {@link GudClientCache} used to create/initialize the factory
+	 * used to create the client {@link GudRegion}.
+	 * @param regionName name given to the client {@link GudRegion}.
+	 * @return a new instance of a client {@link GudRegion} with the given {@code regionName}.
+	 * @throws Exception if the client {@link GudRegion} could not be created.
 	 * @see ClientRegionFactoryBean
-	 * @see ClientCache
-	 * @see Region
+	 * @see GudClientCache
+	 * @see GudRegion
 	 * @see #newClientRegionFactoryBean()
 	 */
-	protected Region<K, V> newClientRegion(ClientCache gemfireCache, String regionName) throws Exception {
+	protected GudRegion<K, V> newClientRegion(GudClientCache gemfireCache, String regionName) throws Exception {
 
 		ClientRegionFactoryBean<K, V> clientRegionFactory = newClientRegionFactoryBean();
 
@@ -157,8 +165,8 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	/**
 	 * Constructs a new instance of the {@link ClientRegionFactoryBean}.
 	 *
-	 * @param <K> {@link Class type} of the created {@link Region Region's} key.
-	 * @param <V> {@link Class type} of the created {@link Region Region's} value.
+	 * @param <K> {@link Class type} of the created {@link GudRegion Region's} key.
+	 * @param <V> {@link Class type} of the created {@link GudRegion Region's} value.
 	 * @return a new instance of the {@link ClientRegionFactoryBean}.
 	 * @see ClientRegionFactoryBean
 	 */
@@ -180,20 +188,20 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		regionFactoryBean.setRegionTimeToLive(getRegionTimeToLive());
 	}
 
-	public void setAttributes(RegionAttributes<K, V> regionAttributes) {
+	public void setAttributes(GudRegionAttributes<K, V> regionAttributes) {
 		this.regionAttributes = regionAttributes;
 	}
 
-	protected RegionAttributes<K, V> getAttributes() {
+	protected GudRegionAttributes<K, V> getAttributes() {
 		return this.regionAttributes;
 	}
 
-	public void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
+	public void setClientRegionShortcut(GudClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
 	}
 
-	protected ClientRegionShortcut getClientRegionShortcut() {
-		return Optional.ofNullable(this.clientRegionShortcut).orElse(ClientRegionShortcut.PROXY);
+	protected GudClientRegionShortcut getClientRegionShortcut() {
+		return Optional.ofNullable(this.clientRegionShortcut).orElse(GudClientRegionShortcut.PROXY);
 	}
 
 	public void setClose(Boolean close) {
@@ -209,47 +217,47 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	}
 
 	/**
-	 * Configures the {@link Compressor} used to compress the this {@link Region Region's} data.
+	 * Configures the {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
 	 *
-	 * @param compressor {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @param compressor {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
+	 * @see GudCompressor
 	 */
-	public void setCompressor(Compressor compressor) {
+	public void setCompressor(GudCompressor compressor) {
 		this.compressor = compressor;
 	}
 
 	/**
-	 * Returns the configured {@link Compressor} used to compress the this {@link Region Region's} data.
+	 * Returns the configured {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
 	 *
-	 * @return the configured {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @return the configured {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
+	 * @see GudCompressor
 	 */
-	protected Compressor getCompressor() {
+	protected GudCompressor getCompressor() {
 		return this.compressor;
 	}
 
-	public void setCustomEntryIdleTimeout(CustomExpiry<K, V> customEntryIdleTimeout) {
+	public void setCustomEntryIdleTimeout(GudCustomExpiry<K, V> customEntryIdleTimeout) {
 		this.customEntryIdleTimeout = customEntryIdleTimeout;
 	}
 
-	protected CustomExpiry<K, V> getCustomEntryIdleTimeout() {
+	protected GudCustomExpiry<K, V> getCustomEntryIdleTimeout() {
 		return this.customEntryIdleTimeout;
 	}
 
-	public void setCustomEntryTimeToLive(CustomExpiry<K, V> customEntryTimeToLive) {
+	public void setCustomEntryTimeToLive(GudCustomExpiry<K, V> customEntryTimeToLive) {
 		this.customEntryTimeToLive = customEntryTimeToLive;
 	}
 
-	protected CustomExpiry<K, V> getCustomEntryTimeToLive() {
+	protected GudCustomExpiry<K, V> getCustomEntryTimeToLive() {
 		return this.customEntryTimeToLive;
 	}
 
-	public void setDataPolicy(DataPolicy dataPolicy) {
+	public void setDataPolicy(GudDataPolicy dataPolicy) {
 		this.dataPolicy = dataPolicy;
 	}
 
-	protected DataPolicy getDataPolicy() {
-		return Optional.ofNullable(this.dataPolicy).orElse(DataPolicy.DEFAULT);
+	protected GudDataPolicy getDataPolicy() {
+		return Optional.ofNullable(this.dataPolicy).orElse(GudDataPolicy.DEFAULT);
 	}
 
 	public void setDiskStoreName(String diskStoreName) {
@@ -260,27 +268,27 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		return this.diskStoreName;
 	}
 
-	public void setEvictionAttributes(EvictionAttributes evictionAttributes) {
+	public void setEvictionAttributes(GudEvictionAttributes evictionAttributes) {
 		this.evictionAttributes = evictionAttributes;
 	}
 
-	protected EvictionAttributes getEvictionAttributes() {
+	protected GudEvictionAttributes getEvictionAttributes() {
 		return this.evictionAttributes;
 	}
 
-	public void setEntryIdleTimeout(ExpirationAttributes entryIdleTimeout) {
+	public void setEntryIdleTimeout(GudExpirationAttributes entryIdleTimeout) {
 		this.entryIdleTimeout = entryIdleTimeout;
 	}
 
-	protected ExpirationAttributes getEntryIdleTimeout() {
+	protected GudExpirationAttributes getEntryIdleTimeout() {
 		return this.entryIdleTimeout;
 	}
 
-	public void setEntryTimeToLive(ExpirationAttributes entryTimeToLive) {
+	public void setEntryTimeToLive(GudExpirationAttributes entryTimeToLive) {
 		this.entryTimeToLive = entryTimeToLive;
 	}
 
-	protected ExpirationAttributes getEntryTimeToLive() {
+	protected GudExpirationAttributes getEntryTimeToLive() {
 		return this.entryTimeToLive;
 	}
 
@@ -337,35 +345,35 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		this.regionConfigurers = Optional.ofNullable(regionConfigurers).orElseGet(Collections::emptyList);
 	}
 
-	public void setRegionIdleTimeout(ExpirationAttributes regionIdleTimeout) {
+	public void setRegionIdleTimeout(GudExpirationAttributes regionIdleTimeout) {
 		this.regionIdleTimeout = regionIdleTimeout;
 	}
 
-	protected ExpirationAttributes getRegionIdleTimeout() {
+	protected GudExpirationAttributes getRegionIdleTimeout() {
 		return this.regionIdleTimeout;
 	}
 
-	public void setRegionTimeToLive(ExpirationAttributes regionTimeToLive) {
+	public void setRegionTimeToLive(GudExpirationAttributes regionTimeToLive) {
 		this.regionTimeToLive = regionTimeToLive;
 	}
 
-	protected ExpirationAttributes getRegionTimeToLive() {
+	protected GudExpirationAttributes getRegionTimeToLive() {
 		return this.regionTimeToLive;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(GudScope scope) {
 		this.scope = scope;
 	}
 
-	protected Scope getScope() {
+	protected GudScope getScope() {
 		return this.scope;
 	}
 
-	public void setServerRegionShortcut(RegionShortcut shortcut) {
+	public void setServerRegionShortcut(GudRegionShortcut shortcut) {
 		this.serverRegionShortcut = shortcut;
 	}
 
-	protected RegionShortcut getServerRegionShortcut() {
+	protected GudRegionShortcut getServerRegionShortcut() {
 		return this.serverRegionShortcut;
 	}
 

@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration.context.event;
 
@@ -18,12 +25,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.apache.geode.cache.DiskStore;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
 import org.springframework.data.gemfire.tests.integration.annotation.GemFireResourceCollectorConfiguration;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.data.gemfire.tests.util.ThreadUtils;
@@ -45,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @see File
  * @see FileFilter
  * @see Predicate
- * @see DiskStore
+ * @see GudDiskStore
  * @see ApplicationContext
  * @see ApplicationContextAware
  * @see ApplicationEvent

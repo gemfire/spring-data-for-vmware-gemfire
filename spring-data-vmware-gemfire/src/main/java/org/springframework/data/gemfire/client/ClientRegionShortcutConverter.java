@@ -1,13 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.client;
 
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 
 /**
  * The ClientRegionShortcutConverter class is a Spring Converter implementation converting String value Client Region
@@ -15,11 +21,11 @@ import org.springframework.core.convert.converter.Converter;
  *
  * @author John Blum
  * @see Converter
- * @see ClientRegionShortcut
+ * @see GudClientRegionShortcut
  * @since 1.3.4
  */
 @SuppressWarnings("unused")
-public class ClientRegionShortcutConverter implements Converter<String, ClientRegionShortcut> {
+public class ClientRegionShortcutConverter implements Converter<String, GudClientRegionShortcut> {
 
 	/**
 	 * Converts the String value to upper case, trimming all whitespace.  This method guards against null values
@@ -42,11 +48,11 @@ public class ClientRegionShortcutConverter implements Converter<String, ClientRe
 	 * @param source the String representation of the Client Region Shortcut to convert.
 	 * @return a ClientRegionShortcut enumerated value for the String representation.
 	 * @throws IllegalArgumentException if the String source is not a valid ClientRegionShortcut enumerated value.
-	 * @see ClientRegionShortcut#valueOf(String)
+	 * @see GudClientRegionShortcut#valueOf(String)
 	 */
 	@Override
-	public ClientRegionShortcut convert(final String source) {
-		return ClientRegionShortcut.valueOf(toUpperCase(source));
+	public GudClientRegionShortcut convert(final String source) {
+		return GudClientRegionShortcut.valueOf(toUpperCase(source));
 	}
 
 }

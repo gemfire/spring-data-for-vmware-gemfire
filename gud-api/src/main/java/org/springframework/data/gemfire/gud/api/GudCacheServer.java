@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -13,12 +18,20 @@
 package org.springframework.data.gemfire.gud.api;
 
 /**
- * Placeholder - CacheServer is a server-side construct.
- * This file is kept empty intentionally. Use constants directly where DEFAULT_PORT is needed.
- * @deprecated Server-side construct not part of GUD client API
+ * GUD API abstraction for GemFire CacheServer.
+ * Primarily a server-side construct, but needed for test support utilities.
  */
-@Deprecated
 public interface GudCacheServer {
-    // Server-side construct - not part of GUD client API
-    // DEFAULT_PORT (40404) should be used as a constant where needed
+
+    int DEFAULT_PORT = 40404;
+
+    String getBindAddress();
+
+    int getPort();
+
+    boolean isRunning();
+
+    void start() throws java.io.IOException;
+
+    void stop();
 }

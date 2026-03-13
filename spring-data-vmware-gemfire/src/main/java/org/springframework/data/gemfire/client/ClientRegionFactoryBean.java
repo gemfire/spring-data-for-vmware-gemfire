@@ -1,28 +1,24 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.client;
 
 import static java.util.Arrays.stream;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
+
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheWriter;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionFactory;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.compression.Compressor;
+
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.data.gemfire.ConfigurableRegionFactoryBean;
@@ -33,6 +29,20 @@ import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
 import org.springframework.data.gemfire.config.xml.GemfireConstants;
 import org.springframework.data.gemfire.eviction.EvictingRegionFactoryBean;
 import org.springframework.data.gemfire.expiration.ExpiringRegionFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 import org.springframework.data.gemfire.support.SmartLifecycleSupport;
 import org.springframework.data.gemfire.util.RegionUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
@@ -42,26 +52,25 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Spring {@link FactoryBean} used to construct, configure and initialize a {@literal client} {@link Region}.
+ * Spring {@link FactoryBean} used to construct, configure and initialize a {@literal client} {@link GudRegion}.
  *
  * @author Costin Leau
  * @author David Turanski
  * @author John Blum
- * @see CacheListener
- * @see CacheLoader
- * @see CacheWriter
- * @see CustomExpiry
- * @see DataPolicy
- * @see EvictionAttributes
- * @see ExpirationAttributes
- * @see ClientCache
- * @see Region
- * @see RegionAttributes
- * @see ClientCache
- * @see ClientRegionFactory
- * @see ClientRegionShortcut
- * @see Pool
- * @see Compressor
+ * @see GudCacheListener
+ * @see GudCacheLoader
+ * @see GudCacheWriter
+ * @see GudCustomExpiry
+ * @see GudDataPolicy
+ * @see GudEvictionAttributes
+ * @see GudExpirationAttributes
+ * @see GudClientCache
+ * @see GudRegion
+ * @see GudRegionAttributes
+ * @see GudClientRegionFactory
+ * @see GudClientRegionShortcut
+ * @see GudPool
+ * @see GudCompressor
  * @see DisposableBean
  * @see FactoryBean
  * @see ConfigurableRegionFactoryBean
@@ -87,30 +96,30 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	private Boolean persistent;
 	private Boolean statisticsEnabled;
 
-	private CacheListener<K, V>[] cacheListeners;
+	private GudCacheListener<K, V>[] cacheListeners;
 
-	private CacheLoader<K, V> cacheLoader;
+	private GudCacheLoader<K, V> cacheLoader;
 
-	private CacheWriter<K, V> cacheWriter;
+	private GudCacheWriter<K, V> cacheWriter;
 
 	private Class<K> keyConstraint;
 	private Class<V> valueConstraint;
 
-	private ClientRegionShortcut shortcut;
+	private GudClientRegionShortcut shortcut;
 
-	private Compressor compressor;
+	private GudCompressor compressor;
 
-	private CustomExpiry<K, V> customEntryIdleTimeout;
-	private CustomExpiry<K, V> customEntryTimeToLive;
+	private GudCustomExpiry<K, V> customEntryIdleTimeout;
+	private GudCustomExpiry<K, V> customEntryTimeToLive;
 
-	private DataPolicy dataPolicy;
+	private GudDataPolicy dataPolicy;
 
-	private EvictionAttributes evictionAttributes;
+	private GudEvictionAttributes evictionAttributes;
 
-	private ExpirationAttributes entryIdleTimeout;
-	private ExpirationAttributes entryTimeToLive;
-	private ExpirationAttributes regionIdleTimeout;
-	private ExpirationAttributes regionTimeToLive;
+	private GudExpirationAttributes entryIdleTimeout;
+	private GudExpirationAttributes entryTimeToLive;
+	private GudExpirationAttributes regionIdleTimeout;
+	private GudExpirationAttributes regionTimeToLive;
 
 	private Integer concurrencyLevel;
 	private Integer initialCapacity;
@@ -122,7 +131,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	private PoolResolver defaultPoolResolver;
 	private PoolResolver poolResolver;
 
-	private RegionAttributes<K, V> attributes;
+	private GudRegionAttributes<K, V> attributes;
 
 	private String diskStoreName;
 	private String poolName;
@@ -139,7 +148,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 
 	/**
 	 * Initializes the {@literal default} {@link PoolResolver} and optionally sets the main {@link PoolResolver}
-	 * used to resolve {@link Pool} objects from Apache Geode if not configured by the user.
+	 * used to resolve {@link GudPool} objects from Apache Geode if not configured by the user.
 	 *
 	 * @see PoolResolver
 	 * @see BeanFactoryPoolResolver
@@ -154,41 +163,41 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Creates a new {@link Region} with the given {@link String name}.
+	 * Creates a new {@link GudRegion} with the given {@link String name}.
 	 *
-	 * @param gemfireCache reference to the {@link ClientCache}.
-	 * @param regionName {@link String name} of the new {@link Region}.
-	 * @return a new {@link Region} with the given {@link String name}.
-	 * @see #createClientRegionFactory(ClientCache, ClientRegionShortcut)
-	 * @see #newRegion(ClientRegionFactory, Region, String)
-	 * @see ClientCache
-	 * @see Region
+	 * @param gemfireCache reference to the {@link GudClientCache}.
+	 * @param regionName {@link String name} of the new {@link GudRegion}.
+	 * @return a new {@link GudRegion} with the given {@link String name}.
+	 * @see #createClientRegionFactory(GudClientCache, GudClientRegionShortcut)
+	 * @see #newRegion(GudClientRegionFactory, GudRegion, String)
+	 * @see GudClientCache
+	 * @see GudRegion
 	 */
 	@Override
-	protected Region<K, V> createRegion(ClientCache gemfireCache, String regionName) {
+	protected GudRegion<K, V> createRegion(GudClientCache gemfireCache, String regionName) {
 
-		ClientCache clientCache = resolveCache(gemfireCache);
+		GudClientCache clientCache = resolveCache(gemfireCache);
 
-		ClientRegionFactory<K, V> clientRegionFactory =
+		GudClientRegionFactory<K, V> clientRegionFactory =
 			postProcess(configure(createClientRegionFactory(clientCache, resolveClientRegionShortcut())));
 
 		return newRegion(clientRegionFactory, getParent(), regionName);
 	}
 
 	/**
-	 * Constructs a new {@link Region} using the provided {@link ClientRegionFactory} as either
-	 * a {@link Region root Region} or a {@link Region sub-Region} if {@link Region parent}
+	 * Constructs a new {@link GudRegion} using the provided {@link GudClientRegionFactory} as either
+	 * a {@link GudRegion root Region} or a {@link GudRegion sub-Region} if {@link GudRegion parent}
 	 * is not {@literal null}.
 	 *
-	 * @param clientRegionFactory {@link ClientRegionFactory} containing the configuration
-	 * for the new {@link Region}.
-	 * @param parent {@link Region} designated as the parent of the new {@link Region}
-	 * if the new {@link Region} is a {@link Region sub-Region}.
-	 * @param regionName {@link String name} of the new {@link Region}.
-	 * @return the new {@link Region} initialized with the given {@link String name}.
+	 * @param clientRegionFactory {@link GudClientRegionFactory} containing the configuration
+	 * for the new {@link GudRegion}.
+	 * @param parent {@link GudRegion} designated as the parent of the new {@link GudRegion}
+	 * if the new {@link GudRegion} is a {@link GudRegion sub-Region}.
+	 * @param regionName {@link String name} of the new {@link GudRegion}.
+	 * @return the new {@link GudRegion} initialized with the given {@link String name}.
 	 */
-	private Region<K, V> newRegion(ClientRegionFactory<K, V> clientRegionFactory,
-			Region<?, ?> parent, String regionName) {
+	private GudRegion<K, V> newRegion(GudClientRegionFactory<K, V> clientRegionFactory,
+			GudRegion<?, ?> parent, String regionName) {
 
 		if (parent != null) {
 
@@ -205,56 +214,52 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		}
 	}
 
-	private ClientCache resolveCache(ClientCache gemfireCache) {
+	private GudClientCache resolveCache(GudClientCache gemfireCache) {
 
 		return Optional.ofNullable(gemfireCache)
-			.map(ClientCache.class::cast)
+			.map(GudClientCache.class::cast)
 			.orElseThrow(() -> newIllegalArgumentException("ClientCache is required"));
 	}
 
 	/**
-	 * Resolves the {@link ClientRegionShortcut} used to configure the {@link DataPolicy}
-	 * for the {@link Region client Region}.
+	 * Resolves the {@link GudClientRegionShortcut} used to configure the {@link GudDataPolicy}
+	 * for the {@link GudRegion client Region}.
 	 *
-	 * @return a {@link ClientRegionShortcut} used to configure the {@link DataPolicy}
-	 * for the {@link Region client Region}.
-	 * @see ClientRegionShortcut
-	 * @see DataPolicy
+	 * @return a {@link GudClientRegionShortcut} used to configure the {@link GudDataPolicy}
+	 * for the {@link GudRegion client Region}.
+	 * @see GudClientRegionShortcut
+	 * @see GudDataPolicy
 	 */
-	ClientRegionShortcut resolveClientRegionShortcut() {
+	GudClientRegionShortcut resolveClientRegionShortcut() {
 
-		ClientRegionShortcut resolvedShortcut = this.shortcut;
+		GudClientRegionShortcut resolvedShortcut = this.shortcut;
 
 		if (resolvedShortcut == null) {
 
-			DataPolicy dataPolicy = this.dataPolicy;
+			GudDataPolicy dataPolicy = this.dataPolicy;
 
 			if (dataPolicy != null) {
 
 				RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(dataPolicy, this.persistent);
 
-				if (DataPolicy.EMPTY.equals(dataPolicy)) {
-					resolvedShortcut = ClientRegionShortcut.PROXY;
+				if (GudDataPolicy.EMPTY.equals(dataPolicy)) {
+					resolvedShortcut = GudClientRegionShortcut.PROXY;
 				}
-				else if (DataPolicy.NORMAL.equals(dataPolicy)) {
-					resolvedShortcut = ClientRegionShortcut.CACHING_PROXY;
+				else if (GudDataPolicy.NORMAL.equals(dataPolicy)) {
+					resolvedShortcut = GudClientRegionShortcut.CACHING_PROXY;
 				}
-				else if (DataPolicy.PERSISTENT_REPLICATE.equals(dataPolicy)) {
-					resolvedShortcut = ClientRegionShortcut.LOCAL_PERSISTENT;
+				else if (GudDataPolicy.PERSISTENT_REPLICATE.equals(dataPolicy)) {
+					resolvedShortcut = GudClientRegionShortcut.LOCAL_PERSISTENT;
 				}
 				else {
-					// NOTE: DataPolicy validation is based on the ClientRegionShortcut initialization logic
-					// in org.apache.geode.internal.cache.GemFireCacheImpl.initializeClientRegionShortcuts.
 					throw newIllegalArgumentException("Data Policy [%s] is not valid for a client Region", dataPolicy);
 				}
 			}
 			else {
-				resolvedShortcut = isPersistent() ? ClientRegionShortcut.LOCAL_PERSISTENT : ClientRegionShortcut.LOCAL;
+				resolvedShortcut = isPersistent() ? GudClientRegionShortcut.LOCAL_PERSISTENT : GudClientRegionShortcut.LOCAL;
 			}
 		}
 
-		// NOTE: The ClientRegionShortcut and Persistent attribute will be compatible
-		// if the shortcut was derived from the DataPolicy.
 		RegionUtils.assertClientRegionShortcutAndPersistentAttributeAreCompatible(resolvedShortcut, this.persistent);
 
 		return resolvedShortcut;
@@ -283,40 +288,40 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 			.map(it -> true)
 			.orElseGet(() ->
 				SpringExtensions.safeGetValue(() ->
-					getBeanFactory().getBean(poolName, Pool.class) != null, false));
+					getBeanFactory().getBean(poolName, GudPool.class) != null, false));
 	}
 
 	/**
-	 * Constructs a new instance of {@link ClientRegionFactory} using the given {@link ClientCache}
-	 * and {@link ClientRegionShortcut}.
+	 * Constructs a new instance of {@link GudClientRegionFactory} using the given {@link GudClientCache}
+	 * and {@link GudClientRegionShortcut}.
 	 *
-	 * @param clientCache reference to the {@link ClientCache}.
-	 * @param clientRegionShortcut {@link ClientRegionShortcut} used to configure
-	 * the {@link Region client Region} {@link DataPolicy}.
-	 * @return a new instance of {@link ClientRegionFactory}.
-	 * @see ClientCache#createClientRegionFactory(ClientRegionShortcut)
-	 * @see ClientRegionShortcut
-	 * @see ClientRegionFactory
+	 * @param clientCache reference to the {@link GudClientCache}.
+	 * @param clientRegionShortcut {@link GudClientRegionShortcut} used to configure
+	 * the {@link GudRegion client Region} {@link GudDataPolicy}.
+	 * @return a new instance of {@link GudClientRegionFactory}.
+	 * @see GudClientCache#createClientRegionFactory(GudClientRegionShortcut)
+	 * @see GudClientRegionShortcut
+	 * @see GudClientRegionFactory
 	 */
-	protected ClientRegionFactory<K, V> createClientRegionFactory(ClientCache clientCache,
-			ClientRegionShortcut clientRegionShortcut) {
+	protected GudClientRegionFactory<K, V> createClientRegionFactory(GudClientCache clientCache,
+			GudClientRegionShortcut clientRegionShortcut) {
 
 		return clientCache.createClientRegionFactory(clientRegionShortcut);
 	}
 
 	/**
 	 * Configures the given {@link ClientRegionFactoryBean} from the configuration settings
-	 * of this {@link ClientRegionFactoryBean} and any {@link RegionAttributes}.
+	 * of this {@link ClientRegionFactoryBean} and any {@link GudRegionAttributes}.
 	 *
-	 * @param clientRegionFactory {@link ClientRegionFactory} to configure.
-	 * @return the configured {@link ClientRegionFactory}.
-	 * @see ClientRegionFactory
+	 * @param clientRegionFactory {@link GudClientRegionFactory} to configure.
+	 * @return the configured {@link GudClientRegionFactory}.
+	 * @see GudClientRegionFactory
 	 */
-	protected ClientRegionFactory<K, V> configure(ClientRegionFactory<K, V> clientRegionFactory) {
+	protected GudClientRegionFactory<K, V> configure(GudClientRegionFactory<K, V> clientRegionFactory) {
 
 		Optional<String> regionAttributesPoolName = configureWithRegionAttributes(clientRegionFactory);
 
-		stream(nullSafeArray(this.cacheListeners, CacheListener.class)).forEach(clientRegionFactory::addCacheListener);
+		stream(nullSafeArray(this.cacheListeners, GudCacheListener.class)).forEach(clientRegionFactory::addCacheListener);
 
 		clientRegionFactory.setStatisticsEnabled(resolveStatisticsEnabled());
 
@@ -345,7 +350,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		return clientRegionFactory;
 	}
 
-	private Optional<String> configureWithRegionAttributes(ClientRegionFactory<K, V> clientRegionFactory) {
+	private Optional<String> configureWithRegionAttributes(GudClientRegionFactory<K, V> clientRegionFactory) {
 
 		AtomicReference<String> regionAttributesPoolName = new AtomicReference<>(null);
 
@@ -353,7 +358,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 
 			regionAttributesPoolName.set(regionAttributes.getPoolName());
 
-			stream(nullSafeArray(regionAttributes.getCacheListeners(), CacheListener.class))
+			stream(nullSafeArray(regionAttributes.getCacheListeners(), GudCacheListener.class))
 				.forEach(clientRegionFactory::addCacheListener);
 
 			clientRegionFactory.setCloningEnabled(regionAttributes.getCloningEnabled());
@@ -380,24 +385,24 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Post-process the given {@link ClientRegionFactory} setup by this {@link ClientRegionFactoryBean}.
+	 * Post-process the given {@link GudClientRegionFactory} setup by this {@link ClientRegionFactoryBean}.
 	 *
-	 * @param clientRegionFactory {@link ClientRegionFactory} to process.
-	 * @return the given {@link ClientRegionFactory}.
-	 * @see ClientRegionFactory
+	 * @param clientRegionFactory {@link GudClientRegionFactory} to process.
+	 * @return the given {@link GudClientRegionFactory}.
+	 * @see GudClientRegionFactory
 	 */
-	protected ClientRegionFactory<K, V> postProcess(ClientRegionFactory<K, V> clientRegionFactory) {
+	protected GudClientRegionFactory<K, V> postProcess(GudClientRegionFactory<K, V> clientRegionFactory) {
 		return clientRegionFactory;
 	}
 
 	/**
-	 * Post-process the {@link Region} created by this {@link ClientRegionFactoryBean}.
+	 * Post-process the {@link GudRegion} created by this {@link ClientRegionFactoryBean}.
 	 *
-	 * @param region {@link Region} to process.
-	 * @see Region
+	 * @param region {@link GudRegion} to process.
+	 * @see GudRegion
 	 */
 	@Override
-	protected Region<K, V> postProcess(Region<K, V> region) {
+	protected GudRegion<K, V> postProcess(GudRegion<K, V> region) {
 
 		super.postProcess(region);
 
@@ -414,7 +419,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Registers interests in the startup lifecycle phase of the Spring container.
 	 *
 	 * @see #getRegion()
-	 * @see #registerInterests(Region)
+	 * @see #registerInterests(GudRegion)
 	 */
 	@Override
 	public void start() {
@@ -422,7 +427,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	@SuppressWarnings("unchecked")
-	private Region<K, V> registerInterests(Region<K, V> region) {
+	private GudRegion<K, V> registerInterests(GudRegion<K, V> region) {
 
 		stream(nullSafeArray(getInterests(), Interest.class)).forEach(interest -> {
 
@@ -471,29 +476,29 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 *
 	 * @param attributes the attributes to set on a newly created region
 	 */
-	public void setAttributes(RegionAttributes<K, V> attributes) {
+	public void setAttributes(GudRegionAttributes<K, V> attributes) {
 		this.attributes = attributes;
 	}
 
 	/**
-	 * Gets the {@link RegionAttributes} used to configure the {@link Region client Region}
+	 * Gets the {@link GudRegionAttributes} used to configure the {@link GudRegion client Region}
 	 * created by this {@link ClientRegionFactoryBean}.
 	 *
-	 * @return the {@link RegionAttributes} used to configure the {@link Region client Region}.
-	 * @see RegionAttributes
+	 * @return the {@link GudRegionAttributes} used to configure the {@link GudRegion client Region}.
+	 * @see GudRegionAttributes
 	 */
-	protected RegionAttributes<K, V> getAttributes() {
+	protected GudRegionAttributes<K, V> getAttributes() {
 		return this.attributes;
 	}
 
 	/**
 	 * Sets the cache listeners used for the region used by this factory. Used
 	 * only when a new region is created.Overrides the settings specified
-	 * through {@link #setAttributes(RegionAttributes)}.
+	 * through {@link #setAttributes(GudRegionAttributes)}.
 	 *
 	 * @param cacheListeners the cacheListeners to set on a newly created region
 	 */
-	public void setCacheListeners(CacheListener<K, V>[] cacheListeners) {
+	public void setCacheListeners(GudCacheListener<K, V>[] cacheListeners) {
 		this.cacheListeners = cacheListeners;
 	}
 
@@ -501,9 +506,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the CacheLoader used to load data local to the client's Region on cache misses.
 	 *
 	 * @param cacheLoader a GemFire CacheLoader used to load data into the client Region.
-	 * @see CacheLoader
+	 * @see GudCacheLoader
 	 */
-	public void setCacheLoader(CacheLoader<K, V> cacheLoader) {
+	public void setCacheLoader(GudCacheLoader<K, V> cacheLoader) {
 		this.cacheLoader = cacheLoader;
 	}
 
@@ -511,9 +516,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the CacheWriter used to perform a synchronous write-behind when data is put into the client's Region.
 	 *
 	 * @param cacheWriter the GemFire CacheWriter used to perform synchronous write-behinds on put ops.
-	 * @see CacheWriter
+	 * @see GudCacheWriter
 	 */
-	public void setCacheWriter(CacheWriter<K, V> cacheWriter) {
+	public void setCacheWriter(GudCacheWriter<K, V> cacheWriter) {
 		this.cacheWriter = cacheWriter;
 	}
 
@@ -539,12 +544,12 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Configures the {@link Compressor} used to compress the this {@link Region Region's} data.
+	 * Configures the {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
 	 *
-	 * @param compressor {@link Compressor} used to compress the this {@link Region Region's} data.
-	 * @see Compressor
+	 * @param compressor {@link GudCompressor} used to compress the this {@link GudRegion Region's} data.
+	 * @see GudCompressor
 	 */
-	public void setCompressor(Compressor compressor) {
+	public void setCompressor(GudCompressor compressor) {
 		this.compressor = compressor;
 	}
 
@@ -556,11 +561,11 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		this.concurrencyLevel = concurrencyLevel;
 	}
 
-	public void setCustomEntryIdleTimeout(CustomExpiry<K, V> customEntryIdleTimeout) {
+	public void setCustomEntryIdleTimeout(GudCustomExpiry<K, V> customEntryIdleTimeout) {
 		this.customEntryIdleTimeout = customEntryIdleTimeout;
 	}
 
-	public void setCustomEntryTimeToLive(CustomExpiry<K, V> customEntryTimeToLive) {
+	public void setCustomEntryTimeToLive(GudCustomExpiry<K, V> customEntryTimeToLive) {
 		this.customEntryTimeToLive = customEntryTimeToLive;
 	}
 
@@ -568,9 +573,9 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	 * Sets the Data Policy. Used only when a new Region is created.
 	 *
 	 * @param dataPolicy the client Region's Data Policy.
-	 * @see DataPolicy
+	 * @see GudDataPolicy
 	 */
-	public void setDataPolicy(DataPolicy dataPolicy) {
+	public void setDataPolicy(GudDataPolicy dataPolicy) {
 		this.dataPolicy = dataPolicy;
 	}
 
@@ -604,15 +609,15 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		this.diskSynchronous = diskSynchronous;
 	}
 
-	public void setEntryIdleTimeout(ExpirationAttributes entryIdleTimeout) {
+	public void setEntryIdleTimeout(GudExpirationAttributes entryIdleTimeout) {
 		this.entryIdleTimeout = entryIdleTimeout;
 	}
 
-	public void setEntryTimeToLive(ExpirationAttributes entryTimeToLive) {
+	public void setEntryTimeToLive(GudExpirationAttributes entryTimeToLive) {
 		this.entryTimeToLive = entryTimeToLive;
 	}
 
-	public void setEvictionAttributes(EvictionAttributes evictionAttributes) {
+	public void setEvictionAttributes(GudEvictionAttributes evictionAttributes) {
 		this.evictionAttributes = evictionAttributes;
 	}
 
@@ -666,33 +671,33 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Configures the {@link Pool} used by this client {@link Region}.
+	 * Configures the {@link GudPool} used by this client {@link GudRegion}.
 	 *
-	 * @param pool {@link Pool} used by this client {@link Region} to send/receive data to/from the server.
-	 * @see Pool
+	 * @param pool {@link GudPool} used by this client {@link GudRegion} to send/receive data to/from the server.
+	 * @see GudPool
 	 * @see #setPoolName(String)
 	 */
-	public void setPool(Pool pool) {
-		setPoolName(Optional.ofNullable(pool).map(Pool::getName).orElse(null));
+	public void setPool(GudPool pool) {
+		setPoolName(Optional.ofNullable(pool).map(GudPool::getName).orElse(null));
 	}
 
 	/**
-	 * Configures the {@link String name} of the {@link Pool} to be used by this client {@link Region}.
+	 * Configures the {@link String name} of the {@link GudPool} to be used by this client {@link GudRegion}.
 	 *
-	 * @param poolName {@link String} containing the name of the client {@link Pool}
-	 * to be used by this client {@link Region}.
+	 * @param poolName {@link String} containing the name of the client {@link GudPool}
+	 * to be used by this client {@link GudRegion}.
 	 * @see #getPoolName()
-	 * @see #setPool(Pool)
+	 * @see #setPool(GudPool)
 	 */
 	public void setPoolName(String poolName) {
 		this.poolName = poolName;
 	}
 
 	/**
-	 * Returns the {@link String name} of the configured {@link Pool} used by this client {@link Region}.
+	 * Returns the {@link String name} of the configured {@link GudPool} used by this client {@link GudRegion}.
 	 *
-	 * @return the {@link Optional} {@link String name} of the configured {@link Pool} to be used by
-	 * this client {@link Region}.
+	 * @return the {@link Optional} {@link String name} of the configured {@link GudPool} to be used by
+	 * this client {@link GudRegion}.
 	 * @see #setPoolName(String)
 	 */
 	public Optional<String> getPoolName() {
@@ -700,11 +705,11 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Sets (configures) the {@link PoolResolver} used by this client {@link Region} to resolve {@link Pool} objects.
+	 * Sets (configures) the {@link PoolResolver} used by this client {@link GudRegion} to resolve {@link GudPool} objects.
 	 *
-	 * The {@link Pool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
+	 * The {@link GudPool} objects may be managed or un-managed depending on the {@link PoolResolver} implementation.
 	 *
-	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link Pool}.
+	 * @param poolResolver {@link PoolResolver} used to resolve the configured {@link GudPool}.
 	 * @see PoolResolver
 	 */
 	public void setPoolResolver(@Nullable PoolResolver poolResolver) {
@@ -712,7 +717,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Gets the configured {@link PoolResolver} used by this client {@link Region} to resolve {@link Pool} objects.
+	 * Gets the configured {@link PoolResolver} used by this client {@link GudRegion} to resolve {@link GudPool} objects.
 	 *
 	 * @return the configured {@link PoolResolver}.  If no {@link PoolResolver} was configured, then return the default,
 	 * {@link PoolManagerPoolResolver}.
@@ -727,8 +732,8 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 	}
 
 	/**
-	 * Gets a reference to the configured, default {@link PoolResolver} used by this client {@link Region} to resolve
-	 * {@link Pool} objects if a explicit {@link PoolResolver} was not configured.
+	 * Gets a reference to the configured, default {@link PoolResolver} used by this client {@link GudRegion} to resolve
+	 * {@link GudPool} objects if a explicit {@link PoolResolver} was not configured.
 	 *
 	 * The {@literal default} {@link PoolResolver} uses a composition of the {@link BeanFactoryPoolResolver}
 	 * and {@link PoolManagerPoolResolver} to fallback on.
@@ -742,23 +747,23 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 		return this.defaultPoolResolver;
 	}
 
-	public void setRegionIdleTimeout(ExpirationAttributes regionIdleTimeout) {
+	public void setRegionIdleTimeout(GudExpirationAttributes regionIdleTimeout) {
 		this.regionIdleTimeout = regionIdleTimeout;
 	}
 
-	public void setRegionTimeToLive(ExpirationAttributes regionTimeToLive) {
+	public void setRegionTimeToLive(GudExpirationAttributes regionTimeToLive) {
 		this.regionTimeToLive = regionTimeToLive;
 	}
 
 	/**
-	 * Initializes the {@link DataPolicy} of the {@link Region client Region}
-	 * using the given {@link ClientRegionShortcut}.
+	 * Initializes the {@link GudDataPolicy} of the {@link GudRegion client Region}
+	 * using the given {@link GudClientRegionShortcut}.
 	 *
-	 * @param shortcut {@link ClientRegionShortcut} used to initialize the {@link DataPolicy}
-	 * of this {@link Region client Region}.
-	 * @see ClientRegionShortcut
+	 * @param shortcut {@link GudClientRegionShortcut} used to initialize the {@link GudDataPolicy}
+	 * of this {@link GudRegion client Region}.
+	 * @see GudClientRegionShortcut
 	 */
-	public void setShortcut(ClientRegionShortcut shortcut) {
+	public void setShortcut(GudClientRegionShortcut shortcut) {
 		this.shortcut = shortcut;
 	}
 
@@ -784,7 +789,7 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 			|| this.regionIdleTimeout != null
 			|| this.regionTimeToLive != null
 			|| Optional.ofNullable(getAttributes())
-				.map(RegionAttributes::getStatisticsEnabled)
+				.map(GudRegionAttributes::getStatisticsEnabled)
 				.orElse(false);
 	}
 

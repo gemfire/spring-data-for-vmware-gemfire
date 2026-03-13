@@ -1,14 +1,19 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.support;
 
 import java.util.Optional;
 import java.util.function.Predicate;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.Index;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -17,6 +22,8 @@ import org.springframework.core.type.MethodMetadata;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
+import org.springframework.data.gemfire.gud.api.GudIndex;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -24,7 +31,7 @@ import org.springframework.util.StringUtils;
 /**
  * The {@link AbstractDependencyStructuringBeanFactoryPostProcessor} class is a Spring {@link BeanFactoryPostProcessor}
  * post processing the Spring {@link BeanFactory} to help ensure that the dependencies between different Apache Geode
- * or Pivotal GemFire objects (e.g. {@link Region} or an OQL {@link Index}) have been
+ * or Pivotal GemFire objects (e.g. {@link GudRegion} or an OQL {@link GudIndex}) have been
  * properly declared in order to the lifecycle of those components are upheld according to Apache Geode
  * or Pivotal GemFire requirements/rules.
  *

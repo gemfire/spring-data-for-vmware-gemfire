@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.config.support;
@@ -9,13 +16,12 @@ import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 
 import java.util.Arrays;
 
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.Region;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.springframework.util.Assert;
@@ -23,7 +29,7 @@ import org.springframework.util.Assert;
 /**
  * {@link PdxDiskStoreAwareBeanFactoryPostProcessor} is a Spring {@link BeanFactoryPostProcessor} that modifies
  * all GemFire Region and Disk Store beans in the Spring container to form a dependency on
- * the Cache's PDX {@link DiskStore} bean.
+ * the Cache's PDX {@link GudDiskStore} bean.
  *
  * A persistent Region may contain PDX typed data, in which case, the PDX type meta-data stored to disk needs to be
  * loaded before the Region having PDX data is loaded from disk.
@@ -31,8 +37,8 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see BeanFactoryPostProcessor
  * @see ConfigurableListableBeanFactory
- * @see DiskStore
- * @see Region
+ * @see GudDiskStore
+ * @see GudRegion
  * @since 1.3.3
  */
 public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
@@ -43,10 +49,10 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 
 	/**
 	 * Constructs an instance of the {@link PdxDiskStoreAwareBeanFactoryPostProcessor} class initialized with
-	 * the given PDX {@link DiskStore} name.
+	 * the given PDX {@link GudDiskStore} name.
 	 *
-	 * @param pdxDiskStoreName name of the GemFire PDX {@link DiskStore}.
-	 * @throws IllegalArgumentException if the GemFire PDX {@link DiskStore} name is unspecified.
+	 * @param pdxDiskStoreName name of the GemFire PDX {@link GudDiskStore}.
+	 * @throws IllegalArgumentException if the GemFire PDX {@link GudDiskStore} name is unspecified.
 	 */
 	public PdxDiskStoreAwareBeanFactoryPostProcessor(String pdxDiskStoreName) {
 
@@ -56,9 +62,9 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	}
 
 	/**
-	 * Returns the name of the GemFire PDX {@link DiskStore}.
+	 * Returns the name of the GemFire PDX {@link GudDiskStore}.
 	 *
-	 * @return the name of the GemFire PDX {@link DiskStore}.
+	 * @return the name of the GemFire PDX {@link GudDiskStore}.
 	 */
 	public String getPdxDiskStoreName() {
 		return this.pdxDiskStoreName;
@@ -70,7 +76,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessor implements BeanFactoryPos
 	@Override
 	@SuppressWarnings("all")
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		postProcessPdxDiskStoreDependencies(beanFactory, DiskStore.class, Region.class);
+		postProcessPdxDiskStoreDependencies(beanFactory, GudDiskStore.class, GudRegion.class);
 	}
 
 	/**

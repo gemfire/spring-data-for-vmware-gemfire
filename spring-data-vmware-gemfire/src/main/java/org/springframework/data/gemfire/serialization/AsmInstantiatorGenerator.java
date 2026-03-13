@@ -1,6 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.serialization;
@@ -14,15 +21,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.geode.DataSerializable;
-import org.apache.geode.Instantiator;
-
 import org.springframework.asm.ClassWriter;
 import org.springframework.asm.FieldVisitor;
 import org.springframework.asm.MethodVisitor;
 import org.springframework.asm.Opcodes;
 import org.springframework.asm.Type;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.gemfire.gud.api.GudDataSerializable;
+import org.springframework.data.gemfire.gud.api.GudInstantiator;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
@@ -37,7 +43,7 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 
 	private static final String PKG = "org/springextensions/gef/serialization";
 	private static final String CLASS_LABEL = "Instantiator$Synthetic";
-	private static final String INSTANTIATOR_NAME = Type.getInternalName(Instantiator.class);
+	private static final String INSTANTIATOR_NAME = Type.getInternalName(GudInstantiator.class);
 	private static final String SERIALIZABLE_NAME = Type.getInternalName(Serializable.class);
 	private static final String CLASS_DESCRIPTOR = Type.getDescriptor(Class.class);
 	private static final String CLASS_FIELD_NAME = "clazz";
@@ -46,14 +52,14 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 	private static final String INIT = "<init>";
 	private static final String CINIT = "<clinit>";
 	private static final String NEW_INSTANCE = "newInstance";
-	private static final String NEW_INSTANCE_DESC = Type.getMethodDescriptor(Type.getType(DataSerializable.class),
+	private static final String NEW_INSTANCE_DESC = Type.getMethodDescriptor(Type.getType(GudDataSerializable.class),
 			new Type[] {});
 
 	// generated class counter
 	private static final AtomicLong counter = new AtomicLong(1);
 
 	// class cache
-	private final ConcurrentMap<Class<? extends DataSerializable>, Instantiator> cache = new ConcurrentHashMap<Class<? extends DataSerializable>, Instantiator>();
+	private final ConcurrentMap<Class<? extends GudDataSerializable>, GudInstantiator> cache = new ConcurrentHashMap<Class<? extends GudDataSerializable>, GudInstantiator>();
 
 
 	private static final class BytecodeClassLoader extends ClassLoader {
@@ -81,8 +87,8 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 		this.classLoader = AccessController.doPrivileged((PrivilegedAction<BytecodeClassLoader>) () -> new BytecodeClassLoader(classLoader));
 	}
 
-	public Instantiator getInstantiator(Class<? extends DataSerializable> clazz, int classId) {
-		Instantiator instantiator = cache.get(clazz);
+	public GudInstantiator getInstantiator(Class<? extends GudDataSerializable> clazz, int classId) {
+		GudInstantiator instantiator = cache.get(clazz);
 		if (instantiator == null) {
 			synchronized (cache) {
 				instantiator = cache.get(clazz);
@@ -103,10 +109,10 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 	 * @param classId
 	 * @return
 	 */
-	private Instantiator createInstantiator(Class<? extends DataSerializable> clazz, int classId) {
+	private GudInstantiator createInstantiator(Class<? extends GudDataSerializable> clazz, int classId) {
 		validateClass(clazz);
 		Class<?> clz = createCustomInstantiatorClass(clazz, classId);
-		return (Instantiator) BeanUtils.instantiate(clz);
+		return (GudInstantiator) BeanUtils.instantiate(clz);
 	}
 
 	/**
@@ -115,11 +121,11 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 	 *
 	 * @param clazz
 	 */
-	private void validateClass(Class<? extends DataSerializable> clazz) {
+	private void validateClass(Class<? extends GudDataSerializable> clazz) {
 		Assert.isTrue(!Modifier.isAbstract(clazz.getModifiers()), "Cannot instantiate abstract classes");
 		Assert.isTrue(Modifier.isPublic(clazz.getModifiers()), "Only public classes are supported");
 		try {
-			Constructor<? extends DataSerializable> ctor = clazz.getConstructor();
+			Constructor<? extends GudDataSerializable> ctor = clazz.getConstructor();
 			Assert.isTrue(Modifier.isPublic(ctor.getModifiers()), "Default constructor is not public");
 
 		} catch (Exception ex) {
@@ -157,14 +163,14 @@ public class AsmInstantiatorGenerator implements InstantiatorGenerator, Opcodes 
 	 * @param clazz
 	 * @return
 	 */
-	Class<?> createCustomInstantiatorClass(Class<? extends DataSerializable> clazz, int classId) {
+	Class<?> createCustomInstantiatorClass(Class<? extends GudDataSerializable> clazz, int classId) {
 		String classInternalName = PKG + clazz.getSimpleName() + CLASS_LABEL + counter.getAndIncrement();
 		byte[] bytecode = generateClassBytecode(classInternalName, clazz, classId);
 		// translate internal name to binary form
 		return classLoader.loadClass(classInternalName.replace('/', '.'), bytecode);
 	}
 
-	byte[] generateClassBytecode(String className, Class<? extends DataSerializable> clazz, int classId) {
+	byte[] generateClassBytecode(String className, Class<? extends GudDataSerializable> clazz, int classId) {
 		ClassWriter cw = new ClassWriter(0);
 
 		cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, className, null, INSTANTIATOR_NAME, new String[] { SERIALIZABLE_NAME });

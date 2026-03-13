@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -33,5 +38,9 @@ public abstract class GudInstantiator {
     
     public int getId() {
         return id;
+    }
+
+    public static void register(GudInstantiator instantiator, boolean distribute) {
+        throw new UnsupportedOperationException("Must be implemented by driver");
     }
 }

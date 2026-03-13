@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.function.config;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -15,9 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -25,6 +30,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -32,13 +39,13 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
- * Annotation based configuration source for {@link Function} {@link Execution Executions}.
+ * Annotation based configuration source for {@link GudFunction} {@link GudExecution Executions}.
  *
  * @author David Turanski
  * @author John Blum
  * @see Annotation
- * @see Execution
- * @see Function
+ * @see GudExecution
+ * @see GudFunction
  * @see EnableGemfireFunctionExecutions
  */
 public class AnnotationFunctionExecutionConfigurationSource extends AbstractFunctionExecutionConfigurationSource {

@@ -1,32 +1,41 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
-import org.apache.geode.cache.client.ClientCache;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.data.gemfire.CacheResolver;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
- * Cacheable {@link CacheResolver} implementation capable of resolving a {@link ClientCache} instance
+ * Cacheable {@link CacheResolver} implementation capable of resolving a {@link GudClientCache} instance
  * from the Spring {@link BeanFactory}.
  *
  * @author John Blum
- * @see ClientCache
+ * @see GudClientCache
  * @see BeanFactory
  * @see BeanFactoryAware
  * @see CacheResolver
  * @see AbstractCachingCacheResolver
  * @since 2.3.0
  */
-public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<ClientCache> implements BeanFactoryAware {
+public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<GudClientCache> implements BeanFactoryAware {
 
 	private BeanFactory beanFactory;
 
@@ -36,7 +45,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 	 * Constructs a new instance of {@link BeanFactoryCacheResolver} initialized with the given, required
 	 * Spring {@link BeanFactory}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve the {@link ClientCache}.
+	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GudClientCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @see BeanFactory
 	 */
@@ -45,9 +54,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 	}
 
 	/**
-	 * Sets a reference to the {@link BeanFactory} used to resolve the {@link ClientCache}.
+	 * Sets a reference to the {@link BeanFactory} used to resolve the {@link GudClientCache}.
 	 *
-	 * @param beanFactory {@link BeanFactory} used to resolve the {@link ClientCache}.
+	 * @param beanFactory {@link BeanFactory} used to resolve the {@link GudClientCache}.
 	 * @throws IllegalArgumentException if {@link BeanFactory} is {@literal null}.
 	 * @throws BeansException if configuration of the {@link BeanFactory} fails.
 	 * @see BeanFactory
@@ -62,7 +71,7 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 
 	/**
 	 * Returns the configured reference to the Spring {@link BeanFactory} used to resolve the single instance
-	 * of the {@link ClientCache}.
+	 * of the {@link GudClientCache}.
 	 *
 	 * @return a reference to the configured Spring {@link BeanFactory}.
 	 * @see BeanFactory
@@ -73,9 +82,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 
 	/**
 	 * Sets (configures) the {@link String bean name} used to further qualify the resolution of
-	 * the {@link ClientCache} object reference in a Spring context.
+	 * the {@link GudClientCache} object reference in a Spring context.
 	 *
-	 * @param cacheBeanName {@link String name} of the {@link ClientCache} bean in the Spring context.
+	 * @param cacheBeanName {@link String name} of the {@link GudClientCache} bean in the Spring context.
 	 */
 	public void setCacheBeanName(String cacheBeanName) {
 		this.cacheBeanName = cacheBeanName;
@@ -83,9 +92,9 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 
 	/**
 	 * Returns the optionally configured {@link String bean name} used to further qualify the resolution of
-	 * the {@link ClientCache} object reference in a Spring context.
+	 * the {@link GudClientCache} object reference in a Spring context.
 	 *
-	 * @return the configured {@link String name} of the {@link ClientCache} bean in the Spring context.
+	 * @return the configured {@link String name} of the {@link GudClientCache} bean in the Spring context.
 	 */
 	public Optional<String> getCacheBeanName() {
 
@@ -95,18 +104,18 @@ public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<Clien
 
 	/**
 	 * Uses the configured Spring {@link BeanFactory} to resolve a reference to
-	 * the single {@link ClientCache} instance.
+	 * the single {@link GudClientCache} instance.
 	 *
-	 * @return a reference to the {@link ClientCache} bean.
+	 * @return a reference to the {@link GudClientCache} bean.
 	 * @see BeanFactory#getBean(Class)
-	 * @see ClientCache
+	 * @see GudClientCache
 	 * @see #getBeanFactory()
 	 */
 	@Override
-	protected ClientCache doResolve() {
+	protected GudClientCache doResolve() {
 
 		return getCacheBeanName()
-			.map(cacheBeanName -> getBeanFactory().getBean(cacheBeanName, ClientCache.class))
-			.orElse(getBeanFactory().getBean(ClientCache.class));
+			.map(cacheBeanName -> getBeanFactory().getBean(cacheBeanName, GudClientCache.class))
+			.orElse(getBeanFactory().getBean(GudClientCache.class));
 	}
 }

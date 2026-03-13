@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
@@ -11,8 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.apache.geode.cache.client.ClientCache;
 import org.apache.shiro.SecurityUtils;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -42,8 +50,7 @@ import org.springframework.util.ObjectUtils;
  * administrative and data access operations.
  *
  * @author John Blum
- * @see ClientCache
- * @see org.apache.geode.internal.security.SecurityService
+ * @see GudClientCache
  * @see DefaultSecurityManager
  * @see Realm
  * @see LifecycleBeanPostProcessor
@@ -137,13 +144,13 @@ public class ApacheShiroSecurityConfiguration extends AbstractAnnotationConfigSu
 	 * to secure Apache Geode, which is determined by the presence of Apache Shiro {@link Realm Realms}
 	 * declared in the Spring {@link org.springframework.context.ApplicationContext}.
 	 *
-	 * This {@link Bean} definition declares a dependency on the Apache Geode {@link ClientCache} instance
+	 * This {@link Bean} definition declares a dependency on the Apache Geode {@link GudClientCache} instance
 	 * in order to ensure the Geode cache is created and initialized first.  This ensures that any internal Geode
 	 * security configuration logic is evaluated and processed before SDG attempts to configure Apache Shiro
 	 * as Apache Geode's security provider.
 	 *
 	 * Additionally, this {@link Bean} definition will register the Apache Shiro
-	 * {@link org.apache.geode.security.SecurityManager} with the Apache Shiro security framework
+	 * SecurityManager with the Apache Shiro security framework.
 	 *
 	 * Finally, this method proceeds to enable Apache Geode security.
 

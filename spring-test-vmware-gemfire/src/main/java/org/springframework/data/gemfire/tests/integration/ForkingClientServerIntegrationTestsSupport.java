@@ -1,6 +1,13 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 package org.springframework.data.gemfire.tests.integration;
 
@@ -19,8 +26,6 @@ import java.util.function.Function;
 
 import org.junit.AfterClass;
 
-import org.apache.geode.cache.client.ClientCache;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +33,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.config.annotation.EnablePdx;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.tests.integration.config.ClientServerIntegrationTestsConfiguration;
 import org.springframework.data.gemfire.tests.process.JavaProcessRunner;
 import org.springframework.data.gemfire.tests.process.ProcessWrapper;
@@ -38,10 +44,10 @@ import org.springframework.lang.Nullable;
 
 /**
  * The {@link ForkingClientServerIntegrationTestsSupport} class is an abstract base class used to configure
- * and bootstrap Apache Geode or VMware GemFire {@link ClientCache} applications.
+ * and bootstrap Apache Geode or VMware GemFire {@link GudClientCache} applications.
  *
  * @author John Blum
- * @see ClientCache
+ * @see GudClientCache
  * @see ClientCacheApplication
  * @see EnablePdx
  * @see ClientServerIntegrationTestsSupport

@@ -1,14 +1,21 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.apache.geode.cache.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.MutablePropertyValues;
@@ -20,6 +27,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedArray;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -51,9 +59,9 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * Return the {@link Class type} of the {@link Region} {@link FactoryBean}.
+	 * Return the {@link Class type} of the {@link GudRegion} {@link FactoryBean}.
 	 *
-	 * @return the {@link Class type} of the {@link Region} {@link FactoryBean}.
+	 * @return the {@link Class type} of the {@link GudRegion} {@link FactoryBean}.
 	 * @see FactoryBean
 	 * @see Class
 	 */
@@ -71,12 +79,12 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * Determines whether the given SDG XML namespace configuration {@link Element} defines a {@link Region} template
-	 * used as the base configuration for one or more {@link Region Regions}.
+	 * Determines whether the given SDG XML namespace configuration {@link Element} defines a {@link GudRegion} template
+	 * used as the base configuration for one or more {@link GudRegion Regions}.
 	 *
 	 * @param element SDG XML namespace {@link Element}.
 	 * @return a boolean value indicating whether the given SDG XML namespace configuration {@link Element}
-	 * defines a {@link Region} template.
+	 * defines a {@link GudRegion} template.
 	 * @see Element
 	 */
 	protected boolean isRegionTemplate(@NonNull Element element) {
@@ -87,12 +95,12 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	}
 
 	/**
-	 * Determines whether the current SDG XML namespace {@link Region} {@link Element} is a {@link Region Sub-Region}
+	 * Determines whether the current SDG XML namespace {@link GudRegion} {@link Element} is a {@link GudRegion Sub-Region}
 	 * definition.
 	 *
-	 * @param element SDG XML namespace {@link Region} {@link Element} to evaluate as a {@link Region Sub-Region}.
-	 * @return a boolean value indicating whether the current SDG XML namespace {@link Region} {@link Element}
-	 * is a {@link Region Sub-Region} definition.
+	 * @param element SDG XML namespace {@link GudRegion} {@link Element} to evaluate as a {@link GudRegion Sub-Region}.
+	 * @return a boolean value indicating whether the current SDG XML namespace {@link GudRegion} {@link Element}
+	 * is a {@link GudRegion Sub-Region} definition.
 	 * @see Element
 	 */
 	protected boolean isSubRegion(@NonNull Element element) {
@@ -276,8 +284,8 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 
 		String regionPath = StringUtils.arrayToDelimitedString(new String[] { parentName, regionName }, "/");
 
-		if (!regionPath.startsWith(Region.SEPARATOR)) {
-			regionPath = Region.SEPARATOR + regionPath;
+		if (!regionPath.startsWith(GudRegion.SEPARATOR)) {
+			regionPath = GudRegion.SEPARATOR + regionPath;
 		}
 
 		return regionPath;
@@ -306,11 +314,11 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 
 	private String getParentRegionPathFrom(String regionPath) {
 
-		int index = regionPath.lastIndexOf(Region.SEPARATOR);
+		int index = regionPath.lastIndexOf(GudRegion.SEPARATOR);
 
 		String parentPath = regionPath.substring(0, index);
 
-		if (parentPath.lastIndexOf(Region.SEPARATOR) == 0) {
+		if (parentPath.lastIndexOf(GudRegion.SEPARATOR) == 0) {
 			parentPath = parentPath.substring(1);
 		}
 

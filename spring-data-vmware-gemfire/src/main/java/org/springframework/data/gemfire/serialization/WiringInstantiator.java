@@ -1,11 +1,16 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.springframework.data.gemfire.serialization;
 
-import org.apache.geode.DataSerializable;
-import org.apache.geode.Instantiator;
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
+package org.springframework.data.gemfire.serialization;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
@@ -14,18 +19,20 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
+import org.springframework.data.gemfire.gud.api.GudDataSerializable;
+import org.springframework.data.gemfire.gud.api.GudInstantiator;
 
 /**
- * Apache Geode {@link Instantiator} that performs instance wiring using the Spring IoC container, allowing common
+ * Apache Geode {@link GudInstantiator} that performs instance wiring using the Spring IoC container, allowing common
  * properties to be injected before the object is hydrated/deserialized. The newly created instances can be configured
  * either by relying on an existing bean definition (which acts as a template) or by providing an embedded configuration
  * through annotations.
  *
- * Can reuse existing {@link Instantiator Instantiators} to optimize instance creation. If one is not provided,
+ * Can reuse existing {@link GudInstantiator Instantiators} to optimize instance creation. If one is not provided,
  * it will fallback to reflection invocation.
  *
- * By default, on initialization, the class will register itself as an {@link Instantiator} through
- * {@link #register(Instantiator)}. This behaviour can be disabled through {@link #setAutoRegister(boolean)}.
+ * By default, on initialization, the class will register itself as an {@link GudInstantiator} through
+ * {@link GudInstantiator#register(GudInstantiator)}. This behaviour can be disabled through {@link #setAutoRegister(boolean)}.
  * Additionally, the instantiator registration is not distributed by default, to allow the application context
  * to be reused. This can be changed through {@link #setDistribute(boolean)}.
  *
@@ -34,22 +41,22 @@ import org.springframework.beans.factory.wiring.BeanConfigurerSupport;
  * @see org.springframework.beans.factory.wiring.BeanWiringInfoResolver
  * @see org.springframework.beans.factory.annotation.Autowired
  */
-public class WiringInstantiator extends Instantiator implements BeanFactoryAware, InitializingBean, DisposableBean {
+public class WiringInstantiator extends GudInstantiator implements BeanFactoryAware, InitializingBean, DisposableBean {
 
-	private final Instantiator instantiator;
-	private final Class<? extends DataSerializable> clazz;
+	private final GudInstantiator instantiator;
+	private final Class<? extends GudDataSerializable> clazz;
 	private BeanConfigurerSupport configurer;
 	private BeanFactory beanFactory;
 	private boolean autoRegister = true;
 	private boolean distribute = false;
 
-	public WiringInstantiator(Instantiator instantiator) {
+	public WiringInstantiator(GudInstantiator instantiator) {
 		super(instantiator.getInstantiatedClass(), instantiator.getId());
 		this.instantiator = instantiator;
 		this.clazz = null;
 	}
 
-	public WiringInstantiator(Class<? extends DataSerializable> c, int classId) {
+	public WiringInstantiator(Class<? extends GudDataSerializable> c, int classId) {
 		super(c, classId);
 		instantiator = null;
 		clazz = c;
@@ -64,7 +71,7 @@ public class WiringInstantiator extends Instantiator implements BeanFactoryAware
 		}
 
 		if (autoRegister) {
-			Instantiator.register(this, distribute);
+			GudInstantiator.register(this, distribute);
 		}
 	}
 
@@ -78,13 +85,13 @@ public class WiringInstantiator extends Instantiator implements BeanFactoryAware
 
 
 	@Override
-	public DataSerializable newInstance() {
-		DataSerializable instance = createInstance();
+	public GudDataSerializable newInstance() {
+		GudDataSerializable instance = createInstance();
 		configurer.configureBean(instance);
 		return instance;
 	}
 
-	private DataSerializable createInstance() {
+	private GudDataSerializable createInstance() {
 		if (instantiator != null) {
 			return instantiator.newInstance();
 		}
@@ -103,10 +110,10 @@ public class WiringInstantiator extends Instantiator implements BeanFactoryAware
 	}
 
 	/**
-	 * Sets the auto-registration of this {@link Instantiator} during the container startup.
+	 * Sets the auto-registration of this {@link GudInstantiator} during the container startup.
 	 * Default is true, meaning the registration will occur once this factory is initialized.
 	 *
-	 * @see #register(Instantiator)
+	 * @see GudInstantiator#register(GudInstantiator)
 	 * @param autoRegister the autoRegister to set
 	 */
 	public void setAutoRegister(boolean autoRegister) {
@@ -114,10 +121,10 @@ public class WiringInstantiator extends Instantiator implements BeanFactoryAware
 	}
 
 	/**
-	 * Sets the distribution of the region of this {@link Instantiator} during the container startup.
+	 * Sets the distribution of the region of this {@link GudInstantiator} during the container startup.
 	 * Default is false, meaning the registration will not be distributed to other clients.
 	 *
-	 * @see #register(Instantiator, boolean)
+	 * @see GudInstantiator#register(GudInstantiator, boolean)
 	 * @param distribute whether the registration is distributable or not
 	 */
 	public void setDistribute(boolean distribute) {

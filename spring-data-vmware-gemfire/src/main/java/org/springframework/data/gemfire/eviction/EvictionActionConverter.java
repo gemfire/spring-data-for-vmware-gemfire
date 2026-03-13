@@ -1,12 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.eviction;
 
-import org.apache.geode.cache.EvictionAction;
-
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
 import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterSupport;
 
 /**
@@ -16,11 +22,11 @@ import org.springframework.data.gemfire.support.AbstractPropertyEditorConverterS
  * @author John Blum
  * @see EvictionActionType
  * @see AbstractPropertyEditorConverterSupport
- * @see EvictionAction
+ * @see GudEvictionAction
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
-public class EvictionActionConverter extends AbstractPropertyEditorConverterSupport<EvictionAction> {
+public class EvictionActionConverter extends AbstractPropertyEditorConverterSupport<GudEvictionAction> {
 
 	/**
 	 * Converts the given String into a GemFire EvictionAction value.
@@ -29,12 +35,12 @@ public class EvictionActionConverter extends AbstractPropertyEditorConverterSupp
 	 * @return the GemFire EvictionAction value matching the given String.
 	 * @throws IllegalArgumentException if the String could not be converted into
 	 * an instance of GemFire EvictionAction.
-	 * @see EvictionAction
+	 * @see GudEvictionAction
 	 */
 	@Override
-	public EvictionAction convert(final String source) {
+	public GudEvictionAction convert(final String source) {
 		return assertConverted(source, EvictionActionType.getEvictionAction(
-			EvictionActionType.valueOfIgnoreCase(source)), EvictionAction.class);
+			EvictionActionType.valueOfIgnoreCase(source)), GudEvictionAction.class);
 	}
 
 }

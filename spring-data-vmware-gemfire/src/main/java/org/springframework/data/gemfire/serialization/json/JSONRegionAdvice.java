@@ -1,7 +1,15 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.serialization.json;
 
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
@@ -25,13 +33,6 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.query.SelectResults;
-import org.apache.geode.cache.query.types.CollectionType;
-import org.apache.geode.cache.query.types.ObjectType;
-import org.apache.geode.pdx.JSONFormatter;
-import org.apache.geode.pdx.PdxInstance;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,16 +40,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.gud.api.GudCollectionType;
+import org.springframework.data.gemfire.gud.api.GudJSONFormatter;
+import org.springframework.data.gemfire.gud.api.GudObjectType;
+import org.springframework.data.gemfire.gud.api.GudPdxInstance;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 import org.springframework.util.CollectionUtils;
 
 /**
- * Spring/AspectJ AOP Aspect adapting a {@link Region} to handle JSON data.
+ * Spring/AspectJ AOP Aspect adapting a {@link GudRegion} to handle JSON data.
  *
  * @author David Turanski
  * @author John Blum
- * @see Region
- * @see JSONFormatter
- * @see PdxInstance
+ * @see GudRegion
+ * @see GudJSONFormatter
+ * @see GudPdxInstance
  * @see Aspect
  * @see Around
  */
@@ -79,7 +86,7 @@ public class JSONRegionAdvice {
 	 *
 	 * @param regions a List of region names to include
 	 */
-	public void setIncludedRegions(List<Region<?, ?>> regions) {
+	public void setIncludedRegions(List<GudRegion<?, ?>> regions) {
 		nullSafeList(regions).forEach(region -> this.includedRegions.add(toRegionName(region)));
 	}
 
@@ -255,11 +262,11 @@ public class JSONRegionAdvice {
 
 				returnValue = pjp.proceed();
 
-				if (returnValue instanceof SelectResults && this.convertReturnedCollections) {
+				if (returnValue instanceof GudSelectResults && this.convertReturnedCollections) {
 
 					List<Object> results = new ArrayList<>();
 
-					for (Object obj : (SelectResults<?>) returnValue) {
+					for (Object obj : (GudSelectResults<?>) returnValue) {
 						results.add(convertToJson(obj));
 					}
 
@@ -281,10 +288,10 @@ public class JSONRegionAdvice {
 	}
 
 	private boolean isIncludedJsonRegion(Object target) {
-		return target instanceof Region && isIncludedJsonRegion((Region) target);
+		return target instanceof GudRegion && isIncludedJsonRegion((GudRegion) target);
 	}
 
-	private boolean isIncludedJsonRegion(Region region) {
+	private boolean isIncludedJsonRegion(GudRegion region) {
 
 		boolean result = false;
 
@@ -312,9 +319,9 @@ public class JSONRegionAdvice {
 
 		Object result = returnValue;
 
-		if (returnValue instanceof PdxInstance) {
+		if (returnValue instanceof GudPdxInstance) {
 
-			result = JSONFormatter.toJSON((PdxInstance) returnValue);
+			result = GudJSONFormatter.toJSON((GudPdxInstance) returnValue);
 
 			if (!this.prettyPrint) {
 				result = flattenString(result);
@@ -324,15 +331,15 @@ public class JSONRegionAdvice {
 		return result;
 	}
 
-	private PdxInstance convertToPdx(Object value) {
+	private GudPdxInstance convertToPdx(Object value) {
 
-		PdxInstance pdx = null;
+		GudPdxInstance pdx = null;
 
-		if (value instanceof PdxInstance) {
-			pdx = (PdxInstance) value;
+		if (value instanceof GudPdxInstance) {
+			pdx = (GudPdxInstance) value;
 		}
 		else if (value instanceof String) {
-			pdx = JSONFormatter.fromJSON((String) value);
+			pdx = GudJSONFormatter.fromJSON((String) value);
 		}
 		else {
 
@@ -340,7 +347,7 @@ public class JSONRegionAdvice {
 
 			try {
 				String json = mapper.writeValueAsString(value);
-				pdx = JSONFormatter.fromJSON(json);
+				pdx = GudJSONFormatter.fromJSON(json);
 			}
 			catch (Throwable cause) {
 				handleThrowable(cause);
@@ -364,7 +371,7 @@ public class JSONRegionAdvice {
 		}
 	}
 
-	private static final class ImmutableSelectResults<T> extends AbstractCollection<T> implements SelectResults<T> {
+	private static final class ImmutableSelectResults<T> extends AbstractCollection<T> implements GudSelectResults<T> {
 
 		private final List<T> results;
 
@@ -383,12 +390,12 @@ public class JSONRegionAdvice {
 		}
 
 		@Override
-		public void setElementType(ObjectType elementType) {
+		public void setElementType(GudObjectType elementType) {
 			throw new UnsupportedOperationException("Setting element type on an immutable SelectResults object is not supported");
 		}
 
 		@Override
-		public CollectionType getCollectionType() {
+		public GudCollectionType getCollectionType() {
 			throw new UnsupportedOperationException("Not Implemented");
 		}
 

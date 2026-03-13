@@ -1,11 +1,19 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
-import org.apache.geode.security.AuthInitialize;
 import org.apache.shiro.lang.util.Assert;
+import org.springframework.data.gemfire.gud.api.GudAuthInitialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +46,14 @@ import java.util.Properties;
 
 /**
  * The {@link AutoConfiguredAuthenticationConfiguration} class is a Spring {@link Configuration} class that
- * auto-configures Apache Geode Authentication by providing an implementation of the {@link AuthInitialize} interface
+ * auto-configures Apache Geode Authentication by providing an implementation of the {@link GudAuthInitialize} interface
  * along with setting the necessary Apache Geode {@link Properties}.
  *
  * @author John Blum
  * @see Authenticator
  * @see PasswordAuthentication
  * @see Properties
- * @see AuthInitialize
+ * @see GudAuthInitialize
  * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
  * @see Bean
  * @see org.springframework.context.annotation.Condition

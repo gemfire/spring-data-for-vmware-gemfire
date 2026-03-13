@@ -1,15 +1,21 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
  */
 
 package org.springframework.data.gemfire.expiration;
 
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
 
 /**
  * The ExpirationAttributesFactoryBean class is a Spring FactoryBean used to create GemFire ExpirationAttributes
@@ -19,33 +25,33 @@ import org.springframework.beans.factory.InitializingBean;
  * @author John Blum
  * @see FactoryBean
  * @see InitializingBean
- * @see ExpirationAttributes
+ * @see GudExpirationAttributes
  * @since 1.6.0
  */
 @SuppressWarnings("unused")
-public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAttributes>, InitializingBean {
+public class ExpirationAttributesFactoryBean implements FactoryBean<GudExpirationAttributes>, InitializingBean {
 
 	protected static final int DEFAULT_TIMEOUT = 0;
 
-	protected static final ExpirationAction DEFAULT_EXPIRATION_ACTION =
+	protected static final GudExpirationAction DEFAULT_EXPIRATION_ACTION =
 		ExpirationActionType.DEFAULT.getExpirationAction();
 
-	private ExpirationAction action;
+	private GudExpirationAction action;
 
-	private ExpirationAttributes expirationAttributes;
+	private GudExpirationAttributes expirationAttributes;
 
 	private Integer timeout;
 
 	/* non-Javadoc */
 	@Override
-	public ExpirationAttributes getObject() throws Exception {
+	public GudExpirationAttributes getObject() throws Exception {
 		return expirationAttributes;
 	}
 
 	/* non-Javadoc */
 	@Override
 	public Class<?> getObjectType() {
-		return (expirationAttributes != null ? expirationAttributes.getClass() : ExpirationAttributes.class);
+		return (expirationAttributes != null ? expirationAttributes.getClass() : GudExpirationAttributes.class);
 	}
 
 	/* non-Javadoc */
@@ -58,9 +64,9 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * Sets the action to perform when a Region or an Entry expire.
 	 *
 	 * @param action the type of action to perform on expiration
-	 * @see ExpirationAction
+	 * @see GudExpirationAction
 	 */
-	public void setAction(final ExpirationAction action) {
+	public void setAction(final GudExpirationAction action) {
 		this.action = action;
 	}
 
@@ -69,9 +75,9 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 *
 	 * @return the type of action to perform on expiration.
 	 * @see ExpirationActionType
-	 * @see ExpirationAttributes#getAction()
+	 * @see GudExpirationAttributes#getAction()
 	 */
-	public ExpirationAction getAction() {
+	public GudExpirationAction getAction() {
 		return (action != null ? action : DEFAULT_EXPIRATION_ACTION);
 	}
 
@@ -88,7 +94,7 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * Gets the number of seconds before a Region or an Entry expires.
 	 *
 	 * @return the number of seconds before a Region or an Entry expires.
-	 * @see ExpirationAttributes#getTimeout()
+	 * @see GudExpirationAttributes#getTimeout()
 	 */
 	public int getTimeout() {
 		return (timeout != null ? timeout : DEFAULT_TIMEOUT);
@@ -101,11 +107,11 @@ public class ExpirationAttributesFactoryBean implements FactoryBean<ExpirationAt
 	 * @see #getAction()
 	 * @see #getTimeout()
 	 * @see ExpirationActionType#getExpirationAction()
-	 * @see ExpirationAttributes
+	 * @see GudExpirationAttributes
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		expirationAttributes = new ExpirationAttributes(getTimeout(), getAction());
+		expirationAttributes = GudExpirationAttributes.of(getTimeout(), getAction());
 	}
 
 }

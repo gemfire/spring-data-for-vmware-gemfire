@@ -1,14 +1,20 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ */
+
 package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
@@ -18,15 +24,18 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.client.GemfireDataSourcePostProcessor;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
- * The {@link ClusterDefinedRegionsConfiguration} class configures client Proxy-based {@link Region Regions}
- * for all {@link Region Regions} defined in the cluster to which the cache client is connected.
+ * The {@link ClusterDefinedRegionsConfiguration} class configures client Proxy-based {@link GudRegion Regions}
+ * for all {@link GudRegion Regions} defined in the cluster to which the cache client is connected.
  *
  * @author John Blum
- * @see Region
- * @see ClientCache
- * @see ClientRegionShortcut
+ * @see GudRegion
+ * @see GudClientCache
+ * @see GudClientRegionShortcut
  * @see Bean
  * @see Configuration
  * @see ImportAware
@@ -39,9 +48,9 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 @Configuration
 public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfigSupport implements ImportAware {
 
-	protected static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY;
+	protected static final GudClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = GudClientRegionShortcut.PROXY;
 
-	private ClientRegionShortcut clientRegionShortcut = DEFAULT_CLIENT_REGION_SHORTCUT;
+	private GudClientRegionShortcut clientRegionShortcut = DEFAULT_CLIENT_REGION_SHORTCUT;
 
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -56,15 +65,15 @@ public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfig
 		setClientRegionShortcut(enableClusterDefinedRegionsAttributes.getEnum("clientRegionShortcut"));
 	}
 
-	protected void setClientRegionShortcut(ClientRegionShortcut clientRegionShortcut) {
+	protected void setClientRegionShortcut(GudClientRegionShortcut clientRegionShortcut) {
 		this.clientRegionShortcut = clientRegionShortcut;
 	}
 
-	protected Optional<ClientRegionShortcut> getClientRegionShortcut() {
+	protected Optional<GudClientRegionShortcut> getClientRegionShortcut() {
 		return Optional.ofNullable(this.clientRegionShortcut);
 	}
 
-	protected ClientRegionShortcut resolveClientRegionShortcut() {
+	protected GudClientRegionShortcut resolveClientRegionShortcut() {
 		return getClientRegionShortcut().orElse(DEFAULT_CLIENT_REGION_SHORTCUT);
 	}
 
@@ -75,7 +84,7 @@ public class ClusterDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	}
 
 	@Bean
-	Object nullCacheDependentBean(ClientCache cache) {
+	Object nullCacheDependentBean(GudClientCache cache) {
 		return null;
 	}
 }
