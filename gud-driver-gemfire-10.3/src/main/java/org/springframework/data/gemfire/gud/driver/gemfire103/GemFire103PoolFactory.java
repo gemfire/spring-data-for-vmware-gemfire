@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -82,17 +87,10 @@ public class GemFire103PoolFactory implements GudPoolFactory, NativeWrapper<Pool
         return this;
     }
 
-    @Override
-    public GudPoolFactory setMinConnectionsPerServer(int minConnections) {
-        // Not available in 10.3, ignore
-        return this;
-    }
-
-    @Override
-    public GudPoolFactory setMaxConnectionsPerServer(int maxConnections) {
-        // Not available in 10.3, ignore
-        return this;
-    }
+    // Note: setMinConnectionsPerServer and setMaxConnectionsPerServer are NOT overridden.
+    // The default methods in GudPoolFactory will throw GudUnsupportedOperationException
+    // since these features are not yet available in GemFire 10.3.
+    // Expected to be available in a future GemFire version.
 
     @Override
     public GudPoolFactory setServerConnectionTimeout(int timeout) {

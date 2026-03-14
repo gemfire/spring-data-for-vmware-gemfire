@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -103,7 +108,7 @@ public class GemFire103DiskStoreFactory implements GudDiskStoreFactory, NativeWr
 
     @Override
     public GudDiskStoreFactory setSegments(int segments) {
-        // GemFire 10.3 may not have setSegments - ignore
+        nativeFactory.setSegments(segments);
         return this;
     }
 

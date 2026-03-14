@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 plugins {
     id("java-library")
     id("commercial-repositories")
@@ -25,10 +30,9 @@ java {
 dependencies {
     // Spring Data VMware GemFire - provides GUD API transitively
     implementation(project(":spring-data-vmware-gemfire"))
-    
-    // GUD Driver for GemFire 10.3 - runtime only, never referenced directly
-    runtimeOnly(project(":gud-driver-gemfire-10.3"))
-    
+
+    runtimeOnly(project(":gud-driver-gemfire-10.1"))
+
     // Logging
     implementation(libs.logback)
     implementation(libs.log4J)

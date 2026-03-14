@@ -9,15 +9,19 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudPoolFactory interface as 1:1 mapping of GemFire PoolFactory
+ * 2026-03-14: Changed per-server connection methods to default methods for API evolution
  */
 
 package org.springframework.data.gemfire.gud.api;
-
-import java.net.InetSocketAddress;
 
 /**
  * GUD API abstraction for GemFire PoolFactory interface.
@@ -59,8 +63,41 @@ public interface GudPoolFactory {
     GudPoolFactory setThreadLocalConnections(boolean threadLocalConnections);
     GudPoolFactory setMinConnections(int minConnections);
     GudPoolFactory setMaxConnections(int maxConnections);
-    GudPoolFactory setMinConnectionsPerServer(int minConnections);
-    GudPoolFactory setMaxConnectionsPerServer(int maxConnections);
+
+    /**
+     * Sets the minimum number of connections to each server.
+     * <p>This feature is planned for a future GemFire version. Current drivers
+     * will throw {@link GudUnsupportedOperationException}.
+     *
+     * @param minConnections the minimum connections per server
+     * @return this factory
+     * @throws GudUnsupportedOperationException if not supported by the driver
+     * @since GemFire 10.4 (planned)
+     */
+    default GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        throw new GudUnsupportedOperationException(
+            "setMinConnectionsPerServer() is not supported in this GemFire version. " +
+            "Use setMinConnections() for total pool connection limits instead.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.4");
+    }
+
+    /**
+     * Sets the maximum number of connections to each server.
+     * <p>This feature is planned for a future GemFire version. Current drivers
+     * will throw {@link GudUnsupportedOperationException}.
+     *
+     * @param maxConnections the maximum connections per server
+     * @return this factory
+     * @throws GudUnsupportedOperationException if not supported by the driver
+     * @since GemFire 10.4 (planned)
+     */
+    default GudPoolFactory setMaxConnectionsPerServer(int maxConnections) {
+        throw new GudUnsupportedOperationException(
+            "setMaxConnectionsPerServer() is not supported in this GemFire version. " +
+            "Use setMaxConnections() for total pool connection limits instead.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.4");
+    }
+
     GudPoolFactory setServerConnectionTimeout(int timeout);
     GudPoolFactory setStatisticInterval(int interval);
     GudPoolFactory setIdleTimeout(long idleTimeout);

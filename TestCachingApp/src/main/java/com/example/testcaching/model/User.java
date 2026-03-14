@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -13,16 +18,14 @@
 package com.example.testcaching.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.gemfire.mapping.annotation.Region;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * User entity stored in the RegionProxy region.
  */
-@Region("RegionProxy")
-public class User implements Serializable {
+//@Region("RegionProxy")
+public class User {
 
     private static final long serialVersionUID = 1L;
 

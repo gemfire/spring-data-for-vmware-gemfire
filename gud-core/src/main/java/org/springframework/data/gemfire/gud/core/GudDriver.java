@@ -9,19 +9,28 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudDriver interface for driver abstraction
  * 2026-03-13: Added factory creation methods for cache creation without native dependencies
+ * 2026-03-14: Added capability detection and version information for API evolution
  */
 
 package org.springframework.data.gemfire.gud.core;
+
+import java.util.Set;
 
 import org.springframework.data.gemfire.gud.api.GudCache;
 import org.springframework.data.gemfire.gud.api.GudCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudGemFireException;
 import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 
@@ -31,6 +40,8 @@ import org.springframework.data.gemfire.gud.api.GudRegion;
  * native GemFire types with GUD API interfaces.
  */
 public interface GudDriver {
+
+    // ===== Identity =====
 
     /**
      * Gets the name of this driver.
@@ -45,6 +56,41 @@ public interface GudDriver {
      * @return the supported GemFire version
      */
     String getSupportedVersion();
+
+    // ===== Version Information =====
+
+    /**
+     * Returns the minimum GUD API version this driver supports.
+     *
+     * @return the minimum supported API version
+     */
+    GudApiVersion getMinimumApiVersion();
+
+    /**
+     * Returns the maximum GUD API version this driver supports.
+     *
+     * @return the maximum supported API version
+     */
+    GudApiVersion getMaximumApiVersion();
+
+    // ===== Capability Detection =====
+
+    /**
+     * Checks if this driver supports a specific capability.
+     *
+     * @param capability the capability to check
+     * @return true if supported
+     */
+    boolean supportsCapability(GudCapability capability);
+
+    /**
+     * Returns all capabilities supported by this driver.
+     *
+     * @return unmodifiable set of supported capabilities
+     */
+    Set<GudCapability> getCapabilities();
+
+    // ===== Factory Creation =====
 
     /**
      * Creates a new client cache factory for building client caches.
@@ -61,6 +107,8 @@ public interface GudDriver {
      * @return a new GudCacheFactory instance
      */
     GudCacheFactory createCacheFactory();
+
+    // ===== Wrapping =====
 
     /**
      * Wraps a native cache object with the GUD API.
@@ -104,4 +152,34 @@ public interface GudDriver {
      * @return the native GemFire object
      */
     <T> T unwrap(Object gudObject);
+
+    // ===== Exception Handling =====
+
+    /**
+     * Translates a native GemFire exception to a GUD exception.
+     *
+     * @param nativeException the native exception
+     * @return a GUD API exception
+     */
+    GudGemFireException translateException(Throwable nativeException);
+
+    // ===== Feature Detection Convenience Methods =====
+
+    /**
+     * Checks if this driver supports partition statistics.
+     *
+     * @return true if partition statistics are supported
+     */
+    default boolean supportsPartitionStatistics() {
+        return supportsCapability(GudCapability.PARTITION_STATISTICS);
+    }
+
+    /**
+     * Checks if this driver supports enhanced security features.
+     *
+     * @return true if enhanced security is supported
+     */
+    default boolean supportsEnhancedSecurity() {
+        return supportsCapability(GudCapability.ENHANCED_SECURITY);
+    }
 }

@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -46,8 +51,9 @@ import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 @ClientCacheApplication(
     name = "TestCachingApp",
     locators = @ClientCacheApplication.Locator(host = "localhost", port = 23232),
-    subscriptionEnabled = true,
-    readyForEvents = true
+    subscriptionEnabled = false,
+    readyForEvents = false,
+    maxConnectionsPerServer = 15
 )
 @EnableDiskStore(
     name = "CachingProxyDiskStore",

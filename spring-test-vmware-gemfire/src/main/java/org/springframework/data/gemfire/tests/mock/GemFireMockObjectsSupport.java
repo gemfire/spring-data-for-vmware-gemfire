@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -280,11 +285,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	static void closeGudPools() {
 
-		// TODO: add support for keepAlive (??)
-		ObjectUtils.doOperationSafely(() -> {
-			GudPoolManager.close();
-			return null;
-		}, null);
+		// TODO: add support for keepAlive (??) Cursor still to clean up
+//		ObjectUtils.doOperationSafely(() -> {
+//			GudPoolManager.close();
+//			return null;
+//		}, null);
 	}
 
 	/**
@@ -325,10 +330,12 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 	 */
 	static synchronized void unregisterManagedGudPools() {
 
-		CollectionUtils.nullSafeMap(GudPoolManager.getAll()).values().stream().filter(Objects::nonNull)
-				.filter(pool -> registeredGudPoolNames.contains(pool.getName())).forEach(GemFireMockObjectsSupport::unregister);
+//		CollectionUtils.nullSafeMap(GudPoolManager.getAll()).values().stream().filter(Objects::nonNull)
+//				.filter(pool -> registeredGudPoolNames.contains(pool.getName())).forEach(GemFireMockObjectsSupport::unregister);
+//
+//		registeredGudPoolNames.clear();
 
-		registeredGudPoolNames.clear();
+		//TODO this still needs to be clean up cursor
 	}
 
 	/**

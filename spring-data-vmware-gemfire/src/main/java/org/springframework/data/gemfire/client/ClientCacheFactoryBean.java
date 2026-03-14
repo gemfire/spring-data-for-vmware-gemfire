@@ -9,10 +9,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ * 2026-03-14: Added graceful handling for unsupported per-server connection settings
  */
 
 package org.springframework.data.gemfire.client;
@@ -48,6 +54,7 @@ import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudConfigProperty;
+import org.springframework.data.gemfire.gud.api.GudUnsupportedOperationException;
 import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 import org.springframework.data.gemfire.gud.api.GudJndiBinding;
 import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
@@ -320,8 +327,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		clientCacheFactory.setPoolLoadConditioningInterval(pool.getLoadConditioningInterval(getLoadConditioningInterval()));
 		clientCacheFactory.setPoolMinConnections(pool.getMinConnections(getMinConnections()));
 		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
-		clientCacheFactory.setPoolMinConnectionsPerServer(pool.getMinConnectionsPerServer(getMinConnectionsPerServer()));
-		clientCacheFactory.setPoolMaxConnectionsPerServer(pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer()));
+		configurePerServerConnectionLimits(clientCacheFactory, pool);
 		clientCacheFactory.setPoolMultiuserAuthentication(pool.getMultiuserAuthentication(getMultiUserAuthentication()));
 		clientCacheFactory.setPoolPingInterval(pool.getPingInterval(getPingInterval()));
 		clientCacheFactory.setPoolPRSingleHopEnabled(pool.getPRSingleHopEnabled(getPrSingleHopEnabled()));
@@ -363,6 +369,31 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		}
 
 		return clientCacheFactory;
+	}
+
+	/**
+	 * Configures per-server connection limits on the client cache factory.
+	 * These settings are only available in GemFire 10.3+. For older versions,
+	 * a warning is logged and the settings are skipped.
+	 */
+	private void configurePerServerConnectionLimits(GudClientCacheFactory clientCacheFactory,
+			DefaultableDelegatingPoolAdapter pool) {
+
+		Integer minConnectionsPerServer = pool.getMinConnectionsPerServer(getMinConnectionsPerServer());
+		Integer maxConnectionsPerServer = pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer());
+
+		try {
+			if (minConnectionsPerServer != null) {
+				clientCacheFactory.setPoolMinConnectionsPerServer(minConnectionsPerServer);
+			}
+			if (maxConnectionsPerServer != null) {
+				clientCacheFactory.setPoolMaxConnectionsPerServer(maxConnectionsPerServer);
+			}
+		} catch (GudUnsupportedOperationException ex) {
+			getLogger().warn("Per-server connection limits (minConnectionsPerServer={}, maxConnectionsPerServer={}) " +
+				"are not supported by this GemFire version. {}",
+				minConnectionsPerServer, maxConnectionsPerServer, ex.getMessage());
+		}
 	}
 
 	/**

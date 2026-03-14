@@ -4,17 +4,26 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudDriverManager for driver discovery and management
+ * 2026-03-14: Added version-aware driver selection and capability checking
  */
 
 package org.springframework.data.gemfire.gud.core;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,5 +119,70 @@ public final class GudDriverManager {
     public static void clearDrivers() {
         drivers.clear();
         defaultDriver = null;
+    }
+
+    // ===== Version-Aware Driver Selection =====
+
+    /**
+     * Gets a driver compatible with the specified GemFire version.
+     * Returns the highest version driver that supports the requested version.
+     *
+     * @param gemfireVersion the GemFire version to find a driver for
+     * @return the best matching driver
+     * @throws IllegalStateException if no compatible driver is found
+     */
+    public static GudDriver getDriverForGemFireVersion(String gemfireVersion) {
+        loadDriversIfNeeded();
+        return drivers.values().stream()
+            .filter(d -> isVersionCompatible(d.getSupportedVersion(), gemfireVersion))
+            .max(Comparator.comparing(GudDriver::getSupportedVersion))
+            .orElseThrow(() -> new IllegalStateException(
+                "No driver found for GemFire version: " + gemfireVersion));
+    }
+
+    /**
+     * Gets all drivers that support a specific capability.
+     *
+     * @param capability the capability to check for
+     * @return list of drivers supporting the capability
+     */
+    public static List<GudDriver> getDriversWithCapability(GudCapability capability) {
+        loadDriversIfNeeded();
+        return drivers.values().stream()
+            .filter(d -> d.supportsCapability(capability))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if any registered driver supports the given capability.
+     * Uses the default driver for the check.
+     *
+     * @param capability the capability to check for
+     * @return true if the default driver supports the capability
+     */
+    public static boolean isCapabilityAvailable(GudCapability capability) {
+        return getDefaultDriver().supportsCapability(capability);
+    }
+
+    /**
+     * Gets all registered drivers.
+     *
+     * @return list of all registered drivers
+     */
+    public static List<GudDriver> getAllDrivers() {
+        loadDriversIfNeeded();
+        return drivers.values().stream().collect(Collectors.toList());
+    }
+
+    private static boolean isVersionCompatible(String driverVersion, String requestedVersion) {
+        GudApiVersion driver = GudApiVersion.parse(driverVersion);
+        GudApiVersion requested = GudApiVersion.parse(requestedVersion);
+        return driver.compareTo(requested) >= 0;
+    }
+
+    private static void loadDriversIfNeeded() {
+        if (drivers.isEmpty()) {
+            loadDrivers();
+        }
     }
 }

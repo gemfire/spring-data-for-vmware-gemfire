@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -210,17 +215,9 @@ public class GemFire103ClientCacheFactory implements GudClientCacheFactory {
         return this;
     }
 
-    @Override
-    public GudClientCacheFactory setPoolMinConnectionsPerServer(int minConnections) {
-        // Not available in GemFire 10.3 ClientCacheFactory
-        return this;
-    }
-
-    @Override
-    public GudClientCacheFactory setPoolMaxConnectionsPerServer(int maxConnections) {
-        // Not available in GemFire 10.3 ClientCacheFactory
-        return this;
-    }
+    // Note: setPoolMinConnectionsPerServer and setPoolMaxConnectionsPerServer are NOT overridden.
+    // The default methods in GudClientCacheFactory will throw GudUnsupportedOperationException
+    // since these features are not yet available in GemFire 10.3.
 
     @Override
     public GudClientCache create() {

@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -14,6 +19,7 @@ package com.example.testcaching.repository;
 
 import com.example.testcaching.model.User;
 
+import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.data.gemfire.repository.GemfireRepository;
 
 import java.util.List;
@@ -21,6 +27,7 @@ import java.util.List;
 /**
  * Repository interface for User entities stored in RegionProxy.
  */
+@Region("RegionProxy")
 public interface UserRepository extends GemfireRepository<User, String> {
 
     /**

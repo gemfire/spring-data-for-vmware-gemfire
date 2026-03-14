@@ -4,10 +4,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
+ * 2026-03-14: Added graceful handling for unsupported per-server connection settings
  */
 
 package org.springframework.data.gemfire.client;
@@ -24,6 +30,7 @@ import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudPoolFactory;
 import org.springframework.data.gemfire.gud.api.GudQueryService;
 import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudUnsupportedOperationException;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
@@ -326,8 +333,7 @@ public abstract class PoolFactoryBean extends AbstractFactoryBeanSupport<GudPool
 			it.setLoadConditioningInterval(this.loadConditioningInterval);
 			it.setMaxConnections(this.maxConnections);
 			it.setMinConnections(this.minConnections);
-			it.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
-			it.setMinConnectionsPerServer(this.minConnectionsPerServer);
+			configurePerServerConnectionLimits(it);
 			it.setMultiuserAuthentication(this.multiUserAuthentication);
 			it.setPingInterval(this.pingInterval);
 			it.setPRSingleHopEnabled(this.prSingleHopEnabled);
@@ -353,6 +359,22 @@ public abstract class PoolFactoryBean extends AbstractFactoryBeanSupport<GudPool
 		});
 
 		return poolFactory;
+	}
+
+	/**
+	 * Configures per-server connection limits on the pool factory.
+	 * These settings are only available in GemFire 10.3+. For older versions,
+	 * a warning is logged and the settings are skipped.
+	 */
+	private void configurePerServerConnectionLimits(GudPoolFactory poolFactory) {
+		try {
+			poolFactory.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
+			poolFactory.setMinConnectionsPerServer(this.minConnectionsPerServer);
+		} catch (GudUnsupportedOperationException ex) {
+			getLogger().warn("Per-server connection limits (minConnectionsPerServer={}, maxConnectionsPerServer={}) " +
+				"are not supported by this GemFire version. {}",
+				this.minConnectionsPerServer, this.maxConnectionsPerServer, ex.getMessage());
+		}
 	}
 
 	/**
