@@ -9,10 +9,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Created GemFire 10.1 DiskStoreFactory adapter
+ * 2026-03-17: Added setSegments() override (supported in 10.1+)
  */
 
 package org.springframework.data.gemfire.gud.driver.gemfire101;
@@ -106,9 +112,11 @@ public class GemFire101DiskStoreFactory implements GudDiskStoreFactory, NativeWr
         return this;
     }
 
-    // Note: setSegments() is NOT overridden.
-    // The default method in GudDiskStoreFactory will throw GudUnsupportedOperationException
-    // since this feature is not available in GemFire 10.1.
+    @Override
+    public GudDiskStoreFactory setSegments(int segments) {
+        nativeFactory.setSegments(segments);
+        return this;
+    }
 
     @Override
     public GudDiskStore create(String name) {

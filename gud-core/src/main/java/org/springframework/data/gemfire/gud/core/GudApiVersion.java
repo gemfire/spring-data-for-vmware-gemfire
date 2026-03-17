@@ -4,10 +4,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-14: Created GudApiVersion class for version compatibility checking
+ * 2026-03-17: Removed V1_1 (10.4) placeholder
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -18,11 +24,8 @@ package org.springframework.data.gemfire.gud.core;
  */
 public final class GudApiVersion implements Comparable<GudApiVersion> {
 
-    /** GUD API version 1.0 - initial release supporting GemFire 10.3 */
+    /** GUD API version 1.0 - initial release supporting GemFire 10.0 through 10.3 */
     public static final GudApiVersion V1_0 = new GudApiVersion(1, 0, 0);
-
-    /** GUD API version 1.1 - adds GemFire 10.4 support */
-    public static final GudApiVersion V1_1 = new GudApiVersion(1, 1, 0);
 
     private final int major;
     private final int minor;

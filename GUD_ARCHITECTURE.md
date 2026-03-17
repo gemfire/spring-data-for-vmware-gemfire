@@ -4,7 +4,7 @@
 
 The GemFire Unified Driver (GUD) is an abstraction layer that decouples Spring Data GemFire from native GemFire APIs. This enables:
 
-1. **Driver Swappability** - Switch between GemFire versions (10.3, 10.4, etc.) without changing application code
+1. **Driver Swappability** - Switch between GemFire versions (10.0, 10.1, 10.2, 10.3) without changing application code
 2. **API Evolution** - Gracefully handle API changes between GemFire versions
 3. **Clean Separation** - Application code never directly imports native GemFire classes
 
@@ -239,23 +239,48 @@ gud-driver-gemfire-10.3
 - [ ] Integration test utilities
 
 #### 12. Additional Drivers
-- [ ] `gud-driver-gemfire-10.4` (when 10.4 is released)
-- [ ] Driver version negotiation
-- [ ] Graceful feature degradation for older drivers
+- [x] `gud-driver-gemfire-10.0` - GemFire 10.0 support
+- [x] `gud-driver-gemfire-10.1` - GemFire 10.1 support
+- [x] `gud-driver-gemfire-10.2` - GemFire 10.2 support
+- [x] Driver version negotiation
+- [x] Graceful feature degradation for older drivers
 
 ## API Evolution Strategy
 
-When a new GemFire version (e.g., 10.4) introduces API changes:
+When a new GemFire version introduces API changes:
 
 ### Adding New Features
-1. Add new methods to GUD interfaces with `default` implementations that throw `UnsupportedOperationException`
-2. Implement in the new driver
+1. Add new methods to GUD interfaces with `default` implementations that throw `GudUnsupportedOperationException`
+2. Implement the method in drivers that support the feature
 3. Old drivers continue to work (throw exception if new feature is used)
+4. Spring Data beans catch `GudUnsupportedOperationException` and log warnings
+
+**Example:** `DiskStoreFactory.setSegments()` was added in GemFire 10.1:
+- The 10.0 driver uses the default method that throws
+- The 10.1, 10.2, and 10.3 drivers override with native implementations
+- `DiskStoreFactoryBean` catches the exception and logs a warning if used on 10.0
+
+### Handling Deprecated Features
+The GUD API tracks deprecated features from GemFire to help applications migrate:
+
+1. Mark deprecated methods with `@Deprecated` annotation in GUD interfaces
+2. Include `@deprecated` Javadoc with migration guidance
+3. Driver implementations still support the methods (for compatibility)
+4. Applications receive compiler warnings when using deprecated features
+
+**Currently Deprecated Features:**
+- `PoolFactory.setThreadLocalConnections()` - No-op since Geode 1.10, ignored
+- `ClientCacheFactory.setPdxDiskStore()` - PDX persistence not supported on client side
+- `ClientCacheFactory.setPdxPersistent()` - PDX persistence not supported on client side
+- `QueryService.createHashIndex()` - Hash indexes deprecated, use standard indexes
+- `QueryService.defineHashIndex()` - Hash indexes deprecated, use standard indexes
+- `QueryService.getIndexes(Region, IndexType)` - IndexType parameter deprecated
+- `IndexType` enum - Use non-IndexType method overloads
 
 ### Handling Removed Features
 1. Keep methods in GUD interfaces
-2. New driver throws `UnsupportedOperationException` with clear message
-3. Applications can check driver version and adapt
+2. Newer driver throws `GudUnsupportedOperationException` with clear message
+3. Applications can check driver capabilities and adapt
 
 ### Handling Changed Signatures
 1. Add new method with new signature

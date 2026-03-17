@@ -9,10 +9,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Created GemFire 10.3 PoolFactory adapter
+ * 2026-03-17: Added per-server connection methods (supported in 10.1+)
  */
 
 package org.springframework.data.gemfire.gud.driver.gemfire103;
@@ -87,10 +93,17 @@ public class GemFire103PoolFactory implements GudPoolFactory, NativeWrapper<Pool
         return this;
     }
 
-    // Note: setMinConnectionsPerServer and setMaxConnectionsPerServer are NOT overridden.
-    // The default methods in GudPoolFactory will throw GudUnsupportedOperationException
-    // since these features are not yet available in GemFire 10.3.
-    // Expected to be available in a future GemFire version.
+    @Override
+    public GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        nativeFactory.setMinConnectionsPerServer(minConnections);
+        return this;
+    }
+
+    @Override
+    public GudPoolFactory setMaxConnectionsPerServer(int maxConnections) {
+        nativeFactory.setMaxConnectionsPerServer(maxConnections);
+        return this;
+    }
 
     @Override
     public GudPoolFactory setServerConnectionTimeout(int timeout) {

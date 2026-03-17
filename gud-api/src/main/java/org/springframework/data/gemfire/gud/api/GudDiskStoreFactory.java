@@ -19,11 +19,17 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudDiskStoreFactory interface as 1:1 mapping of GemFire DiskStoreFactory
- * 2026-03-14: Added version-aware default method for setSegments (requires 10.2+)
+ * 2026-03-14: Added version-aware default method for setSegments (requires 10.1+)
+ * 2026-03-17: Fixed setSegments version from 10.2 to 10.1
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -63,18 +69,18 @@ public interface GudDiskStoreFactory {
 
     /**
      * Sets the number of segments in the disk store.
-     * <p>This feature was added in GemFire 10.2. Drivers for older versions
+     * <p>This feature was added in GemFire 10.1. Drivers for older versions
      * will throw {@link GudUnsupportedOperationException}.
      *
      * @param segments the number of segments
      * @return this factory
      * @throws GudUnsupportedOperationException if not supported by the driver
-     * @since GemFire 10.2
+     * @since GemFire 10.1
      */
     default GudDiskStoreFactory setSegments(int segments) {
         throw new GudUnsupportedOperationException(
-            "setSegments() is not supported. This feature was added in GemFire 10.2.",
-            "DISK_STORE_SEGMENTS", "10.2");
+            "setSegments() is not supported. This feature was added in GemFire 10.1.",
+            "DISK_STORE_SEGMENTS", "10.1");
     }
 
     GudDiskStore create(String name);

@@ -9,10 +9,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GemFire 10.3 Pool adapter
+ * 2026-03-17: Updated per-server connection methods to delegate to native (supported in 10.1+)
  */
 
 package org.springframework.data.gemfire.gud.driver.gemfire103;
@@ -189,14 +195,12 @@ public class GemFire103Pool implements GudPool, NativeWrapper<Pool> {
 
     @Override
     public int getMinConnectionsPerServer() {
-        // Not available in 10.3
-        return 0;
+        return nativePool.getMinConnectionsPerServer();
     }
 
     @Override
     public int getMaxConnectionsPerServer() {
-        // Not available in 10.3
-        return Integer.MAX_VALUE;
+        return nativePool.getMaxConnectionsPerServer();
     }
 
     @Override

@@ -8,6 +8,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 plugins {
     id("java-library")
     id("commercial-repositories")
@@ -32,6 +37,7 @@ dependencies {
     implementation(project(":spring-data-vmware-gemfire"))
 
     runtimeOnly(project(":gud-driver-gemfire-10.1"))
+//    runtimeOnly("com.vwmare.gemfire:gemfire-core:10.1.7")
 
     // Logging
     implementation(libs.logback)

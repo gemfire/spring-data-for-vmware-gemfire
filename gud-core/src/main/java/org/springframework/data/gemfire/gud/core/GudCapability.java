@@ -4,10 +4,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-14: Created GudCapability enum for driver capability detection
+ * 2026-03-17: Fixed PER_SERVER_CONNECTION_LIMITS from 10.3 to 10.1, added DISK_STORE_SEGMENTS, removed 10.4 placeholders
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -32,15 +38,12 @@ public enum GudCapability {
     PDX_SERIALIZATION("PDX serialization", "10.0"),
     FUNCTIONS("Function execution", "10.0"),
 
-    // 10.3+ capabilities
-    SECURITY_MANAGER("Integrated security manager", "10.3"),
-    PER_SERVER_CONNECTION_LIMITS("Per-server min/max connection limits", "10.3"),
+    // 10.1+ capabilities
+    PER_SERVER_CONNECTION_LIMITS("Per-server min/max connection limits", "10.1"),
+    DISK_STORE_SEGMENTS("Disk store segments API", "10.1"),
 
-    // 10.4+ capabilities (placeholders for future versions)
-    PARTITION_STATISTICS("Partition statistics API", "10.4"),
-    ENHANCED_SECURITY("Enhanced security features", "10.4"),
-    NEW_INDEX_TYPES("New index type support", "10.4"),
-    ASYNC_EVENT_QUEUE_V2("Async event queue v2", "10.4");
+    // 10.3+ capabilities
+    SECURITY_MANAGER("Integrated security manager", "10.3");
 
     private final String description;
     private final String minimumVersion;

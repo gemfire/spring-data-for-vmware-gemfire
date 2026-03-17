@@ -14,12 +14,18 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudDriver interface for driver abstraction
  * 2026-03-13: Added factory creation methods for cache creation without native dependencies
  * 2026-03-14: Added capability detection and version information for API evolution
+ * 2026-03-17: Removed hypothetical 10.4 feature detection convenience methods
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -166,20 +172,20 @@ public interface GudDriver {
     // ===== Feature Detection Convenience Methods =====
 
     /**
-     * Checks if this driver supports partition statistics.
+     * Checks if this driver supports per-server connection limits.
      *
-     * @return true if partition statistics are supported
+     * @return true if per-server connection limits are supported
      */
-    default boolean supportsPartitionStatistics() {
-        return supportsCapability(GudCapability.PARTITION_STATISTICS);
+    default boolean supportsPerServerConnectionLimits() {
+        return supportsCapability(GudCapability.PER_SERVER_CONNECTION_LIMITS);
     }
 
     /**
-     * Checks if this driver supports enhanced security features.
+     * Checks if this driver supports disk store segments API.
      *
-     * @return true if enhanced security is supported
+     * @return true if disk store segments are supported
      */
-    default boolean supportsEnhancedSecurity() {
-        return supportsCapability(GudCapability.ENHANCED_SECURITY);
+    default boolean supportsDiskStoreSegments() {
+        return supportsCapability(GudCapability.DISK_STORE_SEGMENTS);
     }
 }

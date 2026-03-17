@@ -14,12 +14,19 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudClientCacheFactory interface for cache creation and lookup
  * 2026-03-13: Changed to interface to allow driver implementations
  * 2026-03-14: Changed per-server connection methods to default methods for API evolution
+ * 2026-03-17: Fixed per-server connection method versions from 10.4 to 10.1
+ * 2026-03-17: Added @Deprecated annotations for deprecated GemFire features
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -64,7 +71,9 @@ public interface GudClientCacheFactory {
      *
      * @param diskStoreName the disk store name
      * @return this factory for chaining
+     * @deprecated PDX persistence is not supported on client side. Even when set, it is internally ignored.
      */
+    @Deprecated
     GudClientCacheFactory setPdxDiskStore(String diskStoreName);
 
     /**
@@ -72,7 +81,9 @@ public interface GudClientCacheFactory {
      *
      * @param persistent true if persistent
      * @return this factory for chaining
+     * @deprecated PDX persistence is not supported on client side. Even when set, it is internally ignored.
      */
+    @Deprecated
     GudClientCacheFactory setPdxPersistent(boolean persistent);
 
     /**
@@ -110,36 +121,34 @@ public interface GudClientCacheFactory {
 
     /**
      * Sets the minimum number of connections to each server for the default pool.
-     * <p>This feature is planned for a future GemFire version. Current drivers
+     * <p>This feature was added in GemFire 10.1. Drivers for older versions
      * will throw {@link GudUnsupportedOperationException}.
      *
      * @param minConnections the minimum connections per server
      * @return this factory for chaining
      * @throws GudUnsupportedOperationException if not supported by the driver
-     * @since GemFire 10.4 (planned)
+     * @since GemFire 10.1
      */
     default GudClientCacheFactory setPoolMinConnectionsPerServer(int minConnections) {
         throw new GudUnsupportedOperationException(
-            "setPoolMinConnectionsPerServer() is not supported in this GemFire version. " +
-            "Use setPoolMinConnections() for total pool connection limits instead.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.4");
+            "setPoolMinConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.1");
     }
 
     /**
      * Sets the maximum number of connections to each server for the default pool.
-     * <p>This feature is planned for a future GemFire version. Current drivers
+     * <p>This feature was added in GemFire 10.1. Drivers for older versions
      * will throw {@link GudUnsupportedOperationException}.
      *
      * @param maxConnections the maximum connections per server
      * @return this factory for chaining
      * @throws GudUnsupportedOperationException if not supported by the driver
-     * @since GemFire 10.4 (planned)
+     * @since GemFire 10.1
      */
     default GudClientCacheFactory setPoolMaxConnectionsPerServer(int maxConnections) {
         throw new GudUnsupportedOperationException(
-            "setPoolMaxConnectionsPerServer() is not supported in this GemFire version. " +
-            "Use setPoolMaxConnections() for total pool connection limits instead.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.4");
+            "setPoolMaxConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.1");
     }
 
     GudClientCacheFactory setPoolMultiuserAuthentication(boolean multiuser);

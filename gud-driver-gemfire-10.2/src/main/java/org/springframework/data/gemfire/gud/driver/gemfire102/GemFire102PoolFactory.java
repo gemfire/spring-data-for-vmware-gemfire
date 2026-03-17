@@ -9,11 +9,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Created GemFire 10.2 PoolFactory adapter
- * 2026-03-14: Removed per-server connection methods (use default methods that throw)
+ * 2026-03-17: Added per-server connection methods (supported in 10.1+)
  */
 
 package org.springframework.data.gemfire.gud.driver.gemfire102;
@@ -26,9 +31,8 @@ import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 
 /**
  * GUD API adapter for GemFire 10.2 PoolFactory.
- * <p>Note: Per-server connection limits (setMinConnectionsPerServer, setMaxConnectionsPerServer)
- * are not supported in GemFire 10.2. The inherited default methods will throw
- * {@link org.springframework.data.gemfire.gud.api.GudUnsupportedOperationException}.
+ * <p>Per-server connection limits (setMinConnectionsPerServer, setMaxConnectionsPerServer)
+ * are supported in GemFire 10.1 and later.
  */
 public class GemFire102PoolFactory implements GudPoolFactory, NativeWrapper<PoolFactory> {
 
@@ -91,9 +95,17 @@ public class GemFire102PoolFactory implements GudPoolFactory, NativeWrapper<Pool
         return this;
     }
 
-    // Note: setMinConnectionsPerServer and setMaxConnectionsPerServer are NOT overridden.
-    // The default methods in GudPoolFactory will throw GudUnsupportedOperationException
-    // since these features are not available in GemFire 10.2.
+    @Override
+    public GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        nativeFactory.setMinConnectionsPerServer(minConnections);
+        return this;
+    }
+
+    @Override
+    public GudPoolFactory setMaxConnectionsPerServer(int maxConnections) {
+        nativeFactory.setMaxConnectionsPerServer(maxConnections);
+        return this;
+    }
 
     @Override
     public GudPoolFactory setServerConnectionTimeout(int timeout) {

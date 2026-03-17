@@ -1,12 +1,13 @@
 # GUD API Evolution Strategy
 
-**Document Version:** 1.0  
+**Document Version:** 1.1  
 **Created:** 2026-03-13  
-**Status:** Proposal
+**Updated:** 2026-03-17  
+**Status:** Implemented
 
 ## Executive Summary
 
-This document analyzes the GemFire Unified Driver (GUD) architecture's ability to handle API evolution across GemFire versions (e.g., 10.3 → 10.4) while maintaining backward compatibility. It identifies gaps in the current SPI design and proposes enhancements to ensure `spring-data-vmware-gemfire` can run seamlessly on multiple driver versions.
+This document analyzes the GemFire Unified Driver (GUD) architecture's ability to handle API evolution across GemFire versions (10.0, 10.1, 10.2, 10.3) while maintaining backward compatibility. It documents the implemented SPI design that ensures `spring-data-vmware-gemfire` can run seamlessly on multiple driver versions.
 
 ---
 
@@ -95,134 +96,131 @@ public final class GudDriverManager {
 
 ## Problem Statement
 
-When GemFire 10.4 is released with API changes, the following scenarios must be handled gracefully:
+When supporting multiple GemFire versions with API differences, the following scenarios must be handled gracefully:
 
 ### Scenario 1: New Method Added to Native API
 
 ```java
-// GemFire 10.4 adds new method to Region
-public interface Region<K, V> {
+// GemFire 10.1 adds new method to PoolFactory
+public interface PoolFactory {
     // Existing methods...
-    PartitionStatistics getPartitionStatistics();  // NEW in 10.4
+    PoolFactory setMinConnectionsPerServer(int min);  // NEW in 10.1
+    PoolFactory setMaxConnectionsPerServer(int max);  // NEW in 10.1
 }
 ```
 
-**Current Behavior:** If `GudRegion` adds this method, the 10.3 driver cannot implement it, causing `AbstractMethodError` at runtime.
+**Solution:** GUD interfaces use `default` methods that throw `GudUnsupportedOperationException`. Drivers for 10.1+ override with actual implementations.
 
-### Scenario 2: Method Signature Change
-
-```java
-// GemFire 10.3
-QueryService.createIndex(String name, String expression, String fromClause);
-
-// GemFire 10.4 (hypothetical)
-QueryService.createIndex(String name, IndexType type, String expression, String fromClause);
-```
-
-**Current Behavior:** No mechanism to detect which signature the driver supports.
-
-### Scenario 3: New Exception Types
+### Scenario 2: Version-Specific Features
 
 ```java
-// GemFire 10.4 introduces new exception
-public class PartitionOfflineException extends CacheException { }
+// GemFire 10.1 adds setSegments() to DiskStoreFactory
+DiskStoreFactory.setSegments(int segments);  // NEW in 10.1
 ```
 
-**Current Behavior:** No exception translation layer; `spring-data-vmware-gemfire` would need to catch native exceptions.
+**Solution:** The 10.0 driver uses the default method that throws. The 10.1, 10.2, and 10.3 drivers override.
 
-### Scenario 4: Deprecated/Removed Methods
+### Scenario 3: Exception Handling
 
-```java
-// GemFire 10.4 removes deprecated method
-// Region.writeToDisk() - removed
-```
+Native GemFire exceptions need to be translated to GUD exceptions.
 
-**Current Behavior:** 10.4 driver would fail to compile if GUD API requires this method.
+**Solution:** `GudDriver.translateException()` maps native exceptions to GUD types, keeping the Spring layer independent of native types.
+
+### Scenario 4: Graceful Degradation
+
+Applications should continue working even when using features not available in older versions.
+
+**Solution:** Spring Data beans catch `GudUnsupportedOperationException` and log warnings, allowing applications to work across versions.
+
+### Scenario 5: Handling Deprecated Features
+
+GemFire deprecates certain APIs over time. The GUD layer tracks these deprecations to help applications migrate.
+
+**Current Deprecated Features:**
+
+| Feature | Deprecated Since | Reason |
+|---------|-----------------|--------|
+| `PoolFactory.setThreadLocalConnections()` | 10.0 (Geode 1.10) | Thread local connections are ignored, no-op |
+| `ClientCacheFactory.setPdxDiskStore()` | 10.0 | PDX persistence not supported on client side |
+| `ClientCacheFactory.setPdxPersistent()` | 10.0 | PDX persistence not supported on client side |
+| `QueryService.createHashIndex()` | 10.0 | Hash indexes deprecated, use standard indexes |
+| `QueryService.defineHashIndex()` | 10.0 | Hash indexes deprecated, use standard indexes |
+| `QueryService.getIndexes(Region, IndexType)` | 10.0 | IndexType parameter deprecated |
+| `IndexType` enum | 10.0 | Use non-IndexType method overloads |
+
+**Solution:** GUD API interfaces mark deprecated methods with `@Deprecated` annotation and include `@deprecated` Javadoc with migration guidance. Driver implementations continue to support these methods for compatibility.
 
 ---
 
-## Gap Analysis
+## Implementation Status
 
-| Aspect | Current State | Gap | Risk Level |
-|--------|---------------|-----|------------|
-| Basic wrapping | ✅ Working | None | Low |
-| Driver discovery | ✅ Working | No version preference | Medium |
-| API evolution (new methods) | ❌ Not handled | No capability detection | **High** |
-| API evolution (signature changes) | ❌ Not handled | No version negotiation | **High** |
-| Exception translation | ❌ Missing | Need wrapper factory | Medium |
-| Factory abstraction | ⚠️ Partial | Missing createXxxFactory() | Medium |
-| Default implementations | ❌ Missing | Need default methods | **High** |
-| Version comparison | ❌ Missing | Need GudApiVersion | Medium |
+| Aspect | Status | Implementation |
+|--------|--------|----------------|
+| Basic wrapping | ✅ Complete | Drivers wrap native objects |
+| Driver discovery | ✅ Complete | ServiceLoader + version priority |
+| API evolution (new methods) | ✅ Complete | Default methods + GudCapability |
+| API evolution (deprecated methods) | ✅ Complete | @Deprecated annotations + Javadoc |
+| API evolution (signature changes) | ✅ Complete | Version-aware factories |
+| Exception translation | ✅ Complete | GudDriver.translateException() |
+| Factory abstraction | ✅ Complete | createXxxFactory() methods |
+| Default implementations | ✅ Complete | All interfaces have defaults |
+| Version comparison | ✅ Complete | GudApiVersion class |
 
-### Detailed Gap Descriptions
+### Implemented Features
 
-#### Gap 1: No Capability Detection
+#### Capability Detection
 
-The SPI provides no way to query what features a driver supports:
+Drivers report supported capabilities:
 
 ```java
-// Cannot currently do this:
-if (driver.supportsCapability(GudCapability.PARTITION_STATISTICS)) {
-    region.getPartitionStatistics();
+if (driver.supportsCapability(GudCapability.PER_SERVER_CONNECTION_LIMITS)) {
+    poolFactory.setMinConnectionsPerServer(5);
 }
 ```
 
-#### Gap 2: No Default Method Pattern
+#### Default Method Pattern
 
-GUD API interfaces lack default implementations:
+GUD API interfaces use default implementations:
 
 ```java
-// Current (problematic)
-public interface GudRegion<K, V> {
-    GudPartitionStatistics getPartitionStatistics();  // 10.3 driver can't implement
-}
-
-// Needed
-public interface GudRegion<K, V> {
-    default GudPartitionStatistics getPartitionStatistics() {
-        throw new UnsupportedOperationException(
-            "getPartitionStatistics() requires GemFire 10.4+ driver");
+public interface GudPoolFactory {
+    /**
+     * @since GemFire 10.1
+     */
+    default GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        throw new GudUnsupportedOperationException(
+            "setMinConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.1");
     }
 }
 ```
 
-#### Gap 3: No Version-Aware Driver Selection
+#### Graceful Degradation in Spring Data
+
+Spring Data beans catch unsupported operations:
 
 ```java
-// Current: picks first available driver
-if (defaultDriver == null) {
-    defaultDriver = driver;
-}
-
-// Needed: version-aware selection
-public static GudDriver getDriverForVersion(String minVersion) {
-    return drivers.values().stream()
-        .filter(d -> isVersionCompatible(d.getSupportedVersion(), minVersion))
-        .max(Comparator.comparing(GudDriver::getSupportedVersion))
-        .orElseThrow();
+// In PoolFactoryBean
+if (this.minConnectionsPerServer != null) {
+    try {
+        poolFactory.setMinConnectionsPerServer(this.minConnectionsPerServer);
+    } catch (GudUnsupportedOperationException ex) {
+        getLogger().warn("Pool 'minConnectionsPerServer' setting ({}) is not supported: {}",
+            this.minConnectionsPerServer, ex.getMessage());
+    }
 }
 ```
 
-#### Gap 4: No Exception Translation
+#### Exception Translation
 
 ```java
-// Currently, native exceptions leak through
+// Drivers translate native exceptions
 try {
     region.get(key);
-} catch (org.apache.geode.cache.CacheClosedException e) {  // Native type!
-    // Problem: spring-data shouldn't reference native types
+} catch (GudCacheClosedException e) {  // GUD type, not native
+    // Handle appropriately
 }
 ```
-
-#### Gap 5: AspectJ Pointcuts Reference Native Types
-
-```java
-// JSONRegionAdvice.java - references native types in pointcuts
-@Around("execution(* org.apache.geode.cache.Region.get(..))")
-public Object get(ProceedingJoinPoint pjp) { ... }
-```
-
-While this works (AspectJ pointcuts are string literals), it's inconsistent with the "no native references" rule.
 
 ---
 
@@ -327,15 +325,13 @@ public enum GudCapability {
     TRANSACTIONS("Transaction support", "10.0"),
     PDX_SERIALIZATION("PDX serialization", "10.0"),
     FUNCTIONS("Function execution", "10.0"),
-    
+
+    // 10.1+ capabilities
+    PER_SERVER_CONNECTION_LIMITS("Per-server min/max connection limits", "10.1"),
+    DISK_STORE_SEGMENTS("Disk store segments API", "10.1"),
+
     // 10.3+ capabilities
-    SECURITY_MANAGER("Integrated security manager", "10.3"),
-    
-    // 10.4+ capabilities (hypothetical)
-    PARTITION_STATISTICS("Partition statistics API", "10.4"),
-    ENHANCED_SECURITY("Enhanced security features", "10.4"),
-    NEW_INDEX_TYPES("New index type support", "10.4"),
-    ASYNC_EVENT_QUEUE_V2("Async event queue v2", "10.4");
+    SECURITY_MANAGER("Integrated security manager", "10.3");
     
     private final String description;
     private final String minimumVersion;
@@ -386,8 +382,8 @@ package org.springframework.data.gemfire.gud.core;
  */
 public final class GudApiVersion implements Comparable<GudApiVersion> {
     
+    /** GUD API version 1.0 - initial release supporting GemFire 10.0 through 10.3 */
     public static final GudApiVersion V1_0 = new GudApiVersion(1, 0, 0);
-    public static final GudApiVersion V1_1 = new GudApiVersion(1, 1, 0);  // 10.4 support
     
     private final int major;
     private final int minor;
@@ -494,31 +490,30 @@ public final class GudDriverManager {
 
 ### 5. Default Methods in GUD API Interfaces
 
-Add default implementations to all GUD API interfaces for methods that may not exist in older versions:
+GUD API interfaces use default implementations for version-specific features:
 
 ```java
-// Example: GudRegion.java
-public interface GudRegion<K, V> extends ConcurrentMap<K, V> {
+// Example: GudPoolFactory.java
+public interface GudPoolFactory {
     
-    // Existing methods (10.3)
-    String getName();
-    String getFullPath();
-    V get(Object key);
-    V put(K key, V value);
+    // Existing methods (all versions)
+    GudPoolFactory setMinConnections(int minConnections);
+    GudPoolFactory setMaxConnections(int maxConnections);
     // ... etc
     
-    // New method added for 10.4 support
+    // Method added in GemFire 10.1
     /**
-     * Returns partition statistics for this region.
+     * Sets the minimum connections per server.
      * 
-     * @return partition statistics
-     * @throws UnsupportedOperationException if the driver doesn't support this feature
-     * @since GUD API 1.1 (GemFire 10.4+)
+     * @param minConnections the minimum connections per server
+     * @return this factory
+     * @throws GudUnsupportedOperationException if the driver doesn't support this feature
+     * @since GemFire 10.1
      */
-    default GudPartitionStatistics getPartitionStatistics() {
-        throw new UnsupportedOperationException(
-            "getPartitionStatistics() requires a GemFire 10.4+ driver. " +
-            "Check driver.supportsCapability(GudCapability.PARTITION_STATISTICS) before calling.");
+    default GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        throw new GudUnsupportedOperationException(
+            "setMinConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
+            "PER_SERVER_CONNECTION_LIMITS", "10.1");
     }
 }
 ```
@@ -552,112 +547,46 @@ public class GudUnsupportedOperationException extends GudException {
 }
 ```
 
-### 7. Updated 10.3 Driver Implementation
+### 7. Driver Implementations
 
+Each GemFire version has a corresponding driver that supports appropriate capabilities:
+
+**10.0 Driver** - Uses default methods for 10.1+ features:
 ```java
-package org.springframework.data.gemfire.gud.driver.gemfire103;
+// GemFire100PoolFactory does NOT override setMinConnectionsPerServer()
+// The default method throws GudUnsupportedOperationException
+```
 
-public class GemFire103Driver implements GudDriver {
+**10.1, 10.2, 10.3 Drivers** - Override with native implementations:
+```java
+package org.springframework.data.gemfire.gud.driver.gemfire101;
+
+public class GemFire101PoolFactory implements GudPoolFactory {
     
-    public static final String DRIVER_NAME = "gemfire-10.3";
-    public static final String SUPPORTED_VERSION = "10.3";
-    
-    private static final Set<GudCapability> SUPPORTED_CAPABILITIES = EnumSet.of(
-        GudCapability.BASIC_CACHE_OPERATIONS,
-        GudCapability.REGIONS,
-        GudCapability.QUERIES,
-        GudCapability.CONTINUOUS_QUERY,
-        GudCapability.TRANSACTIONS,
-        GudCapability.PDX_SERIALIZATION,
-        GudCapability.FUNCTIONS,
-        GudCapability.SECURITY_MANAGER
-    );
+    private final PoolFactory nativeFactory;
     
     @Override
-    public String getName() {
-        return DRIVER_NAME;
+    public GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+        nativeFactory.setMinConnectionsPerServer(minConnections);
+        return this;
     }
     
     @Override
-    public String getSupportedVersion() {
-        return SUPPORTED_VERSION;
+    public GudPoolFactory setMaxConnectionsPerServer(int maxConnections) {
+        nativeFactory.setMaxConnectionsPerServer(maxConnections);
+        return this;
     }
-    
-    @Override
-    public GudApiVersion getMinimumApiVersion() {
-        return GudApiVersion.V1_0;
-    }
-    
-    @Override
-    public GudApiVersion getMaximumApiVersion() {
-        return GudApiVersion.V1_0;
-    }
-    
-    @Override
-    public boolean supportsCapability(GudCapability capability) {
-        return SUPPORTED_CAPABILITIES.contains(capability);
-    }
-    
-    @Override
-    public Set<GudCapability> getCapabilities() {
-        return Collections.unmodifiableSet(SUPPORTED_CAPABILITIES);
-    }
-    
-    @Override
-    public GudException translateException(Throwable nativeException) {
-        if (nativeException instanceof CacheClosedException) {
-            return new GudCacheClosedException(nativeException.getMessage(), nativeException);
-        }
-        if (nativeException instanceof RegionExistsException) {
-            return new GudRegionExistsException(nativeException.getMessage(), nativeException);
-        }
-        // ... more exception mappings
-        return new GudException(nativeException.getMessage(), nativeException);
-    }
-    
-    // ... existing wrap methods
 }
 ```
 
-### 8. Future 10.4 Driver Skeleton
+### 8. Supported Capabilities by Version
 
-```java
-package org.springframework.data.gemfire.gud.driver.gemfire104;
-
-public class GemFire104Driver implements GudDriver {
-    
-    public static final String DRIVER_NAME = "gemfire-10.4";
-    public static final String SUPPORTED_VERSION = "10.4";
-    
-    private static final Set<GudCapability> SUPPORTED_CAPABILITIES = EnumSet.of(
-        // All 10.3 capabilities
-        GudCapability.BASIC_CACHE_OPERATIONS,
-        GudCapability.REGIONS,
-        GudCapability.QUERIES,
-        GudCapability.CONTINUOUS_QUERY,
-        GudCapability.TRANSACTIONS,
-        GudCapability.PDX_SERIALIZATION,
-        GudCapability.FUNCTIONS,
-        GudCapability.SECURITY_MANAGER,
-        // New 10.4 capabilities
-        GudCapability.PARTITION_STATISTICS,
-        GudCapability.ENHANCED_SECURITY,
-        GudCapability.NEW_INDEX_TYPES
-    );
-    
-    @Override
-    public GudApiVersion getMinimumApiVersion() {
-        return GudApiVersion.V1_0;  // Can still work with older API
-    }
-    
-    @Override
-    public GudApiVersion getMaximumApiVersion() {
-        return GudApiVersion.V1_1;  // Supports new API features
-    }
-    
-    // ... implementations for new 10.4 features
-}
-```
+| Version | Capabilities |
+|---------|--------------|
+| 10.0 | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS |
+| 10.1 | All 10.0 + PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
+| 10.2 | All 10.1 capabilities |
+| 10.3 | All 10.2 + SECURITY_MANAGER |
 
 ---
 
@@ -744,24 +673,19 @@ After implementation:
 
 ## Migration Guide
 
-### For Driver Implementers (Creating a 10.4 Driver)
+### For Driver Implementers (Creating a New Version Driver)
 
-1. **Create new module**: `gud-driver-gemfire-10.4`
+1. **Create new module**: `gud-driver-gemfire-X.Y`
 
-2. **Implement GudDriver** with all capabilities:
+2. **Copy from nearest version** and update class names/packages
+
+3. **Override default methods** for features supported in the new version:
    ```java
+   // GemFireXYPoolFactory.java
    @Override
-   public Set<GudCapability> getCapabilities() {
-       return EnumSet.allOf(GudCapability.class);  // 10.4 supports everything
-   }
-   ```
-
-3. **Implement new methods** in wrapper classes:
-   ```java
-   // GemFire104Region.java
-   @Override
-   public GudPartitionStatistics getPartitionStatistics() {
-       return new GemFire104PartitionStatistics(nativeRegion.getPartitionStatistics());
+   public GudPoolFactory setMinConnectionsPerServer(int minConnections) {
+       nativeFactory.setMinConnectionsPerServer(minConnections);
+       return this;
    }
    ```
 
@@ -769,22 +693,23 @@ After implementation:
 
 ### For spring-data-vmware-gemfire Maintainers
 
-1. **Check capabilities before using new features**:
+1. **Wrap version-specific calls in try-catch**:
    ```java
-   GudDriver driver = GudDriverManager.getDefaultDriver();
-   if (driver.supportsCapability(GudCapability.PARTITION_STATISTICS)) {
-       GudPartitionStatistics stats = region.getPartitionStatistics();
-       // Use stats
+   if (this.minConnectionsPerServer != null) {
+       try {
+           poolFactory.setMinConnectionsPerServer(this.minConnectionsPerServer);
+       } catch (GudUnsupportedOperationException ex) {
+           getLogger().warn("Pool 'minConnectionsPerServer' setting ({}) is not supported: {}",
+               this.minConnectionsPerServer, ex.getMessage());
+       }
    }
    ```
 
-2. **Handle UnsupportedOperationException gracefully**:
+2. **Check capabilities for optional features**:
    ```java
-   try {
-       region.getPartitionStatistics();
-   } catch (GudUnsupportedOperationException e) {
-       logger.debug("Partition statistics not available: {}", e.getMessage());
-       // Fallback behavior
+   GudDriver driver = GudDriverManager.getDefaultDriver();
+   if (driver.supportsCapability(GudCapability.PER_SERVER_CONNECTION_LIMITS)) {
+       // Feature is available
    }
    ```
 
@@ -799,41 +724,37 @@ After implementation:
 
 ### For Users (Switching Drivers)
 
-1. **Remove old driver dependency**:
+1. **Change driver dependency**:
    ```groovy
-   // Remove
-   implementation 'com.vmware.gemfire:gud-driver-gemfire-10.3:x.y.z'
+   // Use 10.1 driver instead of 10.0
+   runtimeOnly project(':gud-driver-gemfire-10.1')
    ```
 
-2. **Add new driver dependency**:
+2. **Update GemFire dependency** to match:
    ```groovy
-   // Add
-   implementation 'com.vmware.gemfire:gud-driver-gemfire-10.4:x.y.z'
+   implementation 'com.vmware.gemfire:geode-core:10.1.x'
    ```
 
-3. **Update GemFire dependency**:
-   ```groovy
-   implementation 'com.vmware.gemfire:geode-core:10.4.0'
-   ```
-
-No code changes required in application code - driver is automatically discovered via ServiceLoader.
+No code changes required in application code - driver is automatically discovered via ServiceLoader. Features not available in older drivers will log warnings but applications continue to work.
 
 ---
 
-## Appendix: Files to Modify
+## Appendix: Key Files
 
-| File | Change Type | Description |
-|------|-------------|-------------|
-| `gud-core/.../GudCapability.java` | NEW | Capability enum |
-| `gud-core/.../GudApiVersion.java` | NEW | Version class |
-| `gud-core/.../GudDriver.java` | MODIFY | Add new methods |
-| `gud-core/.../GudDriverManager.java` | MODIFY | Add version-aware selection |
-| `gud-api/.../GudUnsupportedOperationException.java` | NEW | Exception class |
-| `gud-api/.../GudRegion.java` | MODIFY | Add default methods |
-| `gud-api/.../GudCache.java` | MODIFY | Add default methods |
-| `gud-api/.../GudClientCache.java` | MODIFY | Add default methods |
-| `gud-api/.../GudQueryService.java` | MODIFY | Add default methods |
-| `gud-driver-gemfire-10.3/.../GemFire103Driver.java` | MODIFY | Implement new interface |
+| File | Description |
+|------|-------------|
+| `gud-core/.../GudCapability.java` | Capability enum (10.0, 10.1, 10.3 features) |
+| `gud-core/.../GudApiVersion.java` | Version class |
+| `gud-core/.../GudDriver.java` | Driver SPI interface |
+| `gud-core/.../GudDriverManager.java` | Driver discovery and selection |
+| `gud-api/.../GudUnsupportedOperationException.java` | Exception for unsupported features |
+| `gud-api/.../GudPoolFactory.java` | Default methods for 10.1+ features |
+| `gud-api/.../GudDiskStoreFactory.java` | Default methods for 10.1+ features |
+| `gud-api/.../GudPool.java` | Default methods for 10.1+ features |
+| `gud-driver-gemfire-10.0/...` | 10.0 driver (uses default methods) |
+| `gud-driver-gemfire-10.1/...` | 10.1 driver (overrides for 10.1 features) |
+| `gud-driver-gemfire-10.2/...` | 10.2 driver |
+| `gud-driver-gemfire-10.3/...` | 10.3 driver |
 
 ---
 

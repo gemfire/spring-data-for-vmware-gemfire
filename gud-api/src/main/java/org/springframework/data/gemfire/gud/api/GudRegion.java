@@ -14,11 +14,16 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudRegion interface as 1:1 mapping of GemFire Region
- * 2026-03-14: Added default methods for API evolution support (10.4+ features)
+ * 2026-03-17: Removed hypothetical 10.4 features
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -189,24 +194,5 @@ public interface GudRegion<K, V> extends ConcurrentMap<K, V> {
         Object getUserAttribute();
         Object setUserAttribute(Object userAttribute);
         boolean isDestroyed();
-    }
-
-    // ===== API Evolution: 10.4+ Features =====
-    // These default methods throw UnsupportedOperationException when called on older drivers.
-    // Drivers supporting these features override these methods with actual implementations.
-
-    /**
-     * Returns partition statistics for this region.
-     * This feature requires GemFire 10.4 or later.
-     *
-     * @return partition statistics
-     * @throws GudUnsupportedOperationException if the driver doesn't support this feature
-     * @since GUD API 1.1 (GemFire 10.4+)
-     */
-    default GudPartitionStatistics getPartitionStatistics() {
-        throw new GudUnsupportedOperationException(
-            "getPartitionStatistics() requires a GemFire 10.4+ driver. " +
-            "Check driver.supportsCapability(GudCapability.PARTITION_STATISTICS) before calling.",
-            "PARTITION_STATISTICS", "10.4");
     }
 }
