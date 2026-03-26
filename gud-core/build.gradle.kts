@@ -4,6 +4,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -26,7 +31,6 @@ java {
 }
 
 dependencies {
-    api(project(":gud-api"))
-    implementation("org.springframework:spring-context:${project.ext.get("spring-framework.version")}")
+    implementation(project(":gud-api"))
     implementation("org.slf4j:slf4j-api:2.0.9")
 }

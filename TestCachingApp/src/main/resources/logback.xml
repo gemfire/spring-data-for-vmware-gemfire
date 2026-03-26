@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!--
+  Copyright (c) 2026 Broadcom. All Rights Reserved.
+-->
+<!--
+  @AI-Generated
+  Generated in whole or in part by Cursor
+  Description:
+  2026-03-17: Created Logback configuration to write logs to file instead of stdout
+-->
+<configuration>
+
+    <!-- Define the log directory and file name -->
+    <property name="LOG_DIR" value="./logs" />
+    <property name="LOG_FILE" value="testcaching-app" />
+
+    <!-- Console appender for startup messages only (ERROR level) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender for all application logs -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{60} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Application logging -->
+    <logger name="com.example.testcaching" level="INFO" />
+
+    <!-- Spring Data GemFire logging -->
+    <logger name="org.springframework.data.gemfire" level="INFO" />
+
+    <!-- GemFire/Geode internal logging (routed via log4j-to-slf4j bridge) -->
+    <logger name="org.apache.geode" level="INFO" />
+    <logger name="com.vmware.gemfire" level="INFO" />
+
+    <!-- Spring framework logging -->
+    <logger name="org.springframework" level="WARN" />
+
+    <!-- Root logger writes to FILE only -->
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
