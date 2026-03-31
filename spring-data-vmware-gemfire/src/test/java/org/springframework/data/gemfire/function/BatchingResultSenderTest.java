@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.execute.ResultSender;
+import org.springframework.data.gemfire.gud.api.GudResultSender;
 
 import org.assertj.core.api.Assertions;
 
@@ -27,7 +27,7 @@ import org.assertj.core.api.Assertions;
  * @author Udo Kohlmeyer
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.execute.ResultSender
+ * @see org.apache.geode.cache.execute.GudResultSender
  * @see org.springframework.data.gemfire.function.BatchingResultSender
  * @since 1.3.0
  */
@@ -37,7 +37,7 @@ public class BatchingResultSenderTest {
 	@SuppressWarnings("unchecked")
 	public void constructBatchingResultSender() {
 
-		ResultSender<Object> mockResultSender = mock(ResultSender.class);
+		GudResultSender<Object> mockResultSender = mock(GudResultSender.class);
 
 		BatchingResultSender batchResultSender = new BatchingResultSender(20, mockResultSender);
 
@@ -51,7 +51,7 @@ public class BatchingResultSenderTest {
 	public void constructBatchingResultSenderWithBatchSizeOfMinusOne() {
 
 		try {
-			new BatchingResultSender(-1, mock(ResultSender.class));
+			new BatchingResultSender(-1, mock(GudResultSender.class));
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -70,7 +70,7 @@ public class BatchingResultSenderTest {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("ResultSender must not be null");
+			assertThat(expected).hasMessage("GudResultSender must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -82,7 +82,7 @@ public class BatchingResultSenderTest {
 	public void sendArrayResultsWithNonArrayThrowIllegalArgumentException() {
 
 		try {
-			new BatchingResultSender(20, mock(ResultSender.class)).sendArrayResults(new Object());
+			new BatchingResultSender(20, mock(GudResultSender.class)).sendArrayResults(new Object());
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -185,7 +185,7 @@ public class BatchingResultSenderTest {
 		testBatchingResultSender(resultSender,batchSize,100);
 	}
 
-	public static abstract class AbstractTestResultSender implements ResultSender<Object> {
+	public static abstract class AbstractTestResultSender implements GudResultSender<Object> {
 
 		private boolean lastResultSent = false;
 

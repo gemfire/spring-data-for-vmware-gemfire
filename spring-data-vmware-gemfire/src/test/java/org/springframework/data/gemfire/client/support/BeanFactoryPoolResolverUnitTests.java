@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
@@ -34,7 +34,7 @@ import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.GudPool
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver
  * @since 2.3.0
@@ -48,7 +48,7 @@ public class BeanFactoryPoolResolverUnitTests {
 	private BeanFactoryPoolResolver poolResolver;
 
 	@Mock
-	private Pool mockPool;
+	private GudPool mockPool;
 
 	@Before
 	public void setup() {
@@ -116,23 +116,23 @@ public class BeanFactoryPoolResolverUnitTests {
 	public void resolveResolvablePoolByName() {
 
 		when(this.mockBeanFactory.containsBean(eq("TestPool"))).thenReturn(true);
-		when(this.mockBeanFactory.getBean(eq("TestPool"), eq(Pool.class))).thenReturn(this.mockPool);
+		when(this.mockBeanFactory.getBean(eq("TestPool"), eq(GudPool.class))).thenReturn(this.mockPool);
 
 		assertThat(this.poolResolver.resolve("TestPool")).isEqualTo(this.mockPool);
 
 		verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(Pool.class));
+		verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(GudPool.class));
 		verifyNoInteractions(this.mockPool);
 	}
 
-	private Pool testResolveUnresolvablePoolByInvalidName(String poolName) {
+	private GudPool testResolveUnresolvablePoolByInvalidName(String poolName) {
 
 		try {
 			return this.poolResolver.resolve(poolName);
 		}
 		finally {
 			verify(this.mockBeanFactory, never()).containsBean(anyString());
-			verify(this.mockBeanFactory, never()).getBean(anyString(), any(Pool.class));
+			verify(this.mockBeanFactory, never()).getBean(anyString(), any(GudPool.class));
 		}
 	}
 
@@ -159,15 +159,15 @@ public class BeanFactoryPoolResolverUnitTests {
 		assertThat(this.poolResolver.resolve("TestPool")).isNull();
 
 		verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(this.mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+		verify(this.mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 	}
 
 	@Test(expected = BeanNotOfRequiredTypeException.class)
 	public void resolvePoolWhenBeanFactoryContainsBeanByPoolNameButNotAsAPoolType() {
 
 		when(this.mockBeanFactory.containsBean(anyString())).thenReturn(true);
-		when(this.mockBeanFactory.getBean(anyString(), eq(Pool.class)))
-			.thenThrow(new BeanNotOfRequiredTypeException("TestPool", Pool.class, Object.class));
+		when(this.mockBeanFactory.getBean(anyString(), eq(GudPool.class)))
+			.thenThrow(new BeanNotOfRequiredTypeException("TestPool", GudPool.class, Object.class));
 
 		this.poolResolver.resolve("TestPool");
 	}

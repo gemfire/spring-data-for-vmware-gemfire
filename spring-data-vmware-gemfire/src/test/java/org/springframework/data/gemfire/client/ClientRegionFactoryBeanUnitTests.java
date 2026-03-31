@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -27,17 +27,17 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionFactory;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.compression.Compressor;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
 
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.BeanFactory;
@@ -54,12 +54,12 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.EvictionAttributes
- * @see org.apache.geode.cache.ExpirationAttributes
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.client.ClientRegionFactory
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.GudEvictionAttributes
+ * @see org.apache.geode.cache.GudExpirationAttributes
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.client.GudClientRegionFactory
+ * @see org.apache.geode.cache.client.GudPool
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  */
 @SuppressWarnings("rawtypes")
@@ -90,41 +90,41 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public void createRegionUsingDefaultShortcut() throws Exception {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientRegionFactory mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
-		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		when(mockBeanFactory.getBean(eq("TestPoolTwo"), eq(Pool.class))).thenReturn(mockPool);
-		when(mockClientCache.createClientRegionFactory(eq(ClientRegionShortcut.LOCAL)))
+		when(mockBeanFactory.getBean(eq("TestPoolTwo"), eq(GudPool.class))).thenReturn(mockPool);
+		when(mockClientCache.createClientRegionFactory(eq(GudClientRegionShortcut.LOCAL)))
 			.thenReturn(mockClientRegionFactory);
 		when(mockClientRegionFactory.create(eq("TestRegion"))).thenReturn(mockRegion);
 		when(mockRegionAttributes.getCloningEnabled()).thenReturn(false);
-		when(mockRegionAttributes.getCompressor()).thenReturn(mock(Compressor.class));
+		when(mockRegionAttributes.getCompressor()).thenReturn(mock(GudCompressor.class));
 		when(mockRegionAttributes.getConcurrencyChecksEnabled()).thenReturn(true);
 		when(mockRegionAttributes.getConcurrencyLevel()).thenReturn(8);
 		when(mockRegionAttributes.getCustomEntryIdleTimeout()).thenReturn(null);
 		when(mockRegionAttributes.getCustomEntryTimeToLive()).thenReturn(null);
 		when(mockRegionAttributes.getDiskStoreName()).thenReturn("TestDiskStoreOne");
 		when(mockRegionAttributes.isDiskSynchronous()).thenReturn(false);
-		when(mockRegionAttributes.getEntryIdleTimeout()).thenReturn(mock(ExpirationAttributes.class));
-		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(mock(ExpirationAttributes.class));
-		when(mockRegionAttributes.getEvictionAttributes()).thenReturn(mock(EvictionAttributes.class));
+		when(mockRegionAttributes.getEntryIdleTimeout()).thenReturn(mock(GudExpirationAttributes.class));
+		when(mockRegionAttributes.getEntryTimeToLive()).thenReturn(mock(GudExpirationAttributes.class));
+		when(mockRegionAttributes.getEvictionAttributes()).thenReturn(mock(GudEvictionAttributes.class));
 		when(mockRegionAttributes.getInitialCapacity()).thenReturn(101);
 		when(mockRegionAttributes.getKeyConstraint()).thenReturn(Long.class);
 		when(mockRegionAttributes.getLoadFactor()).thenReturn(0.75f);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPoolOne");
-		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(mock(ExpirationAttributes.class));
-		when(mockRegionAttributes.getRegionTimeToLive()).thenReturn(mock(ExpirationAttributes.class));
+		when(mockRegionAttributes.getRegionIdleTimeout()).thenReturn(mock(GudExpirationAttributes.class));
+		when(mockRegionAttributes.getRegionTimeToLive()).thenReturn(mock(GudExpirationAttributes.class));
 		when(mockRegionAttributes.getStatisticsEnabled()).thenReturn(true);
 		when(mockRegionAttributes.getValueConstraint()).thenReturn(Number.class);
 
-		EvictionAttributes evictionAttributes = EvictionAttributes.createLRUEntryAttributes();
+		GudEvictionAttributes evictionAttributes = GudEvictionAttributes.createLRUEntryAttributes();
 
 		factoryBean.setAttributes(mockRegionAttributes);
 		factoryBean.setBeanFactory(mockBeanFactory);
@@ -134,13 +134,13 @@ public class ClientRegionFactoryBeanUnitTests {
 		factoryBean.setPoolName("TestPoolTwo");
 		factoryBean.setShortcut(null);
 
-		Region actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
+		GudRegion actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
 
 		assertThat(actualRegion).isEqualTo(mockRegion);
 
-		verify(mockClientCache, times(1)).createClientRegionFactory(eq(ClientRegionShortcut.LOCAL));
+		verify(mockClientCache, times(1)).createClientRegionFactory(eq(GudClientRegionShortcut.LOCAL));
 		verify(mockClientRegionFactory, times(1)).setCloningEnabled(eq(false));
-		verify(mockClientRegionFactory, times(1)).setCompressor(any(Compressor.class));
+		verify(mockClientRegionFactory, times(1)).setCompressor(any(GudCompressor.class));
 		verify(mockClientRegionFactory, times(1)).setConcurrencyChecksEnabled(eq(true));
 		verify(mockClientRegionFactory, times(1)).setConcurrencyLevel(eq(8));
 		verify(mockClientRegionFactory, times(1)).setCustomEntryIdleTimeout(null);
@@ -148,16 +148,16 @@ public class ClientRegionFactoryBeanUnitTests {
 		verify(mockClientRegionFactory, times(1)).setDiskStoreName(eq("TestDiskStoreOne"));
 		verify(mockClientRegionFactory, times(1)).setDiskStoreName(eq("TestDiskStoreTwo"));
 		verify(mockClientRegionFactory, times(1)).setDiskSynchronous(eq(false));
-		verify(mockClientRegionFactory, times(1)).setEntryIdleTimeout(any(ExpirationAttributes.class));
-		verify(mockClientRegionFactory, times(1)).setEntryTimeToLive(any(ExpirationAttributes.class));
+		verify(mockClientRegionFactory, times(1)).setEntryIdleTimeout(any(GudExpirationAttributes.class));
+		verify(mockClientRegionFactory, times(1)).setEntryTimeToLive(any(GudExpirationAttributes.class));
 		verify(mockClientRegionFactory, times(1)).setEvictionAttributes(eq(evictionAttributes));
 		verify(mockClientRegionFactory, times(1)).setInitialCapacity(eq(101));
 		verify(mockClientRegionFactory, times(1)).setKeyConstraint(eq(Long.class));
 		verify(mockClientRegionFactory, times(1)).setLoadFactor(eq(0.75f));
 		verify(mockClientRegionFactory, never()).setPoolName(eq("TestPoolOne"));
 		verify(mockClientRegionFactory, times(1)).setPoolName(eq("TestPoolTwo"));
-		verify(mockClientRegionFactory, times(1)).setRegionIdleTimeout(any(ExpirationAttributes.class));
-		verify(mockClientRegionFactory, times(1)).setRegionTimeToLive(any(ExpirationAttributes.class));
+		verify(mockClientRegionFactory, times(1)).setRegionIdleTimeout(any(GudExpirationAttributes.class));
+		verify(mockClientRegionFactory, times(1)).setRegionTimeToLive(any(GudExpirationAttributes.class));
 		verify(mockClientRegionFactory, times(2)).setStatisticsEnabled(eq(true));
 		verify(mockClientRegionFactory, times(1)).setValueConstraint(eq(Number.class));
 		verify(mockClientRegionFactory, times(1)).create(eq("TestRegion"));
@@ -168,18 +168,18 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public void createRegionUsingDefaultPersistentShortcut() throws Exception {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		Region<Object, Object> mockRegion = mock(Region.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		when(mockBeanFactory.getBean(anyString(), eq(Pool.class))).thenReturn(mockPool);
-		when(mockClientCache.createClientRegionFactory(eq(ClientRegionShortcut.LOCAL_PERSISTENT)))
+		when(mockBeanFactory.getBean(anyString(), eq(GudPool.class))).thenReturn(mockPool);
+		when(mockClientCache.createClientRegionFactory(eq(GudClientRegionShortcut.LOCAL_PERSISTENT)))
 			.thenReturn(mockClientRegionFactory);
 		when(mockClientRegionFactory.create(eq("TestRegion"))).thenReturn(mockRegion);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPool");
@@ -188,12 +188,12 @@ public class ClientRegionFactoryBeanUnitTests {
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.setPersistent(true);
 
-		Region<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
+		GudRegion<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
 
 		assertThat(actualRegion).isEqualTo(mockRegion);
 
-		verify(mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(Pool.class));
-		verify(mockClientCache, times(1)).createClientRegionFactory(eq(ClientRegionShortcut.LOCAL_PERSISTENT));
+		verify(mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(GudPool.class));
+		verify(mockClientCache, times(1)).createClientRegionFactory(eq(GudClientRegionShortcut.LOCAL_PERSISTENT));
 		verify(mockClientRegionFactory, times(1)).setPoolName(eq("TestPool"));
 		verify(mockClientRegionFactory, times(1)).create(eq("TestRegion"));
 		verify(mockRegionAttributes, times(1)).getPoolName();
@@ -204,27 +204,27 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void createRegionWithSpecifiedShortcut() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Region<Object, Object> mockRegion = mock(Region.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
 
-		when(mockClientCache.createClientRegionFactory(eq(ClientRegionShortcut.CACHING_PROXY)))
+		when(mockClientCache.createClientRegionFactory(eq(GudClientRegionShortcut.CACHING_PROXY)))
 			.thenReturn(mockClientRegionFactory);
 		when(mockClientRegionFactory.create(eq("TestRegion"))).thenReturn(mockRegion);
 
 		factoryBean.setBeanFactory(mockBeanFactory);
-		factoryBean.setShortcut(ClientRegionShortcut.CACHING_PROXY);
+		factoryBean.setShortcut(GudClientRegionShortcut.CACHING_PROXY);
 
-		Region<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
+		GudRegion<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestRegion");
 
 		assertThat(actualRegion).isEqualTo(mockRegion);
 
 		verifyNoInteractions(mockBeanFactory);
 
 		verify(mockClientCache, times(1))
-			.createClientRegionFactory(eq(ClientRegionShortcut.CACHING_PROXY));
+			.createClientRegionFactory(eq(GudClientRegionShortcut.CACHING_PROXY));
 
 		verify(mockClientRegionFactory, times(1)).create(eq("TestRegion"));
 	}
@@ -233,29 +233,29 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void createRegionAsSubRegion() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Region<Object, Object> mockRegion = mock(Region.class, "RootRegion");
-		Region<Object, Object> mockSubRegion = mock(Region.class, "SubRegion");
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class, "RootRegion");
+		GudRegion<Object, Object> mockSubRegion = mock(GudRegion.class, "SubRegion");
 
-		when(mockClientCache.createClientRegionFactory(eq(ClientRegionShortcut.PROXY))).thenReturn(mockClientRegionFactory);
+		when(mockClientCache.createClientRegionFactory(eq(GudClientRegionShortcut.PROXY))).thenReturn(mockClientRegionFactory);
 		when(mockClientRegionFactory.createSubregion(eq(mockRegion), eq("TestSubRegion"))).thenReturn(mockSubRegion);
 		when(mockRegion.getName()).thenReturn("Parent");
 
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.setParent(mockRegion);
-		factoryBean.setShortcut(ClientRegionShortcut.PROXY);
+		factoryBean.setShortcut(GudClientRegionShortcut.PROXY);
 
-		Region<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestSubRegion");
+		GudRegion<Object, Object> actualRegion = factoryBean.createRegion(mockClientCache, "TestSubRegion");
 
 		assertThat(actualRegion).isEqualTo(mockSubRegion);
 
 		verifyNoInteractions(mockBeanFactory);
 
 		verify(mockClientCache, times(1))
-			.createClientRegionFactory(eq(ClientRegionShortcut.PROXY));
+			.createClientRegionFactory(eq(GudClientRegionShortcut.PROXY));
 
 		verify(mockClientRegionFactory, times(1))
 			.createSubregion(eq(mockRegion), eq("TestSubRegion"));
@@ -265,35 +265,35 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void createClientRegionFactoryFromClientCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientRegionFactory mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		when(mockClientCache.createClientRegionFactory(any(ClientRegionShortcut.class)))
+		when(mockClientCache.createClientRegionFactory(any(GudClientRegionShortcut.class)))
 			.thenReturn(mockClientRegionFactory);
 
-		assertThat(factoryBean.createClientRegionFactory(mockClientCache, ClientRegionShortcut.CACHING_PROXY))
+		assertThat(factoryBean.createClientRegionFactory(mockClientCache, GudClientRegionShortcut.CACHING_PROXY))
 			.isEqualTo(mockClientRegionFactory);
 
 		verify(mockClientCache, times(1))
-			.createClientRegionFactory(eq(ClientRegionShortcut.CACHING_PROXY));
+			.createClientRegionFactory(eq(GudClientRegionShortcut.CACHING_PROXY));
 	}
 
 	@Test
 	@SuppressWarnings("unchecked")
 	public void configurePoolFromClientRegionFactoryBeanAndEagerlyInitializePool() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		when(mockBeanFactory.getBean(eq("MockPool"), eq(Pool.class))).thenReturn(mockPool);
+		when(mockBeanFactory.getBean(eq("MockPool"), eq(GudPool.class))).thenReturn(mockPool);
 
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.setPoolName("MockPool");
 		factoryBean.configure(mockClientRegionFactory);
 
-		verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(Pool.class));
+		verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(GudPool.class));
 		verify(mockClientRegionFactory, times(1)).setPoolName(eq("MockPool"));
 	}
 
@@ -301,13 +301,13 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void configurePoolFromClientRegionFactoryBeanEvenWhenRegionAttributesPoolNameIsSet() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		when(mockBeanFactory.getBean(anyString(), eq(Pool.class))).thenReturn(mockPool);
+		when(mockBeanFactory.getBean(anyString(), eq(GudPool.class))).thenReturn(mockPool);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPool");
 
 		factoryBean.setAttributes(mockRegionAttributes);
@@ -315,8 +315,8 @@ public class ClientRegionFactoryBeanUnitTests {
 		factoryBean.setPoolName("MockPool");
 		factoryBean.configure(mockClientRegionFactory);
 
-		verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(Pool.class));
-		verify(mockBeanFactory, never()).getBean(eq("TestPool"), eq(Pool.class));
+		verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(GudPool.class));
+		verify(mockBeanFactory, never()).getBean(eq("TestPool"), eq(GudPool.class));
 		verify(mockClientRegionFactory, times(1)).setPoolName(eq("MockPool"));
 		verify(mockRegionAttributes, times(1)).getPoolName();
 	}
@@ -325,20 +325,20 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void configurePoolFromRegionAttributesAndEagerlyInitializePool() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		when(mockBeanFactory.getBean(eq("TestPool"), eq(Pool.class))).thenReturn(mockPool);
+		when(mockBeanFactory.getBean(eq("TestPool"), eq(GudPool.class))).thenReturn(mockPool);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPool");
 
 		factoryBean.setAttributes(mockRegionAttributes);
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.configure(mockClientRegionFactory);
 
-		verify(mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(Pool.class));
+		verify(mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(GudPool.class));
 		verify(mockClientRegionFactory, times(1)).setPoolName(eq("TestPool"));
 		verify(mockRegionAttributes, times(1)).getPoolName();
 	}
@@ -347,9 +347,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void configurePoolThrowsExceptionWhileEagerlyInitializingPool() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		when(mockBeanFactory.getBean(anyString(), eq(Pool.class))).thenThrow(new BeanCreationException("test"));
+		when(mockBeanFactory.getBean(anyString(), eq(GudPool.class))).thenThrow(new BeanCreationException("test"));
 
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.setPoolName("MockPool");
@@ -359,13 +359,13 @@ public class ClientRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[MockPool] is not resolvable as a Pool in the application context");
+			assertThat(expected).hasMessage("[MockPool] is not resolvable as a GudPool in the application context");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
 		}
 		finally {
-			verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(Pool.class));
+			verify(mockBeanFactory, times(1)).getBean(eq("MockPool"), eq(GudPool.class));
 			verify(mockClientRegionFactory, never()).setPoolName(eq("MockPool"));
 		}
 	}
@@ -374,7 +374,7 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void doesNotConfigurePoolWhenClientRegionFactoryBeanPoolIsDefaultPool() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
 		factoryBean.setBeanFactory(mockBeanFactory);
 		factoryBean.setPoolName(ClientRegionFactoryBean.DEFAULT_POOL_NAME);
@@ -382,7 +382,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		assertThat(factoryBean.getPoolName().orElse(null)).isEqualTo(ClientRegionFactoryBean.DEFAULT_POOL_NAME);
 
-		verify(mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+		verify(mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 		verify(mockClientRegionFactory, never()).setPoolName(anyString());
 	}
 
@@ -390,9 +390,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void doesNotConfigurePoolWhenRegionAttributesPoolIsDefaultPool() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegionAttributes.getPoolName()).thenReturn(ClientRegionFactoryBean.DEFAULT_POOL_NAME);
 
@@ -402,7 +402,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		assertThat(factoryBean.getPoolName().orElse(null)).isNull();
 
-		verify(mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+		verify(mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 		verify(mockClientRegionFactory, never()).setPoolName(anyString());
 		verify(mockRegionAttributes, times(1)).getPoolName();
 	}
@@ -411,9 +411,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void doesNotConfigurePoolWhenDeclaredPoolIsEmpty() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegionAttributes.getPoolName()).thenReturn("  ");
 
@@ -424,7 +424,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		assertThat(factoryBean.getPoolName().orElse(null)).isEqualTo("");
 
-		verify(mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+		verify(mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 		verify(mockClientRegionFactory, never()).setPoolName(anyString());
 		verify(mockRegionAttributes, times(1)).getPoolName();
 	}
@@ -433,9 +433,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void doesNotConfigurePoolWhenDeclaredPoolIsNull() {
 
-		ClientRegionFactory<Object, Object> mockClientRegionFactory = mock(ClientRegionFactory.class);
+		GudClientRegionFactory<Object, Object> mockClientRegionFactory = mock(GudClientRegionFactory.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegionAttributes.getPoolName()).thenReturn(null);
 
@@ -446,7 +446,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		assertThat(factoryBean.getPoolName().orElse(null)).isNull();
 
-		verify(mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+		verify(mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 		verify(mockClientRegionFactory, never()).setPoolName(anyString());
 		verify(mockRegionAttributes, times(1)).getPoolName();
 	}
@@ -535,7 +535,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("persistent", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL);
 	}
 
 	@Test
@@ -546,7 +546,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(factoryBean.isNotPersistent()).isTrue();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL);
 	}
 
 	@Test
@@ -557,28 +557,28 @@ public class ClientRegionFactoryBeanUnitTests {
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(factoryBean.isPersistent()).isTrue();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL_PERSISTENT);
 	}
 
 	@Test
 	public void testResolveClientRegionShortcutUsingShortcut() throws Exception {
 
-		factoryBean.setShortcut(ClientRegionShortcut.CACHING_PROXY_OVERFLOW);
+		factoryBean.setShortcut(GudClientRegionShortcut.CACHING_PROXY_OVERFLOW);
 
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("persistent", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.CACHING_PROXY_OVERFLOW);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.CACHING_PROXY_OVERFLOW);
 	}
 
 	@Test
 	public void testResolveClientRegionShortcutUsingShortcutWhenNotPersistent() throws Exception {
 
 		factoryBean.setPersistent(false);
-		factoryBean.setShortcut(ClientRegionShortcut.CACHING_PROXY_HEAP_LRU);
+		factoryBean.setShortcut(GudClientRegionShortcut.CACHING_PROXY_HEAP_LRU);
 
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(factoryBean.isNotPersistent()).isTrue();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.CACHING_PROXY_HEAP_LRU);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.CACHING_PROXY_HEAP_LRU);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -586,7 +586,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		try {
 			factoryBean.setPersistent(true);
-			factoryBean.setShortcut(ClientRegionShortcut.CACHING_PROXY);
+			factoryBean.setShortcut(GudClientRegionShortcut.CACHING_PROXY);
 
 			assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 			assertThat(factoryBean.isPersistent()).isTrue();
@@ -595,7 +595,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 			assertThat(expected.getMessage())
-				.isEqualTo("Client Region Shortcut [CACHING_PROXY] is not valid when persistent is true");
+				.isEqualTo("Client GudRegion Shortcut [CACHING_PROXY] is not valid when persistent is true");
 			throw expected;
 		}
 	}
@@ -603,11 +603,11 @@ public class ClientRegionFactoryBeanUnitTests {
 	@Test
 	public void testResolveClientRegionShortcutUsingPersistentShortcut() throws Exception {
 
-		factoryBean.setShortcut(ClientRegionShortcut.LOCAL_PERSISTENT);
+		factoryBean.setShortcut(GudClientRegionShortcut.LOCAL_PERSISTENT);
 
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("persistent", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL_PERSISTENT);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -615,7 +615,7 @@ public class ClientRegionFactoryBeanUnitTests {
 
 		try {
 			factoryBean.setPersistent(false);
-			factoryBean.setShortcut(ClientRegionShortcut.LOCAL_PERSISTENT);
+			factoryBean.setShortcut(GudClientRegionShortcut.LOCAL_PERSISTENT);
 
 			assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 			assertThat(factoryBean.isNotPersistent()).isTrue();
@@ -624,7 +624,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 			assertThat(expected.getMessage())
-				.isEqualTo("Client Region Shortcut [LOCAL_PERSISTENT] is not valid when persistent is false");
+				.isEqualTo("Client GudRegion Shortcut [LOCAL_PERSISTENT] is not valid when persistent is false");
 			throw expected;
 		}
 	}
@@ -633,39 +633,39 @@ public class ClientRegionFactoryBeanUnitTests {
 	public void testResolveClientRegionShortcutUsingPersistentShortcutWhenPersistent() throws Exception {
 
 		factoryBean.setPersistent(true);
-		factoryBean.setShortcut(ClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW);
+		factoryBean.setShortcut(GudClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW);
 
 		assertThat(TestUtils.<Object>readField("dataPolicy", factoryBean)).isNull();
 		assertThat(factoryBean.isPersistent()).isTrue();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW);
 	}
 
 	@Test
 	public void testResolveClientRegionShortcutUsingEmptyDataPolicy() throws Exception {
 
-		factoryBean.setDataPolicy(DataPolicy.EMPTY);
+		factoryBean.setDataPolicy(GudDataPolicy.EMPTY);
 
 		assertThat(TestUtils.<Object>readField("persistent", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.PROXY);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.PROXY);
 	}
 
 	@Test
 	public void testResolveClientRegionShortcutUsingNormalDataPolicyWhenNotPersistent() throws Exception {
 
-		factoryBean.setDataPolicy(DataPolicy.NORMAL);
+		factoryBean.setDataPolicy(GudDataPolicy.NORMAL);
 		factoryBean.setPersistent(false);
 
 		assertThat(factoryBean.isNotPersistent()).isTrue();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.CACHING_PROXY);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.CACHING_PROXY);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testResolveClientRegionShortcutUsingNormalDataPolicyWhenPersistent() throws Exception {
 
 		try {
-			factoryBean.setDataPolicy(DataPolicy.NORMAL);
+			factoryBean.setDataPolicy(GudDataPolicy.NORMAL);
 			factoryBean.setPersistent(true);
 
 			assertThat(factoryBean.isPersistent()).isTrue();
@@ -682,18 +682,18 @@ public class ClientRegionFactoryBeanUnitTests {
 	@Test
 	public void testResolveClientRegionShortcutUsingPersistentReplicateDataPolicy() throws Exception {
 
-		factoryBean.setDataPolicy(DataPolicy.PERSISTENT_REPLICATE);
+		factoryBean.setDataPolicy(GudDataPolicy.PERSISTENT_REPLICATE);
 
 		assertThat(TestUtils.<Object>readField("persistent", factoryBean)).isNull();
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL_PERSISTENT);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testResolveClientRegionShortcutUsingPersistentReplicateDataPolicyWhenNotPersistent() throws Exception {
 
 		try {
-			factoryBean.setDataPolicy(DataPolicy.PERSISTENT_REPLICATE);
+			factoryBean.setDataPolicy(GudDataPolicy.PERSISTENT_REPLICATE);
 			factoryBean.setPersistent(false);
 
 			assertThat(factoryBean.isNotPersistent()).isTrue();
@@ -711,12 +711,12 @@ public class ClientRegionFactoryBeanUnitTests {
 	@Test
 	public void testResolveClientRegionShortcutUsingPersistentReplicateDataPolicyWhenPersistent() throws Exception {
 
-		factoryBean.setDataPolicy(DataPolicy.PERSISTENT_REPLICATE);
+		factoryBean.setDataPolicy(GudDataPolicy.PERSISTENT_REPLICATE);
 		factoryBean.setPersistent(true);
 
 		assertThat(TestUtils.<Object>readField("shortcut", factoryBean)).isNull();
 		assertThat(factoryBean.isPersistent()).isTrue();
-		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(ClientRegionShortcut.LOCAL_PERSISTENT);
+		assertThat(factoryBean.resolveClientRegionShortcut()).isEqualTo(GudClientRegionShortcut.LOCAL_PERSISTENT);
 	}
 
 	private <K> Interest<K> newInterest(K key) {
@@ -727,9 +727,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void destroyCallsRegionClose() throws Exception {
 
-		Region mockRegion = mock(Region.class, "MockRegion");
+		GudRegion mockRegion = mock(GudRegion.class, "MockRegion");
 
-		RegionService mockRegionService = mock(RegionService.class, "MockRegionService");
+		GudRegionService mockRegionService = mock(GudRegionService.class, "MockRegionService");
 
 		when(mockRegion.getRegionService()).thenReturn(mockRegionService);
 		when(mockRegionService.isClosed()).thenReturn(false);
@@ -759,9 +759,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void destroyCallsRegionDestroy() throws Exception {
 
-		Region mockRegion = mock(Region.class, withSettings().lenient());
+		GudRegion mockRegion = mock(GudRegion.class, withSettings().lenient());
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		when(mockRegion.getRegionService()).thenReturn(mockRegionService);
 
@@ -791,9 +791,9 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void destroyDoesNothingWhenClientRegionFactoryBeanCloseIsTrueButRegionServiceIsClosed() throws Exception {
 
-		Region mockRegion = mock(Region.class, "MockRegion");
+		GudRegion mockRegion = mock(GudRegion.class, "MockRegion");
 
-		RegionService mockRegionService = mock(RegionService.class, "MockRegionService");
+		GudRegionService mockRegionService = mock(GudRegionService.class, "MockRegionService");
 
 		when(mockRegion.getRegionService()).thenReturn(mockRegionService);
 		when(mockRegionService.isClosed()).thenReturn(true);
@@ -823,7 +823,7 @@ public class ClientRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void destroyDoesNothingWhenClientRegionFactoryBeanCloseAndDestroyAreFalse() throws Exception {
 
-		Region mockRegion = mock(Region.class, "MockRegion");
+		GudRegion mockRegion = mock(GudRegion.class, "MockRegion");
 
 		doReturn(mockRegion).when(factoryBean).getObject();
 

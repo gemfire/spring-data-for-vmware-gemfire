@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.server;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.server.ClientSubscriptionConfig;
+import org.springframework.data.gemfire.gud.api.GudClientSubscriptionConfig;
 
 /**
  * Unit Tests for {@link SubscriptionEvictionPolicy} enum.
@@ -29,7 +29,7 @@ public class SubscriptionEvictionPolicyUnitTests {
 	public void testDefault() {
 
 		assertThat(SubscriptionEvictionPolicy.DEFAULT.name().toLowerCase())
-			.isEqualTo(ClientSubscriptionConfig.DEFAULT_EVICTION_POLICY.toLowerCase());
+			.isEqualTo(GudClientSubscriptionConfig.DEFAULT_EVICTION_POLICY.toLowerCase());
 
 		assertThat(SubscriptionEvictionPolicy.DEFAULT).isSameAs(SubscriptionEvictionPolicy.NONE);
 	}
@@ -60,10 +60,10 @@ public class SubscriptionEvictionPolicyUnitTests {
 	@Test
 	public void testSetEvictionPolicy() {
 
-		ClientSubscriptionConfig mockConfig =
-			mock(ClientSubscriptionConfig.class,"testSetEvictionPolicy.ClientSubscriptionConfig");
+		GudClientSubscriptionConfig mockConfig =
+			mock(GudClientSubscriptionConfig.class,"testSetEvictionPolicy.GudClientSubscriptionConfig");
 
-		ClientSubscriptionConfig returnedConfig = SubscriptionEvictionPolicy.MEM.setEvictionPolicy(mockConfig);
+		GudClientSubscriptionConfig returnedConfig = SubscriptionEvictionPolicy.MEM.setEvictionPolicy(mockConfig);
 
 		assertThat(returnedConfig).isSameAs(mockConfig);
 

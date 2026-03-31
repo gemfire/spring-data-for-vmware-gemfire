@@ -1,19 +1,19 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function;
 
-import org.apache.geode.cache.Declarable;
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
+import org.springframework.data.gemfire.gud.api.GudDeclarable;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxWriter;
 
-public class PersonPdxSerializer implements PdxSerializer, Declarable {
+public class PersonPdxSerializer implements GudPdxSerializer, GudDeclarable {
 
   @Override
-  public boolean toData(Object obj, PdxWriter out) {
+  public boolean toData(Object obj, GudPdxWriter out) {
 
     if (obj instanceof Person) {
 
@@ -29,7 +29,7 @@ public class PersonPdxSerializer implements PdxSerializer, Declarable {
   }
 
   @Override
-  public Object fromData(Class<?> type, PdxReader in) {
+  public Object fromData(Class<?> type, GudPdxReader in) {
 
     if (Person.class.isAssignableFrom(type)) {
       return new Person(in.readString("firstName"), in.readString("lastName"));

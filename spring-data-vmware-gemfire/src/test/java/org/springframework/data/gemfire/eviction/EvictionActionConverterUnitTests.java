@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.eviction;
@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.EvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
 
 /**
  * Unit Tests for {@link EvictionActionConverter}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.EvictionAction
+ * @see org.apache.geode.cache.GudEvictionAction
  * @see org.springframework.data.gemfire.eviction.EvictionActionConverter
  * @since 1.6.0
  */
@@ -32,9 +32,9 @@ public class EvictionActionConverterUnitTests {
 	@Test
 	public void convert() {
 
-		assertThat(converter.convert("local_destroy")).isEqualTo(EvictionAction.LOCAL_DESTROY);
-		assertThat(converter.convert("None")).isEqualTo(EvictionAction.NONE);
-		assertThat(converter.convert("OverFlow_TO_dIsk")).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(converter.convert("local_destroy")).isEqualTo(GudEvictionAction.LOCAL_DESTROY);
+		assertThat(converter.convert("None")).isEqualTo(GudEvictionAction.NONE);
+		assertThat(converter.convert("OverFlow_TO_dIsk")).isEqualTo(GudEvictionAction.OVERFLOW_TO_DISK);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class EvictionActionConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[invalid_value] is not a valid EvictionAction");
+			assertThat(expected).hasMessage("[invalid_value] is not a valid GudEvictionAction");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -59,11 +59,11 @@ public class EvictionActionConverterUnitTests {
 
 		converter.setAsText("Local_Destroy");
 
-		assertThat(converter.getValue()).isEqualTo(EvictionAction.LOCAL_DESTROY);
+		assertThat(converter.getValue()).isEqualTo(GudEvictionAction.LOCAL_DESTROY);
 
 		converter.setAsText("overflow_to_disk");
 
-		assertThat(converter.getValue()).isEqualTo(EvictionAction.OVERFLOW_TO_DISK);
+		assertThat(converter.getValue()).isEqualTo(GudEvictionAction.OVERFLOW_TO_DISK);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -74,7 +74,7 @@ public class EvictionActionConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[destroy] is not a valid EvictionAction");
+			assertThat(expected).hasMessage("[destroy] is not a valid GudEvictionAction");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

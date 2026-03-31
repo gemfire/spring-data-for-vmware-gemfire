@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.expiration;
@@ -21,9 +21,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.expression.BeanFactoryResolver;
@@ -57,8 +57,8 @@ public class AnnotationBasedExpirationUnitTests {
 
 	private final AnnotationBasedExpiration noDefaultExpiration = new AnnotationBasedExpiration();
 
-	private void assertExpiration(ExpirationAttributes expirationAttributes, int expectedTimeout,
-			ExpirationAction expectedAction) {
+	private void assertExpiration(GudExpirationAttributes expirationAttributes, int expectedTimeout,
+			GudExpirationAction expectedAction) {
 
 		assertThat(expirationAttributes).isNotNull();
 		assertThat(expirationAttributes.getTimeout()).isEqualTo(expectedTimeout);
@@ -84,22 +84,22 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void constructInitializedAnnotationBasedExpirationInstance() {
 
-		AnnotationBasedExpiration expiration = new AnnotationBasedExpiration(ExpirationAttributes.DEFAULT);
+		AnnotationBasedExpiration expiration = new AnnotationBasedExpiration(GudExpirationAttributes.DEFAULT);
 
-		assertThat(expiration.getDefaultExpirationAttributes()).isEqualTo(ExpirationAttributes.DEFAULT);
+		assertThat(expiration.getDefaultExpirationAttributes()).isEqualTo(GudExpirationAttributes.DEFAULT);
 	}
 
 	@Test
 	public void forIdleTimeoutNoDefaultExpiration() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forIdleTimeout();
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 120, ExpirationAction.LOCAL_INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 120, GudExpirationAction.LOCAL_INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveGenericExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, ExpirationAction.INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, GudExpirationAction.INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithNoExpiration());
 		assertThat(expiration.getExpiry(mockRegionEntry)).isNull();
 		verify(mockRegionEntry, atLeast(3)).getValue();
@@ -108,16 +108,16 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void forIdleTimeoutWithDefaultExpiration() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
-		ExpirationAttributes defaultExpiration = new ExpirationAttributes(300, ExpirationAction.DESTROY);
+		GudExpirationAttributes defaultExpiration = new GudExpirationAttributes(300, GudExpirationAction.DESTROY);
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forIdleTimeout(defaultExpiration);
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 120, ExpirationAction.LOCAL_INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 120, GudExpirationAction.LOCAL_INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveGenericExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, ExpirationAction.INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, GudExpirationAction.INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithNoExpiration());
 		assertThat(expiration.getExpiry(mockRegionEntry)).isEqualTo(defaultExpiration);
 		verify(mockRegionEntry, atLeast(3)).getValue();
@@ -126,14 +126,14 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void forTimeToLiveNoDefaultExpiration() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forTimeToLive();
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 300, ExpirationAction.LOCAL_DESTROY);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 300, GudExpirationAction.LOCAL_DESTROY);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutGenericExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, ExpirationAction.INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, GudExpirationAction.INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithNoExpiration());
 		assertThat(expiration.getExpiry(mockRegionEntry)).isNull();
 		verify(mockRegionEntry, atLeast(3)).getValue();
@@ -142,16 +142,16 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void forTimeToLiveWithDefaultExpiration() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
-		ExpirationAttributes defaultExpiration = new ExpirationAttributes(300, ExpirationAction.DESTROY);
+		GudExpirationAttributes defaultExpiration = new GudExpirationAttributes(300, GudExpirationAction.DESTROY);
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forTimeToLive(defaultExpiration);
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 300, ExpirationAction.LOCAL_DESTROY);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 300, GudExpirationAction.LOCAL_DESTROY);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutGenericExpiration());
-		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, ExpirationAction.INVALIDATE);
+		assertExpiration(expiration.getExpiry(mockRegionEntry), 60, GudExpirationAction.INVALIDATE);
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithNoExpiration());
 		assertThat(expiration.getExpiry(mockRegionEntry)).isEqualTo(defaultExpiration);
 		verify(mockRegionEntry, atLeast(3)).getValue();
@@ -205,7 +205,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void setAndGetDefaultExpirationAttributes() {
 
-		ExpirationAttributes expectedExpirationAttributes = new ExpirationAttributes(120, ExpirationAction.INVALIDATE);
+		GudExpirationAttributes expectedExpirationAttributes = new GudExpirationAttributes(120, GudExpirationAction.INVALIDATE);
 
 		AnnotationBasedExpiration expiration = new AnnotationBasedExpiration();
 
@@ -217,29 +217,29 @@ public class AnnotationBasedExpirationUnitTests {
 
 		assertThat(expiration.getDefaultExpirationAttributes()).isNull();
 
-		expiration.setDefaultExpirationAttributes(ExpirationAttributes.DEFAULT);
+		expiration.setDefaultExpirationAttributes(GudExpirationAttributes.DEFAULT);
 
-		assertThat(expiration.getDefaultExpirationAttributes()).isEqualTo(ExpirationAttributes.DEFAULT);
+		assertThat(expiration.getDefaultExpirationAttributes()).isEqualTo(GudExpirationAttributes.DEFAULT);
 	}
 
 	@Test
 	public void getExpiryCallsGetExpirationMetaDataOnRegionEntryFollowedByNewExpirationAttributes() {
 
-		ExpirationAttributes expectedExpirationAttributes =
-			new ExpirationAttributes(60, ExpirationAction.LOCAL_DESTROY);
+		GudExpirationAttributes expectedExpirationAttributes =
+			new GudExpirationAttributes(60, GudExpirationAction.LOCAL_DESTROY);
 
-		final Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		final GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		AnnotationBasedExpiration expiration = new AnnotationBasedExpiration() {
 
 			@Override
-			protected ExpirationMetaData getExpirationMetaData(Region.Entry entry) {
+			protected ExpirationMetaData getExpirationMetaData(GudRegion.Entry entry) {
 				assertThat(entry).isSameAs(mockRegionEntry);
 				return ExpirationMetaData.from(expectedExpirationAttributes);
 			}
 
 			@Override
-			protected ExpirationAttributes newExpirationAttributes(ExpirationMetaData expirationMetaData) {
+			protected GudExpirationAttributes newExpirationAttributes(ExpirationMetaData expirationMetaData) {
 				assertThat(expirationMetaData.timeout()).isEqualTo(expectedExpirationAttributes.getTimeout());
 				assertThat(expirationMetaData.expirationAction()).isEqualTo(expectedExpirationAttributes.getAction());
 				return expectedExpirationAttributes;
@@ -252,7 +252,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void isExpirationConfiguredWithGenericExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithGenericExpiration());
 		assertThat(noDefaultExpiration.isExpirationConfigured(mockRegionEntry)).isTrue();
@@ -264,7 +264,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void isExpirationConfiguredWithNoGenericExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
 		assertThat(noDefaultExpiration.isExpirationConfigured(mockRegionEntry)).isFalse();
@@ -276,7 +276,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void isIdleTimeoutConfiguredWithIdleTimeoutExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutExpiration());
 		assertThat(noDefaultExpiration.isIdleTimeoutConfigured(mockRegionEntry)).isTrue();
@@ -288,7 +288,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void isIdleTimeoutConfiguredWithNoIdleTimeoutExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveGenericExpiration());
 		assertThat(noDefaultExpiration.isIdleTimeoutConfigured(mockRegionEntry)).isFalse();
@@ -300,7 +300,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void isTimeToLiveConfiguredWithTimeToLiveExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveExpiration());
 		assertThat(noDefaultExpiration.isTimeToLiveConfigured(mockRegionEntry)).isTrue();
@@ -311,7 +311,7 @@ public class AnnotationBasedExpirationUnitTests {
 
 	public void isTimeToLiveConfiguredWithNoTimeToLiveExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutGenericExpiration());
 		assertThat(noDefaultExpiration.isTimeToLiveConfigured(mockRegionEntry)).isFalse();
@@ -323,7 +323,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getExpirationWithGenericExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithGenericExpiration());
 		assertThat(noDefaultExpiration.getExpiration(mockRegionEntry)).isInstanceOf(Expiration.class);
@@ -335,7 +335,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getExpirationWithNoGenericExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveIdleTimeoutExpiration());
 		assertThat(noDefaultExpiration.getExpiration(mockRegionEntry)).isNull();
@@ -347,7 +347,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getIdleTimeoutWithIdleTimeoutExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutExpiration());
 		assertThat(noDefaultExpiration.getIdleTimeout(mockRegionEntry)).isInstanceOf(IdleTimeoutExpiration.class);
@@ -359,7 +359,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getIdleTimeoutWithNoIdleTimeoutExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveGenericExpiration());
 		assertThat(noDefaultExpiration.getIdleTimeout(mockRegionEntry)).isNull();
@@ -371,7 +371,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getTimeToLiveWithTimeToLiveExpirationBasedRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithTimeToLiveExpiration());
 		assertThat(noDefaultExpiration.getTimeToLive(mockRegionEntry)).isInstanceOf(TimeToLiveExpiration.class);
@@ -383,7 +383,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void getTimeToLiveWithNoTimeToLiveExpirationRegionEntry() {
 
-		Region.Entry mockRegionEntry = mock(Region.Entry.class, "MockRegionEntry");
+		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
 		when(mockRegionEntry.getValue()).thenReturn(new RegionEntryValueWithIdleTimeoutGenericExpiration());
 		assertThat(noDefaultExpiration.getTimeToLive(mockRegionEntry)).isNull();

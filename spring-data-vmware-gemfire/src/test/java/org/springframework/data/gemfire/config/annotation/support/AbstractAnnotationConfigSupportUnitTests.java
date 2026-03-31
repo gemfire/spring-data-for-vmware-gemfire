@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation.support;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,7 +73,7 @@ public class AbstractAnnotationConfigSupportUnitTests {
 	@Test
 	public void isNotInfrastructureBeanWithApacheGeodeClassIsTrue() {
 
-		BeanDefinition mockBeanDefinition = mockBeanDefinition(ClientCache.class);
+		BeanDefinition mockBeanDefinition = mockBeanDefinition(GudClientCache.class);
 
 		assertThat(this.support.isNotInfrastructureBean(mockBeanDefinition)).isTrue();
 

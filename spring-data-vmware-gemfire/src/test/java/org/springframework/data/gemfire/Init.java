@@ -1,11 +1,11 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.server.CacheServer;
+import org.springframework.data.gemfire.gud.api.GudCacheServer;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
@@ -24,8 +24,8 @@ public class Init implements InitializingBean, BeanFactoryAware {
 	private BeanFactory bf;
 
 	public void afterPropertiesSet() {
-		CacheServer cs = bf.getBean(CacheServer.class);
-		Assert.isTrue(!cs.isRunning(), "CacheServer should not have been started yet... ");
+		GudCacheServer cs = bf.getBean(GudCacheServer.class);
+		Assert.isTrue(!cs.isRunning(), "GudCacheServer should not have been started yet... ");
 	}
 
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {

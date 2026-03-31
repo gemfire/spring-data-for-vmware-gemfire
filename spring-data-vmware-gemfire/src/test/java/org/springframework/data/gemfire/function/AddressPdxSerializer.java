@@ -1,18 +1,18 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function;
 
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxWriter;
 
-public class AddressPdxSerializer implements PdxSerializer {
+public class AddressPdxSerializer implements GudPdxSerializer {
 
   @Override
-  public boolean toData(Object obj, PdxWriter out) {
+  public boolean toData(Object obj, GudPdxWriter out) {
 
     if (obj instanceof Address) {
 
@@ -30,7 +30,7 @@ public class AddressPdxSerializer implements PdxSerializer {
   }
 
   @Override
-  public Object fromData(Class<?> type, PdxReader in) {
+  public Object fromData(Class<?> type, GudPdxReader in) {
 
     if (Address.class.isAssignableFrom(type)) {
       return new Address(in.readString("street"), in.readString("city"), in.readString("state"),

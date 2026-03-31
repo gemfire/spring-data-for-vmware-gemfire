@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -23,10 +23,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 
 import org.springframework.data.gemfire.GemfireUtils;
 
@@ -39,10 +39,10 @@ import org.springframework.data.gemfire.GemfireUtils;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.Pool
- * @see org.apache.geode.cache.client.PoolFactory
- * @see org.apache.geode.cache.client.SocketFactory
- * @see org.apache.geode.cache.query.QueryService
+ * @see org.apache.geode.cache.client.GudPool
+ * @see org.apache.geode.cache.client.GudPoolFactory
+ * @see org.apache.geode.cache.client.GudSocketFactory
+ * @see org.apache.geode.cache.query.GudQueryService
  * @see org.springframework.data.gemfire.client.support.DefaultableDelegatingPoolAdapter
  * @since 1.8.0
  */
@@ -52,13 +52,13 @@ public class DefaultableDelegatingPoolAdapterTest {
 	private DefaultableDelegatingPoolAdapter poolAdapter;
 
 	@Mock
-	private Pool mockPool;
+	private GudPool mockPool;
 
 	@Mock
-	private QueryService mockQueryService;
+	private GudQueryService mockQueryService;
 
 	@Mock
-	private SocketFactory mockSocketFactory;
+	private GudSocketFactory mockSocketFactory;
 
 	@Mock
 	@SuppressWarnings("rawtypes")
@@ -91,7 +91,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 			newSocketAddress("localhost", GemfireUtils.DEFAULT_CACHE_SERVER_PORT)));
 		when(this.mockPool.getSocketBufferSize()).thenReturn(16384);
 		when(this.mockPool.getSocketConnectTimeout()).thenReturn(5000);
-		when(this.mockPool.getSocketFactory()).thenReturn(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		when(this.mockPool.getSocketFactory()).thenReturn(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 		when(this.mockPool.getStatisticInterval()).thenReturn(1000);
 		when(this.mockPool.getSubscriptionAckInterval()).thenReturn(200);
 		when(this.mockPool.getSubscriptionEnabled()).thenReturn(true);
@@ -118,7 +118,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Pool delegate must not be null");
+			assertThat(expected).hasMessage("GudPool delegate must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -377,7 +377,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getServers(null)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(32768)).isEqualTo(32768);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(null)).isEqualTo(5000);
-		assertThat(this.poolAdapter.getSocketFactory(null)).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(this.poolAdapter.getSocketFactory(null)).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 		assertThat(this.poolAdapter.getStatisticInterval(null)).isEqualTo(1000);
 		assertThat(this.poolAdapter.getSubscriptionAckInterval(50)).isEqualTo(50);
 		assertThat(this.poolAdapter.getSubscriptionEnabled(true)).isTrue();
@@ -432,7 +432,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getServers(null)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(null)).isEqualTo(16384);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(null)).isEqualTo(5000);
-		assertThat(this.poolAdapter.getSocketFactory(null)).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(this.poolAdapter.getSocketFactory(null)).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 		assertThat(this.poolAdapter.getStatisticInterval(null)).isEqualTo(1000);
 		assertThat(this.poolAdapter.getSubscriptionAckInterval(null)).isEqualTo(200);
 		assertThat(this.poolAdapter.getSubscriptionEnabled(null)).isTrue();
@@ -497,7 +497,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getServers(defaultServer)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(8192)).isEqualTo(16384);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(8192)).isEqualTo(5000);
-		assertThat(this.poolAdapter.getSocketFactory(this.mockSocketFactory)).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(this.poolAdapter.getSocketFactory(this.mockSocketFactory)).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 		assertThat(this.poolAdapter.getStatisticInterval(2000)).isEqualTo(1000);
 		assertThat(this.poolAdapter.getSubscriptionAckInterval(50)).isEqualTo(200);
 		assertThat(this.poolAdapter.getSubscriptionEnabled(false)).isTrue();

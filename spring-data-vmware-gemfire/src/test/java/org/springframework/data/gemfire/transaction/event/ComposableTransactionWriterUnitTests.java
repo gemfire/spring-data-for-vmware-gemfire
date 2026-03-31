@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.transaction.event;
@@ -12,9 +12,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import java.util.Properties;
-import org.apache.geode.cache.TransactionEvent;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.TransactionWriterException;
+import org.springframework.data.gemfire.gud.api.GudTransactionEvent;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriterException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.TransactionWriter
+ * @see org.apache.geode.cache.GudTransactionWriter
  * @see org.springframework.data.gemfire.transaction.event.ComposableTransactionWriter
  * @since 2.3.0
  */
@@ -36,13 +36,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class ComposableTransactionWriterUnitTests {
 
 	@Mock
-	private TransactionEvent mockTransactionEvent;
+	private GudTransactionEvent mockTransactionEvent;
 
 	@Mock
-	private TransactionWriter mockTransactionWriterOne;
+	private GudTransactionWriter mockTransactionWriterOne;
 
 	@Mock
-	private TransactionWriter mockTransactionWriterTwo;
+	private GudTransactionWriter mockTransactionWriterTwo;
 
 	@Test
 	public void composeWithNullIsNullSafeAndReturnsNull() {
@@ -62,7 +62,7 @@ public class ComposableTransactionWriterUnitTests {
 	@Test
 	public void composeWithTwoTransactionWritersReturnsComposite() {
 
-		TransactionWriter compositeTransactionWriter =
+		GudTransactionWriter compositeTransactionWriter =
 			ComposableTransactionWriter.compose(this.mockTransactionWriterOne, this.mockTransactionWriterTwo);
 
 		assertThat(compositeTransactionWriter).isInstanceOf(ComposableTransactionWriter.class);
@@ -87,18 +87,18 @@ public class ComposableTransactionWriterUnitTests {
 			.beforeCommit(eq(this.mockTransactionEvent));
 	}
 
-	@Test(expected = TransactionWriterException.class)
+	@Test(expected = GudTransactionWriterException.class)
 	public void beforeCommitWhenFirstTransactionWriterThrowsException()
 			throws Exception {
 
-		doThrow(new TransactionWriterException("TEST"))
-			.when(this.mockTransactionWriterOne).beforeCommit(any(TransactionEvent.class));
+		doThrow(new GudTransactionWriterException("TEST"))
+			.when(this.mockTransactionWriterOne).beforeCommit(any(GudTransactionEvent.class));
 
 		try {
 			ComposableTransactionWriter.compose(this.mockTransactionWriterOne, this.mockTransactionWriterTwo)
 				.beforeCommit(this.mockTransactionEvent);
 		}
-		catch (TransactionWriterException expected) {
+		catch (GudTransactionWriterException expected) {
 
 			assertThat(expected).hasMessage("TEST");
 			assertThat(expected).hasNoCause();
@@ -110,7 +110,7 @@ public class ComposableTransactionWriterUnitTests {
 			verify(this.mockTransactionWriterOne, times(1))
 				.beforeCommit(eq(this.mockTransactionEvent));
 
-			verify(this.mockTransactionWriterTwo, never()).beforeCommit(any(TransactionEvent.class));
+			verify(this.mockTransactionWriterTwo, never()).beforeCommit(any(GudTransactionEvent.class));
 		}
 	}
 

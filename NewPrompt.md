@@ -272,12 +272,12 @@ Implement the GemFire 10.3 driver that bridges GUD API to native GemFire.
 
 ```
 gud-driver-gemfire-10.3/src/main/java/
-└── org/springframework/data/gemfire/gud/driver/gemfire103/
-    ├── GemFire103Driver.java          # Main driver entry point
-    ├── GemFire103Cache.java           # GudCache implementation
-    ├── GemFire103Region.java          # GudRegion implementation
-    ├── GemFire103QueryService.java    # GudQueryService implementation
-    ├── GemFire103Pool.java            # GudPool implementation
+└── org/springframework/data/gemfire/gud/driver/gemfire/
+    ├── GemFireDriver.java          # Main driver entry point
+    ├── GemFireCache.java           # GudCache implementation
+    ├── GemFireRegion.java          # GudRegion implementation
+    ├── GemFireQueryService.java    # GudQueryService implementation
+    ├── GemFirePool.java            # GudPool implementation
     └── ... (adapter for each GUD API type)
 ```
 
@@ -286,11 +286,11 @@ gud-driver-gemfire-10.3/src/main/java/
 Each driver class wraps the native GemFire type:
 
 ```java
-public class GemFire103Region<K, V> implements GudRegion<K, V> {
+public class GemFireRegion<K, V> implements GudRegion<K, V> {
     
     private final Region<K, V> nativeRegion;
     
-    public GemFire103Region(Region<K, V> nativeRegion) {
+    public GemFireRegion(Region<K, V> nativeRegion) {
         this.nativeRegion = nativeRegion;
     }
     

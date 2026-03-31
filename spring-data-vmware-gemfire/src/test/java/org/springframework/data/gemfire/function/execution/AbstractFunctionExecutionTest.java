@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function.execution;
@@ -27,10 +27,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.execute.Execution;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionException;
-import org.apache.geode.cache.execute.ResultCollector;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionException;
+import org.springframework.data.gemfire.gud.api.GudResultCollector;
 
 /**
  * The AbstractFunctionExecutionTest class is a test suite of test cases testing the contract and functionality
@@ -42,7 +42,7 @@ import org.apache.geode.cache.execute.ResultCollector;
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
  * @see org.springframework.data.gemfire.function.execution.AbstractFunctionExecution
- * @see org.apache.geode.cache.execute.Execution
+ * @see org.apache.geode.cache.execute.GudExecution
  * @since 1.7.0
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -50,7 +50,7 @@ import org.apache.geode.cache.execute.ResultCollector;
 public class AbstractFunctionExecutionTest {
 
 	@Mock
-	private Execution mockExecution;
+	private GudExecution mockExecution;
 
 	@Test
 	@SuppressWarnings("unchecked")
@@ -60,9 +60,9 @@ public class AbstractFunctionExecutionTest {
 
 		List<Object> results = Arrays.asList(args);
 
-		Function mockFunction = mock(Function.class, "MockFunction");
+		GudFunction mockFunction = mock(GudFunction.class, "MockFunction");
 
-		ResultCollector mockResultCollector = mock(ResultCollector.class, "MockResultCollector");
+		GudResultCollector mockResultCollector = mock(GudResultCollector.class, "MockResultCollector");
 
 		when(mockExecution.setArguments(eq(args))).thenReturn(mockExecution);
 		when(mockExecution.execute(eq(mockFunction))).thenReturn(mockResultCollector);
@@ -70,7 +70,7 @@ public class AbstractFunctionExecutionTest {
 		when(mockResultCollector.getResult(500, TimeUnit.MILLISECONDS)).thenReturn(results);
 
 		AbstractFunctionExecution functionExecution = new AbstractFunctionExecution() {
-			@Override protected Execution getExecution() {
+			@Override protected GudExecution getExecution() {
 				return mockExecution;
 			}
 		};
@@ -82,7 +82,7 @@ public class AbstractFunctionExecutionTest {
 		assertThat(actualResults).isEqualTo(results);
 
 		verify(mockExecution, times(1)).setArguments(eq(args));
-		verify(mockExecution, never()).withCollector(any(ResultCollector.class));
+		verify(mockExecution, never()).withCollector(any(GudResultCollector.class));
 		verify(mockExecution, never()).withFilter(any(Set.class));
 		verify(mockExecution, times(1)).execute(eq(mockFunction));
 		verify(mockExecution, never()).execute(any(String.class));
@@ -98,7 +98,7 @@ public class AbstractFunctionExecutionTest {
 		AbstractFunctionExecution functionExecution = new AbstractFunctionExecution() {
 
 			@Override
-			protected Execution getExecution() {
+			protected GudExecution getExecution() {
 				return mockExecution;
 			}
 
@@ -119,7 +119,7 @@ public class AbstractFunctionExecutionTest {
 		AbstractFunctionExecution functionExecution = new AbstractFunctionExecution() {
 
 			@Override
-			protected Execution getExecution() {
+			protected GudExecution getExecution() {
 				return mockExecution;
 			}
 
@@ -138,7 +138,7 @@ public class AbstractFunctionExecutionTest {
 		AbstractFunctionExecution functionExecution = new AbstractFunctionExecution() {
 
 			@Override
-			protected Execution getExecution() {
+			protected GudExecution getExecution() {
 				return mockExecution;
 			}
 
@@ -156,7 +156,7 @@ public class AbstractFunctionExecutionTest {
 		AbstractFunctionExecution functionExecution = new AbstractFunctionExecution() {
 
 			@Override
-			protected Execution getExecution() {
+			protected GudExecution getExecution() {
 				return mockExecution;
 			}
 
@@ -169,7 +169,7 @@ public class AbstractFunctionExecutionTest {
 		assertThat((Object) functionExecution.executeAndExtract()).isNull();
 	}
 
-	@Test(expected = FunctionException.class)
+	@Test(expected = GudFunctionException.class)
 	public void executeAndExtractWithThrowsException() {
 
 		AbstractFunctionExecution functionExecution = mock(AbstractFunctionExecution.class);
@@ -184,8 +184,8 @@ public class AbstractFunctionExecutionTest {
 		}
 		catch (Exception expected) {
 
-			assertThat(expected).isInstanceOf(FunctionException.class);
-			assertThat(expected).hasMessage("Execution of Function [with ID [TestFunction]] failed");
+			assertThat(expected).isInstanceOf(GudFunctionException.class);
+			assertThat(expected).hasMessage("GudExecution of GudFunction [with ID [TestFunction]] failed");
 			assertThat(expected).hasCauseInstanceOf(IllegalArgumentException.class);
 			assertThat(expected.getCause()).hasMessage("test");
 			assertThat(expected.getCause()).hasNoCause();

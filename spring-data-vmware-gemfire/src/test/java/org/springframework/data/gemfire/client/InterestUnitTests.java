@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.InterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 
 /**
  * Unit Tests for {@link Interest}.
@@ -22,7 +22,7 @@ import org.apache.geode.cache.InterestResultPolicy;
  * @author John Blum
  * @author Mark Paluch
  * @see org.junit.Test
- * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.apache.geode.cache.GudInterestResultPolicy
  * @see org.springframework.data.gemfire.client.Interest
  * @since 1.6.0
  */
@@ -37,7 +37,7 @@ public class InterestUnitTests {
 		Interest<String> interest = new Interest<>("testKey");
 
 		assertThat(interest.getKey()).isEqualTo("testKey");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS_VALUES);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS_VALUES);
 		assertThat(interest.isDurable()).isFalse();
 		assertThat(interest.isReceiveValues()).isTrue();
 		assertThat(interest.getType()).isEqualTo(KEY);
@@ -52,10 +52,10 @@ public class InterestUnitTests {
 	@Test
 	public void constructInterestWithKeyAndPolicy() {
 
-		Interest<String> interest = new Interest<>("mockKey", InterestResultPolicy.KEYS);
+		Interest<String> interest = new Interest<>("mockKey", GudInterestResultPolicy.KEYS);
 
 		assertThat(interest.getKey()).isEqualTo("mockKey");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS);
 		assertThat(interest.isDurable()).isFalse();
 		assertThat(interest.isReceiveValues()).isTrue();
 		assertThat(interest.getType()).isEqualTo(KEY);
@@ -70,10 +70,10 @@ public class InterestUnitTests {
 	@Test
 	public void constructInterestWithKeyPolicyAndDurability() {
 
-		Interest<String> interest = new Interest<>(".*Key", InterestResultPolicy.NONE, DURABLE);
+		Interest<String> interest = new Interest<>(".*Key", GudInterestResultPolicy.NONE, DURABLE);
 
 		assertThat(interest.getKey()).isEqualTo(".*Key");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.NONE);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.NONE);
 		assertThat(interest.isDurable()).isTrue();
 		assertThat(interest.isReceiveValues()).isTrue();
 		assertThat(interest.getType()).isEqualTo(REGEX);
@@ -90,11 +90,11 @@ public class InterestUnitTests {
 
 		List<String> keys = asList("KeyOne", "KeyTwo", "KeyThree");
 
-		Interest<Object> interest = new Interest<>(keys, InterestResultPolicy.KEYS_VALUES,
+		Interest<Object> interest = new Interest<>(keys, GudInterestResultPolicy.KEYS_VALUES,
 			DURABLE, DO_NOT_RECEIVE_VALUES);
 
 		assertThat(interest.getKey()).isEqualTo(keys);
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS_VALUES);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS_VALUES);
 		assertThat(interest.isDurable()).isTrue();
 		assertThat(interest.isReceiveValues()).isFalse();
 		assertThat(interest.getType()).isEqualTo(Interest.Type.KEY);
@@ -235,19 +235,19 @@ public class InterestUnitTests {
 
 		assertThat(interest.isDurable()).isFalse();
 		assertThat(interest.getKey()).isEqualTo("key");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.DEFAULT);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.DEFAULT);
 		assertThat(interest.isReceiveValues()).isTrue();
 		assertThat(interest.getType()).isEqualTo(KEY);
 
 		interest.setDurable(true);
 		interest.setKey("testKey");
-		interest.setPolicy(InterestResultPolicy.KEYS);
+		interest.setPolicy(GudInterestResultPolicy.KEYS);
 		interest.setReceiveValues(false);
 		interest.setType(Interest.Type.REGEX);
 
 		assertThat(interest.isDurable()).isTrue();
 		assertThat(interest.getKey()).isEqualTo("testKey");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS);
 		assertThat(interest.isReceiveValues()).isFalse();
 		assertThat(interest.getType()).isEqualTo(REGEX);
 	}
@@ -257,15 +257,15 @@ public class InterestUnitTests {
 
 		Interest<?> interest = newInterest("key");
 
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.DEFAULT);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.DEFAULT);
 
-		interest.setPolicy(InterestResultPolicy.NONE);
+		interest.setPolicy(GudInterestResultPolicy.NONE);
 
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.NONE);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.NONE);
 
 		interest.setPolicy("keys");
 
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -317,12 +317,12 @@ public class InterestUnitTests {
 		Interest<?> interest = newInterest(".*")
 			.makeDurable()
 			.receivesValues(false)
-			.usingPolicy(InterestResultPolicy.KEYS);
+			.usingPolicy(GudInterestResultPolicy.KEYS);
 
 		assertThat(interest).isNotNull();
 		assertThat(interest.isDurable()).isTrue();
 		assertThat(interest.getKey()).isEqualTo(".*");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.KEYS);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.KEYS);
 		assertThat(interest.isReceiveValues()).isFalse();
 		assertThat(interest.getType()).isEqualTo(REGEX);
 	}
@@ -334,12 +334,12 @@ public class InterestUnitTests {
 		Interest<?> interest = newInterest(".*")
 			.asType(KEY)
 			.withKey("^.+Key\\p{Digit}$")
-			.usingPolicy(InterestResultPolicy.NONE);
+			.usingPolicy(GudInterestResultPolicy.NONE);
 
 		assertThat(interest).isNotNull();
 		assertThat(interest.isDurable()).isFalse();
 		assertThat(interest.getKey()).isEqualTo("^.+Key\\p{Digit}$");
-		assertThat(interest.getPolicy()).isEqualTo(InterestResultPolicy.NONE);
+		assertThat(interest.getPolicy()).isEqualTo(GudInterestResultPolicy.NONE);
 		assertThat(interest.isReceiveValues()).isTrue();
 		assertThat(interest.getType()).isEqualTo(KEY);
 	}

@@ -1,15 +1,15 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionContext;
-import org.apache.geode.pdx.PdxInstance;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionContext;
+import org.springframework.data.gemfire.gud.api.GudPdxInstance;
 
-public class DataFieldFunction implements Function<Object> {
+public class DataFieldFunction implements GudFunction {
 
   @Override
   public String getId() {
@@ -17,10 +17,10 @@ public class DataFieldFunction implements Function<Object> {
   }
 
   @Override
-  public void execute(FunctionContext<Object> context) {
+  public void execute(GudFunctionContext<Object> context) {
     Object[] args = (Object[]) context.getArguments();
 
-    PdxInstance data = (PdxInstance) args[0];
+    GudPdxInstance data = (GudPdxInstance) args[0];
     String fieldName = (String) args[1];
 
     context.getResultSender().lastResult(data.getField(fieldName));

@@ -1,13 +1,13 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.listener;
 
-import org.apache.geode.cache.Operation;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqQuery;
+import org.springframework.data.gemfire.gud.api.GudOperation;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
 
 /**
  * Simple GemFire-message/event-driven-pojo.
@@ -16,10 +16,10 @@ import org.apache.geode.cache.query.CqQuery;
  */
 public class GemfireMDP {
 
-	public void handleEvent(CqEvent event) { }
+	public void handleEvent(GudCqEvent event) { }
 
-	public void handleQuery(CqQuery query) { }
+	public void handleQuery(GudCqQuery query) { }
 
-	public void handleOperation(Operation op) { }
+	public void handleOperation(GudOperation op) { }
 
 }

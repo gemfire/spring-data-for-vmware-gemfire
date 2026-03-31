@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -9,11 +9,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationPolicy;
 import static org.springframework.data.gemfire.config.annotation.EnableExpiration.ExpirationType;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -29,10 +29,10 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.CustomExpiry
- * @see org.apache.geode.cache.ExpirationAttributes
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudCustomExpiry
+ * @see org.apache.geode.cache.GudExpirationAttributes
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @see org.springframework.data.gemfire.config.annotation.EnableExpiration
@@ -49,63 +49,63 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	private <K, V> void assertRegionExpiration(ExpirationAttributes expectedExpirationAttributes,
-			Region<K, V> region, V... applicationDomainObjects) {
+	private <K, V> void assertRegionExpiration(GudExpirationAttributes expectedExpirationAttributes,
+			GudRegion<K, V> region, V... applicationDomainObjects) {
 
 		assertIdleTimeoutExpiration(expectedExpirationAttributes, region, applicationDomainObjects);
 		assertTimeToLiveExpiration(expectedExpirationAttributes, region, applicationDomainObjects);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> void assertIdleTimeoutExpiration(ExpirationAttributes expectedExpirationAttributes,
-			Region<K, V> region, V... applicationDomainObjects) {
+	private <K, V> void assertIdleTimeoutExpiration(GudExpirationAttributes expectedExpirationAttributes,
+			GudRegion<K, V> region, V... applicationDomainObjects) {
 
 		assertExpiration(expectedExpirationAttributes, region.getAttributes().getCustomEntryIdleTimeout(),
 			applicationDomainObjects);
 	}
 
-	private <K, V> void assertNoIdleTimeoutExpiration(Region<K, V> region) {
+	private <K, V> void assertNoIdleTimeoutExpiration(GudRegion<K, V> region) {
 		assertThat(region.getAttributes().getCustomEntryIdleTimeout()).isNull();
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> void assertTimeToLiveExpiration(ExpirationAttributes expectedExpirationAttributes,
-			Region<K, V> region, V... applicationDomainObjects) {
+	private <K, V> void assertTimeToLiveExpiration(GudExpirationAttributes expectedExpirationAttributes,
+			GudRegion<K, V> region, V... applicationDomainObjects) {
 
 		assertExpiration(expectedExpirationAttributes, region.getAttributes().getCustomEntryTimeToLive(),
 			applicationDomainObjects);
 	}
 
-	private <K, V> void assertNoTimeToLiveExpiration(Region<K, V> region) {
+	private <K, V> void assertNoTimeToLiveExpiration(GudRegion<K, V> region) {
 		assertThat(region.getAttributes().getCustomEntryTimeToLive()).isNull();
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> void assertExpiration(ExpirationAttributes expectedExpirationAttributes,
-			CustomExpiry<K, V> customExpiry, V... applicationDomainObjects) {
+	private <K, V> void assertExpiration(GudExpirationAttributes expectedExpirationAttributes,
+			GudCustomExpiry<K, V> customExpiry, V... applicationDomainObjects) {
 
-		Region.Entry<K, V> regionEntry = mockRegionEntry(ArrayUtils.getFirst(applicationDomainObjects));
+		GudRegion.Entry<K, V> regionEntry = mockRegionEntry(ArrayUtils.getFirst(applicationDomainObjects));
 
 		assertExpiration(customExpiry.getExpiry(regionEntry), expectedExpirationAttributes);
 	}
 
-	private void assertExpiration(ExpirationAttributes actualExpirationAttributes,
-			ExpirationAttributes expectedExpirationAttributes) {
+	private void assertExpiration(GudExpirationAttributes actualExpirationAttributes,
+			GudExpirationAttributes expectedExpirationAttributes) {
 
 		assertThat(actualExpirationAttributes).isEqualTo(expectedExpirationAttributes);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> Region<K, V> getRegion(String beanName) {
-		return getBean(beanName, Region.class);
+	private <K, V> GudRegion<K, V> getRegion(String beanName) {
+		return getBean(beanName, GudRegion.class);
 	}
 
-	private  ExpirationAttributes newExpirationAttributes(int timeout, ExpirationActionType action) {
+	private  GudExpirationAttributes newExpirationAttributes(int timeout, ExpirationActionType action) {
 		return newExpirationAttributes(timeout, action.getExpirationAction());
 	}
 
-	private ExpirationAttributes newExpirationAttributes(int timeout, ExpirationAction action) {
-		return new ExpirationAttributes(timeout, action);
+	private GudExpirationAttributes newExpirationAttributes(int timeout, GudExpirationAction action) {
+		return new GudExpirationAttributes(timeout, action);
 	}
 
 	@Test
@@ -114,10 +114,10 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(DefaultExpirationPolicyConfiguration.class);
 
-		ExpirationAttributes expectedExpiration = newExpirationAttributes(0, ExpirationActionType.INVALIDATE);
+		GudExpirationAttributes expectedExpiration = newExpirationAttributes(0, ExpirationActionType.INVALIDATE);
 
-		Region one = getRegion("One");
-		Region two = getRegion("Two");
+		GudRegion one = getRegion("One");
+		GudRegion two = getRegion("Two");
 
 		assertIdleTimeoutExpiration(expectedExpiration, one);
 		assertIdleTimeoutExpiration(expectedExpiration, two);
@@ -131,10 +131,10 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(CustomIdleTimeoutExpirationPolicyConfiguration.class);
 
-		ExpirationAttributes expectedExpiration = newExpirationAttributes(300, ExpirationActionType.LOCAL_DESTROY);
+		GudExpirationAttributes expectedExpiration = newExpirationAttributes(300, ExpirationActionType.LOCAL_DESTROY);
 
-		Region one = getRegion("One");
-		Region two = getRegion("Two");
+		GudRegion one = getRegion("One");
+		GudRegion two = getRegion("Two");
 
 		assertIdleTimeoutExpiration(expectedExpiration, one);
 		assertIdleTimeoutExpiration(expectedExpiration, two);
@@ -149,10 +149,10 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(CustomTimeToLiveTimeoutExpirationPolicyConfiguration.class);
 
-		ExpirationAttributes expectedExpiration = newExpirationAttributes(900, ExpirationActionType.LOCAL_INVALIDATE);
+		GudExpirationAttributes expectedExpiration = newExpirationAttributes(900, ExpirationActionType.LOCAL_INVALIDATE);
 
-		Region one = getRegion("One");
-		Region two = getRegion("Two");
+		GudRegion one = getRegion("One");
+		GudRegion two = getRegion("Two");
 
 		assertTimeToLiveExpiration(expectedExpiration, one);
 		assertTimeToLiveExpiration(expectedExpiration, two);
@@ -167,11 +167,11 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(RegionSpecificExpirationPolicyConfiguration.class);
 
-		ExpirationAttributes expectedIdleTimeout = newExpirationAttributes(180, ExpirationActionType.INVALIDATE);
-		ExpirationAttributes expectedTimeToLive = newExpirationAttributes(360, ExpirationActionType.DESTROY);
+		GudExpirationAttributes expectedIdleTimeout = newExpirationAttributes(180, ExpirationActionType.INVALIDATE);
+		GudExpirationAttributes expectedTimeToLive = newExpirationAttributes(360, ExpirationActionType.DESTROY);
 
-		Region one = getRegion("One");
-		Region two = getRegion("Two");
+		GudRegion one = getRegion("One");
+		GudRegion two = getRegion("Two");
 
 		assertIdleTimeoutExpiration(expectedIdleTimeout, one);
 		assertNoIdleTimeoutExpiration(two);
@@ -186,11 +186,11 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(MixedExpirationPolicyConfiguration.class);
 
-		ExpirationAttributes expectedIdleTimeout = newExpirationAttributes(60, ExpirationActionType.LOCAL_INVALIDATE);
-		ExpirationAttributes expectedTimeToLive = newExpirationAttributes(600, ExpirationActionType.DESTROY);
+		GudExpirationAttributes expectedIdleTimeout = newExpirationAttributes(60, ExpirationActionType.LOCAL_INVALIDATE);
+		GudExpirationAttributes expectedTimeToLive = newExpirationAttributes(600, ExpirationActionType.DESTROY);
 
-		Region one = getRegion("One");
-		Region two = getRegion("Two");
+		GudRegion one = getRegion("One");
+		GudRegion two = getRegion("Two");
 
 		assertIdleTimeoutExpiration(expectedIdleTimeout, one);
 		assertNoIdleTimeoutExpiration(two);
@@ -200,9 +200,9 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 	}
 
 	@SuppressWarnings("unchecked")
-	static <K, V> Region.Entry<K, V> mockRegionEntry(V applicationDomainObject) {
+	static <K, V> GudRegion.Entry<K, V> mockRegionEntry(V applicationDomainObject) {
 
-		Region.Entry<K, V> mockRegionEntry = mock(Region.Entry.class);
+		GudRegion.Entry<K, V> mockRegionEntry = mock(GudRegion.Entry.class);
 
 		when(mockRegionEntry.getValue()).thenReturn(applicationDomainObject);
 
@@ -215,7 +215,7 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 	static class RegionConfiguration {
 
 		@Bean("One")
-		public ClientRegionFactoryBean<Object, Object> regionOne(ClientCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> regionOne(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> regionOne = new ClientRegionFactoryBean<>();
 
@@ -227,7 +227,7 @@ public class EnableExpirationConfigurationUnitTests extends SpringApplicationCon
 		}
 
 		@Bean("Two")
-		public ClientRegionFactoryBean<Object, Object> regionTwo(ClientCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> regionTwo(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> regionTwo = new ClientRegionFactoryBean<>();
 

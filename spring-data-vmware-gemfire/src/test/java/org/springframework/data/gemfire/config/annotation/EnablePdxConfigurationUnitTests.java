@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -21,7 +21,7 @@ import com.gemstone.gemfire.TestGemStoneGemFireType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import org.apache.geode.pdx.PdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -43,7 +43,7 @@ import org.springframework.util.MethodInvoker;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Spy
- * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.pdx.GudPdxSerializer
  * @see org.mockito.junit.MockitoJUnitRunner
  * @see org.springframework.data.gemfire.config.annotation.EnablePdx
  * @see org.springframework.data.gemfire.config.annotation.PdxConfiguration
@@ -128,10 +128,10 @@ public class EnablePdxConfigurationUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		PdxSerializer mockPdxSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockPdxSerializer = mock(GudPdxSerializer.class);
 
 		when(mockBeanFactory.containsBean(eq("MockPdxSerializer"))).thenReturn(true);
-		when(mockBeanFactory.getBean(eq("MockPdxSerializer"), eq(PdxSerializer.class)))
+		when(mockBeanFactory.getBean(eq("MockPdxSerializer"), eq(GudPdxSerializer.class)))
 			.thenReturn(mockPdxSerializer);
 
 		doReturn(Optional.of("MockPdxDiskStore")).when(this.pdxConfiguration).getDiskStoreName();
@@ -153,7 +153,7 @@ public class EnablePdxConfigurationUnitTests {
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("MockPdxSerializer"));
 		verify(mockBeanFactory, times(1))
-			.getBean(eq("MockPdxSerializer"), eq(PdxSerializer.class));
+			.getBean(eq("MockPdxSerializer"), eq(GudPdxSerializer.class));
 
 		verify(this.pdxConfiguration, times(1)).getDiskStoreName();
 		verify(this.pdxConfiguration, times(1)).isIgnoreUnreadFields();
@@ -242,7 +242,7 @@ public class EnablePdxConfigurationUnitTests {
 		assertThat(this.pdxConfiguration.resolvePdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("MockPdxSerializer"));
-		verify(mockBeanFactory, never()).getBean(anyString(), any(PdxSerializer.class));
+		verify(mockBeanFactory, never()).getBean(anyString(), any(GudPdxSerializer.class));
 	}
 
 	@Test
@@ -250,10 +250,10 @@ public class EnablePdxConfigurationUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		PdxSerializer mockPdxSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockPdxSerializer = mock(GudPdxSerializer.class);
 
 		when(mockBeanFactory.containsBean(eq("MockPdxSerializer"))).thenReturn(true);
-		when(mockBeanFactory.getBean(eq("MockPdxSerializer"), eq(PdxSerializer.class)))
+		when(mockBeanFactory.getBean(eq("MockPdxSerializer"), eq(GudPdxSerializer.class)))
 			.thenReturn(mockPdxSerializer);
 
 		this.pdxConfiguration.setBeanFactory(mockBeanFactory);
@@ -265,7 +265,7 @@ public class EnablePdxConfigurationUnitTests {
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("MockPdxSerializer"));
 		verify(mockBeanFactory, times(1))
-			.getBean(eq("MockPdxSerializer"), eq(PdxSerializer.class));
+			.getBean(eq("MockPdxSerializer"), eq(GudPdxSerializer.class));
 	}
 
 	@Test
@@ -283,7 +283,7 @@ public class EnablePdxConfigurationUnitTests {
 
 		this.pdxConfiguration.setBeanFactory(mockBeanFactory);
 
-		PdxSerializer pdxSerializer = this.pdxConfiguration.newPdxSerializer();
+		GudPdxSerializer pdxSerializer = this.pdxConfiguration.newPdxSerializer();
 
 		assertThat(pdxSerializer).isInstanceOf(MappingPdxSerializer.class);
 

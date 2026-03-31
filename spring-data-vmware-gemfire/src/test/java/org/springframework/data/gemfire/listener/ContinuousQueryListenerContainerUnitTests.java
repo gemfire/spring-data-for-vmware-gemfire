@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.listener;
@@ -26,22 +26,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
-import org.apache.geode.cache.query.ExcludedEvent;
+import org.springframework.data.gemfire.gud.api.GudExcludedEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.query.CqAttributes;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqException;
-import org.apache.geode.cache.query.CqQuery;
-import org.apache.geode.cache.query.CqState;
-import org.apache.geode.cache.query.QueryException;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudCqAttributes;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqException;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudCqState;
+import org.springframework.data.gemfire.gud.api.GudQueryException;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -74,9 +74,9 @@ public class ContinuousQueryListenerContainerUnitTests {
 		this.cqListenerContainer = spy(new ContinuousQueryListenerContainer());
 	}
 
-	private CqQuery mockCqQuery(String name, String query, CqAttributes attributes, boolean durable) {
+	private GudCqQuery mockCqQuery(String name, String query, GudCqAttributes attributes, boolean durable) {
 
-		CqQuery mockQuery = mock(CqQuery.class);
+		GudCqQuery mockQuery = mock(GudCqQuery.class);
 
 		when(mockQuery.getName()).thenReturn(name);
 		when(mockQuery.getQueryString()).thenReturn(query);
@@ -89,15 +89,15 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void afterPropertiesSetIsAutoStart() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
 		when(this.mockBeanFactory.containsBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class))).thenReturn(true);
-		when(this.mockBeanFactory.getBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class))).thenReturn(mockPool);
+		when(this.mockBeanFactory.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class))).thenReturn(true);
+		when(this.mockBeanFactory.getBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class))).thenReturn(mockPool);
 		when(mockPoolResolver.resolve(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME))).thenReturn(mockPool);
 		when(mockPool.getQueryService()).thenReturn(mockQueryService);
 
@@ -118,8 +118,8 @@ public class ContinuousQueryListenerContainerUnitTests {
 			assertThat(this.cqListenerContainer.getTaskExecutor()).isInstanceOf(Executor.class);
 
 			verify(this.mockBeanFactory, times(2)).containsBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME));
-			verify(this.mockBeanFactory, times(2)).isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class));
-			verify(this.mockBeanFactory, times(1)).getBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class));
+			verify(this.mockBeanFactory, times(2)).isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class));
+			verify(this.mockBeanFactory, times(1)).getBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class));
 			verify(mockPoolResolver, times(1)).resolve(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME));
 			verify(mockPool, times(1)).getQueryService();
 			verifyNoInteractions(mockQueryService);
@@ -131,14 +131,14 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		Executor mockExecutor = mock(Executor.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
 		when(this.mockBeanFactory.containsBean(eq("TestPool"))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq("TestPool"), eq(Pool.class))).thenReturn(true);
+		when(this.mockBeanFactory.isTypeMatch(eq("TestPool"), eq(GudPool.class))).thenReturn(true);
 		when(mockPoolResolver.resolve(eq("TestPool"))).thenReturn(mockPool);
 
 		this.cqListenerContainer.setAutoStartup(false);
@@ -163,8 +163,8 @@ public class ContinuousQueryListenerContainerUnitTests {
 			assertThat(this.cqListenerContainer.getTaskExecutor()).isSameAs(mockExecutor);
 
 			verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-			verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(Pool.class));
-			verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(Pool.class));
+			verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(GudPool.class));
+			verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(GudPool.class));
 			verify(mockPoolResolver, times(1)).resolve(eq("TestPool"));
 			verify(mockPool, times(1)).getQueryService();
 			verifyNoInteractions(mockQueryService);
@@ -175,7 +175,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 	public void afterPropertiesSetThrowsIllegalStateExceptionWhenQueryServiceIsUninitialized() {
 
 		when(this.mockBeanFactory.containsBean(eq("TestPoolZero"))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq("TestPoolZero"), eq(Pool.class))).thenReturn(true);
+		when(this.mockBeanFactory.isTypeMatch(eq("TestPoolZero"), eq(GudPool.class))).thenReturn(true);
 
 		try {
 			this.cqListenerContainer.setBeanFactory(this.mockBeanFactory);
@@ -184,7 +184,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("QueryService is required");
+			assertThat(expected).hasMessage("GudQueryService is required");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -196,8 +196,8 @@ public class ContinuousQueryListenerContainerUnitTests {
 			assertThat(cqListenerContainer.isRunning()).isFalse();
 
 			verify(mockBeanFactory, times(1)).containsBean(eq("TestPoolZero"));
-			verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPoolZero"), eq(Pool.class));
-			verify(mockBeanFactory, times(1)).getBean(eq("TestPoolZero"), eq(Pool.class));
+			verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPoolZero"), eq(GudPool.class));
+			verify(mockBeanFactory, times(1)).getBean(eq("TestPoolZero"), eq(GudPool.class));
 		}
 	}
 
@@ -238,7 +238,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void resolvePoolCallsPoolResolverResolveReturnsPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
@@ -287,7 +287,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 	public void resolvePoolNameReturnsApacheGeodeDefaultPoolNameWhenBeanFactoryContainsBeanWithNonMatchingPoolType() {
 
 		when(this.mockBeanFactory.containsBean(anyString())).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(anyString(), eq(Pool.class))).thenReturn(false);
+		when(this.mockBeanFactory.isTypeMatch(anyString(), eq(GudPool.class))).thenReturn(false);
 
 		this.cqListenerContainer.setBeanFactory(this.mockBeanFactory);
 		this.cqListenerContainer.setPoolName("");
@@ -304,7 +304,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 	public void resolvePoolNameReturnsSpringDataGemFireDefaultPoolName() {
 
 		when(this.mockBeanFactory.containsBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class))).thenReturn(true);
+		when(this.mockBeanFactory.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class))).thenReturn(true);
 
 		this.cqListenerContainer.setBeanFactory(this.mockBeanFactory);
 		this.cqListenerContainer.setPoolName("  ");
@@ -314,28 +314,28 @@ public class ContinuousQueryListenerContainerUnitTests {
 		verify(this.mockBeanFactory, times(1))
 			.containsBean(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME));
 		verify(this.mockBeanFactory, times(1))
-			.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(Pool.class));
+			.isTypeMatch(eq(GemfireConstants.DEFAULT_GEMFIRE_POOL_NAME), eq(GudPool.class));
 	}
 
 	@Test
 	public void eagerlyInitializePoolWithGivenPoolName() {
 
 		when(this.mockBeanFactory.containsBean(eq("TestPool"))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq("TestPool"), eq(Pool.class))).thenReturn(true);
+		when(this.mockBeanFactory.isTypeMatch(eq("TestPool"), eq(GudPool.class))).thenReturn(true);
 
 		this.cqListenerContainer.setBeanFactory(this.mockBeanFactory);
 
 		assertThat(this.cqListenerContainer.eagerlyInitializePool("TestPool")).isEqualTo("TestPool");
 
 		verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(Pool.class));
-		verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(Pool.class));
+		verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(GudPool.class));
+		verify(this.mockBeanFactory, times(1)).getBean(eq("TestPool"), eq(GudPool.class));
 	}
 
 	@Test
 	public void eagerlyInitializePoolFindsRegisteredPoolWithTheGivenName() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
@@ -353,8 +353,8 @@ public class ContinuousQueryListenerContainerUnitTests {
 		finally {
 
 			verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPoolOne"));
-			verify(this.mockBeanFactory, never()).isTypeMatch(anyString(), eq(Pool.class));
-			verify(this.mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+			verify(this.mockBeanFactory, never()).isTypeMatch(anyString(), eq(GudPool.class));
+			verify(this.mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 			verify(mockPoolResolver, times(1)).resolve(eq("TestPoolOne"));
 			verifyNoInteractions(mockPool);
 		}
@@ -363,13 +363,13 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void eagerlyInitializePoolFindsRegisteredPoolWithTheGivenNameWhenBeanFactoryGetBeanThrowsBeansException() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
 		when(this.mockBeanFactory.containsBean(eq("TestPoolTwo"))).thenReturn(true);
-		when(this.mockBeanFactory.isTypeMatch(eq("TestPoolTwo"), eq(Pool.class))).thenReturn(true);
-		when(this.mockBeanFactory.getBean(eq("TestPoolTwo"), eq(Pool.class)))
+		when(this.mockBeanFactory.isTypeMatch(eq("TestPoolTwo"), eq(GudPool.class))).thenReturn(true);
+		when(this.mockBeanFactory.getBean(eq("TestPoolTwo"), eq(GudPool.class)))
 			.thenThrow(new NoSuchBeanDefinitionException("TEST"));
 		when(mockPoolResolver.resolve(eq("TestPoolTwo"))).thenReturn(mockPool);
 
@@ -383,8 +383,8 @@ public class ContinuousQueryListenerContainerUnitTests {
 		finally {
 
 			verify(this.mockBeanFactory, times(1)).containsBean(eq("TestPoolTwo"));
-			verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPoolTwo"), eq(Pool.class));
-			verify(this.mockBeanFactory, times(1)).getBean(eq("TestPoolTwo"), eq(Pool.class));
+			verify(this.mockBeanFactory, times(1)).isTypeMatch(eq("TestPoolTwo"), eq(GudPool.class));
+			verify(this.mockBeanFactory, times(1)).getBean(eq("TestPoolTwo"), eq(GudPool.class));
 			verify(mockPoolResolver, times(1)).resolve(eq("TestPoolTwo"));
 			verifyNoInteractions(mockPool);
 		}
@@ -401,7 +401,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("No Pool with name [TestPoolThree] was found");
+			assertThat(expected).hasMessage("No GudPool with name [TestPoolThree] was found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -409,15 +409,15 @@ public class ContinuousQueryListenerContainerUnitTests {
 		finally {
 
 			verify(mockBeanFactory, times(1)).containsBean(eq("TestPoolThree"));
-			verify(mockBeanFactory, never()).isTypeMatch(anyString(), eq(Pool.class));
-			verify(mockBeanFactory, never()).getBean(anyString(), eq(Pool.class));
+			verify(mockBeanFactory, never()).isTypeMatch(anyString(), eq(GudPool.class));
+			verify(mockBeanFactory, never()).getBean(anyString(), eq(GudPool.class));
 		}
 	}
 
 	@Test
 	public void initQueryServiceReturnsConfiguredQueryService() {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
 		cqListenerContainer.setQueryService(mockQueryService);
 
@@ -434,11 +434,11 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void initializesQueryServiceFromPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
 		when(mockPoolResolver.resolve(eq("TestPoolFour"))).thenReturn(mockPool);
 		when(mockPool.getQueryService()).thenReturn(mockQueryService);
@@ -461,12 +461,12 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void initializesQueryServiceFromPoolIgnoresConfiguredQueryService() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
-		QueryService mockQueryServiceOne = mock(QueryService.class);
-		QueryService mockQueryServiceTwo = mock(QueryService.class);
+		GudQueryService mockQueryServiceOne = mock(GudQueryService.class);
+		GudQueryService mockQueryServiceTwo = mock(GudQueryService.class);
 
 		when(mockPoolResolver.resolve(eq("TestPoolFive"))).thenReturn(mockPool);
 		when(mockPool.getQueryService()).thenReturn(mockQueryServiceOne);
@@ -525,9 +525,9 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void setCacheSetsQueryService() {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		when(mockRegionService.getQueryService()).thenReturn(mockQueryService);
 
@@ -547,7 +547,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		ContinuousQueryDefinition definition =
 			new ContinuousQueryDefinition("TestQuery", "SELECT * FROM /Utilization u WHERE u.value > 100", mockListener);
 
-		CqQuery mockQuery = mock(CqQuery.class);
+		GudCqQuery mockQuery = mock(GudCqQuery.class);
 
 		doReturn(mockQuery).when(cqListenerContainer).addContinuousQuery(eq(definition));
 		when(cqListenerContainer.isRunning()).thenReturn(true);
@@ -562,10 +562,10 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test(expected = GemfireQueryException.class)
 	public void addContinuousQueryThrowsQueryException() throws Exception {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
-		when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
-			.thenThrow(new CqException("TEST"));
+		when(mockQueryService.newCq(anyString(), any(GudCqAttributes.class), anyBoolean()))
+			.thenThrow(new GudCqException("TEST"));
 
 		ContinuousQueryListener mockListener = mock(ContinuousQueryListener.class);
 
@@ -581,7 +581,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		catch (GemfireQueryException expected) {
 
 			assertThat(expected).hasMessageStartingWith("Unable to create query [SELECT * FROM /Utilization u WHERE u.value > 100]");
-			assertThat(expected).hasCauseInstanceOf(QueryException.class);
+			assertThat(expected).hasCauseInstanceOf(GudQueryException.class);
 			assertThat(expected.getCause()).hasMessage("TEST");
 			assertThat(expected.getCause()).hasNoCause();
 
@@ -596,9 +596,9 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void addManagedNamedContinuousQuery() throws Exception {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
-		when(mockQueryService.newCq(anyString(), anyString(), any(CqAttributes.class), anyBoolean()))
+		when(mockQueryService.newCq(anyString(), anyString(), any(GudCqAttributes.class), anyBoolean()))
 			.thenAnswer(invocation -> mockCqQuery(invocation.getArgument(0), invocation.getArgument(1),
 				invocation.getArgument(2), invocation.getArgument(3)));
 
@@ -610,7 +610,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		cqListenerContainer.setQueryService(mockQueryService);
 
-		CqQuery query = cqListenerContainer.addContinuousQuery(definition);
+		GudCqQuery query = cqListenerContainer.addContinuousQuery(definition);
 
 		assertThat(query).isNotNull();
 		assertThat(query.isDurable()).isTrue();
@@ -618,7 +618,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		assertThat(query.getQueryString()).isEqualTo("SELECT * FROM /Utilization u WHERE u.value > 100");
 		assertThat(query.isRunning()).isFalse();
 
-		CqAttributes attributes = query.getCqAttributes();
+		GudCqAttributes attributes = query.getCqAttributes();
 
 		assertThat(attributes).isNotNull();
 		assertThat(attributes.getCqListener()).isInstanceOf(ContinuousQueryListenerContainer.EventDispatcherAdapter.class);
@@ -633,9 +633,9 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void addManagedUnnamedContinuousQuery() throws Exception {
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
-		when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
+		when(mockQueryService.newCq(anyString(), any(GudCqAttributes.class), anyBoolean()))
 			.thenAnswer(invocation -> mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
 				invocation.getArgument(2)));
 
@@ -647,7 +647,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		cqListenerContainer.setQueryService(mockQueryService);
 
-		CqQuery query = cqListenerContainer.addContinuousQuery(definition);
+		GudCqQuery query = cqListenerContainer.addContinuousQuery(definition);
 
 		assertThat(query).isNotNull();
 		assertThat(query.isDurable()).isFalse();
@@ -655,7 +655,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		assertThat(query.getQueryString()).isEqualTo("SELECT * FROM /Utilization u WHERE u.value > 100");
 		assertThat(query.isRunning()).isFalse();
 
-		CqAttributes attributes = query.getCqAttributes();
+		GudCqAttributes attributes = query.getCqAttributes();
 
 		assertThat(attributes).isNotNull();
 		assertThat(attributes.getCqListener()).isInstanceOf(ContinuousQueryListenerContainer.EventDispatcherAdapter.class);
@@ -669,9 +669,9 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 	@Test
 	public void addContinuousQueryWithExcludedEvents() throws Exception {
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
-		when(mockQueryService.newCq(anyString(), any(CqAttributes.class), anyBoolean()))
+		when(mockQueryService.newCq(anyString(), any(GudCqAttributes.class), anyBoolean()))
 				.thenAnswer(invocation -> mockCqQuery(null, invocation.getArgument(0), invocation.getArgument(1),
 						invocation.getArgument(2)));
 
@@ -683,18 +683,18 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		cqListenerContainer.setQueryService(mockQueryService);
 
-		CqQuery query = cqListenerContainer.addContinuousQuery(definition);
-		CqAttributes attributes = query.getCqAttributes();
+		GudCqQuery query = cqListenerContainer.addContinuousQuery(definition);
+		GudCqAttributes attributes = query.getCqAttributes();
 
 		assertThat(attributes).isNotNull();
-		assertThat(attributes.getExcludedEvents()).containsExactlyInAnyOrder(ExcludedEvent.DESTROY, ExcludedEvent.UPDATE);
+		assertThat(attributes.getExcludedEvents()).containsExactlyInAnyOrder(GudExcludedEvent.DESTROY, GudExcludedEvent.UPDATE);
 	}
 
 	@Test
 	public void cqListenerContainerStartsWhenNotRunning() throws Exception {
 
-		CqQuery mockQueryOne = mock(CqQuery.class);
-		CqQuery mockQueryTwo = mock(CqQuery.class);
+		GudCqQuery mockQueryOne = mock(GudCqQuery.class);
+		GudCqQuery mockQueryTwo = mock(GudCqQuery.class);
 
 		cqListenerContainer.getContinuousQueries().add(mockQueryOne);
 		cqListenerContainer.getContinuousQueries().add(mockQueryTwo);
@@ -712,10 +712,10 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test(expected = GemfireQueryException.class)
 	public void cqListenerContainerStartHandlesCqException() throws Exception {
 
-		CqQuery mockQueryOne = mock(CqQuery.class);
-		CqQuery mockQueryTwo = mock(CqQuery.class);
+		GudCqQuery mockQueryOne = mock(GudCqQuery.class);
+		GudCqQuery mockQueryTwo = mock(GudCqQuery.class);
 
-		CqState mockQueryState = mock(CqState.class);
+		GudCqState mockQueryState = mock(GudCqState.class);
 
 		cqListenerContainer.getContinuousQueries().add(mockQueryOne);
 		cqListenerContainer.getContinuousQueries().add(mockQueryTwo);
@@ -723,7 +723,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		when(mockQueryOne.getName()).thenReturn("ONE");
 		when(mockQueryOne.getState()).thenReturn(mockQueryState);
 		when(mockQueryState.toString()).thenReturn("FAILED");
-		doThrow(new CqException("ONE")).when(mockQueryOne).execute();
+		doThrow(new GudCqException("ONE")).when(mockQueryOne).execute();
 
 		try {
 			cqListenerContainer.start();
@@ -731,7 +731,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 		catch (GemfireQueryException cause) {
 
 			assertThat(cause).hasMessageStartingWith("Could not execute query [ONE]; state is [FAILED]");
-			assertThat(cause).hasCauseInstanceOf(CqException.class);
+			assertThat(cause).hasCauseInstanceOf(GudCqException.class);
 			assertThat(cause.getCause()).hasMessage("ONE");
 			assertThat(cause.getCause()).hasNoCause();
 
@@ -769,7 +769,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		ContinuousQueryListener mockListener = mock(ContinuousQueryListener.class);
 
-		CqEvent mockEvent = mock(CqEvent.class);
+		GudCqEvent mockEvent = mock(GudCqEvent.class);
 
 		cqListenerContainer.setTaskExecutor(mockExecutor);
 		cqListenerContainer.dispatchEvent(mockListener, mockEvent);
@@ -796,7 +796,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		doThrow(expectedCause).when(mockListener).onEvent(any());
 
-		CqEvent mockEvent = mock(CqEvent.class);
+		GudCqEvent mockEvent = mock(GudCqEvent.class);
 
 		cqListenerContainer.setErrorHandler(mockErrorHandler);
 		cqListenerContainer.setTaskExecutor(mockExecutor);
@@ -813,11 +813,11 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void stopStopsCqsCallsRunnableHandlesExceptionsOnCqQueryStopWhenRunning() throws Exception {
 
-		CqQuery mockQueryOne = mock(CqQuery.class);
-		CqQuery mockQueryTwo = mock(CqQuery.class);
-		CqQuery mockQueryThree = mock(CqQuery.class);
+		GudCqQuery mockQueryOne = mock(GudCqQuery.class);
+		GudCqQuery mockQueryTwo = mock(GudCqQuery.class);
+		GudCqQuery mockQueryThree = mock(GudCqQuery.class);
 
-		doThrow(new CqException("TWO")).when(mockQueryTwo).stop();
+		doThrow(new GudCqException("TWO")).when(mockQueryTwo).stop();
 
 		Runnable mockRunnable = mock(Runnable.class);
 
@@ -849,15 +849,15 @@ public class ContinuousQueryListenerContainerUnitTests {
 	@Test
 	public void destroyIsSuccessful() throws Exception {
 
-		CqQuery mockQueryOne = mock(CqQuery.class);
-		CqQuery mockQueryTwo = mock(CqQuery.class);
-		CqQuery mockQueryThree = mock(CqQuery.class);
-		CqQuery mockQueryFour = mock(CqQuery.class);
+		GudCqQuery mockQueryOne = mock(GudCqQuery.class);
+		GudCqQuery mockQueryTwo = mock(GudCqQuery.class);
+		GudCqQuery mockQueryThree = mock(GudCqQuery.class);
+		GudCqQuery mockQueryFour = mock(GudCqQuery.class);
 
 		when(mockQueryTwo.isClosed()).thenReturn(true);
 		doThrow(new RuntimeException("THREE")).when(mockQueryThree).close();
 
-		List<CqQuery> queries = Arrays.asList(mockQueryOne, mockQueryTwo, mockQueryThree, mockQueryFour);
+		List<GudCqQuery> queries = Arrays.asList(mockQueryOne, mockQueryTwo, mockQueryThree, mockQueryFour);
 
 		cqListenerContainer.getContinuousQueries().addAll(queries);
 

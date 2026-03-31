@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.admin.remote;
@@ -28,8 +28,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -47,8 +47,8 @@ import org.springframework.web.client.RestTemplate;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.apache.geode.cache.query.Index
  * @see org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate
  * @see org.springframework.http.HttpHeaders
@@ -63,10 +63,10 @@ import org.springframework.web.client.RestTemplate;
 public class RestHttpGemfireAdminTemplateUnitTests {
 
 	@Mock
-	private ClientCache mockClientCache;
+	private GudClientCache mockClientCache;
 
 	@Mock
-	private Region mockRegion;
+	private GudRegion mockRegion;
 
 	private RestHttpGemfireAdminTemplate template;
 

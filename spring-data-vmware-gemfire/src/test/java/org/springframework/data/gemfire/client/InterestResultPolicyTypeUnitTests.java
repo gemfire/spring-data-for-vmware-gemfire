@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.InterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 
 /**
  * Unit Tests for {@link InterestResultPolicyType} enum.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.apache.geode.cache.GudInterestResultPolicy
  * @see org.springframework.data.gemfire.client.InterestResultPolicyTypeUnitTests
  * @since 1.6.0
  */
@@ -24,8 +24,8 @@ public class InterestResultPolicyTypeUnitTests {
 	@Test
 	public void testStaticGetInterestResultPolicy() {
 
-		assertThat(InterestResultPolicyType.getInterestResultPolicy(InterestResultPolicyType.KEYS)).isEqualTo(InterestResultPolicy.KEYS);
-		assertThat(InterestResultPolicyType.getInterestResultPolicy(InterestResultPolicyType.KEYS_VALUES)).isEqualTo(InterestResultPolicy.KEYS_VALUES);
+		assertThat(InterestResultPolicyType.getInterestResultPolicy(InterestResultPolicyType.KEYS)).isEqualTo(GudInterestResultPolicy.KEYS);
+		assertThat(InterestResultPolicyType.getInterestResultPolicy(InterestResultPolicyType.KEYS_VALUES)).isEqualTo(GudInterestResultPolicy.KEYS_VALUES);
 	}
 
 	@Test
@@ -36,8 +36,8 @@ public class InterestResultPolicyTypeUnitTests {
 	@Test
 	public void testDefault() {
 
-		assertThat(InterestResultPolicyType.valueOf(InterestResultPolicy.DEFAULT)).isEqualTo(InterestResultPolicyType.DEFAULT);
-		assertThat(InterestResultPolicyType.DEFAULT.getInterestResultPolicy()).isEqualTo(InterestResultPolicy.DEFAULT);
+		assertThat(InterestResultPolicyType.valueOf(GudInterestResultPolicy.DEFAULT)).isEqualTo(InterestResultPolicyType.DEFAULT);
+		assertThat(InterestResultPolicyType.DEFAULT.getInterestResultPolicy()).isEqualTo(GudInterestResultPolicy.DEFAULT);
 		assertThat(InterestResultPolicyType.DEFAULT).isSameAs(InterestResultPolicyType.KEYS_VALUES);
 	}
 
@@ -47,7 +47,7 @@ public class InterestResultPolicyTypeUnitTests {
 		try {
 			for (byte ordinal = 0; ordinal < Byte.MAX_VALUE; ordinal++) {
 
-				InterestResultPolicy interestResultPolicy = InterestResultPolicy.fromOrdinal(ordinal);
+				GudInterestResultPolicy interestResultPolicy = GudInterestResultPolicy.fromOrdinal(ordinal);
 
 				InterestResultPolicyType interestResultPolicyType =
 					InterestResultPolicyType.valueOf(interestResultPolicy);
@@ -62,7 +62,7 @@ public class InterestResultPolicyTypeUnitTests {
 
 	@Test
 	public void testValueOfWithNull() {
-		assertThat(InterestResultPolicyType.valueOf((InterestResultPolicy) null)).isNull();
+		assertThat(InterestResultPolicyType.valueOf((GudInterestResultPolicy) null)).isNull();
 	}
 
 	@Test

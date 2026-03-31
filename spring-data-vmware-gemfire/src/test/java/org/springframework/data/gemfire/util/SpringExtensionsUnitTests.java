@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.util;
@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
@@ -96,10 +96,10 @@ public class SpringExtensionsUnitTests {
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(true);
 		when(mockBeanFactory.isTypeMatch(anyString(), any(Class.class))).thenReturn(true);
 
-		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", Pool.class)).isTrue();
+		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", GudPool.class)).isTrue();
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(Pool.class));
+		verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(GudPool.class));
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class SpringExtensionsUnitTests {
 
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(false);
 
-		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", Pool.class)).isFalse();
+		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", GudPool.class)).isFalse();
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("TestPool"));
 		verify(mockBeanFactory, never()).isTypeMatch(anyString(), any(Class.class));
@@ -123,10 +123,10 @@ public class SpringExtensionsUnitTests {
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(true);
 		when(mockBeanFactory.isTypeMatch(anyString(), any(Class.class))).thenReturn(false);
 
-		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", Pool.class)).isFalse();
+		assertThat(SpringExtensions.isMatchingBean(mockBeanFactory, "TestPool", GudPool.class)).isFalse();
 
 		verify(mockBeanFactory, times(1)).containsBean(eq("TestPool"));
-		verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(Pool.class));
+		verify(mockBeanFactory, times(1)).isTypeMatch(eq("TestPool"), eq(GudPool.class));
 	}
 
 	@Test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.support;
@@ -15,8 +15,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.internal.cache.LocalRegion;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -31,7 +31,7 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.GudDiskStore
  * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
  * @since 1.3.3
  */
@@ -127,7 +127,7 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 	}
 
 	protected BeanDefinition defineDiskStore(String... dependencies) {
-		return newBeanDefinitionBuilder(DiskStore.class, dependencies).getBeanDefinition();
+		return newBeanDefinitionBuilder(GudDiskStore.class, dependencies).getBeanDefinition();
 	}
 
 	protected BeanDefinition defineRegion(Class<?> regionClass, String... dependencies) {
@@ -170,13 +170,13 @@ public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
 		beanDefinitions.put("pdxDiskStore", defineDiskStore());
 		beanDefinitions.put("someOtherBean", defineBean("org.company.app.domain.SomeOtherBean"));
 		beanDefinitions.put("overflowDiskStore", defineDiskStore());
-		beanDefinitions.put("region1", defineRegion(LocalRegion.class, "overflowDiskStore"));
+		beanDefinitions.put("region1", defineRegion(GudRegion.class, "overflowDiskStore"));
 		beanDefinitions.put("region2DiskStore", defineDiskStore("someBean"));
-		beanDefinitions.put("region2", defineRegion(LocalRegion.class, "region2DiskStore"));
+		beanDefinitions.put("region2", defineRegion(GudRegion.class, "region2DiskStore"));
 		beanDefinitions.put("residentRegionDiskStore", defineDiskStore("someBean", "yetAnotherBean"));
-		beanDefinitions.put("residentRegion", defineRegion(LocalRegion.class, "residentRegionDiskStore"));
+		beanDefinitions.put("residentRegion", defineRegion(GudRegion.class, "residentRegionDiskStore"));
 		beanDefinitions.put("yetAnotherBean", defineBean("org.company.app.domain.YetAnotherBean", "someBean"));
-		beanDefinitions.put("region3", defineRegion(LocalRegion.class));
+		beanDefinitions.put("region3", defineRegion(GudRegion.class));
 
 		ConfigurableListableBeanFactory mockBeanFactory = mockBeanFactory(beanDefinitions);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Cache;
+import org.springframework.data.gemfire.gud.api.GudCache;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -64,7 +64,7 @@ public class LazyWiringDeclarableSupportUnitTests {
 	}
 
 	@Mock
-	private Cache mockCache;
+	private GudCache mockCache;
 
 	@After
 	public void tearDown() {

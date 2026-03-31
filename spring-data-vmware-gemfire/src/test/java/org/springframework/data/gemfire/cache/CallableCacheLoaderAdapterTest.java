@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
@@ -18,13 +18,13 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests to test the adaption of the {@link java.util.concurrent.Callable}
- * into Apache Geode's {@link org.apache.geode.cache.CacheLoader} interface.
+ * into Apache Geode's {@link org.apache.geode.cache.GudCacheLoader} interface.
  *
  * @author John Blum
  * @see org.junit.Test
@@ -32,22 +32,22 @@ import org.apache.geode.cache.Region;
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
  * @see java.util.concurrent.Callable
- * @see org.apache.geode.cache.CacheLoader
- * @see org.apache.geode.cache.LoaderHelper
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudCacheLoader
+ * @see org.apache.geode.cache.GudLoaderHelper
+ * @see org.apache.geode.cache.GudRegion
  * @since 1.9.0
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CallableCacheLoaderAdapterTest {
 
 	@Mock
-	private CacheLoader<String, Object> mockCacheLoader;
+	private GudCacheLoader<String, Object> mockCacheLoader;
 
 	@Mock
-	private LoaderHelper<String, Object> mockLoaderHelper;
+	private GudLoaderHelper<String, Object> mockLoaderHelper;
 
 	@Mock
-	private Region<String, Object> mockRegion;
+	private GudRegion<String, Object> mockRegion;
 
 	@Test
 	public void constructCallableCacheLoaderAdapterWithArgumentKeyAndRegion() {
@@ -96,7 +96,7 @@ public class CallableCacheLoaderAdapterTest {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("CacheLoader must not be null");
+			assertThat(expected).hasMessage("GudCacheLoader must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -110,9 +110,9 @@ public class CallableCacheLoaderAdapterTest {
 		CallableCacheLoaderAdapter<String, Object> instance =
 			new CallableCacheLoaderAdapter<>(mockCacheLoader, "key", mockRegion, "test");
 
-		when(mockCacheLoader.load(any(LoaderHelper.class))).thenAnswer((Answer<String>) invocation -> {
+		when(mockCacheLoader.load(any(GudLoaderHelper.class))).thenAnswer((Answer<String>) invocation -> {
 
-			LoaderHelper<String, Object> loaderHelper = invocation.getArgument(0);
+			GudLoaderHelper<String, Object> loaderHelper = invocation.getArgument(0);
 
 			assertThat(loaderHelper).isNotNull();
 			assertThat(loaderHelper.getArgument()).isEqualTo("test");
@@ -124,7 +124,7 @@ public class CallableCacheLoaderAdapterTest {
 
 		assertThat(instance.call()).isEqualTo("mockValue");
 
-		verify(mockCacheLoader, times(1)).load(isA(LoaderHelper.class));
+		verify(mockCacheLoader, times(1)).load(isA(GudLoaderHelper.class));
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -162,7 +162,7 @@ public class CallableCacheLoaderAdapterTest {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("The Region to load cannot be null");
+			assertThat(expected).hasMessage("The GudRegion to load cannot be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

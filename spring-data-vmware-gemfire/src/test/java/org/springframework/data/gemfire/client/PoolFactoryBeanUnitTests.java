@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -25,11 +25,11 @@ import java.util.Collections;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.data.gemfire.TestUtils;
@@ -45,10 +45,10 @@ import org.springframework.data.util.ReflectionUtils;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.client.Pool
- * @see org.apache.geode.cache.client.PoolFactory
- * @see org.apache.geode.cache.client.SocketFactory
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.client.GudPool
+ * @see org.apache.geode.cache.client.GudPoolFactory
+ * @see org.apache.geode.cache.client.GudSocketFactory
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.client.PoolFactoryBean
  * @see org.springframework.data.gemfire.client.PoolResolver
@@ -70,13 +70,13 @@ public class PoolFactoryBeanUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		PoolFactory mockPoolFactory = mock(PoolFactory.class);
+		GudPoolFactory mockPoolFactory = mock(GudPoolFactory.class);
 
 		PoolResolver mockPoolResolver = mock(PoolResolver.class);
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		doReturn(mockPool).when(mockPoolFactory).create(eq("GemFirePool"));
 		doReturn(null).when(mockPoolResolver).resolve(anyString());
@@ -121,7 +121,7 @@ public class PoolFactoryBeanUnitTests {
 		assertThat(poolFactoryBean.getObject()).isSameAs(mockPool);
 		assertThat(poolFactoryBean.getPoolResolver()).isSameAs(mockPoolResolver);
 
-		verify(mockBeanFactory, times(1)).getBean(eq(ClientCache.class));
+		verify(mockBeanFactory, times(1)).getBean(eq(GudClientCache.class));
 		verify(mockPoolFactory, times(1)).setFreeConnectionTimeout(eq(60000));
 		verify(mockPoolFactory, times(1)).setIdleTimeout(eq(120000L));
 		verify(mockPoolFactory, times(1)).setLoadConditioningInterval(eq(15000));
@@ -166,7 +166,7 @@ public class PoolFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Pool name is required");
+			assertThat(expected).hasMessage("GudPool name is required");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -207,7 +207,7 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void destroyDestroysPool() throws Exception {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		doReturn(false).when(mockPool).isDestroyed();
 
@@ -216,7 +216,7 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setPool(mockPool);
 		poolFactoryBean.destroy();
 
-		assertThat(TestUtils.<Pool>readField("pool", poolFactoryBean)).isNull();
+		assertThat(TestUtils.<GudPool>readField("pool", poolFactoryBean)).isNull();
 
 		InOrder order = inOrder(mockPool);
 
@@ -230,7 +230,7 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void destroyNonSpringManagedPool() throws Exception {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
@@ -252,13 +252,13 @@ public class PoolFactoryBeanUnitTests {
 
 	@Test
 	public void getObjectTypeEqualsPoolClass() {
-		assertThat(new PoolFactoryBean().getObjectType()).isEqualTo(Pool.class);
+		assertThat(new PoolFactoryBean().getObjectType()).isEqualTo(GudPool.class);
 	}
 
 	@Test
 	public void getObjectTypeEqualsPoolInstanceType() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
@@ -347,7 +347,7 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void getPoolWhenPoolIsSet() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
@@ -359,7 +359,7 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void getPoolWhenPoolIsUnset() {
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
@@ -389,7 +389,7 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setSubscriptionRedundancy(2);
 		poolFactoryBean.setSubscriptionTimeoutMultiplier(4);
 
-		Pool pool = poolFactoryBean.getPool();
+		GudPool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
 		assertThat(pool.isDestroyed()).isFalse();
@@ -446,13 +446,13 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void getPoolPendingEventCountWithPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(mockPool.getPendingEventCount()).thenReturn(2);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
-		Pool pool = poolFactoryBean.getPool();
+		GudPool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
@@ -472,7 +472,7 @@ public class PoolFactoryBeanUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("Pool [null] has not been initialized");
+			assertThat(expected).hasMessage("GudPool [null] has not been initialized");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -482,14 +482,14 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void getPoolQueryServiceWithPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		QueryService mockQueryService = mock(QueryService.class);
+		GudQueryService mockQueryService = mock(GudQueryService.class);
 
 		when(mockPool.getQueryService()).thenReturn(mockQueryService);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
-		Pool pool = poolFactoryBean.getPool();
+		GudPool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
@@ -509,7 +509,7 @@ public class PoolFactoryBeanUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("Pool [null] has not been initialized");
+			assertThat(expected).hasMessage("GudPool [null] has not been initialized");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -519,13 +519,13 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void getPoolAndDestroyWithPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolFactoryBean poolFactoryBean = spy(new PoolFactoryBean());
 
 		doThrow(newIllegalStateException("test")).when(poolFactoryBean).destroy();
 
-		Pool pool = poolFactoryBean.getPool();
+		GudPool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
@@ -545,7 +545,7 @@ public class PoolFactoryBeanUnitTests {
 
 		doThrow(newIllegalStateException("test")).when(poolFactoryBean).destroy();
 
-		Pool pool = poolFactoryBean.getPool();
+		GudPool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
 
@@ -576,11 +576,11 @@ public class PoolFactoryBeanUnitTests {
 	@Test
 	public void setAndGetSocketFactory() {
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		PoolFactoryBean poolFactoryBean = new PoolFactoryBean();
 
-		assertThat(poolFactoryBean.getSocketFactory()).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(poolFactoryBean.getSocketFactory()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 
 		poolFactoryBean.setSocketFactory(mockSocketFactory);
 
@@ -588,7 +588,7 @@ public class PoolFactoryBeanUnitTests {
 
 		poolFactoryBean.setSocketFactory(null);
 
-		assertThat(poolFactoryBean.getSocketFactory()).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(poolFactoryBean.getSocketFactory()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 
 		verifyNoInteractions(mockSocketFactory);
 	}

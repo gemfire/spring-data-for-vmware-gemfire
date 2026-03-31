@@ -1,14 +1,14 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function.execution;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionContext;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionContext;
 
-public class NoResultFunction implements Function {
+public class NoResultFunction implements GudFunction {
 
   @Override
   public boolean hasResult() {
@@ -26,5 +26,5 @@ public class NoResultFunction implements Function {
   }
 
   @Override
-  public void execute(FunctionContext functionContext) {}
+  public void execute(GudFunctionContext functionContext) {}
 }

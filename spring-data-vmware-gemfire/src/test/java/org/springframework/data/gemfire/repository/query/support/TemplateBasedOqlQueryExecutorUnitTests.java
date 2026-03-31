@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query.support;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.data.repository.query.QueryMethod;
@@ -66,7 +66,7 @@ public class TemplateBasedOqlQueryExecutorUnitTests {
 
 		QueryMethod mockQueryMethod = mock(QueryMethod.class);
 
-		SelectResults<?> mockSelectResults = mock(SelectResults.class);
+		GudSelectResults<?> mockSelectResults = mock(GudSelectResults.class);
 
 		String query = "SELECT * FROM /TestRegion WHERE id = $1";
 

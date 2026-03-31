@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests for {@link SingleRegionRegionResolver}.
@@ -23,7 +23,7 @@ import org.apache.geode.cache.Region;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.support.SingleRegionRegionResolver
  * @since 2.3.0
  */
@@ -32,7 +32,7 @@ import org.apache.geode.cache.Region;
 public class SingleRegionRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private GudRegion mockRegion;
 
 	@Test
 	public void constructSingleRegionRegionResolverWithRegion() {
@@ -51,7 +51,7 @@ public class SingleRegionRegionResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Region must not be null");
+			assertThat(expected).hasMessage("GudRegion must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

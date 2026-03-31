@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -15,10 +15,10 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver;
 import java.util.Optional;
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +33,10 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.RegionService
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.GudRegionService
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.springframework.data.gemfire.CacheResolver
  * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver
  * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver
@@ -47,12 +47,12 @@ import org.springframework.data.gemfire.CacheResolver;
 public class RegionServiceRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private GudRegion mockRegion;
 
 	@Before
 	public void setupMockRegion() {
 
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
+		GudAttributesMutator mockAttributesMutator = mock(GudAttributesMutator.class);
 
 		when(this.mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
 		when(mockAttributesMutator.getRegion()).thenReturn(this.mockRegion);
@@ -89,11 +89,11 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullCacheResolverResolvingClientCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		when(mockClientCache.getRegion(anyString())).thenReturn(this.mockRegion);
 
-		CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+		CacheResolver<GudClientCache> mockClientCacheResolver = mock(CacheResolver.class);
 
 		when(mockClientCacheResolver.resolve()).thenReturn(mockClientCache);
 
@@ -111,7 +111,7 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullCacheResolveResolvingNullCacheResolvesNullRegion() {
 
-		CacheResolver<ClientCache> mockCacheResolver = mock(CacheResolver.class);
+		CacheResolver<GudClientCache> mockCacheResolver = mock(CacheResolver.class);
 
 		when(mockCacheResolver.resolve()).thenReturn(null);
 
@@ -128,7 +128,7 @@ public class RegionServiceRegionResolverUnitTests {
 	public void fromNullCacheResolverThrowsIllegalArgumentException() {
 
 		try {
-			RegionServiceRegionResolver.from((CacheResolver<ClientCache>) null);
+			RegionServiceRegionResolver.from((CacheResolver<GudClientCache>) null);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -142,7 +142,7 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullRegionService() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		when(mockRegionService.getRegion(anyString())).thenReturn(this.mockRegion);
 
@@ -160,7 +160,7 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNullRegionServiceIsNullSafe() {
 
-		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from((RegionService) null);
+		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from((GudRegionService) null);
 
 		assertThat(regionResolver).isNotNull();
 		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
@@ -171,7 +171,7 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void resolveCachesAndReturnsRegion() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
 
@@ -193,7 +193,7 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void resolveReturnsNullWhenRegionServiceReturnsNull() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
 

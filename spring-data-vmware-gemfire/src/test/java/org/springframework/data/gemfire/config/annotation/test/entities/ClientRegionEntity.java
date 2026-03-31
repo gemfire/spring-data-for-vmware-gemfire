@@ -1,11 +1,11 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.config.annotation.test.entities;
 
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
@@ -17,7 +17,7 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @author John Blum
  * @since 1.9.0
  */
-@ClientRegion(name = "Sessions", shortcut = ClientRegionShortcut.CACHING_PROXY)
+@ClientRegion(name = "Sessions", shortcut = GudClientRegionShortcut.CACHING_PROXY)
 public class ClientRegionEntity {
 
 	@Id

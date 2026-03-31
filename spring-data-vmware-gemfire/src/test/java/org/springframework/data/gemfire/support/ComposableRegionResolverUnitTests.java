@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -23,9 +23,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionDestroyedException;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionDestroyedException;
 
 import org.springframework.data.gemfire.RegionResolver;
 
@@ -36,7 +36,7 @@ import org.springframework.data.gemfire.RegionResolver;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.RegionResolver
  * @see org.springframework.data.gemfire.support.ComposableRegionResolver
  * @since 2.3.0
@@ -46,7 +46,7 @@ import org.springframework.data.gemfire.RegionResolver;
 public class ComposableRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private GudRegion mockRegion;
 
 	@Mock(name = "MockRegionResolverOne")
 	private RegionResolver mockRegionResolverOne;
@@ -60,7 +60,7 @@ public class ComposableRegionResolverUnitTests {
 	@Before
 	public void setupMockRegion() {
 
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
+		GudAttributesMutator mockAttributesMutator = mock(GudAttributesMutator.class);
 
 		when(this.mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
 		when(mockAttributesMutator.getRegion()).thenReturn(this.mockRegion);
@@ -229,7 +229,7 @@ public class ComposableRegionResolverUnitTests {
 			.compose(this.mockRegionResolverOne, this.mockRegionResolverTwo, this.mockRegionResolverThree);
 
 		when(this.mockRegionResolverOne.resolve(anyString()))
-			.thenThrow(new RegionDestroyedException("TEST", "/MockRegion"));
+			.thenThrow(new GudRegionDestroyedException("TEST", "/MockRegion"));
 
 		when(this.mockRegionResolverTwo.resolve(anyString())).thenReturn(this.mockRegion);
 

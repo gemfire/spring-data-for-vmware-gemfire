@@ -45,7 +45,7 @@ This document analyzes the GemFire Unified Driver (GUD) architecture's ability t
                            │ implemented by
 ┌──────────────────────────▼─────────────────────────────────────────┐
 │              gud-driver-gemfire-10.3 (Version-specific)             │
-│  GemFire103Region, GemFire103Cache, GemFire103Driver               │
+│  GemFireRegion, GemFireCache, GemFireDriver                        │
 │  (Direct org.apache.geode dependencies)                             │
 └────────────────────────────────────────────────────────────────────┘
 ```
@@ -553,15 +553,15 @@ Each GemFire version has a corresponding driver that supports appropriate capabi
 
 **10.0 Driver** - Uses default methods for 10.1+ features:
 ```java
-// GemFire100PoolFactory does NOT override setMinConnectionsPerServer()
+// GemFirePoolFactory (10.0) does NOT override setMinConnectionsPerServer()
 // The default method throws GudUnsupportedOperationException
 ```
 
 **10.1, 10.2, 10.3 Drivers** - Override with native implementations:
 ```java
-package org.springframework.data.gemfire.gud.driver.gemfire101;
+package org.springframework.data.gemfire.gud.driver.gemfire;
 
-public class GemFire101PoolFactory implements GudPoolFactory {
+public class GemFirePoolFactory implements GudPoolFactory {
     
     private final PoolFactory nativeFactory;
     
@@ -639,8 +639,8 @@ Create `/gud-api/src/main/java/org/springframework/data/gemfire/gud/api/GudUnsup
 - Extend GudException
 - Include requiredCapability and minimumVersion fields
 
-### Task 6: Update GemFire103Driver
-Modify `/gud-driver-gemfire-10.3/src/main/java/.../GemFire103Driver.java`:
+### Task 6: Update GemFireDriver (10.3)
+Modify `/gud-driver-gemfire-10.3/src/main/java/.../GemFireDriver.java`:
 - Implement new GudDriver methods
 - Define SUPPORTED_CAPABILITIES set
 - Implement translateException() with mappings for common GemFire exceptions

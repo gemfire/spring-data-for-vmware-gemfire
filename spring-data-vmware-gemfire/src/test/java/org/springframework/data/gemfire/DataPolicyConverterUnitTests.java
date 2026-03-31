@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.DataPolicy;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
 
 /**
  * Unit Tests for {@link DataPolicyConverter}.
@@ -28,7 +28,7 @@ public class DataPolicyConverterUnitTests {
 
 		for (byte ordinal = 0; ordinal < Byte.MAX_VALUE; ordinal++) {
 			try {
-				if (DataPolicy.fromOrdinal(ordinal) != null && !DataPolicy.fromOrdinal(ordinal).withPartitioning()) {
+				if (GudDataPolicy.fromOrdinal(ordinal) != null && !GudDataPolicy.fromOrdinal(ordinal).withPartitioning()) {
 					count++;
 				}
 			}
@@ -46,16 +46,16 @@ public class DataPolicyConverterUnitTests {
 	public void policyToDataPolicyConversion() {
 
 		assertThat(DataPolicyConverter.Policy.values().length).isEqualTo(getDataPolicyEnumerationSize() - 1);
-		assertThat(DataPolicyConverter.Policy.EMPTY.toDataPolicy()).isEqualTo(DataPolicy.EMPTY);
-		assertThat(DataPolicyConverter.Policy.NORMAL.toDataPolicy()).isEqualTo(DataPolicy.NORMAL);
-		assertThat(DataPolicyConverter.Policy.PRELOADED.toDataPolicy()).isEqualTo(DataPolicy.PRELOADED);
-		assertThat(DataPolicyConverter.Policy.DEFAULT.toDataPolicy()).isEqualTo(DataPolicy.DEFAULT);
+		assertThat(DataPolicyConverter.Policy.EMPTY.toDataPolicy()).isEqualTo(GudDataPolicy.EMPTY);
+		assertThat(DataPolicyConverter.Policy.NORMAL.toDataPolicy()).isEqualTo(GudDataPolicy.NORMAL);
+		assertThat(DataPolicyConverter.Policy.PRELOADED.toDataPolicy()).isEqualTo(GudDataPolicy.PRELOADED);
+		assertThat(DataPolicyConverter.Policy.DEFAULT.toDataPolicy()).isEqualTo(GudDataPolicy.DEFAULT);
 	}
 
 	@Test
 	public void convertDataPolicyStrings() {
 
-		assertThat(converter.convert("empty")).isEqualTo(DataPolicy.EMPTY);
+		assertThat(converter.convert("empty")).isEqualTo(GudDataPolicy.EMPTY);
 		assertThat(converter.convert("invalid")).isNull();
 		assertThat(converter.convert(null)).isNull();
 	}

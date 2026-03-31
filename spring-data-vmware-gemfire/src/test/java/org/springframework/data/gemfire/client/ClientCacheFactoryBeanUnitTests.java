@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -26,13 +26,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.function.Supplier;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.distributed.DistributedSystem;
-import org.apache.geode.pdx.PdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -49,12 +49,12 @@ import org.springframework.data.gemfire.util.DistributedSystemUtils;
  * @see java.util.Properties
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.client.ClientCacheFactory
- * @see org.apache.geode.cache.client.Pool
- * @see org.apache.geode.distributed.DistributedSystem
- * @see org.apache.geode.pdx.PdxSerializer
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.client.GudClientCacheFactory
+ * @see org.apache.geode.cache.client.GudPool
+ * @see org.apache.geode.distributed.GudDistributedSystem
+ * @see org.apache.geode.pdx.GudPdxSerializer
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @since 1.7.0
@@ -79,21 +79,21 @@ public class ClientCacheFactoryBeanUnitTests {
 
 	@Test
 	public void getObjectTypeEqualsClientCacheClass() {
-		assertThat(new ClientCacheFactoryBean().getObjectType()).isEqualTo(ClientCache.class);
+		assertThat(new ClientCacheFactoryBean().getObjectType()).isEqualTo(GudClientCache.class);
 	}
 
 	@Test
 	public void getObjectTypeEqualsClientCacheInstanceType() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
 		doReturn(mockClientCache).when(clientCacheFactoryBean).getCache();
 
-		assertThat(clientCacheFactoryBean.getObjectType()).isNotEqualTo(ClientCache.class);
+		assertThat(clientCacheFactoryBean.getObjectType()).isNotEqualTo(GudClientCache.class);
 		assertThat(clientCacheFactoryBean.getObjectType()).isEqualTo(mockClientCache.getClass());
-		assertThat(ClientCache.class).isAssignableFrom(clientCacheFactoryBean.getObjectType());
+		assertThat(GudClientCache.class).isAssignableFrom(clientCacheFactoryBean.getObjectType());
 	}
 
 	@Test
@@ -125,7 +125,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		Properties gemfireProperties = createProperties("gf", "test");
 		Properties distributedSystemProperties = createProperties("ds", "mock");
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		doReturn(true).when(mockDistributedSystem).isConnected();
 		doReturn(distributedSystemProperties).when(mockDistributedSystem).getProperties();
@@ -160,7 +160,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		Properties distributedSystemProperties = DistributedSystemUtils
 			.configureDurableClient(createProperties("ds", "mock"), "987", 300);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		doReturn(true).when(mockDistributedSystem).isConnected();
 		doReturn(distributedSystemProperties).when(mockDistributedSystem).getProperties();
@@ -192,7 +192,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		Properties gemfireProperties = createProperties("gf", "test");
 		Properties distributedSystemProperties = createProperties("ds", "mock");
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		doReturn(false).when(mockDistributedSystem).isConnected();
 		doReturn(distributedSystemProperties).when(mockDistributedSystem).getProperties();
@@ -236,10 +236,10 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		Object clientCacheFactoryReference = new ClientCacheFactoryBean().createFactory(gemfireProperties);
 
-		assertThat(clientCacheFactoryReference).isInstanceOf(ClientCacheFactory.class);
+		assertThat(clientCacheFactoryReference).isInstanceOf(GudClientCacheFactory.class);
 		assertThat(gemfireProperties.isEmpty()).isTrue();
 
-		ClientCacheFactory clientCacheFactory = (ClientCacheFactory) clientCacheFactoryReference;
+		GudClientCacheFactory clientCacheFactory = (GudClientCacheFactory) clientCacheFactoryReference;
 
 		clientCacheFactory.set("testKey", "testValue");
 
@@ -250,7 +250,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configureClientCacheFactoryCallsConfigurePdxAndConfigurePool() {
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -269,11 +269,11 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePdxWithAllPdxOptions() {
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
-		PdxSerializer mockPdxSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockPdxSerializer = mock(GudPdxSerializer.class);
 
 		clientCacheFactoryBean.setPdxDiskStoreName("MockPdxDiskStoreName");
 		clientCacheFactoryBean.setPdxIgnoreUnreadFields(false);
@@ -301,7 +301,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePdxWithPartialPdxOptions() {
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -320,7 +320,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPdxIgnoreUnreadFields(eq(true));
 		verify(mockClientCacheFactory, never()).setPdxPersistent(anyBoolean());
 		verify(mockClientCacheFactory, times(1)).setPdxReadSerialized(eq(true));
-		verify(mockClientCacheFactory, never()).setPdxSerializer(any(PdxSerializer.class));
+		verify(mockClientCacheFactory, never()).setPdxSerializer(any(GudPdxSerializer.class));
 
 		verifyNoMoreInteractions(mockClientCacheFactory);
 	}
@@ -328,7 +328,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePdxWithNoPdxOptions() {
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -346,9 +346,9 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithClientCacheFactoryBean() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -405,7 +405,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getSubscriptionMessageTrackingTimeout()).isEqualTo(500);
 		assertThat(clientCacheFactoryBean.getSubscriptionRedundancy()).isEqualTo(2);
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -440,9 +440,9 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		when(mockPool.getFreeConnectionTimeout()).thenReturn(10000);
 		when(mockPool.getIdleTimeout()).thenReturn(120000L);
@@ -497,7 +497,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getSubscriptionMessageTrackingTimeout()).isNull();
 		assertThat(clientCacheFactoryBean.getSubscriptionRedundancy()).isNull();
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -551,9 +551,9 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithClientCacheFactoryBeanAndPoolButClientCacheFactoryBeanOverridesPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		when(mockPool.getFreeConnectionTimeout()).thenReturn(5000);
 		when(mockPool.getIdleTimeout()).thenReturn(120000L);
@@ -571,7 +571,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getServers()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 12480)));
 		when(mockPool.getSocketBufferSize()).thenReturn(8192);
 		when(mockPool.getSocketConnectTimeout()).thenReturn(5000);
-		when(mockPool.getSocketFactory()).thenReturn(SocketFactory.DEFAULT);
+		when(mockPool.getSocketFactory()).thenReturn(GudSocketFactory.DEFAULT);
 		when(mockPool.getStatisticInterval()).thenReturn(5000);
 		when(mockPool.getSubscriptionAckInterval()).thenReturn(1000);
 		when(mockPool.getSubscriptionEnabled()).thenReturn(false);
@@ -622,7 +622,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getSubscriptionMessageTrackingTimeout()).isNull();
 		assertThat(clientCacheFactoryBean.getSubscriptionRedundancy()).isEqualTo(2);
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -675,7 +675,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithFactoryLocator() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(mockPool.getLocators()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 21668)));
 		when(mockPool.getServers()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 41414)));
@@ -689,7 +689,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -702,7 +702,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithFactoryServer() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(mockPool.getLocators()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 21668)));
 		when(mockPool.getServers()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 41414)));
@@ -716,7 +716,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
 		assertThat(clientCacheFactoryBean.getServers().size()).isEqualTo(1);
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -729,7 +729,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithPoolLocator() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(mockPool.getLocators()).thenReturn(Collections.singletonList(new InetSocketAddress("skullbox", 21668)));
 		when(mockPool.getServers()).thenReturn(Collections.emptyList());
@@ -742,7 +742,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -755,7 +755,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void configurePoolWithPoolServer() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(mockPool.getLocators()).thenReturn(Collections.emptyList());
 		when(mockPool.getServers()).thenReturn(Collections.singletonList(new InetSocketAddress("boombox", 41414)));
@@ -768,7 +768,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -789,7 +789,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPool()).isNull();
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		assertThat(clientCacheFactoryBean.configurePool(mockClientCacheFactory)).isSameAs(mockClientCacheFactory);
 
@@ -801,15 +801,15 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void createCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		ClientCacheFactory mockClientCacheFactory = mock(ClientCacheFactory.class);
+		GudClientCacheFactory mockClientCacheFactory = mock(GudClientCacheFactory.class);
 
 		doReturn(mockClientCache).when(mockClientCacheFactory).create();
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
-		assertThat(clientCacheFactoryBean.<ClientCache>createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
+		assertThat(clientCacheFactoryBean.<GudClientCache>createCache(mockClientCacheFactory)).isSameAs(mockClientCache);
 
 		verify(mockClientCacheFactory, times(1)).create();
 		verifyNoMoreInteractions(mockClientCacheFactory);
@@ -819,7 +819,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void resolvePoolReturnsConfiguredPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -835,7 +835,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void resolvesPoolReturnsNamedPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -856,7 +856,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		PoolFactoryBean mockPoolFactoryBean = mock(PoolFactoryBean.class);
 
@@ -905,7 +905,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void onApplicationEventCallsClientCacheReadyForEvents() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -923,7 +923,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void onApplicationEventDoesNotCallClientCacheReadyForEventsWhenClientCacheFactoryBeanReadyForEventsIsFalse() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		doThrow(new RuntimeException("test")).when(mockClientCache).readyForEvents();
 
@@ -943,7 +943,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void onApplicationEventHandlesIllegalStateException() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		doThrow(new IllegalStateException("test")).when(mockClientCache).readyForEvents();
 
@@ -965,7 +965,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
-		doThrow(new CacheClosedException("test")).when(clientCacheFactoryBean).getCache();
+		doThrow(new GudCacheClosedException("test")).when(clientCacheFactoryBean).getCache();
 
 		clientCacheFactoryBean.setReadyForEvents(true);
 
@@ -977,7 +977,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void closeClientCacheWithKeepAlive() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -993,7 +993,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void closeClientCacheWithoutKeepAlive() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
@@ -1030,7 +1030,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		ClientCacheFactoryBean clientCacheFactoryBean = new ClientCacheFactoryBean();
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		assertThat(clientCacheFactoryBean.getPool()).isNull();
 
@@ -1142,11 +1142,11 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getReadyForEvents()).isFalse();
 	}
 
-	private ClientCache mockClientCache(String durableClientId) {
+	private GudClientCache mockClientCache(String durableClientId) {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		Properties gemfireProperties = new Properties();
 
@@ -1163,7 +1163,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void isReadyForEventsIsTrueWhenClientCacheFactoryBeanReadyForEventsIsTrue() {
 
-		ClientCache mockClientCache = mockClientCache("");
+		GudClientCache mockClientCache = mockClientCache("");
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -1180,7 +1180,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void isReadyForEventsIsFalseWhenClientCacheFactoryBeanReadyForEventsIsFalse() {
 
-		ClientCache mockClientCache = mockClientCache("TestDurableClientId");
+		GudClientCache mockClientCache = mockClientCache("TestDurableClientId");
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -1199,7 +1199,7 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
-		doThrow(new CacheClosedException("test")).when(clientCacheFactoryBean).getCache();
+		doThrow(new GudCacheClosedException("test")).when(clientCacheFactoryBean).getCache();
 
 		assertThat(clientCacheFactoryBean.getReadyForEvents()).isNull();
 		assertThat(clientCacheFactoryBean.isReadyForEvents()).isFalse();
@@ -1208,7 +1208,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void isReadyForEventsIsTrueWhenDurableClientIdIsSet() {
 
-		ClientCache mockClientCache = mockClientCache("TestDurableClientId");
+		GudClientCache mockClientCache = mockClientCache("TestDurableClientId");
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -1223,7 +1223,7 @@ public class ClientCacheFactoryBeanUnitTests {
 	@Test
 	public void isReadyForEventsIsFalseWhenDurableClientIdIsNotSet() {
 
-		ClientCache mockClientCache = mockClientCache("  ");
+		GudClientCache mockClientCache = mockClientCache("  ");
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 

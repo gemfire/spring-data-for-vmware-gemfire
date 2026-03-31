@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.support;
@@ -19,8 +19,8 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,9 +54,9 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 		autoRegionLookupBeanPostProcessor = new AutoRegionLookupBeanPostProcessor();
 	}
 
-	protected Region<?, ?> mockRegion(String regionFullPath) {
+	protected GudRegion<?, ?> mockRegion(String regionFullPath) {
 
-		Region<?, ?> mockRegion = mock(Region.class);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class);
 
 		when(mockRegion.getFullPath()).thenReturn(regionFullPath);
 		when(mockRegion.getName()).thenReturn(toRegionName(regionFullPath));
@@ -65,7 +65,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	}
 
 	protected String toRegionName(String regionFullPath) {
-		int index = regionFullPath.lastIndexOf(Region.SEPARATOR);
+		int index = regionFullPath.lastIndexOf(GudRegion.SEPARATOR);
 		return (index > -1 ? regionFullPath.substring(index + 1) : regionFullPath);
 	}
 
@@ -146,24 +146,24 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 
 		assertThat(autoRegionLookupBeanPostProcessorSpy.postProcessAfterInitialization(bean, "test")).isSameAs(bean);
 
-		verify(autoRegionLookupBeanPostProcessorSpy, never()).registerCacheRegionsAsBeans(any(ClientCache.class));
+		verify(autoRegionLookupBeanPostProcessorSpy, never()).registerCacheRegionsAsBeans(any(GudClientCache.class));
 	}
 
 	@Test
 	public void registerCacheRegionsAsBeansIsSuccessful() {
 
-		Set<Region<?, ?>> expected = CollectionUtils.asSet(mockRegion("one"),
+		Set<GudRegion<?, ?>> expected = CollectionUtils.asSet(mockRegion("one"),
 			mockRegion("two"), mockRegion("three"));
 
-		Set<Region<?, ?>> actual = new HashSet<>(expected.size());
+		Set<GudRegion<?, ?>> actual = new HashSet<>(expected.size());
 
 		AutoRegionLookupBeanPostProcessor autoRegionLookupBeanPostProcessor = new AutoRegionLookupBeanPostProcessor() {
-			@Override void registerCacheRegionAsBean(Region<?, ?> region) {
+			@Override void registerCacheRegionAsBean(GudRegion<?, ?> region) {
 				actual.add(region);
 			}
 		};
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		when(mockClientCache.rootRegions()).thenReturn(expected);
 
@@ -173,7 +173,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 
 		verify(mockClientCache, times(1)).rootRegions();
 
-		for (Region<?, ?> region : expected) {
+		for (GudRegion<?, ?> region : expected) {
 			verifyNoInteractions(region);
 		}
 	}
@@ -181,7 +181,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void registerCacheRegionAsBeanIsSuccessful() {
 
-		Region<?, ?> mockRegion = mockRegion("Example");
+		GudRegion<?, ?> mockRegion = mockRegion("Example");
 
 		when(mockRegion.subregions(anyBoolean())).thenReturn(Collections.emptySet());
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(false);
@@ -199,8 +199,8 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void registerCacheRegionAsBeanRegistersSubRegionIgnoresRootRegion() {
 
-		Region<?, ?> mockRootRegion = mockRegion("Root");
-		Region<?, ?> mockSubRegion = mockRegion("/Root/Sub");
+		GudRegion<?, ?> mockRootRegion = mockRegion("Root");
+		GudRegion<?, ?> mockSubRegion = mockRegion("/Root/Sub");
 
 		when(mockRootRegion.subregions(anyBoolean())).thenReturn(CollectionUtils.asSet(mockSubRegion));
 		when(mockSubRegion.subregions(anyBoolean())).thenReturn(Collections.emptySet());
@@ -234,7 +234,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void getBeanNameReturnsRegionFullPath() {
 
-		Region<?, ?> mockRegion = mockRegion("/Parent/Child");
+		GudRegion<?, ?> mockRegion = mockRegion("/Parent/Child");
 
 		assertThat(autoRegionLookupBeanPostProcessor.getBeanName(mockRegion)).isEqualTo("/Parent/Child");
 
@@ -245,7 +245,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void getBeanNameReturnsRegionName() {
 
-		Region<?, ?> mockRegion = mockRegion("/Example");
+		GudRegion<?, ?> mockRegion = mockRegion("/Example");
 
 		assertThat(autoRegionLookupBeanPostProcessor.getBeanName(mockRegion)).isEqualTo("Example");
 
@@ -256,10 +256,10 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void nullSafeSubRegionsWhenSubRegionsIsNotNull() {
 
-		Set<Region<?, ?>> mockSubRegions =
+		Set<GudRegion<?, ?>> mockSubRegions =
 			CollectionUtils.asSet(mockRegion("one"), mockRegion("two"));
 
-		Region<?, ?> mockRegion = mockRegion("parent");
+		GudRegion<?, ?> mockRegion = mockRegion("parent");
 
 		when(mockRegion.subregions(anyBoolean())).thenReturn(mockSubRegions);
 
@@ -271,7 +271,7 @@ public class AutoRegionLookupBeanPostProcessorUnitTests {
 	@Test
 	public void nullSafeSubRegionsWhenSubRegionsIsNull() {
 
-		Region<?, ?> mockRegion = mockRegion("parent");
+		GudRegion<?, ?> mockRegion = mockRegion("parent");
 
 		when(mockRegion.subregions(anyBoolean())).thenReturn(null);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Properties;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -68,7 +68,7 @@ public class SpringContextBootstrappingInitializerUnitTests {
 		return parameters;
 	}
 
-	private final ClientCache mockCache = mock(ClientCache.class);
+	private final GudClientCache mockCache = mock(GudClientCache.class);
 
 	@After
 	public void tearDown() {

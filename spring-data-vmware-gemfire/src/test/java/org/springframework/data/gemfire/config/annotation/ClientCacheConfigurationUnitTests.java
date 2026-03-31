@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -19,9 +19,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
-import org.apache.geode.cache.client.SocketFactory;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
 
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -60,11 +60,11 @@ public class ClientCacheConfigurationUnitTests {
 
 		Resource mockResource = mock(Resource.class, "cache.xml");
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
-		TransactionListener mockTransactionListener = mock(TransactionListener.class);
+		GudTransactionListener mockTransactionListener = mock(GudTransactionListener.class);
 
-		TransactionWriter mockTransactionWriter = mock(TransactionWriter.class);
+		GudTransactionWriter mockTransactionWriter = mock(GudTransactionWriter.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -161,12 +161,12 @@ public class ClientCacheConfigurationUnitTests {
 
 		ClientCacheConfiguration configuration = new ClientCacheConfiguration();
 
-		SocketFactory mockSocketFactory = mock(SocketFactory.class);
+		GudSocketFactory mockSocketFactory = mock(GudSocketFactory.class);
 
 		doReturn(true).when(mockBeanFactory)
-			.isTypeMatch(eq("testSocketFactoryBean"), eq(SocketFactory.class));
+			.isTypeMatch(eq("testSocketFactoryBean"), eq(GudSocketFactory.class));
 		doReturn(mockSocketFactory).when(mockBeanFactory)
-			.getBean(eq("testSocketFactoryBean"), eq(SocketFactory.class));
+			.getBean(eq("testSocketFactoryBean"), eq(GudSocketFactory.class));
 
 		configuration.setBeanFactory(mockBeanFactory);
 		configuration.setSocketFactoryBeanName("testSocketFactoryBean");
@@ -176,9 +176,9 @@ public class ClientCacheConfigurationUnitTests {
 		assertThat(configuration.resolveSocketFactory()).isEqualTo(mockSocketFactory);
 
 		verify(mockBeanFactory, times(1))
-			.isTypeMatch(eq("testSocketFactoryBean"), eq(SocketFactory.class));
+			.isTypeMatch(eq("testSocketFactoryBean"), eq(GudSocketFactory.class));
 		verify(mockBeanFactory, times(1))
-			.getBean(eq("testSocketFactoryBean"), eq(SocketFactory.class));
+			.getBean(eq("testSocketFactoryBean"), eq(GudSocketFactory.class));
 		verifyNoMoreInteractions(mockBeanFactory);
 		verifyNoInteractions(mockSocketFactory);
 	}
@@ -219,9 +219,9 @@ public class ClientCacheConfigurationUnitTests {
 
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
-		doReturn(false).when(mockBeanFactory).isTypeMatch(anyString(), eq(SocketFactory.class));
+		doReturn(false).when(mockBeanFactory).isTypeMatch(anyString(), eq(GudSocketFactory.class));
 		doReturn(true).when(mockBeanFactory).containsBean(eq("testSocketFactory"));
-		doReturn(javax.net.SocketFactory.class).when(mockBeanFactory).getType(eq("testSocketFactory"));
+		doReturn(javax.net.GudSocketFactory.class).when(mockBeanFactory).getType(eq("testSocketFactory"));
 
 		ClientCacheConfiguration configuration = new ClientCacheConfiguration();
 
@@ -238,7 +238,7 @@ public class ClientCacheConfigurationUnitTests {
 
 			assertThat(expected)
 				.hasMessageContaining("Bean named 'testSocketFactory' is expected to be of type '%s' but was actually of type '%s'",
-					SocketFactory.class.getName(), javax.net.SocketFactory.class.getName());
+					GudSocketFactory.class.getName(), javax.net.GudSocketFactory.class.getName());
 
 			assertThat(expected).hasNoCause();
 
@@ -246,7 +246,7 @@ public class ClientCacheConfigurationUnitTests {
 		}
 		finally {
 			verify(mockBeanFactory, times(1))
-				.isTypeMatch(eq("testSocketFactory"), eq(SocketFactory.class));
+				.isTypeMatch(eq("testSocketFactory"), eq(GudSocketFactory.class));
 			verify(mockBeanFactory, times(1)).containsBean(eq("testSocketFactory"));
 			verify(mockBeanFactory, times(1)).getType(eq("testSocketFactory"));
 			verifyNoMoreInteractions(mockBeanFactory);
@@ -259,7 +259,7 @@ public class ClientCacheConfigurationUnitTests {
 		BeanFactory mockBeanFactory = mock(BeanFactory.class);
 
 		doReturn(false).when(mockBeanFactory)
-			.isTypeMatch(eq("mockSocketFactory"), eq(SocketFactory.class));
+			.isTypeMatch(eq("mockSocketFactory"), eq(GudSocketFactory.class));
 		doReturn(false).when(mockBeanFactory).containsBean(eq("mockSocketFactory"));
 
 		ClientCacheConfiguration configuration = new ClientCacheConfiguration();
@@ -272,7 +272,7 @@ public class ClientCacheConfigurationUnitTests {
 		assertThat(configuration.resolveSocketFactory()).isNull();
 
 		verify(mockBeanFactory, times(1))
-			.isTypeMatch(eq("mockSocketFactory"), eq(SocketFactory.class));
+			.isTypeMatch(eq("mockSocketFactory"), eq(GudSocketFactory.class));
 		verify(mockBeanFactory, times(1)).containsBean(eq("mockSocketFactory"));
 		verifyNoMoreInteractions(mockBeanFactory);
 	}

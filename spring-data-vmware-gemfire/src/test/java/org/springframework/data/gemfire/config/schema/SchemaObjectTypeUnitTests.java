@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -11,12 +11,12 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.util.CollectionUtils.asSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.geode.cache.DiskStore;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.query.Index;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudIndex;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -37,9 +37,9 @@ public class SchemaObjectTypeUnitTests {
 	@Test
 	public void objectTypesAreSetAndCorrect() {
 
-		Set<Class<?>> expectedSchemaObjectTypes = asSet(ClientCache.class,
-			DiskStore.class, Function.class, Index.class,
-			Pool.class, Region.class, Void.class);
+		Set<Class<?>> expectedSchemaObjectTypes = asSet(GudClientCache.class,
+			GudDiskStore.class, GudFunction.class, GudIndex.class,
+			GudPool.class, GudRegion.class, Void.class);
 
 		Set<Class<?>> actualSchemaObjectTypes = stream(SchemaObjectType.values())
 			.map(SchemaObjectType::getObjectType)

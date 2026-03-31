@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -7,12 +7,12 @@ package org.springframework.data.gemfire.config.annotation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.EvictionAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.util.ObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -30,8 +30,8 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.EvictionAttributes
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudEvictionAttributes
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.config.annotation.EnableEviction
  * @see org.springframework.data.gemfire.config.annotation.EvictionConfiguration
  * @see org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean
@@ -46,15 +46,15 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 		destroyAllGemFireMockObjects();
 	}
 
-	private void assertEvictionAttributes(Region<?, ?> region, EvictionAttributes expectedEvictionAttributes) {
+	private void assertEvictionAttributes(GudRegion<?, ?> region, GudEvictionAttributes expectedEvictionAttributes) {
 
 		assertThat(region).isNotNull();
 		assertThat(region.getAttributes()).isNotNull();
 		assertEvictionAttributes(region.getAttributes().getEvictionAttributes(), expectedEvictionAttributes);
 	}
 
-	private void assertEvictionAttributes(EvictionAttributes actualEvictionAttributes,
-			EvictionAttributes expectedEvictionAttributes) {
+	private void assertEvictionAttributes(GudEvictionAttributes actualEvictionAttributes,
+			GudEvictionAttributes expectedEvictionAttributes) {
 
 		assertThat(actualEvictionAttributes).isNotNull();
 		assertThat(actualEvictionAttributes.getAction()).isEqualTo(expectedEvictionAttributes.getAction());
@@ -68,12 +68,12 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <K, V> Region<K, V> getRegion(String beanName) {
-		return getBean(beanName, Region.class);
+	protected <K, V> GudRegion<K, V> getRegion(String beanName) {
+		return getBean(beanName, GudRegion.class);
 	}
 
-	private EvictionAttributes newEvictionAttributes(Integer maximum, EvictionPolicyType type, EvictionActionType action,
-			ObjectSizer... objectSizer) {
+	private GudEvictionAttributes newEvictionAttributes(Integer maximum, EvictionPolicyType type, EvictionActionType action,
+			GudObjectSizer... objectSizer) {
 
 		EvictionAttributesFactoryBean evictionAttributesFactory = new EvictionAttributesFactoryBean();
 
@@ -91,9 +91,9 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		newApplicationContext(DefaultEvictionPolicyConfiguration.class);
 
-		EvictionAttributes defaultEvictionAttributes = EvictionAttributes.createLRUEntryAttributes();
+		GudEvictionAttributes defaultEvictionAttributes = GudEvictionAttributes.createLRUEntryAttributes();
 
-		assertEvictionAttributes(getBean("LocalRegion", Region.class), defaultEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", GudRegion.class), defaultEvictionAttributes);
 	}
 
 	@Test
@@ -101,13 +101,13 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		newApplicationContext(CustomEvictionPolicyConfiguration.class);
 
-		ObjectSizer mockObjectSizer = getBean("mockObjectSizer", ObjectSizer.class);
+		GudObjectSizer mockObjectSizer = getBean("mockObjectSizer", GudObjectSizer.class);
 
-		EvictionAttributes customEvictionAttributes =
+		GudEvictionAttributes customEvictionAttributes =
 			newEvictionAttributes(65536, EvictionPolicyType.MEMORY_SIZE, EvictionActionType.OVERFLOW_TO_DISK,
 				mockObjectSizer);
 
-		assertEvictionAttributes(getBean("LocalRegion", Region.class), customEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", GudRegion.class), customEvictionAttributes);
 	}
 
 	@Test
@@ -115,10 +115,10 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		newApplicationContext(LastMatchingWinsEvictionPolicyConfiguration.class);
 
-		EvictionAttributes lastMatchingEvictionAttributes =
+		GudEvictionAttributes lastMatchingEvictionAttributes =
 			newEvictionAttributes(99, EvictionPolicyType.ENTRY_COUNT, EvictionActionType.OVERFLOW_TO_DISK);
 
-		assertEvictionAttributes(getBean("LocalRegion", Region.class), lastMatchingEvictionAttributes);
+		assertEvictionAttributes(getBean("LocalRegion", GudRegion.class), lastMatchingEvictionAttributes);
 	}
 
 	@ClientCacheApplication
@@ -127,22 +127,22 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 	static class CacheRegionConfiguration {
 
 		@Bean("LocalRegion")
-		ClientRegionFactoryBean<Object, Object> mockLocalRegion(ClientCache gemfireCache) {
+		ClientRegionFactoryBean<Object, Object> mockLocalRegion(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegionFactory =
 				new ClientRegionFactoryBean<>();
 
 			clientRegionFactory.setCache(gemfireCache);
 			clientRegionFactory.setPersistent(false);
-			clientRegionFactory.setDataPolicy(DataPolicy.NORMAL);
-			clientRegionFactory.setShortcut(ClientRegionShortcut.LOCAL);
+			clientRegionFactory.setDataPolicy(GudDataPolicy.NORMAL);
+			clientRegionFactory.setShortcut(GudClientRegionShortcut.LOCAL);
 
 			return clientRegionFactory;
 		}
 
 		@Bean
-		ObjectSizer mockObjectSizer() {
-			return mock(ObjectSizer.class);
+		GudObjectSizer mockObjectSizer() {
+			return mock(GudObjectSizer.class);
 		}
 	}
 

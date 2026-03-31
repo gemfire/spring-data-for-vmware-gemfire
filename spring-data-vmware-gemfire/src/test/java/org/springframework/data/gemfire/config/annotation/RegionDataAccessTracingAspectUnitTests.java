@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -33,8 +33,8 @@ import org.springframework.util.ClassUtils;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
  * @see org.springframework.data.gemfire.config.annotation.support.RegionDataAccessTracingAspect
  * @see org.springframework.data.gemfire.tests.logging.slf4j.logback.TestAppender
@@ -69,7 +69,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 
 	@Autowired
 	@Qualifier("ClientRegion")
-	private Region<Object, Object> region;
+	private GudRegion<Object, Object> region;
 
 	private Runnable regionCallbackArgument(AtomicBoolean called) {
 		return () -> called.set(true);
@@ -83,7 +83,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.create\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.create\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionCreate",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -98,7 +98,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.create\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.create\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionCreateWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -112,7 +112,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.get\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.get\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionGet",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -126,7 +126,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.getAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.getAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionGetAll",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -141,7 +141,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.getAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.getAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionGetAllWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -155,7 +155,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.getEntry\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.getEntry\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionGetEntry",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -170,7 +170,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.invalidate\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.invalidate\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionInvalidate",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -185,7 +185,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.invalidate\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.invalidate\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionInvalidateWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -199,7 +199,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.keySet\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.keySet\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionKeySet",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -213,7 +213,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.keySetOnServer\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.keySetOnServer\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionKeySetOnServer",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -227,7 +227,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.localClear\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.localClear\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionLocalClear",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -241,7 +241,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.localDestroy\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.localDestroy\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionLocalDestroy",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -255,7 +255,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.localDestroy\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.localDestroy\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionLocalDestroyWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -270,7 +270,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.localInvalidate\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.localInvalidate\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionLocalInvalidate",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -285,7 +285,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.localInvalidate\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.localInvalidate\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionLocalInvalidateWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -299,7 +299,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.put\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.put\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionPut",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -313,7 +313,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.put\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.put\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionPutWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -327,7 +327,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.putAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.putAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionPutAll",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -341,7 +341,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.putAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.putAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionPutAllWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -355,7 +355,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.putIfAbsent\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.putIfAbsent\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionPutIfAbsent",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -364,12 +364,12 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 	@Test
 	public void logsRegionQuery() throws Exception {
 
-		this.region.query("SELECT * FROM /Region WHERE id = ?");
+		this.region.query("SELECT * FROM /GudRegion WHERE id = ?");
 
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.query\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.query\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionQuery",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -383,7 +383,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.remove\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.remove\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionRemoveWithKey",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -397,7 +397,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.remove\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.remove\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionRemoveWithKeyAndValue",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -411,7 +411,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.removeAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.removeAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionRemoveAll",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -426,7 +426,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.removeAll\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.removeAll\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionRemoveAllWithCallbackArgument",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -440,7 +440,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.replace\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.replace\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionReplace",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -454,7 +454,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.replace\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.replace\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionReplaceWithKeyOldValueNewValue",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -468,7 +468,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.selectValue\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.selectValue\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionSelectValue",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -482,7 +482,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.size\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.size\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionSize",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -496,7 +496,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.sizeOnServer\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.sizeOnServer\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionSizeOnServer",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -510,7 +510,7 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 		String logMessage = TestAppender.getInstance().lastLogMessage();
 
 		assertThat(logMessage)
-			.containsPattern("Region data access call \\[org.apache.geode.cache.Region.*.values\\(..\\)\\] with stack trace");
+			.containsPattern("GudRegion data access call \\[org.apache.geode.cache.GudRegion.*.values\\(..\\)\\] with stack trace");
 
 		assertThat(logMessage).contains(String.format("%s.logsRegionValues",
 			RegionDataAccessTracingAspectUnitTests.class.getName()));
@@ -531,13 +531,13 @@ public class RegionDataAccessTracingAspectUnitTests extends IntegrationTestsSupp
 
 		@Bean("ClientRegion")
 		@SuppressWarnings("unused")
-		public ClientRegionFactoryBean<Object, Object> clientRegion(ClientCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> clientRegion(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegion = new ClientRegionFactoryBean<>();
 
 			clientRegion.setCache(gemfireCache);
 			clientRegion.setClose(false);
-			clientRegion.setShortcut(ClientRegionShortcut.LOCAL);
+			clientRegion.setShortcut(GudClientRegionShortcut.LOCAL);
 
 			return clientRegion;
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 
 /**
  * Unit Tests for {@link ClientRegionShortcutWrapper} enum.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.GudClientRegionShortcut
  * @see org.springframework.data.gemfire.client.ClientRegionShortcutWrapper
  * @since 1.4.0
  */
@@ -24,7 +24,7 @@ public class ClientRegionShortcutWrapperUnitTests {
 	@Test
 	public void testOneToOneMapping() {
 
-		for (ClientRegionShortcut shortcut : ClientRegionShortcut.values()) {
+		for (GudClientRegionShortcut shortcut : GudClientRegionShortcut.values()) {
 			assertThat(ClientRegionShortcutWrapper.valueOf(shortcut.name())).isNotNull();
 			assertThat(ClientRegionShortcutWrapper.UNSPECIFIED.equals(ClientRegionShortcutWrapper.valueOf(shortcut))).isFalse();
 		}
@@ -34,7 +34,7 @@ public class ClientRegionShortcutWrapperUnitTests {
 	public void testClientRegionShortcutUnspecified() {
 
 		assertThat(ClientRegionShortcutWrapper.valueOf(
-			(ClientRegionShortcut) null)).isEqualTo(ClientRegionShortcutWrapper.UNSPECIFIED);
+			(GudClientRegionShortcut) null)).isEqualTo(ClientRegionShortcutWrapper.UNSPECIFIED);
 	}
 
 	@Test

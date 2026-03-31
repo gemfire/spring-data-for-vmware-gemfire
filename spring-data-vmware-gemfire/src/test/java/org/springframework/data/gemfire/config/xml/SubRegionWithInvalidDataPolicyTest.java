@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.xml;
@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException;
@@ -19,13 +19,13 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
 import org.xml.sax.SAXParseException;
 
 /**
- * Unit Tests testing the {@link DataPolicy} and {@literal persistent} attributes settings are consistent for
- * {@link Region sub-Region} bean definitions.
+ * Unit Tests testing the {@link GudDataPolicy} and {@literal persistent} attributes settings are consistent for
+ * {@link GudRegion sub-GudRegion} bean definitions.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.DataPolicy
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudDataPolicy
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.context.support.ClassPathXmlApplicationContext
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @since 1.4.0

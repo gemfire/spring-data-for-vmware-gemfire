@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 /**
  * Unit Tests for {@link StringBasedGemfireRepositoryQuery}
@@ -37,7 +37,7 @@ public class StringBasedGemfireRepositoryQueryUnitTests {
 	@SuppressWarnings("unchecked")
 	public void testToCollectionWithSelectResults() {
 
-		SelectResults<String> mockSelectResults = mock(SelectResults.class);
+		GudSelectResults<String> mockSelectResults = mock(GudSelectResults.class);
 
 		List<String> expectedList = Arrays.asList("one", "two", "three");
 

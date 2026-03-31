@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.RegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
 
 /**
  * Unit Tests for {@link RegionShortcutWrapper} enum.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.RegionShortcut
+ * @see org.apache.geode.cache.GudRegionShortcut
  * @see org.springframework.data.gemfire.RegionShortcutWrapper
  * @since 1.4.0
  */
@@ -23,7 +23,7 @@ public class RegionShortcutWrapperUnitTests {
 
 	@Test
 	public void unspecifiedRegionShortcut() {
-		assertThat(RegionShortcutWrapper.valueOf((RegionShortcut) null)).isEqualTo(RegionShortcutWrapper.UNSPECIFIED);
+		assertThat(RegionShortcutWrapper.valueOf((GudRegionShortcut) null)).isEqualTo(RegionShortcutWrapper.UNSPECIFIED);
 	}
 
 	@Test

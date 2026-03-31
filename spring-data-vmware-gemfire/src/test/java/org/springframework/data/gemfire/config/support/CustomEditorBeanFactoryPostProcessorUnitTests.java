@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.support;
@@ -14,11 +14,11 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.EvictionAction;
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.InterestPolicy;
-import org.apache.geode.cache.InterestResultPolicy;
-import org.apache.geode.cache.Scope;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudScope;
 
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.data.gemfire.InterestPolicyConverter;
@@ -62,18 +62,18 @@ public class CustomEditorBeanFactoryPostProcessorUnitTests {
 		//	eq(CustomEditorBeanFactoryPostProcessor.ConnectionEndpointArrayToIterableConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(ConnectionEndpointList.class),
 			isA(CustomEditorBeanFactoryPostProcessor.StringToConnectionEndpointListConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(EvictionAction.class),
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudEvictionAction.class),
 			isA(EvictionActionConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(EvictionPolicyType.class),
 			isA(EvictionPolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(ExpirationAction.class),
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudExpirationAction.class),
 			isA(ExpirationActionConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestPolicy.class),
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudInterestPolicy.class),
 			isA(InterestPolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestResultPolicy.class),
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudInterestResultPolicy.class),
 			isA(InterestResultPolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudScope.class), isA(ScopeConverter.class));
+		verify(mockRegistry, times(1)).registerCustomEditor(eq(GudScope.class), isA(ScopeConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(SubscriptionEvictionPolicy.class),
 			isA(SubscriptionEvictionPolicyConverter.class));
 

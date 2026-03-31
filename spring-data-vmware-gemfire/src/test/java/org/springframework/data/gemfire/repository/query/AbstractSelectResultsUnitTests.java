@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -25,9 +25,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.query.SelectResults;
-import org.apache.geode.cache.query.types.CollectionType;
-import org.apache.geode.cache.query.types.ObjectType;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
+import org.springframework.data.gemfire.gud.api.GudCollectionType;
+import org.springframework.data.gemfire.gud.api.GudObjectType;
 
 import org.springframework.lang.NonNull;
 
@@ -38,7 +38,7 @@ import org.springframework.lang.NonNull;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.query.SelectResults
+ * @see org.apache.geode.cache.query.GudSelectResults
  * @see org.springframework.data.gemfire.repository.query.AbstractSelectResults
  * @since 2.4.0
  */
@@ -47,7 +47,7 @@ import org.springframework.lang.NonNull;
 public class AbstractSelectResultsUnitTests {
 
 	@Mock
-	private SelectResults<Object> mockSelectResults;
+	private GudSelectResults<Object> mockSelectResults;
 
 	@Test
 	public void constructsAbstractSelectResultsSuccessfully() {
@@ -68,7 +68,7 @@ public class AbstractSelectResultsUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("SelectResults must not be null");
+			assertThat(expected).hasMessage("GudSelectResults must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -104,7 +104,7 @@ public class AbstractSelectResultsUnitTests {
 	@Test
 	public void getCollectionTypeCallsSelectResultsGetCollectionType() {
 
-		CollectionType mockCollectionType = mock(CollectionType.class);
+		GudCollectionType mockCollectionType = mock(GudCollectionType.class);
 
 		doReturn(mockCollectionType).when(this.mockSelectResults).getCollectionType();
 
@@ -139,7 +139,7 @@ public class AbstractSelectResultsUnitTests {
 	@Test
 	public void setObjectTypeCallsSelectResultsSetObjectType() {
 
-		ObjectType mockObjectType = mock(ObjectType.class);
+		GudObjectType mockObjectType = mock(GudObjectType.class);
 
 		new TestSelectResults(this.mockSelectResults).setElementType(mockObjectType);
 
@@ -304,7 +304,7 @@ public class AbstractSelectResultsUnitTests {
 
 	static class TestSelectResults extends AbstractSelectResults<Object> {
 
-		TestSelectResults(@NonNull SelectResults<Object> selectResults) {
+		TestSelectResults(@NonNull GudSelectResults<Object> selectResults) {
 			super(selectResults);
 		}
 	}

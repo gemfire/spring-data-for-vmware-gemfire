@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.repository.sample.User;
 import org.springframework.data.mapping.context.MappingContext;
@@ -44,19 +44,19 @@ public class RegionsUnitTests {
 	@SuppressWarnings("rawtypes")
 	private MappingContext mockMappingContext;
 
-	private Region<?, ?> mockUsers;
-	private Region<?, ?> mockAdminUsers;
-	private Region<?, ?> mockGuestUsers;
+	private GudRegion<?, ?> mockUsers;
+	private GudRegion<?, ?> mockAdminUsers;
+	private GudRegion<?, ?> mockGuestUsers;
 
 	private Regions regions;
 
-	private Region<?, ?> mockRegion(String fullPath) {
-		return mockRegion(fullPath.substring(fullPath.lastIndexOf(Region.SEPARATOR) + 1), fullPath);
+	private GudRegion<?, ?> mockRegion(String fullPath) {
+		return mockRegion(fullPath.substring(fullPath.lastIndexOf(GudRegion.SEPARATOR) + 1), fullPath);
 	}
 
-	private Region<?, ?> mockRegion(String name, String fullPath) {
+	private GudRegion<?, ?> mockRegion(String name, String fullPath) {
 
-		Region<?, ?> mockRegion = mock(Region.class, name);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class, name);
 
 		when(mockRegion.getName()).thenReturn(name);
 		when(mockRegion.getFullPath()).thenReturn(fullPath);
@@ -148,7 +148,7 @@ public class RegionsUnitTests {
 
 	@Test
 	public void getRegionWithNonExistingPathReturnsNull() {
-		assertThat(regions.getRegion("/Non/Existing/Region/Path")).isNull();
+		assertThat(regions.getRegion("/Non/Existing/GudRegion/Path")).isNull();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -159,7 +159,7 @@ public class RegionsUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Region name/path is required");
+			assertThat(expected).hasMessage("GudRegion name/path is required");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -169,13 +169,13 @@ public class RegionsUnitTests {
 	@Test
 	public void iterateRegions() {
 
-		List<Region<?, ?>> actualRegions = new ArrayList<>(3);
+		List<GudRegion<?, ?>> actualRegions = new ArrayList<>(3);
 
-		for (Region<?, ?> region : regions) {
+		for (GudRegion<?, ?> region : regions) {
 			actualRegions.add(region);
 		}
 
-		List<Region<?, ?>> expectedRegions = Arrays.asList(mockUsers, mockAdminUsers, mockGuestUsers);
+		List<GudRegion<?, ?>> expectedRegions = Arrays.asList(mockUsers, mockAdminUsers, mockGuestUsers);
 
 		assertThat(actualRegions).hasSize(expectedRegions.size() * 2);
 		assertThat(actualRegions).containsAll(expectedRegions);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.Scope;
+import org.springframework.data.gemfire.gud.api.GudScope;
 
 /**
  * Unit Tests for {@link ScopeConverter}.
@@ -17,7 +17,7 @@ import org.apache.geode.cache.Scope;
  * @author John Blum
  * @see org.junit.Test
  * @see org.springframework.data.gemfire.ScopeConverter
- * @see org.apache.geode.cache.Scope
+ * @see org.apache.geode.cache.GudScope
  * @since 1.6.0
  */
 public class ScopeConverterUnitTests {
@@ -32,10 +32,10 @@ public class ScopeConverterUnitTests {
 	@Test
 	public void convert() {
 
-		assertThat(converter.convert("distributed-ACK")).isEqualTo(Scope.DISTRIBUTED_ACK);
-		assertThat(converter.convert(" Distributed_NO-aCK")).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
-		assertThat(converter.convert("loCAL  ")).isEqualTo(Scope.LOCAL);
-		assertThat(converter.convert(" GLOBal  ")).isEqualTo(Scope.GLOBAL);
+		assertThat(converter.convert("distributed-ACK")).isEqualTo(GudScope.DISTRIBUTED_ACK);
+		assertThat(converter.convert(" Distributed_NO-aCK")).isEqualTo(GudScope.DISTRIBUTED_NO_ACK);
+		assertThat(converter.convert("loCAL  ")).isEqualTo(GudScope.LOCAL);
+		assertThat(converter.convert(" GLOBal  ")).isEqualTo(GudScope.GLOBAL);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -46,7 +46,7 @@ public class ScopeConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[illegal-value] is not a valid Scope");
+			assertThat(expected).hasMessage("[illegal-value] is not a valid GudScope");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -60,11 +60,11 @@ public class ScopeConverterUnitTests {
 
 		converter.setAsText("DisTributeD-nO_Ack");
 
-		assertThat(converter.getValue()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
+		assertThat(converter.getValue()).isEqualTo(GudScope.DISTRIBUTED_NO_ACK);
 
 		converter.setAsText("distributed-ack");
 
-		assertThat(converter.getValue()).isEqualTo(Scope.DISTRIBUTED_ACK);
+		assertThat(converter.getValue()).isEqualTo(GudScope.DISTRIBUTED_ACK);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -75,7 +75,7 @@ public class ScopeConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[d!5tr!but3d-n0_@ck] is not a valid Scope");
+			assertThat(expected).hasMessage("[d!5tr!but3d-n0_@ck] is not a valid GudScope");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

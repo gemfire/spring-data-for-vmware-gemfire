@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.Scope;
+import org.springframework.data.gemfire.gud.api.GudScope;
 
 /**
  * Unit Tests for {@link ScopeType} enum.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.Scope
+ * @see org.apache.geode.cache.GudScope
  * @see org.springframework.data.gemfire.ScopeType
  * @since 1.6.0
  */
@@ -24,8 +24,8 @@ public class ScopeTypeUnitTests {
 	@Test
 	public void testStaticGetScope() {
 
-		assertThat(ScopeType.getScope(ScopeType.GLOBAL)).isEqualTo(Scope.GLOBAL);
-		assertThat(ScopeType.getScope(ScopeType.LOCAL)).isEqualTo(Scope.LOCAL);
+		assertThat(ScopeType.getScope(ScopeType.GLOBAL)).isEqualTo(GudScope.GLOBAL);
+		assertThat(ScopeType.getScope(ScopeType.LOCAL)).isEqualTo(GudScope.LOCAL);
 	}
 
 	@Test
@@ -36,10 +36,10 @@ public class ScopeTypeUnitTests {
 	@Test
 	public void testGetScope() {
 
-		assertThat(ScopeType.DISTRIBUTED_ACK.getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
-		assertThat(ScopeType.DISTRIBUTED_NO_ACK.getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
-		assertThat(ScopeType.LOCAL.getScope()).isEqualTo(Scope.LOCAL);
-		assertThat(ScopeType.GLOBAL.getScope()).isEqualTo(Scope.GLOBAL);
+		assertThat(ScopeType.DISTRIBUTED_ACK.getScope()).isEqualTo(GudScope.DISTRIBUTED_ACK);
+		assertThat(ScopeType.DISTRIBUTED_NO_ACK.getScope()).isEqualTo(GudScope.DISTRIBUTED_NO_ACK);
+		assertThat(ScopeType.LOCAL.getScope()).isEqualTo(GudScope.LOCAL);
+		assertThat(ScopeType.GLOBAL.getScope()).isEqualTo(GudScope.GLOBAL);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class ScopeTypeUnitTests {
 		try {
 			for (int ordinal = 0; ordinal < Integer.MAX_VALUE; ordinal++) {
 
-				Scope expectedScope = Scope.fromOrdinal(ordinal);
+				GudScope expectedScope = GudScope.fromOrdinal(ordinal);
 				ScopeType scopeType = ScopeType.valueOf(expectedScope);
 
 				assertThat(scopeType).isNotNull();
@@ -61,7 +61,7 @@ public class ScopeTypeUnitTests {
 
 	@Test
 	public void testValueOfWithNull() {
-		assertThat(ScopeType.valueOf((Scope) null)).isNull();
+		assertThat(ScopeType.valueOf((GudScope) null)).isNull();
 	}
 
 	@Test

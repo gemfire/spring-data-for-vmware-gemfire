@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
@@ -37,17 +37,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.CacheTransactionManager;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Page;
@@ -78,7 +78,7 @@ import lombok.ToString;
  * @see java.util.stream.Stream
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.domain.Page
  * @see org.springframework.data.domain.Pageable
  * @see org.springframework.data.domain.Sort
@@ -123,7 +123,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		return animal;
 	}
 
-	private GemfireTemplate newGemfireTemplate(Region<?, ?> region) {
+	private GemfireTemplate newGemfireTemplate(GudRegion<?, ?> region) {
 		return new GemfireTemplate(region);
 	}
 
@@ -131,11 +131,11 @@ public class SimpleGemfireRepositoryUnitTests {
 		return new Wrapper<>(entity, entity.getId());
 	}
 
-	private ClientCache mockCache(String name, boolean transactionExists) {
+	private GudClientCache mockCache(String name, boolean transactionExists) {
 
-		ClientCache mockCache = mock(ClientCache.class, String.format("%s.MockCache", name));
+		GudClientCache mockCache = mock(GudClientCache.class, String.format("%s.MockCache", name));
 
-		CacheTransactionManager mockCacheTransactionManager = mock(CacheTransactionManager.class,
+		GudCacheTransactionManager mockCacheTransactionManager = mock(GudCacheTransactionManager.class,
 			String.format("%s.MockCacheTransactionManager", name));
 
 		doReturn(mockCacheTransactionManager).when(mockCache).getCacheTransactionManager();
@@ -169,13 +169,13 @@ public class SimpleGemfireRepositoryUnitTests {
 		return mockEntityInformation;
 	}
 
-	private Region mockRegion() {
+	private GudRegion mockRegion() {
 		return mockRegion("MockRegion");
 	}
 
-	private Region mockRegion(String name) {
+	private GudRegion mockRegion(String name) {
 
-		Region mockRegion = mock(Region.class, String.format("%s.MockRegion", name));
+		GudRegion mockRegion = mock(GudRegion.class, String.format("%s.MockRegion", name));
 
 		doReturn(name).when(mockRegion).getName();
 		doReturn(RegionUtils.toRegionPath(name)).when(mockRegion).getFullPath();
@@ -183,13 +183,13 @@ public class SimpleGemfireRepositoryUnitTests {
 		return mockRegion;
 	}
 
-	private Region mockRegion(String name, ClientCache mockCache, DataPolicy dataPolicy) {
+	private GudRegion mockRegion(String name, GudClientCache mockCache, GudDataPolicy dataPolicy) {
 
-		Region mockRegion = mockRegion(name);
+		GudRegion mockRegion = mockRegion(name);
 
 		doReturn(mockCache).when(mockRegion).getRegionService();
 
-		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class,
+		GudRegionAttributes mockRegionAttributes = mock(GudRegionAttributes.class,
 			String.format("%s.MockRegionAttributes", name));
 
 		doReturn(mockRegionAttributes).when(mockRegion).getAttributes();
@@ -201,7 +201,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void constructSimpleGemfireRepositorySuccessfully() {
 
-		Region mockRegion = mockRegion();
+		GudRegion mockRegion = mockRegion();
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -250,7 +250,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void getRegionFromTemplate() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -275,7 +275,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		Logger mockLogger = mock(Logger.class);
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			spy(new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation()));
@@ -306,7 +306,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		animals.add(newAnimal(2L, "cat"));
 		animals.add(newAnimal(3L, "dog"));
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -328,7 +328,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		Logger mockLogger = mock(Logger.class);
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			spy(new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation()));
@@ -359,7 +359,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		animals.add(null);
 		animals.add(newAnimal(2L, "dog"));
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -379,7 +379,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void saveAllEntitiesWithNullIterableIsNullSafe() {
 
-		Region<Long, Animal> mockRegion = mock(Region.class);
+		GudRegion<Long, Animal> mockRegion = mock(GudRegion.class);
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -395,9 +395,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void countReturnsNumberOfRegionEntries() {
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -420,7 +420,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void countWhenSelectResultsAreNullIsNullSafeAndReturnsZero() {
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -441,9 +441,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void countWhenSelectResultsIteratorIsNullIsNullSafeAndReturnsZero() {
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -466,9 +466,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void countWhenSelectResultsIteratorIsEmptyReturnsZero() {
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -491,9 +491,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void countWhenSelectResultsIteratorContainsNullIsNullSafeReturnsZero() {
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
 		Iterator mockIterator = mock(Iterator.class);
 
@@ -524,7 +524,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		Animal dog = newAnimal(1L, "dog");
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		doAnswer(invocation -> dog.getId().equals(invocation.getArgument(0)) ? dog : null)
 			.when(mockRegion).get(anyLong());
@@ -552,9 +552,9 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		List<Object> results = Arrays.asList("test", "mock", "fake");
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
 		doReturn(mockRegion).when(mockTemplate).getRegion();
 		doReturn(mockSelectResults).when(mockTemplate).find(anyString());
@@ -581,9 +581,9 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		List<Object> results = Arrays.asList("test", "mock", "fake");
 
-		Region mockRegion = mockRegion("Example");
+		GudRegion mockRegion = mockRegion("Example");
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
 		doReturn(mockRegion).when(mockTemplate).getRegion();
 		doReturn(mockSelectResults).when(mockTemplate).find(anyString());
@@ -625,7 +625,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		Sort orderBy = Sort.by("name");
 
-		Region mockRegion = mockRegion();
+		GudRegion mockRegion = mockRegion();
 
 		Pageable mockPageable = mock(Pageable.class);
 
@@ -703,7 +703,7 @@ public class SimpleGemfireRepositoryUnitTests {
 			newAnimal(3L, "dog")
 		).collect(Collectors.toMap(Animal::getId, Function.identity()));
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		doAnswer(invocation -> {
 
@@ -731,7 +731,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void findAllByIdReturnsNoMatches() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		doReturn(Collections.emptyMap()).when(mockRegion).getAll(any(Collection.class));
 
@@ -756,7 +756,7 @@ public class SimpleGemfireRepositoryUnitTests {
 			newAnimal(3L, "dog")
 		).collect(Collectors.toMap(Animal::getId, Function.identity()));
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		doAnswer(invocation -> {
 
@@ -784,7 +784,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void findAllByIdWithNullIterableIsNullSafe() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -802,7 +802,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		Animal dog = newAnimal(1L, "dog");
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		doAnswer(invocation -> dog.getId().equals(invocation.getArgument(0)) ? dog : null)
 			.when(mockRegion).get(any(Long.class));
@@ -823,7 +823,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void findByIdWithNullIdIsNullSafe() {
 
-		Region mockRegion = mockRegion();
+		GudRegion mockRegion = mockRegion();
 
 		SimpleGemfireRepository repository =
 			new SimpleGemfireRepository(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -836,7 +836,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteByIdSuccessfully() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -850,7 +850,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteEntitySuccessfully() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			spy(new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation()));
@@ -865,7 +865,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteEntitiesSuccessfully() {
 
-		Region<Long, Animal> mockRegion = mockRegion();
+		GudRegion<Long, Animal> mockRegion = mockRegion();
 
 		SimpleGemfireRepository<Animal, Long> repository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -885,9 +885,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithClear() {
 
-		ClientCache mockCache = mockCache("MockCache", false);
+		GudClientCache mockCache = mockCache("MockCache", false);
 
-		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.REPLICATE);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.REPLICATE);
 
 		SimpleGemfireRepository<Animal, Long> gemfireRepository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -907,9 +907,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeysWhenClearThrowsException() {
 
-		ClientCache mockCache = mockCache("MockCache", false);
+		GudClientCache mockCache = mockCache("MockCache", false);
 
-		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.PERSISTENT_REPLICATE);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.PERSISTENT_REPLICATE);
 
 		Set<Long> keys = new HashSet<>(Arrays.asList(1L, 2L, 3L));
 
@@ -933,9 +933,9 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeysWhenTransactionPresent() {
 
-		ClientCache mockCache = mockCache("MockCache", true);
+		GudClientCache mockCache = mockCache("MockCache", true);
 
-		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.REPLICATE);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.REPLICATE);
 
 		Set<Long> keys = new HashSet<>(Arrays.asList(1L, 2L, 3L));
 
@@ -958,11 +958,11 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllWithKeySetOnServerWhenClientRegion() {
 
-		ClientCache mockCache = mockCache("MockCache", false);
+		GudClientCache mockCache = mockCache("MockCache", false);
 
-		Region<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, DataPolicy.EMPTY);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.EMPTY);
 
-		RegionAttributes<Long, Animal> mockRegionAttributes = mockRegion.getAttributes();
+		GudRegionAttributes<Long, Animal> mockRegionAttributes = mockRegion.getAttributes();
 
 		Set<Long> keys = new HashSet<>(Arrays.asList(1L, 2L, 3L));
 
@@ -992,7 +992,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		Collection ids = Arrays.asList(1, 2, 3);
 		Collection keys = new HashSet(ids);
 
-		Region<?, ?> mockRegion = mockRegion("Example");
+		GudRegion<?, ?> mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -1018,7 +1018,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		Collection ids = Arrays.asList(1, null, 3);
 		Collection keys = CollectionUtils.asSet(1, 3);
 
-		Region<?, ?> mockRegion = mockRegion("Example");
+		GudRegion<?, ?> mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -1041,7 +1041,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@Test
 	public void deleteAllByIdWithNullCollectionOfKeys() {
 
-		Region<?, ?> mockRegion = mockRegion("Example");
+		GudRegion<?, ?> mockRegion = mockRegion("Example");
 
 		GemfireTemplate template = spy(newGemfireTemplate(mockRegion));
 
@@ -1107,12 +1107,12 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		List<User> users = Arrays.asList(User.newUser("Jon Doe"), User.newUser("Jane Doe"));
 
-		SelectResults<User> mockSelectResults = mock(SelectResults.class);
+		GudSelectResults<User> mockSelectResults = mock(GudSelectResults.class);
 
 		doReturn(users).when(mockSelectResults).asList();
 
 		List<User> userList = new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion()), mockEntityInformation())
-			.toList((SelectResults) mockSelectResults);
+			.toList((GudSelectResults) mockSelectResults);
 
 		assertThat(userList).isSameAs(users);
 
@@ -1124,7 +1124,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	public void toListFromNullSelectResultsIsNullSafe() {
 
 		List<User> users = new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion()), mockEntityInformation())
-			.toList((SelectResults) null);
+			.toList((GudSelectResults) null);
 
 		assertThat(users).isNotNull();
 		assertThat(users).isEmpty();
@@ -1280,7 +1280,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@ToString(of = "name")
 	@EqualsAndHashCode(of = "name")
 	@RequiredArgsConstructor(staticName = "newUser")
-	@org.springframework.data.gemfire.mapping.annotation.Region("Users")
+	@org.springframework.data.gemfire.mapping.annotation.GudRegion("Users")
 	static class User {
 
 		@Id

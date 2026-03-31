@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.util;
@@ -13,10 +13,10 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.internal.cache.LocalRegion;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests for {@link RegionUtils}.
@@ -30,31 +30,31 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void assertAllDataPoliciesWithNullPersistentPropertyIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, null);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, null);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, null);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.REPLICATE, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.PERSISTENT_REPLICATE, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.PERSISTENT_REPLICATE, null);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.REPLICATE, null);
 	}
 
 	@Test
 	public void assertNonPersistentDataPolicyWithNoPersistenceIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, false);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, false);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.REPLICATE, false);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.REPLICATE, false);
 	}
 
 	@Test
 	public void assertPersistentDataPolicyWithPersistenceIsCompatible() {
 
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, true);
-		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, true);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.PERSISTENT_REPLICATE, true);
+		RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.PERSISTENT_REPLICATE, true);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void assertNonPersistentDataPolicyWithPersistentAttribute() {
 
 		try {
-			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.REPLICATE, true);
+			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.REPLICATE, true);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -69,7 +69,7 @@ public class RegionUtilsUnitTests {
 	public void assertPersistentDataPolicyWithNonPersistentAttribute() {
 
 		try {
-			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(DataPolicy.PERSISTENT_REPLICATE, false);
+			RegionUtils.assertDataPolicyAndPersistentAttributeAreCompatible(GudDataPolicy.PERSISTENT_REPLICATE, false);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -82,13 +82,13 @@ public class RegionUtilsUnitTests {
 
 	@Test
 	public void closeRegionHandlesNull() {
-		assertThat(RegionUtils.close((Region<?, ?>) null)).isFalse();
+		assertThat(RegionUtils.close((GudRegion<?, ?>) null)).isFalse();
 	}
 
 	@Test
 	public void closeRegionSuccessfully() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		assertThat(RegionUtils.close(mockRegion)).isTrue();
 
@@ -98,7 +98,7 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void closeRegionUnsuccessfully() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		doThrow(new RuntimeException("TEST")).when(mockRegion).close();
 
@@ -115,8 +115,8 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void regionIsCloseable() {
 
-		Region mockRegion = mock(Region.class);
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegion mockRegion = mock(GudRegion.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		when(mockRegion.getRegionService()).thenReturn(mockRegionService);
 		when(mockRegionService.isClosed()).thenReturn(false);
@@ -130,8 +130,8 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void regionIsNotCloseable() {
 
-		Region mockRegion = mock(Region.class);
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegion mockRegion = mock(GudRegion.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
 		when(mockRegion.getRegionService()).thenReturn(mockRegionService);
 		when(mockRegionService.isClosed()).thenReturn(true);
@@ -145,7 +145,7 @@ public class RegionUtilsUnitTests {
 	@Test
 	public void regionWithNoRegionServiceIsNotCloseable() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		when(mockRegion.getRegionService()).thenReturn(null);
 
@@ -161,11 +161,11 @@ public class RegionUtilsUnitTests {
 
 	@Test
 	public void localRegionIsLocal() {
-		assertThat(RegionUtils.isLocal(mock(LocalRegion.class))).isTrue();
+		assertThat(RegionUtils.isLocal(mock(GudRegion.class))).isTrue();
 	}
 
 	@Test
 	public void nonLocalRegionIsNotLocal() {
-		assertThat(RegionUtils.isLocal(mock(Region.class))).isFalse();
+		assertThat(RegionUtils.isLocal(mock(GudRegion.class))).isFalse();
 	}
 }

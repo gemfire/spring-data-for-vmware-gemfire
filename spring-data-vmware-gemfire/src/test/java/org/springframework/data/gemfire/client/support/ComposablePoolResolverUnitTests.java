@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -21,7 +21,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import org.springframework.data.gemfire.client.PoolResolver;
 
@@ -33,7 +33,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.GudPool
  * @see org.springframework.data.gemfire.client.PoolResolver
  * @see org.springframework.data.gemfire.client.support.ComposablePoolResolver
  * @since 2.3.0
@@ -42,7 +42,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
 public class ComposablePoolResolverUnitTests {
 
 	@Mock
-	private Pool mockPool;
+	private GudPool mockPool;
 
 	@Mock(name = "one")
 	private PoolResolver mockPoolResolverOne;

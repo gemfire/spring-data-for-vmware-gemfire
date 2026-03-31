@@ -1,10 +1,10 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.listener;
 
-import org.apache.geode.cache.query.CqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
 
 
 /**
@@ -13,7 +13,7 @@ import org.apache.geode.cache.query.CqEvent;
  */
 public class ThrowableEventListener implements ContinuousQueryListener {
 
-	public void onEvent(CqEvent event) {
+	public void onEvent(GudCqEvent event) {
 		throw new IllegalStateException("throwing exception for event " + event);
 	}
 }

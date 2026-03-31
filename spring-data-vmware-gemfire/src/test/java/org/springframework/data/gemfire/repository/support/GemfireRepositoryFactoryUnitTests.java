@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
@@ -25,8 +25,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 
 import org.springframework.aop.framework.Advised;
 import org.springframework.data.gemfire.GemfireTemplate;
@@ -57,10 +57,10 @@ public class GemfireRepositoryFactoryUnitTests {
 	private GemfireMappingContext mappingContext;
 
 	@Mock
-	private Region mockRegion;
+	private GudRegion mockRegion;
 
 	@Mock
-	private RegionAttributes mockRegionAttributes;
+	private GudRegionAttributes mockRegionAttributes;
 
 	@Before
 	@SuppressWarnings("unchecked")
@@ -72,12 +72,12 @@ public class GemfireRepositoryFactoryUnitTests {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> Region<K, V> mockRegion(String name, Class<K> keyType) {
+	private <K, V> GudRegion<K, V> mockRegion(String name, Class<K> keyType) {
 		return configureMockRegion(this.mockRegion, name, keyType);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <K, V> Region<K, V> configureMockRegion(Region<K, V> mockRegion, String name, Class<K> keyType) {
+	private <K, V> GudRegion<K, V> configureMockRegion(GudRegion<K, V> mockRegion, String name, Class<K> keyType) {
 
 		when(mockRegion.getAttributes()).thenReturn(this.mockRegionAttributes);
 		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
@@ -275,8 +275,8 @@ public class GemfireRepositoryFactoryUnitTests {
 		RepositoryMetadata mockRepositoryMetadata =
 			mockRepositoryMetadata(Person.class, Long.class, PeopleRepository.class);
 
-		Region<?, ?> mockRegionOne = mockRegion("RegionOne", Person.class);
-		Region<?, ?> mockRegionTwo = mockRegion("RegionTwo", Object.class);
+		GudRegion<?, ?> mockRegionOne = mockRegion("RegionOne", Person.class);
+		GudRegion<?, ?> mockRegionTwo = mockRegion("RegionTwo", Object.class);
 
 		GemfireRepositoryFactory repositoryFactory =
 			new GemfireRepositoryFactory(Arrays.asList(mockRegionOne, mockRegionTwo), this.mappingContext);
@@ -320,7 +320,7 @@ public class GemfireRepositoryFactoryUnitTests {
 		RepositoryMetadata mockRepositoryMetadata =
 			mockRepositoryMetadata(Person.class, Long.class, PeopleRepository.class);
 
-		Region<Long, Person> mockPeopleRegion = mockRegion("People", Long.class);
+		GudRegion<Long, Person> mockPeopleRegion = mockRegion("People", Long.class);
 
 		GemfireRepositoryFactory repositoryFactory =
 			new GemfireRepositoryFactory(Arrays.asList(this.mockRegion, mockPeopleRegion), mappingContext);
@@ -367,7 +367,7 @@ public class GemfireRepositoryFactoryUnitTests {
 		RepositoryMetadata mockRepositoryMetadata =
 			mockRepositoryMetadata(Person.class, Long.class, PeopleRepository.class);
 
-		Region<Integer, Person> mockPeopleRegion = mockRegion("People", Integer.class);
+		GudRegion<Integer, Person> mockPeopleRegion = mockRegion("People", Integer.class);
 
 		GemfireRepositoryFactory gemfireRepositoryFactory =
 			new GemfireRepositoryFactory(Collections.singleton(mockPeopleRegion), this.mappingContext);
@@ -401,7 +401,7 @@ public class GemfireRepositoryFactoryUnitTests {
 		RepositoryMetadata mockRepositoryMetadata =
 			mockRepositoryMetadata(Person.class, Integer.class, PeopleIntegerRepository.class);
 
-		Region<String, Person> mockPeopleRegion = mockRegion("People", null);
+		GudRegion<String, Person> mockPeopleRegion = mockRegion("People", null);
 
 		GemfireRepositoryFactory gemfireRepositoryFactory =
 			new GemfireRepositoryFactory(Collections.singleton(mockPeopleRegion), this.mappingContext);
@@ -510,13 +510,13 @@ public class GemfireRepositoryFactoryUnitTests {
 
 	interface TestGemfireRepository extends GemfireRepository<Person, Long>, TestCustomRepository<Person> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.Region("People")
+	@org.springframework.data.gemfire.mapping.annotation.GudRegion("People")
 	interface PeopleRepository extends GemfireRepository<Person, Long> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.Region("People")
+	@org.springframework.data.gemfire.mapping.annotation.GudRegion("People")
 	interface PeopleIntegerRepository extends GemfireRepository<Person, Integer> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.Region
+	@org.springframework.data.gemfire.mapping.annotation.GudRegion
 	interface NonQualifiedRegionAnnotatedRepository extends GemfireRepository<Person, Long> { }
 
 }

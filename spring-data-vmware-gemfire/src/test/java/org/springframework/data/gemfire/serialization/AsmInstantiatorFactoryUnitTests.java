@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.serialization;
@@ -13,20 +13,20 @@ import java.io.Serializable;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.geode.DataSerializable;
-import org.apache.geode.Instantiator;
+import org.springframework.data.gemfire.gud.api.GudDataSerializable;
+import org.springframework.data.gemfire.gud.api.GudInstantiator;
 
 /**
  * Unit Tests for {@link AsmInstantiatorGenerator}.
  *
  * @author Costin Leau
  * @author John Blum
- * @see org.apache.geode.Instantiator
+ * @see org.apache.geode.GudInstantiator
  * @see org.springframework.data.gemfire.serialization.AsmInstantiatorGenerator
  */
 public class AsmInstantiatorFactoryUnitTests {
 
-	public static class SomeClass implements DataSerializable {
+	public static class SomeClass implements GudDataSerializable {
 
 		public static boolean instantiated = false;
 
@@ -51,7 +51,7 @@ public class AsmInstantiatorFactoryUnitTests {
 	@Test
 	public void testClassGeneration() {
 
-		Instantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
+		GudInstantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
 
 		assertThat(instantiator.getId()).isEqualTo(100);
 		assertThat(instantiator.getInstantiatedClass()).isEqualTo(SomeClass.class);
@@ -65,7 +65,7 @@ public class AsmInstantiatorFactoryUnitTests {
 	@Test
 	public void testGeneratedClassName() {
 
-		Instantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
+		GudInstantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
 
 		assertThat(instantiator.getClass().getName().contains("$")).isTrue();
 	}
@@ -73,7 +73,7 @@ public class AsmInstantiatorFactoryUnitTests {
 	@Test
 	public void testInterfaces() {
 
-		Instantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
+		GudInstantiator instantiator = asmFactory.getInstantiator(SomeClass.class, 100);
 
 		assertThat(instantiator instanceof Serializable).isTrue();
 	}
@@ -81,8 +81,8 @@ public class AsmInstantiatorFactoryUnitTests {
 	@Test
 	public void testCacheInPlace() {
 
-		Instantiator instance1 = asmFactory.getInstantiator(SomeClass.class, 120);
-		Instantiator instance2 = asmFactory.getInstantiator(SomeClass.class, 125);
+		GudInstantiator instance1 = asmFactory.getInstantiator(SomeClass.class, 120);
+		GudInstantiator instance2 = asmFactory.getInstantiator(SomeClass.class, 125);
 
 		assertThat(instance2).isSameAs(instance1);
 	}

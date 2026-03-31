@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -29,7 +29,7 @@ import org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver;
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.support.BeanFactoryCacheResolver
  * @since 2.3.0
@@ -41,7 +41,7 @@ public class BeanFactoryCacheResolverUnitTests {
 	private BeanFactory mockBeanFactory;
 
 	@Mock
-	private ClientCache mockCache;
+	private GudClientCache mockCache;
 
 	@Test
 	public void constructBeanFactoryCacheResolver() {
@@ -132,14 +132,14 @@ public class BeanFactoryCacheResolverUnitTests {
 	@Test
 	public void doResolveResolvesGemFireCache() {
 
-		when(this.mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(this.mockCache);
+		when(this.mockBeanFactory.getBean(eq(GudClientCache.class))).thenReturn(this.mockCache);
 
 		BeanFactoryCacheResolver cacheResolver = spy(new BeanFactoryCacheResolver(this.mockBeanFactory));
 
 		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
 		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
 
-		verify(this.mockBeanFactory, times(1)).getBean(eq(ClientCache.class));
+		verify(this.mockBeanFactory, times(1)).getBean(eq(GudClientCache.class));
 		verify(cacheResolver, times(1)).doResolve();
 		verifyNoInteractions(this.mockCache);
 	}
@@ -147,7 +147,7 @@ public class BeanFactoryCacheResolverUnitTests {
 	@Test
 	public void doResolveQualifiedGemFireCache() {
 
-		when(this.mockBeanFactory.getBean(eq("QualifiedCache"), eq(ClientCache.class)))
+		when(this.mockBeanFactory.getBean(eq("QualifiedCache"), eq(GudClientCache.class)))
 			.thenReturn(this.mockCache);
 
 		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);

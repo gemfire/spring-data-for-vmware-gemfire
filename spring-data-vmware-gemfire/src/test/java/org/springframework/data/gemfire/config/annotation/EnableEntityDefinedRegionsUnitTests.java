@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -10,13 +10,13 @@ import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.util.ArrayUtils.length;
 import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
 import static org.springframework.data.gemfire.util.RegionUtils.toRegionPath;
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudScope;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudPool;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.context.ConfigurableApplicationContext
  * @see org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @see org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions
@@ -52,21 +52,21 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		destroyAllGemFireMockObjects();
 	}
 
-	private <K, V> void assertRegion(Region<K, V> region, String name) {
+	private <K, V> void assertRegion(GudRegion<K, V> region, String name) {
 		assertRegion(region, name, toRegionPath(name), null, null);
 	}
 
-	private <K, V> void assertRegion(Region<K, V> region, String name,
+	private <K, V> void assertRegion(GudRegion<K, V> region, String name,
 			Class<K> keyConstraint, Class<V> valueConstraint) {
 
 		assertRegion(region, name, toRegionPath(name), keyConstraint, valueConstraint);
 	}
 
-	private <K, V> void assertRegion(Region<K, V> region, String name, String fullPath) {
+	private <K, V> void assertRegion(GudRegion<K, V> region, String name, String fullPath) {
 		assertRegion(region, name, fullPath, null, null);
 	}
 
-	private <K, V> void assertRegion(Region<K, V> region, String name, String fullPath,
+	private <K, V> void assertRegion(GudRegion<K, V> region, String name, String fullPath,
 			Class<K> keyConstraint, Class<V> valueConstraint) {
 
 		assertThat(region).isNotNull();
@@ -77,8 +77,8 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		assertThat(region.getAttributes().getValueConstraint()).isEqualTo(valueConstraint);
 	}
 
-	private <K, V> void assertRegionWithAttributes(Region<K, V> region, String name, DataPolicy dataPolicy,
-			String diskStoreName, Boolean diskSynchronous, Boolean ignoreJta, String poolName, Scope scope) {
+	private <K, V> void assertRegionWithAttributes(GudRegion<K, V> region, String name, GudDataPolicy dataPolicy,
+			String diskStoreName, Boolean diskSynchronous, Boolean ignoreJta, String poolName, GudScope scope) {
 
 		assertRegion(region, name);
 		assertThat(region.getAttributes()).isNotNull();
@@ -86,8 +86,8 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 			poolName, scope);
 	}
 
-	private <K, V> void assertRegionAttributes(RegionAttributes<K, V> regionAttributes, DataPolicy dataPolicy,
-			String diskStoreName, Boolean diskSynchronous, Boolean ignoreJta, String poolName, Scope scope) {
+	private <K, V> void assertRegionAttributes(GudRegionAttributes<K, V> regionAttributes, GudDataPolicy dataPolicy,
+			String diskStoreName, Boolean diskSynchronous, Boolean ignoreJta, String poolName, GudScope scope) {
 
 		assertThat(regionAttributes).isNotNull();
 		assertThat(regionAttributes.getDataPolicy()).isEqualTo(dataPolicy);
@@ -102,7 +102,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 		stream(nullSafeArray(regionBeanNames, String.class)).forEach(regionBeanName ->
 			assertThat(containsBean(regionBeanName)).isFalse());
 
-		assertThat(getBeansOfType(Region.class)).hasSize(4 - length(regionBeanNames));
+		assertThat(getBeansOfType(GudRegion.class)).hasSize(4 - length(regionBeanNames));
 	}
 
 	@Test
@@ -110,16 +110,16 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		newApplicationContext(ClientPersistentEntitiesConfiguration.class);
 
-		Region<String, ClientRegionEntity> sessions = getBean("Sessions", Region.class);
+		GudRegion<String, ClientRegionEntity> sessions = getBean("Sessions", GudRegion.class);
 
 		assertRegion(sessions, "Sessions", String.class, ClientRegionEntity.class);
-		assertRegionAttributes(sessions.getAttributes(), DataPolicy.NORMAL,
+		assertRegionAttributes(sessions.getAttributes(), GudDataPolicy.NORMAL,
 			null, true, false, null, null);
 
-		Region<Long, GenericRegionEntity> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
+		GudRegion<Long, GenericRegionEntity> genericRegionEntity = getBean("GenericRegionEntity", GudRegion.class);
 
 		assertRegion(genericRegionEntity, "GenericRegionEntity", Long.class, GenericRegionEntity.class);
-		assertRegionAttributes(genericRegionEntity.getAttributes(), DataPolicy.EMPTY,
+		assertRegionAttributes(genericRegionEntity.getAttributes(), GudDataPolicy.EMPTY,
 			null, true, false, null, null);
 
 		assertUndefinedRegions("ClientRegionEntity", "NonEntity");
@@ -130,14 +130,14 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		newApplicationContext(ClientPersistentEntitiesWithCustomConfiguration.class);
 
-		Region<Object, Object> sessions = getBean("Sessions", Region.class);
+		GudRegion<Object, Object> sessions = getBean("Sessions", GudRegion.class);
 
-		assertRegionWithAttributes(sessions, "Sessions", DataPolicy.NORMAL,
+		assertRegionWithAttributes(sessions, "Sessions", GudDataPolicy.NORMAL,
 			null, true, false, null, null);
 
-		Region<Object, Object> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
+		GudRegion<Object, Object> genericRegionEntity = getBean("GenericRegionEntity", GudRegion.class);
 
-		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", DataPolicy.NORMAL,
+		assertRegionWithAttributes(genericRegionEntity, "GenericRegionEntity", GudDataPolicy.NORMAL,
 			null, true, false, "TestPool", null);
 
 		assertUndefinedRegions("ClientRegionEntity", "NonEntity");
@@ -148,16 +148,16 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		newApplicationContext(ClientPersistentEntitiesWithServerRegionMappingAnnotationsConfiguration.class);
 
-		Region<String, ClientRegionEntity> sessions = getBean("Sessions", Region.class);
+		GudRegion<String, ClientRegionEntity> sessions = getBean("Sessions", GudRegion.class);
 
 		assertRegion(sessions, "Sessions", String.class, ClientRegionEntity.class);
-		assertRegionAttributes(sessions.getAttributes(), DataPolicy.NORMAL,
+		assertRegionAttributes(sessions.getAttributes(), GudDataPolicy.NORMAL,
 			null, true, false, null, null);
 
-		Region<Long, GenericRegionEntity> genericRegionEntity = getBean("GenericRegionEntity", Region.class);
+		GudRegion<Long, GenericRegionEntity> genericRegionEntity = getBean("GenericRegionEntity", GudRegion.class);
 
 		assertRegion(genericRegionEntity, "GenericRegionEntity", Long.class, GenericRegionEntity.class);
-		assertRegionAttributes(genericRegionEntity.getAttributes(), DataPolicy.EMPTY,
+		assertRegionAttributes(genericRegionEntity.getAttributes(), GudDataPolicy.EMPTY,
 			null, true, false, null, null);
 
 		assertUndefinedRegions("ClientRegionEntity", "NonEntity");
@@ -170,19 +170,19 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, clientRegionShortcut = ClientRegionShortcut.LOCAL,
+	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, clientRegionShortcut = GudClientRegionShortcut.LOCAL,
 		poolName = "TestPool")
 	static class ClientPersistentEntitiesWithCustomConfiguration {
 
 		@Bean("TestPool")
-		Pool testPool() {
-			return mock(Pool.class, "TestPool");
+		GudPool testPool() {
+			return mock(GudPool.class, "TestPool");
 		}
 	}
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, serverRegionShortcut = RegionShortcut.LOCAL,
+	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, serverRegionShortcut = GudRegionShortcut.LOCAL,
 		strict = true
 	)
 	static class ClientPersistentEntitiesWithServerRegionMappingAnnotationsConfiguration { }

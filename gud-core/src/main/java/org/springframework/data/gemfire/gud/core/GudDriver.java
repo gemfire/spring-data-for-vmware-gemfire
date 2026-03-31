@@ -19,6 +19,11 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
@@ -26,6 +31,7 @@
  * 2026-03-13: Added factory creation methods for cache creation without native dependencies
  * 2026-03-14: Added capability detection and version information for API evolution
  * 2026-03-17: Removed hypothetical 10.4 feature detection convenience methods
+ * 2026-03-31: Added supportsServerRegionName convenience method
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -187,5 +193,14 @@ public interface GudDriver {
      */
     default boolean supportsDiskStoreSegments() {
         return supportsCapability(GudCapability.DISK_STORE_SEGMENTS);
+    }
+
+    /**
+     * Checks if this driver supports server region name mapping on client regions.
+     *
+     * @return true if server region name is supported
+     */
+    default boolean supportsServerRegionName() {
+        return supportsCapability(GudCapability.SERVER_REGION_NAME);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.pdx.PdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
 
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.expression.EvaluationContext;
@@ -39,14 +39,14 @@ public class PdxReaderPropertyAccessorUnitTests {
 	private EvaluationContext mockEvaluationContext;
 
 	@Mock
-	private PdxReader mockReader;
+	private GudPdxReader mockReader;
 
 	@Test
 	public void appliesToPdxReadersOnly() {
 
 		List<Class<?>> classes = Arrays.asList(PdxReaderPropertyAccessor.INSTANCE.getSpecificTargetClasses());
 
-		assertThat(classes).contains(PdxReader.class);
+		assertThat(classes).contains(GudPdxReader.class);
 	}
 
 	@Test

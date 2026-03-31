@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.cdi;
@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.repository.GemfireRepository;
@@ -72,12 +72,12 @@ public class GemfireRepositoryExtensionTest {
 	@SuppressWarnings("rawtypes")
 	public void processBeanIdentifiesAndProcessesRegionBeanCorrectly() {
 
-		ProcessBean<Region> mockProcessBean = mock(ProcessBean.class);
+		ProcessBean<GudRegion> mockProcessBean = mock(ProcessBean.class);
 
-		Bean<Region> mockBean = mock(Bean.class);
+		Bean<GudRegion> mockBean = mock(Bean.class);
 
 		when(mockProcessBean.getBean()).thenReturn(mockBean);
-		when(mockBean.getTypes()).thenReturn(Collections.singleton(Region.class));
+		when(mockBean.getTypes()).thenReturn(Collections.singleton(GudRegion.class));
 
 		assertThat(repositoryExtension.regionBeans.isEmpty()).isTrue();
 

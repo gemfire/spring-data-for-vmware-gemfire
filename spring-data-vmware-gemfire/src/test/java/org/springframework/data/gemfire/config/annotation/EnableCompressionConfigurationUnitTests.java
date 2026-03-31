@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.springframework.data.gemfire.config.annotation.CompressionConfiguration.SNAPPY_COMPRESSOR_BEAN_NAME;
 import java.util.Arrays;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.compression.Compressor;
-import org.apache.geode.compression.SnappyCompressor;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudSnappyCompressor;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +27,8 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.config.annotation.CompressionConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableCompression
  * @see org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport
@@ -42,7 +42,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 		destroyAllGemFireMockObjects();
 	}
 
-	private void assertRegionCompressor(Region<?, ?> region, String regionName, Compressor compressor) {
+	private void assertRegionCompressor(GudRegion<?, ?> region, String regionName, GudCompressor compressor) {
 
 		assertThat(region).isNotNull();
 		assertThat(region.getName()).isEqualTo(regionName);
@@ -58,14 +58,14 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 
 		assertThat(containsBean("ExampleClientRegion")).isFalse();
 
-		Compressor compressor = getBean(Compressor.class);
+		GudCompressor compressor = getBean(GudCompressor.class);
 
-		assertThat(compressor).isInstanceOf(SnappyCompressor.class);
+		assertThat(compressor).isInstanceOf(GudSnappyCompressor.class);
 
 		Arrays.asList("People", "ExampleLocalRegion")
 			.forEach(regionName -> {
 				assertThat(containsBean(regionName)).isTrue();
-				assertRegionCompressor(getBean(regionName, Region.class), regionName, compressor);
+				assertRegionCompressor(getBean(regionName, GudRegion.class), regionName, compressor);
 			});
 	}
 
@@ -74,15 +74,15 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 
 		newApplicationContext(EnableCompressionForSelectRegionsConfiguration.class);
 
-		Compressor compressor = getBean("MockCompressor", Compressor.class);
+		GudCompressor compressor = getBean("MockCompressor", GudCompressor.class);
 
 		assertThat(compressor).isNotNull();
-		assertThat(compressor).isNotInstanceOf(SnappyCompressor.class);
+		assertThat(compressor).isNotInstanceOf(GudSnappyCompressor.class);
 		assertThat(containsBean(SNAPPY_COMPRESSOR_BEAN_NAME)).isTrue();
 
 		Arrays.asList("People", "ExampleClientRegion").forEach(regionName -> {
 			assertThat(containsBean(regionName)).isTrue();
-			assertRegionCompressor(getBean(regionName, Region.class), regionName,
+			assertRegionCompressor(getBean(regionName, GudRegion.class), regionName,
 				"People".equals(regionName) ? compressor : null);
 		});
 	}
@@ -95,7 +95,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForAllRegionsConfiguration {
 
 		@Bean("ExampleLocalRegion")
-		public ClientRegionFactoryBean<Object, Object> localRegion(ClientCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> localRegion(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> localRegion = new ClientRegionFactoryBean<>();
 
@@ -114,19 +114,19 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 	static class EnableCompressionForSelectRegionsConfiguration {
 
 		@Bean("ExampleClientRegion")
-		public ClientRegionFactoryBean<Object, Object> clientRegion(ClientCache gemfireCache) {
+		public ClientRegionFactoryBean<Object, Object> clientRegion(GudClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Object, Object> clientRegion = new ClientRegionFactoryBean<>();
 
 			clientRegion.setCache(gemfireCache);
-			clientRegion.setShortcut(ClientRegionShortcut.LOCAL);
+			clientRegion.setShortcut(GudClientRegionShortcut.LOCAL);
 
 			return clientRegion;
 		}
 
 		@Bean("MockCompressor")
-		Compressor mockCompressor() {
-			return mock(Compressor.class);
+		GudCompressor mockCompressor() {
+			return mock(GudCompressor.class);
 		}
 	}
 }

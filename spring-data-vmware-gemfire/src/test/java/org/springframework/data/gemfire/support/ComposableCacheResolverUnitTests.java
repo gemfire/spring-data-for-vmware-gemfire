@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -10,8 +10,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.function.Supplier;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,7 +26,7 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.springframework.data.gemfire.support.ComposableCacheResolver
  * @since 2.3.0
  */
@@ -35,7 +35,7 @@ import org.springframework.data.gemfire.CacheResolver;
 public class ComposableCacheResolverUnitTests {
 
 	@Mock
-	private ClientCache mockCache;
+	private GudClientCache mockCache;
 
 	@Mock(name = "CacheResolverOne")
 	private CacheResolver mockCacheResolverOne;
@@ -206,8 +206,8 @@ public class ComposableCacheResolverUnitTests {
 	@Test
 	public void resolvesGemFireCacheFromLastCacheResolverWithExceptionThrowingCacheResolvers() {
 
-		when(this.mockCacheResolverOne.resolve()).thenThrow(new CacheClosedException("ONE"));
-		when(this.mockCacheResolverTwo.resolve()).thenThrow(new CacheClosedException("ONE"));
+		when(this.mockCacheResolverOne.resolve()).thenThrow(new GudCacheClosedException("ONE"));
+		when(this.mockCacheResolverTwo.resolve()).thenThrow(new GudCacheClosedException("ONE"));
 		when(this.mockCacheResolverThree.resolve()).thenReturn(this.mockCache);
 
 		CacheResolver cacheResolver = ComposableCacheResolver
@@ -225,7 +225,7 @@ public class ComposableCacheResolverUnitTests {
 	public void resolvesGemFireCacheFromLastCacheResolverWithNullReturningAndExceptionThrowingCacheResolvers() {
 
 		when(this.mockCacheResolverOne.resolve()).thenReturn(null);
-		when(this.mockCacheResolverTwo.resolve()).thenThrow(new CacheClosedException("ONE"));
+		when(this.mockCacheResolverTwo.resolve()).thenThrow(new GudCacheClosedException("ONE"));
 		when(this.mockCacheResolverThree.resolve()).thenReturn(this.mockCache);
 
 		CacheResolver cacheResolver = ComposableCacheResolver
@@ -259,7 +259,7 @@ public class ComposableCacheResolverUnitTests {
 	@Test
 	public void shortCircuitsAndResolvesGemFireCacheFromSecondCacheResolver() {
 
-		when(this.mockCacheResolverOne.resolve()).thenThrow(new CacheClosedException("ONE"));
+		when(this.mockCacheResolverOne.resolve()).thenThrow(new GudCacheClosedException("ONE"));
 		when(this.mockCacheResolverTwo.resolve()).thenReturn(this.mockCache);
 
 		CacheResolver cacheResolver = ComposableCacheResolver

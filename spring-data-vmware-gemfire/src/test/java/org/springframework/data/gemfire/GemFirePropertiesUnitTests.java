@@ -1,10 +1,10 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
-import org.apache.geode.distributed.ConfigurationProperties;
+import org.springframework.data.gemfire.gud.api.GudConfigurationProperties;
 import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
 
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.distributed.ConfigurationProperties
+ * @see org.apache.geode.distributed.GudConfigurationProperties
  * @see org.springframework.data.gemfire.GemFireProperties
  * @since 2.3.0
  */
@@ -87,7 +87,7 @@ public class GemFirePropertiesUnitTests {
 
     private Set<String> resolveExpectedNonDeprecatedGemFirePropertyNames() {
 
-        List<Field> nonDeprecatedPublicFields = Arrays.stream(ConfigurationProperties.class.getFields())
+        List<Field> nonDeprecatedPublicFields = Arrays.stream(GudConfigurationProperties.class.getFields())
                 .filter(field -> !field.isAnnotationPresent(Deprecated.class))
                 .filter(field -> !field.getName().endsWith("PREFIX"))
                 .collect(Collectors.toList());
@@ -111,7 +111,7 @@ public class GemFirePropertiesUnitTests {
 
         assertThat(missingGemFireProperties)
                 .describedAs("Expected properties in [%s] not in [%s] include (%s)",
-                        ConfigurationProperties.class.getName(), GemFireProperties.class.getName(), missingGemFireProperties)
+                        GudConfigurationProperties.class.getName(), GemFireProperties.class.getName(), missingGemFireProperties)
                 .isEmpty();
     }
 
@@ -127,7 +127,7 @@ public class GemFirePropertiesUnitTests {
 
         assertThat(missingGemFireProperties)
                 .describedAs("Unexpected properties in [%s] not in [%s] include (%s)",
-                        GemFireProperties.class.getName(), ConfigurationProperties.class.getName(), missingGemFireProperties)
+                        GemFireProperties.class.getName(), GudConfigurationProperties.class.getName(), missingGemFireProperties)
                 .isEmpty();
     }
 

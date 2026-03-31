@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -11,8 +11,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Properties;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.distributed.DistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 import org.junit.Test;
 
 /**
@@ -28,9 +28,9 @@ public class GemfireUtilsUnitTests {
 	@Test
 	public void isDurableWithDurableClientIsTrue() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		Properties gemfireProperties = new Properties();
 
@@ -50,9 +50,9 @@ public class GemfireUtilsUnitTests {
 	@Test
 	public void isDurableWithNonDurableClientIsFalse() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		Properties gemfireProperties = new Properties();
 
@@ -72,9 +72,9 @@ public class GemfireUtilsUnitTests {
 	@Test
 	public void isDurableWhenDistributedSystemIsNotConnectedIsFalse() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		when(mockClientCache.getDistributedSystem()).thenReturn(mockDistributedSystem);
 		when(mockDistributedSystem.isConnected()).thenReturn(false);

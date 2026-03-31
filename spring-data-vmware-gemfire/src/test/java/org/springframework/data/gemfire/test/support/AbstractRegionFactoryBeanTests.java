@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.test.support;
@@ -7,7 +7,7 @@ package org.springframework.data.gemfire.test.support;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
  */
 public abstract class AbstractRegionFactoryBeanTests {
 
-	private ClientCache cache;
+	private GudClientCache cache;
 
 	private final Map<String, RegionFactoryBeanConfig> regionFactoryBeanConfigs = new HashMap<>();
 

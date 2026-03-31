@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.client.PoolResolver;
@@ -26,8 +26,8 @@ import org.springframework.data.gemfire.client.PoolResolver;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.client.GudPool
  * @see org.springframework.data.gemfire.CacheResolver
  * @see org.springframework.data.gemfire.client.PoolResolver
  * @see org.springframework.data.gemfire.client.support.ClientCacheDefaultPoolResolver
@@ -39,7 +39,7 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@SuppressWarnings("unchecked")
 	public void constructClientCacheDefaultPoolResolver() {
 
-		CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+		CacheResolver<GudClientCache> mockClientCacheResolver = mock(CacheResolver.class);
 
 		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(mockClientCacheResolver);
 
@@ -57,7 +57,7 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("CacheResolver for ClientCache must not be null");
+			assertThat(expected).hasMessage("CacheResolver for GudClientCache must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -67,13 +67,13 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@Test
 	public void resolvePoolFromClientCacheReturnsDefaultPool() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		Pool mockPool = mock(Pool.class, PoolResolver.DEFAULT_POOL_NAME);
+		GudPool mockPool = mock(GudPool.class, PoolResolver.DEFAULT_POOL_NAME);
 
 		when(mockClientCache.getDefaultPool()).thenReturn(mockPool);
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+		CacheResolver<GudClientCache> clientCacheResolver = () -> mockClientCache;
 
 		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
 
@@ -88,7 +88,7 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@Test
 	public void resolvePoolWhenClientCacheResolvesToNullIsNullSafe() {
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> null;
+		CacheResolver<GudClientCache> clientCacheResolver = () -> null;
 
 		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
 
@@ -100,9 +100,9 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@Test
 	public void resolvePoolWithNonDefaultPool() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+		CacheResolver<GudClientCache> clientCacheResolver = () -> mockClientCache;
 
 		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
 

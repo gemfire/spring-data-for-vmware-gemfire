@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.admin.remote;
@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 import org.springframework.data.gemfire.util.NetworkUtils;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -33,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.springframework.data.gemfire.config.admin.remote.RestHttpGemfireAdminTemplate.Builder
  * @see org.springframework.http.client.ClientHttpRequestFactory
  * @see org.springframework.http.client.ClientHttpRequestInterceptor
@@ -44,7 +44,7 @@ import org.springframework.web.client.RestTemplate;
 public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 
 	@Mock
-	private ClientCache mockClientCache;
+	private GudClientCache mockClientCache;
 
 	@SuppressWarnings("unchecked")
 	private <T> T getFieldValue(Object target, String fieldName) throws NoSuchFieldException {

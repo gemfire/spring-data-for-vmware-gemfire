@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
+import org.springframework.data.gemfire.gud.api.GudTransactionListener;
+import org.springframework.data.gemfire.gud.api.GudTransactionWriter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -73,13 +73,13 @@ public class AbstractCacheConfigurationUnitTests {
 		ClassLoader testBeanClassLoader = Thread.currentThread().getContextClassLoader();
 
 		List<ClientCacheFactoryBean.JndiDataSource> jndiDataSources = Collections.emptyList();
-		List<TransactionListener> transactionListeners = Collections.singletonList(mock(TransactionListener.class));
+		List<GudTransactionListener> transactionListeners = Collections.singletonList(mock(GudTransactionListener.class));
 
 		Properties gemfireProperties = new Properties();
 
 		Resource mockResource = mock(Resource.class);
 
-		TransactionWriter mockTransactionWriter = mock(TransactionWriter.class);
+		GudTransactionWriter mockTransactionWriter = mock(GudTransactionWriter.class);
 
 		doReturn(gemfireProperties).when(this.cacheConfiguration).gemfireProperties();
 

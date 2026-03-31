@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function.result;
@@ -7,14 +7,14 @@ package org.springframework.data.gemfire.function.result;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.geode.cache.execute.Function;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 
 import org.springframework.data.gemfire.function.annotation.FunctionId;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
 
 /**
- * The MixedResultTypeFunctionExecutions class declares various Apache Geode {@link Function Functions}
- *  * using SDG's {@link Function} implementation annotation support.
+ * The MixedResultTypeFunctionExecutions class declares various Apache Geode {@link GudFunction Functions}
+ *  * using SDG's {@link GudFunction} implementation annotation support.
  *
  * @author John Blum
  * @see org.springframework.data.gemfire.function.annotation.FunctionId

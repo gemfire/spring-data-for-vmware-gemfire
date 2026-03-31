@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -15,14 +15,14 @@ import static org.springframework.data.gemfire.util.ArrayUtils.asArray;
 import java.lang.reflect.Proxy;
 import java.util.concurrent.Executor;
 import lombok.Data;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.query.CqAttributes;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqQuery;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudCqAttributes;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.aop.framework.ProxyFactory;
@@ -60,12 +60,12 @@ import org.springframework.util.ErrorHandler;
  * @see java.lang.reflect.Proxy
  * @see java.util.concurrent.Executor
  * @see org.junit.Test
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.query.CqEvent
- * @see org.apache.geode.cache.query.CqQuery
- * @see org.apache.geode.cache.query.QueryService
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.query.GudCqEvent
+ * @see org.apache.geode.cache.query.GudCqQuery
+ * @see org.apache.geode.cache.query.GudQueryService
  * @see org.springframework.aop.framework.ProxyFactory
  * @see org.springframework.data.gemfire.config.annotation.ContinuousQueryConfiguration
  * @see org.springframework.data.gemfire.config.annotation.EnableContinuousQueries
@@ -91,9 +91,9 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 
 		Executor mockTaskExecutor = getBean("mockTaskExecutor", Executor.class);
 
-		Pool mockPool = getBean("mockPool", Pool.class);
+		GudPool mockPool = getBean("mockPool", GudPool.class);
 
-		QueryService mockQueryService = getBean("mockQueryService", QueryService.class);
+		GudQueryService mockQueryService = getBean("mockQueryService", GudQueryService.class);
 
 		assertThat(containsBean("continuousQueryListenerContainer")).isTrue();
 
@@ -117,16 +117,16 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 			assertThat(applicationContext).isNotNull();
 			assertThat(applicationContext.containsBean("DEFAULT")).isTrue();
 
-			ClientCache gemfireCache = applicationContext.getBean(ClientCache.class);
+			GudClientCache gemfireCache = applicationContext.getBean(GudClientCache.class);
 
 			assertThat(gemfireCache).isNotNull();
 
-			QueryService mockQueryService = gemfireCache.getQueryService();
+			GudQueryService mockQueryService = gemfireCache.getQueryService();
 
 			assertThat(mockQueryService).isNotNull();
 			assertThat(mockQueryService.getCqs()).hasSize(1);
 
-			CqQuery mockCqQuery = mockQueryService.getCqs()[0];
+			GudCqQuery mockCqQuery = mockQueryService.getCqs()[0];
 
 			assertThat(mockCqQuery).isNotNull();
 			assertThat(mockCqQuery.getName()).isEqualTo("TestQuery");
@@ -134,7 +134,7 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 			assertThat(mockCqQuery.isRunning()).isTrue();
 
 			verify(mockQueryService, times(1)).newCq(eq("TestQuery"),
-				eq("SELECT * FROM /Example"), any(CqAttributes.class), eq(false));
+				eq("SELECT * FROM /Example"), any(GudCqAttributes.class), eq(false));
 
 			verify(mockCqQuery, times(1)).execute();
 		}
@@ -167,9 +167,9 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean
-		Pool mockPool() {
+		GudPool mockPool() {
 
-			Pool mockPool = mock(Pool.class);
+			GudPool mockPool = mock(GudPool.class);
 
 			when(mockPool.getName()).thenReturn("mockPool");
 
@@ -177,8 +177,8 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean
-		QueryService mockQueryService() {
-			return mock(QueryService.class);
+		GudQueryService mockQueryService() {
+			return mock(GudQueryService.class);
 		}
 
 		@Bean
@@ -202,8 +202,8 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean("DEFAULT")
-		Pool mockPool() {
-			return mock(Pool.class);
+		GudPool mockPool() {
+			return mock(GudPool.class);
 		}
 
 		@Bean
@@ -237,8 +237,8 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean("People")
-		Region<Long, Person> mockPeopleRegion(ClientCache gemfireCache,
-				@Qualifier("peopleRegionAttributes") RegionAttributes<Long, Person> peopleRegionAttributes) {
+		GudRegion<Long, Person> mockPeopleRegion(GudClientCache gemfireCache,
+				@Qualifier("peopleRegionAttributes") GudRegionAttributes<Long, Person> peopleRegionAttributes) {
 
 			return GemFireMockObjectsSupport.mockRegion(gemfireCache, "People", peopleRegionAttributes);
 		}
@@ -256,8 +256,8 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 		}
 
 		@Bean("Examples")
-		Region<Long, Example> mockExamplesRegion(ClientCache gemfireCache,
-				@Qualifier("examplesRegionAttributes") RegionAttributes<Long, Example> mockExamplesRegionAttributes) {
+		GudRegion<Long, Example> mockExamplesRegion(GudClientCache gemfireCache,
+				@Qualifier("examplesRegionAttributes") GudRegionAttributes<Long, Example> mockExamplesRegionAttributes) {
 
 			return GemFireMockObjectsSupport.mockRegion(gemfireCache, "Examples",
 				mockExamplesRegionAttributes);
@@ -315,12 +315,12 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 	static class TestContinuousQueryComponent {
 
 		@ContinuousQuery(name = "TestQuery", query = "SELECT * FROM /Example")
-		public void handle(CqEvent event) { }
+		public void handle(GudCqEvent event) { }
 
 	}
 
 	@Data
-	@org.springframework.data.gemfire.mapping.annotation.Region("Examples")
+	@org.springframework.data.gemfire.mapping.annotation.GudRegion("Examples")
 	static class Example {
 		@Id Long id;
 	}

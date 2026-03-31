@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -35,9 +35,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxWriter;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.convert.ConversionService;
@@ -77,9 +77,9 @@ import org.springframework.data.mapping.model.ParameterValueProvider;
  * @see org.mockito.junit.MockitoJUnitRunner
  * @see org.springframework.core.convert.ConversionService
  * @see org.springframework.data.gemfire.mapping.MappingPdxSerializer
- * @see org.apache.geode.pdx.PdxReader
- * @see org.apache.geode.pdx.PdxSerializer
- * @see org.apache.geode.pdx.PdxWriter
+ * @see org.apache.geode.pdx.GudPdxReader
+ * @see org.apache.geode.pdx.GudPdxSerializer
+ * @see org.apache.geode.pdx.GudPdxWriter
  */
 @RunWith(MockitoJUnitRunner.class)
 public class MappingPdxSerializerUnitTests {
@@ -94,10 +94,10 @@ public class MappingPdxSerializerUnitTests {
 	private MappingPdxSerializer pdxSerializer;
 
 	@Mock
-	private PdxReader mockReader;
+	private GudPdxReader mockReader;
 
 	@Mock
-	private PdxWriter mockWriter;
+	private GudPdxWriter mockWriter;
 
 	@Before
 	public void setUp() {
@@ -218,8 +218,8 @@ public class MappingPdxSerializerUnitTests {
 	@Test
 	public void setCustomPdxSerializersWithMappingOfClassTypesToPdxSerializers() {
 
-		Map<Class<?>, PdxSerializer> customPdxSerializers =
-			Collections.singletonMap(Person.class, mock(PdxSerializer.class));
+		Map<Class<?>, GudPdxSerializer> customPdxSerializers =
+			Collections.singletonMap(Person.class, mock(GudPdxSerializer.class));
 
 		this.pdxSerializer.setCustomPdxSerializers(customPdxSerializers);
 
@@ -398,15 +398,15 @@ public class MappingPdxSerializerUnitTests {
 	@SuppressWarnings("all")
 	public void resolveCustomPdxSerializerReturnsPdxSerializerForProperty() {
 
-		PdxSerializer mockNamedSerializer = mock(PdxSerializer.class);
-		PdxSerializer mockPropertySerializer = mock(PdxSerializer.class);
-		PdxSerializer mockTypedSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockNamedSerializer = mock(GudPdxSerializer.class);
+		GudPdxSerializer mockPropertySerializer = mock(GudPdxSerializer.class);
+		GudPdxSerializer mockTypedSerializer = mock(GudPdxSerializer.class);
 
 		PersistentEntity personEntity = this.mappingContext.getPersistentEntity(Person.class);
 
 		PersistentProperty addressProperty = personEntity.getPersistentProperty("address");
 
-		this.pdxSerializer.setCustomPdxSerializers(MapBuilder.<Object, PdxSerializer>newMapBuilder()
+		this.pdxSerializer.setCustomPdxSerializers(MapBuilder.<Object, GudPdxSerializer>newMapBuilder()
 			.put(addressProperty, mockPropertySerializer)
 			.put(toFullyQualifiedPropertyName(addressProperty), mockNamedSerializer)
 			.put(Address.class, mockTypedSerializer)
@@ -419,14 +419,14 @@ public class MappingPdxSerializerUnitTests {
 	@SuppressWarnings("all")
 	public void resolveCustomPdxSerializerReturnsPdxSerializerForPropertyName() {
 
-		PdxSerializer mockNamedSerializer = mock(PdxSerializer.class);
-		PdxSerializer mockTypedSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockNamedSerializer = mock(GudPdxSerializer.class);
+		GudPdxSerializer mockTypedSerializer = mock(GudPdxSerializer.class);
 
 		PersistentEntity personEntity = this.mappingContext.getPersistentEntity(Person.class);
 
 		PersistentProperty addressProperty = personEntity.getPersistentProperty("address");
 
-		this.pdxSerializer.setCustomPdxSerializers(MapBuilder.<Object, PdxSerializer>newMapBuilder()
+		this.pdxSerializer.setCustomPdxSerializers(MapBuilder.<Object, GudPdxSerializer>newMapBuilder()
 			.put(toFullyQualifiedPropertyName(addressProperty), mockNamedSerializer)
 			.put(Address.class, mockTypedSerializer)
 			.build());
@@ -438,10 +438,10 @@ public class MappingPdxSerializerUnitTests {
 	@SuppressWarnings("all")
 	public void resolveCustomPdxSerializerReturnsPdxSerializerForPropertyType() {
 
-		PdxSerializer mockNamedSerializer = mock(PdxSerializer.class);
-		PdxSerializer mockTypedSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockNamedSerializer = mock(GudPdxSerializer.class);
+		GudPdxSerializer mockTypedSerializer = mock(GudPdxSerializer.class);
 
-		Map<Object, PdxSerializer> customPdxSerializers = new HashMap<>();
+		Map<Object, GudPdxSerializer> customPdxSerializers = new HashMap<>();
 
 		PersistentEntity personEntity = this.mappingContext.getPersistentEntity(Person.class);
 
@@ -536,7 +536,7 @@ public class MappingPdxSerializerUnitTests {
 		expectedAddress.city = "Portland";
 		expectedAddress.zipCode = "12345";
 
-		PdxSerializer mockAddressSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockAddressSerializer = mock(GudPdxSerializer.class);
 
 		when(this.mockEntityInstantiator.createInstance(any(GemfirePersistentEntity.class), any(ParameterValueProvider.class)))
 			.thenReturn(new Person(null, null, null));
@@ -611,7 +611,7 @@ public class MappingPdxSerializerUnitTests {
 		address.city = "London";
 		address.zipCode = "01234";
 
-		PdxSerializer mockAddressSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockAddressSerializer = mock(GudPdxSerializer.class);
 
 		Person person = new Person(1L, "Oliver", "Gierke");
 
@@ -632,7 +632,7 @@ public class MappingPdxSerializerUnitTests {
 			.createInstance(eq(persistentEntity), any(ParameterValueProvider.class));
 
 		verify(mockAddressSerializer, times(1))
-			.fromData(eq(Address.class), any(PdxReader.class));
+			.fromData(eq(Address.class), any(GudPdxReader.class));
 	}
 
 	@Test
@@ -640,7 +640,7 @@ public class MappingPdxSerializerUnitTests {
 
 		this.pdxSerializer.setIncludeTypeFilters(type -> User.class.getPackage().equals(type.getPackage()));
 
-		doReturn("test").when(this.pdxSerializer).doFromData(any(Class.class), any(PdxReader.class));
+		doReturn("test").when(this.pdxSerializer).doFromData(any(Class.class), any(GudPdxReader.class));
 
 		assertThat(this.pdxSerializer.fromData(Account.class, this.mockReader)).isEqualTo("test");
 		assertThat(this.pdxSerializer.fromData(Algorithm.class, this.mockReader)).isEqualTo("test");
@@ -669,7 +669,7 @@ public class MappingPdxSerializerUnitTests {
 
 		this.pdxSerializer.setIncludeTypeFilters(type -> type.getPackage().getName().startsWith("java.security"));
 
-		doReturn("test").when(this.pdxSerializer).doFromData(any(Class.class), any(PdxReader.class));
+		doReturn("test").when(this.pdxSerializer).doFromData(any(Class.class), any(GudPdxReader.class));
 
 		assertThat(this.pdxSerializer.fromData(Principal.class, this.mockReader)).isEqualTo("test");
 
@@ -719,7 +719,7 @@ public class MappingPdxSerializerUnitTests {
 		address.city = "Portland";
 		address.zipCode = "12345";
 
-		PdxSerializer mockAddressSerializer = mock(PdxSerializer.class);
+		GudPdxSerializer mockAddressSerializer = mock(GudPdxSerializer.class);
 
 		Person jonDoe = new Person(1L, "Jon", "Doe");
 
@@ -806,7 +806,7 @@ public class MappingPdxSerializerUnitTests {
 
 		this.pdxSerializer.setIncludeTypeFilters(type -> User.class.getPackage().equals(type.getPackage()));
 
-		doReturn(true).when(this.pdxSerializer).doToData(any(), any(PdxWriter.class));
+		doReturn(true).when(this.pdxSerializer).doToData(any(), any(GudPdxWriter.class));
 
 		assertThat(this.pdxSerializer.toData(new Account(1L), this.mockWriter)).isTrue();
 		assertThat(this.pdxSerializer.toData(new Animal(), this.mockWriter)).isTrue();
@@ -834,7 +834,7 @@ public class MappingPdxSerializerUnitTests {
 
 		this.pdxSerializer.setIncludeTypeFilters(type -> type.getPackage().getName().startsWith("org.springframework"));
 
-		doReturn(true).when(this.pdxSerializer).doToData(any(), any(PdxWriter.class));
+		doReturn(true).when(this.pdxSerializer).doToData(any(), any(GudPdxWriter.class));
 
 		assertThat(this.pdxSerializer.toData(testOrdered, this.mockWriter)).isTrue();
 

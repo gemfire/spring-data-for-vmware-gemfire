@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 
 /**
  * Unit Tests for {@link ClientRegionShortcutConverter}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.client.GudClientRegionShortcut
  * @see org.springframework.data.gemfire.client.ClientRegionShortcutConverter
  * @since 1.3.4
  */
@@ -37,13 +37,13 @@ public class ClientRegionShortcutConverterUnitTests {
 	@Test
 	public void testConvert() {
 
-		for (ClientRegionShortcut shortcut : ClientRegionShortcut.values()) {
+		for (GudClientRegionShortcut shortcut : GudClientRegionShortcut.values()) {
 			assertThat(converter.convert(shortcut.name())).isEqualTo(shortcut);
 		}
 
-		assertThat(converter.convert("Proxy")).isEqualTo(ClientRegionShortcut.PROXY);
-		assertThat(converter.convert("caching_proxy")).isEqualTo(ClientRegionShortcut.CACHING_PROXY);
-		assertThat(converter.convert("local_Heap_LRU")).isEqualTo(ClientRegionShortcut.LOCAL_HEAP_LRU);
+		assertThat(converter.convert("Proxy")).isEqualTo(GudClientRegionShortcut.PROXY);
+		assertThat(converter.convert("caching_proxy")).isEqualTo(GudClientRegionShortcut.CACHING_PROXY);
+		assertThat(converter.convert("local_Heap_LRU")).isEqualTo(GudClientRegionShortcut.LOCAL_HEAP_LRU);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

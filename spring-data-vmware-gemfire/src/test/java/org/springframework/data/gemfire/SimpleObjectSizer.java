@@ -1,18 +1,18 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.util.ObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 
 /**
  * @author Costin Leau
  */
-public class SimpleObjectSizer implements ObjectSizer {
+public class SimpleObjectSizer implements GudObjectSizer {
 
-	private static final ObjectSizer sizer = ObjectSizer.DEFAULT;
+	private static final GudObjectSizer sizer = GudObjectSizer.DEFAULT;
 
 	@Override
 	public int sizeof(Object o) {

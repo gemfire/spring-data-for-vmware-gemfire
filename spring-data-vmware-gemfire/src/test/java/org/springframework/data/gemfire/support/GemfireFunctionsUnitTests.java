@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -14,8 +14,8 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 
 /**
@@ -24,8 +24,8 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.support.GemfireFunctions
  * @since 2.7.0
  */
@@ -34,13 +34,13 @@ public class GemfireFunctionsUnitTests {
 	@Test
 	public void getRegionFromCacheFunctionReturnsRegion() {
 
-		ClientCache mockCache = mock(ClientCache.class);
+		GudClientCache mockCache = mock(GudClientCache.class);
 
-		Region<?, ?> mockRegion = mock(Region.class);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class);
 
 		doReturn(mockRegion).when(mockCache).getRegion(eq("TestRegion"));
 
-		Function<ClientCache, Region<Object, Object>> function =
+		Function<GudClientCache, GudRegion<Object, Object>> function =
 			GemfireFunctions.getRegionFromCache("TestRegion");
 
 		assertThat(function).isNotNull();
@@ -54,13 +54,13 @@ public class GemfireFunctionsUnitTests {
 	@Test
 	public void getRegionFromCacheSupplierReturnsRegions() {
 
-		ClientCache mockCache = mock(ClientCache.class);
+		GudClientCache mockCache = mock(GudClientCache.class);
 
-		Region<?, ?> mockRegion = mock(Region.class);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class);
 
 		doReturn(mockRegion).when(mockCache).getRegion(eq("TestRegion"));
 
-		Supplier<Region<Object, Object>> supplier =
+		Supplier<GudRegion<Object, Object>> supplier =
 			GemfireFunctions.getRegionFromCache(mockCache, "TestRegion");
 
 		assertThat(supplier).isNotNull();
@@ -74,12 +74,12 @@ public class GemfireFunctionsUnitTests {
 	@Test
 	public void getSubregionFromRegionFunctionReturnsRegion() {
 
-		Region<?, ?> mockParentRegion = mock(Region.class);
-		Region<?, ?> mockSubregion = mock(Region.class);
+		GudRegion<?, ?> mockParentRegion = mock(GudRegion.class);
+		GudRegion<?, ?> mockSubregion = mock(GudRegion.class);
 
 		doReturn(mockSubregion).when(mockParentRegion).getSubregion(eq("TestSubregion"));
 
-		Function<Region<?, ?>, Region<Object, Object>> function =
+		Function<GudRegion<?, ?>, GudRegion<Object, Object>> function =
 			GemfireFunctions.getSubregionFromRegion("TestSubregion");
 
 		assertThat(function).isNotNull();

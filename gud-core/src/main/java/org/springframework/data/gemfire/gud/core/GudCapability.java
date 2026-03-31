@@ -9,11 +9,17 @@
  */
 
 /*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-14: Created GudCapability enum for driver capability detection
  * 2026-03-17: Fixed PER_SERVER_CONNECTION_LIMITS from 10.3 to 10.1, added DISK_STORE_SEGMENTS, removed 10.4 placeholders
+ * 2026-03-31: Added SERVER_REGION_NAME capability (10.3+)
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -43,7 +49,8 @@ public enum GudCapability {
     DISK_STORE_SEGMENTS("Disk store segments API", "10.1"),
 
     // 10.3+ capabilities
-    SECURITY_MANAGER("Integrated security manager", "10.3");
+    SECURITY_MANAGER("Integrated security manager", "10.3"),
+    SERVER_REGION_NAME("Server region name mapping for client regions", "10.3");
 
     private final String description;
     private final String minimumVersion;

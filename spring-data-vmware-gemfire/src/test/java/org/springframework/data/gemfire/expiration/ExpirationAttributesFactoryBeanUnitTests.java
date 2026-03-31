@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.expiration;
@@ -8,15 +8,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.ExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
 
 /**
  * Unit Tests for {@link ExpirationAttributesFactoryBean}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.ExpirationAttributes
+ * @see org.apache.geode.cache.GudExpirationAttributes
  * @see org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBean
  * @since 1.6.0
  */
@@ -35,9 +35,9 @@ public class ExpirationAttributesFactoryBeanUnitTests {
 		assertThat(expirationAttributesFactoryBean.getAction())
 			.isEqualTo(ExpirationAttributesFactoryBean.DEFAULT_EXPIRATION_ACTION);
 
-		expirationAttributesFactoryBean.setAction(ExpirationAction.LOCAL_DESTROY);
+		expirationAttributesFactoryBean.setAction(GudExpirationAction.LOCAL_DESTROY);
 
-		assertThat(expirationAttributesFactoryBean.getAction()).isEqualTo(ExpirationAction.LOCAL_DESTROY);
+		assertThat(expirationAttributesFactoryBean.getAction()).isEqualTo(GudExpirationAction.LOCAL_DESTROY);
 
 		expirationAttributesFactoryBean.setAction(null);
 
@@ -67,16 +67,16 @@ public class ExpirationAttributesFactoryBeanUnitTests {
 		ExpirationAttributesFactoryBean expirationAttributesFactoryBean = new ExpirationAttributesFactoryBean();
 
 		assertThat(expirationAttributesFactoryBean.getObject()).isNull();
-		assertThat(expirationAttributesFactoryBean.getObjectType()).isEqualTo(ExpirationAttributes.class);
+		assertThat(expirationAttributesFactoryBean.getObjectType()).isEqualTo(GudExpirationAttributes.class);
 
-		expirationAttributesFactoryBean.setAction(ExpirationAction.DESTROY);
+		expirationAttributesFactoryBean.setAction(GudExpirationAction.DESTROY);
 		expirationAttributesFactoryBean.setTimeout(8192);
 		expirationAttributesFactoryBean.afterPropertiesSet();
 
-		ExpirationAttributes expirationAttributes = expirationAttributesFactoryBean.getObject();
+		GudExpirationAttributes expirationAttributes = expirationAttributesFactoryBean.getObject();
 
 		assertThat(expirationAttributes).isNotNull();
-		assertThat(expirationAttributes.getAction()).isEqualTo(ExpirationAction.DESTROY);
+		assertThat(expirationAttributes.getAction()).isEqualTo(GudExpirationAction.DESTROY);
 		assertThat(expirationAttributes.getTimeout()).isEqualTo(8192);
 		assertThat(expirationAttributesFactoryBean.getObjectType()).isEqualTo(expirationAttributes.getClass());
 	}

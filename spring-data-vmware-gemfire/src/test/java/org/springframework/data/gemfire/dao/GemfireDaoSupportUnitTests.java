@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.dao;
@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.data.gemfire.GemfireOperations;
 import org.springframework.data.gemfire.GemfireTemplate;
@@ -31,7 +31,7 @@ import org.springframework.data.gemfire.GemfireTemplate;
 public class GemfireDaoSupportUnitTests {
 
 	@Mock
-	public Region<?, ?> mockRegion;
+	public GudRegion<?, ?> mockRegion;
 
 	@Test
 	public void setAndGetGemfireTemplate() {
@@ -84,7 +84,7 @@ public class GemfireDaoSupportUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("A GemFire Cache Region or instance of GemfireTemplate is required");
+			assertThat(expected).hasMessage("A GemFire Cache GudRegion or instance of GemfireTemplate is required");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

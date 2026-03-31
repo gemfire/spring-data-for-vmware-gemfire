@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.transaction.event;
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.TransactionEvent;
+import org.springframework.data.gemfire.gud.api.GudTransactionEvent;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,7 +43,7 @@ public class TransactionListenerAdapterUnitTests {
 	private ApplicationEventPublisher mockApplicationEventPublisher;
 
 	@Mock
-	private TransactionEvent mockTransactionEvent;
+	private GudTransactionEvent mockTransactionEvent;
 
 	@Test
 	public void constructTransactionListenerAdapterIsCorrect() {

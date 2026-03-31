@@ -7,6 +7,11 @@
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
@@ -95,8 +100,6 @@ dependencies {
   compileOnly(libs.cdi.api) {
     exclude("javax.annotation", "jsr250-api")
   }
-
-  testImplementation(libs.bundles.gemfire)
 
   testImplementation(libs.cdi.api) {
     exclude("javax.annotation", "jsr250-api")

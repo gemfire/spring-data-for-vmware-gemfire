@@ -1,16 +1,16 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire;
 
-import org.apache.geode.cache.util.CacheListenerAdapter;
+import org.springframework.data.gemfire.gud.api.GudCacheListenerAdapter;
 
 /**
  * @author Costin Leau
  */
 @SuppressWarnings("rawtypes")
-public class SimpleCacheListener extends CacheListenerAdapter {
+public class SimpleCacheListener extends GudCacheListenerAdapter {
 
 }

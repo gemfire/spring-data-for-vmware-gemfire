@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -7,7 +7,7 @@ package org.springframework.data.gemfire.support;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 import org.springframework.data.gemfire.CacheResolver;
 
@@ -17,7 +17,7 @@ import org.springframework.data.gemfire.CacheResolver;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
+ * @see org.apache.geode.cache.client.GudClientCache
  * @see org.springframework.data.gemfire.CacheResolver
  * @see org.springframework.data.gemfire.support.SingleCacheCacheResolver
  * @since 2.3.0
@@ -27,9 +27,9 @@ public class SingleCacheCacheResolverUnitTests {
 	@Test
 	public void fromCacheReturnsCacheResolverResolvingCache() {
 
-		ClientCache mockCache = mock(ClientCache.class);
+		GudClientCache mockCache = mock(GudClientCache.class);
 
-		CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from(mockCache);
+		CacheResolver<GudClientCache> cacheResolver = SingleCacheCacheResolver.from(mockCache);
 
 		assertThat(cacheResolver).isNotNull();
 		assertThat(cacheResolver.resolve()).isSameAs(mockCache);
@@ -40,7 +40,7 @@ public class SingleCacheCacheResolverUnitTests {
 	@Test
 	public void fromNullCacheReturnsCacheResolverReturningNull() {
 
-		CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from(null);
+		CacheResolver<GudClientCache> cacheResolver = SingleCacheCacheResolver.from(null);
 
 		assertThat(cacheResolver).isNotNull();
 		assertThat(cacheResolver.resolve()).isNull();
@@ -49,9 +49,9 @@ public class SingleCacheCacheResolverUnitTests {
 	@Test
 	public void fromClientCacheReturnsCacheResolverResolvingClientCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		CacheResolver<ClientCache> clientCacheResolver = SingleCacheCacheResolver.from(mockClientCache);
+		CacheResolver<GudClientCache> clientCacheResolver = SingleCacheCacheResolver.from(mockClientCache);
 
 		assertThat(clientCacheResolver).isNotNull();
 		assertThat(clientCacheResolver.resolve()).isSameAs(mockClientCache);
@@ -62,7 +62,7 @@ public class SingleCacheCacheResolverUnitTests {
 	@Test
 	public void fromNullClientCacheReturnsCacheResolverReturningNull() {
 
-		CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from((ClientCache) null);
+		CacheResolver<GudClientCache> cacheResolver = SingleCacheCacheResolver.from((GudClientCache) null);
 
 		assertThat(cacheResolver).isNotNull();
 		assertThat(cacheResolver.resolve()).isNull();

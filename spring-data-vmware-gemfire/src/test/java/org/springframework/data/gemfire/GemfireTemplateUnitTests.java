@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -27,14 +27,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.Scope;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.query.Query;
-import org.apache.geode.cache.query.QueryService;
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.gud.api.GudScope;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
@@ -49,11 +49,11 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.query.Query
- * @see org.apache.geode.cache.query.QueryService
- * @see org.apache.geode.cache.query.SelectResults
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.client.GudClientCache
+ * @see org.apache.geode.cache.query.GudQuery
+ * @see org.apache.geode.cache.query.GudQueryService
+ * @see org.apache.geode.cache.query.GudSelectResults
  * @see org.springframework.data.gemfire.GemfireTemplate
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  */
@@ -64,16 +64,16 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 	private GemfireTemplate template;
 
 	@Mock
-	private Query mockQuery;
+	private GudQuery mockQuery;
 
 	@Mock
-	private QueryService mockQueryService;
+	private GudQueryService mockQueryService;
 
 	@Mock
-	private Region<?, ?> mockRegion;
+	private GudRegion<?, ?> mockRegion;
 
 	@Mock
-	private RegionService mockRegionService;
+	private GudRegionService mockRegionService;
 
 	@Before
 	public void setUp() {
@@ -103,7 +103,7 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Region is required");
+			assertThat(expected).hasMessage("GudRegion is required");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -162,7 +162,7 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 
 		String expectedQuery = "SELECT * FROM /Example";
 
-		SelectResults<?> mockSelectResults = mock(SelectResults.class);
+		GudSelectResults<?> mockSelectResults = mock(GudSelectResults.class);
 
 		when(mockQuery.execute(any(Object.class))).thenReturn(mockSelectResults);
 
@@ -204,7 +204,7 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 
 		String expectedQuery = "SELECT 1 FROM /Example";
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
 		when(mockQuery.execute(any(Object.class))).thenReturn(mockSelectResults);
 		when(mockSelectResults.asList()).thenReturn(Collections.singletonList(1));
@@ -243,7 +243,7 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 
 		String expectedQuery = "SELECT 1 FROM /Example";
 
-		SelectResults mockSelectResults = mock(SelectResults.class);
+		GudSelectResults mockSelectResults = mock(GudSelectResults.class);
 
 		when(mockQuery.execute(any(Object.class))).thenReturn(mockSelectResults);
 		when(mockSelectResults.asList()).thenReturn(Arrays.asList(1, 2));
@@ -276,17 +276,17 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 	@SuppressWarnings("unchecked")
 	public void resolveClientQueryService() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
-		Region<Object, Object> mockRegion = mock(Region.class);
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
-		when(mockRegionAttributes.getScope()).thenReturn(Scope.GLOBAL);
+		when(mockRegionAttributes.getScope()).thenReturn(GudScope.GLOBAL);
 		when(mockRegion.getRegionService()).thenReturn(mockClientCache);
 		when(mockClientCache.getQueryService()).thenReturn(mockQueryService);
 
 		GemfireTemplate localTemplate = new GemfireTemplate(mockRegion) {
-			@Override boolean isLocalWithNoServerProxy(Region<?, ?> region) {
+			@Override boolean isLocalWithNoServerProxy(GudRegion<?, ?> region) {
 				return false;
 			}
 		};
@@ -307,17 +307,17 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 	@SuppressWarnings("unchecked")
 	public void resolvesClientLocalQueryService() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
-		Region<Object, Object> mockRegion = mock(Region.class);
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockClientCache.getLocalQueryService()).thenReturn(mockQueryService);
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 		when(mockRegion.getRegionService()).thenReturn(mockClientCache);
-		when(mockRegionAttributes.getScope()).thenReturn(Scope.LOCAL);
+		when(mockRegionAttributes.getScope()).thenReturn(GudScope.LOCAL);
 
 		GemfireTemplate localTemplate = new GemfireTemplate(mockRegion) {
-			@Override boolean isLocalWithNoServerProxy(Region<?, ?> region) {
+			@Override boolean isLocalWithNoServerProxy(GudRegion<?, ?> region) {
 				return true;
 			}
 		};
@@ -337,18 +337,18 @@ public class GemfireTemplateUnitTests extends IntegrationTestsSupport {
 	@SuppressWarnings("unchecked")
 	public void resolvesClientPooledQueryService() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
-		Region<Object, Object> mockRegion = mock(Region.class);
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockClientCache.getQueryService(anyString())).thenReturn(mockQueryService);
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 		when(mockRegion.getRegionService()).thenReturn(mockClientCache);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPool");
-		when(mockRegionAttributes.getScope()).thenReturn(Scope.LOCAL);
+		when(mockRegionAttributes.getScope()).thenReturn(GudScope.LOCAL);
 
 		GemfireTemplate localTemplate = new GemfireTemplate(mockRegion) {
-			@Override boolean isLocalWithNoServerProxy(Region<?, ?> region) {
+			@Override boolean isLocalWithNoServerProxy(GudRegion<?, ?> region) {
 				return false;
 			}
 		};

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.function.execution;
@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.ResultCollector;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudResultCollector;
 
 /**
  * Unit Tests for {@link AbstractFunctionTemplate}.
@@ -28,8 +28,8 @@ import org.apache.geode.cache.execute.ResultCollector;
  * @see org.junit.Test
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.execute.Function
- * @see org.apache.geode.cache.execute.ResultCollector
+ * @see org.apache.geode.cache.execute.GudFunction
+ * @see org.apache.geode.cache.execute.GudResultCollector
  * @see org.springframework.data.gemfire.function.execution.AbstractFunctionExecution
  * @see org.springframework.data.gemfire.function.execution.AbstractFunctionTemplate
  * @since 1.7.0
@@ -42,10 +42,10 @@ public class AbstractFunctionTemplateUnitTests {
 	private AbstractFunctionExecution mockFunctionExecution;
 
 	@Mock
-	private Function mockFunction;
+	private GudFunction mockFunction;
 
 	@Mock
-	private ResultCollector mockResultCollector;
+	private GudResultCollector mockResultCollector;
 
 	@Test
 	public void executeWithFunctionAndArgs() {

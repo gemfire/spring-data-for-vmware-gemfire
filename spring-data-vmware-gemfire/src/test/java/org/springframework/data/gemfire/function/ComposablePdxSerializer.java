@@ -1,23 +1,23 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function;
 
-import org.apache.geode.pdx.PdxReader;
-import org.apache.geode.pdx.PdxSerializer;
-import org.apache.geode.pdx.PdxWriter;
+import org.springframework.data.gemfire.gud.api.GudPdxReader;
+import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.springframework.data.gemfire.gud.api.GudPdxWriter;
 
-public class ComposablePdxSerializer implements PdxSerializer {
+public class ComposablePdxSerializer implements GudPdxSerializer {
 
-  private final PdxSerializer[] pdxSerializers;
+  private final GudPdxSerializer[] pdxSerializers;
 
-  private ComposablePdxSerializer(PdxSerializer[] pdxSerializers) {
+  private ComposablePdxSerializer(GudPdxSerializer[] pdxSerializers) {
     this.pdxSerializers = pdxSerializers;
   }
 
-  public static PdxSerializer compose(PdxSerializer... pdxSerializers) {
+  public static GudPdxSerializer compose(GudPdxSerializer... pdxSerializers) {
 
     return pdxSerializers == null
         ? null
@@ -27,9 +27,9 @@ public class ComposablePdxSerializer implements PdxSerializer {
   }
 
   @Override
-  public boolean toData(Object obj, PdxWriter out) {
+  public boolean toData(Object obj, GudPdxWriter out) {
 
-    for (PdxSerializer pdxSerializer : this.pdxSerializers) {
+    for (GudPdxSerializer pdxSerializer : this.pdxSerializers) {
       if (pdxSerializer.toData(obj, out)) {
         return true;
       }
@@ -39,9 +39,9 @@ public class ComposablePdxSerializer implements PdxSerializer {
   }
 
   @Override
-  public Object fromData(Class<?> type, final PdxReader in) {
+  public Object fromData(Class<?> type, final GudPdxReader in) {
 
-    for (PdxSerializer pdxSerializer : this.pdxSerializers) {
+    for (GudPdxSerializer pdxSerializer : this.pdxSerializers) {
 
       Object obj = pdxSerializer.fromData(type, in);
 

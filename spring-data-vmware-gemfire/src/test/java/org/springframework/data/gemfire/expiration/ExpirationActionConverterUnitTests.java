@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.expiration;
@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.ExpirationAction;
+import org.springframework.data.gemfire.gud.api.GudExpirationAction;
 
 /**
  * Unit Tests for {@link ExpirationActionConverter}.
@@ -31,10 +31,10 @@ public class ExpirationActionConverterUnitTests {
 
 	@Test
 	public void convert() {
-		assertThat(converter.convert("destroy")).isEqualTo(ExpirationAction.DESTROY);
-		assertThat(converter.convert("inValidAte")).isEqualTo(ExpirationAction.INVALIDATE);
-		assertThat(converter.convert("LOCAL_dEsTrOy")).isEqualTo(ExpirationAction.LOCAL_DESTROY);
-		assertThat(converter.convert("Local_Invalidate")).isEqualTo(ExpirationAction.LOCAL_INVALIDATE);
+		assertThat(converter.convert("destroy")).isEqualTo(GudExpirationAction.DESTROY);
+		assertThat(converter.convert("inValidAte")).isEqualTo(GudExpirationAction.INVALIDATE);
+		assertThat(converter.convert("LOCAL_dEsTrOy")).isEqualTo(GudExpirationAction.LOCAL_DESTROY);
+		assertThat(converter.convert("Local_Invalidate")).isEqualTo(GudExpirationAction.LOCAL_INVALIDATE);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class ExpirationActionConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[illegal_value] is not a valid ExpirationAction");
+			assertThat(expected).hasMessage("[illegal_value] is not a valid GudExpirationAction");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -59,11 +59,11 @@ public class ExpirationActionConverterUnitTests {
 
 		converter.setAsText("InValidAte");
 
-		assertThat(converter.getValue()).isEqualTo(ExpirationAction.INVALIDATE);
+		assertThat(converter.getValue()).isEqualTo(GudExpirationAction.INVALIDATE);
 
 		converter.setAsText("Local_Destroy");
 
-		assertThat(converter.getValue()).isEqualTo(ExpirationAction.LOCAL_DESTROY);
+		assertThat(converter.getValue()).isEqualTo(GudExpirationAction.LOCAL_DESTROY);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -74,7 +74,7 @@ public class ExpirationActionConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[destruction] is not a valid ExpirationAction");
+			assertThat(expected).hasMessage("[destruction] is not a valid GudExpirationAction");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

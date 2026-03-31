@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
@@ -13,8 +13,8 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
@@ -57,11 +57,11 @@ public class GemfireRepositoryFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void initializesWithMappingContext() {
 
-		RegionAttributes<?, ?> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<?, ?> mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		doReturn(Long.class).when(mockRegionAttributes).getKeyConstraint();
 
-		Region<?, ?> mockRegion = mock(Region.class);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class);
 
 		doReturn("simple").when(mockRegion).getName();
 		doReturn(mockRegionAttributes).when(mockRegion).getAttributes();
@@ -69,7 +69,7 @@ public class GemfireRepositoryFactoryBeanUnitTests {
 		ApplicationContext mockApplicationContext = mock(ApplicationContext.class);
 
 		doReturn(Collections.singletonMap("simple", mockRegion))
-			.when(mockApplicationContext).getBeansOfType(Region.class);
+			.when(mockApplicationContext).getBeansOfType(GudRegion.class);
 
 		repositoryFactoryBean.setApplicationContext(mockApplicationContext);
 		repositoryFactoryBean.setGemfireMappingContext(new GemfireMappingContext());

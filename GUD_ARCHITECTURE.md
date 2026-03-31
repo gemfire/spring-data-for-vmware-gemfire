@@ -127,28 +127,32 @@ gud-driver-gemfire-10.3
 | `GudCacheProvider` | ✅ Complete | ServiceLoader-based factory discovery |
 | `GudClientRegionShortcut` | ✅ Complete | Region type shortcuts (PROXY, CACHING_PROXY, etc.) |
 
-### gud-driver-gemfire-10.3 Module
+### gud-driver-gemfire-* Modules (Unified Package)
+
+All driver modules share the same package (`org.springframework.data.gemfire.gud.driver.gemfire`)
+and class names. Only one driver module should be on the classpath at runtime.
+
 | Implementation | Status | Description |
 |----------------|--------|-------------|
-| `GemFire103ClientCache` | ✅ Complete | Wraps native ClientCache |
-| `GemFire103ClientCacheFactory` | ✅ Complete | Wraps native ClientCacheFactory |
-| `GemFire103Region` | ✅ Complete | Wraps native Region |
-| `GemFire103ClientRegionFactory` | ✅ Complete | Wraps native ClientRegionFactory |
-| `GemFire103Pool` | ✅ Complete | Wraps native Pool |
-| `GemFire103PoolFactory` | ✅ Complete | Wraps native PoolFactory |
-| `GemFire103PoolManager` | ✅ Complete | Wraps native PoolManager |
-| `GemFire103DiskStore` | ✅ Complete | Wraps native DiskStore |
-| `GemFire103DiskStoreFactory` | ✅ Complete | Wraps native DiskStoreFactory |
-| `GemFire103AttributesMutator` | ✅ Complete | Wraps native AttributesMutator |
-| `GemFire103DistributedSystem` | ✅ Complete | Wraps native DistributedSystem |
-| `GemFire103DistributedMember` | ✅ Complete | Wraps native DistributedMember |
-| `GemFire103JndiBinding` | ✅ Complete | Wraps native JNDIInvoker |
-| `GemFire103CacheListenerAdapter` | ✅ Complete | Adapts GudCacheListener to native |
-| `GemFire103CacheWriterAdapter` | ✅ Complete | Adapts GudCacheWriter to native |
-| `GemFire103CacheLoaderAdapter` | ✅ Complete | Adapts GudCacheLoader to native |
-| `GemFire103EntryEvent` | ✅ Complete | Wraps native EntryEvent |
-| `GemFire103RegionEvent` | ✅ Complete | Wraps native RegionEvent |
-| `GemFire103LoaderHelper` | ✅ Complete | Wraps native LoaderHelper |
+| `GemFireClientCache` | ✅ Complete | Wraps native ClientCache |
+| `GemFireClientCacheFactory` | ✅ Complete | Wraps native ClientCacheFactory |
+| `GemFireRegion` | ✅ Complete | Wraps native Region |
+| `GemFireClientRegionFactory` | ✅ Complete | Wraps native ClientRegionFactory |
+| `GemFirePool` | ✅ Complete | Wraps native Pool |
+| `GemFirePoolFactory` | ✅ Complete | Wraps native PoolFactory |
+| `GemFirePoolManager` | ✅ Complete | Wraps native PoolManager |
+| `GemFireDiskStore` | ✅ Complete | Wraps native DiskStore |
+| `GemFireDiskStoreFactory` | ✅ Complete | Wraps native DiskStoreFactory |
+| `GemFireAttributesMutator` | ✅ Complete | Wraps native AttributesMutator |
+| `GemFireDistributedSystem` | ✅ Complete | Wraps native DistributedSystem |
+| `GemFireDistributedMember` | ✅ Complete | Wraps native DistributedMember |
+| `GemFireJndiBinding` | ✅ Complete | Wraps native JNDIInvoker |
+| `GemFireCacheListenerAdapter` | ✅ Complete | Adapts GudCacheListener to native |
+| `GemFireCacheWriterAdapter` | ✅ Complete | Adapts GudCacheWriter to native |
+| `GemFireCacheLoaderAdapter` | ✅ Complete | Adapts GudCacheLoader to native |
+| `GemFireEntryEvent` | ✅ Complete | Wraps native EntryEvent |
+| `GemFireRegionEvent` | ✅ Complete | Wraps native RegionEvent |
+| `GemFireLoaderHelper` | ✅ Complete | Wraps native LoaderHelper |
 
 ### spring-data-vmware-gemfire Module
 | Component | Status | Description |
@@ -165,9 +169,9 @@ gud-driver-gemfire-10.3
 ### ServiceLoader Registrations (META-INF/services/)
 | Service Interface | Registered Implementation |
 |-------------------|---------------------------|
-| `GudClientCacheFactory` | `GemFire103ClientCacheFactory` |
-| `GudPoolManager` | `GemFire103PoolManager` |
-| `GudJndiBinding` | `GemFire103JndiBinding` |
+| `GudClientCacheFactory` | `GemFireClientCacheFactory` |
+| `GudPoolManager` | `GemFirePoolManager` |
+| `GudJndiBinding` | `GemFireJndiBinding` |
 
 ## What Remains To Be Done
 
@@ -345,14 +349,14 @@ spring-data-for-vmware-gemfire/
 │       └── (shared utilities)
 │
 ├── gud-driver-gemfire-10.3/
-│   ├── src/main/java/org/springframework/data/gemfire/gud/driver/gemfire103/
-│   │   ├── GemFire103ClientCache.java
-│   │   ├── GemFire103ClientCacheFactory.java
-│   │   ├── GemFire103Region.java
-│   │   ├── GemFire103Pool.java
-│   │   ├── GemFire103PoolManager.java
-│   │   ├── GemFire103CacheListenerAdapter.java
-│   │   ├── GemFire103CacheWriterAdapter.java
+│   ├── src/main/java/org/springframework/data/gemfire/gud/driver/gemfire/
+│   │   ├── GemFireClientCache.java
+│   │   ├── GemFireClientCacheFactory.java
+│   │   ├── GemFireRegion.java
+│   │   ├── GemFirePool.java
+│   │   ├── GemFirePoolManager.java
+│   │   ├── GemFireCacheListenerAdapter.java
+│   │   ├── GemFireCacheWriterAdapter.java
 │   │   └── ... (other implementations)
 │   └── src/main/resources/META-INF/services/
 │       ├── org.springframework.data.gemfire.gud.api.GudClientCacheFactory

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,12 +38,12 @@ import org.springframework.cache.Cache;
 public class GemfireCacheManagerUnitTests {
 
 	@Mock
-	private ClientCache mockGemFireCache;
+	private GudClientCache mockGemFireCache;
 
 	private GemfireCacheManager cacheManager;
 
 	@Mock
-	private Region<Object, Object> mockRegion;
+	private GudRegion<Object, Object> mockRegion;
 
 	@Before
 	public void setup() {
@@ -60,18 +60,18 @@ public class GemfireCacheManagerUnitTests {
 		return set;
 	}
 
-	private Region<?, ?> mockRegion(String name) {
+	private GudRegion<?, ?> mockRegion(String name) {
 
-		Region<?, ?> mockRegion = mock(Region.class, name);
+		GudRegion<?, ?> mockRegion = mock(GudRegion.class, name);
 
 		when(mockRegion.getName()).thenReturn(name);
 
 		return mockRegion;
 	}
 
-	private Region<?, ?> regionFor(Iterable<Region<?, ?>> regions, String name) {
+	private GudRegion<?, ?> regionFor(Iterable<GudRegion<?, ?>> regions, String name) {
 
-		for (Region<?, ?> region : regions) {
+		for (GudRegion<?, ?> region : regions) {
 			if (region.getName().equals(name)) {
 				return region;
 			}
@@ -146,7 +146,7 @@ public class GemfireCacheManagerUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("No Region for cache name [Example] was found");
+			assertThat(expected).hasMessage("No GudRegion for cache name [Example] was found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -163,7 +163,7 @@ public class GemfireCacheManagerUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("Region [Example] has been destroyed");
+			assertThat(expected).hasMessage("GudRegion [Example] has been destroyed");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -176,7 +176,7 @@ public class GemfireCacheManagerUnitTests {
 	@Test
 	public void loadCachesIsSuccessful() {
 
-		Set<Region<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"), mockRegion("three"));
+		Set<GudRegion<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"), mockRegion("three"));
 
 		cacheManager.setRegions(regions);
 
@@ -194,7 +194,7 @@ public class GemfireCacheManagerUnitTests {
 	@Test
 	public void resolveRegionsReturnsGivenRegions() {
 
-		Set<Region<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
+		Set<GudRegion<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
 
 		assertThat(cacheManager.resolveRegions(mockGemFireCache, regions, asSet("three", "four"))).isSameAs(regions);
 		assertThat(cacheManager.isDynamic()).isFalse();
@@ -207,17 +207,17 @@ public class GemfireCacheManagerUnitTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void resolveRegionsReturnsRegionsForCacheNamesOnly() {
 
-		Region mockRegionOne = mockRegion("one");
-		Region mockRegionTwo = mockRegion("two");
+		GudRegion mockRegionOne = mockRegion("one");
+		GudRegion mockRegionTwo = mockRegion("two");
 
 		when(mockGemFireCache.getRegion(eq("one"))).thenReturn(mockRegionOne);
 		when(mockGemFireCache.getRegion(eq("two"))).thenReturn(mockRegionTwo);
 
-		Set<Region<?, ?>> regions = cacheManager.resolveRegions(mockGemFireCache, null, asSet("one", "two"));
+		Set<GudRegion<?, ?>> regions = cacheManager.resolveRegions(mockGemFireCache, null, asSet("one", "two"));
 
 		assertThat(regions).isNotNull();
 		assertThat(regions.size()).isEqualTo(2);
-		assertThat(regions).containsAll(GemfireCacheManagerUnitTests.<Region<?, ?>>asSet(mockRegionOne, mockRegionTwo));
+		assertThat(regions).containsAll(GemfireCacheManagerUnitTests.<GudRegion<?, ?>>asSet(mockRegionOne, mockRegionTwo));
 		assertThat(cacheManager.isDynamic()).isFalse();
 
 		verify(mockGemFireCache, times(1)).getRegion(eq("one"));
@@ -228,7 +228,7 @@ public class GemfireCacheManagerUnitTests {
 	@Test
 	public void resolveRegionsReturnsGemFireCacheRootRegions() {
 
-		Set<Region<?, ?>> rootRegions = asSet(mockRegion("one"), mockRegion("two"));
+		Set<GudRegion<?, ?>> rootRegions = asSet(mockRegion("one"), mockRegion("two"));
 
 		when(mockGemFireCache.rootRegions()).thenReturn(rootRegions);
 
@@ -274,7 +274,7 @@ public class GemfireCacheManagerUnitTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getMissingCacheReturnsMissingCache() {
 
-		Region mockRegion = mockRegion("missing");
+		GudRegion mockRegion = mockRegion("missing");
 
 		when(mockGemFireCache.getRegion(eq("missing"))).thenReturn(mockRegion);
 
@@ -315,7 +315,7 @@ public class GemfireCacheManagerUnitTests {
 	@Test
 	public void setAndGetCacheNames() {
 
-		Set<Region<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
+		Set<GudRegion<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
 
 		cacheManager.setRegions(regions);
 		cacheManager.afterPropertiesSet();
@@ -326,7 +326,7 @@ public class GemfireCacheManagerUnitTests {
 	@Test
 	public void setAndGetRegions() {
 
-		Set<Region<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
+		Set<GudRegion<?, ?>> regions = asSet(mockRegion("one"), mockRegion("two"));
 
 		assertThat(cacheManager.getRegions()).isNull();
 

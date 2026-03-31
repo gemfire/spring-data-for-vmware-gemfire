@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -13,16 +13,16 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheWriter;
-import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.EvictionAttributesMutator;
-import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.junit.Test;
 
 /**
@@ -31,9 +31,9 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.AttributesMutator
- * @see org.apache.geode.cache.EvictionAttributesMutator
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudAttributesMutator
+ * @see org.apache.geode.cache.GudEvictionAttributesMutator
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.LookupRegionFactoryBean
  * @since 1.7.0
  */
@@ -44,17 +44,17 @@ public class LookupRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void testAfterPropertiesSet() throws Exception {
 
-		ClientCache mockCache = mock(ClientCache.class, "testAfterPropertiesSet.MockCache");
+		GudClientCache mockCache = mock(GudClientCache.class, "testAfterPropertiesSet.MockCache");
 
-		Region<Object, Object> mockRegion = mock(Region.class, "testAfterPropertiesSet.MockRegion");
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class, "testAfterPropertiesSet.MockRegion");
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class,
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class,
 			"testAfterPropertiesSet.MockRegionAttributes");
 
-		EvictionAttributesMutator mockEvictionAttributesMutator = mock(EvictionAttributesMutator.class,
-			"testAfterPropertiesSet.EvictionAttributesMutator");
+		GudEvictionAttributesMutator mockEvictionAttributesMutator = mock(GudEvictionAttributesMutator.class,
+			"testAfterPropertiesSet.GudEvictionAttributesMutator");
 
-		AttributesMutator<Object, Object> mockAttributesMutator = mock(AttributesMutator.class,
+		GudAttributesMutator<Object, Object> mockAttributesMutator = mock(GudAttributesMutator.class,
 			"testAfterPropertiesSet.MockAttributesMutator");
 
 		when(mockCache.getRegion(eq("Example"))).thenReturn(mockRegion);
@@ -65,25 +65,25 @@ public class LookupRegionFactoryBeanUnitTests {
 		when(mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
 		when(mockAttributesMutator.getEvictionAttributesMutator()).thenReturn(mockEvictionAttributesMutator);
 
-		CacheListener mockCacheListenerZero = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.0");
-		CacheListener mockCacheListenerOne = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.1");
-		CacheListener mockCacheListenerTwo = mock(CacheListener.class, "testAfterPropertiesSet.MockCacheListener.2");
+		GudCacheListener mockCacheListenerZero = mock(GudCacheListener.class, "testAfterPropertiesSet.MockCacheListener.0");
+		GudCacheListener mockCacheListenerOne = mock(GudCacheListener.class, "testAfterPropertiesSet.MockCacheListener.1");
+		GudCacheListener mockCacheListenerTwo = mock(GudCacheListener.class, "testAfterPropertiesSet.MockCacheListener.2");
 
-		CacheLoader mockCacheLoader = mock(CacheLoader.class, "testAfterPropertiesSet.MockCacheLoader");
+		GudCacheLoader mockCacheLoader = mock(GudCacheLoader.class, "testAfterPropertiesSet.MockCacheLoader");
 
-		CacheWriter mockCacheWriter = mock(CacheWriter.class, "testAfterPropertiesSet.MockCacheWriter");
+		GudCacheWriter mockCacheWriter = mock(GudCacheWriter.class, "testAfterPropertiesSet.MockCacheWriter");
 
-		CustomExpiry mockCustomExpiryTti = mock(CustomExpiry.class, "testAfterPropertiesSet.MockCustomExpiry.TTI");
-		CustomExpiry mockCustomExpiryTtl = mock(CustomExpiry.class, "testAfterPropertiesSet.MockCustomExpiry.TTL");
+		GudCustomExpiry mockCustomExpiryTti = mock(GudCustomExpiry.class, "testAfterPropertiesSet.MockCustomExpiry.TTI");
+		GudCustomExpiry mockCustomExpiryTtl = mock(GudCustomExpiry.class, "testAfterPropertiesSet.MockCustomExpiry.TTL");
 
-		ExpirationAttributes mockExpirationAttributesEntryTti = mock(ExpirationAttributes.class,
+		GudExpirationAttributes mockExpirationAttributesEntryTti = mock(GudExpirationAttributes.class,
 			"testAfterPropertiesSet.MockExpirationAttributes.Entry.TTI");
-		ExpirationAttributes mockExpirationAttributesEntryTtl = mock(ExpirationAttributes.class,
+		GudExpirationAttributes mockExpirationAttributesEntryTtl = mock(GudExpirationAttributes.class,
 			"testAfterPropertiesSet.MockExpirationAttributes.Entry.TTL");
-		ExpirationAttributes mockExpirationAttributesRegionTti = mock(ExpirationAttributes.class,
-			"testAfterPropertiesSet.MockExpirationAttributes.Region.TTI");
-		ExpirationAttributes mockExpirationAttributesRegionTtl = mock(ExpirationAttributes.class,
-			"testAfterPropertiesSet.MockExpirationAttributes.Region.TTL");
+		GudExpirationAttributes mockExpirationAttributesRegionTti = mock(GudExpirationAttributes.class,
+			"testAfterPropertiesSet.MockExpirationAttributes.GudRegion.TTI");
+		GudExpirationAttributes mockExpirationAttributesRegionTtl = mock(GudExpirationAttributes.class,
+			"testAfterPropertiesSet.MockExpirationAttributes.GudRegion.TTL");
 
 		LookupRegionFactoryBean factoryBean = new LookupRegionFactoryBean();
 
@@ -101,7 +101,7 @@ public class LookupRegionFactoryBeanUnitTests {
 		factoryBean.setRegionTimeToLive(mockExpirationAttributesRegionTtl);
 		factoryBean.setStatisticsEnabled(true);
 
-		factoryBean.setCacheListeners(new CacheListener[] {
+		factoryBean.setCacheListeners(new GudCacheListener[] {
 			mockCacheListenerZero, mockCacheListenerOne, mockCacheListenerTwo
 		});
 
@@ -126,17 +126,17 @@ public class LookupRegionFactoryBeanUnitTests {
 	@SuppressWarnings("unchecked")
 	public void testAfterPropertiesSetWhenRegionStatisticsDisabledAndExpirationSpecified() throws Exception {
 
-		ClientCache mockCache = mock(ClientCache.class);
+		GudClientCache mockCache = mock(GudClientCache.class);
 
-		Region<Object, Object> mockRegion = mock(Region.class);
+		GudRegion<Object, Object> mockRegion = mock(GudRegion.class);
 
-		RegionAttributes<Object, Object> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<Object, Object> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
+		GudAttributesMutator mockAttributesMutator = mock(GudAttributesMutator.class);
 
-		EvictionAttributesMutator mockEvictionAttributesMutator = mock(EvictionAttributesMutator.class);
+		GudEvictionAttributesMutator mockEvictionAttributesMutator = mock(GudEvictionAttributesMutator.class);
 
-		ExpirationAttributes mockExpirationAttributesEntryTtl = mock(ExpirationAttributes.class);
+		GudExpirationAttributes mockExpirationAttributesEntryTtl = mock(GudExpirationAttributes.class);
 
 		when(mockCache.getRegion(eq("Example"))).thenReturn(mockRegion);
 		when(mockRegion.getFullPath()).thenReturn("/Example");
@@ -160,11 +160,11 @@ public class LookupRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalStateException expected) {
 			assertThat(expected.getMessage()).isEqualTo(
-				"Statistics for Region [/Example] must be enabled to change Entry & Region TTL/TTI Expiration settings");
+				"Statistics for GudRegion [/Example] must be enabled to change Entry & GudRegion TTL/TTI Expiration settings");
 			throw expected;
 		}
 		finally {
-			verify(mockAttributesMutator, never()).setEntryTimeToLive(any(ExpirationAttributes.class));
+			verify(mockAttributesMutator, never()).setEntryTimeToLive(any(GudExpirationAttributes.class));
 		}
 	}
 

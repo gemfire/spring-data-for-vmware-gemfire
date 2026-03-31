@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.support;
@@ -26,9 +26,9 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionEvent;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionEvent;
 
 /**
  * Unit Tests for {@link AbstractCachingRegionResolver}.
@@ -38,7 +38,7 @@ import org.apache.geode.cache.RegionEvent;
  * @see org.mockito.Mockito
  * @see edu.umd.cs.mtc.MultithreadedTestCase
  * @see edu.umd.cs.mtc.TestFramework
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.support.AbstractCachingRegionResolver
  * @since 2.3.0
  */
@@ -48,9 +48,9 @@ public class AbstractCachingRegionResolverUnitTests {
 	@Test
 	public void resolveCallsDoResolveAndCachesResult() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
+		GudAttributesMutator mockAttributesMutator = mock(GudAttributesMutator.class);
 
 		when(mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
 		when(mockAttributesMutator.getRegion()).thenReturn(mockRegion);
@@ -104,11 +104,11 @@ public class AbstractCachingRegionResolverUnitTests {
 	@Test
 	public void afterRegionDestroyClearsCacheEntryForCachedRegionWithName() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		when(mockRegion.getName()).thenReturn("MockRegion");
 
-		RegionEvent mockRegionEvent = mock(RegionEvent.class);
+		GudRegionEvent mockRegionEvent = mock(GudRegionEvent.class);
 
 		when(mockRegionEvent.getRegion()).thenReturn(mockRegion);
 
@@ -126,20 +126,20 @@ public class AbstractCachingRegionResolverUnitTests {
 	@Test
 	public void afterRegionDestroyWillNotClearCacheEntriesForNonCachedRegion() {
 
-		Region mockCachedRegion = mock(Region.class);
-		Region mockNonCachedRegion = mock(Region.class);
+		GudRegion mockCachedRegion = mock(GudRegion.class);
+		GudRegion mockNonCachedRegion = mock(GudRegion.class);
 
 		when(mockCachedRegion.getName()).thenReturn("CachedRegion");
 		when(mockNonCachedRegion.getName()).thenReturn("NonCachedRegion");
 
-		RegionEvent mockRegionEvent = mock(RegionEvent.class);
+		GudRegionEvent mockRegionEvent = mock(GudRegionEvent.class);
 
 		when(mockRegionEvent.getRegion()).thenReturn(mockNonCachedRegion);
 
 		AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
 
-		doCallRealMethod().when(regionResolver).afterRegionDestroy(any(RegionEvent.class));
-		doCallRealMethod().when(regionResolver).cache(any(Region.class));
+		doCallRealMethod().when(regionResolver).afterRegionDestroy(any(GudRegionEvent.class));
+		doCallRealMethod().when(regionResolver).cache(any(GudRegion.class));
 		doCallRealMethod().when(regionResolver).resolve(anyString());
 
 		regionResolver.cache(mockCachedRegion);
@@ -171,7 +171,7 @@ public class AbstractCachingRegionResolverUnitTests {
 	@Test
 	public void afterRegionDestroyWithNullRegionIsNullSafe() {
 
-		RegionEvent mockRegionEvent = mock(RegionEvent.class);
+		GudRegionEvent mockRegionEvent = mock(GudRegionEvent.class);
 
 		AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
 
@@ -183,11 +183,11 @@ public class AbstractCachingRegionResolverUnitTests {
 
 	public void testAfterRegionDestroyWithNamelessRegionIsNullSafe(String regionName) {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		when(mockRegion.getName()).thenReturn(regionName);
 
-		RegionEvent mockRegionEvent = mock(RegionEvent.class);
+		GudRegionEvent mockRegionEvent = mock(GudRegionEvent.class);
 
 		when(mockRegionEvent.getRegion()).thenReturn(mockRegion);
 
@@ -224,12 +224,12 @@ public class AbstractCachingRegionResolverUnitTests {
 
 		private AbstractCachingRegionResolver regionResolver;
 
-		private AtomicReference<Region> regionResolvedFromThreadOne = new AtomicReference<>(null);
-		private AtomicReference<Region> regionResolvedFromThreadTwo = new AtomicReference<>(null);
+		private AtomicReference<GudRegion> regionResolvedFromThreadOne = new AtomicReference<>(null);
+		private AtomicReference<GudRegion> regionResolvedFromThreadTwo = new AtomicReference<>(null);
 
-		private AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
+		private GudAttributesMutator mockAttributesMutator = mock(GudAttributesMutator.class);
 
-		private Region mockRegion = mock(Region.class);
+		private GudRegion mockRegion = mock(GudRegion.class);
 
 		@Override
 		public void initialize() {
@@ -254,7 +254,7 @@ public class AbstractCachingRegionResolverUnitTests {
 
 		public void thread1() {
 
-			Thread.currentThread().setName("Region Resolver Thread 1");
+			Thread.currentThread().setName("GudRegion Resolver Thread 1");
 
 			assertTick(0);
 
@@ -263,7 +263,7 @@ public class AbstractCachingRegionResolverUnitTests {
 
 		public void thread2() {
 
-			Thread.currentThread().setName("Region Resolver Thread 2");
+			Thread.currentThread().setName("GudRegion Resolver Thread 2");
 
 			assertTick(0);
 			waitForTick(1);

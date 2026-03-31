@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -14,29 +14,29 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.geode.security.AuthenticationFailedException;
-import org.apache.geode.security.SecurityManager;
+import org.springframework.data.gemfire.gud.api.GudAuthenticationFailedException;
+import org.springframework.data.gemfire.gud.api.GudSecurityManager;
 
 import org.springframework.util.StringUtils;
 
 /**
- * The {@link TestSecurityManager} class is an Apache Geode {@link org.apache.geode.security.SecurityManager}
+ * The {@link TestSecurityManager} class is an Apache Geode {@link org.apache.geode.security.GudSecurityManager}
  * implementation used for testing purposes.
  *
  * @author John Blum
  * @see java.security.Principal
  * @see java.util.Properties
  * @see javax.security.auth.Subject
- * @see org.apache.geode.security.SecurityManager
+ * @see org.apache.geode.security.GudSecurityManager
  * @since 2.0.0
  */
-public final class TestSecurityManager implements org.apache.geode.security.SecurityManager {
+public final class TestSecurityManager implements org.apache.geode.security.GudSecurityManager {
 
 	public static final String SECURITY_USERNAME = "testUser";
 	public static final String SECURITY_PASSWORD = "t35t9@55w0rd!";
 
-	public static final String SECURITY_USERNAME_PROPERTY = SecurityManager.USER_NAME;
-	public static final String SECURITY_PASSWORD_PROPERTY = SecurityManager.PASSWORD;
+	public static final String SECURITY_USERNAME_PROPERTY = GudSecurityManager.USER_NAME;
+	public static final String SECURITY_PASSWORD_PROPERTY = GudSecurityManager.PASSWORD;
 
 	private final ConcurrentMap<String, String> authorizedUsers;
 
@@ -50,13 +50,13 @@ public final class TestSecurityManager implements org.apache.geode.security.Secu
 	}
 
 	@Override
-	public Object authenticate(Properties credentials) throws AuthenticationFailedException {
+	public Object authenticate(Properties credentials) throws GudAuthenticationFailedException {
 
 		String username = credentials.getProperty(SECURITY_USERNAME_PROPERTY);
 		String password = credentials.getProperty(SECURITY_PASSWORD_PROPERTY);
 
 		return Optional.ofNullable(identify(username, password)).orElseThrow(() ->
-			new AuthenticationFailedException(String.format("User [%s] is not authorized", username)));
+			new GudAuthenticationFailedException(String.format("User [%s] is not authorized", username)));
 	}
 
 	private Principal identify(String username, String password) {

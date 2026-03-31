@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -9,88 +9,88 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 
 /**
  * Unit tests for {@link ClientRegionShortcutToDataPolicyConverter}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.DataPolicy
- * @see org.apache.geode.cache.client.ClientRegionShortcut
+ * @see org.apache.geode.cache.GudDataPolicy
+ * @see org.apache.geode.cache.client.GudClientRegionShortcut
  * @see org.springframework.data.gemfire.client.ClientRegionShortcutToDataPolicyConverter
  * @since 2.0.2
  */
 public class ClientRegionShortcutToDataPolicyConverterUnitTests {
 
-	protected void assertDataPolicy(DataPolicy actual, DataPolicy expected) {
+	protected void assertDataPolicy(GudDataPolicy actual, GudDataPolicy expected) {
 		assertThat(actual).isEqualTo(expected);
 	}
 
-	protected void assertDataPolicyDefault(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.DEFAULT);
+	protected void assertDataPolicyDefault(GudDataPolicy actual) {
+		assertDataPolicy(actual, GudDataPolicy.DEFAULT);
 	}
 
-	protected void assertDataPolicyEmpty(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.EMPTY);
+	protected void assertDataPolicyEmpty(GudDataPolicy actual) {
+		assertDataPolicy(actual, GudDataPolicy.EMPTY);
 	}
 
-	protected void assertDataPolicyNormal(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.NORMAL);
+	protected void assertDataPolicyNormal(GudDataPolicy actual) {
+		assertDataPolicy(actual, GudDataPolicy.NORMAL);
 	}
 
-	protected void assertDataPolicyPersistentReplicate(DataPolicy actual) {
-		assertDataPolicy(actual, DataPolicy.PERSISTENT_REPLICATE);
+	protected void assertDataPolicyPersistentReplicate(GudDataPolicy actual) {
+		assertDataPolicy(actual, GudDataPolicy.PERSISTENT_REPLICATE);
 	}
 
-	protected DataPolicy convert(ClientRegionShortcut clientRegionShortcut) {
+	protected GudDataPolicy convert(GudClientRegionShortcut clientRegionShortcut) {
 		return ClientRegionShortcutToDataPolicyConverter.INSTANCE.convert(clientRegionShortcut);
 	}
 
 	@Test
 	public void clientRegionShortcutCachingProxyIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.CACHING_PROXY));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.CACHING_PROXY));
 	}
 
 	@Test
 	public void clientRegionShortcutCachingProxyHeapLruIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.CACHING_PROXY_HEAP_LRU));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.CACHING_PROXY_HEAP_LRU));
 	}
 
 	@Test
 	public void clientRegionShortcutCachingProxyOverflowIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.CACHING_PROXY_OVERFLOW));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.CACHING_PROXY_OVERFLOW));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.LOCAL));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.LOCAL));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalHeapLruIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.LOCAL_HEAP_LRU));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.LOCAL_HEAP_LRU));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalOverflowIsDataPolicyNormal() {
-		assertDataPolicyNormal(convert(ClientRegionShortcut.LOCAL_OVERFLOW));
+		assertDataPolicyNormal(convert(GudClientRegionShortcut.LOCAL_OVERFLOW));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalPersistentIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(ClientRegionShortcut.LOCAL_PERSISTENT));
+		assertDataPolicyPersistentReplicate(convert(GudClientRegionShortcut.LOCAL_PERSISTENT));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalPersistentOverflowIsDataPolicyPersistentReplicate() {
-		assertDataPolicyPersistentReplicate(convert(ClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW));
+		assertDataPolicyPersistentReplicate(convert(GudClientRegionShortcut.LOCAL_PERSISTENT_OVERFLOW));
 	}
 
 	@Test
 	public void clientRegionShortcutLocalProxyIsDataPolicyEmpty() {
-		assertDataPolicyEmpty(convert(ClientRegionShortcut.PROXY));
+		assertDataPolicyEmpty(convert(GudClientRegionShortcut.PROXY));
 	}
 
 	@Test

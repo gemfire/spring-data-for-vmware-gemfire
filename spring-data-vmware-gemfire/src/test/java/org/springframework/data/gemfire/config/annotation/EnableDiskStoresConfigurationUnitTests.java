@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import org.apache.geode.cache.DiskStore;
+import org.springframework.data.gemfire.gud.api.GudDiskStore;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
@@ -20,7 +20,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.DiskStore
+ * @see org.apache.geode.cache.GudDiskStore
  * @see org.springframework.data.gemfire.config.annotation.EnableDiskStore
  * @see org.springframework.data.gemfire.config.annotation.EnableDiskStores
  * @see org.springframework.data.gemfire.config.annotation.DiskStoreConfiguration
@@ -34,7 +34,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 	private static final AtomicInteger MOCK_ID = new AtomicInteger(0);
 
-	private void assertDiskStore(DiskStore diskStore, String name, boolean allowForceCompaction, boolean autoCompact,
+	private void assertDiskStore(GudDiskStore diskStore, String name, boolean allowForceCompaction, boolean autoCompact,
 			int compactionThreshold, float diskUsageCriticalPercentage, float diskUsageWarningPercentage,
 			long maxOplogSize, int queueSize, long timeInterval, int writeBufferSize, int segments) {
 
@@ -52,7 +52,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 		assertThat(diskStore.getSegments()).isEqualTo(segments);
 	}
 
-	private void assertDiskStoreDirectoryLocations(DiskStore diskStore, File... diskDirectories) {
+	private void assertDiskStoreDirectoryLocations(GudDiskStore diskStore, File... diskDirectories) {
 
 		assertThat(diskStore).isNotNull();
 
@@ -68,7 +68,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 		}
 	}
 
-	private void assertDiskStoreDirectorySizes(DiskStore diskStore, int... diskDirectorySizes) {
+	private void assertDiskStoreDirectorySizes(GudDiskStore diskStore, int... diskDirectorySizes) {
 
 		assertThat(diskStore).isNotNull();
 
@@ -93,7 +93,7 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(SingleDiskStoreConfiguration.class);
 
-		DiskStore testDiskStore = getBean("TestDiskStore", DiskStore.class);
+		GudDiskStore testDiskStore = getBean("TestDiskStore", GudDiskStore.class);
 
 		assertDiskStore(testDiskStore, "TestDiskStore", true, true, 75, 95.0f, 75.0f, 8192L, 100, 2000L, 65536, 2);
 		assertDiskStoreDirectoryLocations(testDiskStore, newFile("/absolute/path/to/gemfire/disk/directory"),
@@ -106,11 +106,11 @@ public class EnableDiskStoresConfigurationUnitTests extends SpringApplicationCon
 
 		newApplicationContext(MultipleDiskStoresConfiguration.class);
 
-		DiskStore testDiskStoreOne = getBean("TestDiskStoreOne", DiskStore.class);
+		GudDiskStore testDiskStoreOne = getBean("TestDiskStoreOne", GudDiskStore.class);
 
 		assertDiskStore(testDiskStoreOne, "TestDiskStoreOne", false, true, 75, 99.0f, 90.0f, 2048L, 100, 1000L, 32768, 0);
 
-		DiskStore testDiskStoreTwo = getBean("TestDiskStoreTwo", DiskStore.class);
+		GudDiskStore testDiskStoreTwo = getBean("TestDiskStoreTwo", GudDiskStore.class);
 
 		assertDiskStore(testDiskStoreTwo, "TestDiskStoreTwo", true, true, 85, 99.0f, 90.0f, 4096L, 0, 1000L, 32768, 0);
 	}

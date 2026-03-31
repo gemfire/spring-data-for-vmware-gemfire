@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -22,10 +22,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.SocketFactory;
-import org.apache.geode.cache.query.QueryService;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
 
 import org.springframework.data.gemfire.GemfireUtils;
 
@@ -38,10 +38,10 @@ import org.springframework.data.gemfire.GemfireUtils;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.Pool
- * @see org.apache.geode.cache.client.PoolFactory
- * @see org.apache.geode.cache.client.SocketFactory
- * @see org.apache.geode.cache.query.QueryService
+ * @see org.apache.geode.cache.client.GudPool
+ * @see org.apache.geode.cache.client.GudPoolFactory
+ * @see org.apache.geode.cache.client.GudSocketFactory
+ * @see org.apache.geode.cache.query.GudQueryService
  * @see org.springframework.data.gemfire.client.support.DelegatingPoolAdapter
  * @since 1.8.0
  */
@@ -49,13 +49,13 @@ import org.springframework.data.gemfire.GemfireUtils;
 public class DelegatingPoolAdapterTest {
 
 	@Mock
-	private Pool mockPool;
+	private GudPool mockPool;
 
 	@Mock
-	private QueryService mockQueryService;
+	private GudQueryService mockQueryService;
 
 	@Mock
-	private SocketFactory mockSocketFactory;
+	private GudSocketFactory mockSocketFactory;
 
 	private InetSocketAddress newSocketAddress(String host, int port) {
 		return new InetSocketAddress(host, port);
@@ -102,7 +102,7 @@ public class DelegatingPoolAdapterTest {
 	@Test
 	public void mockPoolDelegateUsesMockPool() {
 
-		Pool pool = DelegatingPoolAdapter.from(this.mockPool);
+		GudPool pool = DelegatingPoolAdapter.from(this.mockPool);
 
 		assertThat(pool.isDestroyed()).isFalse();
 		assertThat(pool.getFreeConnectionTimeout()).isEqualTo(10000);
@@ -177,30 +177,30 @@ public class DelegatingPoolAdapterTest {
 	@Test
 	public void nullDelegateUsesDefaultFactorySettings() {
 
-		Pool pool = DelegatingPoolAdapter.from(null);
+		GudPool pool = DelegatingPoolAdapter.from(null);
 
-		assertThat(pool.getFreeConnectionTimeout()).isEqualTo(PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT);
-		assertThat(pool.getIdleTimeout()).isEqualTo(PoolFactory.DEFAULT_IDLE_TIMEOUT);
-		assertThat(pool.getLoadConditioningInterval()).isEqualTo(PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL);
-		assertThat(pool.getMaxConnections()).isEqualTo(PoolFactory.DEFAULT_MAX_CONNECTIONS);
-		assertThat(pool.getMinConnections()).isEqualTo(PoolFactory.DEFAULT_MIN_CONNECTIONS);
-		assertThat(pool.getMultiuserAuthentication()).isEqualTo(PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION);
+		assertThat(pool.getFreeConnectionTimeout()).isEqualTo(GudPoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT);
+		assertThat(pool.getIdleTimeout()).isEqualTo(GudPoolFactory.DEFAULT_IDLE_TIMEOUT);
+		assertThat(pool.getLoadConditioningInterval()).isEqualTo(GudPoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL);
+		assertThat(pool.getMaxConnections()).isEqualTo(GudPoolFactory.DEFAULT_MAX_CONNECTIONS);
+		assertThat(pool.getMinConnections()).isEqualTo(GudPoolFactory.DEFAULT_MIN_CONNECTIONS);
+		assertThat(pool.getMultiuserAuthentication()).isEqualTo(GudPoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION);
 		assertThat(pool.getOnlineLocators()).isEqualTo(Collections.EMPTY_LIST);
-		assertThat(pool.getPingInterval()).isEqualTo(PoolFactory.DEFAULT_PING_INTERVAL);
-		assertThat(pool.getPRSingleHopEnabled()).isEqualTo(PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED);
-		assertThat(pool.getReadTimeout()).isEqualTo(PoolFactory.DEFAULT_READ_TIMEOUT);
-		assertThat(pool.getRetryAttempts()).isEqualTo(PoolFactory.DEFAULT_RETRY_ATTEMPTS);
-		assertThat(pool.getServerConnectionTimeout()).isEqualTo(PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
-		assertThat(pool.getServerGroup()).isEqualTo(PoolFactory.DEFAULT_SERVER_GROUP);
-		assertThat(pool.getSocketBufferSize()).isEqualTo(PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
-		assertThat(pool.getSocketConnectTimeout()).isEqualTo(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
-		assertThat(pool.getSocketFactory()).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
-		assertThat(pool.getStatisticInterval()).isEqualTo(PoolFactory.DEFAULT_STATISTIC_INTERVAL);
-		assertThat(pool.getSubscriptionAckInterval()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL);
-		assertThat(pool.getSubscriptionEnabled()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED);
-		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
-		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
-		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(PoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER);
+		assertThat(pool.getPingInterval()).isEqualTo(GudPoolFactory.DEFAULT_PING_INTERVAL);
+		assertThat(pool.getPRSingleHopEnabled()).isEqualTo(GudPoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED);
+		assertThat(pool.getReadTimeout()).isEqualTo(GudPoolFactory.DEFAULT_READ_TIMEOUT);
+		assertThat(pool.getRetryAttempts()).isEqualTo(GudPoolFactory.DEFAULT_RETRY_ATTEMPTS);
+		assertThat(pool.getServerConnectionTimeout()).isEqualTo(GudPoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
+		assertThat(pool.getServerGroup()).isEqualTo(GudPoolFactory.DEFAULT_SERVER_GROUP);
+		assertThat(pool.getSocketBufferSize()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
+		assertThat(pool.getSocketConnectTimeout()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
+		assertThat(pool.getSocketFactory()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(pool.getStatisticInterval()).isEqualTo(GudPoolFactory.DEFAULT_STATISTIC_INTERVAL);
+		assertThat(pool.getSubscriptionAckInterval()).isEqualTo(GudPoolFactory.DEFAULT_SUBSCRIPTION_ACK_INTERVAL);
+		assertThat(pool.getSubscriptionEnabled()).isEqualTo(GudPoolFactory.DEFAULT_SUBSCRIPTION_ENABLED);
+		assertThat(pool.getSubscriptionMessageTrackingTimeout()).isEqualTo(GudPoolFactory.DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT);
+		assertThat(pool.getSubscriptionRedundancy()).isEqualTo(GudPoolFactory.DEFAULT_SUBSCRIPTION_REDUNDANCY);
+		assertThat(pool.getSubscriptionTimeoutMultiplier()).isEqualTo(GudPoolFactory.DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER);
 
 		verifyNoInteractions(this.mockPool);
 	}
@@ -243,7 +243,7 @@ public class DelegatingPoolAdapterTest {
 
 	@Test
 	public void socketFactoryWithNullIsEqualToDefaultSocketFactory() {
-		assertThat(DelegatingPoolAdapter.from(null).getSocketFactory()).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		assertThat(DelegatingPoolAdapter.from(null).getSocketFactory()).isEqualTo(GudPoolFactory.DEFAULT_SOCKET_FACTORY);
 	}
 
 	@Test

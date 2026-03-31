@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.listener.adapter;
@@ -19,9 +19,9 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.geode.cache.Operation;
-import org.apache.geode.cache.query.CqEvent;
-import org.apache.geode.cache.query.CqQuery;
+import org.springframework.data.gemfire.gud.api.GudOperation;
+import org.springframework.data.gemfire.gud.api.GudCqEvent;
+import org.springframework.data.gemfire.gud.api.GudCqQuery;
 
 import org.springframework.data.gemfire.listener.ContinuousQueryListener;
 
@@ -41,11 +41,11 @@ public class QueryListenerAdapterUnitTests {
 	@SuppressWarnings("unused")
 	interface Delegate {
 
-		void handleEvent(CqEvent event);
+		void handleEvent(GudCqEvent event);
 
-		void handleQuery(CqQuery query);
+		void handleQuery(GudCqQuery query);
 
-		void handleOperation(Operation op);
+		void handleOperation(GudOperation op);
 
 		void handleArray(byte[] ba);
 
@@ -55,9 +55,9 @@ public class QueryListenerAdapterUnitTests {
 
 		void handleError(Throwable th);
 
-		void handleOperations(Operation base, Operation query);
+		void handleOperations(GudOperation base, GudOperation query);
 
-		void handleAll(CqEvent event, CqQuery query, byte[] data, Object key, Operation op, Throwable error, Operation queryOp, Object value);
+		void handleAll(GudCqEvent event, GudCqQuery query, byte[] data, Object key, GudOperation op, Throwable error, GudOperation queryOp, Object value);
 
 		void handleInvalid(Object o1, Object o2, Object o3);
 
@@ -68,26 +68,26 @@ public class QueryListenerAdapterUnitTests {
 		int count;
 
 		@Override
-		public void onEvent(CqEvent event) {
+		public void onEvent(GudCqEvent event) {
 			count++;
 		}
 	}
 
-	static CqEvent event() {
+	static GudCqEvent event() {
 
-		return new CqEvent() {
+		return new GudCqEvent() {
 
 			final byte[] deltaValue = new byte[0];
-			final CqQuery cq = mock(CqQuery.class);
+			final GudCqQuery cq = mock(GudCqQuery.class);
 			final Exception exception = new Exception();
 			final Object key = new Object();
 			final Object value = new Object();
 
-			public Operation getBaseOperation() {
-				return Operation.CACHE_CLOSE;
+			public GudOperation getBaseOperation() {
+				return GudOperation.CACHE_CLOSE;
 			}
 
-			public CqQuery getCq() {
+			public GudCqQuery getCq() {
 				return cq;
 			}
 
@@ -103,8 +103,8 @@ public class QueryListenerAdapterUnitTests {
 				return value;
 			}
 
-			public Operation getQueryOperation() {
-				return Operation.CACHE_CREATE;
+			public GudOperation getQueryOperation() {
+				return GudOperation.CACHE_CREATE;
 			}
 
 			public Throwable getThrowable() {
@@ -136,7 +136,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockCqListener);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.onEvent(event);
 
@@ -150,7 +150,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleAll");
 		cqListenerAdapter.onEvent(event);
@@ -168,7 +168,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleArray");
 		cqListenerAdapter.onEvent(event);
@@ -183,7 +183,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.onEvent(event);
 
@@ -199,7 +199,7 @@ public class QueryListenerAdapterUnitTests {
 
 		cqListenerAdapter.setDefaultListenerMethod("handleQuery");
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.onEvent(event);
 
@@ -213,7 +213,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleError");
 		cqListenerAdapter.onEvent(event);
@@ -228,7 +228,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleKey");
 		cqListenerAdapter.onEvent(event);
@@ -243,7 +243,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleKeyValue");
 		cqListenerAdapter.onEvent(event);
@@ -259,7 +259,7 @@ public class QueryListenerAdapterUnitTests {
 
 		ContinuousQueryListenerAdapter cqListenerAdapter = new ContinuousQueryListenerAdapter(mockDelegate);
 
-		CqEvent event = event();
+		GudCqEvent event = event();
 
 		cqListenerAdapter.setDefaultListenerMethod("handleOperations");
 		cqListenerAdapter.onEvent(event);

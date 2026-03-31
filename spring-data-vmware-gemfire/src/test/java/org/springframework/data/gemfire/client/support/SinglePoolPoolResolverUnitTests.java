@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import org.springframework.data.gemfire.client.PoolResolver;
 
@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.client.GudPool
  * @see org.springframework.data.gemfire.client.support.SinglePoolPoolResolver
  * @since 2.3.0
  */
@@ -36,7 +36,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
 public class SinglePoolPoolResolverUnitTests {
 
 	@Mock
-	private Pool mockPool;
+	private GudPool mockPool;
 
 	@Test
 	public void constructSinglePoolPoolResolver() {
@@ -56,7 +56,7 @@ public class SinglePoolPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Pool must not be null");
+			assertThat(expected).hasMessage("GudPool must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -66,7 +66,7 @@ public class SinglePoolPoolResolverUnitTests {
 	@Test
 	public void fromClientCacheWithDefaultPool() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		when(mockClientCache.getDefaultPool()).thenReturn(this.mockPool);
 
@@ -81,14 +81,14 @@ public class SinglePoolPoolResolverUnitTests {
 	@Test(expected = IllegalArgumentException.class)
 	public void fromClientCacheWithNoDefaultPoolThrowsIllegalArgumentException() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
 		try {
 			SinglePoolPoolResolver.from(mockClientCache);
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("Pool must not be null");
+			assertThat(expected).hasMessage("GudPool must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -107,7 +107,7 @@ public class SinglePoolPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("ClientCache must not be null");
+			assertThat(expected).hasMessage("GudClientCache must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

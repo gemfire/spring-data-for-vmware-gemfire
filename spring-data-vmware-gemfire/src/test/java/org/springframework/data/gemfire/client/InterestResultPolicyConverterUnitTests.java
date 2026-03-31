@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.InterestResultPolicy;
+import org.springframework.data.gemfire.gud.api.GudInterestResultPolicy;
 
 /**
  * Unit Tests for {@link InterestResultPolicyConverter}.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.InterestResultPolicy
+ * @see org.apache.geode.cache.GudInterestResultPolicy
  * @see org.springframework.data.gemfire.client.InterestResultPolicyConverter
  * @see org.springframework.data.gemfire.client.InterestResultPolicyType
  * @since 1.6.0
@@ -33,9 +33,9 @@ public class InterestResultPolicyConverterUnitTests {
 	@Test
 	public void convert() {
 
-		assertThat(converter.convert("NONE")).isEqualTo(InterestResultPolicy.NONE);
-		assertThat(converter.convert("kEyS_ValUes")).isEqualTo(InterestResultPolicy.KEYS_VALUES);
-		assertThat(converter.convert("nONe")).isEqualTo(InterestResultPolicy.NONE);
+		assertThat(converter.convert("NONE")).isEqualTo(GudInterestResultPolicy.NONE);
+		assertThat(converter.convert("kEyS_ValUes")).isEqualTo(GudInterestResultPolicy.KEYS_VALUES);
+		assertThat(converter.convert("nONe")).isEqualTo(GudInterestResultPolicy.NONE);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -46,7 +46,7 @@ public class InterestResultPolicyConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[illegal_value] is not a valid InterestResultPolicy");
+			assertThat(expected).hasMessage("[illegal_value] is not a valid GudInterestResultPolicy");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -60,11 +60,11 @@ public class InterestResultPolicyConverterUnitTests {
 
 		converter.setAsText("NOne");
 
-		assertThat(converter.getValue()).isEqualTo(InterestResultPolicy.NONE);
+		assertThat(converter.getValue()).isEqualTo(GudInterestResultPolicy.NONE);
 
 		converter.setAsText("KeYs");
 
-		assertThat(converter.getValue()).isEqualTo(InterestResultPolicy.KEYS);
+		assertThat(converter.getValue()).isEqualTo(GudInterestResultPolicy.KEYS);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -75,7 +75,7 @@ public class InterestResultPolicyConverterUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[illegal_value] is not a valid InterestResultPolicy");
+			assertThat(expected).hasMessage("[illegal_value] is not a valid GudInterestResultPolicy");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

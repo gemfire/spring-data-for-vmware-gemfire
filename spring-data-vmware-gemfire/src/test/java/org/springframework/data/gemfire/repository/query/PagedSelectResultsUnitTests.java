@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.query.SelectResults;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.domain.Pageable;
 
@@ -36,7 +36,7 @@ import org.springframework.data.domain.Pageable;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.query.SelectResults
+ * @see org.apache.geode.cache.query.GudSelectResults
  * @see org.springframework.data.domain.Pageable
  * @see org.springframework.data.gemfire.repository.query.PagedSelectResults
  * @since 2.4.0
@@ -49,7 +49,7 @@ public class PagedSelectResultsUnitTests {
 	private Pageable mockPageable;
 
 	@Mock
-	private SelectResults<Object> mockSelectResults;
+	private GudSelectResults<Object> mockSelectResults;
 
 	@Test
 	public void constructPagedSelectResultsIsCorrect() {
@@ -89,7 +89,7 @@ public class PagedSelectResultsUnitTests {
 		}
 		catch(IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("SelectResults must not be null");
+			assertThat(expected).hasMessage("GudSelectResults must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

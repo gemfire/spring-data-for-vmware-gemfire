@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
@@ -21,10 +21,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.Pool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 /**
  * Unit Tests for {@link PoolResolver}.
@@ -34,8 +34,8 @@ import org.apache.geode.cache.client.Pool;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.Pool
+ * @see org.apache.geode.cache.GudRegion
+ * @see org.apache.geode.cache.client.GudPool
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -47,16 +47,16 @@ public class PoolResolverUnitTests {
 
 	@Before
 	public void setup() {
-		when(this.testPoolResolver.resolve(any(Region.class))).thenCallRealMethod();
-		when(this.testPoolResolver.resolve(any(ClientCache.class))).thenCallRealMethod();
+		when(this.testPoolResolver.resolve(any(GudRegion.class))).thenCallRealMethod();
+		when(this.testPoolResolver.resolve(any(GudClientCache.class))).thenCallRealMethod();
 	}
 
 	@Test
 	public void resolvePoolFromClientCacheHavingDefaultPoolReturnsDefaultPool() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		GudClientCache mockClientCache = mock(GudClientCache.class);
 
-		Pool mockDefaultPool = mock(Pool.class, "DEFAULT");
+		GudPool mockDefaultPool = mock(GudPool.class, "DEFAULT");
 
 		when(mockClientCache.getDefaultPool()).thenReturn(mockDefaultPool);
 
@@ -67,17 +67,17 @@ public class PoolResolverUnitTests {
 
 	@Test
 	public void resolvePoolFromNullClientCacheIsNullSafe() {
-		assertThat(this.testPoolResolver.resolve((ClientCache) null)).isNull();
+		assertThat(this.testPoolResolver.resolve((GudClientCache) null)).isNull();
 	}
 
 	@Test
 	public void resolvePoolFromRegionWithConfiguredPoolNameReturnsPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
-		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 		when(mockRegionAttributes.getPoolName()).thenReturn("TestPool");
@@ -93,9 +93,9 @@ public class PoolResolverUnitTests {
 
 	private void testResolvePoolFromRegionWithNoPoolReturnsNull(String poolName) {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
-		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes mockRegionAttributes = mock(GudRegionAttributes.class);
 
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 		when(mockRegionAttributes.getPoolName()).thenReturn(poolName);
@@ -132,13 +132,13 @@ public class PoolResolverUnitTests {
 
 	@Test
 	public void resolvePoolWithNullRegionIsNullSafeAndReturnsNull() {
-		assertThat(this.testPoolResolver.resolve((Region) null)).isNull();
+		assertThat(this.testPoolResolver.resolve((GudRegion) null)).isNull();
 	}
 
 	@Test
 	public void resolvePoolWithRegionHavingNullRegionAttributesIsNullSafeAndReturnsNull() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		assertThat(this.testPoolResolver.resolve(mockRegion)).isNull();
 
@@ -148,7 +148,7 @@ public class PoolResolverUnitTests {
 	@Test
 	public void requireExistingPoolReturnsPool() {
 
-		Pool mockPool = mock(Pool.class);
+		GudPool mockPool = mock(GudPool.class);
 
 		when(this.testPoolResolver.resolve(anyString())).thenReturn(mockPool);
 		when(this.testPoolResolver.require(anyString())).thenCallRealMethod();
@@ -168,7 +168,7 @@ public class PoolResolverUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("Pool with name [MockPool] not found");
+			assertThat(expected).hasMessage("GudPool with name [MockPool] not found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

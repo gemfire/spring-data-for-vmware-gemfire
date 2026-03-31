@@ -1,20 +1,20 @@
 /*
- * Copyright 2025 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.function;
 
-import org.apache.geode.cache.execute.Function;
-import org.apache.geode.cache.execute.FunctionContext;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.gud.api.GudFunctionContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaptureUnconvertedArgumentTypesFunction implements Function<Class<?>[]> {
+public class CaptureUnconvertedArgumentTypesFunction implements GudFunction {
 
   @Override
-  public void execute(FunctionContext<Class<?>[]> context) {
+  public void execute(GudFunctionContext<Class<?>[]> context) {
     Object[] args = context.getArguments();
 
     String stringValue = (String) args[0];

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests for {@link RegionResolver}.
@@ -23,7 +23,7 @@ import org.apache.geode.cache.Region;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Region
+ * @see org.apache.geode.cache.GudRegion
  * @see org.springframework.data.gemfire.RegionResolver
  * @since 2.3.0
  */
@@ -33,7 +33,7 @@ public class RegionResolverUnitTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void requiresRegionForNameReturnsRegion() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		RegionResolver regionResolver = mock(RegionResolver.class);
 
@@ -59,7 +59,7 @@ public class RegionResolverUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("Region with name [TestRegion] not found");
+			assertThat(expected).hasMessage("GudRegion with name [TestRegion] not found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
