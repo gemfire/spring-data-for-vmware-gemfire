@@ -3,6 +3,10 @@
  */
 
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -15,18 +19,6 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
-import org.springframework.data.gemfire.gud.api.GudDataPolicy;
-import org.springframework.data.gemfire.gud.api.GudEvictionAction;
-import org.springframework.data.gemfire.gud.api.GudEvictionAlgorithm;
-import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
-import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +26,22 @@ import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionActionType;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAlgorithm;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.data.gemfire.util.ArrayUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
 
 /**
  * Unit Tests for the {@link EnableEviction} annotation and {@link EvictionConfiguration} class.
