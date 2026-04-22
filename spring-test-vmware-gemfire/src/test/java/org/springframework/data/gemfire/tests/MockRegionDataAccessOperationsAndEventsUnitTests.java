@@ -1,7 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode types with GUD equivalents (GudEntryEvent, GudLoaderHelper, GudCacheWriterException, GudEntryNotFoundException, GudRegionAttributes)
+ */
+
 package org.springframework.data.gemfire.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,16 +47,16 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import org.apache.geode.cache.CacheListener;
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.CacheWriter;
-import org.apache.geode.cache.CacheWriterException;
-import org.apache.geode.cache.EntryEvent;
-import org.apache.geode.cache.EntryNotFoundException;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionService;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudCacheWriterException;
+import org.springframework.data.gemfire.gud.api.GudEntryEvent;
+import org.springframework.data.gemfire.gud.api.GudEntryNotFoundException;
+import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
 
 import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
 import org.springframework.data.gemfire.tests.support.MapBuilder;
@@ -61,27 +68,27 @@ import org.springframework.data.gemfire.tests.support.MapBuilder;
  * @see Test
  * @see Mock
  * @see org.mockito.Mockito
- * @see CacheListener
- * @see CacheLoader
- * @see CacheWriter
- * @see EntryEvent
- * @see LoaderHelper
- * @see Region
- * @see RegionAttributes
- * @see RegionService
+ * @see GudCacheListener
+ * @see GudCacheLoader
+ * @see GudCacheWriter
+ * @see GudEntryEvent
+ * @see GudLoaderHelper
+ * @see GudRegion
+ * @see GudRegionAttributes
+ * @see GudRegionService
  * @since 0.0.3
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
 public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
-	private Region<Object, Object> mockRegion;
+	private GudRegion<Object, Object> mockRegion;
 
 	@Mock
-	private RegionAttributes<Object, Object> mockRegionAttributes;
+	private GudRegionAttributes<Object, Object> mockRegionAttributes;
 
 	@Mock
-	private RegionService mockRegionService;
+	private GudRegionService mockRegionService;
 
 	@Before
 	public void setup() {
@@ -154,9 +161,9 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		AtomicInteger counter = new AtomicInteger(0);
 
-		CacheLoader<Object, Object> mockCacheLoader = mock(CacheLoader.class);
+		GudCacheLoader<Object, Object> mockCacheLoader = mock(GudCacheLoader.class);
 
-		when(mockCacheLoader.load(any(LoaderHelper.class))).thenAnswer(invocation -> counter.incrementAndGet());
+		when(mockCacheLoader.load(any(GudLoaderHelper.class))).thenAnswer(invocation -> counter.incrementAndGet());
 
 		this.mockRegion.getAttributesMutator().setCacheLoader(mockCacheLoader);
 
@@ -179,16 +186,16 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		assertThat(this.mockRegion).containsKey("key");
 		assertThat(this.mockRegion).hasSize(1);
 
-		verify(mockCacheLoader, times(3)).load(isA(LoaderHelper.class));
+		verify(mockCacheLoader, times(3)).load(isA(GudLoaderHelper.class));
 	}
 
-	@Test(expected = EntryNotFoundException.class)
+	@Test(expected = GudEntryNotFoundException.class)
 	public void invalidateWithNonExistingKeyThrowsException() {
 
 		try {
 			this.mockRegion.invalidate(1);
 		}
-		catch (EntryNotFoundException expected) {
+		catch (GudEntryNotFoundException expected) {
 
 			assertThat(expected).hasMessage("Entry with key [1] not found");
 			assertThat(expected).hasNoCause();
@@ -204,11 +211,11 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		assertThat(this.mockRegion).containsKey(1);
 		assertThat(this.mockRegion.get(1)).isEqualTo("test");
 
-		CacheListener<Object, Object> mockCacheListener = mock(CacheListener.class);
+		GudCacheListener<Object, Object> mockCacheListener = mock(GudCacheListener.class);
 
 		doAnswer(invocation -> {
 
-			EntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
+			GudEntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
 
 			assertThat(entryEvent).isNotNull();
 			assertThat(entryEvent.getKey()).isEqualTo(1);
@@ -218,7 +225,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 			return null;
 
-		}).when(mockCacheListener).afterInvalidate(any(EntryEvent.class));
+		}).when(mockCacheListener).afterInvalidate(any(GudEntryEvent.class));
 
 		this.mockRegion.getAttributesMutator().addCacheListener(mockCacheListener);
 		this.mockRegion.invalidate(1);
@@ -231,7 +238,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		assertThat(this.mockRegion).containsKey(1);
 		assertThat(this.mockRegion.get(1)).isNull();
 
-		verify(mockCacheListener, times(1)).afterInvalidate(isA(EntryEvent.class));
+		verify(mockCacheListener, times(1)).afterInvalidate(isA(GudEntryEvent.class));
 		verifyNoMoreInteractions(mockCacheListener);
 	}
 
@@ -240,7 +247,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		Answer<Void> createEntryEvent = invocation -> {
 
-			EntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
+			GudEntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
 
 			assertThat(entryEvent.getKey()).isEqualTo("key");
 			assertThat(entryEvent.getOldValue()).isNull();
@@ -253,7 +260,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		Answer<Void> updateEntryEvent = invocation -> {
 
-			EntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
+			GudEntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
 
 			assertThat(entryEvent.getKey()).isEqualTo("key");
 			assertThat(entryEvent.getOldValue()).isEqualTo(1);
@@ -264,15 +271,15 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		};
 
-		CacheListener<Object, Object> mockCacheListener = mock(CacheListener.class);
+		GudCacheListener<Object, Object> mockCacheListener = mock(GudCacheListener.class);
 
-		doAnswer(createEntryEvent).when(mockCacheListener).afterCreate(any(EntryEvent.class));
-		doAnswer(updateEntryEvent).when(mockCacheListener).afterUpdate(any(EntryEvent.class));
+		doAnswer(createEntryEvent).when(mockCacheListener).afterCreate(any(GudEntryEvent.class));
+		doAnswer(updateEntryEvent).when(mockCacheListener).afterUpdate(any(GudEntryEvent.class));
 
-		CacheWriter<Object, Object> mockCacheWriter = mock(CacheWriter.class);
+		GudCacheWriter<Object, Object> mockCacheWriter = mock(GudCacheWriter.class);
 
-		doAnswer(createEntryEvent).when(mockCacheWriter).beforeCreate(any(EntryEvent.class));
-		doAnswer(updateEntryEvent).when(mockCacheWriter).beforeUpdate(any(EntryEvent.class));
+		doAnswer(createEntryEvent).when(mockCacheWriter).beforeCreate(any(GudEntryEvent.class));
+		doAnswer(updateEntryEvent).when(mockCacheWriter).beforeUpdate(any(GudEntryEvent.class));
 
 		this.mockRegion.getAttributesMutator().addCacheListener(mockCacheListener);
 		this.mockRegion.getAttributesMutator().setCacheWriter(mockCacheWriter);
@@ -283,11 +290,11 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		InOrder ordered = inOrder(this.mockRegion, mockCacheWriter, mockCacheListener);
 
 		ordered.verify(this.mockRegion, times(1)).put(eq("key"), eq(1));
-		ordered.verify(mockCacheWriter, times(1)).beforeCreate(isA(EntryEvent.class));
-		ordered.verify(mockCacheListener, times(1)).afterCreate(isA(EntryEvent.class));
+		ordered.verify(mockCacheWriter, times(1)).beforeCreate(isA(GudEntryEvent.class));
+		ordered.verify(mockCacheListener, times(1)).afterCreate(isA(GudEntryEvent.class));
 		ordered.verify(this.mockRegion, times(1)).put(eq("key"), eq(2));
-		ordered.verify(mockCacheWriter, times(1)).beforeUpdate(isA(EntryEvent.class));
-		ordered.verify(mockCacheListener, times(1)).afterUpdate(isA(EntryEvent.class));
+		ordered.verify(mockCacheWriter, times(1)).beforeUpdate(isA(GudEntryEvent.class));
+		ordered.verify(mockCacheListener, times(1)).afterUpdate(isA(GudEntryEvent.class));
 		verifyNoMoreInteractions(mockCacheListener);
 		verifyNoMoreInteractions(mockCacheWriter);
 	}
@@ -307,14 +314,14 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		}
 	}
 
-	@Test(expected = CacheWriterException.class)
+	@Test(expected = GudCacheWriterException.class)
 	public void putStoppedByCacheWriterException() {
 
-		CacheListener<Object, Object> mockCacheListener = mock(CacheListener.class);
+		GudCacheListener<Object, Object> mockCacheListener = mock(GudCacheListener.class);
 
-		CacheWriter<Object, Object> mockCacheWriter = mock(CacheWriter.class);
+		GudCacheWriter<Object, Object> mockCacheWriter = mock(GudCacheWriter.class);
 
-		doThrow(newIllegalStateException("TEST")).when(mockCacheWriter).beforeCreate(any(EntryEvent.class));
+		doThrow(newIllegalStateException("TEST")).when(mockCacheWriter).beforeCreate(any(GudEntryEvent.class));
 
 		this.mockRegion.getAttributesMutator().addCacheListener(mockCacheListener);
 		this.mockRegion.getAttributesMutator().setCacheWriter(mockCacheWriter);
@@ -322,7 +329,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		try {
 			this.mockRegion.put(1, "test");
 		}
-		catch (CacheWriterException cause) {
+		catch (GudCacheWriterException cause) {
 
 			assertThat(cause).hasMessage("Create/Update Error");
 			assertThat(cause).hasCauseInstanceOf(IllegalStateException.class);
@@ -336,7 +343,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 			assertThat(this.mockRegion).doesNotContainKey(1);
 			assertThat(this.mockRegion).hasSize(0);
 
-			verify(mockCacheWriter, times(1)).beforeCreate(isA(EntryEvent.class));
+			verify(mockCacheWriter, times(1)).beforeCreate(isA(GudEntryEvent.class));
 			verifyNoInteractions(mockCacheListener);
 		}
 	}
@@ -346,7 +353,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		Answer<Void> destroyEntryEvent = invocation -> {
 
-			EntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
+			GudEntryEvent<Object, Object> entryEvent = invocation.getArgument(0);
 
 			assertThat(entryEvent.getKey()).isEqualTo(1);
 			assertThat(entryEvent.getNewValue()).isNull();
@@ -357,13 +364,13 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		};
 
-		CacheListener<Object, Object> mockCacheListener = mock(CacheListener.class);
+		GudCacheListener<Object, Object> mockCacheListener = mock(GudCacheListener.class);
 
-		doAnswer(destroyEntryEvent).when(mockCacheListener).afterDestroy(any(EntryEvent.class));
+		doAnswer(destroyEntryEvent).when(mockCacheListener).afterDestroy(any(GudEntryEvent.class));
 
-		CacheWriter<Object, Object> mockCacheWriter = mock(CacheWriter.class);
+		GudCacheWriter<Object, Object> mockCacheWriter = mock(GudCacheWriter.class);
 
-		doAnswer(destroyEntryEvent).when(mockCacheWriter).beforeDestroy(any(EntryEvent.class));
+		doAnswer(destroyEntryEvent).when(mockCacheWriter).beforeDestroy(any(GudEntryEvent.class));
 
 		assertThat(this.mockRegion.put(1, "test")).isNull();
 		assertThat(this.mockRegion).containsKey(1);
@@ -379,20 +386,20 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		InOrder ordered = inOrder(this.mockRegion, mockCacheWriter, mockCacheListener);
 
 		ordered.verify(this.mockRegion, times(1)).remove(eq(1));
-		ordered.verify(mockCacheWriter, times(1)).beforeDestroy(isA(EntryEvent.class));
-		ordered.verify(mockCacheListener, times(1)).afterDestroy(isA(EntryEvent.class));
+		ordered.verify(mockCacheWriter, times(1)).beforeDestroy(isA(GudEntryEvent.class));
+		ordered.verify(mockCacheListener, times(1)).afterDestroy(isA(GudEntryEvent.class));
 		verifyNoMoreInteractions(mockCacheListener);
 		verifyNoMoreInteractions(mockCacheWriter);
 	}
 
-	@Test(expected = CacheWriterException.class)
+	@Test(expected = GudCacheWriterException.class)
 	public void removeStoppedByCacheWriterException() {
 
-		CacheListener<Object, Object> mockCacheListener = mock(CacheListener.class);
+		GudCacheListener<Object, Object> mockCacheListener = mock(GudCacheListener.class);
 
-		CacheWriter<Object, Object> mockCacheWriter = mock(CacheWriter.class);
+		GudCacheWriter<Object, Object> mockCacheWriter = mock(GudCacheWriter.class);
 
-		doThrow(newIllegalStateException("TEST")).when(mockCacheWriter).beforeDestroy(any(EntryEvent.class));
+		doThrow(newIllegalStateException("TEST")).when(mockCacheWriter).beforeDestroy(any(GudEntryEvent.class));
 
 		assertThat(this.mockRegion.put(1, "test")).isNull();
 		assertThat(this.mockRegion).containsKey(1);
@@ -404,7 +411,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		try {
 			this.mockRegion.remove(1);
 		}
-		catch (CacheWriterException expected) {
+		catch (GudCacheWriterException expected) {
 
 			assertThat(expected).hasMessage("Destroy Error");
 			assertThat(expected).hasCauseInstanceOf(IllegalStateException.class);
@@ -418,7 +425,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 			assertThat(this.mockRegion).containsKey(1);
 			assertThat(this.mockRegion).hasSize(1);
 
-			verify(mockCacheWriter, times(1)).beforeDestroy(isA(EntryEvent.class));
+			verify(mockCacheWriter, times(1)).beforeDestroy(isA(GudEntryEvent.class));
 			verifyNoInteractions(mockCacheListener);
 		}
 	}
@@ -574,19 +581,19 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 
 		List<Object> keys = Arrays.asList(null, 1, 2, null, 3, null, 4, 5);
 
-		CacheLoader<Object, Object> mockCacheLoader = mock(CacheLoader.class);
+		GudCacheLoader<Object, Object> mockCacheLoader = mock(GudCacheLoader.class);
 
 		doAnswer(invocation -> {
 
-			LoaderHelper<Object, Object> loaderHelper = invocation.getArgument(0);
+			GudLoaderHelper<Object, Object> loaderHelper = invocation.getArgument(0);
 
 			Object key = loaderHelper.getKey();
 
 			return key != null && key.equals(3) ? "THREE" : null;
 
-		}).when(mockCacheLoader).load(any(LoaderHelper.class));
+		}).when(mockCacheLoader).load(any(GudLoaderHelper.class));
 
-		RegionAttributes<Object, Object> mockRegionAttributes = this.mockRegion.getAttributes();
+		GudRegionAttributes<Object, Object> mockRegionAttributes = this.mockRegion.getAttributes();
 
 		doReturn(mockCacheLoader).when(mockRegionAttributes).getCacheLoader();
 
@@ -600,7 +607,7 @@ public class MockRegionDataAccessOperationsAndEventsUnitTests {
 		assertThat(actualResults).isEqualTo(expectedResults);
 
 		verify(this.mockRegion, times(5)).get(isNotNull());
-		verify(mockCacheLoader, times(2)).load(isA(LoaderHelper.class));
+		verify(mockCacheLoader, times(2)).load(isA(GudLoaderHelper.class));
 		verify(mockRegionAttributes, times(2)).getCacheLoader();
 		verifyNoMoreInteractions(mockCacheLoader);
 	}

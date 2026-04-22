@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,6 +22,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 
 import org.springframework.data.gemfire.util.NetworkUtils;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -71,7 +77,7 @@ public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 		ClientHttpRequestInterceptor mockInterceptorFour = mock(ClientHttpRequestInterceptor.class);
 		ClientHttpRequestInterceptor mockInterceptorFive = mock(ClientHttpRequestInterceptor.class);
 
-		RestHttpGemfireAdminTemplate template = new RestHttpGemfireAdminTemplate.Builder()
+		RestHttpGemfireAdminTemplate template = newBuilder()
 			.with(this.mockClientCache)
 			.with(mockInterceptorOne, mockInterceptorTwo)
 			.with(mockInterceptorThree)
@@ -102,7 +108,7 @@ public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 	private void testInvalidPortThrowsException(int port) {
 
 		try {
-			new RestHttpGemfireAdminTemplate.Builder().listenOn(port);
+			newBuilder().listenOn(port);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -125,7 +131,7 @@ public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 
 	private void testInvalidHostnameDefaultsToLocalhost(String hostname) {
 
-		RestHttpGemfireAdminTemplate template = new RestHttpGemfireAdminTemplate.Builder()
+		RestHttpGemfireAdminTemplate template = newBuilder()
 			.with(this.mockClientCache)
 			.on(hostname)
 			.build();
@@ -150,7 +156,7 @@ public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 	public void usingInvalidScheme() {
 
 		try {
-			new RestHttpGemfireAdminTemplate.Builder().using("ftp");
+			newBuilder().using("ftp");
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -160,6 +166,47 @@ public class RestHttpGemfireAdminTemplateBuilderUnitTests {
 			assertThat(expected).hasNoCause();
 
 			throw expected;
+		}
+	}
+
+	private RestHttpGemfireAdminTemplate.Builder newBuilder() {
+		return new TestBuilder();
+	}
+
+	static class TestBuilder extends RestHttpGemfireAdminTemplate.Builder {
+
+		@Override
+		public RestHttpGemfireAdminTemplate build() {
+			return new TestTemplate(getClientCache(), getScheme(), getHostname(), getPort(),
+				isFollowRedirects(), getClientHttpRequestInterceptors());
+		}
+	}
+
+	static class TestTemplate extends RestHttpGemfireAdminTemplate {
+
+		TestTemplate(GudClientCache clientCache, String scheme, String host, int port,
+				boolean followRedirects, java.util.List<ClientHttpRequestInterceptor> interceptors) {
+			super(clientCache, scheme, host, port, followRedirects, interceptors);
+		}
+
+		@Override
+		public Iterable<String> getAvailableServerRegions() {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected <T> T execute(GudFunction gemfireFunction, Object... arguments) {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected GemfireFunctionOperations newGemfireFunctionOperations() {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected GemfireFunctionOperations newGemfireFunctionOperations(GudClientCache clientCache) {
+			throw new UnsupportedOperationException("stub");
 		}
 	}
 }

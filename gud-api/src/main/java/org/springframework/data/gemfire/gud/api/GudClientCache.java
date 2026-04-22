@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -29,6 +33,7 @@
  * Description:
  * 2026-03-11: Created GudClientCache interface as 1:1 mapping of GemFire ClientCache
  * 2026-03-17: Removed hypothetical 10.4 features
+ * 2026-04-17: Documented as primary supported GUD cache type (client-only contract)
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -36,8 +41,10 @@ package org.springframework.data.gemfire.gud.api;
 import java.util.Set;
 
 /**
- * GUD API abstraction for GemFire ClientCache interface.
- * Represents a client cache that connects to GemFire servers.
+ * GUD API abstraction for GemFire {@code ClientCache}.
+ * <p>This is the <strong>primary</strong> cache type in the client-only GUD contract: application and
+ * Spring Data code should depend on {@code GudClientCache} and {@link GudClientRegionFactory}, not on
+ * {@link GudCache} (peer/server cache).
  */
 public interface GudClientCache extends GudRegionService {
 

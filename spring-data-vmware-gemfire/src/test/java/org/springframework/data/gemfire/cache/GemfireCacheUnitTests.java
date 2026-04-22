@@ -1,8 +1,21 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.cache.Cache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+
+import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,17 +27,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.concurrent.Callable;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudRegion;
-
-import org.springframework.cache.Cache;
 
 /**
  * Unit Tests for {@link GemfireCache}.
@@ -65,7 +67,7 @@ public class GemfireCacheUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GemFire GudRegion must not be null");
+			assertThat(expected).hasMessage("GemFire Region must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

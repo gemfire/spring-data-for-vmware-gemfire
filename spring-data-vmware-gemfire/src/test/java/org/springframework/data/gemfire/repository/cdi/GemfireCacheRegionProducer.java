@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -9,9 +13,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
 import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.core.GudDriverManager;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.util.Assert;
 
@@ -22,9 +26,6 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see jakarta.enterprise.context.ApplicationScoped
  * @see jakarta.enterprise.inject.Produces
- * @see org.apache.geode.cache.CacheFactory
- * @see org.apache.geode.cache.GudRegion
- * @see org.apache.geode.cache.RegionFactory
  * @since 1.8.0
  */
 @SuppressWarnings("unused")
@@ -34,7 +35,7 @@ public class GemfireCacheRegionProducer {
 	@ApplicationScoped
 	public GudRegion<Long, Person> createPeopleRegion() {
 
-		GudClientCache gemfireCache = new GudClientCacheFactory()
+		GudClientCache gemfireCache = GudDriverManager.getDefaultDriver().createClientCacheFactory()
 			.set("name", "SpringDataGemFireCdiTest")
 			.set("log-level", "error")
 			.create();

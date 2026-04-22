@@ -1,7 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode types with GUD equivalents (GudAttributesMutator, GudRegion, GudRegionAttributes, GudRegionService, GudClientSubscriptionConfig)
+ */
+
 package org.springframework.data.gemfire.tests.mock;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,11 +21,11 @@ import static org.mockito.Mockito.verify;
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.server.ClientSubscriptionConfig;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudClientSubscriptionConfig;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
 
 /**
  * Unit Tests for {@link GemFireMockObjectsSupport}.
@@ -26,14 +33,11 @@ import org.apache.geode.cache.server.ClientSubscriptionConfig;
  * @author John Blum
  * @see Test
  * @see org.mockito.Mockito
- * @see AttributesMutator
- * @see Region
- * @see RegionAttributes
- * @see RegionService
- * @see org.apache.geode.cache.asyncqueue.AsyncEventListener
- * @see org.apache.geode.cache.asyncqueue.AsyncEventQueue
- * @see org.apache.geode.cache.asyncqueue.AsyncEventQueueFactory
- * @see ClientSubscriptionConfig
+ * @see GudAttributesMutator
+ * @see GudRegion
+ * @see GudRegionAttributes
+ * @see GudRegionService
+ * @see GudClientSubscriptionConfig
  * @see GemFireMockObjectsSupport
  * @since 1.0.0
  */
@@ -47,8 +51,8 @@ public class GemFireMockObjectsSupportUnitTests {
 	@Test
 	public void mockClientSubscriptionConfigIsCorrect() {
 
-		ClientSubscriptionConfig mockClientSubscriptionConfig =
-			GemFireMockObjectsSupport.mockClientSubscriptionConfig();
+		GudClientSubscriptionConfig mockClientSubscriptionConfig =
+			GemFireMockObjectsSupport.mockGudClientSubscriptionConfig();
 
 		assertThat(mockClientSubscriptionConfig).isNotNull();
 
@@ -65,14 +69,14 @@ public class GemFireMockObjectsSupportUnitTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void mockSubRegionIsCorrect() {
 
-		Region mockRegion = mock(Region.class);
+		GudRegion mockRegion = mock(GudRegion.class);
 
 		doReturn("MockRegion").when(mockRegion).getName();
 		doReturn("/MockRegion").when(mockRegion).getFullPath();
 
-		RegionAttributes mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		Region mockSubRegion = GemFireMockObjectsSupport.mockSubRegion(mockRegion, "MockSubRegion",
+		GudRegion mockSubRegion = GemFireMockObjectsSupport.mockSubRegion(mockRegion, "MockSubRegion",
 			mockRegionAttributes);
 
 		assertThat(mockSubRegion).isNotNull();
@@ -84,18 +88,18 @@ public class GemFireMockObjectsSupportUnitTests {
 	@Test
 	public void regionAttributesMutatorGetRegionReturnsRegion() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
-		RegionAttributes<?, ?> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<?, ?> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		Region<?, ?> mockRegion =
+		GudRegion<?, ?> mockRegion =
 			GemFireMockObjectsSupport.mockRegion(mockRegionService, "MockRegion", mockRegionAttributes);
 
 		assertThat(mockRegion).isNotNull();
 		assertThat(mockRegion.getName()).isEqualTo("MockRegion");
 		assertThat(mockRegion.getRegionService()).isSameAs(mockRegionService);
 
-		AttributesMutator<?, ?> mockAttributesMutator = mockRegion.getAttributesMutator();
+		GudAttributesMutator<?, ?> mockAttributesMutator = mockRegion.getAttributesMutator();
 
 		assertThat(mockAttributesMutator).isNotNull();
 		assertThat(mockAttributesMutator.getRegion()).isSameAs(mockRegion);
@@ -104,18 +108,18 @@ public class GemFireMockObjectsSupportUnitTests {
 	@Test
 	public void regionAttributesMutatorIsInitialized() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
-		RegionAttributes<?, ?> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<?, ?> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		Region<?, ?> mockRegion =
+		GudRegion<?, ?> mockRegion =
 			GemFireMockObjectsSupport.mockRegion(mockRegionService, "MockRegion", mockRegionAttributes);
 
 		assertThat(mockRegion).isNotNull();
 		assertThat(mockRegion.getName()).isEqualTo("MockRegion");
 		assertThat(mockRegion.getRegionService()).isSameAs(mockRegionService);
 
-		AttributesMutator<?, ?> mockAttributesMutator = mockRegion.getAttributesMutator();
+		GudAttributesMutator<?, ?> mockAttributesMutator = mockRegion.getAttributesMutator();
 
 		assertThat(mockAttributesMutator).isNotNull();
 
@@ -131,11 +135,11 @@ public class GemFireMockObjectsSupportUnitTests {
 	@Test
 	public void regionCloningEnabledReturnsFalseByDefault() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		GudRegionService mockRegionService = mock(GudRegionService.class);
 
-		RegionAttributes<?, ?> mockRegionAttributes = mock(RegionAttributes.class);
+		GudRegionAttributes<?, ?> mockRegionAttributes = mock(GudRegionAttributes.class);
 
-		Region<?, ?> mockRegion =
+		GudRegion<?, ?> mockRegion =
 			GemFireMockObjectsSupport.mockRegion(mockRegionService, "MockRegion", mockRegionAttributes);
 
 		assertThat(mockRegion).isNotNull();

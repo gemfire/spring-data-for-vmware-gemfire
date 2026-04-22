@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ * 2026-04-17: Suppress deprecation on initialize(GudCache) — peer cache parameter retained for cache.xml wiring
  */
 
 package org.springframework.data.gemfire.support;
@@ -51,6 +56,7 @@ public abstract class WiringDeclarableSupport extends DeclarableSupport {
 	 * @param cache the {@link GudCache} instance
 	 * @param parameters configuration properties
 	 */
+	@SuppressWarnings("deprecation")
 	public void initialize(@Nullable GudCache cache, @NonNull Properties parameters) {
 		configureThis(parameters.getProperty(TEMPLATE_BEAN_NAME_PROPERTY));
 	}

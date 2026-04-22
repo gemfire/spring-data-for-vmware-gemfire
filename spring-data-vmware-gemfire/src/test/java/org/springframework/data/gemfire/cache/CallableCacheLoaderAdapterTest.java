@@ -1,8 +1,21 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,16 +24,6 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-
-import org.springframework.data.gemfire.gud.api.GudCacheLoader;
-import org.springframework.data.gemfire.gud.api.GudLoaderHelper;
-import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests to test the adaption of the {@link java.util.concurrent.Callable}
@@ -96,7 +99,7 @@ public class CallableCacheLoaderAdapterTest {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GudCacheLoader must not be null");
+			assertThat(expected).hasMessage("CacheLoader must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -162,7 +165,7 @@ public class CallableCacheLoaderAdapterTest {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("The GudRegion to load cannot be null");
+			assertThat(expected).hasMessage("The Region to load cannot be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

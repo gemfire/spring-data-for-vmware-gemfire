@@ -1,6 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 package org.springframework.data.gemfire.config.annotation;
 
@@ -8,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import org.junit.Test;
+import org.springframework.data.gemfire.GemFireGudUnitTestSupport;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 
@@ -22,7 +22,7 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
  * @see org.springframework.data.gemfire.config.annotation.EnableBeanFactoryLocator
  * @since 2.2.1
  */
-public class EnableBeanFactoryLocatorConfigurationUnitTests {
+public class EnableBeanFactoryLocatorConfigurationUnitTests extends GemFireGudUnitTestSupport {
 
 	private final BeanFactoryLocatorConfiguration configuration = new BeanFactoryLocatorConfiguration();
 

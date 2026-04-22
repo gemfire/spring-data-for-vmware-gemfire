@@ -1,12 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -14,6 +10,7 @@
  * Description:
  * 2026-03-11: Created GudClientRegionFactory interface as 1:1 mapping of GemFire ClientRegionFactory
  * 2026-03-31: Added setServerRegionName default method (10.3+)
+ * 2026-04-02: Updated default method to use GudCapability enum for type safety
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -73,7 +70,7 @@ public interface GudClientRegionFactory<K, V> {
     default GudClientRegionFactory<K, V> setServerRegionName(String serverRegionName) {
         throw new GudUnsupportedOperationException(
             "setServerRegionName() is not supported. This feature was added in GemFire 10.3.",
-            "SERVER_REGION_NAME", "10.3");
+            GudCapability.SERVER_REGION_NAME, "10.3");
     }
 
     GudRegion<K, V> create(String regionName);

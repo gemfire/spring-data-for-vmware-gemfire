@@ -1,7 +1,15 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode ClientCache and DistributedSystem with GudClientCache and GudDistributedSystem
+ * 2026-04-02: Replaced spy(new PoolFactoryBean()) with mock(PoolFactoryBean.class) — PoolFactoryBean is now abstract
+ */
+
 package org.springframework.data.gemfire.tests.mock.beans.factory.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,8 +26,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.distributed.DistributedSystem;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
@@ -32,8 +40,8 @@ import org.springframework.data.gemfire.util.PropertiesBuilder;
  * @see Properties
  * @see Test
  * @see org.mockito.Mockito
- * @see ClientCache
- * @see DistributedSystem
+ * @see GudClientCache
+ * @see GudDistributedSystem
  * @see ClientCacheFactoryBean
  * @see PoolFactoryBean
  * @see GemFireMockObjectsBeanPostProcessor
@@ -100,7 +108,7 @@ public class GemFireMockObjectsBeanPostProcessorUnitTests {
 			.isEqualTo(clientCacheFactoryBean);
 
 		verify(clientCacheFactoryBean, times(1))
-			.setCacheFactoryInitializer(isA(GemFireMockObjectsBeanPostProcessor.SpyingClientCacheFactoryInitializer.class));
+			.setCacheFactoryInitializer(isA(GemFireMockObjectsBeanPostProcessor.SpyingGudClientCacheFactoryInitializer.class));
 	}
 
 	@Test
@@ -112,7 +120,7 @@ public class GemFireMockObjectsBeanPostProcessorUnitTests {
 		assertThat(beanPostProcessor.isUsingSingletonCache())
 			.isEqualTo(GemFireMockObjectsBeanPostProcessor.DEFAULT_USE_SINGLETON_CACHE);
 
-		PoolFactoryBean poolFactoryBean = spy(new PoolFactoryBean());
+		PoolFactoryBean poolFactoryBean = mock(PoolFactoryBean.class);
 
 		assertThat(beanPostProcessor.postProcessBeforeInitialization(poolFactoryBean, "gemfirePool"))
 			.isEqualTo(poolFactoryBean);
@@ -147,9 +155,9 @@ public class GemFireMockObjectsBeanPostProcessorUnitTests {
 
 		doReturn(gemfireProperties).when(beanPostProcessor).getGemFireProperties();
 
-		ClientCache mockCache = mock(ClientCache.class);
+		GudClientCache mockCache = mock(GudClientCache.class);
 
-		DistributedSystem mockDistributedSystem = mock(DistributedSystem.class);
+		GudDistributedSystem mockDistributedSystem = mock(GudDistributedSystem.class);
 
 		doReturn(mockDistributedSystem).when(mockCache).getDistributedSystem();
 

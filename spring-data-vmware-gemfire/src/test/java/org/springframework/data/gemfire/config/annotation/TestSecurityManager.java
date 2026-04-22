@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -30,7 +34,7 @@ import org.springframework.util.StringUtils;
  * @see org.apache.geode.security.GudSecurityManager
  * @since 2.0.0
  */
-public final class TestSecurityManager implements org.apache.geode.security.GudSecurityManager {
+public final class TestSecurityManager implements GudSecurityManager {
 
 	public static final String SECURITY_USERNAME = "testUser";
 	public static final String SECURITY_PASSWORD = "t35t9@55w0rd!";

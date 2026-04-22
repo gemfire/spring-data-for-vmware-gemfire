@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -12,18 +16,17 @@
 
 package org.springframework.data.gemfire.util;
 
-import java.util.Optional;
-
+import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
 import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
 import org.springframework.data.gemfire.gud.api.GudDataPolicy;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-
-import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 /**
  * The {@link RegionUtils} class is an abstract utility class for working with {@link GudRegion Regions}.
@@ -61,10 +64,10 @@ public abstract class RegionUtils extends CacheUtils {
 	}
 
 	/**
-	 * Assert that the configuration settings for {@link GudDataPolicy} and the {@literal persistent} attribute
+	 * Assert that the configuration settings for {@link org.springframework.data.gemfire.gud.api.GudDataPolicy} and the {@literal persistent} attribute
 	 * in &lt;gfe:*-region&gt; elements are compatible.
 	 *
-	 * @param dataPolicy {@link GudDataPolicy} resolved from the SDG XML namespace.
+	 * @param dataPolicy {@link org.springframework.data.gemfire.gud.api.GudDataPolicy} resolved from the SDG XML namespace.
 	 * @param persistent boolean indicating the value of the {@literal persistent} configuration attribute.
 	 * @see GudDataPolicy
 	 */

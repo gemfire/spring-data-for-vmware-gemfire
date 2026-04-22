@@ -1,21 +1,24 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
-
 import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link InterestPolicyType} enum.
  *
  * @author John Blum
  * @see org.junit.Test
- * @see org.apache.geode.cache.GudInterestPolicy
+ * @see GudInterestPolicy
  * @see org.springframework.data.gemfire.InterestPolicyType
  * @since 1.6.0
  */
@@ -44,14 +47,14 @@ public class InterestPolicyTypeUnitTests {
 	public void testDefault() {
 
 		assertThat(InterestPolicyType.DEFAULT.getInterestPolicy()).isEqualTo(GudInterestPolicy.DEFAULT);
-		assertThat(InterestPolicyType.DEFAULT).isSameAs(InterestPolicyType.CACHE_CONTENT);
+		assertThat(InterestPolicyType.DEFAULT.getInterestPolicy()).isEqualTo(InterestPolicyType.CACHE_CONTENT.getInterestPolicy());
 	}
 
 	@Test
 	public void testValueOf() {
 
 		try {
-			for (byte ordinal = 0; ordinal < Byte.MAX_VALUE; ordinal++) {
+			for (byte ordinal = 0; ordinal < GudInterestPolicy.values().length; ordinal++) {
 				GudInterestPolicy interestPolicy = GudInterestPolicy.fromOrdinal(ordinal);
 				InterestPolicyType interestPolicyType = InterestPolicyType.valueOf(interestPolicy);
 

@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -25,9 +29,8 @@ import org.springframework.data.gemfire.gud.api.GudInterestPolicy;
 @SuppressWarnings("unused")
 public enum InterestPolicyType {
 	ALL(GudInterestPolicy.ALL),
-	CACHE_CONTENT(GudInterestPolicy.CACHE_CONTENT);
-
-	public static final InterestPolicyType DEFAULT = InterestPolicyType.valueOf(GudInterestPolicy.DEFAULT);
+	CACHE_CONTENT(GudInterestPolicy.CACHE_CONTENT),
+	DEFAULT(GudInterestPolicy.DEFAULT);
 
 	private final GudInterestPolicy interestPolicy;
 

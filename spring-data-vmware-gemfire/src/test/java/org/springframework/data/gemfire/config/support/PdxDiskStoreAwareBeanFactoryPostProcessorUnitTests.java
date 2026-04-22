@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,6 +22,7 @@ import java.util.Map;
 import org.springframework.data.gemfire.gud.api.GudDiskStore;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.junit.Test;
+import org.springframework.data.gemfire.GemFireGudUnitTestSupport;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -35,7 +40,7 @@ import org.springframework.data.gemfire.util.ArrayUtils;
  * @see org.springframework.data.gemfire.config.support.PdxDiskStoreAwareBeanFactoryPostProcessor
  * @since 1.3.3
  */
-public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests {
+public class PdxDiskStoreAwareBeanFactoryPostProcessorUnitTests extends GemFireGudUnitTestSupport {
 
 	private static boolean isBeanType(BeanDefinition beanDefinition, Class<?> beanType) {
 

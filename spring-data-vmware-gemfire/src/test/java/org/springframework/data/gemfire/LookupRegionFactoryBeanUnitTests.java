@@ -1,8 +1,24 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
+
+import org.junit.Test;
+import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudCacheListener;
+import org.springframework.data.gemfire.gud.api.GudCacheLoader;
+import org.springframework.data.gemfire.gud.api.GudCacheWriter;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributesMutator;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,17 +29,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.springframework.data.gemfire.gud.api.GudAttributesMutator;
-import org.springframework.data.gemfire.gud.api.GudCacheListener;
-import org.springframework.data.gemfire.gud.api.GudCacheLoader;
-import org.springframework.data.gemfire.gud.api.GudCacheWriter;
-import org.springframework.data.gemfire.gud.api.GudCustomExpiry;
-import org.springframework.data.gemfire.gud.api.GudEvictionAttributesMutator;
-import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.junit.Test;
 
 /**
  * Unit Tests for {@link LookupRegionFactoryBean}.
@@ -160,7 +165,7 @@ public class LookupRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalStateException expected) {
 			assertThat(expected.getMessage()).isEqualTo(
-				"Statistics for GudRegion [/Example] must be enabled to change Entry & GudRegion TTL/TTI Expiration settings");
+				"Statistics for Region [/Example] must be enabled to change Entry & Region TTL/TTI Expiration settings");
 			throw expected;
 		}
 		finally {

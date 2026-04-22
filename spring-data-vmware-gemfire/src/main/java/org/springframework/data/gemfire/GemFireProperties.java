@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ * 2026-04-17: Aligned enum with GudConfigurationProperties (cluster-configuration-dir, mcast-*)
  */
 
 package org.springframework.data.gemfire;
@@ -59,6 +64,7 @@ public enum GemFireProperties {
 	//GEODE_DISALLOW_INTERNAL_MESSAGES_WITHOUT_CREDENTIALS("geode.disallow-internal-messages-without-credentials", Boolean.class, false),
 	GROUPS(GudConfigurationProperties.GROUPS, String.class),
 	LOAD_CLUSTER_CONFIGURATION_FROM_DIR(GudConfigurationProperties.LOAD_CLUSTER_CONFIGURATION_FROM_DIR, Boolean.class, false),
+	CLUSTER_CONFIGURATION_DIR(GudConfigurationProperties.CLUSTER_CONFIGURATION_DIR, String.class),
 	LOCATOR_WAIT_TIME(GudConfigurationProperties.LOCATOR_WAIT_TIME, Long.class, 0),
 	LOCATORS(GudConfigurationProperties.LOCATORS, String.class),
 	LOCK_MEMORY(GudConfigurationProperties.LOCK_MEMORY, Boolean.class, false),
@@ -68,6 +74,8 @@ public enum GemFireProperties {
 	LOG_LEVEL(GudConfigurationProperties.LOG_LEVEL, String.class, "config"),
 	MAX_NUM_RECONNECT_TRIES(GudConfigurationProperties.MAX_NUM_RECONNECT_TRIES, Integer.class, 3),
 	MAX_WAIT_TIME_RECONNECT(GudConfigurationProperties.MAX_WAIT_TIME_RECONNECT, Long.class, 60000),
+	MCAST_ADDRESS(GudConfigurationProperties.MCAST_ADDRESS, String.class),
+	MCAST_PORT(GudConfigurationProperties.MCAST_PORT, Integer.class, 0),
 	MEMBER_TIMEOUT(GudConfigurationProperties.MEMBER_TIMEOUT, Long.class, 5000L),
 	MEMBERSHIP_PORT_RANGE(GudConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(GudConfigurationProperties.NAME, String.class),

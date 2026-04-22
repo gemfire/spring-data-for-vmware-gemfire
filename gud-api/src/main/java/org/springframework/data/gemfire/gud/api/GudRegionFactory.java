@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,6 +17,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudRegionFactory interface as 1:1 mapping of GemFire RegionFactory
+ * 2026-04-17: Marked deprecated — peer region factories are outside client-only GUD
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -20,12 +25,16 @@ package org.springframework.data.gemfire.gud.api;
 import java.io.File;
 
 /**
- * GUD API abstraction for GemFire RegionFactory interface.
- * Factory for creating regions in a peer cache.
+ * GUD API abstraction for GemFire {@code RegionFactory} on a <strong>peer</strong> cache.
+ *
+ * @deprecated The GUD contract is <strong>client-only</strong>. Client applications should use
+ *             {@link GudClientRegionFactory}. Server-side / peer region creation should be driven
+ *             by GemFire Testcontainers (or native server tooling), not {@code GudRegionFactory}.
  *
  * @param <K> the type of keys
  * @param <V> the type of values
  */
+@Deprecated(since = "4.0")
 public interface GudRegionFactory<K, V> {
 
     GudRegionFactory<K, V> setDataPolicy(GudDataPolicy dataPolicy);

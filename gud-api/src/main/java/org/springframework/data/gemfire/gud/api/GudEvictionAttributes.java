@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,6 +23,7 @@
  * Description:
  * 2026-03-11: Created GudEvictionAttributes interface as 1:1 mapping of GemFire EvictionAttributes
  * 2026-03-13: Added static factory methods for creating eviction attributes
+ * 2026-04-17: Static factories delegate to default GudDriver via GudEvictionAttributesDriverSupport
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -45,15 +50,24 @@ public interface GudEvictionAttributes {
     }
 
     static GudEvictionAttributes createLRUHeapAttributes(GudObjectSizer sizer, GudEvictionAction action) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
+        return GudEvictionAttributesDriverSupport.invoke(
+            "createLruHeapEvictionAttributes",
+            new Class<?>[] { GudObjectSizer.class, GudEvictionAction.class },
+            new Object[] { sizer, action });
     }
 
     static GudEvictionAttributes createLRUMemoryAttributes(int maximum, GudObjectSizer sizer, GudEvictionAction action) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
+        return GudEvictionAttributesDriverSupport.invoke(
+            "createLruMemoryEvictionAttributes",
+            new Class<?>[] { int.class, GudObjectSizer.class, GudEvictionAction.class },
+            new Object[] { maximum, sizer, action });
     }
 
     static GudEvictionAttributes createLRUMemoryAttributes(GudObjectSizer sizer, GudEvictionAction action) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
+        return GudEvictionAttributesDriverSupport.invoke(
+            "createLruMemoryEvictionAttributesFromSizer",
+            new Class<?>[] { GudObjectSizer.class, GudEvictionAction.class },
+            new Object[] { sizer, action });
     }
 
     static GudEvictionAttributes createLRUEntryAttributes() {
@@ -61,6 +75,9 @@ public interface GudEvictionAttributes {
     }
 
     static GudEvictionAttributes createLRUEntryAttributes(int maximum, GudEvictionAction action) {
-        throw new UnsupportedOperationException("Must be implemented by driver");
+        return GudEvictionAttributesDriverSupport.invoke(
+            "createLruEntryEvictionAttributes",
+            new Class<?>[] { int.class, GudEvictionAction.class },
+            new Object[] { maximum, action });
     }
 }

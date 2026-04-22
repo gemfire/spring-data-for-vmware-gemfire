@@ -1,16 +1,5 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
 import java.io.FileInputStream
@@ -58,4 +47,5 @@ include("gud-driver-gemfire-10.0")
 include("gud-driver-gemfire-10.1")
 include("gud-driver-gemfire-10.2")
 include("gud-driver-gemfire-10.3")
+include("gud-driver-mock")
 include("TestCachingApp")

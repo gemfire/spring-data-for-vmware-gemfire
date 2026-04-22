@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -175,7 +179,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		when(mockBeanFactory.containsBean(anyString())).thenReturn(false);
 		when(mockBeanFactory.getBean(eq(GudClientCache.class))).thenReturn(mockGemFireCache);
@@ -201,7 +205,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -234,7 +238,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -272,7 +276,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -311,7 +315,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -359,7 +363,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -396,7 +400,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 
@@ -432,7 +436,7 @@ public class EnableCachingDefinedRegionsUnitTests {
 
 		ConfigurableBeanFactory mockBeanFactory = mock(ConfigurableBeanFactory.class);
 
-		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockGemFireCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		Set<String> registeredBeanNames = new HashSet<>();
 

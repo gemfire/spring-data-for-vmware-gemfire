@@ -1,7 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode Region with GudRegion
+ */
+
 package org.springframework.data.gemfire.tests.mock.beans.factory.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +24,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,7 +38,7 @@ import lombok.ToString;
  * @author John Blum
  * @see Test
  * @see org.mockito.Mockito
- * @see Region
+ * @see GudRegion
  * @see RegionSpyingBeanPostProcessor
  * @since 0.0.22
  */
@@ -40,8 +47,8 @@ public class RegionSpyingBeanPostProcessorUnitTests {
 	@Test
 	public void spiesOnAllRegions() {
 
-		Region<?, ?> mockRegionOne = mock(Region.class, "MockRegionOne");
-		Region<?, ?> mockRegionTwo = mock(Region.class, "MockRegionTwo");
+		GudRegion<?, ?> mockRegionOne = mock(GudRegion.class, "MockRegionOne");
+		GudRegion<?, ?> mockRegionTwo = mock(GudRegion.class, "MockRegionTwo");
 
 		RegionSpyingBeanPostProcessor beanPostProcessor = spy(new RegionSpyingBeanPostProcessor());
 
@@ -64,8 +71,8 @@ public class RegionSpyingBeanPostProcessorUnitTests {
 	@Test
 	public void spiesOnTargetedRegions() {
 
-		Region<?, ?> mockRegionOne = mock(Region.class, "MockRegionOne");
-		Region<?, ?> mockRegionTwo = mock(Region.class, "MockRegionTwo");
+		GudRegion<?, ?> mockRegionOne = mock(GudRegion.class, "MockRegionOne");
+		GudRegion<?, ?> mockRegionTwo = mock(GudRegion.class, "MockRegionTwo");
 
 		RegionSpyingBeanPostProcessor beanPostProcessor =
 			spy(new RegionSpyingBeanPostProcessor("MockRegionOne"));
@@ -117,28 +124,28 @@ public class RegionSpyingBeanPostProcessorUnitTests {
 
 	@Test
 	public void isRegionReturnsTrue() {
-		assertThat(new RegionSpyingBeanPostProcessor().isRegion(mock(Region.class))).isTrue();
+		assertThat(new RegionSpyingBeanPostProcessor().isGudRegion(mock(GudRegion.class))).isTrue();
 	}
 
 	@Test
 	public void isRegionReturnsFalse() {
-		assertThat(new RegionSpyingBeanPostProcessor().isRegion("TEST")).isFalse();
+		assertThat(new RegionSpyingBeanPostProcessor().isGudRegion("TEST")).isFalse();
 	}
 
 	@Test
 	public void isRegionBeanNameMatchReturnsTrue() {
 
-		assertThat(new RegionSpyingBeanPostProcessor().isRegionBeanNameMatch("TestRegionBeanName")).isTrue();
+		assertThat(new RegionSpyingBeanPostProcessor().isGudRegionBeanNameMatch("TestRegionBeanName")).isTrue();
 
 		assertThat(new RegionSpyingBeanPostProcessor("TestRegionBeanName")
-			.isRegionBeanNameMatch("TestRegionBeanName")).isTrue();
+			.isGudRegionBeanNameMatch("TestRegionBeanName")).isTrue();
 	}
 
 	@Test
 	public void isRegionBeanNameMatchReturnsFalse() {
 
 		assertThat(new RegionSpyingBeanPostProcessor("TestRegionBeanName")
-			.isRegionBeanNameMatch("MockRegionBeanName")).isFalse();
+			.isGudRegionBeanNameMatch("MockRegionBeanName")).isFalse();
 	}
 
 	@Getter

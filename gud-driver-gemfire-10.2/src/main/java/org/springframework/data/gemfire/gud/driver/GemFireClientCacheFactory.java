@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -29,6 +33,7 @@
  * Description:
  * 2026-03-13: Created GemFire 10.2 ClientCacheFactory implementation
  * 2026-03-17: Added per-server connection methods (supported in 10.1+)
+ * 2026-04-02: Added package-private constructor for unit testing with a mock native factory
  */
 
 package org.springframework.data.gemfire.gud.driver;
@@ -59,6 +64,10 @@ public class GemFireClientCacheFactory implements GudClientCacheFactory {
 
     public GemFireClientCacheFactory(Properties properties) {
         this.nativeFactory = new ClientCacheFactory(properties);
+    }
+
+    GemFireClientCacheFactory(ClientCacheFactory nativeFactory) {
+        this.nativeFactory = nativeFactory;
     }
 
     @Override

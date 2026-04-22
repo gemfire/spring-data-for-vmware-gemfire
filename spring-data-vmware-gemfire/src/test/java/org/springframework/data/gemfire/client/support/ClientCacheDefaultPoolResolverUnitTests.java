@@ -1,8 +1,18 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
+
+import org.junit.Test;
+import org.springframework.data.gemfire.CacheResolver;
+import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -10,14 +20,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudPool;
-
-import org.springframework.data.gemfire.CacheResolver;
-import org.springframework.data.gemfire.client.PoolResolver;
 
 /**
  * Unit Tests for {@link ClientCacheDefaultPoolResolver}.
@@ -57,7 +59,7 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("CacheResolver for GudClientCache must not be null");
+			assertThat(expected).hasMessage("CacheResolver for ClientCache must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

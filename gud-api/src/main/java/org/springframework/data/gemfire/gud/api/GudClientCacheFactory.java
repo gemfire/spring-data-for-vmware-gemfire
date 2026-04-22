@@ -1,22 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -27,6 +13,7 @@
  * 2026-03-14: Changed per-server connection methods to default methods for API evolution
  * 2026-03-17: Fixed per-server connection method versions from 10.4 to 10.1
  * 2026-03-17: Added @Deprecated annotations for deprecated GemFire features
+ * 2026-04-02: Updated default methods to use GudCapability enum for type safety
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -132,7 +119,7 @@ public interface GudClientCacheFactory {
     default GudClientCacheFactory setPoolMinConnectionsPerServer(int minConnections) {
         throw new GudUnsupportedOperationException(
             "setPoolMinConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.1");
+            GudCapability.PER_SERVER_CONNECTION_LIMITS, "10.1");
     }
 
     /**
@@ -148,7 +135,7 @@ public interface GudClientCacheFactory {
     default GudClientCacheFactory setPoolMaxConnectionsPerServer(int maxConnections) {
         throw new GudUnsupportedOperationException(
             "setPoolMaxConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.1");
+            GudCapability.PER_SERVER_CONNECTION_LIMITS, "10.1");
     }
 
     GudClientCacheFactory setPoolMultiuserAuthentication(boolean multiuser);

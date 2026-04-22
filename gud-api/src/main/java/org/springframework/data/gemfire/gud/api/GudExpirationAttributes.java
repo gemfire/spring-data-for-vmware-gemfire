@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,6 +17,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudExpirationAttributes interface as 1:1 mapping of GemFire ExpirationAttributes
+ * 2026-04-01: Added DEFAULT constant and equals/hashCode support via of() record-style impl
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -22,6 +27,8 @@ package org.springframework.data.gemfire.gud.api;
  * Defines expiration settings for region entries.
  */
 public interface GudExpirationAttributes {
+
+    GudExpirationAttributes DEFAULT = of(0, GudExpirationAction.INVALIDATE);
 
     int getTimeout();
 

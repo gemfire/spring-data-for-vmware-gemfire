@@ -1,28 +1,20 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-14: Created GudCapability enum for driver capability detection
- * 2026-03-17: Fixed PER_SERVER_CONNECTION_LIMITS from 10.3 to 10.1, added DISK_STORE_SEGMENTS, removed 10.4 placeholders
+ * 2026-03-17: Fixed PER_SERVER_CONNECTION_LIMITS from 10.3 to 10.1, added DISK_STORE_SEGMENTS
  * 2026-03-31: Added SERVER_REGION_NAME capability (10.3+)
+ * 2026-04-02: Moved from gud-core to gud-api — capability set is an API contract, not an SPI detail
  */
 
-package org.springframework.data.gemfire.gud.core;
+package org.springframework.data.gemfire.gud.api;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -31,7 +23,10 @@ import java.util.stream.Collectors;
 /**
  * Enumeration of capabilities that may vary between GemFire versions.
  * Drivers report which capabilities they support, allowing spring-data-vmware-gemfire
- * to adapt behavior based on the available features.
+ * to adapt behaviour based on the available features.
+ *
+ * <p>Use {@link #forVersion(String)} to obtain the set of capabilities that should be
+ * available for a given GemFire version string.
  */
 public enum GudCapability {
 
@@ -72,16 +67,16 @@ public enum GudCapability {
     /**
      * Gets the minimum GemFire version required for this capability.
      *
-     * @return the minimum version string
+     * @return the minimum version string (e.g. {@code "10.1"})
      */
     public String getMinimumVersion() {
         return minimumVersion;
     }
 
     /**
-     * Returns capabilities available at or below the given version.
+     * Returns the set of capabilities available at or below the given GemFire version.
      *
-     * @param version the GemFire version to check against
+     * @param version the GemFire version to check against (e.g. {@code "10.1"})
      * @return set of capabilities available for that version
      */
     public static Set<GudCapability> forVersion(String version) {

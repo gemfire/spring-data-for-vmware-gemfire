@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -30,8 +34,8 @@ public enum RegionShortcutWrapper {
 	LOCAL(GudRegionShortcut.LOCAL, GudDataPolicy.NORMAL),
 	LOCAL_HEAP_LRU(GudRegionShortcut.LOCAL_HEAP_LRU, GudDataPolicy.NORMAL),
 	LOCAL_OVERFLOW(GudRegionShortcut.LOCAL_OVERFLOW, GudDataPolicy.NORMAL),
-	LOCAL_PERSISTENT(GudRegionShortcut.LOCAL_PERSISTENT, GudDataPolicy.PERSISTENT_REPLICATE),
-	LOCAL_PERSISTENT_OVERFLOW(GudRegionShortcut.LOCAL_PERSISTENT_OVERFLOW, GudDataPolicy.PERSISTENT_REPLICATE),
+	LOCAL_PERSISTENT(GudRegionShortcut.LOCAL_PERSISTENT, GudDataPolicy.NORMAL),
+	LOCAL_PERSISTENT_OVERFLOW(GudRegionShortcut.LOCAL_PERSISTENT_OVERFLOW, GudDataPolicy.NORMAL),
 	UNSPECIFIED(null, null);
 
 	private final GudDataPolicy dataPolicy;

@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,6 +23,7 @@
  * Description:
  * 2026-03-11: Created GudCache interface as 1:1 mapping of GemFire Cache
  * 2026-03-17: Removed hypothetical 10.4 features
+ * 2026-04-17: Marked deprecated — GUD is client-only; peer cache is outside supported application API
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -26,9 +31,16 @@ package org.springframework.data.gemfire.gud.api;
 import java.util.Set;
 
 /**
- * GUD API abstraction for GemFire Cache interface.
- * Represents a peer cache in a GemFire distributed system.
+ * GUD API abstraction for GemFire {@code Cache} (peer / server-side cache).
+ *
+ * @deprecated The GUD contract is <strong>client-only</strong>. Application code should use
+ *             {@link GudClientCache} and {@link GudClientRegionFactory}. Peer caches and server
+ *             regions belong in integration tests with
+ *             <a href="https://github.com/gemfire/gemfire-testcontainers">GemFire Testcontainers</a>,
+ *             not in the supported GUD surface. This type remains for legacy transaction/function
+ *             signatures and driver adapters until those call sites are migrated.
  */
+@Deprecated(since = "4.0")
 public interface GudCache extends GudRegionService {
 
     String getName();

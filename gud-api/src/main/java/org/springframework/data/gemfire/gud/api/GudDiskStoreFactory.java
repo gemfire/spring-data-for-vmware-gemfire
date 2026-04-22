@@ -1,27 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -30,6 +11,7 @@
  * 2026-03-11: Created GudDiskStoreFactory interface as 1:1 mapping of GemFire DiskStoreFactory
  * 2026-03-14: Added version-aware default method for setSegments (requires 10.1+)
  * 2026-03-17: Fixed setSegments version from 10.2 to 10.1
+ * 2026-04-02: Updated default method to use GudCapability enum for type safety
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -80,7 +62,7 @@ public interface GudDiskStoreFactory {
     default GudDiskStoreFactory setSegments(int segments) {
         throw new GudUnsupportedOperationException(
             "setSegments() is not supported. This feature was added in GemFire 10.1.",
-            "DISK_STORE_SEGMENTS", "10.1");
+            GudCapability.DISK_STORE_SEGMENTS, "10.1");
     }
 
     GudDiskStore create(String name);

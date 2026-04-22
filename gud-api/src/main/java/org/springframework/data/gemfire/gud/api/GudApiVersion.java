@@ -1,12 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -14,18 +10,22 @@
  * Description:
  * 2026-03-14: Created GudApiVersion class for version compatibility checking
  * 2026-03-17: Removed V1_1 (10.4) placeholder
+ * 2026-04-02: Moved from gud-core to gud-api — version contract belongs with the API
  */
 
-package org.springframework.data.gemfire.gud.core;
+package org.springframework.data.gemfire.gud.api;
 
 /**
  * Represents a GUD API version for compatibility checking.
  * Used to determine if a driver is compatible with a given API version.
+ *
+ * <p>Parse a version string with {@link #parse(String)} and compare instances
+ * with {@link #compareTo(GudApiVersion)} or {@link #isCompatibleWith(GudApiVersion)}.
  */
 public final class GudApiVersion implements Comparable<GudApiVersion> {
 
-    /** GUD API version 1.0 - initial release supporting GemFire 10.0 through 10.3 */
-    public static final GudApiVersion V1_0 = new GudApiVersion(1, 0, 0);
+    /** GUD API version 1.0 — initial release supporting GemFire 10.0 through 10.3. */
+    public static final GudApiVersion V1_0_0 = new GudApiVersion(1, 0, 0);
 
     private final int major;
     private final int minor;
@@ -46,9 +46,11 @@ public final class GudApiVersion implements Comparable<GudApiVersion> {
 
     /**
      * Parses a version string into a GudApiVersion.
+     * Supports {@code "1.0"}, {@code "1.0.0"}, or any number of dot-separated integer segments.
      *
-     * @param version the version string (e.g., "1.0.0" or "1.1")
+     * @param version the version string
      * @return the parsed GudApiVersion
+     * @throws NumberFormatException if any segment is not a valid integer
      */
     public static GudApiVersion parse(String version) {
         String[] parts = version.split("\\.");
@@ -88,10 +90,10 @@ public final class GudApiVersion implements Comparable<GudApiVersion> {
 
     /**
      * Checks if this version is compatible with another version.
-     * Compatibility means same major version and this version's minor >= other's minor.
+     * Compatibility means the same major version and this version's minor &gt;= other's minor.
      *
      * @param other the other version to check compatibility with
-     * @return true if compatible
+     * @return {@code true} if compatible
      */
     public boolean isCompatibleWith(GudApiVersion other) {
         return this.major == other.major && this.minor >= other.minor;

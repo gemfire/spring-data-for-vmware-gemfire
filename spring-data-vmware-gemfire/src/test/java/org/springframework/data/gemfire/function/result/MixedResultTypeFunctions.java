@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -29,7 +33,7 @@ public class MixedResultTypeFunctions {
 	public static class SingleObjectFunction implements GudFunction {
 
 		@Override
-		public void execute(GudFunctionContext<BigDecimal> functionContext) {
+		public void execute(GudFunctionContext functionContext) {
 			functionContext.getResultSender().lastResult(new BigDecimal(5));
 		}
 
@@ -42,7 +46,7 @@ public class MixedResultTypeFunctions {
 	public static class ListObjectFunction implements GudFunction {
 
 		@Override
-		public void execute(GudFunctionContext<List<BigDecimal>> functionContext) {
+		public void execute(GudFunctionContext functionContext) {
 			functionContext.getResultSender().lastResult(Collections.singletonList(new BigDecimal(10)));
 		}
 
@@ -55,7 +59,7 @@ public class MixedResultTypeFunctions {
 	public static class SinglePrimitiveFunction implements GudFunction {
 
 		@Override
-		public void execute(GudFunctionContext<Integer> functionContext) {
+		public void execute(GudFunctionContext functionContext) {
 			functionContext.getResultSender().lastResult(7);
 		}
 

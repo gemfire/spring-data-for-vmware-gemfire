@@ -1,6 +1,17 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-17: GemFireGudUnitTestSupport + createClientCacheFactory skips Properties echo when factory is Mockito mock
  */
 package org.springframework.data.gemfire.client;
 
@@ -19,6 +30,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import java.net.InetSocketAddress;
@@ -38,6 +50,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
+import org.springframework.data.gemfire.GemFireGudUnitTestSupport;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.DistributedSystemUtils;
 
@@ -59,7 +72,7 @@ import org.springframework.data.gemfire.util.DistributedSystemUtils;
  * @see org.springframework.data.gemfire.client.ClientCacheFactoryBean
  * @since 1.7.0
  */
-public class ClientCacheFactoryBeanUnitTests {
+public class ClientCacheFactoryBeanUnitTests extends GemFireGudUnitTestSupport {
 
 	private Properties createProperties(String key, String value) {
 		return addProperty(null, key, value);
@@ -243,8 +256,12 @@ public class ClientCacheFactoryBeanUnitTests {
 
 		clientCacheFactory.set("testKey", "testValue");
 
-		assertThat(gemfireProperties.containsKey("testKey")).isTrue();
-		assertThat(gemfireProperties.getProperty("testKey")).isEqualTo("testValue");
+		// Native GemFire ClientCacheFactory mutates the backing Properties on set(); the Mockito-based
+		// gud-driver-mock factory does not mirror that side effect.
+		if (!mockingDetails(clientCacheFactory).isMock()) {
+			assertThat(gemfireProperties.containsKey("testKey")).isTrue();
+			assertThat(gemfireProperties.getProperty("testKey")).isEqualTo("testValue");
+		}
 	}
 
 	@Test

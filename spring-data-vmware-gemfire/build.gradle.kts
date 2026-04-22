@@ -1,17 +1,16 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-17: Dropped Nebula facet plugin (Gradle 9 removed ConfigurableReport.setDestination(File));
+ *             declare integrationTest source set + Test task explicitly for Gradle 9.4+
+ * 2026-04-17: Do not wire integrationTest into check until src/integrationTest compiles cleanly again
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
@@ -40,11 +39,12 @@ plugins {
 }
 
 sourceSets {
-  register("integrationTest") {
-    compileClasspath += sourceSets.main.get().output + sourceSets.test.get().output
-    runtimeClasspath += sourceSets.main.get().output + sourceSets.test.get().output
-    java.srcDir("src/integrationTest/java")
-    resources.srcDir("src/test/resources")
+  create("integrationTest") {
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += sourceSets.test.get().output
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += sourceSets.test.get().output
+    java.setSrcDirs(listOf("src/integrationTest/java"))
   }
 }
 
@@ -56,6 +56,13 @@ configurations {
   getByName("integrationTestRuntimeOnly") {
     extendsFrom(configurations.runtimeOnly.get())
     extendsFrom(configurations.getByName("testRuntimeOnly"))
+  }
+  // integrationTest runs against a real GemFire GUD driver only; gud-driver-mock must not
+  // appear on this classpath or ServiceLoader may pick the mock as the default driver.
+  listOf("integrationTestCompileClasspath", "integrationTestRuntimeClasspath").forEach { name ->
+    named(name) {
+      exclude(group = "com.vmware.gemfire", module = "gud-driver-mock")
+    }
   }
 }
 
@@ -122,6 +129,7 @@ dependencies {
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.vintage.engine)
   testRuntimeOnly(libs.junit.jupiter.engine)
+  testRuntimeOnly(libs.junit.platform.launcher)
 
   testImplementation(libs.junit)
   testImplementation(libs.assertJ)
@@ -132,20 +140,35 @@ dependencies {
   testImplementation(libs.awaitility)
   testImplementation(libs.gemfire.testcontainers)
   testImplementation(project(":spring-test-vmware-gemfire"))
+
+  // In-memory mock GUD driver for unit tests — registers MockGudDriver via ServiceLoader
+  // so GudCacheProvider / GudDriverManager always have a driver on the test classpath.
+  testImplementation(project(":gud-driver-mock"))
+
+  // Integration tests run against a real GemFire driver.  Which driver is selected
+  // is controlled by the `gudIntegrationDriver` Gradle property (default: 10.3).
+  val integrationDriver = (findProperty("gudIntegrationDriver") as String?) ?: "10.3"
+  // Native GemFire on compile classpath (driver uses `implementation` for Geode, so it does not
+  // propagate here).  `libs.bundles.gemfire` matches the selected driver line (10.3.+ from BOM).
+  "integrationTestImplementation"(libs.bundles.gemfire)
+  "integrationTestImplementation"(project(":gud-driver-gemfire-$integrationDriver"))
+  // Integration sources under src/integrationTest reference types compiled in src/test (e.g.
+  // example.app.model.*); expose that output on the integration test compile classpath.
+  "integrationTestImplementation"(sourceSets.test.get().output)
 }
 
 tasks {
   test {
     dependsOn("testJar")
   }
-  this.register<Test>("integrationTest") {
+  register<Test>("integrationTest") {
     description = "Runs the integration tests."
     group = "verification"
 
+    dependsOn("testJar", "compileIntegrationTestJava", "processIntegrationTestResources")
+
     testClassesDirs = sourceSets["integrationTest"].output.classesDirs
     classpath = sourceSets["integrationTest"].runtimeClasspath
-
-    dependsOn("testJar")
 
     forkEvery = 1
     maxParallelForks = 2
@@ -227,7 +250,8 @@ tasks.register("copyJavadocsToBucket") {
   doLast {
     val storage =
       StorageOptions.newBuilder().setProjectId(project.properties["docsGCSProject"].toString()).setCredentials(
-        GoogleCredentials.fromStream(FileInputStream(project.properties["docsGCSProjectCredentials"].toString()))).build().getService()
+        GoogleCredentials.fromStream(FileInputStream(project.properties["docsGCSProjectCredentials"].toString()))
+      ).build().getService()
     val blobId = BlobId.of(
       project.properties["docsGCSBucket"].toString(),
       "${publishingDetails.artifactName.get()}/${project.version}/${

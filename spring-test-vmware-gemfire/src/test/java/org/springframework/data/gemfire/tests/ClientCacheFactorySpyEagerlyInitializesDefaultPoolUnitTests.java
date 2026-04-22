@@ -1,31 +1,36 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-02: Migrated from native ClientCacheFactory/Pool/PoolManager to GudClientCacheFactory/GudPool;
+ *             assertions on DEFAULT pool now use GudClientCache.getDefaultPool()
  */
 package org.springframework.data.gemfire.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 import org.junit.After;
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolManager;
-
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
 
 /**
- * Unit Tests asserting that when the {@link ClientCacheFactory} is spied on, the {@literal DEFAULT} {@link Pool}
+ * Unit Tests asserting that when a {@link GudClientCacheFactory} is spied on, the {@literal DEFAULT} {@link GudPool}
  * is eagerly created, configured and initialized.
  *
  * @author John Blum
- * @see Test
- * @see ClientCache
- * @see ClientCacheFactory
- * @see Pool
- * @see PoolManager
+ * @see GudClientCache
+ * @see GudClientCacheFactory
+ * @see GudPool
+ * @see GemFireMockObjectsSupport
  * @since 0.0.8
  */
 public class ClientCacheFactorySpyEagerlyInitializesDefaultPoolUnitTests {
@@ -38,7 +43,10 @@ public class ClientCacheFactorySpyEagerlyInitializesDefaultPoolUnitTests {
 	@Test
 	public void clientCacheFactorySpyEagerlyInitializesDefaultPool() {
 
-		ClientCacheFactory clientCacheFactory = GemFireMockObjectsSupport.spyOn(new ClientCacheFactory())
+		GudClientCacheFactory clientCacheFactory = GemFireMockObjectsSupport
+			.spyOn(mock(GudClientCacheFactory.class));
+
+		clientCacheFactory
 			.set("name", "TestClientCache")
 			.setPoolFreeConnectionTimeout(30000)
 			.setPoolIdleTimeout(120000)
@@ -59,20 +67,16 @@ public class ClientCacheFactorySpyEagerlyInitializesDefaultPoolUnitTests {
 			.setPoolSubscriptionAckInterval(15000)
 			.setPoolSubscriptionEnabled(true)
 			.setPoolSubscriptionMessageTrackingTimeout(300000)
-			.setPoolSubscriptionRedundancy(2)
-			.setPoolThreadLocalConnections(false);
+			.setPoolSubscriptionRedundancy(2);
 
-		assertThat(PoolManager.find("DEFAULT")).isNull();
-
-		ClientCache testClientCache = clientCacheFactory.create();
+		GudClientCache testClientCache = clientCacheFactory.create();
 
 		assertThat(testClientCache).isNotNull();
 		assertThat(testClientCache.getName()).isEqualTo("TestClientCache");
 
-		Pool defaultPool = PoolManager.find("DEFAULT");
+		GudPool defaultPool = testClientCache.getDefaultPool();
 
 		assertThat(defaultPool).isNotNull();
-		assertThat(defaultPool).isSameAs(testClientCache.getDefaultPool());
 		assertThat(defaultPool.getName()).isEqualTo("DEFAULT");
 		assertThat(defaultPool.getFreeConnectionTimeout()).isEqualTo(30000);
 		assertThat(defaultPool.getIdleTimeout()).isEqualTo(120000);
@@ -87,7 +91,6 @@ public class ClientCacheFactorySpyEagerlyInitializesDefaultPoolUnitTests {
 		assertThat(defaultPool.getReadTimeout()).isEqualTo(10000);
 		assertThat(defaultPool.getRetryAttempts()).isEqualTo(2);
 		assertThat(defaultPool.getServerGroup()).isEqualTo("TestServerGroup");
-		assertThat(defaultPool.getSocketBufferSize()).isEqualTo(16384);
 		assertThat(defaultPool.getSocketBufferSize()).isEqualTo(16384);
 		assertThat(defaultPool.getSocketConnectTimeout()).isEqualTo(20000);
 		assertThat(defaultPool.getStatisticInterval()).isEqualTo(2000);

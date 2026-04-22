@@ -1,24 +1,26 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.gemfire.client.PoolResolver;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudPool;
-
-import org.springframework.data.gemfire.client.PoolResolver;
 
 /**
  * Unit Tests for {@link SinglePoolPoolResolver}.
@@ -56,7 +58,7 @@ public class SinglePoolPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GudPool must not be null");
+			assertThat(expected).hasMessage("Pool must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -88,7 +90,7 @@ public class SinglePoolPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GudPool must not be null");
+			assertThat(expected).hasMessage("Pool must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -107,7 +109,7 @@ public class SinglePoolPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GudClientCache must not be null");
+			assertThat(expected).hasMessage("ClientCache must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,7 +22,7 @@ public class AddressFieldFunction implements GudFunction {
   }
 
   @Override
-  public void execute(GudFunctionContext<Object> context) {
+  public void execute(GudFunctionContext context) {
     Object[] args = (Object[]) context.getArguments();
 
     GudPdxInstance address = (GudPdxInstance) args[0];

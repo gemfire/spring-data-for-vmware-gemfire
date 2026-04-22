@@ -1,8 +1,22 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -14,17 +28,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudPool;
 
 /**
  * Unit Tests for {@link PoolResolver}.
@@ -168,7 +171,7 @@ public class PoolResolverUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("GudPool with name [MockPool] not found");
+			assertThat(expected).hasMessage("Pool with name [MockPool] not found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

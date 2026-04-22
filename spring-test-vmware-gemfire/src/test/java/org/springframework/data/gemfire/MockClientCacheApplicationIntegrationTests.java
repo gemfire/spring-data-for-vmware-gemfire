@@ -1,6 +1,5 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 package org.springframework.data.gemfire;
 
@@ -13,11 +12,9 @@ import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-import org.apache.geode.internal.cache.GemFireCacheImpl;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,20 +47,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MockClientCacheApplicationIntegrationTests {
 
   @Autowired
-  private ClientCache clientCache;
+  private GudClientCache clientCache;
 
   @Resource(name = "Example")
-  private Region<Object, Object> example;
+  private GudRegion<Object, Object> example;
 
   @Test
   public void clientCacheIsMocked() {
 
     assertThat(this.clientCache).isNotNull();
-    assertThat(this.clientCache).isInstanceOf(ClientCache.class);
-    assertThat(this.clientCache).isNotInstanceOf(GemFireCacheImpl.class);
+    assertThat(this.clientCache).isInstanceOf(GudClientCache.class);
     assertThat(this.clientCache.isClosed()).isFalse();
 
-    Set<Region<?, ?>> rootRegions = this.clientCache.rootRegions();
+    Set<GudRegion<?, ?>> rootRegions = this.clientCache.rootRegions();
 
     assertThat(rootRegions).isNotNull();
     assertThat(rootRegions).hasSize(1);
@@ -93,13 +89,13 @@ public class MockClientCacheApplicationIntegrationTests {
   static class TestConfiguration {
 
     @Bean("Example")
-    public ClientRegionFactoryBean<Object, Object> exampleRegion(ClientCache gemfireCache) {
+    public ClientRegionFactoryBean<Object, Object> exampleRegion(GudClientCache gemfireCache) {
 
       ClientRegionFactoryBean<Object, Object> exampleRegion = new ClientRegionFactoryBean<>();
 
       exampleRegion.setCache(gemfireCache);
       exampleRegion.setClose(false);
-      exampleRegion.setShortcut(ClientRegionShortcut.LOCAL);
+      exampleRegion.setShortcut(GudClientRegionShortcut.LOCAL);
 
       return exampleRegion;
     }

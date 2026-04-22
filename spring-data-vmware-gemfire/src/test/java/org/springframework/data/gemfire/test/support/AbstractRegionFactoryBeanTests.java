@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -37,7 +41,7 @@ public abstract class AbstractRegionFactoryBeanTests {
 
 	@Before
 	public void setUp() throws Exception {
-		this.cache = GemFireMockObjectsSupport.mockClientCache();
+		this.cache = GemFireMockObjectsSupport.mockGudClientCache();
 	}
 
 	@After

@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -247,9 +251,6 @@ public class ClientRegionFactoryBean<K, V> extends ConfigurableRegionFactoryBean
 				}
 				else if (GudDataPolicy.NORMAL.equals(dataPolicy)) {
 					resolvedShortcut = GudClientRegionShortcut.CACHING_PROXY;
-				}
-				else if (GudDataPolicy.PERSISTENT_REPLICATE.equals(dataPolicy)) {
-					resolvedShortcut = GudClientRegionShortcut.LOCAL_PERSISTENT;
 				}
 				else {
 					throw newIllegalArgumentException("Data Policy [%s] is not valid for a client Region", dataPolicy);

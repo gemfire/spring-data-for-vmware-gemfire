@@ -1,8 +1,26 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.cache.Cache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -12,18 +30,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.cache.Cache;
 
 /**
  * Unit Tests for {@link GemfireCacheManager}.
@@ -146,7 +152,7 @@ public class GemfireCacheManagerUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("No GudRegion for cache name [Example] was found");
+			assertThat(expected).hasMessage("No Region for cache name [Example] was found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -163,7 +169,7 @@ public class GemfireCacheManagerUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("GudRegion [Example] has been destroyed");
+			assertThat(expected).hasMessage("Region [Example] has been destroyed");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

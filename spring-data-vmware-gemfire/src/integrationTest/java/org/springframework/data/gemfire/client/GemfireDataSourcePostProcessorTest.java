@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -88,7 +92,7 @@ public class GemfireDataSourcePostProcessorTest {
 		when(mockRegion.getParentRegion()).thenReturn(null);
 		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
-		when(mockRegionAttributes.getDataPolicy()).thenReturn(GudDataPolicy.REPLICATE);
+		when(mockRegionAttributes.getDataPolicy()).thenReturn(GudDataPolicy.NORMAL);
 		when(mockRegionAttributes.getScope()).thenReturn(GudScope.DISTRIBUTED_ACK);
 
 		return mockRegion;

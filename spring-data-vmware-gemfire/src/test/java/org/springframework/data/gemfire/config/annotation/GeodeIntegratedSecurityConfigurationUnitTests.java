@@ -1,6 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 package org.springframework.data.gemfire.config.annotation;
 
@@ -54,7 +53,7 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 
 	}
 
-	private static class TestSecurityPostProcessor implements org.apache.geode.security.PostProcessor {
+	private static class TestSecurityPostProcessor implements org.springframework.data.gemfire.gud.api.GudPostProcessor {
 
 		@Override
 		public Object processRegionValue(Object principal, String regionName, Object key, Object value) {

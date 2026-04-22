@@ -1,20 +1,28 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-02: Migrated from native ClientCacheFactory/ClientCache to GudClientCacheFactory/GudClientCache;
+ *             properties are now set via factory.set() rather than constructor argument
  */
 package org.springframework.data.gemfire.tests.mock;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
 import org.junit.After;
 import org.junit.Test;
 
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.support.AbstractSecurityManager;
 
@@ -23,8 +31,8 @@ import org.springframework.data.gemfire.tests.support.AbstractSecurityManager;
  *
  * @author John Blum
  * @see Properties
- * @see Test
- * @see ClientCacheFactory
+ * @see GudClientCacheFactory
+ * @see GudClientCache
  * @see IntegrationTestsSupport
  * @see GemFireMockObjectsSupport
  * @see AbstractSecurityManager
@@ -46,14 +54,13 @@ public class GemFireMockObjectsSupportIntegrationTests extends IntegrationTestsS
 	@Test
 	public void constructsGemFireObjectsFromPropertiesSuccessfully() {
 
-		Properties gemfireProperties = new Properties();
-
-		gemfireProperties.setProperty("name", "TestConstructsGemFireObjectsFromPropertiesSuccessfully");
-		gemfireProperties.setProperty("security-manager", TestSecurityManager.class.getName());
-
 		assertThat(TestSecurityManager.constructed.get()).isFalse();
 
-		GemFireMockObjectsSupport.spyOn(new ClientCacheFactory(gemfireProperties)).create();
+		GudClientCacheFactory factory = GemFireMockObjectsSupport.spyOn(mock(GudClientCacheFactory.class));
+
+		factory.set("name", "TestConstructsGemFireObjectsFromPropertiesSuccessfully");
+		factory.set("security-manager", TestSecurityManager.class.getName());
+		factory.create();
 
 		assertThat(TestSecurityManager.constructed.get()).isTrue();
 	}
@@ -61,17 +68,16 @@ public class GemFireMockObjectsSupportIntegrationTests extends IntegrationTestsS
 	@Test
 	public void destroysConstructedGemFireObjectsFromPropertiesSuccessfully() {
 
-		Properties gemfireProperties = new Properties();
-
-		gemfireProperties.setProperty("name", "TestConstructsGemFireObjectsFromPropertiesSuccessfully");
-		gemfireProperties.setProperty("security-manager", TestSecurityManager.class.getName());
-		gemfireProperties.setProperty("security-post-processor", TestSecurityPostProcessor.class.getName());
-
 		assertThat(TestSecurityManager.constructed.get()).isFalse();
 		assertThat(TestSecurityManager.destroyed.get()).isFalse();
 		assertThat(TestSecurityPostProcessor.constructed.get()).isFalse();
 
-		GemFireMockObjectsSupport.spyOn(new ClientCacheFactory(gemfireProperties)).create();
+		GudClientCacheFactory factory = GemFireMockObjectsSupport.spyOn(mock(GudClientCacheFactory.class));
+
+		factory.set("name", "TestConstructsGemFireObjectsFromPropertiesSuccessfully");
+		factory.set("security-manager", TestSecurityManager.class.getName());
+		factory.set("security-post-processor", TestSecurityPostProcessor.class.getName());
+		factory.create();
 
 		assertThat(TestSecurityManager.constructed.get()).isTrue();
 		assertThat(TestSecurityManager.destroyed.get()).isFalse();
@@ -92,19 +98,15 @@ public class GemFireMockObjectsSupportIntegrationTests extends IntegrationTestsS
 			System.setProperty("gemfire.locators", "skullbox[12345]");
 			System.setProperty("non-gemfire.property", "test");
 
-			Properties gemfireProperties = new Properties();
+			GudClientCacheFactory mockCacheFactory = GemFireMockObjectsSupport.spyOn(mock(GudClientCacheFactory.class));
 
-			gemfireProperties.setProperty("log-level", "info");
-			gemfireProperties.setProperty("jmx-manager-port", "1199");
-			gemfireProperties.setProperty("groups", "test,mock");
-
-			ClientCacheFactory mockCacheFactory =
-				GemFireMockObjectsSupport.spyOn(new ClientCacheFactory(gemfireProperties));
-
+			mockCacheFactory.set("log-level", "info");
+			mockCacheFactory.set("jmx-manager-port", "1199");
+			mockCacheFactory.set("groups", "test,mock");
 			mockCacheFactory.set("groups", "qa,test,testers");
 			mockCacheFactory.set("conserve-sockets", "true");
 
-			ClientCache mockCache = mockCacheFactory.create();
+			GudClientCache mockCache = mockCacheFactory.create();
 
 			assertThat(mockCache).isNotNull();
 			assertThat(mockCache.getDistributedSystem()).isNotNull();

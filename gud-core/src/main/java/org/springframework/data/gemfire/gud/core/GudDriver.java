@@ -1,27 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -32,38 +13,50 @@
  * 2026-03-14: Added capability detection and version information for API evolution
  * 2026-03-17: Removed hypothetical 10.4 feature detection convenience methods
  * 2026-03-31: Added supportsServerRegionName convenience method
+ * 2026-04-02: Updated imports — GudCapability/GudApiVersion moved to gud-api; added createJndiBinding/createPoolManager
+ * 2026-04-17: Removed peer-cache factory and wrapCache from SPI — GUD drivers are client-only
+ * 2026-04-17: Added eviction-attribute factory methods for GudEvictionAttributes static delegation
  */
 
 package org.springframework.data.gemfire.gud.core;
 
 import java.util.Set;
 
-import org.springframework.data.gemfire.gud.api.GudCache;
-import org.springframework.data.gemfire.gud.api.GudCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudApiVersion;
+import org.springframework.data.gemfire.gud.api.GudCapability;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
 import org.springframework.data.gemfire.gud.api.GudGemFireException;
+import org.springframework.data.gemfire.gud.api.GudJndiBinding;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolManager;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Main interface for GemFire Unified Driver implementations.
  * Each GemFire version provides its own driver implementation that wraps
  * native GemFire types with GUD API interfaces.
+ *
+ * <p>Drivers are discovered via Java's {@link java.util.ServiceLoader} mechanism.
+ * Register a driver by placing its fully-qualified class name in
+ * {@code META-INF/services/org.springframework.data.gemfire.gud.core.GudDriver}.
  */
 public interface GudDriver {
 
     // ===== Identity =====
 
     /**
-     * Gets the name of this driver.
+     * Gets the name of this driver (e.g. {@code "gemfire-10.3"}).
      *
      * @return the driver name
      */
     String getName();
 
     /**
-     * Gets the GemFire version this driver supports.
+     * Gets the GemFire version this driver supports (e.g. {@code "10.3"}).
      *
      * @return the supported GemFire version
      */
@@ -91,7 +84,7 @@ public interface GudDriver {
      * Checks if this driver supports a specific capability.
      *
      * @param capability the capability to check
-     * @return true if supported
+     * @return {@code true} if supported
      */
     boolean supportsCapability(GudCapability capability);
 
@@ -106,29 +99,51 @@ public interface GudDriver {
 
     /**
      * Creates a new client cache factory for building client caches.
-     * This allows applications to create caches without referencing native GemFire types.
+     * A fresh factory instance is returned on each call.
      *
      * @return a new GudClientCacheFactory instance
      */
     GudClientCacheFactory createClientCacheFactory();
 
     /**
-     * Creates a new cache factory for building peer caches.
-     * This allows applications to create caches without referencing native GemFire types.
+     * Returns the JNDI binding implementation for this driver.
+     * Implementations may return a shared singleton.
      *
-     * @return a new GudCacheFactory instance
+     * @return a GudJndiBinding instance
      */
-    GudCacheFactory createCacheFactory();
-
-    // ===== Wrapping =====
+    GudJndiBinding createJndiBinding();
 
     /**
-     * Wraps a native cache object with the GUD API.
+     * Returns the pool manager implementation for this driver.
+     * Implementations may return a shared singleton.
      *
-     * @param nativeCache the native GemFire cache
-     * @return a GUD API cache wrapper
+     * @return a GudPoolManager instance
      */
-    GudCache wrapCache(Object nativeCache);
+    GudPoolManager createPoolManager();
+
+    // ===== Eviction attribute factories (used by GudEvictionAttributes static methods) =====
+
+    /**
+     * Creates LRU-heap eviction attributes (native-backed in real drivers).
+     */
+    GudEvictionAttributes createLruHeapEvictionAttributes(GudObjectSizer objectSizer, GudEvictionAction action);
+
+    /**
+     * Creates LRU-memory eviction attributes with an explicit maximum.
+     */
+    GudEvictionAttributes createLruMemoryEvictionAttributes(int maximum, GudObjectSizer objectSizer, GudEvictionAction action);
+
+    /**
+     * Creates LRU-memory eviction attributes using only an object sizer and action.
+     */
+    GudEvictionAttributes createLruMemoryEvictionAttributesFromSizer(GudObjectSizer objectSizer, GudEvictionAction action);
+
+    /**
+     * Creates LRU-entry eviction attributes.
+     */
+    GudEvictionAttributes createLruEntryEvictionAttributes(int maximum, GudEvictionAction action);
+
+    // ===== Wrapping =====
 
     /**
      * Wraps a native client cache object with the GUD API.
@@ -180,16 +195,16 @@ public interface GudDriver {
     /**
      * Checks if this driver supports per-server connection limits.
      *
-     * @return true if per-server connection limits are supported
+     * @return {@code true} if {@link GudCapability#PER_SERVER_CONNECTION_LIMITS} is supported
      */
     default boolean supportsPerServerConnectionLimits() {
         return supportsCapability(GudCapability.PER_SERVER_CONNECTION_LIMITS);
     }
 
     /**
-     * Checks if this driver supports disk store segments API.
+     * Checks if this driver supports the disk store segments API.
      *
-     * @return true if disk store segments are supported
+     * @return {@code true} if {@link GudCapability#DISK_STORE_SEGMENTS} is supported
      */
     default boolean supportsDiskStoreSegments() {
         return supportsCapability(GudCapability.DISK_STORE_SEGMENTS);
@@ -198,7 +213,7 @@ public interface GudDriver {
     /**
      * Checks if this driver supports server region name mapping on client regions.
      *
-     * @return true if server region name is supported
+     * @return {@code true} if {@link GudCapability#SERVER_REGION_NAME} is supported
      */
     default boolean supportsServerRegionName() {
         return supportsCapability(GudCapability.SERVER_REGION_NAME);

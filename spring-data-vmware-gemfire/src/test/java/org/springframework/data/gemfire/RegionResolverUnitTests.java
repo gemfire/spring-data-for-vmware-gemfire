@@ -1,8 +1,15 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
+
+import org.junit.Test;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -12,10 +19,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-
-import org.springframework.data.gemfire.gud.api.GudRegion;
 
 /**
  * Unit Tests for {@link RegionResolver}.
@@ -59,7 +62,7 @@ public class RegionResolverUnitTests {
 		}
 		catch (IllegalStateException expected) {
 
-			assertThat(expected).hasMessage("GudRegion with name [TestRegion] not found");
+			assertThat(expected).hasMessage("Region with name [TestRegion] not found");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

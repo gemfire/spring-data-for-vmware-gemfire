@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-11: Created GudCqEvent interface as 1:1 mapping of GemFire CqEvent
+ * 2026-03-31: Changed getBaseOperation/getQueryOperation to return GudOperation
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -20,9 +25,9 @@ public interface GudCqEvent {
 
     GudCqQuery getCq();
 
-    GudCqEventType getBaseOperation();
+    GudOperation getBaseOperation();
 
-    GudCqEventType getQueryOperation();
+    GudOperation getQueryOperation();
 
     Object getKey();
 

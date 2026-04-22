@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -27,6 +31,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 import org.springframework.core.io.Resource;
+import org.springframework.data.gemfire.GemFireGudUnitTestSupport;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 
@@ -44,7 +49,7 @@ import org.springframework.data.gemfire.support.ConnectionEndpoint;
  * @see org.springframework.data.gemfire.config.annotation.ClientCacheConfiguration
  * @since 2.4.0
  */
-public class ClientCacheConfigurationUnitTests {
+public class ClientCacheConfigurationUnitTests extends GemFireGudUnitTestSupport {
 
 	@Test
 	public void configuresClientCacheFactoryBean() {
@@ -221,7 +226,7 @@ public class ClientCacheConfigurationUnitTests {
 
 		doReturn(false).when(mockBeanFactory).isTypeMatch(anyString(), eq(GudSocketFactory.class));
 		doReturn(true).when(mockBeanFactory).containsBean(eq("testSocketFactory"));
-		doReturn(javax.net.GudSocketFactory.class).when(mockBeanFactory).getType(eq("testSocketFactory"));
+		doReturn(javax.net.SocketFactory.class).when(mockBeanFactory).getType(eq("testSocketFactory"));
 
 		ClientCacheConfiguration configuration = new ClientCacheConfiguration();
 
@@ -238,7 +243,7 @@ public class ClientCacheConfigurationUnitTests {
 
 			assertThat(expected)
 				.hasMessageContaining("Bean named 'testSocketFactory' is expected to be of type '%s' but was actually of type '%s'",
-					GudSocketFactory.class.getName(), javax.net.GudSocketFactory.class.getName());
+					GudSocketFactory.class.getName(), javax.net.SocketFactory.class.getName());
 
 			assertThat(expected).hasNoCause();
 

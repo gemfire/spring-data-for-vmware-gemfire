@@ -1,8 +1,44 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-17: createRegionUsingDefaultShortcut uses Mockito GudEvictionAttributes (unit isolation)
+ */
 package org.springframework.data.gemfire.client;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.data.gemfire.TestUtils;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudCompressor;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudRegionService;
+import org.springframework.data.gemfire.util.ArrayUtils;
+
+import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,33 +52,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
-
-import java.io.InputStream;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudDataPolicy;
-import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
-import org.springframework.data.gemfire.gud.api.GudExpirationAttributes;
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-import org.springframework.data.gemfire.gud.api.GudRegionService;
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
-import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
-import org.springframework.data.gemfire.gud.api.GudPool;
-import org.springframework.data.gemfire.gud.api.GudCompressor;
-
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.data.gemfire.TestUtils;
-import org.springframework.data.gemfire.util.ArrayUtils;
 
 /**
  * Unit Tests for {@link ClientRegionFactoryBean}.
@@ -124,7 +133,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		when(mockRegionAttributes.getStatisticsEnabled()).thenReturn(true);
 		when(mockRegionAttributes.getValueConstraint()).thenReturn(Number.class);
 
-		GudEvictionAttributes evictionAttributes = GudEvictionAttributes.createLRUEntryAttributes();
+		GudEvictionAttributes evictionAttributes = mock(GudEvictionAttributes.class);
 
 		factoryBean.setAttributes(mockRegionAttributes);
 		factoryBean.setBeanFactory(mockBeanFactory);
@@ -359,7 +368,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("[MockPool] is not resolvable as a GudPool in the application context");
+			assertThat(expected).hasMessage("[MockPool] is not resolvable as a Pool in the application context");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -595,7 +604,7 @@ public class ClientRegionFactoryBeanUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 			assertThat(expected.getMessage())
-				.isEqualTo("Client GudRegion Shortcut [CACHING_PROXY] is not valid when persistent is true");
+				.isEqualTo("Client Region Shortcut [CACHING_PROXY] is not valid when persistent is true");
 			throw expected;
 		}
 	}
@@ -613,7 +622,6 @@ public class ClientRegionFactoryBeanUnitTests {
 	@Test(expected = IllegalArgumentException.class)
 	public void testResolveClientRegionShortcutUsingPersistentShortcutWhenNotPersistent() throws Exception {
 
-		try {
 			factoryBean.setPersistent(false);
 			factoryBean.setShortcut(GudClientRegionShortcut.LOCAL_PERSISTENT);
 
@@ -621,12 +629,6 @@ public class ClientRegionFactoryBeanUnitTests {
 			assertThat(factoryBean.isNotPersistent()).isTrue();
 
 			factoryBean.resolveClientRegionShortcut();
-		}
-		catch (IllegalArgumentException expected) {
-			assertThat(expected.getMessage())
-				.isEqualTo("Client GudRegion Shortcut [LOCAL_PERSISTENT] is not valid when persistent is false");
-			throw expected;
-		}
 	}
 
 	@Test

@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,6 +23,7 @@
  * Description:
  * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  * 2026-03-14: Added graceful handling for unsupported setSegments (requires 10.2+)
+ * 2026-04-02: Replaced ad-hoc try/catch with GudVersionAwareInvoker for consistent handling
  */
 
 package org.springframework.data.gemfire;
@@ -38,9 +43,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.gemfire.config.annotation.DiskStoreConfigurer;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudDiskStore;
+import org.springframework.data.gemfire.gud.api.GudCapability;
 import org.springframework.data.gemfire.gud.api.GudDiskStoreFactory;
-import org.springframework.data.gemfire.gud.api.GudUnsupportedOperationException;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
+import org.springframework.data.gemfire.support.GudVersionAwareInvoker;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -212,17 +218,17 @@ public class DiskStoreFactoryBean extends AbstractFactoryBeanSupport<GudDiskStor
 
 	/**
 	 * Configures the segments setting on the disk store factory.
-	 * This setting is only available in GemFire 10.2+. For older versions,
+	 * This setting is only available in GemFire 10.1+. For older versions,
 	 * a warning is logged and the setting is skipped.
 	 */
 	private void configureSegments(GudDiskStoreFactory diskStoreFactory) {
 		if (this.segments != null) {
-			try {
-				diskStoreFactory.setSegments(this.segments);
-			} catch (GudUnsupportedOperationException ex) {
-				getLogger().warn("DiskStore 'segments' setting ({}) is not supported by this GemFire version. {}",
-					this.segments, ex.getMessage());
-			}
+			GudVersionAwareInvoker.invokeIfSupported(
+				() -> diskStoreFactory.setSegments(this.segments),
+				GudCapability.DISK_STORE_SEGMENTS,
+				getLogger(),
+				"DiskStore 'segments' setting ({}) is not supported by this GemFire version; skipping.",
+				this.segments);
 		}
 	}
 

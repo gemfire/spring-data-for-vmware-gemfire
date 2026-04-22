@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -30,6 +34,8 @@ import org.mockito.stubbing.Answer;
 
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudFunction;
+import org.springframework.data.gemfire.function.execution.GemfireFunctionOperations;
 
 import org.springframework.data.gemfire.config.support.RestTemplateConfigurer;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -76,7 +82,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 	@Before
 	public void setup() {
 
-		this.template = new RestHttpGemfireAdminTemplate(this.mockClientCache) {
+		this.template = new TestRestHttpGemfireAdminTemplate(this.mockClientCache) {
 
 			@Override
 			@SuppressWarnings("unchecked")
@@ -108,7 +114,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 	@Test
 	public void constructDefaultRestHttpGemfireAdminTemplate() {
 
-		RestHttpGemfireAdminTemplate template = new RestHttpGemfireAdminTemplate(this.mockClientCache);
+		RestHttpGemfireAdminTemplate template = new TestRestHttpGemfireAdminTemplate(this.mockClientCache);
 
 		assertThat(template).isNotNull();
 		assertThat(template.getClientCache()).isSameAs(this.mockClientCache);
@@ -138,7 +144,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		ClientHttpRequestInterceptor mockInterceptor = mock(ClientHttpRequestInterceptor.class);
 
 		RestHttpGemfireAdminTemplate template =
-			new RestHttpGemfireAdminTemplate(this.mockClientCache, "sftp", "skullbox", 8080,
+			new TestRestHttpGemfireAdminTemplate(this.mockClientCache, "sftp", "skullbox", 8080,
 				false, Collections.singletonList(mockInterceptor));
 
 		assertThat(template).isNotNull();
@@ -196,7 +202,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		ClientHttpRequestInterceptor mockInterceptorOne = mock(ClientHttpRequestInterceptor.class);
 		ClientHttpRequestInterceptor mockInterceptorTwo = mock(ClientHttpRequestInterceptor.class);
 
-		RestTemplate restTemplate = new RestHttpGemfireAdminTemplate(this.mockClientCache)
+		RestTemplate restTemplate = new TestRestHttpGemfireAdminTemplate(this.mockClientCache)
 			.newRestOperations(mockClientHttpRequestFactory, Arrays.asList(mockInterceptorOne, mockInterceptorTwo),
 				Collections.emptyList());
 
@@ -211,7 +217,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 
 		ClientHttpRequestFactory mockClientHttpRequestFactory = mock(ClientHttpRequestFactory.class);
 
-		RestTemplate restTemplate = new RestHttpGemfireAdminTemplate(this.mockClientCache)
+		RestTemplate restTemplate = new TestRestHttpGemfireAdminTemplate(this.mockClientCache)
 			.newRestOperations(mockClientHttpRequestFactory, Collections.emptyList(), Collections.emptyList());
 
 		assertThat(restTemplate).isNotNull();
@@ -240,7 +246,7 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		List<RestTemplateConfigurer> mockRestTemplateConfigurers =
 			Arrays.asList(mockRestTemplateConfigurerOne, null, mockRestTemplateConfigurerTwo);
 
-		RestTemplate restTemplate = new RestHttpGemfireAdminTemplate(this.mockClientCache)
+		RestTemplate restTemplate = new TestRestHttpGemfireAdminTemplate(this.mockClientCache)
 			.newRestOperations(mockClientHttpRequestFactory, Collections.emptyList(), mockRestTemplateConfigurers);
 
 		assertThat(restTemplate).isNotNull();
@@ -291,5 +297,37 @@ public class RestHttpGemfireAdminTemplateUnitTests {
 		assertThat(this.template.resolveManagementRestApiUrl("http", "shoebox", 101123))
 			.isEqualTo(String.format(RestHttpGemfireAdminTemplate.MANAGEMENT_REST_API_NO_PORT_URL_TEMPLATE,
 				"http", "shoebox"));
+	}
+
+	static class TestRestHttpGemfireAdminTemplate extends RestHttpGemfireAdminTemplate {
+
+		TestRestHttpGemfireAdminTemplate(GudClientCache clientCache) {
+			super(clientCache);
+		}
+
+		TestRestHttpGemfireAdminTemplate(GudClientCache clientCache, String scheme, String host, int port,
+				boolean followRedirects, List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors) {
+			super(clientCache, scheme, host, port, followRedirects, clientHttpRequestInterceptors);
+		}
+
+		@Override
+		public Iterable<String> getAvailableServerRegions() {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected <T> T execute(GudFunction gemfireFunction, Object... arguments) {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected GemfireFunctionOperations newGemfireFunctionOperations() {
+			throw new UnsupportedOperationException("stub");
+		}
+
+		@Override
+		protected GemfireFunctionOperations newGemfireFunctionOperations(GudClientCache clientCache) {
+			throw new UnsupportedOperationException("stub");
+		}
 	}
 }

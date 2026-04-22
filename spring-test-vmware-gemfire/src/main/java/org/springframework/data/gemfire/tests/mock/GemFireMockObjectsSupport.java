@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -13,6 +17,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ * 2026-04-02: Added doAnswer for set(String,String) in spyOn so mock factories capture GemFire properties
  */
 package org.springframework.data.gemfire.tests.mock;
 
@@ -428,14 +433,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				case LOCAL_HEAP_LRU:
 				case LOCAL_OVERFLOW:
 					return GudDataPolicy.NORMAL;
-				case REPLICATE:
-				case REPLICATE_HEAP_LRU:
-				case REPLICATE_OVERFLOW:
-					return GudDataPolicy.REPLICATE;
 				case LOCAL_PERSISTENT:
 				case LOCAL_PERSISTENT_OVERFLOW:
-				case REPLICATE_PERSISTENT:
-				case REPLICATE_PERSISTENT_OVERFLOW:
 					return GudDataPolicy.PERSISTENT_REPLICATE;
 				case REPLICATE_PROXY:
 					return GudDataPolicy.EMPTY;
@@ -2433,6 +2432,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicReference<GudPdxSerializer> pdxSerializer = new AtomicReference<>(null);
 
 		GudClientCacheFactory clientCacheFactorySpy = spy(clientCacheFactory);
+
+		doAnswer(invocation -> {
+			gemfireProperties.get().setProperty(invocation.getArgument(0), invocation.getArgument(1));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).set(anyString(), anyString());
 
 		doAnswer(newSetter(pdxGudDiskStoreName, () -> clientCacheFactorySpy)).when(clientCacheFactorySpy)
 				.setPdxDiskStore(anyString());

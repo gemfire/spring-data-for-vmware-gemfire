@@ -1,7 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode Region with GudRegion
+ */
+
 package org.springframework.data.gemfire.tests.mock;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.Region;
+import org.springframework.data.gemfire.gud.api.GudRegion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,7 +49,7 @@ import lombok.RequiredArgsConstructor;
  * @author John Blum
  * @see Test
  * @see org.mockito.Mockito
- * @see Region
+ * @see GudRegion
  * @see GemfireTemplate
  * @see GemfireRepository
  * @see IntegrationTestsSupport
@@ -65,7 +72,7 @@ public class GemfireTemplateAndGemfireRepositoryUsingMockRegionOperationsIntegra
 	private GemfireTemplate customersTemplate;
 
 	@Resource(name = "Customers")
-	private Region<Long, Customer> customers;
+	private GudRegion<Long, Customer> customers;
 
 	@Before
 	public void setup() {
@@ -106,7 +113,7 @@ public class GemfireTemplateAndGemfireRepositoryUsingMockRegionOperationsIntegra
 	static class TestConfiguration {
 
 		@Bean
-		GemfireTemplate customersTemplate(@Qualifier("Customers") Region<Long, Customer> customersRegion) {
+		GemfireTemplate customersTemplate(@Qualifier("Customers") GudRegion<Long, Customer> customersRegion) {
 			return new GemfireTemplate(customersRegion);
 		}
 

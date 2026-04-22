@@ -1,8 +1,28 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client.support;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.gemfire.GemfireUtils;
+import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolFactory;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSocketFactory;
+
+import java.net.InetSocketAddress;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -11,24 +31,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.net.InetSocketAddress;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudPool;
-import org.springframework.data.gemfire.gud.api.GudPoolFactory;
-import org.springframework.data.gemfire.gud.api.GudSocketFactory;
-import org.springframework.data.gemfire.gud.api.GudQueryService;
-
-import org.springframework.data.gemfire.GemfireUtils;
 
 /**
  * Unit Tests for {@link DefaultableDelegatingPoolAdapter}.
@@ -118,7 +120,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("GudPool delegate must not be null");
+			assertThat(expected).hasMessage("Pool delegate must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;

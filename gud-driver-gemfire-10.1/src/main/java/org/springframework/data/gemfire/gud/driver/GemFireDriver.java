@@ -1,33 +1,19 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-14: Created GemFire 10.1 driver implementation based on 10.3 driver
+ * 2026-04-02: Updated imports — GudCapability/GudApiVersion moved to gud-api; fixed capability
+ *             set to include PER_SERVER_CONNECTION_LIMITS and DISK_STORE_SEGMENTS (both added
+ *             in 10.1); added createJndiBinding() and createPoolManager() methods
+ * 2026-04-17: Removed peer cache factory and wrapCache (client-only driver)
+ * 2026-04-17: Implemented GudDriver eviction-attribute factories (native EvictionAttributes)
  */
 
 package org.springframework.data.gemfire.gud.driver;
@@ -36,7 +22,6 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.CacheClosedException;
 import org.apache.geode.cache.CacheLoaderException;
 import org.apache.geode.cache.CacheWriterException;
@@ -45,6 +30,8 @@ import org.apache.geode.cache.DiskAccessException;
 import org.apache.geode.cache.EntryDestroyedException;
 import org.apache.geode.cache.EntryExistsException;
 import org.apache.geode.cache.EntryNotFoundException;
+import org.apache.geode.cache.EvictionAction;
+import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionDestroyedException;
 import org.apache.geode.cache.RegionExistsException;
@@ -53,31 +40,35 @@ import org.apache.geode.cache.TransactionException;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.query.QueryException;
+import org.apache.geode.cache.util.ObjectSizer;
 import org.apache.geode.security.AuthenticationFailedException;
 
+import org.springframework.data.gemfire.gud.api.GudApiVersion;
 import org.springframework.data.gemfire.gud.api.GudAuthenticationFailedException;
-import org.springframework.data.gemfire.gud.api.GudCache;
 import org.springframework.data.gemfire.gud.api.GudCacheClosedException;
-import org.springframework.data.gemfire.gud.api.GudCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudCacheLoaderException;
 import org.springframework.data.gemfire.gud.api.GudCacheWriterException;
+import org.springframework.data.gemfire.gud.api.GudCapability;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudCommitConflictException;
 import org.springframework.data.gemfire.gud.api.GudDiskAccessException;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
 import org.springframework.data.gemfire.gud.api.GudEntryDestroyedException;
 import org.springframework.data.gemfire.gud.api.GudEntryExistsException;
 import org.springframework.data.gemfire.gud.api.GudEntryNotFoundException;
 import org.springframework.data.gemfire.gud.api.GudGemFireException;
+import org.springframework.data.gemfire.gud.api.GudJndiBinding;
+import org.springframework.data.gemfire.gud.api.GudObjectSizer;
 import org.springframework.data.gemfire.gud.api.GudPool;
+import org.springframework.data.gemfire.gud.api.GudPoolManager;
 import org.springframework.data.gemfire.gud.api.GudQueryException;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.api.GudRegionDestroyedException;
 import org.springframework.data.gemfire.gud.api.GudRegionExistsException;
 import org.springframework.data.gemfire.gud.api.GudTimeoutException;
 import org.springframework.data.gemfire.gud.api.GudTransactionException;
-import org.springframework.data.gemfire.gud.core.GudApiVersion;
-import org.springframework.data.gemfire.gud.core.GudCapability;
 import org.springframework.data.gemfire.gud.core.GudDriver;
 
 /**
@@ -97,7 +88,9 @@ public class GemFireDriver implements GudDriver {
             GudCapability.CONTINUOUS_QUERY,
             GudCapability.TRANSACTIONS,
             GudCapability.PDX_SERIALIZATION,
-            GudCapability.FUNCTIONS
+            GudCapability.FUNCTIONS,
+            GudCapability.PER_SERVER_CONNECTION_LIMITS,
+            GudCapability.DISK_STORE_SEGMENTS
         )
     );
 
@@ -113,12 +106,12 @@ public class GemFireDriver implements GudDriver {
 
     @Override
     public GudApiVersion getMinimumApiVersion() {
-        return GudApiVersion.V1_0;
+        return GudApiVersion.V1_0_0;
     }
 
     @Override
     public GudApiVersion getMaximumApiVersion() {
-        return GudApiVersion.V1_0;
+        return GudApiVersion.V1_0_0;
     }
 
     @Override
@@ -137,17 +130,62 @@ public class GemFireDriver implements GudDriver {
     }
 
     @Override
-    public GudCacheFactory createCacheFactory() {
-        return new GemFireCacheFactory();
+    public GudJndiBinding createJndiBinding() {
+        return new GemFireJndiBinding();
     }
 
     @Override
-    public GudCache wrapCache(Object nativeCache) {
-        if (nativeCache instanceof Cache) {
-            return new GemFireCache((Cache) nativeCache);
+    public GudPoolManager createPoolManager() {
+        return new GemFirePoolManager();
+    }
+
+    @Override
+    public GudEvictionAttributes createLruHeapEvictionAttributes(GudObjectSizer objectSizer, GudEvictionAction action) {
+        ObjectSizer nativeSizer = toNativeObjectSizer(objectSizer);
+        return new GemFireEvictionAttributes(
+            EvictionAttributes.createLRUHeapAttributes(nativeSizer, toNativeEvictionAction(action)));
+    }
+
+    @Override
+    public GudEvictionAttributes createLruMemoryEvictionAttributes(int maximum, GudObjectSizer objectSizer, GudEvictionAction action) {
+        return new GemFireEvictionAttributes(EvictionAttributes.createLRUMemoryAttributes(
+            maximum, toNativeObjectSizer(objectSizer), toNativeEvictionAction(action)));
+    }
+
+    @Override
+    public GudEvictionAttributes createLruMemoryEvictionAttributesFromSizer(GudObjectSizer objectSizer, GudEvictionAction action) {
+        return new GemFireEvictionAttributes(EvictionAttributes.createLRUMemoryAttributes(
+            toNativeObjectSizer(objectSizer), toNativeEvictionAction(action)));
+    }
+
+    @Override
+    public GudEvictionAttributes createLruEntryEvictionAttributes(int maximum, GudEvictionAction action) {
+        return new GemFireEvictionAttributes(EvictionAttributes.createLRUEntryAttributes(
+            maximum, toNativeEvictionAction(action)));
+    }
+
+    private static EvictionAction toNativeEvictionAction(GudEvictionAction action) {
+        if (action == null || action == GudEvictionAction.NONE) {
+            return EvictionAction.NONE;
         }
-        throw new IllegalArgumentException("Expected Cache instance but got: " + 
-            (nativeCache != null ? nativeCache.getClass().getName() : "null"));
+        if (action == GudEvictionAction.OVERFLOW_TO_DISK) {
+            return EvictionAction.OVERFLOW_TO_DISK;
+        }
+        return EvictionAction.LOCAL_DESTROY;
+    }
+
+    private static ObjectSizer toNativeObjectSizer(GudObjectSizer sizer) {
+        if (sizer == null) {
+            return null;
+        }
+        if (sizer instanceof NativeWrapper) {
+            Object nativeObj = ((NativeWrapper<?>) sizer).getNative();
+            if (nativeObj instanceof ObjectSizer) {
+                return (ObjectSizer) nativeObj;
+            }
+        }
+        throw new IllegalArgumentException(
+            "GudObjectSizer must wrap a native ObjectSizer; got: " + sizer.getClass().getName());
     }
 
     @Override
@@ -155,7 +193,7 @@ public class GemFireDriver implements GudDriver {
         if (nativeClientCache instanceof ClientCache) {
             return new GemFireClientCache((ClientCache) nativeClientCache);
         }
-        throw new IllegalArgumentException("Expected ClientCache instance but got: " + 
+        throw new IllegalArgumentException("Expected ClientCache instance but got: " +
             (nativeClientCache != null ? nativeClientCache.getClass().getName() : "null"));
     }
 
@@ -165,7 +203,7 @@ public class GemFireDriver implements GudDriver {
         if (nativeRegion instanceof Region) {
             return new GemFireRegion<>((Region<K, V>) nativeRegion);
         }
-        throw new IllegalArgumentException("Expected Region instance but got: " + 
+        throw new IllegalArgumentException("Expected Region instance but got: " +
             (nativeRegion != null ? nativeRegion.getClass().getName() : "null"));
     }
 
@@ -174,7 +212,7 @@ public class GemFireDriver implements GudDriver {
         if (nativePool instanceof Pool) {
             return new GemFirePool((Pool) nativePool);
         }
-        throw new IllegalArgumentException("Expected Pool instance but got: " + 
+        throw new IllegalArgumentException("Expected Pool instance but got: " +
             (nativePool != null ? nativePool.getClass().getName() : "null"));
     }
 
@@ -184,7 +222,7 @@ public class GemFireDriver implements GudDriver {
         if (gudObject instanceof NativeWrapper) {
             return ((NativeWrapper<T>) gudObject).getNative();
         }
-        throw new IllegalArgumentException("Object is not a GUD wrapper: " + 
+        throw new IllegalArgumentException("Object is not a GUD wrapper: " +
             (gudObject != null ? gudObject.getClass().getName() : "null"));
     }
 

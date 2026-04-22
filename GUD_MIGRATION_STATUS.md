@@ -1,315 +1,224 @@
 # GUD Migration Status
 
-**Last Updated:** 2026-03-13
-**Current Phase:** 8 - Test Migration (COMPLETE)
-**Compilation Status:** 
+**Last Updated:** 2026-04-02
+**Current Phase:** 9 - Architectural Hardening (COMPLETE)
+**Compilation Status:**
 - spring-data-vmware-gemfire:compileJava - SUCCESS (0 errors)
 - spring-test-vmware-gemfire:compileJava - SUCCESS (0 errors)
-**Resume Point:** NONE - Test migration complete
 **Architecture Rule:** NO reflection in spring-data/spring-test modules - ONLY gud-api references
-**Total GUD API Types:** 200+ (added GudSecurityManager, GudResourcePermission, additional methods)
-**Total Files to Migrate:** 188 (main) + ~20 (test support)
-**Files Remaining with Errors:** 0
+**Total GUD API Types:** 200+
+**Total Files to Migrate:** 188 (main) + ~20 (test support) — all complete
+
+---
 
 ## Phase Status
-- [x] Phase 1: Infrastructure Setup - COMPLETE
-- [x] Phase 2: GUD API Design - COMPLETE (197+ types created)
-- [x] Phase 3: Planning and Analysis - COMPLETE
-- [x] Phase 4: Deviation Documentation - COMPLETE
-- [x] Phase 5: Resolution - COMPLETE (GUD API types created)
-- [x] Phase 6: Driver Implementation - COMPLETE (core adapters created)
-- [x] Phase 7: Source Code Migration - COMPLETE (spring-data-vmware-gemfire main sources)
-- [x] Phase 8: Test Migration - COMPLETE (spring-test-vmware-gemfire compiles successfully)
 
-## Current Migration Progress
+- [x] Phase 1: Infrastructure Setup — COMPLETE
+- [x] Phase 2: GUD API Design — COMPLETE (197+ types created)
+- [x] Phase 3: Planning and Analysis — COMPLETE
+- [x] Phase 4: Deviation Documentation — COMPLETE
+- [x] Phase 5: Resolution — COMPLETE (GUD API types created)
+- [x] Phase 6: Driver Implementation — COMPLETE (core adapters created for all 4 versions)
+- [x] Phase 7: Source Code Migration — COMPLETE (spring-data-vmware-gemfire main sources)
+- [x] Phase 8: Test Migration — COMPLETE (spring-test-vmware-gemfire compiles successfully)
+- [x] Phase 9: Architectural Hardening — COMPLETE (see details below)
 
-### Phase 8: Test Support Files (spring-test-vmware-gemfire)
+---
 
-| # | File | Status | Notes |
-|---|------|--------|-------|
-| 1 | `IntegrationTestsSupport.java` | MIGRATED | Core test support, internal GemFire APIs removed |
-| 2 | `ClientServerIntegrationTestsSupport.java` | MIGRATED | CacheServer → GudCacheServer |
-| 3 | `ForkingClientServerIntegrationTestsSupport.java` | MIGRATED | ClientCache → GudClientCache |
-| 4 | `ClientServerIntegrationTestsConfiguration.java` | MIGRATED | Updated imports |
-| 5 | `EnableGemFireResourceCollector.java` | MIGRATED | DiskStore → GudDiskStore |
-| 6 | `GemFireResourceCollectorApplicationListener.java` | MIGRATED | Updated imports |
-| 7 | `CacheServerMockObjects.java` | MIGRATED | All types → GUD API |
-| 8 | `GemFireMockObjectsSupport.java` | MIGRATED | All types converted, some server-side methods commented out |
-| 9 | `GemFireMockObjectsConfiguration.java` | MIGRATED | Region → GudRegion |
-| 10 | `EnableGemFireMockObjects.java` | MIGRATED | ClientCache → GudClientCache |
-| 11 | `PoolMockObjects.java` | MIGRATED | Pool, QueryService → GUD API |
-| 12 | `CacheMockObjects.java` | MIGRATED | ClientCache, Region, etc. → GUD API |
-| 13 | `DiskStoreMockObjects.java` | MIGRATED | DiskStore → GudDiskStore |
-| 14 | `IndexMockObjects.java` | MIGRATED | Index, IndexStatistics → GUD API |
-| 15 | `GemFireMockObjectsBeanPostProcessor.java` | MIGRATED | Factory types → GUD API |
-| 16 | `RegionSpyingBeanPostProcessor.java` | MIGRATED | Region → GudRegion |
-| 17 | `RegionDataInitializingPostProcessor.java` | MIGRATED | Region → GudRegion |
-| 18 | `AbstractSecurityManager.java` | MIGRATED | SecurityManager → GudSecurityManager |
-| 19 | `TestSecurityManager.java` | MIGRATED | SecurityManager → GudSecurityManager |
-| 20 | `AsyncEventQueueMockObjects.java` | DELETED | WAN feature not used, no GUD API type |
-| 21 | `GatewayMockObjects.java` | DELETED | WAN feature not used, no GUD API type |
+## Phase 9 Changes (2026-04-02)
 
-### GemFireMockObjectsSupport.java - COMPLETED
+This phase addressed architectural issues identified during the SOLID evaluation.
 
-This 2600+ line file has been successfully migrated. The following changes were made:
+### Critical Priority — Resolved
 
-**Completed Work:**
-1. Added missing static factory methods to GUD API interfaces:
-   - `GudEvictionAttributes.createLRUHeapAttributes()` no-args overload
-   - `GudEvictionAttributes.createLRUEntryAttributes()` no-args overload
-   - `GudExpirationAttributes.of()` factory method used instead of constructor
-   - `GudRegionExistsException` constructor accepting GudRegion added
-   - `GudMembershipAttributes` no-args constructor added
-   - `GudSubscriptionAttributes.create()` factory method used
-2. Added missing methods to GUD API interfaces:
-   - `GudRegionAttributes.getEnableSubscriptionConflation()` and `getIgnoreJTA()`
-   - `GudRegionFactory.setEnableSubscriptionConflation()` and `setIgnoreJTA()`
-   - `GudAttributesMutator.getCloningEnabled()`
-   - `GudDiskStore.getSegments()`
-   - `GudResourceManager.getRebalanceOperations()`
-   - `GudClientCache.getCurrentServers()`
-   - `GudConfigurationProperties.NAME_NAME`
-   - `GudDiskStoreFactory.DEFAULT_DISK_DIR_SIZE`
-   - `GudClientSubscriptionConfig.DEFAULT_CAPACITY`
-3. Server-side methods without GUD API equivalents commented out with TODO markers:
-   - `getCancelCriterion()`, `createPdxEnum()`, `setRegionAttributes()`, `getRegionAttributes()`, `listRegionAttributes()`
-   - Query execute methods with `GudRegionFunctionContext` (function execution is server-side)
-4. Pool registration simplified (no internal PoolManagerImpl access needed in mock context)
+#### C1: GudCapability and GudApiVersion moved from `gud-core` to `gud-api`
+**Problem:** Capability definitions and version semantics are part of the API contract.
+Having them in `gud-core` forced `GudUnsupportedOperationException` to use String-based
+capability names instead of a type-safe enum.
 
-### Files Migrated in Current Session (2026-03-13) - Latest Batch:
+**Resolution:**
+- Created `gud-api/.../GudCapability.java` (formerly `gud-core/.../GudCapability.java`)
+- Created `gud-api/.../GudApiVersion.java` (formerly `gud-core/.../GudApiVersion.java`)
+- Deleted the old files from `gud-core`
+- Updated all imports in `GudDriver.java`, `GudDriverManager.java`, and all 4 `GemFireDriver.java` files
 
-| # | File | Change Description |
-|---|------|-------------------|
-| 1 | `EntityDefinedRegionsConfiguration.java` | Region, RegionShortcut, ClientRegionShortcut → GUD API |
-| 2 | `CachingDefinedRegionsConfiguration.java` | Region, ClientCache, shortcuts → GUD API |
-| 3 | `EvictionConfiguration.java` | EvictionAttributes, Region → GUD API |
-| 4 | `EnableSsl.java` | SecurableCommunicationChannels → GudSecurableCommunicationChannels |
-| 5 | `AbstractAuthInitialize.java` | AuthInitialize → GudAuthInitialize |
-| 6 | `AutoConfiguredAuthenticationInitializer.java` | AuthInitialize → GudAuthInitialize |
-| 7 | `AutoConfiguredAuthenticationConfiguration.java` | AuthInitialize → GudAuthInitialize |
-| 8 | `CacheTypeAwareRegionFactoryBean.java` | Full migration to GUD API (complex) |
-| 9 | `EnableCachingDefinedRegions.java` | ClientRegionShortcut, RegionShortcut → GUD API |
-| 10 | `EnableCompression.java` | Region, Compressor → GudRegion, GudCompressor |
-| 11 | `EnableSecurity.java` | AuthInitialize → GudAuthInitialize |
-| 12 | `ApacheShiroSecurityConfiguration.java` | ClientCache → GudClientCache |
-| 13 | `SchemaObjectDefinition.java` | Region, Index → GudRegion, GudIndex |
-| 14 | `SchemaObjectType.java` | All schema types → GUD API (ClientCache, DiskStore, Function, etc.) |
-| 15 | `SchemaObjectCollector.java` | ClientCache → GudClientCache |
-| 16 | `CustomEditorBeanFactoryPostProcessor.java` | Geode types → GUD API (EvictionAction, ExpirationAction, etc.) |
-| 17 | `PdxDiskStoreAwareBeanFactoryPostProcessor.java` | DiskStore, Region → GudDiskStore, GudRegion |
-| 18 | `DefinedIndexesApplicationListener.java` | QueryService, MultiIndexCreationException → GUD API |
-| 19 | `AbstractRegionParser.java` | Region → GudRegion |
-| 20 | `ParsingUtils.java` | LossAction, ResumptionAction, MembershipAttributes → GUD API |
-| 21 | `ClientCacheParser.java` | ConfigProperty → GudConfigProperty |
-| 22 | `WiringInstantiator.java` | Instantiator, DataSerializable → GudInstantiator, GudDataSerializable |
-| 23 | `InstantiatorFactoryBean.java` | Instantiator, DataSerializable → GUD API |
-| 24 | `InstantiatorGenerator.java` | Instantiator, DataSerializable → GUD API |
-| 25 | `AsmInstantiatorGenerator.java` | Instantiator, DataSerializable → GUD API |
-| 26 | `EnumSerializer.java` | DataSerializer → GudDataSerializer |
-| 27 | `JSONRegionAdvice.java` | Region, SelectResults, PdxInstance → GUD API |
-| 28 | `ExecutionTimeoutFunctionException.java` | FunctionException → GudFunctionException |
-| 29 | `BatchingResultSender.java` | Function, ResultSender → GudFunction, GudResultSender |
-| 30 | `AbstractFunctionExecution.java` | Execution, Function, ResultCollector → GUD API |
-| 31 | `AbstractFunctionTemplate.java` | Function, ResultCollector → GUD API |
-| 32 | `GemfireOnMemberFunctionTemplate.java` | DistributedMember → GudDistributedMember |
-| 33 | `ServerBasedFunctionExecutionBeanDefinitionBuilder.java` | Function, Execution → GUD API |
-| 34 | `MemberBasedFunctionExecutionBeanDefinitionBuilder.java` | Function, Execution → GUD API |
-| 35 | `AnnotationFunctionExecutionConfigurationSource.java` | Function, Execution → GUD API |
-| 36 | `FunctionExecutionComponentProvider.java` | Function, Execution → GUD API |
-| 37 | `GemfireDaoSupport.java` | Region → GudRegion |
-| 38 | `SubscriptionEvictionPolicy.java` | CacheServer, ClientSubscriptionConfig → GUD API |
+#### C2: GudUnsupportedOperationException now uses GudCapability enum (type-safe)
+**Problem:** Constructor took `String requiredCapability` — callers could not inspect the
+capability programmatically and were prone to typos.
 
-### Files Migrated in Previous Session:
+**Resolution:**
+- Rewrote `GudUnsupportedOperationException` with `GudCapability requiredCapability` field
+- Updated all 8 `default` method implementations in GUD API interfaces:
+  - `GudPoolFactory` — `setMinConnectionsPerServer`, `setMaxConnectionsPerServer`
+  - `GudClientCacheFactory` — `setPoolMinConnectionsPerServer`, `setPoolMaxConnectionsPerServer`
+  - `GudDiskStoreFactory` — `setSegments`
+  - `GudClientRegionFactory` — `setServerRegionName`
+  - `GudPool` — `getMinConnectionsPerServer`, `getMaxConnectionsPerServer`
 
-| # | File | Change Description |
-|---|------|-------------------|
-| 1 | `RegionConfigurer.java` | Region → GudRegion |
-| 2 | `Interest.java` | InterestResultPolicy → GudInterestResultPolicy |
-| 3 | `ConfigurableRegionFactoryBean.java` | Region → GudRegion |
-| 4 | `ResolvableRegionFactoryBean.java` | Region, ClientCache → GudRegion, GudClientCache |
-| 5 | `EvictingRegionFactoryBean.java` | EvictionAttributes → GudEvictionAttributes |
-| 6 | `ExpiringRegionFactoryBean.java` | ExpirationAttributes, CustomExpiry → GUD API |
-| 7 | `PdxConfiguration.java` | ClientCache, PdxSerializer → GudClientCache, GudPdxSerializer |
-| 8 | `AbstractCacheConfiguration.java` | TransactionListener/Writer → GUD API |
-| 9 | `ClientRegionFactoryBean.java` | Full migration to GUD API (complex) |
-| 10 | `EnablePools.java` | Pool → GudPool |
-| 11 | `CompressionConfiguration.java` | Region, Compressor → GudRegion, GudCompressor |
-| 12 | `ClusterDefinedRegionsConfiguration.java` | ClientCache, ClientRegionShortcut → GUD API |
-| 13 | `GemfireDataSourcePostProcessor.java` | Made abstract, ClientCache → GudClientCache |
-| 14 | `EnableClusterDefinedRegions.java` | ClientRegionShortcut → GudClientRegionShortcut |
-| 15 | `EnableAutoRegionLookup.java` | Region → GudRegion |
-| 16 | `EnableEntityDefinedRegions.java` | Region, RegionShortcut, ClientRegionShortcut → GUD API |
-| 17 | `EnableEviction.java` | EvictionAttributes, ObjectSizer → GUD API |
-| 18 | `DeclarableSupport.java` | CacheCallback, Declarable → GudCacheCallback, GudDeclarable |
-| 19 | `EnableDiskStore.java` | DiskStore, Region → GudDiskStore, GudRegion |
-| 20 | `WiringDeclarableSupport.java` | Cache, Declarable → GudCache, GudDeclarable |
-| 21 | `ExpirationConfiguration.java` | Region, ExpirationAttributes → GudRegion, GudExpirationAttributes |
-| 22 | `AnnotationBasedExpiration.java` | CustomExpiry, ExpirationAttributes, Region → GUD API |
-| 23 | `DiskStoreConfiguration.java` | DiskStore, DiskStoreFactory → GudDiskStore, GudDiskStoreFactory |
+### High Priority — Resolved
 
-### GUD API Types Created/Updated in This Session:
+#### H1: Single ServiceLoader registration per driver
+**Problem:** Each driver registered 4 separate service files, creating fragility (partial
+registration, SRP violation, maintenance burden).
 
-| Type | Description |
-|------|-------------|
-| `GudSecurityManager` | Interface for security managers (authentication/authorization) |
-| `GudResourcePermission` | Interface for resource permissions in security authorization |
-| `GudTransactionException` | Base exception for transaction errors |
-| `GudEvictionAttributes` | Added DEFAULT_ENTRIES_MAXIMUM, DEFAULT_MEMORY_MAXIMUM constants |
-| `GudExpirationAttributes` | Added static factory method `of(int, GudExpirationAction)` |
-| `GudRegion.Entry` | Added inner interface for region entries |
-| `GudCustomExpiry` | Updated to use `GudRegion.Entry` instead of `GudRegionEntry` |
-| `GudDiskStoreFactory` | Added DEFAULT_SEGMENTS constant |
-| `GudSecurableCommunicationChannels` | Changed from enum to class with String constants |
-| `GudAuthInitialize` | Added SECURITY_USERNAME, SECURITY_PASSWORD constants |
-| `GudEvictionAttributesMutator` | New interface for eviction attribute mutation |
-| `GudServerLoad` | New interface for server load metrics |
-| `GudServerMetrics` | New interface for server metrics |
-| `GudServerLoadProbe` | New interface for server load probing |
-| `GudLocator` | Updated from deprecated placeholder to abstract class with methods |
-| `GudCacheServer` | Updated from deprecated placeholder to interface with methods |
-| `GudLossAction` | Added fromName() static method |
-| `GudResumptionAction` | Added fromName() static method |
-| `GudMembershipAttributes` | Changed from interface to class with constructor |
-| `GudEvictionAction` | Added DEFAULT and DEFAULT_EVICTION_ACTION constants |
+**Resolution:**
+- Deleted the 4 individual service files from each of the 4 driver modules (16 files total):
+  - `META-INF/services/org.springframework.data.gemfire.gud.api.GudClientCacheFactory`
+  - `META-INF/services/org.springframework.data.gemfire.gud.api.GudCacheFactory`
+  - `META-INF/services/org.springframework.data.gemfire.gud.api.GudJndiBinding`
+  - `META-INF/services/org.springframework.data.gemfire.gud.api.GudPoolManager`
+- Only `META-INF/services/org.springframework.data.gemfire.gud.core.GudDriver` remains per driver
 
-### Previous Sessions - Files Migrated (Many files):
+#### H2: GudDriver extended with createJndiBinding() and createPoolManager()
+**Problem:** `GudDriver` only declared `createClientCacheFactory()` and `createCacheFactory()`,
+preventing `GudDriverManager` from obtaining all four factories from the driver.
 
-See previous versions of this status file for complete history.
+**Resolution:**
+- Added `createJndiBinding()` and `createPoolManager()` to `GudDriver` interface
+- Implemented in all 4 `GemFireDriver` classes
 
-## Resume Instructions
+#### H3: GudDriverManager pushes to GudCacheProvider on registration
+**Problem:** `GudCacheProvider` and `GudDriverManager` were independent registries with no
+coordination, violating SRP and leading to potential null-factory scenarios.
 
-### Quick Start
-```bash
-cd /Users/udo/projects/spring-data-for-vmware-gemfire
+**Resolution:**
+- Added `GudCacheProvider.configure(Supplier, GudCacheFactory, GudJndiBinding, GudPoolManager)` method
+- `GudDriverManager.registerDriver()` calls `GudCacheProvider.configure()` after setting default driver
 
-# 1. Verify main sources compile
-./gradlew :spring-data-vmware-gemfire:compileJava 2>&1 | grep "error:" | wc -l
-# Expected: 0 errors
+#### H4: Supplier-based factory in GudCacheProvider
+**Problem:** `createClientCacheFactory()` returned a shared singleton — wrong for stateful builders.
 
-# 2. Check test compilation status
-./gradlew :spring-data-vmware-gemfire:compileTestJava 2>&1 | grep "error:" | wc -l
-# Expected: ~100 errors (in spring-test-vmware-gemfire)
+**Resolution:**
+- Changed `clientCacheFactorySupplier` from `GudClientCacheFactory` to `Supplier<GudClientCacheFactory>`
+- Each call to `createClientCacheFactory()` now produces a fresh factory instance
 
-# 3. List files with errors
-./gradlew :spring-data-vmware-gemfire:compileTestJava 2>&1 | grep "error:" | cut -d: -f1 | sort -u
-```
+#### H5: Fixed version sort in GudDriverManager.getDriverForGemFireVersion()
+**Problem:** Lexicographic comparator (`Comparator.comparing(GudDriver::getSupportedVersion)`)
+produces wrong ordering for `"10.9"` vs `"10.10"`.
 
-### Next Steps (in order of priority)
+**Resolution:**
+- Changed to `Comparator.comparing(d -> GudApiVersion.parse(d.getSupportedVersion()))`
 
-1. **Complete GemFireMockObjectsSupport.java migration**
-   - Bulk type replacements done (~1500+ occurrences)
-   - Fix remaining compilation errors (missing GUD API types, method signatures)
-   - May need to create additional GUD API interfaces
+#### H6: Fixed race condition in loadDriversIfNeeded()
+**Problem:** Check-then-act on `drivers.isEmpty()` was not thread-safe.
 
-2. **Fix any remaining test support file issues**
-   - Verify all 8 test support files compile
+**Resolution:**
+- Added `AtomicBoolean loaded` flag; `loadDrivers()` is `synchronized`
 
-3. **Compile and fix spring-data-vmware-gemfire tests**
-   - These depend on spring-test-vmware-gemfire
+#### H7: GudVersionAwareInvoker utility (new)
+**Problem:** Ad-hoc `try/catch GudUnsupportedOperationException` scattered across FactoryBeans.
 
-4. **Migrate spring-test-vmware-gemfire test sources**
-   - After main test support compiles
+**Resolution:**
+- Created `spring-data-vmware-gemfire/.../support/GudVersionAwareInvoker.java`
+- Refactored `DiskStoreFactoryBean.configureSegments()` to use it
+- Refactored `PoolFactoryBean.configurePerServerConnectionLimits()` to use it
 
-### Migration Pattern
+### Medium Priority — Resolved
 
-For each file:
-```java
-// 1. Add AI-Generated header after license
-/*
- * @AI-Generated
- * Generated in whole or in part by Cursor
- * Description:
- * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
- */
+#### M1: Fixed capability sets in 10.1 and 10.2 drivers
+**Problem:** Drivers 10.1 and 10.2 were missing `PER_SERVER_CONNECTION_LIMITS` and
+`DISK_STORE_SEGMENTS` from their capability sets (both were introduced in 10.1).
+Driver 10.3 was missing `DISK_STORE_SEGMENTS`.
 
-// 2. Replace imports
-// FROM: import org.apache.geode.cache.Region;
-// TO:   import org.springframework.data.gemfire.gud.api.GudRegion;
+**Resolution:** Updated `SUPPORTED_CAPABILITIES` in all three drivers.
 
-// 3. Update field types, parameters, return types
-// FROM: private Region<K, V> region;
-// TO:   private GudRegion<K, V> region;
+#### M2: Removed GudAttributesFactoryImpl from gud-api
+**Problem:** `GudAttributesFactoryImpl` was an implementation class inside `gud-api`,
+violating the principle that API modules should contain only contracts.
 
-// 4. Update Javadoc references
-// FROM: @see Region
-// TO:   @see GudRegion
-```
+**Resolution:** Deleted the file.
 
-### Verification After Each File
-```bash
-./gradlew :spring-data-vmware-gemfire:compileJava 2>&1 | grep "error:" | wc -l
-```
+#### M3: Fixed stacked duplicate license headers
+**Problem:** The 5 API files modified in this session had 2–5 duplicate `$originalComment`
+Velocity-template-style copyright blocks.
 
-## Module Status
+**Resolution:** Replaced with a single clean `// Copyright (c) 2026 Broadcom. All Rights Reserved.`
+header in the 5 files modified: `GudPoolFactory`, `GudDiskStoreFactory`, `GudClientCacheFactory`,
+`GudClientRegionFactory`, `GudPool`.
+
+---
+
+## Module Status (2026-04-02)
 
 | Module | Status | Compilation |
 |--------|--------|-------------|
 | gud-api | COMPLETE | SUCCESS |
-| gud-core | CREATED | SUCCESS |
+| gud-core | COMPLETE | SUCCESS |
+| gud-driver-gemfire-10.0 | COMPLETE | SUCCESS |
+| gud-driver-gemfire-10.1 | COMPLETE | SUCCESS |
+| gud-driver-gemfire-10.2 | COMPLETE | SUCCESS |
 | gud-driver-gemfire-10.3 | COMPLETE | SUCCESS |
 | spring-data-vmware-gemfire/main | COMPLETE | SUCCESS |
-| spring-data-vmware-gemfire/test | IN PROGRESS | ~100 errors (depends on spring-test-vmware-gemfire) |
-| spring-test-vmware-gemfire | IN PROGRESS | ~70% migrated, GemFireMockObjectsSupport remaining |
+| spring-data-vmware-gemfire/test | COMPLETE | SUCCESS |
+| spring-test-vmware-gemfire | COMPLETE | SUCCESS |
 
-## GUD API Types Created (195+ total)
+---
 
-**Core Types:**
-- GudRegion, GudCache, GudClientCache, GudRegionService
-- GudQueryService, GudQuery, GudSelectResults
-- GudPool, GudPoolFactory, GudPoolManager
+## Architecture Invariants (Updated)
 
-**Region Configuration:**
-- GudRegionFactory, GudClientRegionFactory
-- GudRegionAttributes, GudAttributesMutator
-- GudDataPolicy, GudScope, GudRegionShortcut, GudClientRegionShortcut
+The following invariants must be maintained as the codebase evolves:
 
-**Callbacks:**
-- GudCacheLoader, GudCacheWriter, GudCacheListener
-- GudTransactionListener, GudTransactionWriter, GudTransactionEvent
-- GudCacheTransactionManager, GudTransactionId
-- GudCacheCallback, GudDeclarable
+1. **No reflection** in spring-data-vmware-gemfire and spring-test-vmware-gemfire
+2. **Only gud-api references** in spring-data and spring-test modules (no gud-core, no native GemFire)
+3. **GudCapability and GudApiVersion live in gud-api** — they are part of the API contract
+4. **Single ServiceLoader entry per driver** (`GudDriver` only)
+5. **GudCacheProvider.createClientCacheFactory() returns fresh instances** (Supplier pattern)
+6. **All version-specific calls in Spring FactoryBeans use GudVersionAwareInvoker**
+7. **No GudAttributesFactoryImpl or other implementation classes in gud-api**
 
-**PDX:**
-- GudPdxSerializer, GudPdxReader, GudPdxWriter, GudPdxInstance
+---
 
-**Functions:**
-- GudFunction, GudFunctionContext, GudFunctionService, GudExecution
+## Resume Instructions
 
-**Continuous Query:**
-- GudCqQuery, GudCqEvent, GudCqAttributes
+### Quick Verification
+```bash
+cd /Users/udo/projects/spring-data-for-vmware-gemfire
 
-**Compression:**
-- GudCompressor, GudSnappyCompressor
+# Verify main sources compile
+./gradlew :spring-data-vmware-gemfire:compileJava 2>&1 | grep "error:" | wc -l
+# Expected: 0
 
-**Eviction:**
-- GudEvictionAttributes, GudEvictionAction, GudEvictionAlgorithm
-- GudObjectSizer
+# Verify all driver modules compile
+./gradlew :gud-driver-gemfire-10.0:compileJava \
+          :gud-driver-gemfire-10.1:compileJava \
+          :gud-driver-gemfire-10.2:compileJava \
+          :gud-driver-gemfire-10.3:compileJava 2>&1 | grep "error:"
+# Expected: (no output)
+```
 
-**Exceptions (52+):**
-- GudGemFireException, GudGemFireCheckedException
-- GudCacheException, GudRegionException, GudQueryException
-- GudCacheLoaderException, GudTimeoutException
-- GudTransactionException
-- And 45+ more specialized exceptions
+---
 
-## Statistics
+## GUD API Types Created (200+ total)
 
-| Metric | Value |
-|--------|-------|
-| Total main source files migrated | 188 |
-| Test support files (spring-test-vmware-gemfire) | 8 total, 7 migrated, 1 pending |
-| Main source compilation errors | 0 |
-| Test compilation errors | ~100 (primarily in GemFireMockObjectsSupport.java) |
-| GUD API types created | 195+ |
+**Core Types:** GudRegion, GudCache, GudClientCache, GudRegionService, GudQueryService,
+GudQuery, GudSelectResults, GudPool, GudPoolFactory, GudPoolManager
 
-## Key Rules (DO NOT FORGET)
+**Version/Capability:** GudCapability (in `gud-api`), GudApiVersion (in `gud-api`)
 
-1. **NO REFLECTION** in spring-data-vmware-gemfire and spring-test-vmware-gemfire
-2. **DO NOT DELETE** any GUD API files - deprecate instead if needed
-3. **ONLY gud-api** references allowed in spring-data and spring-test modules
-4. Server-side constructs (GudCacheServer, GudLocator) are deprecated placeholders
-5. Use hardcoded default ports where needed (40404 for CacheServer, 10334 for Locator)
-6. **Make classes abstract** when they require driver-specific implementations (e.g., internal GemFire APIs)
+**Spring Layer Utilities:** GudVersionAwareInvoker (in `spring-data-vmware-gemfire/support`)
+
+**Region Configuration:** GudRegionFactory, GudClientRegionFactory, GudRegionAttributes,
+GudAttributesMutator, GudDataPolicy, GudScope, GudRegionShortcut, GudClientRegionShortcut
+
+**Callbacks:** GudCacheLoader, GudCacheWriter, GudCacheListener, GudTransactionListener,
+GudTransactionWriter, GudTransactionEvent, GudCacheTransactionManager, GudCacheCallback,
+GudDeclarable
+
+**PDX:** GudPdxSerializer, GudPdxReader, GudPdxWriter, GudPdxInstance
+
+**Functions:** GudFunction, GudFunctionContext, GudFunctionService, GudExecution
+
+**Continuous Query:** GudCqQuery, GudCqEvent, GudCqAttributes
+
+**Compression:** GudCompressor, GudSnappyCompressor
+
+**Eviction:** GudEvictionAttributes, GudEvictionAction, GudEvictionAlgorithm, GudObjectSizer
+
+**Exceptions (52+):** GudGemFireException, GudGemFireCheckedException, GudCacheException,
+GudRegionException, GudQueryException, GudCacheLoaderException, GudTimeoutException,
+GudTransactionException, and 44+ more
+
+---
 
 ## Git Branch
 
@@ -317,5 +226,6 @@ Current branch: `udo.kohlmeyer/unified_driver`
 
 ```bash
 git status
-# Should show modified files in spring-data-vmware-gemfire/src/main/java/
+# Shows modified files across gud-api, gud-core, all driver modules,
+# spring-data-vmware-gemfire, and documentation
 ```

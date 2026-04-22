@@ -1,7 +1,14 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode ClientCache with GudClientCache
+ */
+
 package org.springframework.data.gemfire.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +18,7 @@ import java.util.Properties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.apache.geode.cache.client.ClientCache;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
@@ -42,7 +49,7 @@ public class GemFireObjectCreationTriggeredByGemFirePropertyConfigurationIntegra
 		extends IntegrationTestsSupport {
 
 	@Autowired
-	private ClientCache gemfireCache;
+	private GudClientCache gemfireCache;
 
 	@Test
 	public void securityManagerIsPresent() {

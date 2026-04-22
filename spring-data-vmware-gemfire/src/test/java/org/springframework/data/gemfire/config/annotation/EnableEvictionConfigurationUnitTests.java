@@ -1,13 +1,27 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
+ */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-17: usesDefaultEvictionPolicyConfiguration expects Mockito GudEvictionAttributes (unit isolation)
  */
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.config.annotation.EnableEviction.EvictionPolicy;
 import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudEvictionAction;
+import org.springframework.data.gemfire.gud.api.GudEvictionAlgorithm;
 import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
 import org.springframework.data.gemfire.gud.api.GudRegion;
 import org.springframework.data.gemfire.gud.api.GudClientCache;
@@ -91,7 +105,11 @@ public class EnableEvictionConfigurationUnitTests extends SpringApplicationConte
 
 		newApplicationContext(DefaultEvictionPolicyConfiguration.class);
 
-		GudEvictionAttributes defaultEvictionAttributes = GudEvictionAttributes.createLRUEntryAttributes();
+		GudEvictionAttributes defaultEvictionAttributes = mock(GudEvictionAttributes.class);
+		when(defaultEvictionAttributes.getAction()).thenReturn(GudEvictionAction.DEFAULT_EVICTION_ACTION);
+		when(defaultEvictionAttributes.getAlgorithm()).thenReturn(GudEvictionAlgorithm.LRU_ENTRY);
+		when(defaultEvictionAttributes.getMaximum()).thenReturn(GudEvictionAttributes.DEFAULT_ENTRIES_MAXIMUM);
+		when(defaultEvictionAttributes.getObjectSizer()).thenReturn(null);
 
 		assertEvictionAttributes(getBean("LocalRegion", GudRegion.class), defaultEvictionAttributes);
 	}

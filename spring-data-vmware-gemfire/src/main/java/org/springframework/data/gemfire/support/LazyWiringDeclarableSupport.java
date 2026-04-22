@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -8,6 +12,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ * 2026-04-17: Suppress deprecation on initialize(GudCache) — peer cache parameter retained for cache.xml wiring
  */
 
 package org.springframework.data.gemfire.support;
@@ -153,6 +158,7 @@ public abstract class LazyWiringDeclarableSupport extends WiringDeclarableSuppor
 	 * @see Properties
 	 */
 	@Override
+	@SuppressWarnings("deprecation")
 	public final void initialize(@Nullable GudCache cache, @NonNull Properties parameters) {
 
 		// Set a reference to the Apache Geode (configuration) Properties

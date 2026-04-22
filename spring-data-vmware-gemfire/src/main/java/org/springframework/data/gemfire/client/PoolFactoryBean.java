@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -14,6 +18,8 @@
  * Description:
  * 2026-03-12: Migrated from org.apache.geode imports to GUD API types
  * 2026-03-14: Added graceful handling for unsupported per-server connection settings
+ * 2026-04-02: Replaced ad-hoc try/catch with GudVersionAwareInvoker for consistent handling
+ * 2026-04-02: Changed isClientCachePresent() from package-private to protected so cross-package subclasses can override
  */
 
 package org.springframework.data.gemfire.client;
@@ -29,9 +35,10 @@ import org.springframework.data.gemfire.gud.api.GudDistributedSystem;
 import org.springframework.data.gemfire.gud.api.GudPool;
 import org.springframework.data.gemfire.gud.api.GudPoolFactory;
 import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudCapability;
 import org.springframework.data.gemfire.gud.api.GudSocketFactory;
-import org.springframework.data.gemfire.gud.api.GudUnsupportedOperationException;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
+import org.springframework.data.gemfire.support.GudVersionAwareInvoker;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.data.gemfire.util.CollectionUtils;
@@ -307,7 +314,7 @@ public abstract class PoolFactoryBean extends AbstractFactoryBeanSupport<GudPool
 	 * @see GudDistributedSystem
 	 * @see GudClientCache
 	 */
-	abstract boolean isClientCachePresent();
+	protected abstract boolean isClientCachePresent();
 
 	/**
 	 * Creates an instance of the {@link GudPoolFactory} interface to construct, configure and initialize a {@link GudPool}.
@@ -363,18 +370,19 @@ public abstract class PoolFactoryBean extends AbstractFactoryBeanSupport<GudPool
 
 	/**
 	 * Configures per-server connection limits on the pool factory.
-	 * These settings are only available in GemFire 10.3+. For older versions,
+	 * These settings are only available in GemFire 10.1+. For older versions,
 	 * a warning is logged and the settings are skipped.
 	 */
 	private void configurePerServerConnectionLimits(GudPoolFactory poolFactory) {
-		try {
-			poolFactory.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
-			poolFactory.setMinConnectionsPerServer(this.minConnectionsPerServer);
-		} catch (GudUnsupportedOperationException ex) {
-			getLogger().warn("Per-server connection limits (minConnectionsPerServer={}, maxConnectionsPerServer={}) " +
-				"are not supported by this GemFire version. {}",
-				this.minConnectionsPerServer, this.maxConnectionsPerServer, ex.getMessage());
-		}
+		GudVersionAwareInvoker.invokeIfSupported(
+			() -> {
+				poolFactory.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
+				poolFactory.setMinConnectionsPerServer(this.minConnectionsPerServer);
+			},
+			GudCapability.PER_SERVER_CONNECTION_LIMITS,
+			getLogger(),
+			"Per-server connection limits (min={}, max={}) are not supported by this GemFire version; skipping.",
+			this.minConnectionsPerServer, this.maxConnectionsPerServer);
 	}
 
 	/**

@@ -1,38 +1,43 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-04-01: Replaced Apache Geode DataPolicy, ClientRegionShortcut, and Region with GUD equivalents
+ */
+
 package org.springframework.data.gemfire.tests.objects.geode.cache;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.client.ClientRegionShortcut;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
-import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
-import org.springframework.data.gemfire.mapping.annotation.Region;
-import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
+import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
+import org.springframework.data.gemfire.gud.api.GudClientRegionShortcut;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.mapping.annotation.Region;
+import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
+import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration Tests for {@link RegionDataInitializingPostProcessor}.
  *
  * @author John Blum
  * @see Test
- * @see org.apache.geode.cache.Region
+ * @see org.springframework.data.gemfire.gud.api.GudRegion
  * @see ClientCacheApplication
  * @see IntegrationTestsSupport
  * @see GemFireUnitTest
@@ -47,7 +52,7 @@ public class RegionDataInitializingPostProcessorIntegrationTests extends Integra
 
 	@Autowired
 	@Qualifier("Users")
-	private org.apache.geode.cache.Region<String, User> users;
+	private GudRegion<String, User> users;
 
 	@Test
 	public void assertUsersRegionMetadata() {
@@ -55,7 +60,7 @@ public class RegionDataInitializingPostProcessorIntegrationTests extends Integra
 		assertThat(this.users).isNotNull();
 		assertThat(this.users.getName()).isEqualTo("Users");
 		assertThat(this.users.getAttributes()).isNotNull();
-		assertThat(this.users.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
+		assertThat(this.users.getAttributes().getDataPolicy()).isEqualTo(GudDataPolicy.NORMAL);
 	}
 
 	@Test
@@ -67,13 +72,13 @@ public class RegionDataInitializingPostProcessorIntegrationTests extends Integra
 	}
 
 	@ClientCacheApplication
-	@EnableEntityDefinedRegions(basePackageClasses = User.class, clientRegionShortcut = ClientRegionShortcut.LOCAL)
+	@EnableEntityDefinedRegions(basePackageClasses = User.class, clientRegionShortcut = GudClientRegionShortcut.LOCAL)
 	static class TestConfiguration {
 
 		@Bean
 		RegionDataInitializingPostProcessor<User> usersRegionDataInitializer() {
 
-			return RegionDataInitializingPostProcessor.<User>withRegion("Users")
+			return RegionDataInitializingPostProcessor.<User>withGudRegion("Users")
 				.useAsEntityIdentifier(User::getName)
 				.store(User.with("jonDoe"))
 				.store(User.with("janeDoe"));

@@ -1,8 +1,56 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import org.junit.Test;
+import org.mockito.InOrder;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.slf4j.Logger;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
+import org.springframework.data.gemfire.repository.Wrapper;
+import org.springframework.data.gemfire.repository.sample.Animal;
+import org.springframework.data.gemfire.repository.sample.Identifiable;
+import org.springframework.data.gemfire.util.CollectionUtils;
+import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.repository.core.EntityInformation;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,54 +69,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.springframework.data.gemfire.gud.api.GudClientCache;
-import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import org.springframework.data.gemfire.gud.api.GudCacheTransactionManager;
-import org.springframework.data.gemfire.gud.api.GudDataPolicy;
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-import org.springframework.data.gemfire.gud.api.GudSelectResults;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.gemfire.GemfireTemplate;
-import org.springframework.data.gemfire.repository.Wrapper;
-import org.springframework.data.gemfire.repository.sample.Animal;
-import org.springframework.data.gemfire.repository.sample.Identifiable;
-import org.springframework.data.gemfire.util.CollectionUtils;
-import org.springframework.data.gemfire.util.RegionUtils;
-import org.springframework.data.repository.core.EntityInformation;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
-import org.slf4j.Logger;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 /**
  * Unit Tests for {@link SimpleGemfireRepository}.
@@ -887,7 +887,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		GudClientCache mockCache = mockCache("MockCache", false);
 
-		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.REPLICATE);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.EMPTY);
 
 		SimpleGemfireRepository<Animal, Long> gemfireRepository =
 			new SimpleGemfireRepository<>(newGemfireTemplate(mockRegion), mockEntityInformation());
@@ -935,7 +935,7 @@ public class SimpleGemfireRepositoryUnitTests {
 
 		GudClientCache mockCache = mockCache("MockCache", true);
 
-		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.REPLICATE);
+		GudRegion<Long, Animal> mockRegion = mockRegion("MockRegion", mockCache, GudDataPolicy.EMPTY);
 
 		Set<Long> keys = new HashSet<>(Arrays.asList(1L, 2L, 3L));
 
@@ -1280,7 +1280,7 @@ public class SimpleGemfireRepositoryUnitTests {
 	@ToString(of = "name")
 	@EqualsAndHashCode(of = "name")
 	@RequiredArgsConstructor(staticName = "newUser")
-	@org.springframework.data.gemfire.mapping.annotation.GudRegion("Users")
+	@org.springframework.data.gemfire.mapping.annotation.Region("Users")
 	static class User {
 
 		@Id

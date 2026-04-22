@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -38,4 +42,12 @@ dependencies {
     implementation("com.vmware.gemfire:gemfire-gfsh:$gemfire102Version")
     implementation("com.vmware.gemfire:gemfire-tcp-server:$gemfire102Version")
     implementation("com.vmware.gemfire:gemfire-deployment-chained-classloader:$gemfire102Version")
+
+    testImplementation(libs.junit)
+    testImplementation(libs.assertJ)
+    testImplementation(libs.mockito)
+}
+
+tasks.withType<Test> {
+    useJUnit()
 }

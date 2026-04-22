@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -22,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.gemfire.gud.api.GudPdxSerializer;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -33,6 +38,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
+import org.springframework.data.gemfire.gud.driver.mock.GudResetRule;
 import org.springframework.data.gemfire.mapping.MappingPdxSerializer;
 import org.springframework.util.MethodInvoker;
 
@@ -51,6 +57,9 @@ import org.springframework.util.MethodInvoker;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class EnablePdxConfigurationUnitTests {
+
+	@Rule
+	public final GudResetRule gudResetRule = new GudResetRule();
 
 	@Spy
 	private PdxConfiguration pdxConfiguration;

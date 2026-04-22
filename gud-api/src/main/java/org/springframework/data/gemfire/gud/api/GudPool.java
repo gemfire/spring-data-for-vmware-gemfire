@@ -1,12 +1,8 @@
 /*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 
-/*
- * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+// Copyright (c) 2026 Broadcom. All Rights Reserved.
 
 /*
  * @AI-Generated
@@ -14,6 +10,7 @@
  * Description:
  * 2026-03-11: Created GudPool interface as 1:1 mapping of GemFire Pool
  * 2026-03-17: Changed getMin/MaxConnectionsPerServer() to default methods for 10.1+ feature
+ * 2026-04-02: Updated default methods to use GudCapability enum for type safety
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -52,7 +49,7 @@ public interface GudPool {
     default int getMinConnectionsPerServer() {
         throw new GudUnsupportedOperationException(
             "getMinConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.1");
+            GudCapability.PER_SERVER_CONNECTION_LIMITS, "10.1");
     }
 
     /**
@@ -67,7 +64,7 @@ public interface GudPool {
     default int getMaxConnectionsPerServer() {
         throw new GudUnsupportedOperationException(
             "getMaxConnectionsPerServer() is not supported. This feature was added in GemFire 10.1.",
-            "PER_SERVER_CONNECTION_LIMITS", "10.1");
+            GudCapability.PER_SERVER_CONNECTION_LIMITS, "10.1");
     }
 
     long getIdleTimeout();

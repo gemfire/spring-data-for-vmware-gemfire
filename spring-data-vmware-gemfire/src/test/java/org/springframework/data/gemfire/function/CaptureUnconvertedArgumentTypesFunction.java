@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -14,8 +18,8 @@ import java.util.List;
 public class CaptureUnconvertedArgumentTypesFunction implements GudFunction {
 
   @Override
-  public void execute(GudFunctionContext<Class<?>[]> context) {
-    Object[] args = context.getArguments();
+  public void execute(GudFunctionContext context) {
+    Object[] args = (Object[]) context.getArguments();
 
     String stringValue = (String) args[0];
     Integer integerValue = (Integer) args[1];

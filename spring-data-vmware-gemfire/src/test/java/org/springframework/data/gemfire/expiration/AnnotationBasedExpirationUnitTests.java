@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -110,7 +114,7 @@ public class AnnotationBasedExpirationUnitTests {
 
 		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
-		GudExpirationAttributes defaultExpiration = new GudExpirationAttributes(300, GudExpirationAction.DESTROY);
+		GudExpirationAttributes defaultExpiration = GudExpirationAttributes.of(300, GudExpirationAction.DESTROY);
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forIdleTimeout(defaultExpiration);
 
@@ -144,7 +148,7 @@ public class AnnotationBasedExpirationUnitTests {
 
 		GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 
-		GudExpirationAttributes defaultExpiration = new GudExpirationAttributes(300, GudExpirationAction.DESTROY);
+		GudExpirationAttributes defaultExpiration = GudExpirationAttributes.of(300, GudExpirationAction.DESTROY);
 
 		AnnotationBasedExpiration expiration = AnnotationBasedExpiration.forTimeToLive(defaultExpiration);
 
@@ -205,7 +209,7 @@ public class AnnotationBasedExpirationUnitTests {
 	@Test
 	public void setAndGetDefaultExpirationAttributes() {
 
-		GudExpirationAttributes expectedExpirationAttributes = new GudExpirationAttributes(120, GudExpirationAction.INVALIDATE);
+		GudExpirationAttributes expectedExpirationAttributes = GudExpirationAttributes.of(120, GudExpirationAction.INVALIDATE);
 
 		AnnotationBasedExpiration expiration = new AnnotationBasedExpiration();
 
@@ -226,7 +230,7 @@ public class AnnotationBasedExpirationUnitTests {
 	public void getExpiryCallsGetExpirationMetaDataOnRegionEntryFollowedByNewExpirationAttributes() {
 
 		GudExpirationAttributes expectedExpirationAttributes =
-			new GudExpirationAttributes(60, GudExpirationAction.LOCAL_DESTROY);
+			GudExpirationAttributes.of(60, GudExpirationAction.LOCAL_DESTROY);
 
 		final GudRegion.Entry mockRegionEntry = mock(GudRegion.Entry.class, "MockRegionEntry");
 

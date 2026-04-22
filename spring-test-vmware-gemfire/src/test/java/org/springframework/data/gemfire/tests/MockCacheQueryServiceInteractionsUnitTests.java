@@ -1,6 +1,5 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 package org.springframework.data.gemfire.tests;
 
@@ -10,33 +9,32 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.query.Query;
-import org.apache.geode.cache.query.QueryService;
-import org.apache.geode.cache.query.SelectResults;
-import org.apache.geode.cache.query.types.CollectionType;
-import org.apache.geode.cache.query.types.ObjectType;
+import org.springframework.data.gemfire.gud.api.GudClientCache;
+import org.springframework.data.gemfire.gud.api.GudCollectionType;
+import org.springframework.data.gemfire.gud.api.GudObjectType;
+import org.springframework.data.gemfire.gud.api.GudQuery;
+import org.springframework.data.gemfire.gud.api.GudQueryService;
+import org.springframework.data.gemfire.gud.api.GudSelectResults;
 
 import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
 
 /**
- * Unit Tests for GemFire/Geode {@literal Mock} {@link ClientCache} {@link QueryService} and {@link Query OQL Queries}.
+ * Unit Tests for GemFire/Geode {@literal Mock} {@link GudClientCache} {@link GudQueryService}
+ * and {@link GudQuery OQL Queries}.
  *
  * @author John Blum
  * @see Test
- * @see ClientCache
- * @see ClientCache
- * @see QueryService
- * @see Query
- * @see SelectResults
- * @see CollectionType
- * @see ObjectType
+ * @see GudClientCache
+ * @see GudQueryService
+ * @see GudQuery
+ * @see GudSelectResults
+ * @see GudCollectionType
+ * @see GudObjectType
  * @since 0.0.19
  */
 public class MockCacheQueryServiceInteractionsUnitTests {
 
-	private void assertSelectResults(SelectResults<Object> selectResults) {
+	private void assertSelectResults(GudSelectResults<Object> selectResults) {
 
 		assertThat(selectResults).isNotNull();
 		assertThat(selectResults.asList()).isEmpty();
@@ -45,13 +43,13 @@ public class MockCacheQueryServiceInteractionsUnitTests {
 		assertThat(selectResults.occurrences("MOCK")).isZero();
 		assertThat(selectResults.occurrences("TEST")).isZero();
 
-		CollectionType collectionType = selectResults.getCollectionType();
+		GudCollectionType collectionType = selectResults.getCollectionType();
 
 		assertThat(collectionType).isNotNull();
 		assertThat(collectionType.allowsDuplicates()).isFalse();
 		assertThat(collectionType.isOrdered()).isFalse();
 
-		ObjectType objectType = collectionType.getElementType();
+		GudObjectType objectType = collectionType.getElementType();
 
 		assertThat(objectType).isNotNull();
 		assertThat(objectType.getSimpleClassName()).isEqualTo(Object.class.getSimpleName());
@@ -72,15 +70,15 @@ public class MockCacheQueryServiceInteractionsUnitTests {
 
 		String queryString = "SELECT * FROM /Example WHERE id = $1";
 
-		ClientCache mockClientCache = GemFireMockObjectsSupport.mockClientCache();
+		GudClientCache mockClientCache = GemFireMockObjectsSupport.mockGudClientCache();
 
 		assertThat(mockClientCache).isNotNull();
 
-		QueryService mockQueryService = mockClientCache.getQueryService();
+		GudQueryService mockQueryService = mockClientCache.getQueryService();
 
 		assertThat(mockQueryService).isNotNull();
 
-		Query mockQuery = mockQueryService.newQuery(queryString);
+		GudQuery mockQuery = mockQueryService.newQuery(queryString);
 
 		assertThat(mockQuery).isNotNull();
 		assertThat(mockQuery.getQueryString()).isEqualTo(queryString);
@@ -88,17 +86,17 @@ public class MockCacheQueryServiceInteractionsUnitTests {
 
 		Object results = mockQuery.execute();
 
-		assertThat(results).isInstanceOf(SelectResults.class);
+		assertThat(results).isInstanceOf(GudSelectResults.class);
 
-		SelectResults<Object> mockSelectResults = (SelectResults<Object>) results;
+		GudSelectResults<Object> mockSelectResults = (GudSelectResults<Object>) results;
 
 		assertSelectResults(mockSelectResults);
 
 		results = mockQuery.execute(1);
 
-		assertThat(results).isInstanceOf(SelectResults.class);
+		assertThat(results).isInstanceOf(GudSelectResults.class);
 
-		mockSelectResults = (SelectResults<Object>) results;
+		mockSelectResults = (GudSelectResults<Object>) results;
 
 		assertSelectResults(mockSelectResults);
 	}

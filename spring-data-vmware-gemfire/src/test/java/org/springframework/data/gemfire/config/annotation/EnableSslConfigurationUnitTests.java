@@ -1,6 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
- * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) 2026 Broadcom. All rights reserved.
  */
 package org.springframework.data.gemfire.config.annotation;
 
@@ -8,11 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
+import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
+import org.springframework.data.gemfire.gud.driver.mock.GudResetRule;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.data.gemfire.util.ArrayUtils;
@@ -33,6 +34,9 @@ import org.springframework.util.StringUtils;
  * @since 2.1.0
  */
 public class EnableSslConfigurationUnitTests extends SpringApplicationContextIntegrationTestsSupport {
+
+	@Rule
+	public final GudResetRule gudResetRule = new GudResetRule();
 
 	private ConfigurableApplicationContext newApplicationContext(PropertySource<?> testPropertySource,
 			Class<?>... annotatedClasses) {

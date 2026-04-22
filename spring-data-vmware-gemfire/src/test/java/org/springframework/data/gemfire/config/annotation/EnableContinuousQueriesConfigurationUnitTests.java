@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -320,7 +324,7 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 	}
 
 	@Data
-	@org.springframework.data.gemfire.mapping.annotation.GudRegion("Examples")
+	@org.springframework.data.gemfire.mapping.annotation.Region("Examples")
 	static class Example {
 		@Id Long id;
 	}

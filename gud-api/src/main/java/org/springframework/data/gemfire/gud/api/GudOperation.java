@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -23,6 +27,8 @@ package org.springframework.data.gemfire.gud.api;
  */
 public enum GudOperation {
 
+    CACHE_CREATE,
+    CACHE_CLOSE,
     CREATE,
     LOCAL_CREATE,
     PUT_IF_ABSENT,

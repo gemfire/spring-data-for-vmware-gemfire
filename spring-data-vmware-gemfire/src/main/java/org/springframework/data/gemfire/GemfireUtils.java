@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -23,7 +27,7 @@ import org.w3c.dom.Element;
  * and capabilities of Apache Geode based on version as well as other configuration meta-data.
  *
  * @author John Blum
- * @see GudClientCacheFactory
+ * @see org.springframework.data.gemfire.gud.api.GudClientCacheFactory
  * @see GemfireFeature
  * @see RegionUtils
  * @since 1.3.3
@@ -45,7 +49,7 @@ public abstract class GemfireUtils extends RegionUtils {
 	public static String apacheGeodeVersion() {
 
 		try {
-			return GudCacheProvider.getClientCacheFactory().getVersion();
+			return GudCacheProvider.createClientCacheFactory().getVersion();
 		}
 		catch (Throwable ignore) {
 			return UNKNOWN;

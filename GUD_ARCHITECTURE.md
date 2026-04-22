@@ -1,19 +1,37 @@
 # GemFire Unified Driver (GUD) Architecture
 
+> **Updated:** 2026-04-17 — Client-only GUD contract documented; peer/server types deprecated (use GemFire Testcontainers).
+
 ## Overview
 
 The GemFire Unified Driver (GUD) is an abstraction layer that decouples Spring Data GemFire from native GemFire APIs. This enables:
 
 1. **Driver Swappability** - Switch between GemFire versions (10.0, 10.1, 10.2, 10.3) without changing application code
-2. **API Evolution** - Gracefully handle API changes between GemFire versions
+2. **API Evolution** - Gracefully handle API additions, deprecations, and signature changes between GemFire versions
 3. **Clean Separation** - Application code never directly imports native GemFire classes
+4. **Type-Safe Capability Detection** - `GudCapability` enum allows compile-time checked feature detection
+
+### Client-only GUD contract
+
+The **supported GUD application surface is client-side only**: `GudClientCache`, `GudClientCacheFactory`,
+`GudClientRegionFactory`, pools, client regions, PDX, queries, and transactions on a client cache.
+
+**Peer (server) cache**, native **locator/server bootstrap**, and **server-side regions** (REPLICATE,
+PARTITION, etc.) are **not** part of that contract. Integration tests and fixtures that need a real
+cluster should use **[GemFire Testcontainers](https://github.com/gemfire/gemfire-testcontainers)**
+(or native `org.apache.geode` server APIs in test code), not `GudCacheFactory` / `GudCache` /
+`GudRegionFactory` in application modules.
+
+The types `GudCache`, `GudCacheFactory`, and `GudRegionFactory` remain on the classpath for backward
+compatibility and driver SPI (`GudDriver#createCacheFactory`, `wrapCache`) but are **deprecated since 4.0**
+with removal planned after call sites migrate.
 
 ## Architecture Layers
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                      Application Layer                          │
-│  (TestCachingApp, User Applications)                           │
+│  (User Applications)                                            │
 │  - Uses Spring annotations (@ClientCacheApplication, @Region)   │
 │  - Only imports from spring-data-vmware-gemfire and gud-api     │
 └─────────────────────────────────────────────────────────────────┘
@@ -25,6 +43,7 @@ The GemFire Unified Driver (GUD) is an abstraction layer that decouples Spring D
 │  - Spring Configurations (@ClientCacheApplication support)      │
 │  - Repository infrastructure                                    │
 │  - Uses GudCacheProvider to obtain factories                    │
+│  - GudVersionAwareInvoker for graceful version degradation      │
 │  - Dependencies: gud-api (api), gud-core (implementation)       │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -32,31 +51,33 @@ The GemFire Unified Driver (GUD) is an abstraction layer that decouples Spring D
 ┌─────────────────────────────────────────────────────────────────┐
 │                          gud-api                                │
 │  - Pure Java interfaces (no Spring, no native GemFire)         │
-│  - GudClientCache, GudRegion, GudPool, etc.                    │
-│  - GudCacheProvider - ServiceLoader-based factory discovery     │
-│  - Defines the contract between Spring layer and drivers        │
+│  - GudClientCache, GudClientRegionFactory, GudRegion (client), │
+│    GudPool, etc. — client-side contract only                   │
+│  - GudCapability, GudApiVersion (capability/version contracts)  │
+│  - GudCacheProvider (Supplier-based factory; configure() API)  │
+│  - GudUnsupportedOperationException (type-safe, enum-based)    │
+│  - Defines the client contract between Spring layer and drivers  │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                         gud-core                                │
-│  - Shared utilities and base implementations                    │
-│  - Common functionality used by drivers                         │
+│  - GudDriver (SPI interface)                                    │
+│  - GudDriverManager (ServiceLoader discovery + push to provider)│
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   gud-driver-gemfire-10.3                       │
+│            gud-driver-gemfire-{10.0, 10.1, 10.2, 10.3}        │
 │  - Concrete implementations of GUD interfaces                   │
-│  - Wraps native GemFire 10.3 APIs                              │
-│  - Registered via ServiceLoader (META-INF/services/)           │
+│  - Wraps native GemFire APIs for that version                  │
+│  - Registered via ServiceLoader (single GudDriver service file) │
 │  - NO Spring dependencies                                       │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    Native GemFire 10.3                          │
-│  (org.apache.geode.* classes)                                  │
+│                 Native GemFire (org.apache.geode.*)             │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -68,333 +89,169 @@ Applications should only import from:
 - `org.springframework.data.gemfire.gud.api.*` (GUD API interfaces)
 
 ### 2. Driver Layer Has No Spring Dependencies
-The driver (`gud-driver-gemfire-10.3`) contains zero Spring imports. It only:
+Each driver module (`gud-driver-gemfire-10.x`) contains zero Spring imports. It only:
 - Implements GUD API interfaces
 - Wraps native GemFire classes
-- Registers implementations via ServiceLoader
+- Registers a single `GudDriver` implementation via ServiceLoader
 
-### 3. ServiceLoader-Based Discovery
-Drivers are discovered automatically via Java's ServiceLoader mechanism:
+### 3. Single ServiceLoader Registration per Driver
+Each driver module registers exactly **one** service entry:
 ```
-META-INF/services/org.springframework.data.gemfire.gud.api.GudClientCacheFactory
-META-INF/services/org.springframework.data.gemfire.gud.api.GudPoolManager
-META-INF/services/org.springframework.data.gemfire.gud.api.GudJndiBinding
+META-INF/services/org.springframework.data.gemfire.gud.core.GudDriver
 ```
+`GudDriverManager` discovers the driver and pushes all its factories (client cache, cache,
+JNDI binding, pool manager) into `GudCacheProvider` via `GudCacheProvider.configure()`.
+This ensures both registration paths (driver-manager and direct service-loader) remain
+coordinated through a single authoritative source.
 
 ### 4. GudCacheProvider as the Bridge
 `GudCacheProvider` is the central access point that:
-- Auto-discovers driver implementations via ServiceLoader
-- Provides factories to the Spring layer
-- Maintains singleton references for caches
+- Receives factory suppliers pushed by `GudDriverManager` (`configure()` method)
+- Falls back to direct ServiceLoader discovery if invoked before `GudDriverManager`
+- Returns **fresh** factory instances per call (Supplier pattern — correct for stateful builders)
+- Maintains references to the current cache instances
+
+### 5. Type-Safe Capability Detection
+`GudCapability` (in `gud-api`) enumerates all version-specific features.
+`GudUnsupportedOperationException` carries the `GudCapability` enum value, enabling callers
+to inspect the required capability without relying on String comparison.
+
+### 6. Graceful Degradation via GudVersionAwareInvoker
+`GudVersionAwareInvoker` (in `spring-data-vmware-gemfire`) centralises the
+`try/catch GudUnsupportedOperationException` pattern used across FactoryBeans:
+```java
+GudVersionAwareInvoker.invokeIfSupported(
+    () -> poolFactory.setMinConnectionsPerServer(min),
+    GudCapability.PER_SERVER_CONNECTION_LIMITS,
+    logger,
+    "Per-server connection limits (min={}) not supported; skipping.", min
+);
+```
 
 ## Module Dependency Graph
 
 ```
-TestCachingApp
-├── implementation: spring-data-vmware-gemfire
-└── runtimeOnly: gud-driver-gemfire-10.3
-
 spring-data-vmware-gemfire
 ├── api: gud-api
 └── implementation: gud-core
 
-gud-driver-gemfire-10.3
+gud-core
+└── implementation: gud-api
+
+gud-driver-gemfire-10.x
 ├── implementation: gud-api
 ├── implementation: gud-core
 └── implementation: gemfire-core (native)
 ```
 
-## What Has Been Implemented
+## Package Ownership
+
+| Package | Responsibility |
+|---------|----------------|
+| `o.s.d.g.gud.api` | Interfaces, enums (`GudCapability`, `GudApiVersion`), exceptions, `GudCacheProvider` |
+| `o.s.d.g.gud.core` | Driver SPI (`GudDriver`), driver registry (`GudDriverManager`) |
+| `o.s.d.g.gud.driver` | Version-specific implementations (one class `GemFireDriver` per module) |
+| `o.s.d.g.support` | `GudVersionAwareInvoker` and other Spring-layer utilities |
+
+## What Is Implemented
 
 ### gud-api Module
-| Interface | Status | Description |
-|-----------|--------|-------------|
+| Interface/Class | Status | Description |
+|-----------------|--------|-------------|
 | `GudClientCache` | ✅ Complete | Client cache abstraction |
-| `GudClientCacheFactory` | ✅ Complete | Factory for creating client caches |
+| `GudClientCacheFactory` | ✅ Complete | Factory for creating client caches (versioned defaults) |
 | `GudRegion` | ✅ Complete | Region abstraction with full Map-like API |
-| `GudPool` | ✅ Complete | Connection pool abstraction |
-| `GudPoolFactory` | ✅ Complete | Factory for creating pools |
+| `GudPool` | ✅ Complete | Connection pool abstraction (versioned defaults) |
+| `GudPoolFactory` | ✅ Complete | Factory for creating pools (versioned defaults) |
 | `GudPoolManager` | ✅ Complete | Pool management (find, getAll, close) |
 | `GudDiskStore` | ✅ Complete | Disk store abstraction |
-| `GudDiskStoreFactory` | ✅ Complete | Factory for creating disk stores |
-| `GudCacheListener` | ✅ Complete | Event listener interface |
-| `GudCacheWriter` | ✅ Complete | Cache writer interface |
-| `GudCacheLoader` | ✅ Complete | Cache loader interface |
-| `GudAttributesMutator` | ✅ Complete | Region attributes modification |
-| `GudDistributedSystem` | ✅ Complete | Distributed system abstraction |
-| `GudDistributedMember` | ✅ Complete | Cluster member abstraction |
-| `GudJndiBinding` | ✅ Complete | JNDI data source management |
-| `GudCacheProvider` | ✅ Complete | ServiceLoader-based factory discovery |
-| `GudClientRegionShortcut` | ✅ Complete | Region type shortcuts (PROXY, CACHING_PROXY, etc.) |
+| `GudDiskStoreFactory` | ✅ Complete | Factory for disk stores (versioned defaults) |
+| `GudClientRegionFactory` | ✅ Complete | Client region factory (versioned defaults) |
+| `GudCacheProvider` | ✅ Complete | Supplier-based factory access + `configure()` push entry-point |
+| `GudCapability` | ✅ Complete | Type-safe capability enum — **now in gud-api** |
+| `GudApiVersion` | ✅ Complete | Semantic version comparison — **now in gud-api** |
+| `GudUnsupportedOperationException` | ✅ Complete | Type-safe with `GudCapability` field |
 
-### gud-driver-gemfire-* Modules (Unified Package)
+### gud-core Module
+| Class | Status | Description |
+|-------|--------|-------------|
+| `GudDriver` | ✅ Complete | SPI — includes `createJndiBinding()` and `createPoolManager()` |
+| `GudDriverManager` | ✅ Complete | ServiceLoader discovery; fixed version comparator; fixed race condition; pushes to `GudCacheProvider` |
 
-All driver modules share the same package (`org.springframework.data.gemfire.gud.driver.gemfire`)
-and class names. Only one driver module should be on the classpath at runtime.
-
-| Implementation | Status | Description |
-|----------------|--------|-------------|
-| `GemFireClientCache` | ✅ Complete | Wraps native ClientCache |
-| `GemFireClientCacheFactory` | ✅ Complete | Wraps native ClientCacheFactory |
-| `GemFireRegion` | ✅ Complete | Wraps native Region |
-| `GemFireClientRegionFactory` | ✅ Complete | Wraps native ClientRegionFactory |
-| `GemFirePool` | ✅ Complete | Wraps native Pool |
-| `GemFirePoolFactory` | ✅ Complete | Wraps native PoolFactory |
-| `GemFirePoolManager` | ✅ Complete | Wraps native PoolManager |
-| `GemFireDiskStore` | ✅ Complete | Wraps native DiskStore |
-| `GemFireDiskStoreFactory` | ✅ Complete | Wraps native DiskStoreFactory |
-| `GemFireAttributesMutator` | ✅ Complete | Wraps native AttributesMutator |
-| `GemFireDistributedSystem` | ✅ Complete | Wraps native DistributedSystem |
-| `GemFireDistributedMember` | ✅ Complete | Wraps native DistributedMember |
-| `GemFireJndiBinding` | ✅ Complete | Wraps native JNDIInvoker |
-| `GemFireCacheListenerAdapter` | ✅ Complete | Adapts GudCacheListener to native |
-| `GemFireCacheWriterAdapter` | ✅ Complete | Adapts GudCacheWriter to native |
-| `GemFireCacheLoaderAdapter` | ✅ Complete | Adapts GudCacheLoader to native |
-| `GemFireEntryEvent` | ✅ Complete | Wraps native EntryEvent |
-| `GemFireRegionEvent` | ✅ Complete | Wraps native RegionEvent |
-| `GemFireLoaderHelper` | ✅ Complete | Wraps native LoaderHelper |
+### Driver Modules
+| Version | Capabilities |
+|---------|--------------|
+| `gemfire-10.0` | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS |
+| `gemfire-10.1` | All 10.0 + PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
+| `gemfire-10.2` | All 10.1 capabilities |
+| `gemfire-10.3` | All 10.2 + SECURITY_MANAGER, SERVER_REGION_NAME |
 
 ### spring-data-vmware-gemfire Module
 | Component | Status | Description |
 |-----------|--------|-------------|
-| `ClientCacheFactoryBean` | ✅ Migrated | Uses GudCacheProvider for factory |
-| `ClientRegionFactoryBean` | ✅ Migrated | Creates GudRegion instances |
-| `DiskStoreFactoryBean` | ✅ Migrated | Uses GudClientCache for factory |
-| `ClientCacheConfiguration` | ✅ Migrated | @ClientCacheApplication support |
-| `@EnableDiskStore` | ✅ Working | Disk store annotation support |
-| `@EnableGemfireRepositories` | ✅ Working | Repository support |
-| `PoolManagerPoolResolver` | ✅ Migrated | Uses GudCacheProvider.getPoolManager() |
-| `DistributedSystemUtils` | ✅ Migrated | Uses GudCacheProvider |
+| `ClientCacheFactoryBean` | ✅ Migrated | Uses `GudCacheProvider.createClientCacheFactory()` |
+| `PoolFactoryBean` | ✅ Migrated | Uses `GudVersionAwareInvoker` for per-server limits |
+| `DiskStoreFactoryBean` | ✅ Migrated | Uses `GudVersionAwareInvoker` for segments |
+| `GudVersionAwareInvoker` | ✅ New | Central utility for graceful version degradation |
 
 ### ServiceLoader Registrations (META-INF/services/)
+Each driver module now registers **one service only**:
 | Service Interface | Registered Implementation |
 |-------------------|---------------------------|
-| `GudClientCacheFactory` | `GemFireClientCacheFactory` |
-| `GudPoolManager` | `GemFirePoolManager` |
-| `GudJndiBinding` | `GemFireJndiBinding` |
+| `GudDriver` | `GemFireDriver` (per version module) |
 
-## What Remains To Be Done
-
-### High Priority
-
-#### 1. Server-Side Cache Support
-- [ ] `GudCache` interface (peer cache, not client)
-- [ ] `GudCacheFactory` implementation
-- [ ] `GudCacheServer` interface
-- [ ] Server region types (REPLICATE, PARTITION, etc.)
-
-#### 2. Query Support
-- [ ] `GudQueryService` interface
-- [ ] `GudQuery` interface
-- [ ] `GudSelectResults` interface
-- [ ] OQL query execution
-
-#### 3. Function Execution
-- [ ] `GudFunctionService` interface
-- [ ] `GudExecution` interface
-- [ ] `GudResultCollector` interface
-- [ ] Function registration and execution
-
-#### 4. Continuous Query (CQ)
-- [ ] `GudCqService` interface
-- [ ] `GudCqQuery` interface
-- [ ] `GudCqListener` interface
-- [ ] CQ event handling
-
-#### 5. Transaction Support
-- [ ] `GudCacheTransactionManager` interface
-- [ ] Transaction begin/commit/rollback
-- [ ] Transaction event listeners
-
-### Medium Priority
-
-#### 6. PDX Serialization
-- [ ] `GudPdxInstance` interface
-- [ ] `GudPdxInstanceFactory` interface
-- [ ] PDX field access methods
-- [ ] PDX type registry
-
-#### 7. Security
-- [ ] `GudSecurityManager` interface
-- [ ] Authentication callbacks
-- [ ] Authorization support
-
-#### 8. Statistics
-- [ ] `GudStatistics` interface
-- [ ] `GudStatisticsType` interface
-- [ ] Statistics sampling
-
-#### 9. WAN Replication
-- [ ] `GudGatewaySender` interface
-- [ ] `GudGatewayReceiver` interface
-- [ ] WAN event handling
-
-### Lower Priority
-
-#### 10. Additional Spring Data Features
-- [ ] `@EnableClusterConfiguration` support
-- [ ] `@EnableContinuousQueries` support
-- [ ] `@EnableGemfireFunctionExecutions` full support
-- [ ] Lucene index support
-
-#### 11. Testing Infrastructure
-- [ ] `spring-test-vmware-gemfire` migration
-- [ ] Mock GUD implementations for testing
-- [ ] Integration test utilities
-
-#### 12. Additional Drivers
-- [x] `gud-driver-gemfire-10.0` - GemFire 10.0 support
-- [x] `gud-driver-gemfire-10.1` - GemFire 10.1 support
-- [x] `gud-driver-gemfire-10.2` - GemFire 10.2 support
-- [x] Driver version negotiation
-- [x] Graceful feature degradation for older drivers
+All other factories (ClientCacheFactory, CacheFactory, JndiBinding, PoolManager) are
+obtained from the driver via its `createXxx()` methods and pushed into `GudCacheProvider`.
 
 ## API Evolution Strategy
 
-When a new GemFire version introduces API changes:
-
 ### Adding New Features
-1. Add new methods to GUD interfaces with `default` implementations that throw `GudUnsupportedOperationException`
-2. Implement the method in drivers that support the feature
-3. Old drivers continue to work (throw exception if new feature is used)
-4. Spring Data beans catch `GudUnsupportedOperationException` and log warnings
-
-**Example:** `DiskStoreFactory.setSegments()` was added in GemFire 10.1:
-- The 10.0 driver uses the default method that throws
-- The 10.1, 10.2, and 10.3 drivers override with native implementations
-- `DiskStoreFactoryBean` catches the exception and logs a warning if used on 10.0
+1. Add new method to GUD interface with a `default` that throws `GudUnsupportedOperationException`
+2. Add a `GudCapability` enum value for the new feature
+3. Implement the method in drivers that support the feature
+4. Old drivers continue to work via the default (throw on use)
+5. Spring FactoryBeans use `GudVersionAwareInvoker.invokeIfSupported()` for graceful skip
 
 ### Handling Deprecated Features
-The GUD API tracks deprecated features from GemFire to help applications migrate:
-
-1. Mark deprecated methods with `@Deprecated` annotation in GUD interfaces
+1. Mark deprecated methods with `@Deprecated` in GUD interfaces
 2. Include `@deprecated` Javadoc with migration guidance
-3. Driver implementations still support the methods (for compatibility)
-4. Applications receive compiler warnings when using deprecated features
+3. Driver implementations continue to support methods for compatibility
 
-**Currently Deprecated Features:**
-- `PoolFactory.setThreadLocalConnections()` - No-op since Geode 1.10, ignored
-- `ClientCacheFactory.setPdxDiskStore()` - PDX persistence not supported on client side
-- `ClientCacheFactory.setPdxPersistent()` - PDX persistence not supported on client side
-- `QueryService.createHashIndex()` - Hash indexes deprecated, use standard indexes
-- `QueryService.defineHashIndex()` - Hash indexes deprecated, use standard indexes
-- `QueryService.getIndexes(Region, IndexType)` - IndexType parameter deprecated
-- `IndexType` enum - Use non-IndexType method overloads
+### Currently Deprecated Features
+| Feature | Deprecated Since | Reason |
+|---------|-----------------|--------|
+| `PoolFactory.setThreadLocalConnections()` | 10.0 | No-op since Geode 1.10 |
+| `ClientCacheFactory.setPdxDiskStore()` | 10.0 | PDX persistence not supported on client side |
+| `ClientCacheFactory.setPdxPersistent()` | 10.0 | PDX persistence not supported on client side |
+| `QueryService.createHashIndex()` | 10.0 | Hash indexes deprecated |
+| `QueryService.defineHashIndex()` | 10.0 | Hash indexes deprecated |
 
-### Handling Removed Features
-1. Keep methods in GUD interfaces
-2. Newer driver throws `GudUnsupportedOperationException` with clear message
-3. Applications can check driver capabilities and adapt
-
-### Handling Changed Signatures
-1. Add new method with new signature
-2. Deprecate old method
-3. Old driver implements old method
-4. New driver implements new method
-5. Both can coexist
-
-## Example: TestCachingApp Configuration
-
-```java
-@Configuration
-@ClientCacheApplication(
-    name = "TestCachingApp",
-    locators = @ClientCacheApplication.Locator(host = "localhost", port = 23232),
-    subscriptionEnabled = true
-)
-@EnableDiskStore(
-    name = "CachingProxyDiskStore",
-    autoCompact = true,
-    diskDirectories = @EnableDiskStore.DiskDirectory(location = "./data/diskstore")
-)
-@EnableGemfireRepositories(basePackages = "com.example.testcaching.repository")
-public class GemFireClientConfiguration {
-
-    @Bean("RegionProxy")
-    public ClientRegionFactoryBean<String, Object> regionProxy(
-            GudClientCache clientCache,
-            GudCacheListener<String, Object> listener) {
-        
-        ClientRegionFactoryBean<String, Object> factory = new ClientRegionFactoryBean<>();
-        factory.setCache(clientCache);
-        factory.setShortcut(GudClientRegionShortcut.PROXY);
-        factory.setCacheListeners(new GudCacheListener[] { listener });
-        return factory;
-    }
-}
-```
-
-Note: The application imports `GudClientCache`, `GudCacheListener`, and `GudClientRegionShortcut` from the GUD API - never native GemFire classes.
-
-## File Structure
+## File Structure (Condensed)
 
 ```
 spring-data-for-vmware-gemfire/
 ├── gud-api/
-│   └── src/main/java/org/springframework/data/gemfire/gud/api/
-│       ├── GudClientCache.java
-│       ├── GudClientCacheFactory.java
-│       ├── GudCacheProvider.java
-│       ├── GudRegion.java
-│       ├── GudPool.java
-│       ├── GudPoolManager.java
-│       ├── GudDiskStore.java
-│       ├── GudCacheListener.java
-│       ├── GudCacheWriter.java
-│       ├── GudCacheLoader.java
-│       └── ... (other interfaces)
+│   └── src/main/java/.../gud/api/
+│       ├── GudCapability.java          ← Moved from gud-core
+│       ├── GudApiVersion.java          ← Moved from gud-core
+│       ├── GudCacheProvider.java       ← configure() + Supplier pattern
+│       ├── GudUnsupportedOperationException.java  ← Uses GudCapability enum
+│       └── ... (interfaces)
 │
 ├── gud-core/
-│   └── src/main/java/org/springframework/data/gemfire/gud/core/
-│       └── (shared utilities)
+│   └── src/main/java/.../gud/core/
+│       ├── GudDriver.java              ← createJndiBinding() + createPoolManager()
+│       └── GudDriverManager.java       ← Fixed sort, race cond., push to provider
 │
-├── gud-driver-gemfire-10.3/
-│   ├── src/main/java/org/springframework/data/gemfire/gud/driver/gemfire/
-│   │   ├── GemFireClientCache.java
-│   │   ├── GemFireClientCacheFactory.java
-│   │   ├── GemFireRegion.java
-│   │   ├── GemFirePool.java
-│   │   ├── GemFirePoolManager.java
-│   │   ├── GemFireCacheListenerAdapter.java
-│   │   ├── GemFireCacheWriterAdapter.java
-│   │   └── ... (other implementations)
+├── gud-driver-gemfire-10.x/ (x = 0,1,2,3)
+│   ├── src/main/java/.../gud/driver/
+│   │   └── GemFireDriver.java          ← Fixed capabilities; new createXxx() methods
 │   └── src/main/resources/META-INF/services/
-│       ├── org.springframework.data.gemfire.gud.api.GudClientCacheFactory
-│       ├── org.springframework.data.gemfire.gud.api.GudPoolManager
-│       └── org.springframework.data.gemfire.gud.api.GudJndiBinding
+│       └── org.springframework.data.gemfire.gud.core.GudDriver  ← Only this file
 │
-├── spring-data-vmware-gemfire/
-│   └── src/main/java/org/springframework/data/gemfire/
-│       ├── client/
-│       │   ├── ClientCacheFactoryBean.java
-│       │   └── ClientRegionFactoryBean.java
-│       ├── config/annotation/
-│       │   └── ClientCacheConfiguration.java
-│       └── ... (other Spring components)
-│
-└── TestCachingApp/
-    └── src/main/java/com/example/testcaching/
-        ├── GemFireClientConfiguration.java
-        ├── TestCachingApplication.java
-        ├── KeyPrintingCacheListener.java
-        └── SKeyFilteringCacheWriter.java
+└── spring-data-vmware-gemfire/
+    └── src/main/java/.../
+        ├── support/GudVersionAwareInvoker.java   ← New utility
+        ├── DiskStoreFactoryBean.java             ← Uses GudVersionAwareInvoker
+        └── client/PoolFactoryBean.java           ← Uses GudVersionAwareInvoker
 ```
-
-## Running the Test Application
-
-```bash
-# Build all modules
-./gradlew build
-
-# Run the test application
-./gradlew :TestCachingApp:run
-
-# Expected output:
-# TestCachingApplication initialized successfully!
-# Beans created:
-#   - ClientCache: TestCachingApp
-#   - RegionProxy: RegionProxy
-#   - RegionCachingProxy: RegionCachingProxy
-```
-
-Note: The application will show connection warnings if no GemFire locator is running on port 23232. This is expected behavior.

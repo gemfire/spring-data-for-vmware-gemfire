@@ -1,14 +1,17 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
-
 import org.springframework.data.gemfire.gud.api.GudDataPolicy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link DataPolicyConverter}.
@@ -28,7 +31,7 @@ public class DataPolicyConverterUnitTests {
 
 		for (byte ordinal = 0; ordinal < Byte.MAX_VALUE; ordinal++) {
 			try {
-				if (GudDataPolicy.fromOrdinal(ordinal) != null && !GudDataPolicy.fromOrdinal(ordinal).withPartitioning()) {
+				if (GudDataPolicy.fromOrdinal(ordinal) != null) {
 					count++;
 				}
 			}

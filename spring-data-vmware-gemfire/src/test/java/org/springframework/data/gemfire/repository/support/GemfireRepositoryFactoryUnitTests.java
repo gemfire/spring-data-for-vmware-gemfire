@@ -1,8 +1,35 @@
 /*
+ * Copyright (c) 2026 Broadcom. All rights reserved.
+ */
+
+/*
  * Copyright $originalComment.match(" (\d+)", 1, "-", $today.year)2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.aop.framework.Advised;
+import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
+import org.springframework.data.gemfire.mapping.GemfireMappingContext;
+import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
+import org.springframework.data.gemfire.repository.GemfireRepository;
+import org.springframework.data.gemfire.repository.sample.Person;
+import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.core.EntityInformation;
+import org.springframework.data.repository.core.RepositoryMetadata;
+import org.springframework.data.repository.core.support.RepositoryComposition;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.atLeastOnce;
@@ -14,31 +41,6 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newUnsupportedOperationException;
-
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.data.gemfire.gud.api.GudRegion;
-import org.springframework.data.gemfire.gud.api.GudRegionAttributes;
-
-import org.springframework.aop.framework.Advised;
-import org.springframework.data.gemfire.GemfireTemplate;
-import org.springframework.data.gemfire.mapping.GemfireMappingContext;
-import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
-import org.springframework.data.gemfire.repository.GemfireRepository;
-import org.springframework.data.gemfire.repository.sample.Person;
-import org.springframework.data.gemfire.util.RegionUtils;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.core.EntityInformation;
-import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.repository.core.support.RepositoryComposition;
 
 /**
  * Unit Tests for {@link GemfireRepositoryFactory}.
@@ -510,13 +512,13 @@ public class GemfireRepositoryFactoryUnitTests {
 
 	interface TestGemfireRepository extends GemfireRepository<Person, Long>, TestCustomRepository<Person> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.GudRegion("People")
+	@org.springframework.data.gemfire.mapping.annotation.Region("People")
 	interface PeopleRepository extends GemfireRepository<Person, Long> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.GudRegion("People")
+	@org.springframework.data.gemfire.mapping.annotation.Region("People")
 	interface PeopleIntegerRepository extends GemfireRepository<Person, Integer> { }
 
-	@org.springframework.data.gemfire.mapping.annotation.GudRegion
+	@org.springframework.data.gemfire.mapping.annotation.Region
 	interface NonQualifiedRegionAnnotatedRepository extends GemfireRepository<Person, Long> { }
 
 }
