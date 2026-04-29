@@ -4,6 +4,7 @@
  */
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import nl.littlerobots.vcu.plugin.versionSelector
 
 buildscript {
   repositories {
@@ -25,12 +26,6 @@ tasks.artifactoryPublish {
   skip = true
 }
 
-allprojects {
-  repositories {
-    mavenCentral()
-  }
-}
-
 versionCatalogUpdate {
   // These options will be set as default for all version catalogs
   sortByKey = true
@@ -40,16 +35,17 @@ versionCatalogUpdate {
   }
   keep {
     keepUnusedVersions = true
-    // keep all libraries that aren't used in the project
-    keepUnusedLibraries = true
-    // keep all plugins that aren't used in the project
-    keepUnusedPlugins = true
+
   }
 
   versionCatalogs {
     create("publishCatalog"){
       catalogFile = file("gradle/publishing.versions.toml")
     }
+  }
+
+  versionSelector {
+    isPatch(it.candidate.version, it.currentVersion) // adjust property names to match API if needed
   }
 }
 

@@ -112,6 +112,8 @@ dependencies {
 
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.vintage.engine)
+  testRuntimeOnly(platform(libs.junit.jupiter.bom))
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   testRuntimeOnly(libs.junit.jupiter.engine)
 
   testImplementation(libs.junit)
@@ -128,6 +130,7 @@ dependencies {
 tasks {
   test {
     dependsOn("testJar")
+    useJUnitPlatform()
   }
   this.register<Test>("integrationTest") {
     description = "Runs the integration tests."
@@ -140,6 +143,8 @@ tasks {
 
     forkEvery = 1
     maxParallelForks = 2
+
+    useJUnitPlatform()
   }
 }
 
@@ -190,20 +195,6 @@ gradle.taskGraph.whenReady {
   }
 }
 
-repositories {
-  val additionalMavenRepoURLs: String? by project
-  additionalMavenRepoURLs?.apply {
-    if (this.isNotEmpty() && this.isNotBlank()) {
-      this.split(",").forEach {
-        project.repositories.maven {
-          this.url = uri(it)
-        }
-      }
-    }
-  }
-  maven { url = uri("https://repo.spring.io/milestone") }
-}
-
 fun getGemFireBaseVersion(): String {
   val gemfireVersion: String by project
   val split = gemfireVersion.split(".")
@@ -235,4 +226,8 @@ tasks.register<Jar>("testJar") {
   from(sourceSets.main.get().output)
   archiveFileName = "testJar.jar"
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
