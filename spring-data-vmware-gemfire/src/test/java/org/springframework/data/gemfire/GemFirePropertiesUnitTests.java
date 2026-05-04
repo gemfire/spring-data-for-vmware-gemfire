@@ -38,6 +38,7 @@ public class GemFirePropertiesUnitTests {
         "enable-management-rest-service",
         "http-service-bind-address",
         "http-service-port",
+        "http-services",
         "start-dev-rest-api",
         "jmx-manager",
         "jmx-manager-access-file",
