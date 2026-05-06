@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import java.nio.file.Path
-
 plugins {
   id("java-library")
   id("idea")
