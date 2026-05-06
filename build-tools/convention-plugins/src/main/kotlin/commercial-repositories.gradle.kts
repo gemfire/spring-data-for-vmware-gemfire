@@ -12,6 +12,7 @@ plugins {
 }
 
 repositories {
+  mavenCentral()
   val repositoryConfigFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
     providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
   )
@@ -32,7 +33,6 @@ repositories {
         }
       }
     }
-  mavenCentral()
 }
 
 fun getEtcDirectoryFromProjectPath(path: Path): String {
