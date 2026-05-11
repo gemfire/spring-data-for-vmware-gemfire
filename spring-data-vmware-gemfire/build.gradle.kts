@@ -113,6 +113,7 @@ dependencies {
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.vintage.engine)
   testRuntimeOnly(libs.junit.jupiter.engine)
+  testRuntimeOnly(libs.junit.platform.launcher)
 
   testImplementation(libs.junit)
   testImplementation(libs.assertJ)

@@ -244,6 +244,17 @@ public @interface ClientCacheApplication {
 	long pingInterval() default PoolFactory.DEFAULT_PING_INTERVAL;
 
 	/**
+	 * Configures the amount of time, in milliseconds, to wait for a ping response from a server.
+	 *
+	 * Defaults to {@link PoolFactory#DEFAULT_PING_TIMEOUT}.
+	 *
+	 * Use either the {@literal spring.data.gemfire.pool.default.ping-timeout} property
+	 * or the {@literal spring.data.gemfire.pool.ping-timeout} property
+	 * in {@literal application.properties}.
+	 */
+	int pingTimeout() default PoolFactory.DEFAULT_PING_TIMEOUT;
+
+	/**
 	 * Configures {@code prSingleHopEnabled} functionality for the {@literal DEFAULT} {@link Pool}.
 	 *
 	 * When {@literal true} the client will be aware of the location of all partitions on servers

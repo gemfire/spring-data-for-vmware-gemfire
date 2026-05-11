@@ -4,9 +4,6 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import java.net.InetSocketAddress;
-import java.util.function.Function;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
@@ -21,6 +18,9 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 import org.springframework.mock.env.MockPropertySource;
+
+import java.net.InetSocketAddress;
+import java.util.function.Function;
 
 /**
  * Integration Tests for {@link EnablePool} and {@link EnablePools}.
@@ -61,7 +61,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 	private void assertPool(Pool pool, int freeConnectionTimeout, long idleTimeout, int loadConditioningInterval,
 			int maxConnections, int minConnections, int maxConnectionsPerServer, int minConnectionsPerServer,
 			boolean multiUserAuthentication, String name, long pingInterval, boolean prSinglehopEnabled,
-			int readTimeout, int retryAttempts, int serverConnectionTimeout, String serverGroup, int socketBufferSize,
+			int readTimeout, int pingTimeout, int retryAttempts, int serverConnectionTimeout, String serverGroup, int socketBufferSize,
 			int socketConnectTimeout, SocketFactory socketFactory, int statisticInterval, int subscriptionAckInterval,
 			boolean subscriptionEnabled, int subscriptionMessageTrackingTimeout, int subscriptionRedundancy) {
 
@@ -78,6 +78,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(pool.getPingInterval()).isEqualTo(pingInterval);
 		Assertions.assertThat(pool.getPRSingleHopEnabled()).isEqualTo(prSinglehopEnabled);
 		Assertions.assertThat(pool.getReadTimeout()).isEqualTo(readTimeout);
+		Assertions.assertThat(pool.getPingTimeout()).isEqualTo(pingTimeout);
 		Assertions.assertThat(pool.getRetryAttempts()).isEqualTo(retryAttempts);
 		Assertions.assertThat(pool.getServerConnectionTimeout()).isEqualTo(serverConnectionTimeout);
 		Assertions.assertThat(pool.getServerGroup()).isEqualTo(serverGroup);
@@ -99,11 +100,12 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.locators", "skullbox[11235]")
 			.withProperty("spring.data.gemfire.pool.max-connections", 400)
 			.withProperty("spring.data.gemfire.pool.min-connections", 10)
-				.withProperty("spring.data.gemfire.pool.max-connections-per-server", 40)
-				.withProperty("spring.data.gemfire.pool.min-connections-per-server", 2)
+			.withProperty("spring.data.gemfire.pool.max-connections-per-server", 40)
+			.withProperty("spring.data.gemfire.pool.min-connections-per-server", 2)
 			.withProperty("spring.data.gemfire.pool.ping-interval", 5000L)
 			.withProperty("spring.data.gemfire.pool.pr-single-hop-enabled", false)
 			.withProperty("spring.data.gemfire.pool.read-timeout", 15000)
+			.withProperty("spring.data.gemfire.pool.ping-timeout", 12345)
 			.withProperty("spring.data.gemfire.pool.default.read-timeout", 5000L)
 			.withProperty("spring.data.gemfire.pool.retry-attempts", 2)
 			.withProperty("spring.data.gemfire.pool.server-group", "TestGroup")
@@ -135,6 +137,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(testPool.getPingInterval()).isEqualTo(5000L);
 		Assertions.assertThat(testPool.getPRSingleHopEnabled()).isFalse();
 		Assertions.assertThat(testPool.getReadTimeout()).isEqualTo(15000);
+		Assertions.assertThat(testPool.getPingTimeout()).isEqualTo(12345);
 		Assertions.assertThat(testPool.getRetryAttempts()).isEqualTo(1);
 		Assertions.assertThat(testPool.getServerConnectionTimeout()).isEqualTo(60000);
 		Assertions.assertThat(testPool.getServerGroup()).isEqualTo("TestGroup");
@@ -161,6 +164,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.ping-interval", 5000L)
 			.withProperty("spring.data.gemfire.pool.pr-single-hop-enabled", false)
 			.withProperty("spring.data.gemfire.pool.read-timeout", 15000L)
+			.withProperty("spring.data.gemfire.pool.ping-timeout", 12345L)
 			.withProperty("spring.data.gemfire.pool.retry-attempts", 2)
 			.withProperty("spring.data.gemfire.pool.server-connection-timeout", 30000)
 			.withProperty("spring.data.gemfire.pool.server-group", "testGroup")
@@ -182,6 +186,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.default.ping-interval", 15000L)
 			.withProperty("spring.data.gemfire.pool.default.pr-single-hop-enabled", false)
 			.withProperty("spring.data.gemfire.pool.default.read-timeout", 2000L)
+			.withProperty("spring.data.gemfire.pool.default.ping-timeout", 123456L)
 			.withProperty("spring.data.gemfire.pool.default.retry-attempts", 1)
 			.withProperty("spring.data.gemfire.pool.default.server-connection-timeout", 60000)
 			.withProperty("spring.data.gemfire.pool.default.server-group", "testDefaultGroup")
@@ -203,6 +208,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.ping-interval", 20000L)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.pr-single-hop-enabled", false)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.read-timeout", 5000L)
+			.withProperty("spring.data.gemfire.pool.TestPoolTwo.ping-timeout", 1234L)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.retry-attempts", 4)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.server-group", "testTwoGroup")
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.socket-buffer-size", 65536)
@@ -237,7 +243,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(defaultPool, 15000, 20000L, 180000,
 			275, 27, -1, 1, true, "DEFAULT", 15000L,
-			false, 2000, 1, 60000, "testDefaultGroup",
+			false, 2000,123456, 1, 60000, "testDefaultGroup",
 			16384, 10000, SocketFactory.DEFAULT, 500, 250,
 			true, 300000, 3);
 
@@ -245,7 +251,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(testPoolOne, 30000, 300000L, 120000,
 			500, 50, -1, 1, true, "TestPoolOne", 5000L,
-			false, 15000, 2, 30000, "testGroup",
+			false, 15000, 12345, 2, 30000, "testGroup",
 			8192, 5000, mockSocketFactoryOne,1000, 5000,
 			true, 180000, 2);
 
@@ -253,7 +259,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(testPoolTwo, 20000, 15000L, 60000,
 			1000, 100, -1, 1, true, "TestPoolTwo", 20000L,
-			false, 5000, 4, 30000, "testTwoGroup",
+			false, 5000, 1234, 4, 30000, "testTwoGroup",
 			65536, 15000, mockSocketFactoryTwo, 2000, 500,
 			true, 300000, 4);
 
@@ -261,7 +267,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(testPoolTwo, 20000, 15000L, 60000,
 				1000, 100, -1, 1, true, "TestPoolTwo", 20000L,
-				false, 5000, 4, 30000, "testTwoGroup",
+				false, 5000, 12345, 4, 30000, "testTwoGroup",
 				65536, 15000, mockSocketFactoryTwo, 2000, 500,
 				true, 300000, 4);
 	}

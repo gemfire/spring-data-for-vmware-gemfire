@@ -11,6 +11,7 @@ gemFireTestContainersVersion = "3.0.0"
 googleCloudStorageVersion = "2.45.0"
 interceptorApiVersion = "1.2.2"
 jUnitJupiterVersion = "5.11.4"
+jUnitPlatformVersion = "1.11.4"
 jUnitVersion = "4.13.2"
 jacksonVersion = "2.18.2"
 log4JVersion = "2.24.2"
@@ -57,6 +58,7 @@ multithreadedtc = { module = "edu.umd.cs.mtc:multithreadedtc", version.ref = "mu
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jUnitJupiterVersion" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "jUnitPlatformVersion" }
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" }
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }

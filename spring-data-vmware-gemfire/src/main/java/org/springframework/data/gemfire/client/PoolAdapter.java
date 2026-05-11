@@ -4,12 +4,12 @@
  */
 package org.springframework.data.gemfire.client;
 
-import java.net.InetSocketAddress;
-import java.util.List;
-
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.query.QueryService;
+
+import java.net.InetSocketAddress;
+import java.util.List;
 
 /**
  * The {@link PoolAdapter} class is an abstract base class and default, no-op implementation of
@@ -58,6 +58,16 @@ public abstract class PoolAdapter implements Pool {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
+	@Override
+	public int getMaxConnectionsPerServer() {
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public int getMinConnectionsPerServer() {
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
+	}
+
 	public boolean getMultiuserAuthentication() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
@@ -87,6 +97,11 @@ public abstract class PoolAdapter implements Pool {
 	}
 
 	public int getReadTimeout() {
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
+	}
+
+	@Override
+	public int getPingTimeout() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 

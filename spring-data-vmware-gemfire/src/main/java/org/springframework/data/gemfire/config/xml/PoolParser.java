@@ -4,9 +4,6 @@
  */
 package org.springframework.data.gemfire.config.xml;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -23,8 +20,10 @@ import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.data.gemfire.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
-
 import org.w3c.dom.Element;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Spring {@link BeanDefinition} parser for &lt;gfe:pool&gt; SDG XML Namespace (XSD), schema element.
@@ -97,6 +96,7 @@ class PoolParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, poolBuilder, "multi-user-authentication");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "ping-interval");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "pr-single-hop-enabled");
+		ParsingUtils.setPropertyValue(element, poolBuilder, "ping-timeout");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "read-timeout");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "retry-attempts");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "server-group");

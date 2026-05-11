@@ -172,6 +172,13 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	}
 
 	@Override
+	public int getPingTimeout() {
+		return Optional.ofNullable(getDelegate())
+				.map(Pool::getPingTimeout)
+				.orElseGet(super::getPingTimeout);
+	}
+
+	@Override
 	public QueryService getQueryService() {
 
 		return Optional.ofNullable(getDelegate())

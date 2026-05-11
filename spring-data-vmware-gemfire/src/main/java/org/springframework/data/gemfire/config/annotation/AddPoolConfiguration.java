@@ -4,16 +4,6 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static java.util.Arrays.stream;
-import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -26,6 +16,16 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.util.StringUtils;
+
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Arrays.stream;
+import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 
 /**
  * The {@link AddPoolConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} that registers
@@ -131,6 +131,11 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 			resolveProperty(namedPoolProperty(poolName, "ping-interval"),
 				resolveProperty(poolProperty("ping-interval"),
 					enablePoolAttributes.<Long>getNumber("pingInterval"))));
+
+		poolFactoryBean.addPropertyValue("pingTimeout",
+				resolveProperty(namedPoolProperty(poolName, "ping-timeout"),
+						resolveProperty(poolProperty("ping-timeout"),
+								enablePoolAttributes.<Long>getNumber("pingTimeout"))));
 
 		poolFactoryBean.addPropertyValue("poolConfigurers", resolvePoolConfigurers());
 

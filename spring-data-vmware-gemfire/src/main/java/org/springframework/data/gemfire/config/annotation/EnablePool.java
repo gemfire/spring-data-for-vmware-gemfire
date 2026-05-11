@@ -4,20 +4,19 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import org.apache.geode.cache.client.AllConnectionsInUseException;
+import org.apache.geode.cache.client.Pool;
+import org.apache.geode.cache.client.PoolFactory;
+import org.apache.geode.cache.client.SocketFactory;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.gemfire.GemfireUtils;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.apache.geode.cache.client.AllConnectionsInUseException;
-import org.apache.geode.cache.client.Pool;
-import org.apache.geode.cache.client.PoolFactory;
-import org.apache.geode.cache.client.SocketFactory;
-
-import org.springframework.context.annotation.Import;
-import org.springframework.data.gemfire.GemfireUtils;
 
 /**
  * The {@link EnablePool} annotation configures a Spring {@link org.springframework.context.annotation.Configuration}
@@ -178,6 +177,17 @@ public @interface EnablePool {
 	 * in {@literal application.properties}.
 	 */
 	long pingInterval() default PoolFactory.DEFAULT_PING_INTERVAL;
+
+	/**
+	 * Configures the amount of time, in milliseconds, to wait for a ping response from a server
+	 *
+	 * Defaults to {@link PoolFactory#DEFAULT_PING_TIMEOUT}.
+	 *
+	 * Use either the {@literal spring.data.gemfire.pool.<poolName>.ping-timeout} property
+	 * or the {@literal spring.data.gemfire.pool.ping-timeout} property
+	 * in {@literal application.properties}.
+	 */
+	long pingTimeout() default PoolFactory.DEFAULT_PING_TIMEOUT;
 
 	/**
 	 * By default {@code prSingleHopEnabled} is {@literal true} in which case the client is aware of the location
