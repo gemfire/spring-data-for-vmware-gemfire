@@ -111,6 +111,8 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 	private Long idleTimeout;
 	private Long pingInterval;
 
+	private Integer pingTimeout;
+
 	private Pool pool;
 
 	private PoolResolver poolResolver = DEFAULT_POOL_RESOLVER;
@@ -290,6 +292,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		clientCacheFactory.setPoolMaxConnectionsPerServer(pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer()));
 		clientCacheFactory.setPoolMultiuserAuthentication(pool.getMultiuserAuthentication(getMultiUserAuthentication()));
 		clientCacheFactory.setPoolPingInterval(pool.getPingInterval(getPingInterval()));
+		clientCacheFactory.setPoolPingTimeout(pool.getPingTimeout(getPingTimeout()));
 		clientCacheFactory.setPoolPRSingleHopEnabled(pool.getPRSingleHopEnabled(getPrSingleHopEnabled()));
 		clientCacheFactory.setPoolReadTimeout(pool.getReadTimeout(getReadTimeout()));
 		clientCacheFactory.setPoolRetryAttempts(pool.getRetryAttempts(getRetryAttempts()));
@@ -761,6 +764,14 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	public Long getPingInterval() {
 		return this.pingInterval;
+	}
+
+	public void setPingTimeout(Integer pingTimeout) {
+		this.pingTimeout = pingTimeout;
+	}
+
+	public Integer getPingTimeout() {
+		return this.pingTimeout;
 	}
 
 	public void setPrSingleHopEnabled(Boolean prSingleHopEnabled) {

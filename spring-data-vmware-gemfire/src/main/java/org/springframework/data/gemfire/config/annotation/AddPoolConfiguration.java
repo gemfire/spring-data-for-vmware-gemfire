@@ -135,7 +135,7 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 		poolFactoryBean.addPropertyValue("pingTimeout",
 				resolveProperty(namedPoolProperty(poolName, "ping-timeout"),
 						resolveProperty(poolProperty("ping-timeout"),
-								enablePoolAttributes.<Long>getNumber("pingTimeout"))));
+								enablePoolAttributes.<Integer>getNumber("pingTimeout"))));
 
 		poolFactoryBean.addPropertyValue("poolConfigurers", resolvePoolConfigurers());
 

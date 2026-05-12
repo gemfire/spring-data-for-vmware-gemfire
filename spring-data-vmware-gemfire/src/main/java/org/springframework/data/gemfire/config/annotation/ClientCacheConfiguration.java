@@ -100,6 +100,8 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 	private Long idleTimeout;
 	private Long pingInterval;
 
+	private Integer pingTimeout;
+
 	private String durableClientId;
 	private String serverGroup;
 	private String socketFactoryBeanName;
@@ -132,6 +134,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		gemfireCache.setMaxConnectionsPerServer(getMaxConnectionsPerServer());
 		gemfireCache.setMultiUserAuthentication(getMultiUserAuthentication());
 		gemfireCache.setPingInterval(getPingInterval());
+		gemfireCache.setPingTimeout(getPingTimeout());
 		gemfireCache.setPrSingleHopEnabled(getPrSingleHopEnabled());
 		gemfireCache.setReadTimeout(getReadTimeout());
 		gemfireCache.setReadyForEvents(getReadyForEvents());
@@ -292,12 +295,17 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 				resolveProperty(poolProperty("multi-user-authentication"),
 				Boolean.TRUE.equals(clientCacheApplicationAttributes.get("multiUserAuthentication")))));
 
-			setPingInterval(
-				resolveProperty(namedPoolProperty("default", "ping-interval"),
-				resolveProperty(poolProperty("ping-interval"),
-				(Long) clientCacheApplicationAttributes.get("pingInterval"))));
+		setPingInterval(
+			resolveProperty(namedPoolProperty("default", "ping-interval"),
+			resolveProperty(poolProperty("ping-interval"),
+			(Long) clientCacheApplicationAttributes.get("pingInterval"))));
 
-			setPrSingleHopEnabled(
+		setPingTimeout(
+			resolveProperty(namedPoolProperty("default", "ping-timeout"),
+			resolveProperty(poolProperty("ping-timeout"),
+			(Integer) clientCacheApplicationAttributes.get("pingTimeout"))));
+
+		setPrSingleHopEnabled(
 				resolveProperty(namedPoolProperty("default", "pr-single-hop-enabled"),
 				resolveProperty(poolProperty("pr-single-hop-enabled"),
 				Boolean.TRUE.equals(clientCacheApplicationAttributes.get("prSingleHopEnabled")))));
@@ -550,6 +558,14 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	protected Long getPingInterval() {
 		return this.pingInterval;
+	}
+
+	void setPingTimeout(Integer pingTimeout) {
+		this.pingTimeout = pingTimeout;
+	}
+
+	protected Integer getPingTimeout() {
+		return this.pingTimeout;
 	}
 
 	void setPoolLocators(Iterable<ConnectionEndpoint> locators) {

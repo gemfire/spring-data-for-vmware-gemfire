@@ -187,7 +187,7 @@ public @interface EnablePool {
 	 * or the {@literal spring.data.gemfire.pool.ping-timeout} property
 	 * in {@literal application.properties}.
 	 */
-	long pingTimeout() default PoolFactory.DEFAULT_PING_TIMEOUT;
+	int pingTimeout() default PoolFactory.DEFAULT_PING_TIMEOUT;
 
 	/**
 	 * By default {@code prSingleHopEnabled} is {@literal true} in which case the client is aware of the location

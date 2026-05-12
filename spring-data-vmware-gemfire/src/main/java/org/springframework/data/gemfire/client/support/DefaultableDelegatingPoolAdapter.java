@@ -140,6 +140,10 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfNull(defaultPingInterval, () -> getDelegate().getPingInterval());
 	}
 
+	public int getPingTimeout(Integer defaultPingTimeout) {
+		return defaultIfNull(defaultPingTimeout, () -> getDelegate().getPingTimeout());
+	}
+
 	public boolean getPRSingleHopEnabled(Boolean defaultPrSingleHopEnabled) {
 		return defaultIfNull(defaultPrSingleHopEnabled, () -> getDelegate().getPRSingleHopEnabled());
 	}
