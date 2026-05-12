@@ -2,19 +2,20 @@
  * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.springframework.data.gemfire.transaction;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-05-13: Narrow listener parameter types to TransactionApplicationEvent to exclude Spring 7.0 MethodRollbackEvent
+ */
+
+package org.springframework.data.gemfire.transaction;
 
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -27,6 +28,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Integration Tests for the Spring {@link TransactionalEventListener} in the context of Apache Geode
@@ -126,29 +133,27 @@ public class TransactionalEventListenerIntegrationTests extends AbstractTransact
 			Optional.ofNullable(transactionPhase).ifPresent(this.transactionPhases::add);
 		}
 
-		private void extractTransactionDetails(ApplicationEvent event) {
+		private void extractTransactionDetails(TransactionApplicationEvent event) {
 
 			Optional.ofNullable(event)
-				.filter(TransactionApplicationEvent.class::isInstance)
-				.map(TransactionApplicationEvent.class::cast)
 				.flatMap(TransactionApplicationEvent::getDetails)
 				.ifPresent(this.transactionDetails::add);
 		}
 
 		@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-		public void handleTransactionBeforeCommit(ApplicationEvent event) {
+		public void handleTransactionBeforeCommit(TransactionApplicationEvent event) {
 			appendTransactionPhase(TransactionPhase.BEFORE_COMMIT);
 			extractTransactionDetails(event);
 		}
 
 		@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-		public void handleTransactionAfterCommit(ApplicationEvent event) {
+		public void handleTransactionAfterCommit(TransactionApplicationEvent event) {
 			appendTransactionPhase(TransactionPhase.AFTER_COMMIT);
 			extractTransactionDetails(event);
 		}
 
 		@TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
-		public void handleTransactionAfterRollback(ApplicationEvent event) {
+		public void handleTransactionAfterRollback(TransactionApplicationEvent event) {
 			appendTransactionPhase(TransactionPhase.AFTER_ROLLBACK);
 			extractTransactionDetails(event);
 		}
