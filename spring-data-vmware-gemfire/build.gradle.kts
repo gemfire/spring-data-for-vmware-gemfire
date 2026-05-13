@@ -196,7 +196,7 @@ gradle.taskGraph.whenReady {
 }
 
 fun getGemFireBaseVersion(): String {
-  val gemfireVersion: String by project
+  val gemfireVersion = System.getProperty("gemfireVersion")
 
   logger.info("gemFireVersion provided |$gemfireVersion|")
   val split = gemfireVersion.split(".")
