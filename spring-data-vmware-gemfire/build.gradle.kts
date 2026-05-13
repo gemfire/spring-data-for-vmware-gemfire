@@ -197,6 +197,8 @@ gradle.taskGraph.whenReady {
 
 fun getGemFireBaseVersion(): String {
   val gemfireVersion: String by project
+
+  logger.info("gemFireVersion provided |$gemfireVersion|")
   val split = gemfireVersion.split(".")
   if (split.size < 2) {
     throw RuntimeException("gemfireVersion is malformed")
