@@ -361,6 +361,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setMinConnectionsPerServer(5);
 		clientCacheFactoryBean.setMultiUserAuthentication(true);
 		clientCacheFactoryBean.setPingInterval(15000L);
+		clientCacheFactoryBean.setPingTimeout(3000);
 		clientCacheFactoryBean.setPool(mockPool);
 		clientCacheFactoryBean.setPrSingleHopEnabled(true);
 		clientCacheFactoryBean.setReadTimeout(20000);
@@ -388,6 +389,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getMinConnectionsPerServer()).isEqualTo(5);
 		assertThat(clientCacheFactoryBean.getMultiUserAuthentication()).isTrue();
 		assertThat(clientCacheFactoryBean.getPingInterval()).isEqualTo(15000L);
+		assertThat(clientCacheFactoryBean.getPingTimeout()).isEqualTo(3000);
 		assertThat(clientCacheFactoryBean.getPool()).isSameAs(mockPool);
 		assertThat(clientCacheFactoryBean.getPoolName()).isNull();
 		assertThat(clientCacheFactoryBean.getPrSingleHopEnabled()).isTrue();
@@ -418,6 +420,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolMinConnectionsPerServer(eq(5));
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
+		verify(mockClientCacheFactory, times(1)).setPoolPingTimeout(eq(3000));
 		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
 		verify(mockClientCacheFactory, times(1)).setPoolReadTimeout(eq(20000));
 		verify(mockClientCacheFactory, times(1)).setPoolRetryAttempts(eq(2));
