@@ -206,7 +206,7 @@ repositories {
 }
 
 fun getGemFireBaseVersion(): String {
-  val gemfireVersion: String by project
+  val gemfireVersion = System.getProperty("gemfireVersion")
   val split = gemfireVersion.split(".")
   if (split.size < 2) {
     throw RuntimeException("gemfireVersion is malformed")
