@@ -34,6 +34,10 @@ buildscript {
           }
         }
       }
+
+    if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+      mavenCentral()
+    }
   }
   dependencies {
     classpath(libs.google.cloud.storage)
@@ -83,8 +87,11 @@ tasks.withType<JavaCompile>().configureEach {
   options.compilerArgs.add("-parameters")
 }
 
+val baseGemFireVersion: String by project
+val baseSpringVersion: String by project
+
 publishingDetails {
-  artifactName.set("spring-data-4.0-gemfire-10.3")
+  artifactName.set("spring-data-${baseSpringVersion}-gemfire-${baseGemFireVersion}")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
   test.set(false)
@@ -119,9 +126,9 @@ dependencies {
   testImplementation(libs.log4J)
   testImplementation(libs.annotation.api)
   testImplementation(libs.derby)
-  testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta") })
+  testImplementation(libs.openwebbeans.se)
+  testImplementation(libs.openwebbeans.spi)
+  testImplementation(libs.openwebbeans.impl)
   testImplementation(libs.assertJ)
   testImplementation(libs.snappy)
   testImplementation(libs.spring.shell) {

@@ -27,6 +27,10 @@ buildscript {
           }
         }
       }
+
+    if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+      mavenCentral()
+    }
   }
 }
 
@@ -66,6 +70,9 @@ allprojects {
           }
         }
       }
+    if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+      mavenCentral()
+    }
   }
 }
 
@@ -78,10 +85,6 @@ versionCatalogUpdate {
   }
   keep {
     keepUnusedVersions = true
-    // keep all libraries that aren't used in the project
-    keepUnusedLibraries = true
-    // keep all plugins that aren't used in the project
-    keepUnusedPlugins = true
   }
 
   versionCatalogs {

@@ -25,6 +25,10 @@ buildscript {
                     }
                 }
             }
+
+        if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+            mavenCentral()
+        }
     }
 }
 
@@ -48,10 +52,13 @@ tasks.named<Javadoc>("javadoc") {
     isFailOnError = false
 }
 
+val baseGemFireVersion: String by project
+val baseSpringVersion: String by project
+
 publishingDetails {
-    artifactName.set("spring-data-4.0-gemfire-test-framework-10.3")
-    longName.set("Spring Test Framework for VMware GemFire 10.3 and Spring Data 4.0")
-    description.set("Spring Test Framework for VMware GemFire 10.3 and Spring Data 4.0")
+    artifactName.set("spring-data-${baseSpringVersion}-gemfire-test-framework-${baseGemFireVersion}")
+    longName.set("Spring Test Framework for VMware GemFire ${baseGemFireVersion} and Spring Data ${baseSpringVersion}")
+    description.set("Spring Test Framework for VMware GemFire ${baseGemFireVersion} and Spring Data ${baseSpringVersion}")
     test.set(true)
 }
 
