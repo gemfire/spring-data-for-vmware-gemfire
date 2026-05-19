@@ -24,6 +24,10 @@ pluginManagement {
           }
         }
       }
+
+    if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+      gradlePluginPortal()
+    }
   }
 }
 

@@ -28,6 +28,10 @@ repositories {
         }
       }
     }
+
+  if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+    mavenCentral()
+  }
 }
 
 dependencies {

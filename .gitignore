@@ -121,3 +121,4 @@ generated-pipeline.yml
 *.crf
 *.dat
 /build-tools/convention-plugins/.gradle
+*.salive
