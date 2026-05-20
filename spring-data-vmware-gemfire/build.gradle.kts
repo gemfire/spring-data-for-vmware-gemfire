@@ -14,7 +14,26 @@ import java.io.FileInputStream
 
 buildscript {
   repositories {
-    mavenCentral()
+    val repositoryConfigFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
+      providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+    )
+
+    val jsonString = File(repositoryConfigFilePath).readText(Charsets.UTF_8)
+    val repositories = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
+    (repositories["repositories"] as List<*>).filterNotNull().map { entry -> entry as Map<*, *> }
+      .forEach { entry ->
+        entry.apply {
+          maven {
+            url = uri(entry["url"]!! as String)
+            if (!entry["username"]?.toString().isNullOrBlank()) {
+              credentials {
+                username = entry["username"] as String
+                password = entry["password"] as String
+              }
+            }
+          }
+        }
+      }
   }
   dependencies {
     classpath(libs.google.cloud.storage)
@@ -65,7 +84,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 publishingDetails {
-  artifactName.set("spring-data-4.0-gemfire-${getGemFireBaseVersion()}")
+  artifactName.set("spring-data-4.0-gemfire-10.3")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
   test.set(false)
@@ -203,15 +222,6 @@ repositories {
     }
   }
   maven { url = uri("https://repo.spring.io/milestone") }
-}
-
-fun getGemFireBaseVersion(): String {
-  val gemfireVersion = System.getProperty("gemfireVersion")
-  val split = gemfireVersion.split(".")
-  if (split.size < 2) {
-    throw RuntimeException("gemfireVersion is malformed")
-  }
-  return "${split[0]}.${split[1]}"
 }
 
 tasks.register("copyJavadocsToBucket") {

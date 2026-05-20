@@ -5,7 +5,26 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        val repositoryConfigFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
+            providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+        )
+
+        val jsonString = File(repositoryConfigFilePath).readText(Charsets.UTF_8)
+        val repositories = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
+        (repositories["repositories"] as List<*>).filterNotNull().map { entry -> entry as Map<*, *> }
+            .forEach { entry ->
+                entry.apply {
+                    maven {
+                        url = uri(entry["url"]!! as String)
+                        if (!entry["username"]?.toString().isNullOrBlank()) {
+                            credentials {
+                                username = entry["username"] as String
+                                password = entry["password"] as String
+                            }
+                        }
+                    }
+                }
+            }
     }
 }
 
@@ -30,9 +49,9 @@ tasks.named<Javadoc>("javadoc") {
 }
 
 publishingDetails {
-    artifactName.set("spring-data-4.0-gemfire-test-framework-${getGemFireBaseVersion()}")
-    longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 4.0")
-    description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 4.0")
+    artifactName.set("spring-data-4.0-gemfire-test-framework-10.3")
+    longName.set("Spring Test Framework for VMware GemFire 10.3 and Spring Data 4.0")
+    description.set("Spring Test Framework for VMware GemFire 10.3 and Spring Data 4.0")
     test.set(true)
 }
 
@@ -77,13 +96,4 @@ repositories {
         }
     }
     maven { url = uri("https://repo.spring.io/milestone") }
-}
-
-fun getGemFireBaseVersion(): String {
-    val gemfireVersion = System.getProperty("gemfireVersion");
-    val split = gemfireVersion.split(".")
-    if (split.size < 2) {
-        throw RuntimeException("gemfireVersion is malformed")
-    }
-    return "${split[0]}.${split[1]}"
 }
