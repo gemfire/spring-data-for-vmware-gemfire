@@ -105,8 +105,8 @@ dependencies {
 
   implementation(libs.cache.api)
   api("org.springframework:spring-context-support")
-  api("org.springframework:spring-tx")
-  api("org.springframework:spring-web")
+  implementation("org.springframework:spring-tx")
+  implementation("org.springframework:spring-web")
   api("org.springframework.data:spring-data-commons")
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
@@ -215,20 +215,6 @@ gradle.taskGraph.whenReady {
       useJUnitPlatform()
     }
   }
-}
-
-repositories {
-  val additionalMavenRepoURLs: String? by project
-  additionalMavenRepoURLs?.apply {
-    if (this.isNotEmpty() && this.isNotBlank()) {
-      this.split(",").forEach {
-        project.repositories.maven {
-          this.url = uri(it)
-        }
-      }
-    }
-  }
-  maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 tasks.register("copyJavadocsToBucket") {

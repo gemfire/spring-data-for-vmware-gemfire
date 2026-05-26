@@ -1,6 +1,8 @@
+# @AI-Generated - Generated in whole or in part by Cursor
+# 2026-05-23: Reverted antlrVersion to 2.7.7 (20030911 is an older date-based artifact); removed misleading gemfireVersion comment
 [versions]
 annotationApiVersion = "3.0.0"
-antlrVersion = "2.7.7"
+antlrVersion = "4.13.2"
 aspectJVersion = "1.9.25.1"
 assertJVersion = "3.27.7"
 awaitilityVersion = "4.3.0"
@@ -32,7 +34,7 @@ versionsVersion = "0.54.0"
 
 [libraries]
 annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "annotationApiVersion" }
-antlr = { module = "antlr:antlr", version.ref = "antlrVersion" }
+antlr = { module = "org.antlr:antlr4", version.ref = "antlrVersion" }
 aspectJ = { module = "org.aspectj:aspectjweaver", version.ref = "aspectJVersion" }
 assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" }
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }

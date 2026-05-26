@@ -71,6 +71,7 @@ dependencies {
     api(libs.mockito)
     api(libs.lombok)
     api("org.springframework:spring-test")
+    implementation("org.springframework:spring-tx")
 
     compileOnly(project(":spring-data-vmware-gemfire"))
 
@@ -89,18 +90,4 @@ dependencies {
     testImplementation(project(":spring-data-vmware-gemfire")) {
         exclude("com.vmware.gemfire")
     }
-}
-
-repositories {
-    val additionalMavenRepoURLs: String? by project
-    additionalMavenRepoURLs?.apply {
-        if (this.isNotEmpty() && this.isNotBlank()) {
-            this.split(",").forEach {
-                project.repositories.maven {
-                    this.url = uri(it)
-                }
-            }
-        }
-    }
-    maven { url = uri("https://repo.spring.io/milestone") }
 }
