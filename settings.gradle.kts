@@ -1,10 +1,15 @@
 /*
- * Copyright 2024-2025 Broadcom. All rights reserved.
+ * Copyright 2024-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import java.io.FileInputStream
-import java.util.*
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-05-23: Added dependencyResolutionManagement.repositories so vCU detached configs can reach the private GemFire Maven repo
+ * 2026-05-26: Extracted addGemFireRepositories() helper; dependencyResolutionManagement.repositories delegates to it
+ */
 
 pluginManagement {
   includeBuild("build-tools/publishing")
@@ -38,29 +43,57 @@ pluginManagement {
 }
 
 include("spring-data-vmware-gemfire")
+include("spring-test-vmware-gemfire")
 
 project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
-
 rootProject.name = "spring-data-for-vmware-gemfire"
 
 dependencyResolutionManagement {
+  repositories {
+    addGemFireRepositories(
+      providers,
+      addMavenCentral = providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()
+    )
+  }
   versionCatalogs {
     create("libs") {
-      val properties = Properties()
-      properties.load(FileInputStream("gradle.properties"))
-      versionOverrideFromProperties(this, properties)
+      // Override gemfireVersion only when explicitly passed as a system property (-D)
+      // or Gradle property (-P). The TOML is the source of truth for normal builds.
+      val gemfireVersion = System.getProperty("gemfireVersion")
+        ?: (settings as? ExtensionAware)?.extensions?.extraProperties?.let {
+          if (it.has("gemfireVersion")) it.get("gemfireVersion") as? String else null
+        }
+
+      if (gemfireVersion != null) {
+        logger.debug("Overriding gemfireVersion: $gemfireVersion")
+        version("gemfireVersion", gemfireVersion)
+      }
     }
   }
 }
 
-private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBuilder, propertyName: String, propertiesFile: Properties): String {
-  val propertyValue = providers.systemProperty(propertyName).getOrElse(propertiesFile.getProperty(propertyName))
-  return versionCatalogBuilder.version(propertyName, propertyValue)
+fun org.gradle.api.artifacts.dsl.RepositoryHandler.addGemFireRepositories(
+  providers: org.gradle.api.provider.ProviderFactory,
+  addGradlePluginPortal: Boolean = false,
+  addMavenCentral: Boolean = false
+) {
+  val configFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
+    providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+  )
+  val jsonString = java.io.File(configFilePath).readText(Charsets.UTF_8)
+  val repos = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
+  (repos["repositories"] as List<*>).filterNotNull().map { it as Map<*, *> }
+    .forEach { entry ->
+      maven {
+        url = uri(entry["url"]!! as String)
+        if (!entry["username"]?.toString().isNullOrBlank()) {
+          credentials {
+            username = entry["username"] as String
+            password = entry["password"] as String
+          }
+        }
+      }
+    }
+  if (addGradlePluginPortal) gradlePluginPortal()
+  if (addMavenCentral) mavenCentral()
 }
-
-private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
-  versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
-}
-
-include("spring-data-vmware-gemfire")
-include("spring-test-vmware-gemfire")
