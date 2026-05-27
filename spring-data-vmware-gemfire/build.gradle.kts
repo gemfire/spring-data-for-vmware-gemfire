@@ -126,6 +126,7 @@ dependencies {
   testImplementation(libs.log4J)
   testImplementation(libs.annotation.api)
   testImplementation(libs.derby)
+  testImplementation(libs.derby.tools)
   testImplementation(libs.openwebbeans.se)
   testImplementation(libs.openwebbeans.spi)
   testImplementation(libs.openwebbeans.impl)

@@ -8,9 +8,9 @@ assertJVersion = "3.27.7"
 awaitilityVersion = "4.3.0"
 cacheApiVersion = "1.1.1"
 cdiApiVersion = "4.1.0"
-derbyVersion = "10.17.1.0"
+derbyVersion = "10.16.1.1"
 gemFireTestContainersVersion = "3.0.0"
-gemfireVersion = "10.3.0"
+gemfireVersion = "[10.3,10.4)"
 googleCloudStorageVersion = "2.68.0"
 interceptorApiVersion = "1.2.2"
 jUnitJupiterVersion = "6.1.0"
@@ -40,7 +40,8 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
 cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
 cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
-derby = { module = "org.apache.derby:derbyLocale_zh_TW", version.ref = "derbyVersion" }
+derby = { module = "org.apache.derby:derby", version.ref = "derbyVersion" }
+derby-tools = { module = "org.apache.derby:derbytools", version.ref = "derbyVersion" }
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
 gemfire-cq = { module = "com.vmware.gemfire:gemfire-cq", version.ref = "gemfireVersion" }
 gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
