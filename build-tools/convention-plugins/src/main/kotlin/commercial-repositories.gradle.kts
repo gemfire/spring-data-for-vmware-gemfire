@@ -35,7 +35,9 @@ repositories {
         }
       }
     }
-  mavenCentral()
+  if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
+    mavenCentral()
+  }
 }
 
 fun getEtcDirectoryFromProjectPath(path: Path): String {
