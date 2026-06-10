@@ -11,6 +11,7 @@
  * 2026-03-14: Created GudApiVersion class for version compatibility checking
  * 2026-03-17: Removed V1_1 (10.4) placeholder
  * 2026-04-02: Moved from gud-core to gud-api — version contract belongs with the API
+ * 2026-06-06: Updated V1_0_0 Javadoc to reflect removal of the 10.0 driver (minimum is now 10.1)
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -24,7 +25,7 @@ package org.springframework.data.gemfire.gud.api;
  */
 public final class GudApiVersion implements Comparable<GudApiVersion> {
 
-    /** GUD API version 1.0 — initial release supporting GemFire 10.0 through 10.3. */
+    /** GUD API version 1.0 — initial release supporting GemFire 10.1 through 10.3. */
     public static final GudApiVersion V1_0_0 = new GudApiVersion(1, 0, 0);
 
     private final int major;

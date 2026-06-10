@@ -13,46 +13,44 @@ and class name (`GemFireDriver`). Only one driver module should be on the classp
 
 | Driver Module | GemFire Version |
 |---------------|-----------------|
-| gud-driver-gemfire-10.0 | 10.0.x |
 | gud-driver-gemfire-10.1 | 10.1.x |
 | gud-driver-gemfire-10.2 | 10.2.x |
 | gud-driver-gemfire-10.3 | 10.3.x |
 
 ## Capability Matrix
 
-| `GudCapability` | 10.0 | 10.1 | 10.2 | 10.3 | Notes |
-|-----------------|------|------|------|------|-------|
-| `BASIC_CACHE_OPERATIONS` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `REGIONS` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `QUERIES` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `CONTINUOUS_QUERY` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `TRANSACTIONS` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `PDX_SERIALIZATION` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `FUNCTIONS` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `PER_SERVER_CONNECTION_LIMITS` | ✗ | ✓ | ✓ | ✓ | Added in 10.1 |
-| `DISK_STORE_SEGMENTS` | ✗ | ✓ | ✓ | ✓ | Added in 10.1 |
-| `SECURITY_MANAGER` | ✗ | ✗ | ✗ | ✓ | Added in 10.3 |
-| `SERVER_REGION_NAME` | ✗ | ✗ | ✗ | ✓ | Added in 10.3 |
+| `GudCapability` | 10.1 | 10.2 | 10.3 | Notes |
+|-----------------|------|------|------|-------|
+| `BASIC_CACHE_OPERATIONS` | ✓ | ✓ | ✓ | All supported versions |
+| `REGIONS` | ✓ | ✓ | ✓ | All supported versions |
+| `QUERIES` | ✓ | ✓ | ✓ | All supported versions |
+| `CONTINUOUS_QUERY` | ✓ | ✓ | ✓ | All supported versions |
+| `TRANSACTIONS` | ✓ | ✓ | ✓ | All supported versions |
+| `PDX_SERIALIZATION` | ✓ | ✓ | ✓ | All supported versions |
+| `FUNCTIONS` | ✓ | ✓ | ✓ | All supported versions |
+| `PER_SERVER_CONNECTION_LIMITS` | ✓ | ✓ | ✓ | Added in 10.1 |
+| `DISK_STORE_SEGMENTS` | ✓ | ✓ | ✓ | Added in 10.1 |
+| `SECURITY_MANAGER` | ✗ | ✗ | ✓ | Added in 10.3 |
+| `SERVER_REGION_NAME` | ✗ | ✗ | ✓ | Added in 10.3 |
 
-> **Note:** `PER_SERVER_CONNECTION_LIMITS` and `DISK_STORE_SEGMENTS` were previously
-> missing from the 10.1, 10.2, and 10.3 driver capability sets. This has been corrected.
-> `DISK_STORE_SEGMENTS` was also missing from the 10.3 driver and has been added.
+> **Note:** `PER_SERVER_CONNECTION_LIMITS` and `DISK_STORE_SEGMENTS` are available in all
+> supported driver versions (10.1, 10.2, 10.3) since both features were introduced in GemFire 10.1.
 
 ## Version Summary (Feature-Level)
 
-| Feature | 10.0 | 10.1 | 10.2 | 10.3 | Notes |
-|---------|------|------|------|------|-------|
-| Basic Cache Operations | ✓ | ✓ | ✓ | ✓ | |
-| PDX Serialization | ✓ | ✓ | ✓ | ✓ | |
-| Regions & Queries | ✓ | ✓ | ✓ | ✓ | |
-| Continuous Query | ✓ | ✓ | ✓ | ✓ | |
-| Transactions | ✓ | ✓ | ✓ | ✓ | |
-| Functions | ✓ | ✓ | ✓ | ✓ | |
-| `DiskStoreFactory.setSegments()` | ✗ | ✓ | ✓ | ✓ | Added in 10.1 |
-| `DiskStore.getSegments()` | ✗ | ✓ | ✓ | ✓ | Added in 10.1 |
-| Per-Server Connection Limits | ✗ | ✓ | ✓ | ✓ | Added in 10.1 |
-| Integrated Security Manager | ✗ | ✗ | ✗ | ✓ | Added in 10.3 |
-| `ClientRegionFactory.setServerRegionName()` | ✗ | ✗ | ✗ | ✓ | Added in 10.3 |
+| Feature | 10.1 | 10.2 | 10.3 | Notes |
+|---------|------|------|------|-------|
+| Basic Cache Operations | ✓ | ✓ | ✓ | |
+| PDX Serialization | ✓ | ✓ | ✓ | |
+| Regions & Queries | ✓ | ✓ | ✓ | |
+| Continuous Query | ✓ | ✓ | ✓ | |
+| Transactions | ✓ | ✓ | ✓ | |
+| Functions | ✓ | ✓ | ✓ | |
+| `DiskStoreFactory.setSegments()` | ✓ | ✓ | ✓ | Added in 10.1 |
+| `DiskStore.getSegments()` | ✓ | ✓ | ✓ | Added in 10.1 |
+| Per-Server Connection Limits | ✓ | ✓ | ✓ | Added in 10.1 |
+| Integrated Security Manager | ✗ | ✗ | ✓ | Added in 10.3 |
+| `ClientRegionFactory.setServerRegionName()` | ✗ | ✗ | ✓ | Added in 10.3 |
 
 ## Deprecated Features
 
@@ -70,62 +68,62 @@ The following features are deprecated across all GemFire versions and should be 
 
 ### GudPoolFactory
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `setMinConnectionsPerServer(int)` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| `setMaxConnectionsPerServer(int)` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| `setServerConnectionTimeout(int)` | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
-| `setThreadLocalConnections(boolean)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — No-op, ignored |
-| Other pool settings | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `setMinConnectionsPerServer(int)` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| `setMaxConnectionsPerServer(int)` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| `setServerConnectionTimeout(int)` | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| `setThreadLocalConnections(boolean)` | ⚠ | ⚠ | ⚠ | **Deprecated** — No-op, ignored |
+| Other pool settings | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
 
 ### GudPool
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `getMinConnectionsPerServer()` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| `getMaxConnectionsPerServer()` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| Other pool getters | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `getMinConnectionsPerServer()` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| `getMaxConnectionsPerServer()` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| Other pool getters | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
 
 ### GudClientCacheFactory
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `setPoolMinConnectionsPerServer(int)` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| `setPoolMaxConnectionsPerServer(int)` | ✗ | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
-| `setPdxDiskStore(String)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — Ignored on clients |
-| `setPdxPersistent(boolean)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — Ignored on clients |
-| Other factory settings | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `setPoolMinConnectionsPerServer(int)` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| `setPoolMaxConnectionsPerServer(int)` | ✓ | ✓ | ✓ | `PER_SERVER_CONNECTION_LIMITS` |
+| `setPdxDiskStore(String)` | ⚠ | ⚠ | ⚠ | **Deprecated** — Ignored on clients |
+| `setPdxPersistent(boolean)` | ⚠ | ⚠ | ⚠ | **Deprecated** — Ignored on clients |
+| Other factory settings | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
 
 ### GudClientRegionFactory
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `setServerRegionName(String)` | ✗ | ✗ | ✗ | ✓ | `SERVER_REGION_NAME` |
-| Other client region settings | ✓ | ✓ | ✓ | ✓ | `REGIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `setServerRegionName(String)` | ✗ | ✗ | ✓ | `SERVER_REGION_NAME` |
+| Other client region settings | ✓ | ✓ | ✓ | `REGIONS` |
 
 ### GudQueryService
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | Notes |
-|--------|------|------|------|------|-------|
-| `createIndex(...)` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `createKeyIndex(...)` | ✓ | ✓ | ✓ | ✓ | All versions |
-| `createHashIndex(...)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — Use createIndex instead |
-| `defineHashIndex(...)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — Use defineIndex instead |
-| `getIndexes(Region, IndexType)` | ⚠ | ⚠ | ⚠ | ⚠ | **Deprecated** — Use getIndexes(Region) |
+| Method | 10.1 | 10.2 | 10.3 | Notes |
+|--------|------|------|------|-------|
+| `createIndex(...)` | ✓ | ✓ | ✓ | All supported versions |
+| `createKeyIndex(...)` | ✓ | ✓ | ✓ | All supported versions |
+| `createHashIndex(...)` | ⚠ | ⚠ | ⚠ | **Deprecated** — Use createIndex instead |
+| `defineHashIndex(...)` | ⚠ | ⚠ | ⚠ | **Deprecated** — Use defineIndex instead |
+| `getIndexes(Region, IndexType)` | ⚠ | ⚠ | ⚠ | **Deprecated** — Use getIndexes(Region) |
 
 ### GudDiskStoreFactory
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `setSegments(int)` | ✗ | ✓ | ✓ | ✓ | `DISK_STORE_SEGMENTS` |
-| Other disk store settings | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `setSegments(int)` | ✓ | ✓ | ✓ | `DISK_STORE_SEGMENTS` |
+| Other disk store settings | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
 
 ### GudDiskStore
 
-| Method | 10.0 | 10.1 | 10.2 | 10.3 | `GudCapability` |
-|--------|------|------|------|------|-----------------|
-| `getSegments()` | ✗ | ✓ | ✓ | ✓ | `DISK_STORE_SEGMENTS` |
-| Other disk store getters | ✓ | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
+| Method | 10.1 | 10.2 | 10.3 | `GudCapability` |
+|--------|------|------|------|-----------------|
+| `getSegments()` | ✓ | ✓ | ✓ | `DISK_STORE_SEGMENTS` |
+| Other disk store getters | ✓ | ✓ | ✓ | `BASIC_CACHE_OPERATIONS` |
 
 ## Default Method Strategy
 
@@ -163,7 +161,7 @@ public GudDiskStoreFactory setSegments(int segments) {
 }
 ```
 
-The 10.0 driver does **not** override; it inherits the default which throws on invocation.
+Drivers that do not support the feature inherit the default, which throws `GudUnsupportedOperationException` on invocation.
 
 ## Graceful Degradation via GudVersionAwareInvoker
 

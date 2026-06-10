@@ -6,7 +6,7 @@
 
 The GemFire Unified Driver (GUD) is an abstraction layer that decouples Spring Data GemFire from native GemFire APIs. This enables:
 
-1. **Driver Swappability** - Switch between GemFire versions (10.0, 10.1, 10.2, 10.3) without changing application code
+1. **Driver Swappability** - Switch between GemFire versions (10.1, 10.2, 10.3) without changing application code
 2. **API Evolution** - Gracefully handle API additions, deprecations, and signature changes between GemFire versions
 3. **Clean Separation** - Application code never directly imports native GemFire classes
 4. **Type-Safe Capability Detection** - `GudCapability` enum allows compile-time checked feature detection
@@ -68,7 +68,7 @@ with removal planned after call sites migrate.
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│            gud-driver-gemfire-{10.0, 10.1, 10.2, 10.3}        │
+│            gud-driver-gemfire-{10.1, 10.2, 10.3}               │
 │  - Concrete implementations of GUD interfaces                   │
 │  - Wraps native GemFire APIs for that version                  │
 │  - Registered via ServiceLoader (single GudDriver service file) │
@@ -181,8 +181,7 @@ gud-driver-gemfire-10.x
 ### Driver Modules
 | Version | Capabilities |
 |---------|--------------|
-| `gemfire-10.0` | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS |
-| `gemfire-10.1` | All 10.0 + PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
+| `gemfire-10.1` | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS, PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
 | `gemfire-10.2` | All 10.1 capabilities |
 | `gemfire-10.3` | All 10.2 + SECURITY_MANAGER, SERVER_REGION_NAME |
 
@@ -243,7 +242,7 @@ spring-data-for-vmware-gemfire/
 │       ├── GudDriver.java              ← createJndiBinding() + createPoolManager()
 │       └── GudDriverManager.java       ← Fixed sort, race cond., push to provider
 │
-├── gud-driver-gemfire-10.x/ (x = 0,1,2,3)
+├── gud-driver-gemfire-10.x/ (x = 1,2,3)
 │   ├── src/main/java/.../gud/driver/
 │   │   └── GemFireDriver.java          ← Fixed capabilities; new createXxx() methods
 │   └── src/main/resources/META-INF/services/

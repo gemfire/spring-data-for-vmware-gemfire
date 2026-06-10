@@ -12,6 +12,7 @@
  *             Answers.RETURNS_SELF; create(...) terminals return real in-memory
  *             GudClientCache / GudRegion / GudPool / GudDiskStore instances
  * 2026-04-17: Removed peer GudCacheFactory mock helper
+ * 2026-06-06: Added newExecution() factory for MockGudFunctionService on*() methods
  */
 
 package org.springframework.data.gemfire.gud.driver.mock;
@@ -19,6 +20,7 @@ package org.springframework.data.gemfire.gud.driver.mock;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
@@ -30,8 +32,11 @@ import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudClientRegionFactory;
 import org.springframework.data.gemfire.gud.api.GudDiskStore;
 import org.springframework.data.gemfire.gud.api.GudDiskStoreFactory;
+import org.springframework.data.gemfire.gud.api.GudExecution;
+import org.springframework.data.gemfire.gud.api.GudFunction;
 import org.springframework.data.gemfire.gud.api.GudPoolFactory;
 import org.springframework.data.gemfire.gud.api.GudRegion;
+import org.springframework.data.gemfire.gud.api.GudResultCollector;
 
 /**
  * Produces Mockito-backed fluent-builder mocks for the Gud* factory interfaces.
@@ -136,6 +141,27 @@ final class MockGudFactories {
         }).when(factory).create(anyString());
 
         return factory;
+    }
+
+    // ===== Execution =====
+
+    /**
+     * Returns a Mockito-backed {@link GudExecution} stub.
+     * <p>
+     * Fluent setter methods ({@code withFilter}, {@code withArgs}, {@code setArguments},
+     * {@code withCollector}) return the mock itself via {@link Answers#RETURNS_SELF}.
+     * {@code execute(String)} and {@code execute(GudFunction)} return a mock
+     * {@link GudResultCollector}.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    static GudExecution newExecution() {
+        GudResultCollector resultCollector = mock(GudResultCollector.class);
+        GudExecution execution = mock(
+            GudExecution.class,
+            withSettings().defaultAnswer(Answers.RETURNS_SELF));
+        doReturn(resultCollector).when(execution).execute(anyString());
+        doReturn(resultCollector).when(execution).execute(any(GudFunction.class));
+        return execution;
     }
 
     @FunctionalInterface

@@ -16,6 +16,7 @@
  * 2026-04-02: Updated imports — GudCapability/GudApiVersion moved to gud-api; added createJndiBinding/createPoolManager
  * 2026-04-17: Removed peer-cache factory and wrapCache from SPI — GUD drivers are client-only
  * 2026-04-17: Added eviction-attribute factory methods for GudEvictionAttributes static delegation
+ * 2026-06-06: Added createFunctionService() default method for GudFunctionService delegate registration
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -28,6 +29,7 @@ import org.springframework.data.gemfire.gud.api.GudClientCache;
 import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudEvictionAction;
 import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
 import org.springframework.data.gemfire.gud.api.GudGemFireException;
 import org.springframework.data.gemfire.gud.api.GudJndiBinding;
 import org.springframework.data.gemfire.gud.api.GudObjectSizer;
@@ -142,6 +144,19 @@ public interface GudDriver {
      * Creates LRU-entry eviction attributes.
      */
     GudEvictionAttributes createLruEntryEvictionAttributes(int maximum, GudEvictionAction action);
+
+    /**
+     * Returns the driver-specific {@link GudFunctionService} implementation, or {@code null}
+     * if this driver does not support function execution.
+     *
+     * <p>Called automatically by {@code GudDriverManager} when the driver is registered;
+     * if non-null, the returned instance is passed to {@link GudFunctionService#register}.
+     *
+     * @return a concrete {@link GudFunctionService} subclass, or {@code null}
+     */
+    default GudFunctionService createFunctionService() {
+        return null;
+    }
 
     // ===== Wrapping =====
 

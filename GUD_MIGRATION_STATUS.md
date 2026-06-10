@@ -18,7 +18,7 @@
 - [x] Phase 3: Planning and Analysis — COMPLETE
 - [x] Phase 4: Deviation Documentation — COMPLETE
 - [x] Phase 5: Resolution — COMPLETE (GUD API types created)
-- [x] Phase 6: Driver Implementation — COMPLETE (core adapters created for all 4 versions)
+- [x] Phase 6: Driver Implementation — COMPLETE (core adapters created for all 3 supported versions)
 - [x] Phase 7: Source Code Migration — COMPLETE (spring-data-vmware-gemfire main sources)
 - [x] Phase 8: Test Migration — COMPLETE (spring-test-vmware-gemfire compiles successfully)
 - [x] Phase 9: Architectural Hardening — COMPLETE (see details below)
@@ -40,7 +40,7 @@ capability names instead of a type-safe enum.
 - Created `gud-api/.../GudCapability.java` (formerly `gud-core/.../GudCapability.java`)
 - Created `gud-api/.../GudApiVersion.java` (formerly `gud-core/.../GudApiVersion.java`)
 - Deleted the old files from `gud-core`
-- Updated all imports in `GudDriver.java`, `GudDriverManager.java`, and all 4 `GemFireDriver.java` files
+- Updated all imports in `GudDriver.java`, `GudDriverManager.java`, and all 3 `GemFireDriver.java` files
 
 #### C2: GudUnsupportedOperationException now uses GudCapability enum (type-safe)
 **Problem:** Constructor took `String requiredCapability` — callers could not inspect the
@@ -62,7 +62,7 @@ capability programmatically and were prone to typos.
 registration, SRP violation, maintenance burden).
 
 **Resolution:**
-- Deleted the 4 individual service files from each of the 4 driver modules (16 files total):
+- Deleted the 4 individual service files from each of the 3 driver modules (12 files total):
   - `META-INF/services/org.springframework.data.gemfire.gud.api.GudClientCacheFactory`
   - `META-INF/services/org.springframework.data.gemfire.gud.api.GudCacheFactory`
   - `META-INF/services/org.springframework.data.gemfire.gud.api.GudJndiBinding`
@@ -75,7 +75,7 @@ preventing `GudDriverManager` from obtaining all four factories from the driver.
 
 **Resolution:**
 - Added `createJndiBinding()` and `createPoolManager()` to `GudDriver` interface
-- Implemented in all 4 `GemFireDriver` classes
+- Implemented in all 3 `GemFireDriver` classes
 
 #### H3: GudDriverManager pushes to GudCacheProvider on registration
 **Problem:** `GudCacheProvider` and `GudDriverManager` were independent registries with no
@@ -144,7 +144,6 @@ header in the 5 files modified: `GudPoolFactory`, `GudDiskStoreFactory`, `GudCli
 |--------|--------|-------------|
 | gud-api | COMPLETE | SUCCESS |
 | gud-core | COMPLETE | SUCCESS |
-| gud-driver-gemfire-10.0 | COMPLETE | SUCCESS |
 | gud-driver-gemfire-10.1 | COMPLETE | SUCCESS |
 | gud-driver-gemfire-10.2 | COMPLETE | SUCCESS |
 | gud-driver-gemfire-10.3 | COMPLETE | SUCCESS |
@@ -179,8 +178,7 @@ cd /Users/udo/projects/spring-data-for-vmware-gemfire
 # Expected: 0
 
 # Verify all driver modules compile
-./gradlew :gud-driver-gemfire-10.0:compileJava \
-          :gud-driver-gemfire-10.1:compileJava \
+./gradlew :gud-driver-gemfire-10.1:compileJava \
           :gud-driver-gemfire-10.2:compileJava \
           :gud-driver-gemfire-10.3:compileJava 2>&1 | grep "error:"
 # Expected: (no output)

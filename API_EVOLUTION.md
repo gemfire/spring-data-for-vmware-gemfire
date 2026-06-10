@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-This document describes the GemFire Unified Driver (GUD) architecture's strategy for handling API evolution across GemFire versions (10.0–10.3) while maintaining backward compatibility. The design ensures `spring-data-vmware-gemfire` runs seamlessly across multiple driver versions without requiring code changes in the Spring layer.
+This document describes the GemFire Unified Driver (GUD) architecture's strategy for handling API evolution across GemFire versions (10.1–10.3) while maintaining backward compatibility. The design ensures `spring-data-vmware-gemfire` runs seamlessly across multiple driver versions without requiring code changes in the Spring layer.
 
 ---
 
@@ -45,7 +45,7 @@ This document describes the GemFire Unified Driver (GUD) architecture's strategy
 └──────────────────────────┬─────────────────────────────────────────┘
                            │ implemented by
 ┌──────────────────────────▼─────────────────────────────────────────┐
-│        gud-driver-gemfire-{10.0, 10.1, 10.2, 10.3}                │
+│        gud-driver-gemfire-{10.1, 10.2, 10.3}                       │
 │  GemFireDriver with full capability sets                           │
 │  (Direct org.apache.geode dependencies)                             │
 └────────────────────────────────────────────────────────────────────┘
@@ -74,7 +74,7 @@ default GudPoolFactory setMinConnectionsPerServer(int minConnections) {
 }
 ```
 
-The 10.1, 10.2, 10.3 drivers override with native implementations; the 10.0 driver uses the default.
+The 10.1, 10.2, and 10.3 drivers override with native implementations.
 
 ### Scenario 2: Version-Specific Features
 
@@ -177,8 +177,7 @@ them atomically into `GudCacheProvider`.
 
 | Version | Capabilities |
 |---------|--------------|
-| 10.0 | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS |
-| 10.1 | All 10.0 + PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
+| 10.1 | BASIC_CACHE_OPERATIONS, REGIONS, QUERIES, CONTINUOUS_QUERY, TRANSACTIONS, PDX_SERIALIZATION, FUNCTIONS, PER_SERVER_CONNECTION_LIMITS, DISK_STORE_SEGMENTS |
 | 10.2 | All 10.1 capabilities |
 | 10.3 | All 10.2 + SECURITY_MANAGER, SERVER_REGION_NAME |
 

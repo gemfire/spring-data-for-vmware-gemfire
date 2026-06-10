@@ -15,6 +15,7 @@
  *             GudCapability/GudApiVersion; added push of driver factories to GudCacheProvider on
  *             driver registration so both discovery paths stay coordinated
  * 2026-04-17: pushFactoriesToCacheProvider registers client-only factories (no peer cache factory)
+ * 2026-06-06: Register GudFunctionService delegate in pushFactoriesToCacheProvider(); clear it in clearDrivers()
  */
 
 package org.springframework.data.gemfire.gud.core;
@@ -33,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.gemfire.gud.api.GudApiVersion;
 import org.springframework.data.gemfire.gud.api.GudCacheProvider;
 import org.springframework.data.gemfire.gud.api.GudCapability;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
 
 /**
  * Manager class for discovering and managing GUD drivers.
@@ -136,11 +138,13 @@ public final class GudDriverManager {
 
     /**
      * Clears all registered drivers and resets state. Primarily for testing.
+     * Also clears the {@link GudFunctionService} delegate so a stale mock is not left registered.
      */
     public static synchronized void clearDrivers() {
         drivers.clear();
         defaultDriver = null;
         loaded.set(false);
+        GudFunctionService.register(null);
     }
 
     // ===== Version-Aware Driver Selection =====
@@ -212,6 +216,10 @@ public final class GudDriverManager {
                 driver.createJndiBinding(),
                 driver.createPoolManager()
             );
+            GudFunctionService functionService = driver.createFunctionService();
+            if (functionService != null) {
+                GudFunctionService.register(functionService);
+            }
         } catch (Exception ex) {
             logger.warn("Failed to push driver factories to GudCacheProvider: {}", ex.getMessage());
         }

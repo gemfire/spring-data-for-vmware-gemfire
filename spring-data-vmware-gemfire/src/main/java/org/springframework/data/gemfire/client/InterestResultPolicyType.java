@@ -8,6 +8,7 @@
  * Generated in whole or in part by Cursor
  * Description:
  * 2026-03-13: Migrated from org.apache.geode imports to GUD API types
+ * 2026-06-06: DEFAULT constant changed to direct alias of KEYS_VALUES (matches native InterestResultPolicy.DEFAULT)
  */
 
 package org.springframework.data.gemfire.client;
@@ -27,8 +28,7 @@ public enum InterestResultPolicyType {
 	KEYS_VALUES(GudInterestResultPolicy.KEYS_VALUES),
 	NONE(GudInterestResultPolicy.NONE);
 
-	public static final InterestResultPolicyType DEFAULT = InterestResultPolicyType.valueOf(
-		GudInterestResultPolicy.DEFAULT);
+	public static final InterestResultPolicyType DEFAULT = InterestResultPolicyType.KEYS_VALUES;
 
 	private final GudInterestResultPolicy interestResultPolicy;
 

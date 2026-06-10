@@ -13,6 +13,7 @@
  * Description:
  * 2026-03-11: Created GudScope enum as 1:1 mapping of GemFire Scope
  * 2026-04-01: Added fromOrdinal() method
+ * 2026-06-06: fromOrdinal() now throws ArrayIndexOutOfBoundsException for invalid ordinals
  */
 
 package org.springframework.data.gemfire.gud.api;
@@ -31,10 +32,7 @@ public enum GudScope {
     private static final GudScope[] VALUES = values();
 
     public static GudScope fromOrdinal(int ordinal) {
-        if (ordinal >= 0 && ordinal < VALUES.length) {
-            return VALUES[ordinal];
-        }
-        return null;
+        return VALUES[ordinal];
     }
 
     public boolean isLocal() {

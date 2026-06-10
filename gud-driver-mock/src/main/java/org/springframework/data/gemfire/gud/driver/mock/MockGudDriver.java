@@ -13,6 +13,7 @@
  *             supported branch
  * 2026-04-17: Removed peer cache factory and wrapCache (client-only driver)
  * 2026-04-17: Implemented eviction-attribute factories for GudEvictionAttributes static delegation
+ * 2026-06-06: Added MockGudFunctionService field and createFunctionService() override
  */
 
 package org.springframework.data.gemfire.gud.driver.mock;
@@ -28,6 +29,7 @@ import org.springframework.data.gemfire.gud.api.GudClientCacheFactory;
 import org.springframework.data.gemfire.gud.api.GudEvictionAction;
 import org.springframework.data.gemfire.gud.api.GudEvictionAlgorithm;
 import org.springframework.data.gemfire.gud.api.GudEvictionAttributes;
+import org.springframework.data.gemfire.gud.api.GudFunctionService;
 import org.springframework.data.gemfire.gud.api.GudGemFireException;
 import org.springframework.data.gemfire.gud.api.GudJndiBinding;
 import org.springframework.data.gemfire.gud.api.GudObjectSizer;
@@ -58,6 +60,7 @@ public class MockGudDriver implements GudDriver {
 
     private final MockGudPoolManager poolManager = new MockGudPoolManager();
     private final MockGudJndiBinding jndiBinding = new MockGudJndiBinding();
+    private final MockGudFunctionService functionService = new MockGudFunctionService();
 
     @Override
     public String getName() {
@@ -102,6 +105,11 @@ public class MockGudDriver implements GudDriver {
     @Override
     public GudPoolManager createPoolManager() {
         return poolManager;
+    }
+
+    @Override
+    public GudFunctionService createFunctionService() {
+        return functionService;
     }
 
     @Override
