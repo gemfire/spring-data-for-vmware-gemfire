@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.auth.oauth2.GoogleCredentials
@@ -98,15 +98,25 @@ publishingDetails {
 }
 
 dependencies {
-  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
-  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+  api(platform(libs.spring.framework.bom))
+  api(platform(libs.spring.data.bom))
 
-  compileOnly(libs.bundles.gemfire)
+  listOf(
+    libs.gemfire.core,
+    libs.gemfire.cq,
+    libs.gemfire.deployment.chained.classloader,
+    libs.gemfire.gfsh,
+    libs.gemfire.logging,
+    libs.gemfire.tcp.server,
+    libs.gemfire.wan
+  ).forEach { gemfireLibrary ->
+    compileOnly(gemfireLibrary) { exclude(group = "org.springframework") }
+  }
 
   implementation(libs.cache.api)
   api("org.springframework:spring-context-support")
-  api("org.springframework:spring-tx")
-  api("org.springframework:spring-web")
+  implementation("org.springframework:spring-tx")
+  implementation("org.springframework:spring-web")
   api("org.springframework.data:spring-data-commons")
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
@@ -116,7 +126,17 @@ dependencies {
     exclude("javax.annotation", "jsr250-api")
   }
 
-  testImplementation(libs.bundles.gemfire)
+  listOf(
+    libs.gemfire.core,
+    libs.gemfire.cq,
+    libs.gemfire.deployment.chained.classloader,
+    libs.gemfire.gfsh,
+    libs.gemfire.logging,
+    libs.gemfire.tcp.server,
+    libs.gemfire.wan
+  ).forEach { gemfireLibrary ->
+    testImplementation(gemfireLibrary) { exclude(group = "org.springframework") }
+  }
 
   testImplementation(libs.cdi.api) {
     exclude("javax.annotation", "jsr250-api")
@@ -139,6 +159,7 @@ dependencies {
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.vintage.engine)
   testRuntimeOnly(libs.junit.jupiter.engine)
+  testRuntimeOnly(libs.junit.platform.launcher)
 
   testImplementation(libs.junit)
   testImplementation(libs.assertJ)
@@ -215,21 +236,6 @@ gradle.taskGraph.whenReady {
     }
   }
 }
-
-repositories {
-  val additionalMavenRepoURLs: String? by project
-  additionalMavenRepoURLs?.apply {
-    if (this.isNotEmpty() && this.isNotBlank()) {
-      this.split(",").forEach {
-        project.repositories.maven {
-          this.url = uri(it)
-        }
-      }
-    }
-  }
-  maven { url = uri("https://repo.spring.io/milestone") }
-}
-
 
 tasks.register("copyJavadocsToBucket") {
   dependsOn(tasks.named("javadocJar"))

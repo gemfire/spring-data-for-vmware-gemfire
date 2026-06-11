@@ -1,29 +1,32 @@
 [versions]
 annotationApiVersion = "2.1.1"
-antlrVersion = "2.7.7"
-aspectJVersion = "1.9.22.1"
+antlrVersion = "2.7.6"
+aspectJVersion = "1.9.25.1"
 assertJVersion = "3.26.3"
 awaitilityVersion = "4.2.2"
 cacheApiVersion = "1.1.1"
 cdiApiVersion = "4.0.1"
 derbyVersion = "10.9.1.0"
 gemFireTestContainersVersion = "3.0.0"
-gemfireVersion = "10.2.4"
+gemfireVersion = "10.3.0-build.2927.ec89c4a9"
 googleCloudStorageVersion = "2.45.0"
 interceptorApiVersion = "1.2.2"
-jUnitJupiterVersion = "5.11.4"
+jUnitJupiterVersion = "6.1.0"
+jUnitPlatformVersion = "6.1.0"
 jUnitVersion = "4.13.2"
-jacksonAnnotationVersion = "2.18.7"
+jacksonAnnotationVersion = "2.18.8"
 jacksonVersion = "2.20.2"
 log4JVersion = "2.24.3"
-logbackVersion = "1.5.32"
+logbackVersion = "1.5.34"
 lombokPluginVersion = "8.11"
 lombokVersion = "1.18.46"
 mockitoVersion = "5.14.2"
 multithreadedTCVersion = "1.01"
 openWebBeansVersion = "2.0.28"
 snappyVersion = "0.4"
-springBootVersion = "3.5.14"
+springBootVersion = "3.5.15"
+springDataVersion = "2025.0.12"
+springFrameworkVersion = "6.2.19"
 springShellVersion = "1.2.0.RELEASE"
 springShiroVersion = "2.0.6"
 versionCatalogUpdateVersion = "1.1.0"
@@ -53,6 +56,7 @@ jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", ver
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jUnitJupiterVersion" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "jUnitPlatformVersion" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
 log4J = { module = "org.apache.logging.log4j:log4j-to-slf4j", version.ref = "log4JVersion" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
@@ -64,6 +68,8 @@ openwebbeans-se = { module = "org.apache.openwebbeans:openwebbeans-se", version.
 openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", version.ref = "openWebBeansVersion" }
 snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 

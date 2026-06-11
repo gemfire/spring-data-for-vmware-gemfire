@@ -52,30 +52,8 @@ publishing {
           }
         }
       }
-      repositories {
-        maven {
-          val mavenPushRepositoryURL = project.findProperty("mavenPushRepository")
-          if (mavenPushRepositoryURL != null) {
-            url = uri(mavenPushRepositoryURL)
-            if (mavenPushRepositoryURL.toString().startsWith("gcs:")) {
-              name = "GCS"
-            }
-            setGemFirePublishingCredentials(this)
-          } else {
-            println("WARNING: No push repository configured")
-          }
-        }
-      }
     }
   }
-}
-
-tasks.register("publishToInternalGCS") {
-  group = "publishing"
-  description = "Publishes all Maven publications to internal GCS repository."
-  dependsOn(tasks.withType<PublishToMavenRepository>().matching {
-    it.repository == publishing.repositories["GCS"]
-  })
 }
 
 fun setGemFirePublishingCredentials(

@@ -100,6 +100,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	private long idleTimeout = PoolFactory.DEFAULT_IDLE_TIMEOUT;
 	private long pingInterval = PoolFactory.DEFAULT_PING_INTERVAL;
+	private int pingTimeout = PoolFactory.DEFAULT_PING_TIMEOUT;
 
 	private final ConnectionEndpointList locators = new ConnectionEndpointList();
 	private final ConnectionEndpointList servers = new ConnectionEndpointList();
@@ -586,6 +587,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			}
 
 			@Override
+			public int getPingTimeout() {
+				return PoolFactoryBean.this.pingTimeout;
+			}
+
+			@Override
 			public boolean getPRSingleHopEnabled() {
 				return PoolFactoryBean.this.prSingleHopEnabled;
 			}
@@ -738,6 +744,10 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	public void setPingInterval(long pingInterval) {
 		this.pingInterval = pingInterval;
+	}
+
+	public void setPingTimeout(int pingTimeout) {
+		this.pingTimeout = pingTimeout;
 	}
 
 	/**

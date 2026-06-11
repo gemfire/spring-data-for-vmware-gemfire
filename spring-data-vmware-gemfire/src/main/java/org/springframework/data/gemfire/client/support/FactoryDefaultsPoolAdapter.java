@@ -4,17 +4,16 @@
  */
 package org.springframework.data.gemfire.client.support;
 
-import java.net.InetSocketAddress;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.query.QueryService;
-
 import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.PoolAdapter;
+
+import java.net.InetSocketAddress;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * {@link FactoryDefaultsPoolAdapter} is an abstract implementation of the {@link Pool} interface and extension of
@@ -32,7 +31,6 @@ import org.springframework.data.gemfire.client.PoolAdapter;
  */
 @SuppressWarnings("unused")
 public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
-
 	protected static final boolean DEFAULT_KEEP_ALIVE = false;
 
 	protected static final String DEFAULT_POOL_NAME = "DEFAULT";
@@ -96,6 +94,11 @@ public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
 	@Override
 	public long getPingInterval() {
 		return PoolFactory.DEFAULT_PING_INTERVAL;
+	}
+
+	@Override
+	public int getPingTimeout() {
+		return PoolFactory.DEFAULT_PING_TIMEOUT;
 	}
 
 	@Override

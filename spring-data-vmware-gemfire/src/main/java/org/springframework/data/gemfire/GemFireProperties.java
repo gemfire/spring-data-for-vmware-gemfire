@@ -1,13 +1,8 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
-
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
-import java.io.File;
-import java.util.Arrays;
 
 import org.apache.geode.distributed.ConfigurationProperties;
 import org.springframework.core.convert.ConversionService;
@@ -15,6 +10,11 @@ import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
+
+import java.io.File;
+import java.util.Arrays;
+
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
 
 /**
  * An Enum (enumeration) of Apache Geode {@literal gemfire.properties}.
@@ -34,6 +34,7 @@ public enum GemFireProperties {
 	BIND_ADDRESS(ConfigurationProperties.BIND_ADDRESS, String.class),
 	CACHE_XML_FILE(ConfigurationProperties.CACHE_XML_FILE, String.class),
 	CONFLATE_EVENTS(ConfigurationProperties.CONFLATE_EVENTS, String.class, "server"),
+	@Deprecated
 	CONSERVE_SOCKETS(ConfigurationProperties.CONSERVE_SOCKETS, Boolean.class, true),
 	DELTA_PROPAGATION(ConfigurationProperties.DELTA_PROPAGATION, Boolean.class, true),
 	DEPLOY_WORKING_DIRECTORY(ConfigurationProperties.DEPLOY_WORKING_DIR, File.class, new File(".")),
@@ -63,10 +64,10 @@ public enum GemFireProperties {
 	MEMBER_TIMEOUT(ConfigurationProperties.MEMBER_TIMEOUT, Long.class, 5000L),
 	MEMBERSHIP_PORT_RANGE(ConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(ConfigurationProperties.NAME, String.class),
-	OFF_HEAP_MEMORY_SIZE(ConfigurationProperties.OFF_HEAP_MEMORY_SIZE, Integer.class),
 	REDUNDANCY_ZONE(ConfigurationProperties.REDUNDANCY_ZONE, String.class),
 	REMOTE_LOCATORS(ConfigurationProperties.REMOTE_LOCATORS, String.class),
 	REMOVE_UNRESPONSIVE_CLIENT(ConfigurationProperties.REMOVE_UNRESPONSIVE_CLIENT, Boolean.class, false),
+	REST_JSON_STORAGE_FORMAT(ConfigurationProperties.REST_JSON_STORAGE_FORMAT, String.class, "BSON"),
 	SECURITY_AUTH_TOKEN_ENABLED_COMPONENTS(ConfigurationProperties.SECURITY_AUTH_TOKEN_ENABLED_COMPONENTS, String[].class),
 	SECURITY_CLIENT_AUTH_INIT(ConfigurationProperties.SECURITY_CLIENT_AUTH_INIT, String.class),
 	SECURITY_LOG_FILE(ConfigurationProperties.SECURITY_LOG_FILE, File.class),
@@ -75,6 +76,7 @@ public enum GemFireProperties {
 	SECURITY_PEER_AUTH_INIT(ConfigurationProperties.SECURITY_PEER_AUTH_INIT, String.class),
 	SECURITY_PEER_VERIFY_MEMBER_TIMEOUT(ConfigurationProperties.SECURITY_PEER_VERIFY_MEMBER_TIMEOUT, Long.class, 1000L),
 	SECURITY_POST_PROCESSOR(ConfigurationProperties.SECURITY_POST_PROCESSOR, String.class),
+	@Deprecated
 	SECURITY_SHIRO_INIT(ConfigurationProperties.SECURITY_SHIRO_INIT, String.class),
 	SECURITY_UDP_DHALO(ConfigurationProperties.SECURITY_UDP_DHALGO, String.class),
 	SERIALIZABLE_OBJECT_FILTER(ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER, String.class, "!*"),
@@ -116,8 +118,6 @@ public enum GemFireProperties {
 	UDP_FRAGMENT_SIZE(ConfigurationProperties.UDP_FRAGMENT_SIZE, Integer.class, 60000),
 	UDP_RECV_BUFFER_SIZE(ConfigurationProperties.UDP_RECV_BUFFER_SIZE, Integer.class, 1048576),
 	UPD_SEND_BUFFER_SIZE(ConfigurationProperties.UDP_SEND_BUFFER_SIZE, Integer.class, 65535),
-
-	USE_UDP_MEMBERSHIP_MESSENGER(ConfigurationProperties.USE_UDP_MEMBERSHIP_MESSENGER, Boolean.class,false),
 
 	USE_CLUSTER_CONFIGURATION(ConfigurationProperties.USE_CLUSTER_CONFIGURATION, Boolean.class, true),
 	USER_COMMAND_PACKAGES(ConfigurationProperties.USER_COMMAND_PACKAGES, String.class),

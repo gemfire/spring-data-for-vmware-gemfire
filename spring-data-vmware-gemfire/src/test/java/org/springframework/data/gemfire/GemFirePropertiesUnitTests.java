@@ -4,7 +4,9 @@
  */
 package org.springframework.data.gemfire;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.geode.distributed.ConfigurationProperties;
+import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,9 +15,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.geode.distributed.ConfigurationProperties;
-import org.junit.Test;
-import org.springframework.util.ReflectionUtils;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link GemFireProperties}.
@@ -38,6 +38,7 @@ public class GemFirePropertiesUnitTests {
         "enable-management-rest-service",
         "http-service-bind-address",
         "http-service-port",
+        "http-services",
         "start-dev-rest-api",
         "jmx-manager",
         "jmx-manager-access-file",
@@ -48,7 +49,9 @@ public class GemFirePropertiesUnitTests {
         "jmx-manager-start",
         "jmx-manager-update-rate",
         "disable-jmx",
-        "ssl-jmx-alias"
+        "ssl-jmx-alias",
+        "rest-json-storage-format",
+				"ssl-grpc-alias"
     );
 
     private static final Set<String> deprecatedGemFireProperties = Set.of(
@@ -73,9 +76,10 @@ public class GemFirePropertiesUnitTests {
             "security-client-authenticator", // replaced by SecurityManager
             "security-client-dhalgo", // use SSL instead
 				    "security-peer-authenticator", // replaced by SecurityManager
+				    "conserve-sockets", // deprecated in GemFire 10.3
 				    "distributed-transactions", // being removed
             "statistic-sampling-enabled",
-            "use-udp-membership-messenger"
+            "security-shiro-init"
     );
 
     private Set<String> resolveActualGemFirePropertyNames() {
