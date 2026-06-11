@@ -2,6 +2,14 @@
  * Copyright 2022-2025 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/*
+ * @AI-Generated
+ * Generated in whole or in part by Cursor
+ * Description:
+ * 2026-06-12: Added withStartupAttempts(3) on the server container to survive the
+ *             HTTP keep-alive idle timeout.
+ */
 package org.springframework.data.gemfire.client;
 
 import java.io.IOException;
@@ -42,7 +50,8 @@ public class ClientCacheVariableLocatorsIntegrationTests {
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 3, 1);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 3, 1)
+				.withConfiguration("server-*", container -> container.withStartupAttempts(3));
 
 		gemFireCluster.acceptLicense().start();
 
