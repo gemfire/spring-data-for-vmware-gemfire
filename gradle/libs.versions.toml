@@ -1,30 +1,33 @@
 [versions]
 annotationApiVersion = "2.1.1"
 antlrVersion = "2.7.7"
-aspectJVersion = "1.9.25"
-assertJVersion = "3.26.3"
-awaitilityVersion = "4.2.2"
+aspectJVersion = "1.9.25.1"
+assertJVersion = "3.27.7"
+awaitilityVersion = "4.3.0"
 cacheApiVersion = "1.1.1"
-cdiApiVersion = "4.0.1"
-derbyVersion = "10.9.1.0"
+cdiApiVersion = "4.1.0"
+derbyVersion = "10.17.1.0"
 gemFireTestContainersVersion = "3.0.0"
 gemfireVersion = "10.2.4"
-googleCloudStorageVersion = "2.45.0"
+googleCloudStorageVersion = "2.69.0"
 interceptorApiVersion = "1.2.2"
-jUnitJupiterVersion = "5.11.4"
+jUnitJupiterVersion = "6.1.0"
+jUnitPlatformVersion = "6.1.0"
 jUnitVersion = "4.13.2"
-jacksonVersion = "2.18.7"
-log4JVersion = "2.24.3"
-logbackVersion = "1.5.32"
-lombokPluginVersion = "8.14"
+jacksonVersion = "2.22"
+log4JVersion = "2.26.0"
+logbackVersion = "1.5.34"
+lombokPluginVersion = "9.5.0"
 lombokVersion = "1.18.46"
-mockitoVersion = "5.14.2"
+mockitoVersion = "5.23.0"
 multithreadedTCVersion = "1.01"
-openWebBeansVersion = "2.0.28"
-snappyVersion = "0.4"
-springBootVersion = "4.0.6"
+openWebBeansVersion = "4.1.0"
+snappyVersion = "0.5"
+springBootVersion = "4.1.0"
+springDataVersion = "2026.0.0"
+springFrameworkVersion = "7.0.8"
 springShellVersion = "1.2.0.RELEASE"
-springShiroVersion = "2.0.6"
+springShiroVersion = "2.2.0"
 versionCatalogUpdateVersion = "1.1.0"
 versionsVersion = "0.54.0"
 
@@ -36,7 +39,8 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
 cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
 cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
-derby = { module = "org.apache.derby:derbyLocale_zh_TW", version.ref = "derbyVersion" }
+derby = { module = "org.apache.derby:derby", version.ref = "derbyVersion" }
+derby-tools = { module = "org.apache.derby:derbytools", version.ref = "derbyVersion" }
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
 gemfire-cq = { module = "com.vmware.gemfire:gemfire-cq", version.ref = "gemfireVersion" }
 gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
@@ -48,11 +52,12 @@ gemfire-wan = { module = "com.vmware.gemfire:gemfire-wan", version.ref = "gemfir
 google-cloud-storage = { module = "com.google.cloud:google-cloud-storage", version.ref = "googleCloudStorageVersion" }
 interceptor-api = { module = "javax.interceptor:javax.interceptor-api", version.ref = "interceptorApiVersion" }
 jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
+jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.22.0"
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-bom = { module = "org.junit:junit-bom", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jUnitJupiterVersion" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "jUnitPlatformVersion" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
 log4J = { module = "org.apache.logging.log4j:log4j-to-slf4j", version.ref = "log4JVersion" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
@@ -64,6 +69,8 @@ openwebbeans-se = { module = "org.apache.openwebbeans:openwebbeans-se", version.
 openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", version.ref = "openWebBeansVersion" }
 snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 

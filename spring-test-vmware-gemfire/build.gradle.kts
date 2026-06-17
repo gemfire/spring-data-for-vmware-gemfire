@@ -63,7 +63,6 @@ publishingDetails {
 }
 
 dependencies {
-    api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
 
     api(libs.multithreadedtc)
     api(libs.junit)

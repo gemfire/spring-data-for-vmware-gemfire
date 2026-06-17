@@ -98,8 +98,8 @@ publishingDetails {
 }
 
 dependencies {
-  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
-  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+  api(platform(libs.spring.framework.bom))
+  api(platform(libs.spring.data.bom))
 
   compileOnly(libs.bundles.gemfire)
 
@@ -126,9 +126,10 @@ dependencies {
   testImplementation(libs.log4J)
   testImplementation(libs.annotation.api)
   testImplementation(libs.derby)
-  testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta") })
+  testImplementation(libs.derby.tools)
+  testImplementation(libs.openwebbeans.se)
+  testImplementation(libs.openwebbeans.spi)
+  testImplementation(libs.openwebbeans.impl)
   testImplementation(libs.assertJ)
   testImplementation(libs.snappy)
   testImplementation(libs.spring.shell) {
