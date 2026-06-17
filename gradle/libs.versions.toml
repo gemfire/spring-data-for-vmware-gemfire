@@ -1,6 +1,6 @@
 [versions]
 annotationApiVersion = "2.1.1"
-antlrVersion = "2.7.7"
+antlrVersion = "2.7.6"
 aspectJVersion = "1.9.25.1"
 assertJVersion = "3.27.7"
 awaitilityVersion = "4.3.0"
