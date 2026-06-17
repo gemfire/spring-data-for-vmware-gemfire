@@ -4,8 +4,7 @@
  */
 package org.springframework.data.gemfire.function.execution.onservers;
 
-import java.util.List;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.execute.Function;
 import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
@@ -23,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.utility.MountableFile;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.util.List;
 
 /**
  * Integration Tests testing the return values from {@link Function} executions.
@@ -54,7 +53,8 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Client
 	@BeforeClass
 	public static void startGemFireServer() {
 
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 2);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 2)
+				.withConfiguration("server-*", container -> container.withStartupAttempts(3));
 
 		gemFireCluster.acceptLicense().start();
 		gemFireCluster.getContainers().values().forEach(container -> container

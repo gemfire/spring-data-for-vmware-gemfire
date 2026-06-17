@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class GemFirePropertiesUnitTests {
 
+    //These are properties set for the server which SDG does not care about being a client-only lib
     private static final Set<String> unsupportedGemFireProperties = Set.of(
         "memcached-bind-address",
         "memcached-port",
@@ -49,7 +50,8 @@ public class GemFirePropertiesUnitTests {
         "jmx-manager-start",
         "jmx-manager-update-rate",
         "disable-jmx",
-        "ssl-jmx-alias"
+        "ssl-jmx-alias",
+        "ssl-grpc-alias"
     );
 
     private static final Set<String> deprecatedGemFireProperties = Set.of(

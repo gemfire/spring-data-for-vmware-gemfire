@@ -98,15 +98,15 @@ publishingDetails {
 }
 
 dependencies {
-  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
-  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+  api(platform(libs.spring.framework.bom))
+  api(platform(libs.spring.data.bom))
 
   compileOnly(libs.bundles.gemfire)
 
   implementation(libs.cache.api)
   api("org.springframework:spring-context-support")
-  implementation("org.springframework:spring-tx")
-  implementation("org.springframework:spring-web")
+  api("org.springframework:spring-tx")
+  api("org.springframework:spring-web")
   api("org.springframework.data:spring-data-commons")
   implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
@@ -139,8 +139,9 @@ dependencies {
 
   testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.junit.vintage.engine)
+  testRuntimeOnly(platform(libs.junit.jupiter.bom))
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
   testRuntimeOnly(libs.junit.jupiter.engine)
-  testRuntimeOnly(libs.junit.platform.launcher)
 
   testImplementation(libs.junit)
   testImplementation(libs.assertJ)
