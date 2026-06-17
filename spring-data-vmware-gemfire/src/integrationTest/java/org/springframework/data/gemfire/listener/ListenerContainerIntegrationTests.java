@@ -4,13 +4,7 @@
  */
 package org.springframework.data.gemfire.listener;
 
-import java.io.IOException;
-import java.util.EventListener;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.TimeUnit;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.query.CqEvent;
@@ -24,7 +18,12 @@ import org.springframework.data.gemfire.listener.adapter.ContinuousQueryListener
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.util.SpringExtensions;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.io.IOException;
+import java.util.EventListener;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Costin Leau
@@ -52,6 +51,7 @@ public class ListenerContainerIntegrationTests extends IntegrationTestsSupport {
 	public static void startGeodeServer() throws IOException {
 
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
+				.withConfiguration("server-*", container -> container.withStartupAttempts(3))
 				.withGfsh(false, "create region --name=test-cq --type=REPLICATE");
 
 		gemFireCluster.acceptLicense().start();

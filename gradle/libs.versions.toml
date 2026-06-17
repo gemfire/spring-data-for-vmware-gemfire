@@ -26,7 +26,9 @@ mockitoVersion = "5.23.0"
 multithreadedTCVersion = "1.01"
 openWebBeansVersion = "4.1.0"
 snappyVersion = "0.5"
-springBootVersion = "4.0.6.1"
+springBootVersion = "4.1.0"
+springDataVersion = "2026.0.0"
+springFrameworkVersion = "7.0.8"
 springShellVersion = "1.2.0.RELEASE"
 springShiroVersion = "2.2.0"
 versionCatalogUpdateVersion = "1.1.0"
@@ -56,6 +58,7 @@ jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations"
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabindVersion" }
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
+junit-jupiter-bom = { module = "org.junit:junit-bom", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jUnitJupiterVersion" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "jUnitPlatformVersion" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
@@ -69,6 +72,8 @@ openwebbeans-se = { module = "org.apache.openwebbeans:openwebbeans-se", version.
 openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", version.ref = "openWebBeansVersion" }
 snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 

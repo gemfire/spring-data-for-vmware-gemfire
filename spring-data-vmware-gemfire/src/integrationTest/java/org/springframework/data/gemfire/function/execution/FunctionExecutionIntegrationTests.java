@@ -4,8 +4,7 @@
  */
 package org.springframework.data.gemfire.function.execution;
 
-import java.util.Optional;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -21,7 +20,7 @@ import org.springframework.data.gemfire.client.support.PoolManagerPoolResolver;
 import org.springframework.data.gemfire.util.SpringExtensions;
 import org.testcontainers.utility.MountableFile;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.util.Optional;
 
 /**
  * Integration Tests for SDG Function support.
@@ -48,6 +47,7 @@ public class FunctionExecutionIntegrationTests {
 	public static void setupGemFireServer() {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
 				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withConfiguration("server-*", container -> container.withStartupAttempts(3))
 				.withGfsh(false, "deploy --jar=/testJar.jar",
 						"create region --name=test-function --type=REPLICATE",
 						"put --region=/test-function --key=one --value=1",

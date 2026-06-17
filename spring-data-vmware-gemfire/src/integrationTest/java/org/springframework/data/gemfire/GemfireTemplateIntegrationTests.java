@@ -4,15 +4,7 @@
  */
 package org.springframework.data.gemfire;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -39,7 +31,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.utility.MountableFile;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * Integration Tests for {@link GemfireTemplate}.
@@ -68,7 +67,7 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 
 	@BeforeClass
 	public static void startCluster() {
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1).withConfiguration("server-*", container -> container.withStartupAttempts(3));;
 
 		gemFireCluster.acceptLicense().start();
 		gemFireCluster.getContainers().values().forEach(container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));

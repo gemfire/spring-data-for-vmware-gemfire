@@ -4,6 +4,7 @@
  */
 package org.springframework.data.gemfire;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +29,8 @@ import org.apache.geode.cache.RegionEvent;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.BeanNameAware;
@@ -55,6 +58,16 @@ import org.springframework.util.StringUtils;
 @ContextConfiguration
 @SuppressWarnings("unused")
 public class LookupRegionMutationIntegrationTests extends IntegrationTestsSupport {
+
+	@BeforeClass
+	public static void deleteDefaultDiskStoreDirectory() {
+		removeRecursiveDirectory(new File("DEFAULT"));
+	}
+
+	@AfterClass
+	public static void cleanUpDefaultDiskStoreDirectory() {
+		removeRecursiveDirectory(new File("DEFAULT"));
+	}
 
 	@Autowired
 	@Qualifier("Example")

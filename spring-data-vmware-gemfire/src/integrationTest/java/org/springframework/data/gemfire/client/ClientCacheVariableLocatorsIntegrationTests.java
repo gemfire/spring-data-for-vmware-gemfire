@@ -4,8 +4,7 @@
  */
 package org.springframework.data.gemfire.client;
 
-import java.io.IOException;
-
+import com.vmware.gemfire.testcontainers.GemFireCluster;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolManager;
@@ -20,7 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.vmware.gemfire.testcontainers.GemFireCluster;
+import java.io.IOException;
 
 /**
  * Integration Tests testing the use of variable {@literal locators} attribute on &lt;gfe:pool/&lt; in SDG XML Namespace
@@ -42,7 +41,8 @@ public class ClientCacheVariableLocatorsIntegrationTests {
 	@BeforeClass
 	public static void startGeodeServer() throws IOException {
 
-		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 3, 1);
+		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 3, 1)
+				.withConfiguration("server-*", container -> container.withStartupAttempts(3));
 
 		gemFireCluster.acceptLicense().start();
 
