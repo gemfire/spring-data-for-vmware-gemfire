@@ -8,31 +8,38 @@ plugins {
 }
 
 repositories {
-  val repositoryConfigFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
-    providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+  addGemFireRepositories(
+    providers,
+    addMavenCentral = providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()
   )
-
-  val jsonString = File(repositoryConfigFilePath).readText(Charsets.UTF_8)
-  val repositories = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
-  (repositories["repositories"] as List<*>).filterNotNull().map { entry -> entry as Map<*, *> }
-    .forEach { entry ->
-      entry.apply {
-        maven {
-          url = uri(entry["url"]!! as String)
-          if (!entry["username"]?.toString().isNullOrBlank()) {
-            credentials {
-              username = entry["username"] as String
-              password = entry["password"] as String
-            }
-          }
-        }
-      }
-    }
-  if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
-    mavenCentral()
-  }
 }
 
 dependencies {
   implementation(libs.kotlin)
+}
+
+fun RepositoryHandler.addGemFireRepositories(
+  providers: ProviderFactory,
+  addGradlePluginPortal: Boolean = false,
+  addMavenCentral: Boolean = false
+) {
+  val configFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
+    providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+  )
+  val jsonString = File(configFilePath).readText(Charsets.UTF_8)
+  val repos = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
+  (repos["repositories"] as List<*>).filterNotNull().map { it as Map<*, *> }
+    .forEach { entry ->
+      maven {
+        url = uri(entry["url"]!! as String)
+        if (!entry["username"]?.toString().isNullOrBlank()) {
+          credentials {
+            username = entry["username"] as String
+            password = entry["password"] as String
+          }
+        }
+      }
+    }
+  if (addGradlePluginPortal) gradlePluginPortal()
+  if (addMavenCentral) mavenCentral()
 }

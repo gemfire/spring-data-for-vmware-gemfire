@@ -23,6 +23,8 @@ multithreadedTCVersion = "1.01"
 openWebBeansVersion = "2.0.28"
 snappyVersion = "0.4"
 springBootVersion = "3.5.16"
+springDataBomVersion = "2025.0.13"
+springFrameworkVersion = "6.2.19"
 springShellVersion = "1.2.0.RELEASE"
 springShiroVersion = "2.0.6"
 versionCatalogUpdateVersion = "1.1.0"
@@ -36,7 +38,7 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
 cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
 cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
-derby = { module = "org.apache.derby:derbyLocale_zh_TW", version.ref = "derbyVersion" }
+derby = { module = "org.apache.derby:derby", version.ref = "derbyVersion" }
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
 gemfire-cq = { module = "com.vmware.gemfire:gemfire-cq", version.ref = "gemfireVersion" }
 gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
@@ -63,6 +65,8 @@ openwebbeans-se = { module = "org.apache.openwebbeans:openwebbeans-se", version.
 openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", version.ref = "openWebBeansVersion" }
 snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataBomVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 
