@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 Broadcom. All rights reserved.
+ * Copyright 2024-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -34,8 +34,9 @@ buildscript {
 
 plugins {
     id("java-library")
+    id("idea")
+    id("eclipse")
     id("gemfire-repo-artifact-publishing")
-    id("commercial-repositories")
     id("gemfire-artifactory")
     alias(libs.plugins.lombok)
     alias(libs.plugins.dependency.management)
@@ -53,15 +54,18 @@ tasks.named<Javadoc>("javadoc") {
     isFailOnError = false
 }
 
+val baseGemFireVersion: String by project
+val baseSpringVersion: String by project
+
 publishingDetails {
-    artifactName.set("spring-data-2.7-gemfire-test-framework-${getGemFireBaseVersion()}")
-    longName.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 2.7")
-    description.set("Spring Test Framework for VMware GemFire ${getGemFireBaseVersion()} and Spring Data 2.7")
+    artifactName.set("spring-data-${baseSpringVersion}-gemfire-test-framework-${baseGemFireVersion}")
+    longName.set("Spring Test Framework for VMware GemFire ${baseGemFireVersion} and Spring Data ${baseSpringVersion}")
+    description.set("Spring Test Framework for VMware GemFire ${baseGemFireVersion} and Spring Data ${baseSpringVersion}")
     test.set(true)
 }
 
 dependencies {
-    api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+    api(platform(libs.spring.framework.bom))
 
     api(libs.multithreadedtc)
     api(libs.junit)
@@ -101,13 +105,4 @@ repositories {
         }
     }
     maven { url = uri("https://repo.spring.io/milestone") }
-}
-
-fun getGemFireBaseVersion(): String {
-    val gemfireVersion: String by project
-    val split = gemfireVersion.split(".")
-    if (split.size < 2) {
-        throw RuntimeException("gemfireVersion is malformed")
-    }
-    return "${split[0]}.${split[1]}"
 }

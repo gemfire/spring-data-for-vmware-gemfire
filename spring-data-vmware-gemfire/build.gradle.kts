@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.auth.oauth2.GoogleCredentials
@@ -43,8 +43,9 @@ buildscript {
 
 plugins {
   id("java-library")
+  id("idea")
+  id("eclipse")
   id("gemfire-repo-artifact-publishing")
-  id("commercial-repositories")
   id("gemfire-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
@@ -66,16 +67,19 @@ tasks.withType<JavaCompile>().configureEach {
   options.compilerArgs.add("-parameters")
 }
 
+val baseGemFireVersion: String by project
+val baseSpringVersion: String by project
+
 publishingDetails {
-  artifactName.set("spring-data-2.7-gemfire-${getGemFireBaseVersion()}")
+  artifactName.set("spring-data-${baseSpringVersion}-gemfire-${baseGemFireVersion}")
   longName.set("Spring Data VMware GemFire")
   description.set("Spring Data For VMware GemFire")
   test.set(false)
 }
 
 dependencies {
-  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
-  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+  api(platform(libs.spring.data.bom))
+  api(platform(libs.spring.framework.bom))
 
   compileOnly(libs.bundles.gemfire)
 
@@ -150,15 +154,6 @@ repositories {
     }
   }
   maven { url = uri("https://repo.spring.io/milestone") }
-}
-
-fun getGemFireBaseVersion(): String {
-  val gemfireVersion: String by project
-  val split = gemfireVersion.split(".")
-  if (split.size < 2) {
-    throw RuntimeException("gemfireVersion is malformed")
-  }
-  return "${split[0]}.${split[1]}"
 }
 
 tasks.register("copyJavadocsToBucket") {

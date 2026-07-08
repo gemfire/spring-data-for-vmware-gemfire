@@ -1,10 +1,7 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2024-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
-import java.io.FileInputStream
-import java.util.Properties
 
 pluginManagement {
   includeBuild("build-tools/publishing")
@@ -38,29 +35,61 @@ pluginManagement {
 }
 
 include("spring-data-vmware-gemfire")
+include("spring-test-vmware-gemfire")
 
 project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
-
 rootProject.name = "spring-data-for-vmware-gemfire"
 
 dependencyResolutionManagement {
+  repositories {
+    if (providers.gradleProperty("useMavenLocal").getOrElse("false").toBoolean()) {
+      mavenLocal()
+    }
+    addGemFireRepositories(
+      providers,
+      addMavenCentral = providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()
+    )
+  }
   versionCatalogs {
     create("libs") {
-      val properties = Properties()
-      properties.load(FileInputStream("gradle.properties"))
-      versionOverrideFromProperties(this, properties)
+      overrideProperty("gemfireVersion")
     }
   }
 }
 
-private fun versionOverrideFromProperty(versionCatalogBuilder: VersionCatalogBuilder, propertyName: String, propertiesFile: Properties): String {
-  val propertyValue = providers.systemProperty(propertyName).getOrElse(propertiesFile.getProperty(propertyName))
-  return versionCatalogBuilder.version(propertyName, propertyValue)
+fun RepositoryHandler.addGemFireRepositories(
+  providers: org.gradle.api.provider.ProviderFactory,
+  addGradlePluginPortal: Boolean = false,
+  addMavenCentral: Boolean = false
+) {
+  val configFilePath = providers.gradleProperty("spring.gemfire.repositories").getOrElse(
+    providers.environmentVariable("HOME").get() + "/.gradle/gradleRepositories.json"
+  )
+  val jsonString = java.io.File(configFilePath).readText(Charsets.UTF_8)
+  val repos = groovy.json.JsonSlurper().parseText(jsonString) as Map<*, *>
+  (repos["repositories"] as List<*>).filterNotNull().map { it as Map<*, *> }
+    .forEach { entry ->
+      maven {
+        url = uri(entry["url"]!! as String)
+        if (!entry["username"]?.toString().isNullOrBlank()) {
+          credentials {
+            username = entry["username"] as String
+            password = entry["password"] as String
+          }
+        }
+      }
+    }
+  if (addGradlePluginPortal) gradlePluginPortal()
+  if (addMavenCentral) mavenCentral()
 }
 
-private fun versionOverrideFromProperties(versionCatalogBuilder: VersionCatalogBuilder, properties: Properties) {
-  versionOverrideFromProperty(versionCatalogBuilder, "gemfireVersion", properties)
+fun VersionCatalogBuilder.overrideProperty(property: String) {
+  val value = System.getProperty(property)
+    ?: (settings as? ExtensionAware)?.extensions?.extraProperties?.let {
+      if (it.has(property)) it.get(property) as? String else null
+    }
+  if (value != null) {
+    logger.debug("Overriding $property: $value")
+    version(property, value)
+  }
 }
-
-include("spring-data-vmware-gemfire")
-include("spring-test-vmware-gemfire")
