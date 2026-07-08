@@ -1,7 +1,7 @@
 [versions]
 annotationApiVersion = "2.1.1"
 antlrVersion = "2.7.7"
-aspectJVersion = "1.9.20.1"
+aspectJVersion = "1.9.25.1"
 assertJVersion = "3.24.2"
 awaitilityVersion = "4.2.2"
 cacheApiVersion = "1.1.1"
@@ -23,6 +23,7 @@ multithreadedTCVersion = "1.01"
 openWebBeansVersion = "2.0.28"
 snappyVersion = "0.4"
 springBootVersion = "3.5.16"
+springDataBomVersion = "2025.0.13"
 springDataVersion = "3.5.13"
 springDependencyManagementVersion = "1.1.7"
 springFrameworkVersion = "6.2.19"
@@ -39,7 +40,7 @@ assertJ = { module = "org.assertj:assertj-core", version.ref = "assertJVersion" 
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitilityVersion" }
 cache-api = { module = "javax.cache:cache-api", version.ref = "cacheApiVersion" }
 cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "cdiApiVersion" }
-derby = { module = "org.apache.derby:derbyLocale_zh_TW", version.ref = "derbyVersion" }
+derby = { module = "org.apache.derby:derby", version.ref = "derbyVersion" }
 gemfire-core = { module = "com.vmware.gemfire:gemfire-core", version.ref = "gemfireVersion" }
 gemfire-cq = { module = "com.vmware.gemfire:gemfire-cq", version.ref = "gemfireVersion" }
 gemfire-deployment-chained-classloader = { module = "com.vmware.gemfire:gemfire-deployment-chained-classloader", version.ref = "gemfireVersion" }
@@ -67,7 +68,9 @@ openwebbeans-spi = { module = "org.apache.openwebbeans:openwebbeans-spi", versio
 snappy = { module = "org.iq80.snappy:snappy", version.ref = "snappyVersion" }
 spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBootVersion" }
 spring-context-support = { module = "org.springframework:spring-context-support", version.ref = "springFrameworkVersion" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "springDataBomVersion" }
 spring-data-commons = { module = "org.springframework.data:spring-data-commons", version.ref = "springDataVersion" }
+spring-framework-bom = { module = "org.springframework:spring-framework-bom", version.ref = "springFrameworkVersion" }
 spring-shell = { module = "org.springframework.shell:spring-shell", version.ref = "springShellVersion" }
 spring-shiro = { module = "org.apache.shiro:shiro-spring", version.ref = "springShiroVersion" }
 spring-test = { module = "org.springframework:spring-test", version.ref = "springFrameworkVersion" }

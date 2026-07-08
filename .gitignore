@@ -110,6 +110,7 @@ generated-pipeline.yml
 #build/*
 **/gradle/*
 **/.gradle/*
+.gradle/*
 
 
 **/*test-read-only/*
@@ -119,3 +120,5 @@ generated-pipeline.yml
 *.krf
 *.crf
 *.dat
+/build-tools/convention-plugins/.gradle
+*.salive
