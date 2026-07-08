@@ -52,7 +52,7 @@ gemfire-wan = { module = "com.vmware.gemfire:gemfire-wan", version.ref = "gemfir
 google-cloud-storage = { module = "com.google.cloud:google-cloud-storage", version.ref = "googleCloudStorageVersion" }
 interceptor-api = { module = "javax.interceptor:javax.interceptor-api", version.ref = "interceptorApiVersion" }
 jackson-annotation = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
-jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.22.0"
+jackson-databind = "com.fasterxml.jackson.core:jackson-databind:2.22.1"
 junit = { module = "junit:junit", version.ref = "jUnitVersion" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jUnitJupiterVersion" }
 junit-jupiter-bom = { module = "org.junit:junit-bom", version.ref = "jUnitJupiterVersion" }

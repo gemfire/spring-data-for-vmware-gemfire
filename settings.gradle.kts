@@ -1,5 +1,5 @@
 /*
- * Copyright 2024-2025 Broadcom. All rights reserved.
+ * Copyright 2024-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -42,6 +42,9 @@ rootProject.name = "spring-data-for-vmware-gemfire"
 
 dependencyResolutionManagement {
   repositories {
+    if (providers.gradleProperty("useMavenLocal").getOrElse("false").toBoolean()) {
+      mavenLocal()
+    }
     addGemFireRepositories(
       providers,
       addMavenCentral = providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()
@@ -49,22 +52,12 @@ dependencyResolutionManagement {
   }
   versionCatalogs {
     create("libs") {
-      // Override gemfireVersion only when explicitly passed as a system property (-D)
-      // or Gradle property (-P). The TOML is the source of truth for normal builds.
-      val gemfireVersion = System.getProperty("gemfireVersion")
-        ?: (settings as? ExtensionAware)?.extensions?.extraProperties?.let {
-          if (it.has("gemfireVersion")) it.get("gemfireVersion") as? String else null
-        }
-
-      if (gemfireVersion != null) {
-        logger.debug("Overriding gemfireVersion: $gemfireVersion")
-        version("gemfireVersion", gemfireVersion)
-      }
+      overrideProperty("gemfireVersion")
     }
   }
 }
 
-fun org.gradle.api.artifacts.dsl.RepositoryHandler.addGemFireRepositories(
+fun RepositoryHandler.addGemFireRepositories(
   providers: org.gradle.api.provider.ProviderFactory,
   addGradlePluginPortal: Boolean = false,
   addMavenCentral: Boolean = false
@@ -88,4 +81,15 @@ fun org.gradle.api.artifacts.dsl.RepositoryHandler.addGemFireRepositories(
     }
   if (addGradlePluginPortal) gradlePluginPortal()
   if (addMavenCentral) mavenCentral()
+}
+
+fun VersionCatalogBuilder.overrideProperty(property: String) {
+  val value = System.getProperty(property)
+    ?: (settings as? ExtensionAware)?.extensions?.extraProperties?.let {
+      if (it.has(property)) it.get(property) as? String else null
+    }
+  if (value != null) {
+    logger.debug("Overriding $property: $value")
+    version(property, value)
+  }
 }

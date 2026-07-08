@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.auth.oauth2.GoogleCredentials
@@ -46,8 +46,9 @@ buildscript {
 
 plugins {
   id("java-library")
+  id("idea")
+  id("eclipse")
   id("gemfire-repo-artifact-publishing")
-  id("commercial-repositories")
   id("gemfire-artifactory")
   alias(libs.plugins.lombok)
 }
