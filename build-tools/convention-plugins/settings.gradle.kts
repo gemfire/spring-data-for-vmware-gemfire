@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Broadcom. All rights reserved.
+ * Copyright 2024-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -25,6 +25,7 @@ pluginManagement {
           }
         }
       }
+
     if (providers.gradleProperty("useMavenCentral").getOrElse("false").toBoolean()) {
       gradlePluginPortal()
     }

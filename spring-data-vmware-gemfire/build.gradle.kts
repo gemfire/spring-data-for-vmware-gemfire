@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 import com.google.auth.oauth2.GoogleCredentials
@@ -43,8 +43,9 @@ buildscript {
 
 plugins {
   id("java-library")
+  id("idea")
+  id("eclipse")
   id("gemfire-repo-artifact-publishing")
-  id("commercial-repositories")
   id("gemfire-artifactory")
   alias(libs.plugins.lombok)
   alias(libs.plugins.dependency.management)
@@ -82,8 +83,8 @@ publishingDetails {
 }
 
 dependencies {
-  api(platform("org.springframework.data:spring-data-bom:${project.ext.get("spring-data-bom.version")}"))
-  api(platform("org.springframework:spring-framework-bom:${project.ext.get("spring-framework.version")}"))
+  api(platform(libs.spring.data.bom))
+  api(platform(libs.spring.framework.bom))
 
   compileOnly(libs.bundles.gemfire)
 
