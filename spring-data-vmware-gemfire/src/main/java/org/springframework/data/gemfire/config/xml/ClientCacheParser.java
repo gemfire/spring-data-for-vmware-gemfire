@@ -70,9 +70,7 @@ class ClientCacheParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "close");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "copy-on-read");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "critical-heap-percentage");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "critical-off-heap-percentage");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "eviction-heap-percentage");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "eviction-off-heap-percentage");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "lock-lease");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "lock-timeout");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "message-sync-interval");
