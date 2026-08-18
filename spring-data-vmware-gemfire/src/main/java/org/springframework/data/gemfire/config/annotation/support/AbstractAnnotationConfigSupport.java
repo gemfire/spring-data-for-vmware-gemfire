@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation.support;
@@ -956,7 +956,7 @@ public abstract class AbstractAnnotationConfigSupport
 			.map(BeanDefinition::getBeanClassName)
 			.filter(StringUtils::hasText);
 
-		boolean beanClassNameNotPresent = beanClassName.isEmpty();
+		boolean beanClassNameNotPresent = !beanClassName.isPresent();
 
 		if (beanClassNameNotPresent) {
 			beanClassName = optionalBeanDefinition

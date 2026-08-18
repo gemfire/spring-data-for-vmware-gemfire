@@ -1,9 +1,10 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,6 +29,8 @@ import org.apache.geode.cache.RegionEvent;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.BeanNameAware;
@@ -55,6 +58,26 @@ import org.springframework.util.StringUtils;
 @ContextConfiguration
 @SuppressWarnings("unused")
 public class LookupRegionMutationIntegrationTests extends IntegrationTestsSupport {
+
+	private static final String DISK_STORE_DIR_PROPERTY = "disk-store.dir";
+
+	private static File diskStoreDirectory;
+
+	@BeforeClass
+	public static void createDiskStoreDirectory() {
+
+		diskStoreDirectory = createDirectory(asDirectoryName(LookupRegionMutationIntegrationTests.class));
+
+		System.setProperty(DISK_STORE_DIR_PROPERTY, diskStoreDirectory.getAbsolutePath());
+	}
+
+	@AfterClass
+	public static void deleteDiskStoreDirectory() {
+
+		System.clearProperty(DISK_STORE_DIR_PROPERTY);
+
+		removeRecursiveDirectory(diskStoreDirectory);
+	}
 
 	@Autowired
 	@Qualifier("Example")

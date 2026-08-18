@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -15,7 +15,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.annotation.Region;
 import org.springframework.data.mapping.IdentifierAccessor;
 import org.springframework.data.mapping.MappingException;
-import org.springframework.data.util.TypeInformation;
+import org.springframework.data.util.ClassTypeInformation;
 
 /**
  * Unit Tests for {@link GemfirePersistentEntity}.
@@ -45,7 +45,7 @@ public class GemfirePersistentEntityUnitTests {
 	}
 
 	protected <T> GemfirePersistentEntity<T> newPersistentEntity(Class<T> type) {
-		return new GemfirePersistentEntity<>(TypeInformation.of(type));
+		return new GemfirePersistentEntity<>(ClassTypeInformation.from(type));
 	}
 
 	@Test

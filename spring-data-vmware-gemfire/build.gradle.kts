@@ -6,7 +6,6 @@ import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobId
 import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.StorageOptions
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.io.FileInputStream
@@ -76,7 +75,7 @@ configurations {
 java {
   withJavadocJar()
   withSourcesJar()
-  toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
+  toolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
 }
 
 tasks.named<Javadoc>("javadoc") {
@@ -119,6 +118,8 @@ dependencies {
 
   testImplementation(libs.bundles.gemfire)
 
+  testImplementation(libs.geronimo.jcdi)
+  testImplementation(libs.el.api)
   testImplementation(libs.cdi.api) {
     exclude("javax.annotation", "jsr250-api")
   }
@@ -127,9 +128,7 @@ dependencies {
   testImplementation(libs.log4J)
   testImplementation(libs.annotation.api)
   testImplementation(libs.derby)
-  testImplementation(variantOf(libs.openwebbeans.se) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.spi) { classifier("jakarta") })
-  testImplementation(variantOf(libs.openwebbeans.impl) { classifier("jakarta") })
+  testImplementation(libs.openwebbeans.se)
   testImplementation(libs.assertJ)
   testImplementation(libs.snappy)
   testImplementation(libs.spring.shell) {
@@ -175,27 +174,7 @@ gradle.taskGraph.whenReady {
     with(testTask) {
       jvmArgs(
         "-XX:+HeapDumpOnOutOfMemoryError", "-ea",
-        // Product: BufferPool uses DirectBuffer
-        "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
-        // Tests: CertificateBuilder uses numerous types declared here
-        "--add-exports=java.base/sun.security.x509=ALL-UNNAMED",
-        // Product: ManagementAgent"s custom MBean servers extend types declared here
-        "--add-exports=java.management/com.sun.jmx.remote.security=ALL-UNNAMED",
-        // Product: UnsafeThreadLocal accesses fields and methods of ThreadLocal
-        "--add-opens=java.base/java.lang=ALL-UNNAMED",
-        // Product: AddressableMemoryManager accesses DirectByteBuffer constructor
-        "--add-opens=java.base/java.nio=ALL-UNNAMED",
-        // Tests: EnvironmentVariables rule accesses Collections$UnmodifiableMap.m
-        "--add-opens=java.base/java.util=ALL-UNNAMED",
-        // Tests: SecurityTestUtils resets SSL-related fields
-        "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
-        "-XX:+EnableDynamicAgentLoading",
-        "--add-opens=java.base/javax.net.ssl=ALL-UNNAMED"
       )
-
-      if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
-        jvmArgs("-XX:+UseZGC")
-      }
 
       val springTestGemfireDockerImage: String by project
 

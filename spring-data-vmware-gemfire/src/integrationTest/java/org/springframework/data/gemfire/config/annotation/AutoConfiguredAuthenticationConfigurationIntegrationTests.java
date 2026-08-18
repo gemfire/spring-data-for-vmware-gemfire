@@ -1,11 +1,10 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -55,7 +54,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 		gemFireCluster.acceptLicense().start();
 
 		gemFireCluster.gfshBuilder()
-				.withConnect(List.of(String.format("--username=%s --password=%s", TestSecurityManager.SECURITY_USERNAME, TestSecurityManager.SECURITY_PASSWORD)))
+				.withConnect(Collections.singletonList(String.format("--username=%s --password=%s", TestSecurityManager.SECURITY_USERNAME, TestSecurityManager.SECURITY_PASSWORD)))
 				.run("create region --name=Echo --type=LOCAL",
 						"put --region=/Echo --key=Hello --value=Hello",
 						"put --region=/Echo --key=TEST --value=TEST",

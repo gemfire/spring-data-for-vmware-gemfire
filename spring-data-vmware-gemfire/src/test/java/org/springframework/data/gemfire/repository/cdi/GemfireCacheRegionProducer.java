@@ -1,12 +1,12 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire.repository.cdi;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -20,8 +20,8 @@ import org.springframework.util.Assert;
  * for creating the GemFire Cache "People" Region used to store {@link Person} instances.
  *
  * @author John Blum
- * @see jakarta.enterprise.context.ApplicationScoped
- * @see jakarta.enterprise.inject.Produces
+ * @see javax.enterprise.context.ApplicationScoped
+ * @see javax.enterprise.inject.Produces
  * @see org.apache.geode.cache.CacheFactory
  * @see org.apache.geode.cache.Region
  * @see org.apache.geode.cache.RegionFactory

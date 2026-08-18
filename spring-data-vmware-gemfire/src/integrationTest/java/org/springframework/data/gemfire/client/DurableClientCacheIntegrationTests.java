@@ -1,11 +1,12 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -225,7 +226,7 @@ public class DurableClientCacheIntegrationTests extends IntegrationTestsSupport 
 		waitForRegionEntryEvents();
 
 		Awaitility.await().timeout(4, TimeUnit.SECONDS)
-				.until(() -> regionCacheListenerEventValues.containsAll(List.of(4, 5)));
+				.until(() -> regionCacheListenerEventValues.containsAll(Arrays.asList(4, 5)));
 	}
 
 	public static class RegionDataLoadingBeanPostProcessor<K, V> implements BeanPostProcessor {

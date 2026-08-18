@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -247,8 +247,8 @@ public class PdxConfiguration extends AbstractAnnotationConfigSupport implements
 			.map(beanName -> beanFactory.getBean(beanName, PdxSerializer.class))
 			.orElseGet(this::newPdxSerializer);
 
-		if (serializer instanceof MappingPdxSerializer mappingSerializer) {
-			mappingSerializer.setIncludeTypeFilters(buildIncludeTypeFilters());
+		if (serializer instanceof MappingPdxSerializer) {
+			((MappingPdxSerializer) serializer).setIncludeTypeFilters(buildIncludeTypeFilters());
 		}
 
 		return serializer;

@@ -9,6 +9,12 @@
 	   xsi:schemaLocation="http://geode.apache.org/schema/cache https://geode.apache.org/schema/cache/cache-1.0.xsd"
 	   version="1.0">
 
+	<disk-store name="NativeReplicateRegionDiskStore">
+		<disk-dirs>
+			<disk-dir>${disk-store.dir}</disk-dir>
+		</disk-dirs>
+	</disk-store>
+
 	<region name="NativeLocalRegion" refid="LOCAL">
 		<region-attributes cloning-enabled="false"
 						   concurrency-checks-enabled="false"
@@ -22,6 +28,7 @@
 
 	<region name="NativeReplicateRegion">
 		<region-attributes data-policy="persistent-replicate"
+						   disk-store-name="NativeReplicateRegionDiskStore"
 						   cloning-enabled="false"
 						   concurrency-checks-enabled="true"
 						   concurrency-level="20"

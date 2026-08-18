@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.query;
@@ -28,7 +28,7 @@ import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.util.TypeInformation;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -104,8 +104,7 @@ public class GemfireQueryMethodUnitTests {
 	public void setup() {
 		doReturn(Person.class).when(this.repositoryMetadata).getDomainType();
 		doReturn(Person.class).when(this.repositoryMetadata).getReturnedDomainClass(any(Method.class));
-		doReturn(TypeInformation.of(Person.class)).when(this.repositoryMetadata).getDomainTypeInformation();
-		doReturn(TypeInformation.of(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
+		doReturn(ClassTypeInformation.from(Object.class)).when(this.repositoryMetadata).getReturnType(any(Method.class));
 	}
 
 	@Test

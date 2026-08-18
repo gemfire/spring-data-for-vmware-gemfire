@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,7 +7,7 @@ package org.springframework.data.gemfire.repository.cdi;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.util.Assert;
@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
  * The RepositoryClient class is a user/consumer of the {@link SamplePersonRepository} bean in a CDI context.
  *
  * @author John Blum
- * @see jakarta.inject.Inject
+ * @see javax.inject.Inject
  * @see org.springframework.data.gemfire.repository.cdi.SamplePersonRepository
  * @since 1.8.0
  */

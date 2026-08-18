@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire;
@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,7 +30,7 @@ import org.springframework.util.ReflectionUtils;
  */
 public class GemFirePropertiesUnitTests {
 
-    private static final Set<String> unsupportedGemFireProperties = Set.of(
+    private static final Set<String> unsupportedGemFireProperties = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
         "memcached-bind-address",
         "memcached-port",
         "memcached-protocol",
@@ -49,9 +51,9 @@ public class GemFirePropertiesUnitTests {
         "jmx-manager-update-rate",
         "disable-jmx",
         "ssl-jmx-alias"
-    );
+    )));
 
-    private static final Set<String> deprecatedGemFireProperties = Set.of(
+    private static final Set<String> deprecatedGemFireProperties = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "disable-tcp",
             "security-udp-dhalgo",
             "udp-fragment-size",
@@ -76,7 +78,7 @@ public class GemFirePropertiesUnitTests {
 				    "distributed-transactions", // being removed
             "statistic-sampling-enabled",
             "use-udp-membership-messenger"
-    );
+    )));
 
     private Set<String> resolveActualGemFirePropertyNames() {
 

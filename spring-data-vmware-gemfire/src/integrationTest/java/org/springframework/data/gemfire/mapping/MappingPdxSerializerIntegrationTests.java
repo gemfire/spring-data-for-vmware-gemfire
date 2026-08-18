@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.mapping;
@@ -45,7 +45,7 @@ import org.springframework.data.gemfire.repository.sample.Address;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.data.mapping.model.EntityInstantiator;
-import org.springframework.data.util.TypeInformation;
+import org.springframework.data.util.ClassTypeInformation;
 
 import com.vmware.gemfire.testcontainers.GemFireCluster;
 
@@ -160,7 +160,7 @@ public class MappingPdxSerializerIntegrationTests {
 
 		EntityInstantiator mockEntityInstantiator = Mockito.mock(EntityInstantiator.class);
 
-		PersistentEntity entity = this.mappingContext.createPersistentEntity(TypeInformation.of(Person.class));
+		PersistentEntity entity = this.mappingContext.createPersistentEntity(ClassTypeInformation.from(Person.class));
 
 		Assertions.assertThat(cache.getPdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
 
@@ -184,7 +184,7 @@ public class MappingPdxSerializerIntegrationTests {
 
 		EntityInstantiator mockEntityInstantiator = Mockito.mock(EntityInstantiator.class);
 
-		PersistentEntity entity = this.mappingContext.createPersistentEntity(TypeInformation.of(Address.class));
+		PersistentEntity entity = this.mappingContext.createPersistentEntity(ClassTypeInformation.from(Address.class));
 
 		Assertions.assertThat(cache.getPdxSerializer()).isInstanceOf(MappingPdxSerializer.class);
 

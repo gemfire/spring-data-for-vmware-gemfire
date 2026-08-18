@@ -1,9 +1,11 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.springframework.data.gemfire;
+
+import java.io.File;
 
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
@@ -11,6 +13,8 @@ import org.apache.geode.cache.RegionExistsException;
 import org.apache.geode.cache.Scope;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -30,6 +34,26 @@ import org.springframework.data.gemfire.tests.integration.IntegrationTestsSuppor
  * @link https://jira.spring.io/browse/SGF-204
  */
 public class RegionLookupIntegrationTests extends IntegrationTestsSupport {
+
+	private static final String DISK_STORE_DIR_PROPERTY = "disk-store.dir";
+
+	private static File diskStoreDirectory;
+
+	@BeforeClass
+	public static void createDiskStoreDirectory() {
+
+		diskStoreDirectory = createDirectory(asDirectoryName(RegionLookupIntegrationTests.class));
+
+		System.setProperty(DISK_STORE_DIR_PROPERTY, diskStoreDirectory.getAbsolutePath());
+	}
+
+	@AfterClass
+	public static void deleteDiskStoreDirectory() {
+
+		System.clearProperty(DISK_STORE_DIR_PROPERTY);
+
+		removeRecursiveDirectory(diskStoreDirectory);
+	}
 
 	private void assertNoRegionLookup(String configLocation) {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -78,8 +78,8 @@ public class AutoRegionLookupBeanPostProcessor implements BeanPostProcessor, Bea
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 
-		if (bean instanceof ClientCache clientCacheBean) {
-			registerCacheRegionsAsBeans(clientCacheBean);
+		if (bean instanceof ClientCache) {
+			registerCacheRegionsAsBeans((ClientCache) bean);
 		}
 
 		return bean;

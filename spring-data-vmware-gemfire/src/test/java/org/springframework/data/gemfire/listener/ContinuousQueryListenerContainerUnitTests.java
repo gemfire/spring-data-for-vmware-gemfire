@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.listener;
@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -679,7 +680,7 @@ public class ContinuousQueryListenerContainerUnitTests {
 
 		ContinuousQueryDefinition definition =
 				new ContinuousQueryDefinition("SELECT * FROM /Utilization",
-						mockListener, false, Set.of(CQEvent.DESTROY, CQEvent.UPDATE));
+						mockListener, false, EnumSet.of(CQEvent.DESTROY, CQEvent.UPDATE));
 
 		cqListenerContainer.setQueryService(mockQueryService);
 

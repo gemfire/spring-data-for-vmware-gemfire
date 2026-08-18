@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -79,9 +79,11 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 
 		this.evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
 
-		if (beanFactory instanceof ConfigurableBeanFactory configurableBeanFactory) {
+		if (beanFactory instanceof ConfigurableBeanFactory) {
 
-      this.evaluationContext.setTypeLocator(new StandardTypeLocator(configurableBeanFactory.getBeanClassLoader()));
+			ConfigurableBeanFactory configurableBeanFactory = (ConfigurableBeanFactory) beanFactory;
+
+			this.evaluationContext.setTypeLocator(new StandardTypeLocator(configurableBeanFactory.getBeanClassLoader()));
 
 			Optional.ofNullable(configurableBeanFactory.getConversionService())
 				.ifPresent(conversionService ->
@@ -114,7 +116,7 @@ public class AutoRegionLookupConfiguration extends AbstractAnnotationConfigSuppo
 	@SuppressWarnings("unused")
 	private boolean isEnabled(String enabled) {
 
-		enabled = enabled.strip();
+		enabled = enabled.trim();
 
 		if (!Boolean.parseBoolean(enabled)) {
 			try {

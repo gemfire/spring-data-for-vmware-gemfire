@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2024 Broadcom. All rights reserved.
+ * Copyright 2017-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.tests.mock;
@@ -9,7 +9,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
 
 import org.junit.Before;
 import org.junit.Test;

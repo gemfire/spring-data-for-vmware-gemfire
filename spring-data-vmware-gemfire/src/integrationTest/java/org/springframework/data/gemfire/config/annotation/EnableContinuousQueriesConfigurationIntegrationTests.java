@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.config.annotation;
@@ -160,7 +160,7 @@ public class EnableContinuousQueriesConfigurationIntegrationTests extends Integr
 
 		private CacheListener<Long, TemperatureReading> temperatureReadingCounterListener() {
 
-			return new CacheListenerAdapter<>() {
+			return new CacheListenerAdapter<Long, TemperatureReading>() {
 
 				@Override
 				public void afterCreate(EntryEvent<Long, TemperatureReading> event) {
@@ -172,5 +172,42 @@ public class EnableContinuousQueriesConfigurationIntegrationTests extends Integr
 		}
 	}
 
-	public record TemperatureReading(Integer temperature) implements Serializable { }
+	public static final class TemperatureReading implements Serializable {
+
+		private final Integer temperature;
+
+		public TemperatureReading(Integer temperature) {
+			this.temperature = temperature;
+		}
+
+		public Integer temperature() {
+			return this.temperature;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+
+			if (this == obj) {
+				return true;
+			}
+
+			if (!(obj instanceof TemperatureReading)) {
+				return false;
+			}
+
+			TemperatureReading that = (TemperatureReading) obj;
+
+			return java.util.Objects.equals(this.temperature, that.temperature);
+		}
+
+		@Override
+		public int hashCode() {
+			return java.util.Objects.hash(this.temperature);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("TemperatureReading[temperature=%s]", this.temperature);
+		}
+	}
 }

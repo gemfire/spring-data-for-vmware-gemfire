@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.repository.support;
@@ -36,6 +36,7 @@ import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.data.repository.core.support.QueryCreationListener;
 import org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.data.util.TypeInformation;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -302,7 +303,7 @@ public class GemfireRepositoryFactoryBean<T extends Repository<S, ID>, S, ID>
 
 			this.queryPostProcessor = queryPostProcessor;
 
-			List<TypeInformation<?>> typeArguments = TypeInformation.of(queryPostProcessor.getClass())
+			List<TypeInformation<?>> typeArguments = ClassTypeInformation.from(queryPostProcessor.getClass())
 				.getRequiredSuperTypeInformation(QueryPostProcessor.class)
 				.getTypeArguments();
 
