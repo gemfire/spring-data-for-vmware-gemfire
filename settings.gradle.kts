@@ -44,6 +44,8 @@ pluginManagement {
 
 include("spring-data-vmware-gemfire")
 include("spring-test-vmware-gemfire")
+include("spring-data-gemfire-driver-spi")
+include("spring-data-gemfire-driver-core")
 
 project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
 rootProject.name = "spring-data-for-vmware-gemfire"
