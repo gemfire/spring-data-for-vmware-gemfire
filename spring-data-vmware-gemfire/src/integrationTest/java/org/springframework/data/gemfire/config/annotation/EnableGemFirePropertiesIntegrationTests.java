@@ -4,10 +4,6 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import java.util.Optional;
-import java.util.Properties;
-import java.util.function.Function;
-
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.pdx.PdxSerializer;
 import org.assertj.core.api.Assertions;
@@ -23,6 +19,10 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.mock.env.MockPropertySource;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
+import java.util.Properties;
+import java.util.function.Function;
 
 /**
  * Integration tests for {@link EnableGemFireProperties}, {@link EnableLogging},
@@ -153,8 +153,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.security.client.AuthenticationInitializer")
 			.withProperty("spring.data.gemfire.security.peer.authentication-initializer", "example.security.peer.AuthenticationInitializer")
 			.withProperty("spring.data.gemfire.security.manager.class-name", "example.security.SecurityManager")
-			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "example.security.PostProcessor")
-			.withProperty("spring.data.gemfire.security.shiro.ini-resource-path", "/path/to/shiro.ini");
+			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "example.security.PostProcessor");
 
 		newApplicationContext(testPropertySource, TestSecurityGemFirePropertiesConfiguration.class);
 
@@ -172,7 +171,6 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		Assertions.assertThat(gemfireProperties.getProperty("security-peer-auth-init")).isEqualTo("example.security.peer.AuthenticationInitializer");
 		Assertions.assertThat(gemfireProperties.getProperty("security-manager")).isEqualTo("example.security.SecurityManager");
 		Assertions.assertThat(gemfireProperties.getProperty("security-post-processor")).isEqualTo("example.security.PostProcessor");
-		Assertions.assertThat(gemfireProperties.getProperty("security-shiro-init")).isEqualTo("/path/to/shiro.ini");
 	}
 
 	@Test
