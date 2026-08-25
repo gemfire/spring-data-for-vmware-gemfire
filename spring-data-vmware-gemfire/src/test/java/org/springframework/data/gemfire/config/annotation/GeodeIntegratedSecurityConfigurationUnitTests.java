@@ -4,14 +4,13 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.springframework.data.gemfire.test.support.MapBuilder;
 
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Test;
-
-import org.springframework.data.gemfire.test.support.MapBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit Tests for {@link GeodeIntegratedSecurityConfiguration}.
@@ -46,7 +45,6 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 			.isEqualTo("example.TestSecurityClientAuthenticationInitialization");
 		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_MANAGER))
 			.isEqualTo(TestSecurityManager.class.getName());
-		assertThat(gemfireProperties).doesNotContainKey(GeodeIntegratedSecurityConfiguration.SECURITY_SHIRO_INIT);
 		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_PEER_AUTH_INIT))
 			.isEqualTo("example.TestSecurityPeerAuthenticationInitializer");
 		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_POST_PROCESSOR))

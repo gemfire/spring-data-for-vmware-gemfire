@@ -4,13 +4,13 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import java.lang.annotation.Annotation;
-import java.util.Map;
-import java.util.Properties;
-
 import org.springframework.data.gemfire.GemFireProperties;
 import org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport;
 import org.springframework.data.gemfire.util.PropertiesBuilder;
+
+import java.lang.annotation.Annotation;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * The {@link GeodeIntegratedSecurityConfiguration} class is a {@link EmbeddedServiceConfigurationSupport} implementation
@@ -27,7 +27,6 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 	protected static final String SECURITY_MANAGER = GemFireProperties.SECURITY_MANAGER.getName();
 	protected static final String SECURITY_PEER_AUTH_INIT = GemFireProperties.SECURITY_PEER_AUTH_INIT.getName();
 	protected static final String SECURITY_POST_PROCESSOR = GemFireProperties.SECURITY_POST_PROCESSOR.getName();
-	protected static final String SECURITY_SHIRO_INIT = GemFireProperties.SECURITY_SHIRO_INIT.getName();
 
 	/**
 	 * Returns the {@link EnableSecurity} {@link Annotation} {@link Class} type.
@@ -86,10 +85,6 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 			gemfireProperties.setProperty(SECURITY_MANAGER,
 				resolveProperty(securityProperty("manager.class-name"),
 					(String) annotationAttributes.get("securityManagerClassName")));
-
-			gemfireProperties.setProperty(SECURITY_SHIRO_INIT,
-				resolveProperty(securityProperty("shiro.ini-resource-path"),
-					(String) annotationAttributes.get("shiroIniResourcePath")));
 		}
 
 		gemfireProperties.setProperty(SECURITY_PEER_AUTH_INIT,

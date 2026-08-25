@@ -76,8 +76,6 @@ public enum GemFireProperties {
 	SECURITY_PEER_AUTH_INIT(ConfigurationProperties.SECURITY_PEER_AUTH_INIT, String.class),
 	SECURITY_PEER_VERIFY_MEMBER_TIMEOUT(ConfigurationProperties.SECURITY_PEER_VERIFY_MEMBER_TIMEOUT, Long.class, 1000L),
 	SECURITY_POST_PROCESSOR(ConfigurationProperties.SECURITY_POST_PROCESSOR, String.class),
-	@Deprecated
-	SECURITY_SHIRO_INIT(ConfigurationProperties.SECURITY_SHIRO_INIT, String.class),
 	SECURITY_UDP_DHALO(ConfigurationProperties.SECURITY_UDP_DHALGO, String.class),
 	SERIALIZABLE_OBJECT_FILTER(ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER, String.class, "!*"),
 	SERVER_BIND_ADDRESS(ConfigurationProperties.SERVER_BIND_ADDRESS, String.class),
