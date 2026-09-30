@@ -83,3 +83,7 @@ Signed off by Udo Kohlmeyer, 2026-08-20. Final shape of the model:
 - [Ticket 10](10-spi-versioning-scheme.md)'s SemVer-based answer is superseded by this ticket; ticket 10 is amended accordingly.
 - [Ticket 08](08-capability-enum-evolution-and-removal.md) is amended with the capability-immutability invariant (decision 4 above).
 - `map.md`'s "Not yet specified" Axis A entry moves to "Decisions so far."
+
+## Amendment — superseded by [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+The generation-number scheme, the `[spiMin, spiMax]`/`[implMin, implMax]` ranges, range-intersection binding and the effective-range diagnostic are superseded; ticket 10's SemVer-based basis is replaced by `major.minor` as an ABI unit, not restored as a range declaration. Reasons: the model had no treatment of binary compatibility (a wide Impl compiled against a newer SPI would pass the intersection check and then fail with an untyped `LinkageError`), and with drivers locked 1:1 to a GemFire version the "wide Impl spanning several generations" scenario that motivated the ranges no longer exists. The research findings are retained as history. The capability-immutability invariant this ticket added to ticket 08 survives in restated form (existing SPI methods never change behaviour within a major).

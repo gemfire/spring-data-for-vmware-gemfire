@@ -9,11 +9,12 @@ public interface GemFireDriver {
 	DriverMetadata metadata();
 
 	/**
-	 * Axis B self-check (§6.3): does this Driver Impl accept the GemFire version actually
-	 * present on the classpath it's co-located with? A verdict, never a throw — driver-core
-	 * alone throws on a negative verdict (§5.2).
+	 * The GemFire product version actually present on the classpath this Driver Impl is co-located
+	 * with, read locally from the native jars' build metadata (§6.3). Exposed so driver-core, which
+	 * has no native GemFire dependency, can compare it with the GemFire version stamped into the
+	 * driver at build time (exact match) and report it in a failure.
 	 */
-	boolean acceptsRuntimeGemFireVersion(String gemFireVersion);
+	String runtimeGemFireVersion();
 
 	/**
 	 * Establishes the runtime connection this driver mediates. Thread-safety is whatever the

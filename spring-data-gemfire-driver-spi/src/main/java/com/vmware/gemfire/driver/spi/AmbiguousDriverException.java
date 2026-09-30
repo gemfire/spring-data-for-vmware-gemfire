@@ -8,17 +8,16 @@ import java.util.List;
 
 public class AmbiguousDriverException extends DriverBindException {
 
-	// transient: implementor-provided DriverMetadata is not guaranteed Serializable.
-	private final transient List<DriverMetadata> candidates;
+	private final List<String> providerClasses;
 
-	public AmbiguousDriverException(List<DriverMetadata> candidates) {
-		super("Multiple GemFireDriver implementations found on the classpath (" + candidates.size()
-			+ "); exactly one is required. Remove the extra Driver Impl jars from the classpath.");
-		this.candidates = List.copyOf(candidates);
+	public AmbiguousDriverException(List<String> providerClasses) {
+		super("Multiple GemFireDriver implementations found on the classpath (" + providerClasses.size()
+			+ "): " + providerClasses + "; exactly one is required. Remove the extra Driver Impl jars from the classpath.");
+		this.providerClasses = List.copyOf(providerClasses);
 	}
 
-	public List<DriverMetadata> candidates() {
-		return candidates;
+	public List<String> providerClasses() {
+		return providerClasses;
 	}
 
 }

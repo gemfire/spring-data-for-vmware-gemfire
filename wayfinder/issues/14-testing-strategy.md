@@ -22,3 +22,7 @@ A Driver Impl's self-declared native-engine range, `[nativeMin, nativeMax]` (rea
 ## Open follow-up — marked out of scope
 
 Whether `spring-test-vmware-gemfire` itself should be migrated to depend only on `driver-spi`/the mock Driver Impl (removing its current direct `compileOnly` dependency on native GemFire) was left open pending more thought/research. The user has since marked it **out of scope for this spec** rather than resolving it — `spring-test-vmware-gemfire` keeps its current direct dependency on native GemFire; this module is not migrated as part of this effort. See the map's "Out of scope" section.
+
+## Amendment 2 — range-enforcement replaced by [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+Drivers are locked 1:1 to a GemFire version and no longer declare ranges, so the continuous-CI range-coverage rules added from tickets 15 and 18 no longer apply. Replaced by: (a) each driver's `integrationTest` configuration runs against exactly one GemFire version — the driver's own; (b) a **driver contract test kit**, shipped with the reference driver and mock, asserting that each driver's expected-unsupported methods throw `UnsupportedFeatureException` with the expected reason and that every other `default` SPI method works; (c) an **SPI API-compatibility gate** (japicmp or Revapi) that fails CI on any binary-incompatible change within a major. The one-configuration-per-driver-version shape from this ticket's original answer stands.

@@ -21,7 +21,7 @@ public class GemFireDriverExceptionTranslator implements PersistenceExceptionTra
 	}
 
 	private DataAccessException translate(GemFireDriverException ex) {
-		if (ex instanceof UnsupportedCapabilityException) {
+		if (ex instanceof UnsupportedFeatureException) {
 			return new InvalidDataAccessApiUsageException(ex.getMessage(), ex);
 		}
 		if (ex instanceof DriverBindException) {

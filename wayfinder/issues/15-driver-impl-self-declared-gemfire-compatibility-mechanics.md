@@ -62,3 +62,7 @@ Signed off by Udo Kohlmeyer, 2026-08-20. Final shape of the Axis B mechanism:
 - [Ticket 14](14-testing-strategy.md) is amended to extend its per-Driver-Impl-version `integrationTest` configuration concept to also cover Axis B's native-engine-range CI enforcement (decision 5 above), symmetric with how [ticket 18](18-spi-impl-generation-range-compatibility.md) already extends it for Axis A.
 - `map.md`'s "Not yet specified" Axis B entry moves to "Decisions so far."
 
+
+## Amendment — Axis B mechanism superseded by [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+The self-declared `[nativeMin, nativeMax]` range, `acceptsRuntimeGemFireVersion` and the Impl-supplied verdict are superseded. A driver's version now equals the GemFire version it wraps, and its build-generated stamp records that GemFire version. At bind time `driver-core` compares `runtimeGemFireVersion()` (the SPI method added for this ticket, kept so `driver-core` stays native-free) with the stamped version: **exact match required**, mechanical, no verdict method. `driver-core` remains the sole thrower of `NativeVersionIncompatibleException`. Retained from this ticket: the survey findings, `GemFireVersion.getGemFireVersion()` as the classpath-local version source, and the deferral of the live-cluster (`MemberMXBean`) check past v1. Decision 5's continuous range-coverage CI rule is replaced per [ticket 14](14-testing-strategy.md)'s second amendment.

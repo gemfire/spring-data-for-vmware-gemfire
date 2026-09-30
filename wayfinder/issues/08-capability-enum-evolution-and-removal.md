@@ -21,3 +21,11 @@ Added during [ticket 18](18-spi-impl-generation-range-compatibility.md)'s resear
 **Explicit invariant: once introduced, a capability's semantics are immutable.** A capability enum constant's contract is fixed at the generation it's introduced and never changes underneath existing generations. If GemFire (or the SPI) ever needs to change a capability's behavior in a way that isn't purely additive, that is **not** a modification of the existing constant — it must retire the old constant (subject to the same end-of-support-gated removal rule above) and introduce a new one to represent the changed behavior.
 
 
+
+## Amendment — superseded by [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+The closed `Capability` enum is removed. The method is the capability: implemented means supported, and a `default` SPI method that throws means not supported (see [ticket 07](07-unsupported-feature-fail-fast.md)'s amendment). What survives from this ticket:
+
+- **Backward compatibility, no forward compatibility.** An older driver runs against a newer SPI in the same major (new methods are `default`). A driver built against a newer SPI minor than the runtime SPI cannot exist by construction — it is now rejected at bind time by the `runtime SPI minor >= stamped minor` check, instead of being prevented by absent enum vocabulary.
+- **Immutability invariant** (added via ticket 18), restated as: within a major, existing SPI methods never change behaviour; a behaviour change arrives as a new method.
+- **Removal gating.** A feature can only leave the SPI at an SPI **major** bump, and the support matrix ([ticket 11](11-driver-impl-support-matrix-and-bind-time-check.md) part 1, [ticket 16](16-initial-version-list-and-matrix-scope.md)) gates that as a release-checklist item. Within a major nothing is removed.

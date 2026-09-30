@@ -18,3 +18,7 @@ Two complementary pieces:
 Part 2 above (the Driver Manager-derived, matrix-sourced minimum-version bind-time check) is **superseded and dropped**. `driver-core` should not own GemFire-version compatibility logic or consult a centrally-maintained matrix at bind time — that logic instead belongs to the Driver Impl itself, which self-declares/self-checks its own compatibility with the GemFire version present at runtime; `driver-core` simply asks the Driver Impl that question at bind time (a thin-delegate check, distinct from the still-standing SPI-version-range check in [SPI versioning scheme](10-spi-versioning-scheme.md)). The concrete mechanics of that self-check are open research — see [Driver Impl self-declared GemFire compatibility mechanics](15-driver-impl-self-declared-gemfire-compatibility-mechanics.md).
 
 Part 1 above (the support matrix as a documented artifact) **stands, but with its role narrowed**: it is now purely a documentation/governance record (release planning, capability-removal sign-off) with no runtime enforcement role at all — the process-enforced release-checklist use described above is unaffected.
+
+## Amendment 2 — see [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+Part 1 (the support matrix as a governance artifact) still stands. References above to capability removal now read: a feature may be removed from the SPI only at an SPI major bump, gated by the matrix.

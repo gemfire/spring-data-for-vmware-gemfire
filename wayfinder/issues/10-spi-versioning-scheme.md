@@ -21,3 +21,7 @@ The SemVer basis above is superseded. `driver-spi`'s external release version nu
 - A Driver Impl's declared range is only trustworthy if backed by continuous CI enforcement (a passing [`integrationTest`](14-testing-strategy.md) configuration for every generation in the declared range, re-verified whenever `driver-spi`/`driver-core` change).
 
 See [ticket 18](18-spi-impl-generation-range-compatibility.md) for the full research and sign-off rationale.
+
+## Amendment 2 — SemVer partly revived by [ticket 20](20-spi-abi-compatibility-and-driver-version-lockstep.md)
+
+Ticket 18's generation-number scheme is itself superseded. The SPI is versioned `major.minor`, and that version is the **ABI compatibility unit**: minors are additive only (new methods are `default`), and a major bump is the only point at which anything is removed or changed. A driver's build stamps the SPI `major.minor` it was built against; `driver-core` requires the same major and a runtime SPI minor at least the stamped one. The original "declared SemVer range" mechanism is not restored — the stamp plus the additive-only rule replaces it. Ticket 18's objection (SemVer "says nothing about which GemFire feature generation" the SPI exposes) is answered elsewhere: the feature surface is the set of SPI methods, and which of them a driver supports is fixed by the driver's version, which equals its GemFire version.

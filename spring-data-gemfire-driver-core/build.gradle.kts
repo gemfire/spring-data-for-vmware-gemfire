@@ -17,4 +17,14 @@ tasks.withType<JavaCompile>().configureEach {
 
 dependencies {
   api(project(":spring-data-gemfire-driver-spi"))
+
+  testImplementation(platform(libs.junit.jupiter.bom))
+  testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.assertJ)
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+  testRuntimeOnly(libs.junit.jupiter.engine)
+}
+
+tasks.withType<Test>().configureEach {
+  useJUnitPlatform()
 }

@@ -6,19 +6,25 @@ package com.vmware.gemfire.driver.spi;
 
 public class NativeVersionIncompatibleException extends DriverBindException {
 
-	// transient: implementor-provided DriverMetadata is not guaranteed Serializable.
-	private final transient DriverMetadata metadata;
+	private final String providerClass;
+	private final String stampedVersion;
 	private final String runtimeVersion;
 
-	public NativeVersionIncompatibleException(DriverMetadata metadata, String runtimeVersion) {
-		super("Driver Impl declares supported native GemFire range " + metadata.supportedNativeRange()
-			+ " but rejected the runtime GemFire version '" + runtimeVersion + "'.");
-		this.metadata = metadata;
+	public NativeVersionIncompatibleException(String providerClass, String stampedVersion, String runtimeVersion) {
+		super("Driver Impl " + providerClass + " was built for GemFire " + stampedVersion
+			+ " but the GemFire on the classpath is " + runtimeVersion
+			+ "; use the driver whose version matches the GemFire version in use.");
+		this.providerClass = providerClass;
+		this.stampedVersion = stampedVersion;
 		this.runtimeVersion = runtimeVersion;
 	}
 
-	public DriverMetadata metadata() {
-		return metadata;
+	public String providerClass() {
+		return providerClass;
+	}
+
+	public String stampedVersion() {
+		return stampedVersion;
 	}
 
 	public String runtimeVersion() {
