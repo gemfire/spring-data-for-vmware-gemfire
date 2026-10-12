@@ -61,7 +61,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 	private void assertPool(Pool pool, int freeConnectionTimeout, long idleTimeout, int loadConditioningInterval,
 			int maxConnections, int minConnections, int maxConnectionsPerServer, int minConnectionsPerServer,
 			boolean multiUserAuthentication, String name, long pingInterval, boolean prSinglehopEnabled,
-			int readTimeout, int pingTimeout, int retryAttempts, int serverConnectionTimeout, String serverGroup, int socketBufferSize,
+			int readTimeout, int pingTimeout, int retryAttempts, int serverConnectionTimeout, String serverGroup, String availabilityZone, int socketBufferSize,
 			int socketConnectTimeout, SocketFactory socketFactory, int statisticInterval, int subscriptionAckInterval,
 			boolean subscriptionEnabled, int subscriptionMessageTrackingTimeout, int subscriptionRedundancy) {
 
@@ -82,6 +82,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(pool.getRetryAttempts()).isEqualTo(retryAttempts);
 		Assertions.assertThat(pool.getServerConnectionTimeout()).isEqualTo(serverConnectionTimeout);
 		Assertions.assertThat(pool.getServerGroup()).isEqualTo(serverGroup);
+		Assertions.assertThat(pool.getAvailabilityZone()).isEqualTo(availabilityZone);
 		Assertions.assertThat(pool.getSocketBufferSize()).isEqualTo(socketBufferSize);
 		Assertions.assertThat(pool.getSocketConnectTimeout()).isEqualTo(socketConnectTimeout);
 		Assertions.assertThat(pool.getSocketFactory()).isEqualTo(socketFactory);
@@ -109,6 +110,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.default.read-timeout", 5000L)
 			.withProperty("spring.data.gemfire.pool.retry-attempts", 2)
 			.withProperty("spring.data.gemfire.pool.server-group", "TestGroup")
+			.withProperty("spring.data.gemfire.pool.availability-zone", "TestZone")
 			.withProperty("spring.data.gemfire.pool.default.socket-connect-timeout", 5000)
 			.withProperty("spring.data.gemfire.pool.subscription-enabled", true)
 			.withProperty("spring.data.gemfire.pool.TestPool.subscription-redundancy", 2);
@@ -141,6 +143,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(testPool.getRetryAttempts()).isEqualTo(1);
 		Assertions.assertThat(testPool.getServerConnectionTimeout()).isEqualTo(60000);
 		Assertions.assertThat(testPool.getServerGroup()).isEqualTo("TestGroup");
+		Assertions.assertThat(testPool.getAvailabilityZone()).isEqualTo("TestZone");
 		Assertions.assertThat(testPool.getSocketBufferSize()).isEqualTo(PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
 		Assertions.assertThat(testPool.getSocketConnectTimeout()).isEqualTo(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
 		Assertions.assertThat(testPool.getSocketFactory()).isEqualTo(mockSocketFactory);
@@ -168,6 +171,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.retry-attempts", 2)
 			.withProperty("spring.data.gemfire.pool.server-connection-timeout", 30000)
 			.withProperty("spring.data.gemfire.pool.server-group", "testGroup")
+			.withProperty("spring.data.gemfire.pool.availability-zone", "testZone")
 			.withProperty("spring.data.gemfire.pool.socket-buffer-size", 8192)
 			.withProperty("spring.data.gemfire.pool.socket-connect-timeout", 5000)
 			.withProperty("spring.data.gemfire.pool.socket-factory-bean-name", "mockSocketFactoryOne")
@@ -213,6 +217,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.ping-timeout", 1234)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.retry-attempts", 4)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.server-group", "testTwoGroup")
+			.withProperty("spring.data.gemfire.pool.TestPoolTwo.availability-zone", "testTwoZone")
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.socket-buffer-size", 65536)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.socket-connect-timeout", 15000)
 			.withProperty("spring.data.gemfire.pool.TestPoolTwo.socket-factory-bean-name", "mockSocketFactoryTwo")
@@ -245,13 +250,13 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(mockSocketFactoryOne).isNotSameAs(mockSocketFactoryTwo);
 
 		Pool defaultPool = gemfireCache.getDefaultPool();
-		assertPool(defaultPool, 15000, 20000L, 180000, 275,27, -1, 1, true,"DEFAULT", 15000L, false, 2000,123456, 1, 60000, "testDefaultGroup", 16384, 10000, SocketFactory.DEFAULT,500, 250, true, 300000, 3);
+		assertPool(defaultPool, 15000, 20000L, 180000, 275,27, -1, 1, true,"DEFAULT", 15000L, false, 2000,123456, 1, 60000, "testDefaultGroup", PoolFactory.DEFAULT_AVAILABILITY_ZONE, 16384, 10000, SocketFactory.DEFAULT,500, 250, true, 300000, 3);
 
 		Pool testPoolOne = getBean("TestPoolOne", Pool.class);
 
 		assertPool(testPoolOne, 30000, 300000L, 120000,
 			500, 50, -1, 1, true, "TestPoolOne", 5000L,
-			false, 15000, 12345, 2, 30000, "testGroup",
+			false, 15000, 12345, 2, 30000, "testGroup", "testZone",
 			8192, 5000, mockSocketFactoryOne,1000, 5000,
 			true, 180000, 2);
 
@@ -259,7 +264,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(testPoolTwo, 20000, 15000L, 60000,
 			1000, 100, -1, 1, true, "TestPoolTwo", 20000L,
-			false, 5000, 1234, 4, 30000, "testTwoGroup",
+			false, 5000, 1234, 4, 30000, "testTwoGroup", "testTwoZone",
 			65536, 15000, mockSocketFactoryTwo, 2000, 500,
 			true, 300000, 4);
 
@@ -267,7 +272,7 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 
 		assertPool(testPoolThree, 30000, 300000L, 120000,
 				500, 50, 300, 3, true, "TestPoolThree", 5000L,
-				false, 15000, 12345, 2, 30000, "testGroup",
+				false, 15000, 12345, 2, 30000, "testGroup", "testZone",
 				8192, 5000, mockSocketFactoryOne, 1000, 5000,
 				true, 180000, 2);
 	}

@@ -4,6 +4,16 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import static java.util.Arrays.stream;
+import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
+
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -17,20 +27,10 @@ import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.util.StringUtils;
 
-import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import static java.util.Arrays.stream;
-import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
 /**
- * The {@link AddPoolConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} that registers
- * a {@link PoolFactoryBean} definition for the {@link org.apache.geode.cache.client.Pool}
- * configuration meta-data defined in {@link EnablePool} annotations.
+ * The {@link AddPoolConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} that registers a
+ * {@link PoolFactoryBean} definition for the {@link org.apache.geode.cache.client.Pool} configuration meta-data defined
+ * in {@link EnablePool} annotations.
  *
  * @author John Blum
  * @see org.apache.geode.cache.client.Pool
@@ -47,11 +47,9 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
  * @see AbstractAnnotationConfigSupport
  * @since 1.9.0
  */
-public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
-		implements ImportBeanDefinitionRegistrar {
+public class AddPoolConfiguration extends AbstractAnnotationConfigSupport implements ImportBeanDefinitionRegistrar {
 
-	@Autowired(required = false)
-	private List<PoolConfigurer> poolConfigurers = Collections.emptyList();
+	@Autowired(required = false) private List<PoolConfigurer> poolConfigurers = Collections.emptyList();
 
 	@Override
 	protected Class<? extends Annotation> getAnnotationType() {
@@ -70,8 +68,8 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 	}
 
 	/**
-	 * Registers a {@link PoolFactoryBean} definition in the Spring application context configured with
-	 * the {@link EnablePool} annotation meta-data.
+	 * Registers a {@link PoolFactoryBean} definition in the Spring application context configured with the
+	 * {@link EnablePool} annotation meta-data.
 	 *
 	 * @param enablePoolAttributes {@link EnablePool} annotation attributes.
 	 * @param registry Spring {@link BeanDefinitionRegistry} used to register the {@link PoolFactoryBean} definition.
@@ -87,126 +85,106 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 
 		BeanDefinitionBuilder poolFactoryBean = BeanDefinitionBuilder.genericBeanDefinition(PoolFactoryBean.class);
 
-		poolFactoryBean.addPropertyValue("freeConnectionTimeout",
-			resolveProperty(namedPoolProperty(poolName, "free-connection-timeout"),
-				resolveProperty(poolProperty("free-connection-timeout"),
-					enablePoolAttributes.<Integer>getNumber("freeConnectionTimeout"))));
+		poolFactoryBean.addPropertyValue("availabilityZone",
+				resolveProperty(namedPoolProperty(poolName, "availability-zone"), resolveProperty(
+						poolProperty("availability-zone"), enablePoolAttributes.getString("availabilityZone"))));
 
-		poolFactoryBean.addPropertyValue("idleTimeout",
-			resolveProperty(namedPoolProperty(poolName, "idle-timeout"),
-				resolveProperty(poolProperty("idle-timeout"),
-					enablePoolAttributes.<Long>getNumber("idleTimeout"))));
+		poolFactoryBean.addPropertyValue("freeConnectionTimeout",
+				resolveProperty(namedPoolProperty(poolName, "free-connection-timeout"),
+						resolveProperty(poolProperty("free-connection-timeout"),
+								enablePoolAttributes.<Integer> getNumber("freeConnectionTimeout"))));
+
+		poolFactoryBean.addPropertyValue("idleTimeout", resolveProperty(namedPoolProperty(poolName, "idle-timeout"),
+				resolveProperty(poolProperty("idle-timeout"), enablePoolAttributes.<Long> getNumber("idleTimeout"))));
 
 		poolFactoryBean.addPropertyValue("loadConditioningInterval",
-			resolveProperty(namedPoolProperty(poolName, "load-conditioning-interval"),
-				resolveProperty(poolProperty("load-conditioning-interval"),
-					enablePoolAttributes.<Integer>getNumber("loadConditioningInterval"))));
+				resolveProperty(namedPoolProperty(poolName, "load-conditioning-interval"),
+						resolveProperty(poolProperty("load-conditioning-interval"),
+								enablePoolAttributes.<Integer> getNumber("loadConditioningInterval"))));
 
-		poolFactoryBean.addPropertyValue("maxConnections",
-			resolveProperty(namedPoolProperty(poolName, "max-connections"),
-				resolveProperty(poolProperty("max-connections"),
-					enablePoolAttributes.<Integer>getNumber("maxConnections"))));
+		poolFactoryBean.addPropertyValue("maxConnections", resolveProperty(namedPoolProperty(poolName, "max-connections"),
+				resolveProperty(poolProperty("max-connections"), enablePoolAttributes.<Integer> getNumber("maxConnections"))));
 
-		poolFactoryBean.addPropertyValue("minConnections",
-			resolveProperty(namedPoolProperty(poolName, "min-connections"),
-				resolveProperty(poolProperty("min-connections"),
-					enablePoolAttributes.<Integer>getNumber("minConnections"))));
+		poolFactoryBean.addPropertyValue("minConnections", resolveProperty(namedPoolProperty(poolName, "min-connections"),
+				resolveProperty(poolProperty("min-connections"), enablePoolAttributes.<Integer> getNumber("minConnections"))));
 
 		poolFactoryBean.addPropertyValue("maxConnectionsPerServer",
 				resolveProperty(namedPoolProperty(poolName, "max-connections-per-server"),
 						resolveProperty(poolProperty("max-connections-per-server"),
-								enablePoolAttributes.<Integer>getNumber("maxConnectionsPerServer"))));
+								enablePoolAttributes.<Integer> getNumber("maxConnectionsPerServer"))));
 
 		poolFactoryBean.addPropertyValue("minConnectionsPerServer",
 				resolveProperty(namedPoolProperty(poolName, "min-connections-per-server"),
 						resolveProperty(poolProperty("min-connections-per-server"),
-								enablePoolAttributes.<Integer>getNumber("minConnectionsPerServer"))));
+								enablePoolAttributes.<Integer> getNumber("minConnectionsPerServer"))));
 
 		poolFactoryBean.addPropertyValue("multiUserAuthentication",
-			resolveProperty(namedPoolProperty(poolName, "multi-user-authentication"),
-				resolveProperty(poolProperty("multi-user-authentication"),
-					enablePoolAttributes.getBoolean("multiUserAuthentication"))));
+				resolveProperty(namedPoolProperty(poolName, "multi-user-authentication"), resolveProperty(
+						poolProperty("multi-user-authentication"), enablePoolAttributes.getBoolean("multiUserAuthentication"))));
 
-		poolFactoryBean.addPropertyValue("pingInterval",
-			resolveProperty(namedPoolProperty(poolName, "ping-interval"),
-				resolveProperty(poolProperty("ping-interval"),
-					enablePoolAttributes.<Long>getNumber("pingInterval"))));
+		poolFactoryBean.addPropertyValue("pingInterval", resolveProperty(namedPoolProperty(poolName, "ping-interval"),
+				resolveProperty(poolProperty("ping-interval"), enablePoolAttributes.<Long> getNumber("pingInterval"))));
 
-		poolFactoryBean.addPropertyValue("pingTimeout",
-				resolveProperty(namedPoolProperty(poolName, "ping-timeout"),
-						resolveProperty(poolProperty("ping-timeout"),
-								enablePoolAttributes.<Integer>getNumber("pingTimeout"))));
+		poolFactoryBean.addPropertyValue("pingTimeout", resolveProperty(namedPoolProperty(poolName, "ping-timeout"),
+				resolveProperty(poolProperty("ping-timeout"), enablePoolAttributes.<Integer> getNumber("pingTimeout"))));
 
 		poolFactoryBean.addPropertyValue("poolConfigurers", resolvePoolConfigurers());
 
-		poolFactoryBean.addPropertyValue("prSingleHopEnabled",
-			resolveProperty(namedPoolProperty(poolName, "pr-single-hop-enabled"),
-				resolveProperty(poolProperty("pr-single-hop-enabled"),
-					enablePoolAttributes.getBoolean("prSingleHopEnabled"))));
+		poolFactoryBean.addPropertyValue("prSingleHopEnabled", resolveProperty(
+				namedPoolProperty(poolName, "pr-single-hop-enabled"),
+				resolveProperty(poolProperty("pr-single-hop-enabled"), enablePoolAttributes.getBoolean("prSingleHopEnabled"))));
 
-		poolFactoryBean.addPropertyValue("readTimeout",
-			resolveProperty(namedPoolProperty(poolName, "read-timeout"),
-				resolveProperty(poolProperty("read-timeout"),
-					enablePoolAttributes.<Integer>getNumber("readTimeout"))));
+		poolFactoryBean.addPropertyValue("readTimeout", resolveProperty(namedPoolProperty(poolName, "read-timeout"),
+				resolveProperty(poolProperty("read-timeout"), enablePoolAttributes.<Integer> getNumber("readTimeout"))));
 
-		poolFactoryBean.addPropertyValue("retryAttempts",
-			resolveProperty(namedPoolProperty(poolName, "retry-attempts"),
-				resolveProperty(poolProperty("retry-attempts"),
-					enablePoolAttributes.<Integer>getNumber("retryAttempts"))));
+		poolFactoryBean.addPropertyValue("retryAttempts", resolveProperty(namedPoolProperty(poolName, "retry-attempts"),
+				resolveProperty(poolProperty("retry-attempts"), enablePoolAttributes.<Integer> getNumber("retryAttempts"))));
 
 		poolFactoryBean.addPropertyValue("serverConnectionTimeout",
-			resolveProperty(namedPoolProperty(poolName, "server-connection-timeout"),
-				resolveProperty(poolProperty("server-connection-timeout"),
-					enablePoolAttributes.<Integer>getNumber("serverConnectionTimeout"))));
+				resolveProperty(namedPoolProperty(poolName, "server-connection-timeout"),
+						resolveProperty(poolProperty("server-connection-timeout"),
+								enablePoolAttributes.<Integer> getNumber("serverConnectionTimeout"))));
 
-		poolFactoryBean.addPropertyValue("serverGroup",
-			resolveProperty(namedPoolProperty(poolName, "server-group"),
-				resolveProperty(poolProperty("server-group"),
-					enablePoolAttributes.getString("serverGroup"))));
+		poolFactoryBean.addPropertyValue("serverGroup", resolveProperty(namedPoolProperty(poolName, "server-group"),
+				resolveProperty(poolProperty("server-group"), enablePoolAttributes.getString("serverGroup"))));
 
 		poolFactoryBean.addPropertyValue("socketBufferSize",
-			resolveProperty(namedPoolProperty(poolName, "socket-buffer-size"),
-				resolveProperty(poolProperty("socket-buffer-size"),
-					enablePoolAttributes.<Integer>getNumber("socketBufferSize"))));
+				resolveProperty(namedPoolProperty(poolName, "socket-buffer-size"), resolveProperty(
+						poolProperty("socket-buffer-size"), enablePoolAttributes.<Integer> getNumber("socketBufferSize"))));
 
 		poolFactoryBean.addPropertyValue("socketConnectTimeout",
-			resolveProperty(namedPoolProperty(poolName, "socket-connect-timeout"),
-				resolveProperty(poolProperty("socket-connect-timeout"),
-					enablePoolAttributes.<Integer>getNumber("socketConnectTimeout"))));
+				resolveProperty(namedPoolProperty(poolName, "socket-connect-timeout"), resolveProperty(
+						poolProperty("socket-connect-timeout"), enablePoolAttributes.<Integer> getNumber("socketConnectTimeout"))));
 
-		String resolvedSocketFactoryBeanName =
-			resolveProperty(namedPoolProperty(poolName, "socket-factory-bean-name"),
+		String resolvedSocketFactoryBeanName = resolveProperty(namedPoolProperty(poolName, "socket-factory-bean-name"),
 				resolveProperty(poolProperty("socket-factory-bean-name"),
-					enablePoolAttributes.getString("socketFactoryBeanName")));
+						enablePoolAttributes.getString("socketFactoryBeanName")));
 
-		Optional.ofNullable(resolvedSocketFactoryBeanName)
-			.filter(StringUtils::hasText)
-			.ifPresent(beanName -> poolFactoryBean.addPropertyReference("socketFactory", beanName));
+		Optional.ofNullable(resolvedSocketFactoryBeanName).filter(StringUtils::hasText)
+				.ifPresent(beanName -> poolFactoryBean.addPropertyReference("socketFactory", beanName));
 
 		poolFactoryBean.addPropertyValue("statisticInterval",
-			resolveProperty(namedPoolProperty(poolName, "statistic-interval"),
-				resolveProperty(poolProperty("statistic-interval"),
-					enablePoolAttributes.<Integer>getNumber("statisticInterval"))));
+				resolveProperty(namedPoolProperty(poolName, "statistic-interval"), resolveProperty(
+						poolProperty("statistic-interval"), enablePoolAttributes.<Integer> getNumber("statisticInterval"))));
 
 		poolFactoryBean.addPropertyValue("subscriptionAckInterval",
-			resolveProperty(namedPoolProperty(poolName, "subscription-ack-interval"),
-				resolveProperty(poolProperty("subscription-ack-interval"),
-					enablePoolAttributes.<Integer>getNumber("subscriptionAckInterval"))));
+				resolveProperty(namedPoolProperty(poolName, "subscription-ack-interval"),
+						resolveProperty(poolProperty("subscription-ack-interval"),
+								enablePoolAttributes.<Integer> getNumber("subscriptionAckInterval"))));
 
-		poolFactoryBean.addPropertyValue("subscriptionEnabled",
-			resolveProperty(namedPoolProperty(poolName, "subscription-enabled"),
-				resolveProperty(poolProperty("subscription-enabled"),
-					enablePoolAttributes.getBoolean("subscriptionEnabled"))));
+		poolFactoryBean.addPropertyValue("subscriptionEnabled", resolveProperty(
+				namedPoolProperty(poolName, "subscription-enabled"),
+				resolveProperty(poolProperty("subscription-enabled"), enablePoolAttributes.getBoolean("subscriptionEnabled"))));
 
 		poolFactoryBean.addPropertyValue("subscriptionMessageTrackingTimeout",
-			resolveProperty(namedPoolProperty(poolName, "subscription-message-tracking-timeout"),
-				resolveProperty(poolProperty("subscription-message-tracking-timeout"),
-					enablePoolAttributes.<Integer>getNumber("subscriptionMessageTrackingTimeout"))));
+				resolveProperty(namedPoolProperty(poolName, "subscription-message-tracking-timeout"),
+						resolveProperty(poolProperty("subscription-message-tracking-timeout"),
+								enablePoolAttributes.<Integer> getNumber("subscriptionMessageTrackingTimeout"))));
 
 		poolFactoryBean.addPropertyValue("subscriptionRedundancy",
-			resolveProperty(namedPoolProperty(poolName, "subscription-redundancy"),
-				resolveProperty(poolProperty("subscription-redundancy"),
-					enablePoolAttributes.<Integer>getNumber("subscriptionRedundancy"))));
+				resolveProperty(namedPoolProperty(poolName, "subscription-redundancy"),
+						resolveProperty(poolProperty("subscription-redundancy"),
+								enablePoolAttributes.<Integer> getNumber("subscriptionRedundancy"))));
 
 		configurePoolConnections(poolName, enablePoolAttributes, poolFactoryBean);
 
@@ -215,25 +193,22 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 
 	private List<PoolConfigurer> resolvePoolConfigurers() {
 
-		return Optional.ofNullable(this.poolConfigurers)
-			.filter(poolConfigurers -> !poolConfigurers.isEmpty())
-			.orElseGet(() -> Collections.singletonList(LazyResolvingComposablePoolConfigurer.create(getBeanFactory())));
+		return Optional.ofNullable(this.poolConfigurers).filter(poolConfigurers -> !poolConfigurers.isEmpty())
+				.orElseGet(() -> Collections.singletonList(LazyResolvingComposablePoolConfigurer.create(getBeanFactory())));
 	}
 
 	protected String getAndValidatePoolName(Map<String, Object> enablePoolAttributes) {
 
-		return Optional.ofNullable((String) enablePoolAttributes.get("name"))
-			.filter(StringUtils::hasText)
-			.orElseThrow(() -> newIllegalArgumentException("Pool name is required"));
+		return Optional.ofNullable((String) enablePoolAttributes.get("name")).filter(StringUtils::hasText)
+				.orElseThrow(() -> newIllegalArgumentException("Pool name is required"));
 	}
 
 	/**
-	 * Uses the list of GemFire Locator and Server connection endpoint definitions and meta-data to configure
-	 * the GemFire client {@link org.apache.geode.cache.client.Pool} used to communicate with the servers
-	 * in the GemFire cluster.
+	 * Uses the list of GemFire Locator and Server connection endpoint definitions and meta-data to configure the GemFire
+	 * client {@link org.apache.geode.cache.client.Pool} used to communicate with the servers in the GemFire cluster.
 	 *
-	 * @param enablePoolAttributes {@link EnablePool} annotation containing
-	 * {@link org.apache.geode.cache.client.Pool} Locator/Server connection endpoint meta-data.
+	 * @param enablePoolAttributes {@link EnablePool} annotation containing {@link org.apache.geode.cache.client.Pool}
+	 *          Locator/Server connection endpoint meta-data.
 	 * @see ClientCacheApplication
 	 * @see Map
 	 */
@@ -250,13 +225,12 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 			BeanDefinitionBuilder poolFactoryBean) {
 
 		String locatorsFromProperty = resolveProperty(namedPoolProperty(poolName, "locators"),
-			resolveProperty(poolProperty("locators"), (String) null));
+				resolveProperty(poolProperty("locators"), (String) null));
 
-		ConnectionEndpointList locators = Optional.ofNullable(locatorsFromProperty)
-			.filter(StringUtils::hasText)
-			.map(it -> ConnectionEndpointList.parse(GemfireUtils.DEFAULT_LOCATOR_PORT, it.split(",")))
-			.orElseGet(() -> parseConnectionEndpoints(enablePoolAttributes,"locators",
-				"locatorsString", GemfireUtils.DEFAULT_LOCATOR_PORT));
+		ConnectionEndpointList locators = Optional.ofNullable(locatorsFromProperty).filter(StringUtils::hasText)
+				.map(it -> ConnectionEndpointList.parse(GemfireUtils.DEFAULT_LOCATOR_PORT, it.split(",")))
+				.orElseGet(() -> parseConnectionEndpoints(enablePoolAttributes, "locators", "locatorsString",
+						GemfireUtils.DEFAULT_LOCATOR_PORT));
 
 		poolFactoryBean.addPropertyValue("locators", locators);
 
@@ -267,13 +241,12 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 			BeanDefinitionBuilder poolFactoryBean) {
 
 		String serversFromProperty = resolveProperty(namedPoolProperty(poolName, "servers"),
-			resolveProperty("servers", (String) null));
+				resolveProperty("servers", (String) null));
 
-		ConnectionEndpointList servers = Optional.ofNullable(serversFromProperty)
-			.filter(StringUtils::hasText)
-			.map(it -> ConnectionEndpointList.parse(GemfireUtils.DEFAULT_CACHE_SERVER_PORT, it.split(",")))
-			.orElseGet(() -> parseConnectionEndpoints(enablePoolAttributes, "servers",
-				"serversString", GemfireUtils.DEFAULT_CACHE_SERVER_PORT));
+		ConnectionEndpointList servers = Optional.ofNullable(serversFromProperty).filter(StringUtils::hasText)
+				.map(it -> ConnectionEndpointList.parse(GemfireUtils.DEFAULT_CACHE_SERVER_PORT, it.split(",")))
+				.orElseGet(() -> parseConnectionEndpoints(enablePoolAttributes, "servers", "serversString",
+						GemfireUtils.DEFAULT_CACHE_SERVER_PORT));
 
 		poolFactoryBean.addPropertyValue("servers", servers);
 
@@ -283,20 +256,16 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 	protected ConnectionEndpointList parseConnectionEndpoints(AnnotationAttributes enablePoolAttributes,
 			String arrayAttributeName, String stringAttributeName, int defaultPort) {
 
-		AnnotationAttributes[] connectionEndpointsMetaData =
-			enablePoolAttributes.getAnnotationArray(arrayAttributeName);
+		AnnotationAttributes[] connectionEndpointsMetaData = enablePoolAttributes.getAnnotationArray(arrayAttributeName);
 
 		ConnectionEndpointList connectionEndpoints = new ConnectionEndpointList();
 
-		stream(nullSafeArray(connectionEndpointsMetaData, AnnotationAttributes.class))
-			.forEach(annotationAttributes ->
-				connectionEndpoints.add(newConnectionEndpoint((String) annotationAttributes.get("host"),
-					(Integer) annotationAttributes.get("port"))));
+		stream(nullSafeArray(connectionEndpointsMetaData, AnnotationAttributes.class)).forEach(
+				annotationAttributes -> connectionEndpoints.add(newConnectionEndpoint((String) annotationAttributes.get("host"),
+						(Integer) annotationAttributes.get("port"))));
 
-		Optional.ofNullable(enablePoolAttributes.getString(stringAttributeName))
-			.filter(StringUtils::hasText)
-			.ifPresent(hostsPorts ->
-				connectionEndpoints.add(ConnectionEndpointList.parse(defaultPort, hostsPorts.split(","))));
+		Optional.ofNullable(enablePoolAttributes.getString(stringAttributeName)).filter(StringUtils::hasText).ifPresent(
+				hostsPorts -> connectionEndpoints.add(ConnectionEndpointList.parse(defaultPort, hostsPorts.split(","))));
 
 		return connectionEndpoints;
 	}

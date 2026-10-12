@@ -1241,6 +1241,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		AtomicLong pingInterval = new AtomicLong(PoolFactory.DEFAULT_PING_INTERVAL);
 
 		AtomicReference<SocketFactory> socketFactory = new AtomicReference<>(PoolFactory.DEFAULT_SOCKET_FACTORY);
+		AtomicReference<String> availabilityZone = new AtomicReference<>(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 		AtomicReference<String> serverGroup = new AtomicReference<>(PoolFactory.DEFAULT_SERVER_GROUP);
 
 		List<InetSocketAddress> locators = new ArrayList<>();
@@ -1291,6 +1292,8 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		when(mockPoolFactory.setServerConnectionTimeout(anyInt()))
 				.thenAnswer(newSetter(serverConnectionTimeout, mockPoolFactory));
 
+		when(mockPoolFactory.setAvailabilityZone(anyString()))
+				.thenAnswer(newSetter(availabilityZone, () -> mockPoolFactory));
 		when(mockPoolFactory.setServerGroup(anyString())).thenAnswer(newSetter(serverGroup, () -> mockPoolFactory));
 
 		when(mockPoolFactory.setSocketBufferSize(anyInt())).thenAnswer(newSetter(socketBufferSize, mockPoolFactory));
@@ -1355,6 +1358,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			when(mockPool.getReadTimeout()).thenReturn(readTimeout.get());
 			when(mockPool.getRetryAttempts()).thenReturn(retryAttempts.get());
 			when(mockPool.getServerConnectionTimeout()).thenReturn(serverConnectionTimeout.get());
+			when(mockPool.getAvailabilityZone()).thenReturn(availabilityZone.get());
 			when(mockPool.getServerGroup()).thenReturn(serverGroup.get());
 			when(mockPool.getServers()).thenReturn(servers);
 			when(mockPool.getSocketBufferSize()).thenReturn(socketBufferSize.get());
@@ -2513,6 +2517,11 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			mockPoolFactory.setServerConnectionTimeout(invocation.getArgument(0));
 			return clientCacheFactorySpy;
 		}).when(clientCacheFactorySpy).setPoolServerConnectionTimeout(anyInt());
+
+		doAnswer(invocation -> {
+			mockPoolFactory.setAvailabilityZone(invocation.getArgument(0));
+			return clientCacheFactorySpy;
+		}).when(clientCacheFactorySpy).setPoolAvailabilityZone(anyString());
 
 		doAnswer(invocation -> {
 			mockPoolFactory.setServerGroup(invocation.getArgument(0));

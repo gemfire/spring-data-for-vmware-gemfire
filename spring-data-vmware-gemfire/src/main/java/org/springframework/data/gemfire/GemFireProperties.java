@@ -31,6 +31,7 @@ public enum GemFireProperties {
 	ACK_WAIT_THRESHOLD(ConfigurationProperties.ACK_WAIT_THRESHOLD, Long.class, 15),
 	ARCHIVE_DISK_SPACE_LIMIT(ConfigurationProperties.ARCHIVE_DISK_SPACE_LIMIT, Integer.class, 0),
 	ARCHIVE_FILE_SIZE_LIMIT(ConfigurationProperties.ARCHIVE_FILE_SIZE_LIMIT, Integer.class, 0),
+	AVAILABILITY_ZONE(ConfigurationProperties.AVAILABILITY_ZONE, String.class),
 	BIND_ADDRESS(ConfigurationProperties.BIND_ADDRESS, String.class),
 	CACHE_XML_FILE(ConfigurationProperties.CACHE_XML_FILE, String.class),
 	CONFLATE_EVENTS(ConfigurationProperties.CONFLATE_EVENTS, String.class, "server"),
@@ -64,6 +65,7 @@ public enum GemFireProperties {
 	MEMBER_TIMEOUT(ConfigurationProperties.MEMBER_TIMEOUT, Long.class, 5000L),
 	MEMBERSHIP_PORT_RANGE(ConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(ConfigurationProperties.NAME, String.class),
+	@Deprecated
 	REDUNDANCY_ZONE(ConfigurationProperties.REDUNDANCY_ZONE, String.class),
 	REMOTE_LOCATORS(ConfigurationProperties.REMOTE_LOCATORS, String.class),
 	REMOVE_UNRESPONSIVE_CLIENT(ConfigurationProperties.REMOVE_UNRESPONSIVE_CLIENT, Boolean.class, false),

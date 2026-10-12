@@ -15,7 +15,7 @@ import org.apache.geode.cache.query.QueryService;
 /**
  * {@link DelegatingPoolAdapter} is an abstract implementation of GemFire's {@link Pool} interface and extension of
  * {@link FactoryDefaultsPoolAdapter} that delegates operations to the provided {@link Pool} instance.
- *
+ * <p>
  * However, this implementation guards against a potentially <code>null</code> {@link Pool} reference by returning
  * default factory settings for the {@link Pool}'s configuration properties along with default behavior for operations
  * when the {@link Pool} reference is <code>null</code>.
@@ -53,247 +53,174 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 
 	@Override
 	public boolean isDestroyed() {
+		return Optional.ofNullable(getDelegate()).map(Pool::isDestroyed).orElseGet(super::isDestroyed);
+	}
 
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::isDestroyed)
-			.orElseGet(super::isDestroyed);
+	@Override
+	public String getAvailabilityZone() {
+		return Optional.ofNullable(getDelegate()).map(Pool::getAvailabilityZone).orElseGet(super::getAvailabilityZone);
 	}
 
 	@Override
 	public int getFreeConnectionTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getFreeConnectionTimeout)
-			.orElseGet(super::getFreeConnectionTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getFreeConnectionTimeout)
+				.orElseGet(super::getFreeConnectionTimeout);
 	}
 
 	@Override
 	public long getIdleTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getIdleTimeout)
-			.orElseGet(super::getIdleTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getIdleTimeout).orElseGet(super::getIdleTimeout);
 	}
 
 	@Override
 	public int getLoadConditioningInterval() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getLoadConditioningInterval)
-			.orElseGet(super::getLoadConditioningInterval);
+		return Optional.ofNullable(getDelegate()).map(Pool::getLoadConditioningInterval)
+				.orElseGet(super::getLoadConditioningInterval);
 	}
 
 	@Override
 	public List<InetSocketAddress> getLocators() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getLocators)
-			.orElseGet(super::getLocators);
+		return Optional.ofNullable(getDelegate()).map(Pool::getLocators).orElseGet(super::getLocators);
 	}
 
 	@Override
 	public int getMaxConnections() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getMaxConnections)
-			.orElseGet(super::getMaxConnections);
+		return Optional.ofNullable(getDelegate()).map(Pool::getMaxConnections).orElseGet(super::getMaxConnections);
 	}
 
 	@Override
 	public int getMinConnections() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getMinConnections)
-			.orElseGet(super::getMinConnections);
+		return Optional.ofNullable(getDelegate()).map(Pool::getMinConnections).orElseGet(super::getMinConnections);
 	}
 
 	@Override
 	public int getMaxConnectionsPerServer() {
-
-		return Optional.ofNullable(getDelegate())
-				.map(Pool::getMaxConnectionsPerServer)
+		return Optional.ofNullable(getDelegate()).map(Pool::getMaxConnectionsPerServer)
 				.orElseGet(super::getMaxConnectionsPerServer);
 	}
 
 	@Override
 	public int getMinConnectionsPerServer() {
-
-		return Optional.ofNullable(getDelegate())
-				.map(Pool::getMinConnectionsPerServer)
+		return Optional.ofNullable(getDelegate()).map(Pool::getMinConnectionsPerServer)
 				.orElseGet(super::getMinConnectionsPerServer);
 	}
 
 	@Override
 	public boolean getMultiuserAuthentication() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getMultiuserAuthentication)
-			.orElseGet(super::getMultiuserAuthentication);
+		return Optional.ofNullable(getDelegate()).map(Pool::getMultiuserAuthentication)
+				.orElseGet(super::getMultiuserAuthentication);
 	}
 
 	@Override
 	public String getName() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getName)
-			.orElseGet(super::getName);
+		return Optional.ofNullable(getDelegate()).map(Pool::getName).orElseGet(super::getName);
 	}
 
 	@Override
 	public List<InetSocketAddress> getOnlineLocators() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getOnlineLocators)
-			.orElseGet(super::getOnlineLocators);
+		return Optional.ofNullable(getDelegate()).map(Pool::getOnlineLocators).orElseGet(super::getOnlineLocators);
 	}
 
 	@Override
 	public int getPendingEventCount() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getPendingEventCount)
-			.orElse(0);
+		return Optional.ofNullable(getDelegate()).map(Pool::getPendingEventCount).orElse(0);
 	}
 
 	@Override
 	public long getPingInterval() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getPingInterval)
-			.orElseGet(super::getPingInterval);
+		return Optional.ofNullable(getDelegate()).map(Pool::getPingInterval).orElseGet(super::getPingInterval);
 	}
 
 	@Override
 	public boolean getPRSingleHopEnabled() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getPRSingleHopEnabled)
-			.orElseGet(super::getPRSingleHopEnabled);
+		return Optional.ofNullable(getDelegate()).map(Pool::getPRSingleHopEnabled).orElseGet(super::getPRSingleHopEnabled);
 	}
 
 	@Override
 	public int getPingTimeout() {
-		return Optional.ofNullable(getDelegate())
-				.map(Pool::getPingTimeout)
-				.orElseGet(super::getPingTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getPingTimeout).orElseGet(super::getPingTimeout);
 	}
 
 	@Override
 	public QueryService getQueryService() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getQueryService)
-			.orElseGet(super::getQueryService);
+		return Optional.ofNullable(getDelegate()).map(Pool::getQueryService).orElseGet(super::getQueryService);
 	}
 
 	@Override
 	public int getReadTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getReadTimeout)
-			.orElseGet(super::getReadTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getReadTimeout).orElseGet(super::getReadTimeout);
 	}
 
 	@Override
 	public int getRetryAttempts() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getRetryAttempts)
-			.orElseGet(super::getRetryAttempts);
+		return Optional.ofNullable(getDelegate()).map(Pool::getRetryAttempts).orElseGet(super::getRetryAttempts);
 	}
 
 	@Override
 	public int getServerConnectionTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getServerConnectionTimeout)
-			.orElseGet(super::getServerConnectionTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getServerConnectionTimeout)
+				.orElseGet(super::getServerConnectionTimeout);
 	}
 
 	@Override
 	public String getServerGroup() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getServerGroup)
-			.orElseGet(super::getServerGroup);
+		return Optional.ofNullable(getDelegate()).map(Pool::getServerGroup).orElseGet(super::getServerGroup);
 	}
 
 	@Override
 	public List<InetSocketAddress> getServers() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getServers)
-			.orElseGet(super::getServers);
+		return Optional.ofNullable(getDelegate()).map(Pool::getServers).orElseGet(super::getServers);
 	}
 
 	@Override
 	public int getSocketBufferSize() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSocketBufferSize)
-			.orElseGet(super::getSocketBufferSize);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSocketBufferSize).orElseGet(super::getSocketBufferSize);
 	}
 
 	@Override
 	public int getSocketConnectTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSocketConnectTimeout)
-			.orElseGet(super::getSocketConnectTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSocketConnectTimeout)
+				.orElseGet(super::getSocketConnectTimeout);
 	}
 
 	@Override
 	public SocketFactory getSocketFactory() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSocketFactory)
-			.orElseGet(super::getSocketFactory);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSocketFactory).orElseGet(super::getSocketFactory);
 	}
 
 	@Override
 	public int getStatisticInterval() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getStatisticInterval)
-			.orElseGet(super::getStatisticInterval);
+		return Optional.ofNullable(getDelegate()).map(Pool::getStatisticInterval).orElseGet(super::getStatisticInterval);
 	}
 
 	@Override
 	public int getSubscriptionAckInterval() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSubscriptionAckInterval)
-			.orElseGet(super::getSubscriptionAckInterval);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSubscriptionAckInterval)
+				.orElseGet(super::getSubscriptionAckInterval);
 	}
 
 	@Override
 	public boolean getSubscriptionEnabled() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSubscriptionEnabled)
-			.orElseGet(super::getSubscriptionEnabled);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSubscriptionEnabled)
+				.orElseGet(super::getSubscriptionEnabled);
 	}
 
 	@Override
 	public int getSubscriptionMessageTrackingTimeout() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSubscriptionMessageTrackingTimeout)
-			.orElseGet(super::getSubscriptionMessageTrackingTimeout);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSubscriptionMessageTrackingTimeout)
+				.orElseGet(super::getSubscriptionMessageTrackingTimeout);
 	}
 
 	@Override
 	public int getSubscriptionRedundancy() {
-
-		return Optional.ofNullable(getDelegate())
-			.map(Pool::getSubscriptionRedundancy)
-			.orElseGet(super::getSubscriptionRedundancy);
+		return Optional.ofNullable(getDelegate()).map(Pool::getSubscriptionRedundancy)
+				.orElseGet(super::getSubscriptionRedundancy);
 	}
 
 	@Override
 	public int getSubscriptionTimeoutMultiplier() {
 		return Optional.ofNullable(getDelegate()).map(Pool::getSubscriptionTimeoutMultiplier)
-			.orElseGet(super::getSubscriptionTimeoutMultiplier);
+				.orElseGet(super::getSubscriptionTimeoutMultiplier);
 	}
 
 	@Override

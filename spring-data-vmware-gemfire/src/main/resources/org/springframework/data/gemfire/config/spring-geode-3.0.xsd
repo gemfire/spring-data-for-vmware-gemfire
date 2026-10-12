@@ -312,6 +312,7 @@ Comma-delimited list of Locator endpoints used by this Pool in the form of: host
 			<xsd:attribute name="max-connections" type="xsd:string" use="optional"/>
 			<xsd:attribute name="min-connections" type="xsd:string" use="optional"/>
 			<xsd:attribute name="max-connections-per-server" type="xsd:string" use="optional"/>
+			<xsd:attribute name="availability-zone" type="xsd:string" use="optional"/>
 			<xsd:attribute name="min-connections-per-server" type="xsd:string" use="optional"/>
 			<xsd:attribute name="multi-user-authentication" type="xsd:string" use="optional"/>
 			<xsd:attribute name="ping-interval" type="xsd:string" use="optional"/>

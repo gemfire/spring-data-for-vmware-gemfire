@@ -367,6 +367,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setReadTimeout(20000);
 		clientCacheFactoryBean.setRetryAttempts(2);
 		clientCacheFactoryBean.setServerConnectionTimeout(12345);
+		clientCacheFactoryBean.setAvailabilityZone("TestZone");
 		clientCacheFactoryBean.setServerGroup("TestGroup");
 		clientCacheFactoryBean.setSocketBufferSize(16384);
 		clientCacheFactoryBean.setSocketConnectTimeout(5000);
@@ -396,6 +397,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getReadTimeout()).isEqualTo(20000);
 		assertThat(clientCacheFactoryBean.getRetryAttempts()).isEqualTo(2);
 		assertThat(clientCacheFactoryBean.getServerConnectionTimeout()).isEqualTo(12345);
+		assertThat(clientCacheFactoryBean.getAvailabilityZone()).isEqualTo("TestZone");
 		assertThat(clientCacheFactoryBean.getServerGroup()).isEqualTo("TestGroup");
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 		assertThat(clientCacheFactoryBean.getSocketBufferSize()).isEqualTo(16384);
@@ -425,6 +427,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolReadTimeout(eq(20000));
 		verify(mockClientCacheFactory, times(1)).setPoolRetryAttempts(eq(2));
 		verify(mockClientCacheFactory, times(1)).setPoolServerConnectionTimeout(eq(12345));
+		verify(mockClientCacheFactory, times(1)).setPoolAvailabilityZone(eq("TestZone"));
 		verify(mockClientCacheFactory, times(1)).setPoolServerGroup(eq("TestGroup"));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketBufferSize(eq(16384));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketConnectTimeout(eq(5000));
@@ -459,6 +462,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getReadTimeout()).thenReturn(20000);
 		when(mockPool.getRetryAttempts()).thenReturn(1);
 		when(mockPool.getServerConnectionTimeout()).thenReturn(1248);
+		when(mockPool.getAvailabilityZone()).thenReturn("TestZone");
 		when(mockPool.getServerGroup()).thenReturn("TestGroup");
 		when(mockPool.getSocketBufferSize()).thenReturn(8192);
 		when(mockPool.getSocketConnectTimeout()).thenReturn(5000);
@@ -489,6 +493,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getReadTimeout()).isNull();
 		assertThat(clientCacheFactoryBean.getRetryAttempts()).isNull();
 		assertThat(clientCacheFactoryBean.getServerConnectionTimeout()).isNull();
+		assertThat(clientCacheFactoryBean.getAvailabilityZone()).isNull();
 		assertThat(clientCacheFactoryBean.getServerGroup()).isNull();
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 		assertThat(clientCacheFactoryBean.getSocketBufferSize()).isNull();
@@ -516,6 +521,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockPool, times(1)).getReadTimeout();
 		verify(mockPool, times(1)).getRetryAttempts();
 		verify(mockPool, times(1)).getServerConnectionTimeout();
+		verify(mockPool, times(1)).getAvailabilityZone();
 		verify(mockPool, times(1)).getServerGroup();
 		verify(mockPool, times(1)).getServers();
 		verify(mockPool, times(1)).getSocketBufferSize();
@@ -537,6 +543,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolReadTimeout(eq(20000));
 		verify(mockClientCacheFactory, times(1)).setPoolRetryAttempts(eq(1));
 		verify(mockClientCacheFactory, times(1)).setPoolServerConnectionTimeout(eq(1248));
+		verify(mockClientCacheFactory, times(1)).setPoolAvailabilityZone(eq("TestZone"));
 		verify(mockClientCacheFactory, times(1)).setPoolServerGroup(eq("TestGroup"));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketBufferSize(eq(8192));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketConnectTimeout(eq(5000));
@@ -570,6 +577,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getReadTimeout()).thenReturn(30000);
 		when(mockPool.getRetryAttempts()).thenReturn(1);
 		when(mockPool.getServerConnectionTimeout()).thenReturn(12345);
+		when(mockPool.getAvailabilityZone()).thenReturn("TestZone");
 		when(mockPool.getServerGroup()).thenReturn("TestServerGroup");
 		when(mockPool.getServers()).thenReturn(Collections.singletonList(new InetSocketAddress("localhost", 12480)));
 		when(mockPool.getSocketBufferSize()).thenReturn(8192);
@@ -590,6 +598,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setPool(mockPool);
 		clientCacheFactoryBean.setPrSingleHopEnabled(true);
 		clientCacheFactoryBean.setServerConnectionTimeout(1248);
+		clientCacheFactoryBean.setAvailabilityZone("TestZone");
 		clientCacheFactoryBean.setServerGroup("TestGroup");
 		clientCacheFactoryBean.setSocketBufferSize(16384);
 		clientCacheFactoryBean.setSocketConnectTimeout(10000);
@@ -614,6 +623,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getReadTimeout()).isNull();
 		assertThat(clientCacheFactoryBean.getRetryAttempts()).isNull();
 		assertThat(clientCacheFactoryBean.getServerConnectionTimeout()).isEqualTo(1248);
+		assertThat(clientCacheFactoryBean.getAvailabilityZone()).isEqualTo("TestZone");
 		assertThat(clientCacheFactoryBean.getServerGroup()).isEqualTo("TestGroup");
 		assertThat(clientCacheFactoryBean.getServers().isEmpty()).isTrue();
 		assertThat(clientCacheFactoryBean.getSocketBufferSize()).isEqualTo(16384);
@@ -641,6 +651,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockPool, times(1)).getReadTimeout();
 		verify(mockPool, times(1)).getRetryAttempts();
 		verify(mockPool, never()).getServerConnectionTimeout();
+		verify(mockPool, never()).getAvailabilityZone();
 		verify(mockPool, never()).getServerGroup();
 		verify(mockPool, never()).getServers();
 		verify(mockPool, never()).getSocketBufferSize();
@@ -662,6 +673,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolReadTimeout(eq(30000));
 		verify(mockClientCacheFactory, times(1)).setPoolRetryAttempts(eq(1));
 		verify(mockClientCacheFactory, times(1)).setPoolServerConnectionTimeout(eq(1248));
+		verify(mockClientCacheFactory, times(1)).setPoolAvailabilityZone(eq("TestZone"));
 		verify(mockClientCacheFactory, times(1)).setPoolServerGroup(eq("TestGroup"));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketBufferSize(eq(16384));
 		verify(mockClientCacheFactory, times(1)).setPoolSocketConnectTimeout(eq(10000));
@@ -1077,6 +1089,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPrSingleHopEnabled()).isNull();
 		assertThat(clientCacheFactoryBean.getReadTimeout()).isNull();
 		assertThat(clientCacheFactoryBean.getRetryAttempts()).isNull();
+		assertThat(clientCacheFactoryBean.getAvailabilityZone()).isNull();
 		assertThat(clientCacheFactoryBean.getServerGroup()).isNull();
 		assertThat(clientCacheFactoryBean.getSocketBufferSize()).isNull();
 		assertThat(clientCacheFactoryBean.getSocketConnectTimeout()).isNull();
@@ -1096,6 +1109,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		clientCacheFactoryBean.setPrSingleHopEnabled(true);
 		clientCacheFactoryBean.setReadTimeout(30000);
 		clientCacheFactoryBean.setRetryAttempts(1);
+		clientCacheFactoryBean.setAvailabilityZone("test");
 		clientCacheFactoryBean.setServerGroup("test");
 		clientCacheFactoryBean.setSocketBufferSize(16384);
 		clientCacheFactoryBean.setSocketConnectTimeout(5000);
@@ -1115,6 +1129,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThat(clientCacheFactoryBean.getPrSingleHopEnabled()).isTrue();
 		assertThat(clientCacheFactoryBean.getReadTimeout()).isEqualTo(30000);
 		assertThat(clientCacheFactoryBean.getRetryAttempts()).isEqualTo(1);
+		assertThat(clientCacheFactoryBean.getAvailabilityZone()).isEqualTo("test");
 		assertThat(clientCacheFactoryBean.getServerGroup()).isEqualTo("test");
 		assertThat(clientCacheFactoryBean.getSocketBufferSize()).isEqualTo(16384);
 		assertThat(clientCacheFactoryBean.getSocketConnectTimeout()).isEqualTo(5000);

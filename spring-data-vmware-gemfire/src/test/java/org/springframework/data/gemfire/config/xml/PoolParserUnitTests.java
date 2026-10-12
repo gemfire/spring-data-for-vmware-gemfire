@@ -117,6 +117,7 @@ public class PoolParserUnitTests {
 		when(mockPoolElement.getAttribute(eq("read-timeout"))).thenReturn("20000");
 		when(mockPoolElement.getAttribute(eq("retry-attempts"))).thenReturn("1");
 		when(mockPoolElement.getAttribute(eq("server-group"))).thenReturn("TestGroup");
+		when(mockPoolElement.getAttribute(eq("availability-zone"))).thenReturn("TestZone");
 		when(mockPoolElement.getAttribute(eq("socket-buffer-size"))).thenReturn("16384");
 		when(mockPoolElement.getAttribute(eq("socket-connect-timeout"))).thenReturn("5000");
 		when(mockPoolElement.getAttribute(eq("statistic-interval"))).thenReturn("500");
@@ -165,6 +166,7 @@ public class PoolParserUnitTests {
 		assertPropertyValue(poolDefinition, "readTimeout", "20000");
 		assertPropertyValue(poolDefinition, "retryAttempts", "1");
 		assertPropertyValue(poolDefinition, "serverGroup", "TestGroup");
+		assertPropertyValue(poolDefinition, "availabilityZone", "TestZone");
 		assertPropertyValue(poolDefinition, "socketBufferSize", "16384");
 		assertPropertyValue(poolDefinition, "socketConnectTimeout", "5000");
 		assertPropertyValue(poolDefinition, "statisticInterval", "500");
@@ -203,6 +205,7 @@ public class PoolParserUnitTests {
 		verify(mockPoolElement, times(1)).getAttribute(eq("read-timeout"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("retry-attempts"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("server-group"));
+		verify(mockPoolElement, times(1)).getAttribute(eq("availability-zone"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("socket-buffer-size"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("socket-connect-timeout"));
 		verify(mockPoolElement, times(1)).getAttribute(eq("statistic-interval"));

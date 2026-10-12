@@ -106,6 +106,7 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setRetryAttempts(10);
 		poolFactoryBean.setServerConnectionTimeout(10000);
 		poolFactoryBean.setServerGroup("TestServerGroup");
+		poolFactoryBean.setAvailabilityZone("TestAvailabilityZone");
 		poolFactoryBean.setServers(Collections.singletonList(newConnectionEndpoint("localhost", 12345)));
 		poolFactoryBean.setSocketBufferSize(32768);
 		poolFactoryBean.setSocketConnectTimeout(5000);
@@ -136,6 +137,7 @@ public class PoolFactoryBeanUnitTests {
 		verify(mockPoolFactory, times(1)).setRetryAttempts(eq(10));
 		verify(mockPoolFactory, times(1)).setServerConnectionTimeout(eq(10000));
 		verify(mockPoolFactory, times(1)).setServerGroup(eq("TestServerGroup"));
+		verify(mockPoolFactory, times(1)).setAvailabilityZone(eq("TestAvailabilityZone"));
 		verify(mockPoolFactory, times(1)).setSocketBufferSize(eq(32768));
 		verify(mockPoolFactory, times(1)).setSocketConnectTimeout(eq(5000));
 		verify(mockPoolFactory, times(1)).setSocketFactory(eq(mockSocketFactory));
@@ -378,6 +380,7 @@ public class PoolFactoryBeanUnitTests {
 		poolFactoryBean.setRetryAttempts(1);
 		poolFactoryBean.setServerConnectionTimeout(10000);
 		poolFactoryBean.setServerGroup("TestGroup");
+		poolFactoryBean.setAvailabilityZone("TestZone");
 		poolFactoryBean.setServers(ArrayUtils.asArray(newConnectionEndpoint("boombox", 12480)));
 		poolFactoryBean.setSocketBufferSize(16384);
 		poolFactoryBean.setSocketConnectTimeout(5000);
@@ -409,6 +412,7 @@ public class PoolFactoryBeanUnitTests {
 		assertThat(pool.getRetryAttempts()).isEqualTo(1);
 		assertThat(pool.getServerConnectionTimeout()).isEqualTo(10000);
 		assertThat(pool.getServerGroup()).isEqualTo("TestGroup");
+		assertThat(pool.getAvailabilityZone()).isEqualTo("TestZone");
 		assertThat(pool.getServers()).isEqualTo(Collections.singletonList(newSocketAddress("boombox", 12480)));
 		assertThat(pool.getSocketBufferSize()).isEqualTo(16384);
 		assertThat(pool.getSocketConnectTimeout()).isEqualTo(5000);

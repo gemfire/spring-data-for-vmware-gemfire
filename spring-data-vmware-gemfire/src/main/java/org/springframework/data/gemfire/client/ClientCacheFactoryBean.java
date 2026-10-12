@@ -119,6 +119,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	private SocketFactory socketFactory;
 
+	private String availabilityZone;
 	private String durableClientId;
 	private String poolName;
 	private String serverGroup;
@@ -297,6 +298,7 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		clientCacheFactory.setPoolReadTimeout(pool.getReadTimeout(getReadTimeout()));
 		clientCacheFactory.setPoolRetryAttempts(pool.getRetryAttempts(getRetryAttempts()));
 		clientCacheFactory.setPoolServerConnectionTimeout(pool.getServerConnectionTimeout(getServerConnectionTimeout()));
+		clientCacheFactory.setPoolAvailabilityZone(pool.getAvailabilityZone(getAvailabilityZone()));
 		clientCacheFactory.setPoolServerGroup(pool.getServerGroup(getServerGroup()));
 		clientCacheFactory.setPoolSocketBufferSize(pool.getSocketBufferSize(getSocketBufferSize()));
 		clientCacheFactory.setPoolSocketConnectTimeout(pool.getSocketConnectTimeout(getSocketConnectTimeout()));
@@ -841,6 +843,14 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 
 	public Integer getServerConnectionTimeout() {
 		return this.serverConnectionTimeout;
+	}
+
+	public void setAvailabilityZone(String availabilityZone) {
+		this.availabilityZone = availabilityZone;
+	}
+
+	public String getAvailabilityZone() {
+		return this.availabilityZone;
 	}
 
 	public void setServerGroup(String serverGroup) {

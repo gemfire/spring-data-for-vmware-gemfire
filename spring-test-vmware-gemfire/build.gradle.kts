@@ -64,6 +64,8 @@ publishingDetails {
 }
 
 dependencies {
+    api(platform(libs.spring.framework.bom))
+    api(platform(libs.spring.data.bom))
     api(libs.multithreadedtc)
     api(libs.junit)
     api(libs.assertJ)

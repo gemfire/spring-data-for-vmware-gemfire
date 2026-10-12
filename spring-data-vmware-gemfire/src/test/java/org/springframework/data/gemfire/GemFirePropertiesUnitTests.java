@@ -78,6 +78,7 @@ public class GemFirePropertiesUnitTests {
 				    "security-peer-authenticator", // replaced by SecurityManager
 				    "conserve-sockets", // deprecated in GemFire 10.3
 				    "distributed-transactions", // being removed
+            "redundancy-zone", // replaced by 'availability-zone'
             "statistic-sampling-enabled",
             "security-shiro-init"
     );

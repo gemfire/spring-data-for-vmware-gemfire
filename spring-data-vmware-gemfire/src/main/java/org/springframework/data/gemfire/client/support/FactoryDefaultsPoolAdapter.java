@@ -143,6 +143,11 @@ public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
 	}
 
 	@Override
+	public String getAvailabilityZone() {
+		return PoolFactory.DEFAULT_AVAILABILITY_ZONE;
+	}
+
+	@Override
 	public int getSocketConnectTimeout() {
 		return PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT;
 	}

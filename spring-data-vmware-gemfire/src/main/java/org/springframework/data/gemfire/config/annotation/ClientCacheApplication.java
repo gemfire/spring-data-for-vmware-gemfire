@@ -323,6 +323,17 @@ public @interface ClientCacheApplication {
 	int serverConnectionTimeout() default PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT;
 
 	/**
+	 * Configures the {@link String name} of the availability zone used by the {@literal DEFAULT} {@link Pool}.
+	 *
+	 * Defaults to {@link PoolFactory#DEFAULT_AVAILABILITY_ZONE}.
+	 *
+	 * Use either the {@literal spring.data.gemfire.pool.default.availability-zone} property
+	 * or the {@literal spring.data.gemfire.pool.availability-zone} property
+	 * in {@literal application.properties}.
+	 */
+	String availabilityZone() default PoolFactory.DEFAULT_AVAILABILITY_ZONE;
+
+	/**
 	 * Configures the {@link String name} of the group that all servers in which the {@literal DEFAULT} {@link Pool}
 	 * connects to must belong to.
 	 *

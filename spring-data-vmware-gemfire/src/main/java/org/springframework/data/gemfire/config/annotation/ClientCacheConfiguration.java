@@ -102,6 +102,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	private Integer pingTimeout;
 
+	private String availabilityZone;
 	private String durableClientId;
 	private String serverGroup;
 	private String socketFactoryBeanName;
@@ -140,6 +141,7 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 		gemfireCache.setReadyForEvents(getReadyForEvents());
 		gemfireCache.setRetryAttempts(getRetryAttempts());
 		gemfireCache.setServerConnectionTimeout(getServerConnectionTimeout());
+		gemfireCache.setAvailabilityZone(getAvailabilityZone());
 		gemfireCache.setServerGroup(getServerGroup());
 		gemfireCache.setServers(getPoolServers());
 		gemfireCache.setSocketBufferSize(getSocketBufferSize());
@@ -329,6 +331,11 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 				resolveProperty(namedPoolProperty("default", "server-connection-timeout"),
 				resolveProperty(poolProperty("server-connection-timeout"),
 				(Integer) clientCacheApplicationAttributes.get("serverConnectionTimeout"))));
+
+			setAvailabilityZone(
+				resolveProperty(namedPoolProperty("default", "availability-zone"),
+				resolveProperty(poolProperty("availability-zone"),
+				(String) clientCacheApplicationAttributes.get("availabilityZone"))));
 
 			setServerGroup(
 				resolveProperty(namedPoolProperty("default", "server-group"),
@@ -622,6 +629,14 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 
 	protected Integer getServerConnectionTimeout() {
 		return this.serverConnectionTimeout;
+	}
+
+	void setAvailabilityZone(String availabilityZone) {
+		this.availabilityZone = availabilityZone;
+	}
+
+	protected String getAvailabilityZone() {
+		return this.availabilityZone;
 	}
 
 	void setServerGroup(String serverGroup) {

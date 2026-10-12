@@ -87,6 +87,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		when(this.mockPool.getRetryAttempts()).thenReturn(1);
 		when(this.mockPool.getServerConnectionTimeout()).thenReturn(10000);
 		when(this.mockPool.getServerGroup()).thenReturn("TestGroup");
+		when(this.mockPool.getAvailabilityZone()).thenReturn("TestZone");
 		when(this.mockPool.getServers()).thenReturn(Collections.singletonList(
 			newSocketAddress("localhost", GemfireUtils.DEFAULT_CACHE_SERVER_PORT)));
 		when(this.mockPool.getSocketBufferSize()).thenReturn(16384);
@@ -332,6 +333,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getRetryAttempts(2)).isEqualTo(2);
 		assertThat(this.poolAdapter.getServerConnectionTimeout(123)).isEqualTo(123);
 		assertThat(this.poolAdapter.getServerGroup("MockGroup")).isEqualTo("MockGroup");
+		assertThat(this.poolAdapter.getAvailabilityZone("MockZone")).isEqualTo("MockZone");
 		assertThat(this.poolAdapter.getServers(defaultServer)).isEqualTo(defaultServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(8192)).isEqualTo(8192);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(10000)).isEqualTo(10000);
@@ -374,6 +376,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getRetryAttempts(null)).isEqualTo(1);
 		assertThat(this.poolAdapter.getServerConnectionTimeout(null)).isEqualTo(10000);
 		assertThat(this.poolAdapter.getServerGroup("MockGroup")).isEqualTo("MockGroup");
+		assertThat(this.poolAdapter.getAvailabilityZone("MockZone")).isEqualTo("MockZone");
 		assertThat(this.poolAdapter.getServers(null)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(32768)).isEqualTo(32768);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(null)).isEqualTo(5000);
@@ -429,6 +432,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getRetryAttempts(null)).isEqualTo(1);
 		assertThat(this.poolAdapter.getServerConnectionTimeout(null)).isEqualTo(10000);
 		assertThat(this.poolAdapter.getServerGroup(null)).isEqualTo("TestGroup");
+		assertThat(this.poolAdapter.getAvailabilityZone(null)).isEqualTo("TestZone");
 		assertThat(this.poolAdapter.getServers(null)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(null)).isEqualTo(16384);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(null)).isEqualTo(5000);
@@ -456,6 +460,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getRetryAttempts();
 		verify(this.mockPool, times(1)).getServerConnectionTimeout();
 		verify(this.mockPool, times(1)).getServerGroup();
+		verify(this.mockPool, times(1)).getAvailabilityZone();
 		verify(this.mockPool, times(1)).getServers();
 		verify(this.mockPool, times(1)).getSocketBufferSize();
 		verify(this.mockPool, times(1)).getSocketConnectTimeout();
@@ -494,6 +499,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		assertThat(this.poolAdapter.getRetryAttempts(4)).isEqualTo(1);
 		assertThat(this.poolAdapter.getServerConnectionTimeout(12345)).isEqualTo(10000);
 		assertThat(this.poolAdapter.getServerGroup("MockGroup")).isEqualTo("TestGroup");
+		assertThat(this.poolAdapter.getAvailabilityZone("MockZone")).isEqualTo("TestZone");
 		assertThat(this.poolAdapter.getServers(defaultServer)).isEqualTo(poolServer);
 		assertThat(this.poolAdapter.getSocketBufferSize(8192)).isEqualTo(16384);
 		assertThat(this.poolAdapter.getSocketConnectTimeout(8192)).isEqualTo(5000);
@@ -521,6 +527,7 @@ public class DefaultableDelegatingPoolAdapterTest {
 		verify(this.mockPool, times(1)).getRetryAttempts();
 		verify(this.mockPool, times(1)).getServerConnectionTimeout();
 		verify(this.mockPool, times(1)).getServerGroup();
+		verify(this.mockPool, times(1)).getAvailabilityZone();
 		verify(this.mockPool, times(1)).getServers();
 		verify(this.mockPool, times(1)).getSocketBufferSize();
 		verify(this.mockPool, times(1)).getSocketConnectTimeout();

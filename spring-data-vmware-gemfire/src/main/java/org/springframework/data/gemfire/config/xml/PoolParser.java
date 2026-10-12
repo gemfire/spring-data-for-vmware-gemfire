@@ -101,6 +101,7 @@ class PoolParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, poolBuilder, "retry-attempts");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "server-group");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "socket-buffer-size");
+		ParsingUtils.setPropertyValue(element, poolBuilder, "availability-zone");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "socket-connect-timeout");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "statistic-interval");
 		ParsingUtils.setPropertyValue(element, poolBuilder, "subscription-ack-interval");

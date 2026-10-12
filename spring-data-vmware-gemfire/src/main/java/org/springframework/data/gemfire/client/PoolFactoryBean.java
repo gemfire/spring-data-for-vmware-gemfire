@@ -4,6 +4,19 @@
  */
 package org.springframework.data.gemfire.client;
 
+import static java.util.stream.StreamSupport.stream;
+import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
+import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeIterable;
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
+import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
+
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
@@ -26,27 +39,11 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static java.util.stream.StreamSupport.stream;
-import static org.springframework.data.gemfire.util.ArrayUtils.nullSafeArray;
-import static org.springframework.data.gemfire.util.CollectionUtils.nullSafeIterable;
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalStateException;
-
 /**
- * Spring {@link FactoryBean} used to construct, configure and initialize a {@link Pool}.
- *
- * If a new {@link Pool} is created, its lifecycle is bound to that of this declaring {@link FactoryBean}
- * and indirectly, the Spring container.
- *
- * If a {@link Pool} having the configured {@link String name} already exists, then the existing {@link Pool}
- * will be returned as is without any modifications and its lifecycle will be unaffected by this {@link FactoryBean}.
+ * Spring {@link FactoryBean} used to construct, configure and initialize a {@link Pool}. If a new {@link Pool} is
+ * created, its lifecycle is bound to that of this declaring {@link FactoryBean} and indirectly, the Spring container.
+ * If a {@link Pool} having the configured {@link String name} already exists, then the existing {@link Pool} will be
+ * returned as is without any modifications and its lifecycle will be unaffected by this {@link FactoryBean}.
  *
  * @author Costin Leau
  * @author John Blum
@@ -81,6 +78,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	private boolean prSingleHopEnabled = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
 	private boolean subscriptionEnabled = PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
 
+	private String availabilityZone = PoolFactory.DEFAULT_AVAILABILITY_ZONE;
 	private int freeConnectionTimeout = PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
 	private int loadConditioningInterval = PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
 	private int maxConnections = PoolFactory.DEFAULT_MAX_CONNECTIONS;
@@ -111,16 +109,15 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 	private volatile Pool pool;
 
-	private final PoolConfigurer xmlDeclaredServersPoolConfigurer = (beanName, bean) ->
-		bean.addServers(this.xmlDeclaredServers);
+	private final PoolConfigurer xmlDeclaredServersPoolConfigurer = (beanName, bean) -> bean
+			.addServers(this.xmlDeclaredServers);
 
-	private final PoolConfigurer xmlDeclaredLocatorsPoolConfigurer = (beanName, bean) ->
-		bean.addLocators(this.xmlDeclaredLocators);
+	private final PoolConfigurer xmlDeclaredLocatorsPoolConfigurer = (beanName, bean) -> bean
+			.addLocators(this.xmlDeclaredLocators);
 
 	private final PoolConfigurer compositePoolConfigurer = (beanName, bean) -> {
 
-		List<PoolConfigurer> allPoolConfigurers =
-			new ArrayList<>(CollectionUtils.nullSafeSize(this.poolConfigurers) + 2);
+		List<PoolConfigurer> allPoolConfigurers = new ArrayList<>(CollectionUtils.nullSafeSize(this.poolConfigurers) + 2);
 
 		allPoolConfigurers.add(this.xmlDeclaredLocatorsPoolConfigurer);
 		allPoolConfigurers.add(this.xmlDeclaredServersPoolConfigurer);
@@ -165,9 +162,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			this.springManagedPool = false;
 
 			logDebug(() -> String.format("Pool [%s] already exists; Using existing Pool; PoolConfigurers will not be applied",
-				this.pool.getName()));
-		}
-		else {
+					this.pool.getName()));
+		} else {
 			logDebug("Pool [%s] not found; Lazily creating new Pool...", getName());
 			applyPoolConfigurers();
 		}
@@ -178,19 +174,16 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	private String resolvePoolName() {
-
 		if (!StringUtils.hasText(getName())) {
-			setName(Optional.ofNullable(getBeanName())
-				.filter(StringUtils::hasText)
-				.orElseThrow(() -> newIllegalArgumentException("Pool name is required")));
+			setName(Optional.ofNullable(getBeanName()).filter(StringUtils::hasText)
+					.orElseThrow(() -> newIllegalArgumentException("Pool name is required")));
 		}
 
 		return getName();
 	}
 
 	/**
-	 * Applies the composite {@link PoolConfigurer} object to customize the configuration
-	 * of this {@link PoolFactoryBean}.
+	 * Applies the composite {@link PoolConfigurer} object to customize the configuration of this {@link PoolFactoryBean}.
 	 *
 	 * @see #applyPoolConfigurers(PoolConfigurer...)
 	 * @see #getCompositePoolConfigurer()
@@ -200,8 +193,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Null-safe operation to apply the given array of {@link PoolConfigurer PoolConfigurers}
-	 * to this {@link PoolFactoryBean}.
+	 * Null-safe operation to apply the given array of {@link PoolConfigurer PoolConfigurers} to this
+	 * {@link PoolFactoryBean}.
 	 *
 	 * @param poolConfigurers array of {@link PoolConfigurer PoolConfigurers} applied to this {@link PoolFactoryBean}.
 	 * @see PoolConfigurer
@@ -212,16 +205,16 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Null-safe operation to apply the given {@link Iterable} of {@link PoolConfigurer PoolConfigurers}
-	 * to this {@link PoolFactoryBean}.
+	 * Null-safe operation to apply the given {@link Iterable} of {@link PoolConfigurer PoolConfigurers} to this
+	 * {@link PoolFactoryBean}.
 	 *
-	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers}
-	 * applied to this {@link PoolFactoryBean}.
+	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers} applied to this
+	 *          {@link PoolFactoryBean}.
 	 * @see PoolConfigurer
 	 */
 	protected void applyPoolConfigurers(Iterable<PoolConfigurer> poolConfigurers) {
 		stream(nullSafeIterable(poolConfigurers).spliterator(), false)
-			.forEach(poolConfigurer -> poolConfigurer.configure(getName(), this));
+				.forEach(poolConfigurer -> poolConfigurer.configure(getName(), this));
 	}
 
 	/**
@@ -231,15 +224,12 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 */
 	@Override
 	public void destroy() {
-
-		Optional.ofNullable(this.pool)
-			.filter(this::isSpringManagedPool)
-			.filter(pool -> !pool.isDestroyed())
-			.ifPresent(pool -> {
-				pool.destroy(this.keepAlive);
-				setPool(null);
-				logDebug("Destroyed Pool [%s]", pool.getName());
-			});
+		Optional.ofNullable(this.pool).filter(this::isSpringManagedPool).filter(pool -> !pool.isDestroyed())
+				.ifPresent(pool -> {
+					pool.destroy(this.keepAlive);
+					setPool(null);
+					logDebug("Destroyed Pool [%s]", pool.getName());
+				});
 	}
 
 	private boolean isSpringManagedPool(Pool pool) {
@@ -257,16 +247,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	public Pool getObject() throws Exception {
 
 		return Optional.ofNullable(this.pool).orElseGet(() -> {
-
 			eagerlyInitializeClientCache();
-
 			String poolName = getName();
-
 			Pool namedPool = resolvePool(poolName);
-
 			this.pool = namedPool != null ? namedPool
-				: postProcess(create(postProcess(configure(initialize(createPoolFactory()))), poolName));
-
+					: postProcess(create(postProcess(configure(initialize(createPoolFactory()))), poolName));
 			return this.pool;
 		});
 	}
@@ -281,7 +266,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * @see #isClientCachePresent()
 	 */
 	private void eagerlyInitializeClientCache() {
-
 		if (!isClientCachePresent()) {
 			getBeanFactory().getBean(ClientCache.class);
 		}
@@ -290,19 +274,14 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	/**
 	 * Determines whether the {@link ClientCache} exists yet or not.
 	 *
-	 * @return a boolean value indicating whether the single {@link ClientCache} instance
-	 * has been created yet.
+	 * @return a boolean value indicating whether the single {@link ClientCache} instance has been created yet.
 	 * @see GemfireUtils#getClientCache()
 	 * @see DistributedSystem
 	 * @see ClientCache
 	 */
 	boolean isClientCachePresent() {
-
-		return Optional.ofNullable(GemfireUtils.getClientCache())
-			.filter(clientCache -> !clientCache.isClosed())
-			.map(ClientCache::getDistributedSystem)
-			.filter(GemfireUtils::isConnected)
-			.isPresent();
+		return Optional.ofNullable(GemfireUtils.getClientCache()).filter(clientCache -> !clientCache.isClosed())
+				.map(ClientCache::getDistributedSystem).filter(GemfireUtils::isConnected).isPresent();
 	}
 
 	/**
@@ -326,7 +305,7 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	protected PoolFactory configure(PoolFactory poolFactory) {
 
 		Optional.ofNullable(poolFactory).ifPresent(it -> {
-
+			it.setAvailabilityZone(this.availabilityZone);
 			it.setFreeConnectionTimeout(this.freeConnectionTimeout);
 			it.setIdleTimeout(this.idleTimeout);
 			it.setLoadConditioningInterval(this.loadConditioningInterval);
@@ -352,11 +331,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			it.setSubscriptionRedundancy(this.subscriptionRedundancy);
 			it.setSubscriptionTimeoutMultiplier(this.subscriptionTimeoutMultiplier);
 
-			CollectionUtils.nullSafeCollection(this.locators).forEach(locator ->
-				it.addLocator(locator.getHost(), locator.getPort()));
+			CollectionUtils.nullSafeCollection(this.locators)
+					.forEach(locator -> it.addLocator(locator.getHost(), locator.getPort()));
 
-			CollectionUtils.nullSafeCollection(this.servers).forEach(server ->
-				it.addServer(server.getHost(), server.getPort()));
+			CollectionUtils.nullSafeCollection(this.servers)
+					.forEach(server -> it.addServer(server.getHost(), server.getPort()));
 		});
 
 		return poolFactory;
@@ -370,10 +349,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	 * @see PoolFactory
 	 */
 	protected PoolFactory initialize(PoolFactory poolFactory) {
-
-		return Optional.ofNullable(this.poolFactoryInitializer)
-			.map(initializer -> initializer.initialize(poolFactory))
-			.orElse(poolFactory);
+		return Optional.ofNullable(this.poolFactoryInitializer).map(initializer -> initializer.initialize(poolFactory))
+				.orElse(poolFactory);
 	}
 
 	/**
@@ -449,8 +426,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Returns a reference to the {@literal Composite} {@link PoolConfigurer} used to apply additional configuration
-	 * to this {@link PoolFactoryBean} on Spring container initialization.
+	 * Returns a reference to the {@literal Composite} {@link PoolConfigurer} used to apply additional configuration to
+	 * this {@link PoolFactoryBean} on Spring container initialization.
 	 *
 	 * @return the {@literal Composite} {@link PoolConfigurer}.
 	 * @see PoolConfigurer
@@ -491,11 +468,10 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Gets the {@link Pool} configured and built by this {@link PoolFactoryBean}.
-	 *
-	 * May return a proxy {@link Pool} if the actual {@link Pool} has not yet been configured and built by
-	 * this {@link PoolFactoryBean}. In this case, the proxy {@link Pool} object will have the same configuration
-	 * as the final {@link Pool} built by this {@link PoolFactoryBean}.
+	 * Gets the {@link Pool} configured and built by this {@link PoolFactoryBean}. May return a proxy {@link Pool} if the
+	 * actual {@link Pool} has not yet been configured and built by this {@link PoolFactoryBean}. In this case, the proxy
+	 * {@link Pool} object will have the same configuration as the final {@link Pool} built by this
+	 * {@link PoolFactoryBean}.
 	 *
 	 * @return the {@link Pool} configured and built by this {@link PoolFactoryBean}.
 	 * @see Pool
@@ -511,6 +487,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 				Pool pool = PoolFactoryBean.this.pool;
 
 				return pool != null && pool.isDestroyed();
+			}
+
+			@Override
+			public String getAvailabilityZone() {
+				return PoolFactoryBean.this.availabilityZone;
 			}
 
 			@Override
@@ -536,9 +517,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			@Override
 			public List<InetSocketAddress> getOnlineLocators() {
 
-				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getOnlineLocators)
-					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
+				return Optional.ofNullable(PoolFactoryBean.this.pool).map(Pool::getOnlineLocators)
+						.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
 			@Override
@@ -569,17 +549,15 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			@Override
 			public String getName() {
 
-				return Optional.ofNullable(PoolFactoryBean.this.getName())
-					.filter(StringUtils::hasText)
-					.orElseGet(PoolFactoryBean.this::getBeanName);
+				return Optional.ofNullable(PoolFactoryBean.this.getName()).filter(StringUtils::hasText)
+						.orElseGet(PoolFactoryBean.this::getBeanName);
 			}
 
 			@Override
 			public int getPendingEventCount() {
 
-				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getPendingEventCount)
-					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
+				return Optional.ofNullable(PoolFactoryBean.this.pool).map(Pool::getPendingEventCount)
+						.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
 			@Override
@@ -600,9 +578,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			@Override
 			public QueryService getQueryService() {
 
-				return Optional.ofNullable(PoolFactoryBean.this.pool)
-					.map(Pool::getQueryService)
-					.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
+				return Optional.ofNullable(PoolFactoryBean.this.pool).map(Pool::getQueryService)
+						.orElseThrow(() -> newIllegalStateException("Pool [%s] has not been initialized", getName()));
 			}
 
 			@Override
@@ -675,7 +652,6 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 				return PoolFactoryBean.this.subscriptionTimeoutMultiplier;
 			}
 
-
 			@Override
 			public void destroy() {
 				destroy(false);
@@ -686,12 +662,15 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 				try {
 					PoolFactoryBean.this.destroy();
-				}
-				catch (Exception ignore) {
+				} catch (Exception ignore) {
 					Optional.ofNullable(PoolFactoryBean.this.pool).ifPresent(pool -> pool.destroy(keepAlive));
 				}
 			}
 		});
+	}
+
+	public void setAvailabilityZone(String availabilityZone) {
+		this.availabilityZone = availabilityZone;
 	}
 
 	public void setFreeConnectionTimeout(int freeConnectionTimeout) {
@@ -752,11 +731,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Null-safe operation to set an array of {@link PoolConfigurer PoolConfigurers} used to apply
-	 * additional configuration to this {@link PoolFactoryBean} when using Annotation-based configuration.
+	 * Null-safe operation to set an array of {@link PoolConfigurer PoolConfigurers} used to apply additional
+	 * configuration to this {@link PoolFactoryBean} when using Annotation-based configuration.
 	 *
-	 * @param poolConfigurers array of {@link PoolConfigurer PoolConfigurers} used to apply
-	 * additional configuration to this {@link PoolFactoryBean}.
+	 * @param poolConfigurers array of {@link PoolConfigurer PoolConfigurers} used to apply additional configuration to
+	 *          this {@link PoolFactoryBean}.
 	 * @see PoolConfigurer
 	 * @see #setPoolConfigurers(List)
 	 */
@@ -765,11 +744,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Null-safe operation to set an {@link Iterable} of {@link PoolConfigurer PoolConfigurers} used to apply
-	 * additional configuration to this {@link PoolFactoryBean} when using Annotation-based configuration.
+	 * Null-safe operation to set an {@link Iterable} of {@link PoolConfigurer PoolConfigurers} used to apply additional
+	 * configuration to this {@link PoolFactoryBean} when using Annotation-based configuration.
 	 *
-	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers} used to apply
-	 * additional configuration to this {@link PoolFactoryBean}.
+	 * @param poolConfigurers {@link Iterable} of {@link PoolConfigurer PoolConfigurers} used to apply additional
+	 *          configuration to this {@link PoolFactoryBean}.
 	 * @see PoolConfigurer
 	 */
 	public void setPoolConfigurers(List<PoolConfigurer> poolConfigurers) {
@@ -777,11 +756,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Sets the {@link PoolFactoryInitializer} to initialize the {@link PoolFactory} used by
-	 * this {@link PoolFactoryBean} to create a {@link Pool}.
+	 * Sets the {@link PoolFactoryInitializer} to initialize the {@link PoolFactory} used by this {@link PoolFactoryBean}
+	 * to create a {@link Pool}.
 	 *
-	 * @param poolFactoryInitializer {@link PoolFactoryInitializer} user provided callback interface invoked
-	 * by this {@link PoolFactoryBean} to initialize the {@link PoolFactory} constructed to create the {@link Pool}.
+	 * @param poolFactoryInitializer {@link PoolFactoryInitializer} user provided callback interface invoked by this
+	 *          {@link PoolFactoryBean} to initialize the {@link PoolFactory} constructed to create the {@link Pool}.
 	 * @see PoolFactoryInitializer
 	 */
 	public void setPoolFactoryInitializer(PoolFactoryInitializer poolFactoryInitializer) {
@@ -789,11 +768,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Configures the {@link PoolResolver} to resolve {@link Pool} objects by {@link String name}
-	 * from the Apache Geode cache.
+	 * Configures the {@link PoolResolver} to resolve {@link Pool} objects by {@link String name} from the Apache Geode
+	 * cache.
 	 *
-	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects
-	 * by {@link String name}.
+	 * @param poolResolver the configured {@link PoolResolver} used to resolve {@link Pool} objects by {@link String
+	 *          name}.
 	 * @see PoolResolver
 	 */
 	public void setPoolResolver(PoolResolver poolResolver) {
@@ -895,8 +874,8 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	}
 
 	/**
-	 * Callback interface to initialize the {@link PoolFactory} used by this {@link PoolFactoryBean}
-	 * to create a {@link Pool} by providing additional or alternative configuration for the factory.
+	 * Callback interface to initialize the {@link PoolFactory} used by this {@link PoolFactoryBean} to create a
+	 * {@link Pool} by providing additional or alternative configuration for the factory.
 	 *
 	 * @see PoolFactory
 	 */

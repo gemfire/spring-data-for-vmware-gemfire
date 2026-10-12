@@ -52,6 +52,7 @@ public class FactoryDefaultsPoolAdapterTest {
 		assertThat(this.poolAdapter.getRetryAttempts()).isEqualTo(PoolFactory.DEFAULT_RETRY_ATTEMPTS);
 		assertThat(this.poolAdapter.getServerConnectionTimeout()).isEqualTo(PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
 		assertThat(this.poolAdapter.getServerGroup()).isEqualTo(PoolFactory.DEFAULT_SERVER_GROUP);
+		assertThat(this.poolAdapter.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 		assertThat(this.poolAdapter.getSocketBufferSize()).isEqualTo(PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
 		assertThat(this.poolAdapter.getSocketConnectTimeout()).isEqualTo(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);
 		assertThat(this.poolAdapter.getSocketFactory()).isEqualTo(PoolFactory.DEFAULT_SOCKET_FACTORY);

@@ -102,6 +102,7 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setReadyForEvents(true);
 		configuration.setRetryAttempts(2);
 		configuration.setServerConnectionTimeout(60000);
+		configuration.setAvailabilityZone("TestZone");
 		configuration.setServerGroup("TestGroup");
 		configuration.setSocketBufferSize(8192);
 		configuration.setSocketConnectTimeout(30000);
@@ -143,6 +144,7 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setReadyForEvents(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setRetryAttempts(eq(2));
 		verify(clientCacheFactoryBean, times(1)).setServerConnectionTimeout(eq(60000));
+		verify(clientCacheFactoryBean, times(1)).setAvailabilityZone(eq("TestZone"));
 		verify(clientCacheFactoryBean, times(1)).setServerGroup(eq("TestGroup"));
 		verify(clientCacheFactoryBean, times(1)).setSocketBufferSize(eq(8192));
 		verify(clientCacheFactoryBean, times(1)).setSocketConnectTimeout(eq(30000));

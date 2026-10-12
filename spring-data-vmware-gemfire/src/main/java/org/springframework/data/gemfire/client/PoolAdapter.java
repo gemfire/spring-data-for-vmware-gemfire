@@ -34,6 +34,11 @@ public abstract class PoolAdapter implements Pool {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}
 
+	@Override
+	public String getAvailabilityZone() {
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
+	}
+
 	public int getFreeConnectionTimeout() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}

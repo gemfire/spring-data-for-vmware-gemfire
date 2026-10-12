@@ -176,6 +176,10 @@ public abstract class DefaultableDelegatingPoolAdapter {
 		return defaultIfNull(defaultSocketBufferSize, () -> getDelegate().getSocketBufferSize());
 	}
 
+	public String getAvailabilityZone(String defaultAvailabilityZone) {
+		return defaultIfNull(defaultAvailabilityZone, () -> getDelegate().getAvailabilityZone());
+	}
+
 	public int getSocketConnectTimeout(Integer defaultSocketConnectTimeout) {
 		return defaultIfNull(defaultSocketConnectTimeout, () -> getDelegate().getSocketConnectTimeout());
 	}
