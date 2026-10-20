@@ -30,6 +30,11 @@ public abstract class PoolAdapter implements Pool {
 
 	public static final String NOT_IMPLEMENTED = "Not Implemented";
 
+	@Override
+	public String getAvailabilityZone() {
+		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
+	}
+
 	public boolean isDestroyed() {
 		throw new UnsupportedOperationException(NOT_IMPLEMENTED);
 	}

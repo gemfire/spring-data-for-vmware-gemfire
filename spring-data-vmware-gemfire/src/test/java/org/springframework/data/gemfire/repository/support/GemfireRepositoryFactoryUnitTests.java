@@ -34,7 +34,7 @@ import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.repository.GemfireRepository;
 import org.springframework.data.gemfire.repository.sample.Person;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
@@ -80,7 +80,7 @@ public class GemfireRepositoryFactoryUnitTests {
 	private <K, V> Region<K, V> configureMockRegion(Region<K, V> mockRegion, String name, Class<K> keyType) {
 
 		when(mockRegion.getAttributes()).thenReturn(this.mockRegionAttributes);
-		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
+		when(mockRegion.getFullPath()).thenReturn(RegionPaths.toRegionPath(name));
 		when(mockRegion.getName()).thenReturn(name);
 		when(this.mockRegionAttributes.getKeyConstraint()).thenReturn(keyType);
 

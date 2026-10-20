@@ -70,7 +70,6 @@ import org.apache.logging.log4j.Logger;
 import org.mockito.ArgumentMatchers;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.RegionShortcutWrapper;
 import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
 import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
@@ -79,6 +78,7 @@ import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.data.gemfire.tests.util.ObjectUtils;
 import org.springframework.data.gemfire.util.ArrayUtils;
 import org.springframework.data.gemfire.util.CollectionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -1649,7 +1649,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 		int indexOfDot = regionName.indexOf(".");
 		int indexOfSpace = regionName.indexOf(" ");
 
-		regionName = regionName.startsWith(Region.SEPARATOR) ? regionName : GemfireUtils.toRegionPath(regionName);
+		regionName = regionName.startsWith(Region.SEPARATOR) ? regionName : RegionPaths.toRegionPath(regionName);
 		regionName = indexOfSpace > -1 ? regionName.substring(0, indexOfSpace) : regionName;
 		regionName = indexOfDot > -1 ? regionName.substring(0, indexOfDot) : regionName;
 

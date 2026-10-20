@@ -46,6 +46,9 @@ include("spring-data-vmware-gemfire")
 include("spring-test-vmware-gemfire")
 include("spring-data-gemfire-driver-spi")
 include("spring-data-gemfire-driver-core")
+include("spring-data-gemfire-driver-10.4")
+include("spring-data-gemfire-driver-mock")
+include("spring-data-gemfire-driver-contract-tests")
 
 project(":spring-data-vmware-gemfire").name = "spring-data-vmware-gemfire"
 rootProject.name = "spring-data-for-vmware-gemfire"

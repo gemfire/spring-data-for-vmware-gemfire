@@ -5,20 +5,18 @@
 
 package org.springframework.data.gemfire.cache;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 
 import java.util.Map;
 
-import org.apache.geode.cache.Region;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverOperationException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 /**
@@ -26,27 +24,31 @@ import org.springframework.util.Assert;
  * as a caching provider applied with Spring Data for Apache Geode.
  *
  * @author John Blum
- * @see org.junit.Test
- * @see org.junit.runner.RunWith
  * @see org.springframework.cache.annotation.Cacheable
- * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see org.springframework.test.context.ActiveProfiles
- * @see org.springframework.test.context.ContextConfiguration
- * @see org.springframework.test.context.junit4.SpringRunner
  * @since 1.5.1
  */
-@RunWith(SpringRunner.class)
-@ContextConfiguration
 @SuppressWarnings("unused")
-public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport {
+public class CachingWithGemFireIntegrationTests {
 
-	@Autowired
 	private NamedNumbersService namedNumbersService;
 
-	@Resource(name = "NamedNumbersRegion")
-	private Region<String, Integer> namedNumbersRegion;
+	private DriverRegion<String, Integer> namedNumbersRegion;
 
-	@Test(expected = NullPointerException.class)
+	private ClassPathXmlApplicationContext context;
+
+	@BeforeEach
+	@SuppressWarnings("unchecked")
+	void openContext() {
+		context = new ClassPathXmlApplicationContext(
+			"org/springframework/data/gemfire/cache/CachingWithGemFireIntegrationTests-context.xml");
+		namedNumbersService = context.getBean(NamedNumbersService.class);
+		namedNumbersRegion = (DriverRegion<String, Integer>) context.getBean("NamedNumbersRegion");
+	}
+
+	@AfterEach
+	void closeContext() { if (context != null) context.close(); }
+
+	@Test
 	public void testRegionCacheHit() {
 
 		Assertions.assertThat(namedNumbersRegion.get("eleven")).isNull();
@@ -58,15 +60,12 @@ public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport 
 		Assertions.assertThat(namedNumbersService.get("eleven").intValue()).isEqualTo(11);
 		Assertions.assertThat(namedNumbersService.wasCacheMiss()).isFalse();
 
-		try {
-			namedNumbersRegion.put("eleven", null); // GemFire does not accept null values on put(key, value)
-		}
-		finally {
-			Assertions.assertThat(namedNumbersRegion.containsKey("eleven")).isTrue();
-			Assertions.assertThat(namedNumbersRegion.get("eleven").intValue()).isEqualTo(11);
-			Assertions.assertThat(namedNumbersService.get("eleven").intValue()).isEqualTo(11);
-			Assertions.assertThat(namedNumbersService.wasCacheMiss()).isFalse();
-		}
+		Assertions.assertThatThrownBy(() -> namedNumbersRegion.put("eleven", null))
+			.isInstanceOf(DriverOperationException.class);
+		Assertions.assertThat(namedNumbersRegion.containsKey("eleven")).isTrue();
+		Assertions.assertThat(namedNumbersRegion.get("eleven")).isEqualTo(11);
+		Assertions.assertThat(namedNumbersService.get("eleven")).isEqualTo(11);
+		Assertions.assertThat(namedNumbersService.wasCacheMiss()).isFalse();
 	}
 
 	@Test
@@ -114,11 +113,10 @@ public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport 
 
 	public static class NamedNumbersInMemoryRepository {
 
-		private volatile boolean cacheMiss;
+		private final AtomicBoolean cacheMiss = new AtomicBoolean();
 
 		private Map<String, Integer> namedNumbers;
 
-		@PostConstruct
 		public void init() {
 			getNamedNumbers();
 		}
@@ -134,14 +132,12 @@ public class CachingWithGemFireIntegrationTests extends IntegrationTestsSupport 
 		}
 
 		public Integer get(final String namedNumber) {
-			this.cacheMiss = true;
+			this.cacheMiss.set(true);
 			return namedNumbers.get(namedNumber);
 		}
 
 		public boolean wasCacheMiss() {
-			boolean localCacheMiss = this.cacheMiss;
-			this.cacheMiss = false;
-			return localCacheMiss;
+			return this.cacheMiss.getAndSet(false);
 		}
 	}
 }

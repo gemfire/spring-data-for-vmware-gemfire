@@ -1,237 +1,102 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire.cache;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
+
+import com.vmware.gemfire.driver.spi.DriverConnection;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.support.AbstractCacheManager;
 import org.springframework.util.Assert;
 
 /**
- * Core Spring Framework {@link CacheManager} implementation backed by a GemFire cache instance
- * (either a client or peer cache).
+ * Spring cache manager backed by an injected Driver SPI connection. Explicit regions take precedence
+ * over explicit names; either selection disables dynamic lookup. With neither, all root regions are
+ * discovered at initialization and regions created later can be looked up dynamically.
  *
- * Automatically discovers available caches (or GemFire {@link Region Regions}) when a cache for a given name
- * is missing and dynamic cache lookup/creation is enabled.
- *
- * @author Costin Leau
- * @author David Turanski
- * @author John Blum
- * @see CacheManager
- * @see AbstractCacheManager
- * @see ClientCache
- * @see Region
+ * <p>This manager borrows its connection; the owner controls connection shutdown.
  */
-@SuppressWarnings("unused")
 public class GemfireCacheManager extends AbstractCacheManager {
 
+	private final DriverConnection gemfireCache;
 	private final AtomicBoolean dynamic = new AtomicBoolean(true);
-
-	private ClientCache gemfireCache;
-
-	private Set<Region<?, ?>> regions;
-
+	private Set<DriverRegion<?, ?>> regions;
 	private Set<String> cacheNames;
 
-	/* (non-Javadoc) */
-	@SuppressWarnings("all")
-	<T extends ClientCache> T assertGemFireCacheAvailable(T gemfireCache) {
-		Assert.state(gemfireCache != null, "A GemFire cache instance is required");
-		Assert.state(!gemfireCache.isClosed(), String.format("GemFire cache [%s] has been closed",
-			gemfireCache.getName()));
-
-		return gemfireCache;
-	}
-
-	/* (non-Javadoc) */
-	@SuppressWarnings("all")
-	Region<?, ?> assertGemFireRegionAvailable(Region<?, ?> region, String cacheName) {
-		Assert.state(region != null, String.format("No Region for cache name [%s] was found", cacheName));
-		Assert.state(!region.isDestroyed(), String.format("Region [%s] has been destroyed", cacheName));
-
-		return region;
-	}
-
-	/**
-	 * Loads all configured GemFire {@link Region Regions} that will be used by this {@link CacheManager}.
-	 *
-	 * Any GemFire {@link Region Regions} configured with the {@link #regions} property will take precedence over
-	 * any configured {@link #cacheNames}.  If no GemFire {@link Region Regions} were configured, then any
-	 * {@link #cacheNames} that were specified will be used to lookup existing GemFire {@link Region Regions}
-	 * to function as Spring {@link Cache Caches}in Spring's caching infrastructure.
-	 *
-	 * However, if neither {@link #regions} nor {@link #cacheNames} were specified, then all defined GemFire
-	 * {@link Region Regions} declared in the Spring application context, as determined by
-	 * {@link ClientCache#rootRegions()}, will be used as Spring {@link Cache Caches}, and this {@link CacheManager}
-	 * will allow any dynamically created GemFire {@link Region Regions} at runtime to be found and used as a
-	 * Spring {@link Cache} as well.
-	 *
-	 * @return a {@link Collection} of GemFire {@link Region Regions} used by this {@link CacheManager}
-	 * to function as {@link Cache Caches} in Spring's caching infrastructure.
-	 * @throws IllegalStateException if a GemFire cache instance was not provided, the provided GemFire cache instance
-	 * has been closed, no GemFire {@link Region} could be found for a given cache name, or the GemFire {@link Region}
-	 * for the given cache name has been destroyed.
-	 * @see Cache
-	 */
-	@Override
-	protected Collection<Cache> loadCaches() {
-		Set<Region<?, ?>> regions = resolveRegions(this.gemfireCache, this.regions, this.cacheNames);
-
-		Collection<Cache> caches = new HashSet<Cache>(regions.size());
-
-		for (Region<?, ?> region : regions) {
-			caches.add(newGemfireCache(region));
-		}
-
-		return caches;
-	}
-
-	/* (non-Javadoc) */
-	Set<Region<?, ?>> resolveRegions(ClientCache gemfireCache, Set<Region<?, ?>> regions, Set<String> cacheNames) {
-		if (isSet(regions)) {
-			dynamic.set(false);
-			return regions;
-		}
-		else if (isSet(cacheNames)) {
-			dynamic.set(false);
-
-			regions = new HashSet<Region<?, ?>>(cacheNames.size());
-
-			for (String cacheName : cacheNames) {
-				regions.add(regionFor(gemfireCache, cacheName));
-			}
-
-			return regions;
-		}
-		else {
-			return assertGemFireCacheAvailable(gemfireCache).rootRegions();
-		}
-	}
-
-	/* (non-Javadoc) */
-	boolean isSet(Iterable<?> collection) {
-		return (collection != null && collection.iterator().hasNext());
-	}
-
-	/**
-	 * Constructs a new instance of {@link GemfireCache} initialized with the given GemFire {@link Region}.
-	 *
-	 * @param region GemFire {@link Region} to wrap (adapt).
-	 * @return an instance of {@link GemfireCache} initialized with the given GemFire {@link Region}.
-	 * @see GemfireCache
-	 * @see Region
-	 */
-	protected GemfireCache newGemfireCache(Region<?, ?> region) {
-		return GemfireCache.wrap(region);
-	}
-
-	/* (non-Javadoc) */
-	Region<?, ?> regionFor(ClientCache gemfireCache, String cacheName) {
-		return assertGemFireRegionAvailable(assertGemFireCacheAvailable(gemfireCache).getRegion(cacheName), cacheName);
-	}
-
-	/**
-	 * Returns a missing Spring {@link Cache} for the given {@code name}.
-	 *
-	 * To return a missing Spring {@link Cache} for the given {@code name}, dynamic cache lookup/creation must be
-	 * enabled, which means that either the {@link #cacheNames} or {@link #regions} properties must not be set.
-	 * If either property was specified then dynamic Spring {@link Cache} lookup/creation will be disabled and this
-	 * overridden {@link AbstractCacheManager#getMissingCache(String)} method will return {@literal null}.
-	 *
-	 * @param name name of the missing Spring {@link Cache} to lookup (and potentially create).
-	 * @return a Spring {@link Cache} instance for the given {@code name} or {@literal null} if the {@link Cache}
-	 * cannot be found (or possibly created).
-	 * @see AbstractCacheManager#getMissingCache(String)
-	 * @see Cache
-	 */
-	@Override
-	protected Cache getMissingCache(String name) {
-		Cache cache = super.getMissingCache(name);
-
-		return (cache != null ? cache : (isDynamic() ? newGemfireCache(regionFor(this.gemfireCache, name)) : null));
-	}
-
-	/**
-	 * Determines whether this {@link CacheManager} allows the dynamic creation of a {@link Cache} at runtime.
-	 *
-	 * @return a boolean value indicating whether dynamic {@link Cache} creation is enabled.
-	 */
-	protected boolean isDynamic() {
-		return dynamic.get();
-	}
-
-	/**
-	 * Sets the GemFire cache instance backing this {@link CacheManager}.
-	 *
-	 * When set, if neither {@link Region Regions} nor {@code cacheNames} were specified, then this {@link CacheManager}
-	 * is capable of creating Spring {@link Cache Caches} backed by existing GemFire {@link Region Regions} used by
-	 * the application at runtime.  However, in order to dynamically create Spring {@link Cache Caches} a reference to
-	 * an open GemFire cache instance must be set.
-	 *
-	 * @param gemfireCache the GemFire cache instance used by this {@link CacheManager}
-	 * to manage Spring {@link Cache Caches}.
-	 * @see ClientCache
-	 */
-	public void setCache(ClientCache gemfireCache) {
+	public GemfireCacheManager(DriverConnection gemfireCache) {
+		Assert.notNull(gemfireCache, "A GemFire driver connection is required");
 		this.gemfireCache = gemfireCache;
 	}
 
-	/**
-	 * Returns the {@link ClientCache} instance backing this {@link CacheManager}.
-	 *
-	 * @return the {@link ClientCache} instance backing this {@link CacheManager}.
-	 * @see ClientCache
-	 */
-	protected ClientCache getCache() {
-		return this.gemfireCache;
+	@Override
+	protected Collection<Cache> loadCaches() {
+		Collection<Cache> caches = new HashSet<>();
+		for (DriverRegion<?, ?> region : resolveRegions()) {
+			caches.add(newGemfireCache(assertRegionAvailable(region, region.name())));
+		}
+		return caches;
 	}
 
-	/**
-	 * Sets the names of all Spring {@link Cache Caches} that will be used in the application.
-	 *
-	 * When set, this disables the dynamic capability of this {@link CacheManager} to create Spring {@link Cache Caches}
-	 * at runtime by dynamically looking up existing {@link Region Regions} from the GemFire cache instance.
-	 *
-	 * @param cacheNames {@link Set} of cache names that will be used in the application.
-	 * @see Set
-	 */
+	private Set<DriverRegion<?, ?>> resolveRegions() {
+		assertCacheAvailable();
+		if (regions != null && !regions.isEmpty()) {
+			dynamic.set(false);
+			return regions;
+		}
+		if (cacheNames != null && !cacheNames.isEmpty()) {
+			dynamic.set(false);
+			Set<DriverRegion<?, ?>> selected = new HashSet<>();
+			for (String name : cacheNames) selected.add(regionFor(name));
+			return selected;
+		}
+		dynamic.set(true);
+		return gemfireCache.rootRegions();
+	}
+
+	protected GemfireCache newGemfireCache(DriverRegion<?, ?> region) {
+		return new GemfireCache(region);
+	}
+
+	private DriverRegion<?, ?> regionFor(String name) {
+		assertCacheAvailable();
+		return assertRegionAvailable(gemfireCache.getRegion(name), name);
+	}
+
+	private void assertCacheAvailable() {
+		Assert.state(!gemfireCache.isClosed(), "GemFire driver connection has been closed");
+	}
+
+	private DriverRegion<?, ?> assertRegionAvailable(DriverRegion<?, ?> region, String name) {
+		Assert.state(region != null, () -> "No Region for cache name [" + name + "] was found");
+		Assert.state(!region.isDestroyed(), () -> "Region [" + name + "] has been destroyed");
+		return region;
+	}
+
+	@Override
+	protected Cache getMissingCache(String name) {
+		return isDynamic() ? newGemfireCache(regionFor(name)) : null;
+	}
+
+	protected boolean isDynamic() { return dynamic.get(); }
+
+	protected DriverConnection getCache() { return gemfireCache; }
+
+	/** Configure before initialization. Nonempty names disable dynamic lookup. */
 	public void setCacheNames(Set<String> cacheNames) {
-		this.cacheNames = cacheNames;
+		this.cacheNames = cacheNames == null ? null : Set.copyOf(cacheNames);
 	}
 
-	/**
-	 * Explicitly sets the GemFire {@link Region Regions} to be used as Spring {@link Cache Caches}
-	 * in the application.
-	 *
-	 * When set, this disables the dynamic capability of this {@link CacheManager} to create Spring {@link Cache Caches}
-	 * at runtime by dynamically looking up existing {@link Region Regions} from the GemFire cache instance.
-	 *
-	 * @param regions {@link Set} of GemFire {@link Region Regions} used by this {@link CacheManager}
-	 * as Spring {@link Cache Caches}.
-	 * @see Region
-	 */
-	public void setRegions(Set<Region<?, ?>> regions) {
-		this.regions = regions;
+	/** Configure before initialization. Nonempty regions override names and disable dynamic lookup. */
+	public void setRegions(Set<DriverRegion<?, ?>> regions) {
+		this.regions = regions == null ? null : Set.copyOf(regions);
 	}
 
-	/**
-	 * Returns the set of GemFire {@link Region Regions} used explicitly as Spring {@link Cache Caches}
-	 * in Spring's caching infrastructure.
-	 *
-	 * @return the set of GemFire {@link Region Regions} functioning as Spring {@link Cache Caches}
-	 * in Spring's caching infrastructure
-	 * @see Region
-	 */
-	protected Set<Region<?, ?>> getRegions() {
-		return this.regions;
-	}
+	protected Set<DriverRegion<?, ?>> getRegions() { return regions; }
 }

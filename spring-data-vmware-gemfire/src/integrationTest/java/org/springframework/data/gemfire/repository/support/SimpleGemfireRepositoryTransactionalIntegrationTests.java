@@ -18,12 +18,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.GemfireTemplate;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.mapping.GemfirePersistentEntity;
 import org.springframework.data.gemfire.repository.GemfireRepository;
 import org.springframework.data.gemfire.repository.sample.Customer;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.support.PersistentEntityInformation;
 import org.springframework.test.context.ContextConfiguration;
@@ -78,7 +78,7 @@ public class SimpleGemfireRepositoryTransactionalIntegrationTests extends Integr
 			.isNotNull();
 
 		Assertions.assertThat(this.customers.getName()).isEqualTo("Customers");
-		Assertions.assertThat(this.customers.getFullPath()).isEqualTo(GemfireUtils.toRegionPath("Customers"));
+		Assertions.assertThat(this.customers.getFullPath()).isEqualTo(RegionPaths.toRegionPath("Customers"));
 		Assertions.assertThat(this.customers.isEmpty()).isTrue();
 	}
 

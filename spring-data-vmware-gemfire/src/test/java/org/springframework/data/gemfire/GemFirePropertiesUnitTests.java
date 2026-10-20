@@ -79,7 +79,8 @@ public class GemFirePropertiesUnitTests {
 				    "conserve-sockets", // deprecated in GemFire 10.3
 				    "distributed-transactions", // being removed
             "statistic-sampling-enabled",
-            "security-shiro-init"
+            "security-shiro-init",
+            "redundancy-zone" // deprecated in GemFire 10.4 in favor of availability-zone
     );
 
     private Set<String> resolveActualGemFirePropertyNames() {

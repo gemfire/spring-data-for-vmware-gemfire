@@ -10,6 +10,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.io.FileInputStream
+import java.util.zip.ZipFile
 
 
 buildscript {
@@ -99,6 +100,9 @@ publishingDetails {
 }
 
 dependencies {
+  api(project(":spring-data-gemfire-driver-spi"))
+  api(project(":spring-data-gemfire-driver-core"))
+  testRuntimeOnly(project(":spring-data-gemfire-driver-mock"))
   api(platform(libs.spring.framework.bom))
   api(platform(libs.spring.data.bom))
 
@@ -242,4 +246,105 @@ tasks.register<Jar>("testJar") {
   from(sourceSets.main.get().output)
   archiveFileName = "testJar.jar"
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// Transitional verification of the actual migrated sources. These source sets do not inherit
+// main/test's native dependencies; expand their inventory as the migration advances.
+val spiCacheSourceFiles = listOf(
+  "org/springframework/data/gemfire/cache/**/*.java",
+  "org/springframework/data/gemfire/util/RegionPaths.java"
+)
+val spiCacheTestFiles = listOf(
+  "org/springframework/data/gemfire/util/RegionPathsTests.java",
+  "org/springframework/data/gemfire/cache/CallableCacheLoaderAdapterTest.java",
+  "org/springframework/data/gemfire/cache/GemfireCacheUnitTests.java",
+  "org/springframework/data/gemfire/cache/GemfireCacheManagerUnitTests.java",
+  "org/springframework/data/gemfire/cache/config/GemfireCachingConfigurationTests.java",
+  "org/springframework/data/gemfire/cache/ClientCacheManagerIntegrationTests.java",
+  "org/springframework/data/gemfire/cache/CachingWithGemFireIntegrationTests.java",
+  "org/springframework/data/gemfire/cache/CacheErrorHandlerIntegrationTests.java"
+)
+val spiCache = sourceSets.create("spiCache") {
+  java.setSrcDirs(sourceSets.main.get().java.srcDirs)
+  java.setIncludes(spiCacheSourceFiles)
+}
+val spiCacheTest = sourceSets.create("spiCacheTest") {
+  java.setSrcDirs(sourceSets.test.get().java.srcDirs + sourceSets["integrationTest"].java.srcDirs)
+  java.setIncludes(spiCacheTestFiles)
+  resources.setSrcDirs(sourceSets.test.get().resources.srcDirs)
+  resources.include("org/springframework/data/gemfire/cache/*-context.xml")
+  compileClasspath += spiCache.output
+  runtimeClasspath += spiCache.output
+}
+val spiCacheIntegrationTest = sourceSets.create("spiCacheIntegrationTest") {
+  java.setSrcDirs(sourceSets.test.get().java.srcDirs + sourceSets["integrationTest"].java.srcDirs)
+  java.setIncludes(spiCacheTestFiles)
+  resources.setSrcDirs(sourceSets.test.get().resources.srcDirs)
+  resources.include("org/springframework/data/gemfire/cache/*-context.xml")
+  compileClasspath += spiCache.output
+  runtimeClasspath += spiCache.output
+}
+configurations[spiCacheTest.implementationConfigurationName].extendsFrom(configurations[spiCache.implementationConfigurationName])
+configurations[spiCacheIntegrationTest.implementationConfigurationName].extendsFrom(configurations[spiCache.implementationConfigurationName])
+dependencies {
+  add(spiCache.implementationConfigurationName, project(":spring-data-gemfire-driver-core"))
+  add(spiCache.implementationConfigurationName, platform(libs.spring.framework.bom))
+  add(spiCache.implementationConfigurationName, "org.springframework:spring-context-support")
+  listOf(spiCacheTest, spiCacheIntegrationTest).forEach { suite ->
+    add(suite.implementationConfigurationName, platform(libs.junit.jupiter.bom))
+    add(suite.implementationConfigurationName, libs.junit.jupiter.api)
+    add(suite.implementationConfigurationName, libs.assertJ)
+    add(suite.runtimeOnlyConfigurationName, libs.junit.jupiter.engine)
+    add(suite.runtimeOnlyConfigurationName, libs.junit.platform.launcher)
+  }
+  add(spiCacheTest.runtimeOnlyConfigurationName, project(":spring-data-gemfire-driver-mock"))
+  add(spiCacheIntegrationTest.runtimeOnlyConfigurationName, project(":spring-data-gemfire-driver-10.4"))
+}
+val verifySpiCacheBoundary = tasks.register("verifySpiCacheBoundary") {
+  val nativeFreeClasspaths = listOf(configurations[spiCache.compileClasspathConfigurationName],
+    configurations[spiCacheTest.runtimeClasspathConfigurationName])
+  inputs.files(spiCache.allJava, spiCacheTest.allJava, nativeFreeClasspaths)
+  doLast {
+    (spiCache.allJava.files + spiCacheTest.allJava.files).forEach { source ->
+      check(!source.readText().contains("org.apache.geode")) { "Native reference in migrated source: $source" }
+    }
+    nativeFreeClasspaths.forEach { classpath ->
+      classpath.incoming.resolutionResult.allComponents.forEach { component ->
+        val id = component.id as? org.gradle.api.artifacts.component.ModuleComponentIdentifier
+        check(id == null || !(id.group.startsWith("org.apache.geode") ||
+          (id.group == "com.vmware.gemfire" && id.module.startsWith("gemfire-")))) {
+          "Native GemFire dependency on migrated cache/utility classpath: $id"
+        }
+      }
+      classpath.files.filter { it.extension == "jar" }.forEach { jar ->
+        ZipFile(jar).use { zip ->
+          check(zip.entries().asSequence().none { it.name.startsWith("org/apache/geode/") }) {
+            "Native GemFire classes on migrated cache/utility classpath: ${jar.name}"
+          }
+        }
+      }
+    }
+  }
+}
+val spiCacheTestTask = tasks.register<Test>("spiCacheTest") {
+  description = "Tests the migrated Spring Cache and utility sources with a native-free mock runtime."
+  group = "verification"
+  testClassesDirs = spiCacheTest.output.classesDirs
+  classpath = spiCacheTest.runtimeClasspath
+  dependsOn(verifySpiCacheBoundary)
+}
+val spiCacheIntegrationTestTask = tasks.register<Test>("spiCacheIntegrationTest") {
+  description = "Runs the same Spring Cache and utility behavior tests against the resolved native 10.4 driver."
+  group = "verification"
+  testClassesDirs = spiCacheIntegrationTest.output.classesDirs
+  classpath = spiCacheIntegrationTest.runtimeClasspath
+  maxParallelForks = 1
+  forkEvery = 1
+}
+tasks.check { dependsOn(spiCacheTestTask, spiCacheIntegrationTestTask) }
+
+configurations["integrationTestRuntimeClasspath"].exclude(
+  group = "com.vmware.gemfire", module = "spring-data-gemfire-driver-mock")
+dependencies {
+  add("integrationTestRuntimeOnly", project(":spring-data-gemfire-driver-10.4"))
 }

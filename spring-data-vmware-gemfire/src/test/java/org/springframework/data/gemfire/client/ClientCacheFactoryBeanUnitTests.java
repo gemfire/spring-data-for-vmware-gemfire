@@ -5,6 +5,7 @@
 package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -60,6 +61,27 @@ import org.springframework.data.gemfire.util.DistributedSystemUtils;
  * @since 1.7.0
  */
 public class ClientCacheFactoryBeanUnitTests {
+
+	@Test
+	public void rejectsRemovedShiroPropertyBeforeCacheCreation() {
+		ClientCacheFactoryBean factory = new ClientCacheFactoryBean();
+		factory.setProperties(createProperties("security-shiro-init", "/private/shiro.ini"));
+
+		assertThatThrownBy(() -> factory.resolveProperties(() -> null))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessageContaining("security-shiro-init")
+			.hasMessageContaining("security-manager")
+			.hasMessageNotContaining("/private/shiro.ini");
+	}
+
+	@Test
+	public void rejectsRemovedShiroPropertyInheritedFromDefaults() {
+		ClientCacheFactoryBean factory = new ClientCacheFactoryBean();
+		factory.setProperties(new Properties(createProperties("security-shiro-init", "shiro.ini")));
+
+		assertThatThrownBy(() -> factory.resolveProperties(() -> null))
+			.isInstanceOf(UnsupportedOperationException.class);
+	}
 
 	private Properties createProperties(String key, String value) {
 		return addProperty(null, key, value);

@@ -81,6 +81,7 @@ public class DelegatingPoolAdapterTest {
 		when(this.mockPool.getReadTimeout()).thenReturn(30000);
 		when(this.mockPool.getRetryAttempts()).thenReturn(1);
 		when(this.mockPool.getServerConnectionTimeout()).thenReturn(10000);
+		when(this.mockPool.getAvailabilityZone()).thenReturn("zone-a");
 		when(this.mockPool.getServerGroup()).thenReturn("TestGroup");
 		when(this.mockPool.getServers()).thenReturn(Collections.singletonList(newSocketAddress("xghost", 12480)));
 		when(this.mockPool.getSocketBufferSize()).thenReturn(16384);
@@ -121,6 +122,7 @@ public class DelegatingPoolAdapterTest {
 		assertThat(pool.getReadTimeout()).isEqualTo(30000);
 		assertThat(pool.getRetryAttempts()).isEqualTo(1);
 		assertThat(pool.getServerConnectionTimeout()).isEqualTo(10000);
+		assertThat(pool.getAvailabilityZone()).isEqualTo("zone-a");
 		assertThat(pool.getServerGroup()).isEqualTo("TestGroup");
 		assertThat(pool.getServers()).isEqualTo(Collections.singletonList(newSocketAddress("xghost", 12480)));
 		assertThat(pool.getSocketBufferSize()).isEqualTo(16384);
@@ -163,6 +165,12 @@ public class DelegatingPoolAdapterTest {
 	}
 
 	@Test
+	public void preservesNullAvailabilityZoneFromDelegate() {
+		when(this.mockPool.getAvailabilityZone()).thenReturn(null);
+		assertThat(DelegatingPoolAdapter.from(this.mockPool).getAvailabilityZone()).isNull();
+	}
+
+	@Test
 	public void destroyUsingDelegateCallsDestroy() {
 		DelegatingPoolAdapter.from(this.mockPool).destroy();
 		verify(this.mockPool, times(1)).destroy();
@@ -191,6 +199,7 @@ public class DelegatingPoolAdapterTest {
 		assertThat(pool.getReadTimeout()).isEqualTo(PoolFactory.DEFAULT_READ_TIMEOUT);
 		assertThat(pool.getRetryAttempts()).isEqualTo(PoolFactory.DEFAULT_RETRY_ATTEMPTS);
 		assertThat(pool.getServerConnectionTimeout()).isEqualTo(PoolFactory.DEFAULT_SERVER_CONNECTION_TIMEOUT);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 		assertThat(pool.getServerGroup()).isEqualTo(PoolFactory.DEFAULT_SERVER_GROUP);
 		assertThat(pool.getSocketBufferSize()).isEqualTo(PoolFactory.DEFAULT_SOCKET_BUFFER_SIZE);
 		assertThat(pool.getSocketConnectTimeout()).isEqualTo(PoolFactory.DEFAULT_SOCKET_CONNECT_TIMEOUT);

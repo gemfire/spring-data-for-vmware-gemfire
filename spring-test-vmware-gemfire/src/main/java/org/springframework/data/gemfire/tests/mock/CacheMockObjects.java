@@ -21,7 +21,7 @@ import org.apache.geode.cache.control.ResourceManager;
 import org.apache.geode.distributed.DistributedMember;
 import org.apache.geode.distributed.DistributedSystem;
 
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 
 /**
  * The {@link CacheMockObjects} class is a mock objects class allowing users to mock Apache Geode or VMware GemFire
@@ -101,8 +101,8 @@ public abstract class CacheMockObjects {
 
 		Region<K, V> mockRegion = mock(Region.class, withSettings().name(name).lenient());
 
-		when(mockRegion.getName()).thenReturn(RegionUtils.toRegionName(name));
-		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
+		when(mockRegion.getName()).thenReturn(RegionPaths.toRegionName(name));
+		when(mockRegion.getFullPath()).thenReturn(RegionPaths.toRegionPath(name));
 
 		RegionAttributes<K, V> mockRegionAttributes = mock(RegionAttributes.class,
 			withSettings().name(String.format("%sRegionAttributes", name)).lenient());

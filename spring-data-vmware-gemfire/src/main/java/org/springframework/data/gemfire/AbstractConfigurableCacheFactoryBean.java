@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.gemfire.support.GemfireBeanFactoryLocator;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 
 /**
  * Abstract base class encapsulating functionality for (externally) configuring an Apache Geode {@link ClientCache}
@@ -280,6 +281,12 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 	protected @NonNull Properties resolveProperties() {
 
 		Properties properties = getProperties();
+
+		if (properties != null && StringUtils.hasText(
+				properties.getProperty(GemFireProperties.SECURITY_SHIRO_INIT.getName()))) {
+			throw new UnsupportedOperationException("security-shiro-init is unavailable in GemFire 10.4; "
+				+ "configure security-manager instead");
+		}
 
 		return properties != null ? properties : setAndGetProperties(new Properties());
 	}

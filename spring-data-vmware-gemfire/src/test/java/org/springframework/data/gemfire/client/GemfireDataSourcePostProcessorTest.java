@@ -49,7 +49,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 
 /**
  * Unit tests for {@link GemfireDataSourcePostProcessor}.
@@ -86,7 +86,7 @@ public class GemfireDataSourcePostProcessorTest {
 			mock(RegionAttributes.class, String.format("%s-RegionAttributes", name));
 
 		when(mockRegion.getParentRegion()).thenReturn(null);
-		when(mockRegion.getFullPath()).thenReturn(RegionUtils.toRegionPath(name));
+		when(mockRegion.getFullPath()).thenReturn(RegionPaths.toRegionPath(name));
 		when(mockRegion.getAttributes()).thenReturn(mockRegionAttributes);
 		when(mockRegionAttributes.getDataPolicy()).thenReturn(DataPolicy.REPLICATE);
 		when(mockRegionAttributes.getScope()).thenReturn(Scope.DISTRIBUTED_ACK);

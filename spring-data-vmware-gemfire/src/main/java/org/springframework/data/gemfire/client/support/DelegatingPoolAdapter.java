@@ -52,6 +52,12 @@ public abstract class DelegatingPoolAdapter extends FactoryDefaultsPoolAdapter {
 	}
 
 	@Override
+	public String getAvailabilityZone() {
+		Pool pool = getDelegate();
+		return pool != null ? pool.getAvailabilityZone() : super.getAvailabilityZone();
+	}
+
+	@Override
 	public boolean isDestroyed() {
 
 		return Optional.ofNullable(getDelegate())

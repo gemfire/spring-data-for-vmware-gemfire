@@ -1,41 +1,24 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Integration Tests for {@link GemfireCacheManager}.
- *
- * @author David Turanski
- * @author John Blum
- * @see org.junit.Test
- * @see org.springframework.data.gemfire.cache.GemfireCacheManager
- * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
- * @see org.springframework.test.context.ContextConfiguration
- * @see org.springframework.test.context.junit4.SpringRunner
- */
-@RunWith(SpringRunner.class)
-@GemFireUnitTest
-@SuppressWarnings("unused")
-public class ClientCacheManagerIntegrationTests extends IntegrationTestsSupport {
+import org.junit.jupiter.api.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-	@Autowired
-	private GemfireCacheManager cacheManager;
+/** Verifies XML constructor injection of a driver connection into the cache manager. */
+class ClientCacheManagerIntegrationTests {
 
 	@Test
-	public void cacheManagerUsesConfiguredGemFireRegionAsCache() {
-
-		Assertions.assertThat(this.cacheManager).isNotNull();
-		Assertions.assertThat(this.cacheManager.getCache("Example")).isNotNull();
+	void cacheManagerUsesConfiguredDriverRegion() {
+		try (var context = new ClassPathXmlApplicationContext(
+			"org/springframework/data/gemfire/cache/ClientCacheManagerIntegrationTests-context.xml")) {
+			GemfireCacheManager manager = context.getBean(GemfireCacheManager.class);
+			assertThat(manager.getCache("Example")).isNotNull();
+			assertThat(manager.getCacheNames()).containsExactly("Example");
+		}
 	}
 }

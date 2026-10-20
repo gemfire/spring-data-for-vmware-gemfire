@@ -58,7 +58,7 @@ import org.springframework.data.gemfire.repository.Wrapper;
 import org.springframework.data.gemfire.repository.sample.Animal;
 import org.springframework.data.gemfire.repository.sample.Identifiable;
 import org.springframework.data.gemfire.util.CollectionUtils;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -178,7 +178,7 @@ public class SimpleGemfireRepositoryUnitTests {
 		Region mockRegion = mock(Region.class, String.format("%s.MockRegion", name));
 
 		doReturn(name).when(mockRegion).getName();
-		doReturn(RegionUtils.toRegionPath(name)).when(mockRegion).getFullPath();
+		doReturn(RegionPaths.toRegionPath(name)).when(mockRegion).getFullPath();
 
 		return mockRegion;
 	}

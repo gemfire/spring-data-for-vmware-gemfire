@@ -38,6 +38,11 @@ public abstract class FactoryDefaultsPoolAdapter extends PoolAdapter {
 	protected static final String LOCALHOST = "localhost";
 
 	@Override
+	public String getAvailabilityZone() {
+		return PoolFactory.DEFAULT_AVAILABILITY_ZONE;
+	}
+
+	@Override
 	public int getFreeConnectionTimeout() {
 		return PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
 	}

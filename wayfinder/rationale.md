@@ -1,6 +1,6 @@
 # Spring Data GemFire Driver SPI — Rationale & Executive Summary
 
-**Status:** Signed off in full — see §8 (2026-08-20 entry). All items formerly open in §6 are resolved; the design is implementation-ready.
+**Status:** Revised design signed off in full by Udo Kohlmeyer on 2026-10-20 — see §8. Approval includes the no-static-state rule, SPI ABI compatibility and driver version lock-step, and the finalized driver release and binding details. Implementation-ready.
 **Companion document:** `wayfinder/technical-spec.md` (full technical design — read this document first; consult the spec for implementation detail)
 
 ## 1. The problem
@@ -54,7 +54,7 @@ One further item was raised during this work and explicitly marked **out of scop
 
 ## 7. What sign-off means
 
-Approving this document means agreeing to the architectural direction in §2–§4 — the SPI/Driver Impl split, the JDBC-style pattern, the breaking-major-version approach, and the fail-fast philosophy — as the basis for a full implementation plan. The existing §8 sign-off entry recorded that approval for §2–§4 only, explicitly excluding the then-open §6 items. With every one of those items now resolved (§6 above) and reflected in the technical spec, the design as a whole is implementation-ready; a fresh §8 sign-off entry covering the complete, now-settled design is the natural next step, per the review process resolved in §6.
+Approving this document means agreeing to the architectural direction in §2–§4 — the SPI/Driver Impl split, the JDBC-style pattern, the breaking-major-version approach, and the fail-fast philosophy — as the basis for a full implementation plan. The initial §8 entry approved §2–§4 only; the subsequent entries approved the complete design and then its revisions. The 2026-10-20 entry covers the current technical spec and this rationale, including the finalized driver release and binding details. The design is approved for implementation under the review process resolved in §6.
 
 ## 8. Sign-off log
 
@@ -62,3 +62,4 @@ Approving this document means agreeing to the architectural direction in §2–�
 |---|---|---|
 | Udo Kohlmeyer | 2026-08-19 | Architectural direction (§2–§4) as basis for the full implementation plan, per §7. Open items in §6 remain unresolved and out of scope of this approval. |
 | Udo Kohlmeyer | 2026-08-20 | Full design, implementation-ready. All items formerly open in §6 are resolved and reflected in `technical-spec.md`; approval now covers the complete document (§1–§10 and Appendix A) as the basis for implementation, per [ticket 17](issues/17-spec-review-sign-off-process.md)'s once-at-implementation-ready cadence. |
+| Udo Kohlmeyer | 2026-10-20 | Full revised technical design and companion rationale approved for implementation, including [No static state or singletons](issues/19-no-static-state-or-singletons.md), [SPI ABI compatibility and driver version lock-step](issues/20-spi-abi-compatibility-and-driver-version-lockstep.md), and [Finalize provisional driver release and binding details](issues/21-finalize-provisional-driver-release-and-binding-details.md). Explicit approval in this session: “ok... docs sign-off”. |

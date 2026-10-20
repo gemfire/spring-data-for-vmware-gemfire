@@ -1,5 +1,5 @@
 Type: grilling
-Status: resolved — shape approved by Udo Kohlmeyer 2026-10-01; `rationale.md` §8 sign-off row **pending** (per [ticket 17](17-spec-review-sign-off-process.md))
+Status: resolved — shape approved by Udo Kohlmeyer 2026-10-01; full revised-design sign-off recorded in `rationale.md` §8 on 2026-10-20 (per [ticket 17](17-spec-review-sign-off-process.md))
 
 ## Question
 
@@ -74,12 +74,14 @@ Driver <G> ───────────► SPI (major.minor)
 
 ## Decided and open points
 
+The formerly provisional defaults below were confirmed on 2026-10-20 in [Finalize provisional driver release and binding details](21-finalize-provisional-driver-release-and-binding-details.md), which records the resolution. Full revised-design sign-off was subsequently recorded on 2026-10-20 in [the sign-off log](../rationale.md#8-sign-off-log).
+
 1. **Native match strictness — decided: exact match** (2026-10-01). Every GemFire release needs a driver release; release automation from a template is expected.
-2. **Driver-only fixes — provisional default.** Driver version equals GemFire version, leaving no room for a driver bug-fix release. Default applied in the spec: a qualifier (e.g. `10.3.2.1` or `10.3.2+2`); compatibility reads the stamped GemFire version and ignores the qualifier. To be confirmed.
+2. **Driver-only fixes — decided.** Incrementing numeric revision appended to the target GemFire version; see the follow-up resolution.
 3. **Maintenance of N drivers — deferred to Step 2.** A shared native-free base module could limit duplication; anything touching native types stays per driver.
 4. **API-compat tool — deferred.** japicmp or Revapi, selected when the gate is wired into CI. The spec requires the gate, not the tool.
-5. **Exception name — provisional:** `UnsupportedFeatureException`.
-6. **Stamp location — provisional default applied in the spec:** properties file keyed by provider class (`META-INF/gemfire-driver/<provider-fqcn>.properties`), not a `MANIFEST.MF` entry.
-7. **`driver-core` in the graph — provisional default applied in the spec:** Spring Data GemFire depends on the SPI through `driver-core` (discovery and binding live there), as it does today.
+5. **Exception name — decided:** retain the existing name; see the follow-up resolution.
+6. **Stamp location — decided:** retain the generated provider-keyed properties resource; see the follow-up resolution.
+7. **`driver-core` in the graph — decided:** retain discovery/binding in `driver-core` and the §4 dependency arrangement; see the follow-up resolution.
 
 Applied to the spec and to tickets 07, 08, 10, 14, 15, 18 (amendments) on 2026-10-01. Code changes for Step 1 (removing the capability and range types, stamp-based manager) are a separate follow-up.

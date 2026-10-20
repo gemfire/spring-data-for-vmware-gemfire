@@ -1,191 +1,167 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
-import org.apache.geode.cache.CacheLoader;
-import org.apache.geode.cache.LoaderHelper;
-import org.apache.geode.cache.Region;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-/**
- * Unit Tests to test the adaption of the {@link java.util.concurrent.Callable}
- * into Apache Geode's {@link org.apache.geode.cache.CacheLoader} interface.
- *
- * @author John Blum
- * @see org.junit.Test
- * @see org.mockito.Mock
- * @see org.mockito.Mockito
- * @see org.mockito.junit.MockitoJUnitRunner
- * @see java.util.concurrent.Callable
- * @see org.apache.geode.cache.CacheLoader
- * @see org.apache.geode.cache.LoaderHelper
- * @see org.apache.geode.cache.Region
- * @since 1.9.0
- */
-@RunWith(MockitoJUnitRunner.class)
-public class CallableCacheLoaderAdapterTest {
+import com.vmware.gemfire.driver.core.GemFireDriverManager;
+import com.vmware.gemfire.driver.spi.CacheConfiguration;
+import com.vmware.gemfire.driver.spi.DriverCacheLoader;
+import com.vmware.gemfire.driver.spi.DriverConnection;
+import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
+import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 
-	@Mock
-	private CacheLoader<String, Object> mockCacheLoader;
+class CallableCacheLoaderAdapterTest {
 
-	@Mock
-	private LoaderHelper<String, Object> mockLoaderHelper;
+	private DriverConnection connection;
+	private DriverRegion<String, String> region;
 
-	@Mock
-	private Region<String, Object> mockRegion;
+	@BeforeEach
+	void createRegion() {
+		connection = new GemFireDriverManager().driver()
+			.connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()));
+		region = connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
+	}
+
+	@AfterEach
+	void closeConnection() { connection.close(); }
 
 	@Test
-	public void constructCallableCacheLoaderAdapterWithArgumentKeyAndRegion() {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader, "key", mockRegion, "test");
-
-		assertThat(instance).isNotNull();
-		assertThat(instance.getCacheLoader()).isSameAs(mockCacheLoader);
-		assertThat(instance.getKey()).isEqualTo("key");
-		assertThat(instance.getRegion()).isSameAs(mockRegion);
-		assertThat(String.valueOf(instance.getArgument())).isEqualTo("test");
+	void preservesConstructorArguments() {
+		RecordingLoader loader = new RecordingLoader(helper -> "value");
+		var adapter = new CallableCacheLoaderAdapter<>(loader, "key", region, "argument");
+		assertThat(adapter.getCacheLoader()).isSameAs(loader);
+		assertThat(adapter.getKey()).isEqualTo("key");
+		assertThat(adapter.getRegion()).isSameAs(region);
+		assertThat(adapter.getArgument()).isEqualTo("argument");
+		assertThat(new CallableCacheLoaderAdapter<>(loader, "key", region).getArgument()).isNull();
+		var unbound = new CallableCacheLoaderAdapter<>(loader);
+		assertThat(unbound.getKey()).isNull();
+		assertThat(unbound.getRegion()).isNull();
+		assertThat(unbound.getArgument()).isNull();
 	}
 
 	@Test
-	public void constructCallableCacheLoaderAdapterWithKeyRegionAndNoArgument() {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader, "key", mockRegion);
-
-		assertThat(instance).isNotNull();
-		assertThat(instance.getCacheLoader()).isSameAs(mockCacheLoader);
-		assertThat(instance.getKey()).isEqualTo("key");
-		assertThat(instance.getRegion()).isSameAs(mockRegion);
-		assertThat(instance.getArgument()).isNull();
+	void rejectsNullLoader() {
+		assertThatThrownBy(() -> new CallableCacheLoaderAdapter<>(null))
+			.isInstanceOf(IllegalArgumentException.class).hasMessage("CacheLoader must not be null");
 	}
 
 	@Test
-	public void constructCallableCacheLoaderAdapterWithNoArgumentKeyOrRegion() {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader);
-
-		assertThat(instance).isNotNull();
-		assertThat(instance.getCacheLoader()).isSameAs(mockCacheLoader);
-		assertThat(instance.getKey()).isNull();
-		assertThat(instance.getRegion()).isNull();
-		assertThat(instance.getArgument()).isNull();
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void constructCallableCacheLoaderAdapterWithNullCacheLoader() {
-
-		try {
-			new CallableCacheLoaderAdapter<>(null);
-		}
-		catch (IllegalArgumentException expected) {
-
-			assertThat(expected).hasMessage("CacheLoader must not be null");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
+	void rejectsUnboundKeyAndRegionBeforeLoading() {
+		RecordingLoader loader = new RecordingLoader(helper -> "value");
+		assertThatThrownBy(() -> new CallableCacheLoaderAdapter<>(loader, null, region).call())
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessage("The key for which the value is loaded for cannot be null");
+		assertThatThrownBy(() -> new CallableCacheLoaderAdapter<>(loader, "key", null).call())
+			.isInstanceOf(IllegalStateException.class).hasMessage("The Region to load cannot be null");
+		assertThat(loader.loads.get()).isZero();
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
-	public void callDelegatesToLoad() throws Exception {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader, "key", mockRegion, "test");
-
-		when(mockCacheLoader.load(any(LoaderHelper.class))).thenAnswer((Answer<String>) invocation -> {
-
-			LoaderHelper<String, Object> loaderHelper = invocation.getArgument(0);
-
-			assertThat(loaderHelper).isNotNull();
-			assertThat(loaderHelper.getArgument()).isEqualTo("test");
-			assertThat(loaderHelper.getKey()).isEqualTo("key");
-			assertThat(loaderHelper.getRegion()).isSameAs(mockRegion);
-
-			return "mockValue";
+	void callSuppliesContextWithoutInsertingTheResult() throws Exception {
+		Object argument = new Object();
+		RecordingLoader loader = new RecordingLoader(helper -> {
+			assertThat(helper.getKey()).isEqualTo("key");
+			assertThat(helper.getRegion()).isSameAs(region);
+			assertThat(helper.getArgument()).isSameAs(argument);
+			return "value";
 		});
-
-		assertThat(instance.call()).isEqualTo("mockValue");
-
-		verify(mockCacheLoader, times(1)).load(isA(LoaderHelper.class));
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void callThrowsIllegalStateExceptionForNullKey() throws Exception {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader, null, mockRegion);
-
-		assertThat(instance.getKey()).isNull();
-		assertThat(instance.getRegion()).isSameAs(mockRegion);
-
-		try {
-			instance.call();
-		}
-		catch (IllegalStateException expected) {
-
-			assertThat(expected).hasMessage("The key for which the value is loaded for cannot be null");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void callThrowsIllegalStateExceptionForNullRegion() throws Exception {
-
-		CallableCacheLoaderAdapter<String, Object> instance =
-			new CallableCacheLoaderAdapter<>(mockCacheLoader, "key", null);
-
-		assertThat(instance.getKey()).isEqualTo("key");
-		assertThat(instance.getRegion()).isNull();
-
-		try {
-			instance.call();
-		}
-		catch (IllegalStateException expected) {
-
-			assertThat(expected).hasMessage("The Region to load cannot be null");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
+		assertThat(new CallableCacheLoaderAdapter<>(loader, "key", region, argument).call()).isEqualTo("value");
+		assertThat(loader.loads.get()).isEqualTo(1);
+		assertThat(region.containsKey("key")).isFalse();
 	}
 
 	@Test
-	public void closeDelegatesToCacheLoaderClose() {
-
-		new CallableCacheLoaderAdapter<>(mockCacheLoader).close();
-
-		verify(mockCacheLoader, times(1)).close();
+	void loadForwardsTheSuppliedHelperUnchanged() throws Exception {
+		RecordingLoader loader = new RecordingLoader(helper -> "value");
+		var adapter = new CallableCacheLoaderAdapter<>(loader, "key", region);
+		adapter.call();
+		DriverLoaderHelper<String, String> supplied = loader.lastHelper;
+		assertThat(adapter.load(supplied)).isEqualTo("value");
+		assertThat(loader.lastHelper).isSameAs(supplied);
+		assertThat(loader.loads.get()).isEqualTo(2);
 	}
 
 	@Test
-	public void loadDelegatesToCacheLoaderLoad() {
+	void preservesNullLoadResult() throws Exception {
+		assertThat(new CallableCacheLoaderAdapter<>(new RecordingLoader(helper -> null), "key", region).call()).isNull();
+	}
 
-		CallableCacheLoaderAdapter<String, Object> instance = new CallableCacheLoaderAdapter<>(mockCacheLoader);
+	@Test
+	void propagatesCallbackFailureUnchanged() {
+		IllegalArgumentException failure = new IllegalArgumentException("load failed");
+		var adapter = new CallableCacheLoaderAdapter<>(new RecordingLoader(helper -> { throw failure; }), "key", region);
+		assertThatThrownBy(adapter::call).isSameAs(failure);
+		assertThatThrownBy(() -> adapter.load(null)).isSameAs(failure);
+	}
 
-		when(mockCacheLoader.load(eq(mockLoaderHelper))).thenReturn("test");
+	@Test
+	void rejectsSyntheticNetworkSearchExplicitly() {
+		var adapter = new CallableCacheLoaderAdapter<>(new RecordingLoader(helper -> helper.netSearch(true)), "key", region);
+		assertThatThrownBy(adapter::call).isInstanceOfSatisfying(UnsupportedFeatureException.class, ex -> {
+			assertThat(ex.feature()).isEqualTo("LoaderHelper.netSearch");
+			assertThat(ex.reason()).isEqualTo(UnsupportedFeatureException.Reason.NOT_INTRODUCED);
+		});
+	}
 
-		assertThat(instance.load(mockLoaderHelper)).isEqualTo("test");
+	@Test
+	void closeForwardsEachInvocation() {
+		RecordingLoader loader = new RecordingLoader(helper -> "value");
+		var adapter = new CallableCacheLoaderAdapter<>(loader);
+		adapter.close();
+		adapter.close();
+		assertThat(loader.closes.get()).isEqualTo(2);
+	}
 
-		verify(mockCacheLoader, times(1)).load(eq(mockLoaderHelper));
+	@Test
+	void closePropagatesCallbackFailure() {
+		IllegalStateException failure = new IllegalStateException("close failed");
+		DriverCacheLoader<String, String> loader = new DriverCacheLoader<>() {
+			@Override public String load(DriverLoaderHelper<String, String> helper) { return null; }
+			@Override public void close() { throw failure; }
+		};
+		assertThatThrownBy(new CallableCacheLoaderAdapter<>(loader)::close).isSameAs(failure);
+	}
+
+	@Test
+	void installedAdapterUsesDriverContextAndLifecycle() {
+		RecordingLoader loader = new RecordingLoader(helper -> {
+			assertThat(helper.getRegion().name()).isEqualTo("entries");
+			return helper.getKey() + ":" + helper.getArgument();
+		});
+		region.setCacheLoader(new CallableCacheLoaderAdapter<>(loader));
+		assertThat(region.get("key", "argument")).isEqualTo("key:argument");
+		assertThat(region.get("key", "other")).isEqualTo("key:argument");
+		assertThat(loader.loads.get()).isEqualTo(1);
+		region.setCacheLoader(null);
+		assertThat(loader.closes.get()).isEqualTo(1);
+	}
+
+	private static final class RecordingLoader implements DriverCacheLoader<String, String> {
+		private final Function<DriverLoaderHelper<String, String>, String> action;
+		private final AtomicInteger loads = new AtomicInteger();
+		private final AtomicInteger closes = new AtomicInteger();
+		private DriverLoaderHelper<String, String> lastHelper;
+		RecordingLoader(Function<DriverLoaderHelper<String, String>, String> action) { this.action = action; }
+		@Override public String load(DriverLoaderHelper<String, String> helper) {
+			loads.incrementAndGet();
+			lastHelper = helper;
+			return action.apply(helper);
+		}
+		@Override public void close() { closes.incrementAndGet(); }
 	}
 }

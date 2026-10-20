@@ -1,0 +1,217 @@
+path	line	source
+spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/client/support/ClientCacheFactoryCacheResolverIntegrationTests.java	50	ClientCacheFactoryCacheResolver cacheResolver = Mockito.spy(ClientCacheFactoryCacheResolver.INSTANCE);
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/CacheResolver.java	21	public interface CacheResolver<T extends ClientCache> extends Supplier<T> {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionResolver.java	23	public interface RegionResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	12	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	32	private final CacheResolver<ClientCache> clientCacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	44	public ClientCacheDefaultPoolResolver(@NonNull CacheResolver<ClientCache> clientCacheResolver) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	46	Assert.notNull(clientCacheResolver, "CacheResolver for ClientCache must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	59	protected @NonNull CacheResolver<ClientCache> getClientCacheResolver() {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolver.java	71	.map(CacheResolver::resolve)
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheFactoryCacheResolver.java	10	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheFactoryCacheResolver.java	11	import org.springframework.data.gemfire.support.AbstractCachingCacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheFactoryCacheResolver.java	24	public class ClientCacheFactoryCacheResolver extends AbstractCachingCacheResolver<ClientCache> {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/support/ClientCacheFactoryCacheResolver.java	26	public static final ClientCacheFactoryCacheResolver INSTANCE = new ClientCacheFactoryCacheResolver();
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/AbstractCachingCacheResolver.java	8	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/AbstractCachingCacheResolver.java	19	public abstract class AbstractCachingCacheResolver<T extends ClientCache> implements CacheResolver<T> {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolver.java	18	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolver.java	34	public abstract class AbstractCachingRegionResolver extends CacheListenerAdapter implements RegionResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolver.java	81	attributesMutator.addCacheListener(AbstractCachingRegionResolver.this);
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolver.java	12	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolver.java	29	public class BeanFactoryCacheResolver extends AbstractCachingCacheResolver<ClientCache> implements BeanFactoryAware {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolver.java	43	public BeanFactoryCacheResolver(BeanFactory beanFactory) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolver.java	12	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolver.java	30	public class BeanFactoryRegionResolver extends AbstractCachingRegionResolver implements BeanFactoryAware {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolver.java	42	public BeanFactoryRegionResolver(BeanFactory beanFactory) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	11	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	32	public class ComposableCacheResolver<T extends ClientCache> extends AbstractCachingCacheResolver<T> {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	34	private final CacheResolver<T> cacheResolverOne;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	35	private final CacheResolver<T> cacheResolverTwo;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	48	public static <T extends ClientCache> CacheResolver<T> compose(@Nullable CacheResolver<T>... cacheResolvers) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	49	return compose(Arrays.asList(ArrayUtils.nullSafeArray(cacheResolvers, CacheResolver.class)));
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	66	public static <T extends ClientCache> CacheResolver<T> compose(@Nullable Iterable<CacheResolver<T>> cacheResolvers) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	68	CacheResolver<T> current = null;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	70	for (CacheResolver<T> cacheResolver : CollectionUtils.nullSafeIterable(cacheResolvers)) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	90	public static <T extends ClientCache> CacheResolver<T> compose(@Nullable CacheResolver<T> one,
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	91	@Nullable CacheResolver<T> two) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	93	return one == null ? two : two == null ? one : new ComposableCacheResolver<>(one, two);
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	105	protected ComposableCacheResolver(@NonNull CacheResolver<T> cacheResolverOne,
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	106	@NonNull CacheResolver<T> cacheResolverTwo) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	108	Assert.notNull(cacheResolverOne, "CacheResolver 1 must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	109	Assert.notNull(cacheResolverTwo, "CacheResolver 2 must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	121	protected @NonNull CacheResolver<T> getCacheResolverOne() {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableCacheResolver.java	131	protected @NonNull CacheResolver<T> getCacheResolverTwo() {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	13	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	29	public class ComposableRegionResolver extends AbstractCachingRegionResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	39	public static RegionResolver compose(@Nullable RegionResolver... regionResolvers) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	40	return compose(Arrays.asList(ArrayUtils.nullSafeArray(regionResolvers, RegionResolver.class)));
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	55	public static @Nullable RegionResolver compose(@Nullable Iterable<RegionResolver> regionResolvers) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	57	RegionResolver current = null;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	59	for (RegionResolver regionResolver : CollectionUtils.nullSafeIterable(regionResolvers)) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	78	public static @Nullable RegionResolver compose(@Nullable RegionResolver one, @Nullable RegionResolver two) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	79	return one == null ? two : two == null ? one : new ComposableRegionResolver(one, two);
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	82	private final RegionResolver regionResolverOne;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	83	private final RegionResolver regionResolverTwo;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	94	protected ComposableRegionResolver(@NonNull RegionResolver regionResolverOne,
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	95	@NonNull RegionResolver regionResolverTwo) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	97	Assert.notNull(regionResolverOne, "RegionResolver 1 must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	98	Assert.notNull(regionResolverTwo, "RegionResolver 2 must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	110	protected @NonNull RegionResolver getRegionResolverOne() {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/ComposableRegionResolver.java	120	protected @NonNull RegionResolver getRegionResolverTwo() {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	11	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	12	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	31	public class RegionServiceRegionResolver<T extends RegionService> extends AbstractCachingRegionResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	48	public static <S extends ClientCache> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	50	Assert.notNull(cacheResolver, "CacheResolver must not be null");
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	52	return new RegionServiceRegionResolver<>(() -> Optional.ofNullable(cacheResolver.resolve()));
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	68	public static RegionServiceRegionResolver<RegionService> from(@Nullable RegionService regionService) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	69	return new RegionServiceRegionResolver<>(() -> Optional.ofNullable(regionService));
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/RegionServiceRegionResolver.java	83	public RegionServiceRegionResolver(RegionServiceResolver<T> resolver) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleCacheCacheResolver.java	8	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleCacheCacheResolver.java	18	public abstract class SingleCacheCacheResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleCacheCacheResolver.java	28	public static CacheResolver<ClientCache> from(@Nullable ClientCache clientCache) {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleRegionRegionResolver.java	9	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleRegionRegionResolver.java	23	public class SingleRegionRegionResolver implements RegionResolver {
+spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SingleRegionRegionResolver.java	34	public SingleRegionRegionResolver(@NonNull Region region) {
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/CacheResolverUnitTests.java	34	CacheResolver mockCacheResolver = mock(CacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionResolverUnitTests.java	38	RegionResolver regionResolver = mock(RegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionResolverUnitTests.java	52	RegionResolver regionResolver = mock(RegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	19	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	42	CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	60	assertThat(expected).hasMessage("CacheResolver for ClientCache must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	76	CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	91	CacheResolver<ClientCache> clientCacheResolver = () -> null;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/client/support/ClientCacheDefaultPoolResolverUnitTests.java	105	CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingCacheResolverUnitTests.java	44	AbstractCachingCacheResolver cacheResolver = mock(AbstractCachingCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingCacheResolverUnitTests.java	64	private AbstractCachingCacheResolver<?> mockCacheResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingCacheResolverUnitTests.java	74	this.mockCacheResolver = mock(AbstractCachingCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	58	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	79	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	115	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	139	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	164	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	176	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	194	AbstractCachingRegionResolver regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	225	private AbstractCachingRegionResolver regionResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java	242	this.regionResolver = spy(AbstractCachingRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	49	BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	76	BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	88	BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	111	BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	137	BeanFactoryCacheResolver cacheResolver = spy(new BeanFactoryCacheResolver(this.mockBeanFactory));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java	153	BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java	61	BeanFactoryRegionResolver regionResolver = new BeanFactoryRegionResolver(this.mockBeanFactory);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java	71	new BeanFactoryRegionResolver(null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java	91	BeanFactoryRegionResolver regionResolver = spy(new BeanFactoryRegionResolver(this.mockBeanFactory));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java	106	BeanFactoryRegionResolver regionResolver = spy(new BeanFactoryRegionResolver(this.mockBeanFactory));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java	118	BeanFactoryRegionResolver regionResolver = spy(new BeanFactoryRegionResolver(this.mockBeanFactory));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	19	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	41	private CacheResolver mockCacheResolverOne;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	44	private CacheResolver mockCacheResolverTwo;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	47	private CacheResolver mockCacheResolverThree;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	51	assertThat(ComposableCacheResolver.compose(null, null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	57	assertThat(ComposableCacheResolver.compose(this.mockCacheResolverOne, null))
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	60	assertThat(ComposableCacheResolver.compose(null, this.mockCacheResolverTwo))
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	67	CacheResolver composed = ComposableCacheResolver.compose(this.mockCacheResolverOne, this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	69	assertThat(composed).isInstanceOf(ComposableCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	70	assertThat(((ComposableCacheResolver) composed).getCacheResolverOne()).isEqualTo(this.mockCacheResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	71	assertThat(((ComposableCacheResolver) composed).getCacheResolverTwo()).isEqualTo(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	78	CacheResolver[] cacheResolvers = {
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	82	CacheResolver composed = ComposableCacheResolver.compose(cacheResolvers);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	84	assertThat(composed).isInstanceOf(ComposableCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	86	CacheResolver cacheResolverOne = ((ComposableCacheResolver) composed).getCacheResolverOne();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	87	CacheResolver cacheResolverTwo = ((ComposableCacheResolver) composed).getCacheResolverTwo();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	89	assertThat(cacheResolverOne).isInstanceOf(ComposableCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	90	assertThat(((ComposableCacheResolver) cacheResolverOne).getCacheResolverOne()).isEqualTo(this.mockCacheResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	91	assertThat(((ComposableCacheResolver) cacheResolverOne).getCacheResolverTwo()).isEqualTo(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	99	CacheResolver[] cacheResolvers = { null, this.mockCacheResolverTwo, null, null };
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	101	assertThat(ComposableCacheResolver.compose(cacheResolvers)).isSameAs(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	103	cacheResolvers = new CacheResolver[] { null, this.mockCacheResolverTwo, this.mockCacheResolverThree, null };
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	105	CacheResolver composed = ComposableCacheResolver.compose(cacheResolvers);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	107	assertThat(composed).isInstanceOf(ComposableCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	108	assertThat(((ComposableCacheResolver) composed).getCacheResolverOne()).isEqualTo(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	109	assertThat(((ComposableCacheResolver) composed).getCacheResolverTwo()).isEqualTo(this.mockCacheResolverThree);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	111	cacheResolvers = new CacheResolver[] { null, this.mockCacheResolverOne, null, null, this.mockCacheResolverTwo };
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	113	composed = ComposableCacheResolver.compose(cacheResolvers);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	115	assertThat(composed).isInstanceOf(ComposableCacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	116	assertThat(((ComposableCacheResolver) composed).getCacheResolverOne()).isEqualTo(this.mockCacheResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	117	assertThat(((ComposableCacheResolver) composed).getCacheResolverTwo()).isEqualTo(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	123	CacheResolver[] cacheResolvers = { null, this.mockCacheResolverTwo };
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	125	assertThat(ComposableCacheResolver.compose(cacheResolvers)).isSameAs(this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	130	assertThat(ComposableCacheResolver.compose(this.mockCacheResolverOne)).isSameAs(this.mockCacheResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	135	assertThat(ComposableCacheResolver.compose()).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	140	assertThat(ComposableCacheResolver.compose((CacheResolver[]) null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	145	assertThat(ComposableCacheResolver.compose((Iterable) null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	151	ComposableCacheResolver cacheResolver =
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	152	new ComposableCacheResolver(this.mockCacheResolverOne, this.mockCacheResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	160	Supplier<CacheResolver> cacheResolverSupplier, String expectedMessage) {
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	178	() -> new ComposableCacheResolver(null, this.mockCacheResolverTwo),
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	179	"CacheResolver 1 must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	186	() -> new ComposableCacheResolver(this.mockCacheResolverOne, null),
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	187	"CacheResolver 2 must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	195	CacheResolver cacheResolver = ComposableCacheResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	213	CacheResolver cacheResolver = ComposableCacheResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	231	CacheResolver cacheResolver = ComposableCacheResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	248	CacheResolver cacheResolver = ComposableCacheResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java	265	CacheResolver cacheResolver = ComposableCacheResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	30	import org.springframework.data.gemfire.RegionResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	52	private RegionResolver mockRegionResolverOne;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	55	private RegionResolver mockRegionResolverTwo;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	58	private RegionResolver mockRegionResolverThree;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	72	ComposableRegionResolver regionResolver =
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	73	new ComposableRegionResolver(this.mockRegionResolverOne, this.mockRegionResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	80	public void testConstructRegionResolverWithNullRegionResolver(Supplier<RegionResolver> regionResolverSupplier,
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	98	() -> new ComposableRegionResolver(null, this.mockRegionResolverTwo),
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	99	"RegionResolver 1 must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	105	() -> new ComposableRegionResolver(this.mockRegionResolverOne, null),
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	106	"RegionResolver 2 must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	111	assertThat(ComposableRegionResolver.compose(null, null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	117	assertThat(ComposableRegionResolver.compose(this.mockRegionResolverOne, null))
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	120	assertThat(ComposableRegionResolver.compose(null, this.mockRegionResolverTwo))
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	127	RegionResolver regionResolver =
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	128	ComposableRegionResolver.compose(this.mockRegionResolverOne, this.mockRegionResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	131	assertThat(regionResolver).isInstanceOf(ComposableRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	132	assertThat(((ComposableRegionResolver) regionResolver).getRegionResolverOne()).isEqualTo(this.mockRegionResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	133	assertThat(((ComposableRegionResolver) regionResolver).getRegionResolverTwo()).isEqualTo(this.mockRegionResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	139	RegionResolver regionResolver = ComposableRegionResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	143	assertThat(regionResolver).isInstanceOf(ComposableRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	145	RegionResolver regionResolverOne = ((ComposableRegionResolver) regionResolver).getRegionResolverOne();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	146	RegionResolver regionResolverTwo = ((ComposableRegionResolver) regionResolver).getRegionResolverTwo();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	149	assertThat(regionResolverOne).isInstanceOf(ComposableRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	150	assertThat(((ComposableRegionResolver) regionResolverOne).getRegionResolverOne()).isEqualTo(this.mockRegionResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	151	assertThat(((ComposableRegionResolver) regionResolverOne).getRegionResolverTwo()).isEqualTo(this.mockRegionResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	158	RegionResolver regionResolver = ComposableRegionResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	162	assertThat(regionResolver).isInstanceOf(ComposableRegionResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	163	assertThat(((ComposableRegionResolver) regionResolver).getRegionResolverOne()).isEqualTo(this.mockRegionResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	164	assertThat(((ComposableRegionResolver) regionResolver).getRegionResolverTwo()).isEqualTo(this.mockRegionResolverTwo);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	169	assertThat(ComposableRegionResolver.compose(this.mockRegionResolverOne)).isEqualTo(this.mockRegionResolverOne);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	174	assertThat(ComposableRegionResolver.compose()).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	179	assertThat(ComposableRegionResolver.compose((RegionResolver[]) null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	184	assertThat(ComposableRegionResolver.compose((Iterable<RegionResolver>) null)).isNull();
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	191	RegionResolver regionResolver = ComposableRegionResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	207	RegionResolver regionResolver = ComposableRegionResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java	228	RegionResolver regionResolver = ComposableRegionResolver
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	16	import static org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	27	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	66	RegionServiceRegionResolver regionResolver = new RegionServiceRegionResolver(mockRegionServiceResolver);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	78	new RegionServiceRegionResolver<>(null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	96	CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	100	RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockClientCacheResolver);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	114	CacheResolver<ClientCache> mockCacheResolver = mock(CacheResolver.class);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	118	RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockCacheResolver);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	131	RegionServiceRegionResolver.from((CacheResolver<ClientCache>) null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	135	assertThat(expected).hasMessage("CacheResolver must not be null");
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	149	RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockRegionService);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	163	RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from((RegionService) null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	181	RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	203	RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java	220	RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java	12	import org.springframework.data.gemfire.CacheResolver;
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java	32	CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from(mockCache);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java	43	CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from(null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java	54	CacheResolver<ClientCache> clientCacheResolver = SingleCacheCacheResolver.from(mockClientCache);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java	65	CacheResolver<ClientCache> cacheResolver = SingleCacheCacheResolver.from((ClientCache) null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleRegionRegionResolverUnitTests.java	40	SingleRegionRegionResolver regionResolver = new SingleRegionRegionResolver(this.mockRegion);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleRegionRegionResolverUnitTests.java	50	new SingleRegionRegionResolver(null);
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleRegionRegionResolverUnitTests.java	66	assertThat(new SingleRegionRegionResolver(this.mockRegion).resolve("MockRegion"))
+spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/SingleRegionRegionResolverUnitTests.java	77	SingleRegionRegionResolver regionResolver = new SingleRegionRegionResolver(this.mockRegion);

@@ -5,11 +5,13 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Test;
+import org.springframework.mock.env.MockEnvironment;
 
 import org.springframework.data.gemfire.test.support.MapBuilder;
 
@@ -52,6 +54,27 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_POST_PROCESSOR))
 			.isEqualTo(TestSecurityPostProcessor.class.getName());
 
+	}
+
+	@Test
+	public void rejectsRemovedShiroAnnotationAttribute() {
+		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+
+		assertThatThrownBy(() -> configuration.toGemFireProperties(Map.of("shiroIniResourcePath", "shiro.ini")))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessageContaining("security-shiro-init")
+			.hasMessageContaining("security-manager");
+	}
+
+	@Test
+	public void rejectsRemovedShiroEnvironmentProperty() {
+		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+		configuration.setEnvironment(new MockEnvironment()
+			.withProperty("spring.data.gemfire.security.shiro.ini-resource-path", "shiro.ini"));
+
+		assertThatThrownBy(() -> configuration.toGemFireProperties(Map.of()))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessageContaining("security-shiro-init");
 	}
 
 	private static class TestSecurityPostProcessor implements org.apache.geode.security.PostProcessor {

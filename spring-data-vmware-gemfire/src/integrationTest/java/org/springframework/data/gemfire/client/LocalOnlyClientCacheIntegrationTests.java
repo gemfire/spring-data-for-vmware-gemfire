@@ -16,12 +16,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
 import org.springframework.data.gemfire.test.model.Gender;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -52,7 +52,7 @@ public class LocalOnlyClientCacheIntegrationTests extends IntegrationTestsSuppor
 
 		Assertions.assertThat(this.people).isNotNull();
 		Assertions.assertThat(this.people.getName()).isEqualTo("People");
-		Assertions.assertThat(this.people.getFullPath()).isEqualTo(GemfireUtils.toRegionPath("People"));
+		Assertions.assertThat(this.people.getFullPath()).isEqualTo(RegionPaths.toRegionPath("People"));
 		Assertions.assertThat(this.people.getAttributes()).isNotNull();
 		Assertions.assertThat(this.people.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		Assertions.assertThat(this.people.getAttributes().getKeyConstraint()).isEqualTo(Long.class);

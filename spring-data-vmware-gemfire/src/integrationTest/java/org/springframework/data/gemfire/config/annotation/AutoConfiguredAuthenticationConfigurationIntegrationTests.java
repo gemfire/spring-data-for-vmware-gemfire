@@ -16,9 +16,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.GemfireTemplate;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -89,7 +89,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 
 		@Bean
 		GemfireTemplate echoTemplate(ClientCache cache) {
-			return new GemfireTemplate(cache.getRegion(GemfireUtils.toRegionPath("Echo")));
+			return new GemfireTemplate(cache.getRegion(RegionPaths.toRegionPath("Echo")));
 		}
 
 		@Bean

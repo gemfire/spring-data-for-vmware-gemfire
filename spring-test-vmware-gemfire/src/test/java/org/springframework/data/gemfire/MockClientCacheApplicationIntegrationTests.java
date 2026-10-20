@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -74,7 +74,7 @@ public class MockClientCacheApplicationIntegrationTests {
   public void exampleRegionIsMocked() {
 
     assertThat(this.example).isNotNull();
-    assertThat(this.example.getFullPath()).isEqualTo(RegionUtils.toRegionPath("Example"));
+    assertThat(this.example.getFullPath()).isEqualTo(RegionPaths.toRegionPath("Example"));
     assertThat(this.example.getName()).isEqualTo("Example");
     assertThat(this.example.put(1, "test")).isNull();
     assertThat(this.example.get(1)).isEqualTo("test");

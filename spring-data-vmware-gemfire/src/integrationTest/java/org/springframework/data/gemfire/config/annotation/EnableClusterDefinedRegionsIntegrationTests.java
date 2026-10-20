@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -84,7 +84,7 @@ public class EnableClusterDefinedRegionsIntegrationTests {
 
 		Assertions.assertThat(region).isNotNull();
 		Assertions.assertThat(region.getName()).isEqualTo(expectedName);
-		Assertions.assertThat(region.getFullPath()).isEqualTo(RegionUtils.toRegionPath(expectedName));
+		Assertions.assertThat(region.getFullPath()).isEqualTo(RegionPaths.toRegionPath(expectedName));
 		Assertions.assertThat(region.getAttributes()).isNotNull();
 		Assertions.assertThat(region.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.EMPTY);
 	}

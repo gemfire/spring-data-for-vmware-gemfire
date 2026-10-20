@@ -16,11 +16,11 @@ import org.apache.geode.compression.SnappyCompressor;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
+import org.springframework.data.gemfire.util.RegionPaths;
 
 /**
  * Integration Tests for {@link EnableCompression} and {@link CompressionConfiguration}.
@@ -46,7 +46,7 @@ public class EnableCompressionConfigurationUnitTests extends SpringApplicationCo
 
 		assertThat(region).isNotNull();
 		assertThat(region.getName()).isEqualTo(regionName);
-		assertThat(region.getFullPath()).isEqualTo(GemfireUtils.toRegionPath(regionName));
+		assertThat(region.getFullPath()).isEqualTo(RegionPaths.toRegionPath(regionName));
 		assertThat(region.getAttributes()).isNotNull();
 		assertThat(region.getAttributes().getCompressor()).isEqualTo(compressor);
 	}

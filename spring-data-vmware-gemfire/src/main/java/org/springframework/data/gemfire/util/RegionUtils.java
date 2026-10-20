@@ -13,7 +13,6 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.internal.cache.LocalRegion;
 
 import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -144,25 +143,8 @@ public abstract class RegionUtils extends CacheUtils {
 	}
 
 	@Nullable
-	public static String toRegionName(String regionPath) {
-
-		return Optional.ofNullable(regionPath)
-			.filter(StringUtils::hasText)
-			.map(StringUtils::trimWhitespace)
-			.map(it -> it.lastIndexOf(Region.SEPARATOR))
-			.filter(index -> index > -1)
-			.map(index -> regionPath.substring(index + 1))
-			.orElse(regionPath);
-	}
-
-	@Nullable
 	public static String toRegionPath(@Nullable Region<?, ?> region) {
 		return Optional.ofNullable(region).map(Region::getFullPath).orElse(null);
-	}
-
-	@NonNull
-	public static String toRegionPath(String regionName) {
-		return String.format("%1$s%2$s", Region.SEPARATOR, regionName);
 	}
 
 	/**

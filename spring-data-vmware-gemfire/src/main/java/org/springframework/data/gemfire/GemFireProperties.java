@@ -31,6 +31,7 @@ public enum GemFireProperties {
 	ACK_WAIT_THRESHOLD(ConfigurationProperties.ACK_WAIT_THRESHOLD, Long.class, 15),
 	ARCHIVE_DISK_SPACE_LIMIT(ConfigurationProperties.ARCHIVE_DISK_SPACE_LIMIT, Integer.class, 0),
 	ARCHIVE_FILE_SIZE_LIMIT(ConfigurationProperties.ARCHIVE_FILE_SIZE_LIMIT, Integer.class, 0),
+	AVAILABILITY_ZONE(ConfigurationProperties.AVAILABILITY_ZONE, String.class),
 	BIND_ADDRESS(ConfigurationProperties.BIND_ADDRESS, String.class),
 	CACHE_XML_FILE(ConfigurationProperties.CACHE_XML_FILE, String.class),
 	CONFLATE_EVENTS(ConfigurationProperties.CONFLATE_EVENTS, String.class, "server"),
@@ -76,8 +77,9 @@ public enum GemFireProperties {
 	SECURITY_PEER_AUTH_INIT(ConfigurationProperties.SECURITY_PEER_AUTH_INIT, String.class),
 	SECURITY_PEER_VERIFY_MEMBER_TIMEOUT(ConfigurationProperties.SECURITY_PEER_VERIFY_MEMBER_TIMEOUT, Long.class, 1000L),
 	SECURITY_POST_PROCESSOR(ConfigurationProperties.SECURITY_POST_PROCESSOR, String.class),
+	// Retained for property-name compatibility; configuration rejects this removed native setting.
 	@Deprecated
-	SECURITY_SHIRO_INIT(ConfigurationProperties.SECURITY_SHIRO_INIT, String.class),
+	SECURITY_SHIRO_INIT("security-shiro-init", String.class),
 	SECURITY_UDP_DHALO(ConfigurationProperties.SECURITY_UDP_DHALGO, String.class),
 	SERIALIZABLE_OBJECT_FILTER(ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER, String.class, "!*"),
 	SERVER_BIND_ADDRESS(ConfigurationProperties.SERVER_BIND_ADDRESS, String.class),

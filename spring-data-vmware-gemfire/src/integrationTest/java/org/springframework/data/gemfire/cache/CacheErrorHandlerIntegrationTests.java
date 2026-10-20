@@ -1,127 +1,77 @@
 /*
- * Copyright 2022-2025 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 package org.springframework.data.gemfire.cache;
 
-import org.apache.geode.cache.DataPolicy;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.NoAvailableServersException;
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.jupiter.api.Test;
+
+import com.vmware.gemfire.driver.spi.DriverOperationException;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+
 import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.cache.config.EnableGemfireCaching;
-import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
-import org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions;
-import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.cache.support.SimpleCacheManager;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * Integration Tests demonstrating the use of Spring's {@link CacheErrorHandler} with Apache Geode
- * as the caching provider.
- *
- * @author John Blum
- * @see org.junit.Test
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.springframework.cache.annotation.Cacheable
- * @see org.springframework.cache.annotation.CachingConfigurerSupport
- * @see org.springframework.cache.interceptor.CacheErrorHandler
- * @see org.springframework.data.gemfire.cache.config.EnableGemfireCaching
- * @see org.springframework.data.gemfire.config.annotation.ClientCacheApplication
- * @see org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions
- * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
- * @see org.springframework.test.context.ContextConfiguration
- * @see org.springframework.test.context.junit4.SpringRunner
- * @since 2.3.0
- */
-@RunWith(SpringRunner.class)
-@ContextConfiguration
-@SuppressWarnings("unused")
-public class CacheErrorHandlerIntegrationTests extends IntegrationTestsSupport {
-
-	@Autowired
-	private ClientCache clientCache;
-
-	@Autowired
-	private TestCacheableService cacheableService;
-
-	@Before
-	public void assertSetup() {
-
-		Assertions.assertThat(this.clientCache).isNotNull();
-		Assertions.assertThat(this.cacheableService).isNotNull();
-
-		Region<Object, Object> testCache = this.clientCache.getRegion("/TestCache");
-
-		Assertions.assertThat(testCache).isNotNull();
-		Assertions.assertThat(testCache.getName()).isEqualTo("TestCache");
-		Assertions.assertThat(testCache.getAttributes()).isNotNull();
-		Assertions.assertThat(testCache.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.EMPTY);
-		Assertions.assertThat(testCache.getAttributes().getPoolName()).isEqualTo("DEFAULT");
-	}
+/** Verifies that an application's error handler sees SPI failures from the migrated adapter. */
+class CacheErrorHandlerIntegrationTests {
 
 	@Test
-	public void cacheServiceOperationIsSuccessful() {
-		Assertions.assertThat(this.cacheableService.processCacheableOperation("one")).isEqualTo("TEST");
-	}
-
-	@ClientCacheApplication
-	@EnableCachingDefinedRegions
-	@EnableGemfireCaching
-	static class GeodeClientTestConfiguration extends CachingConfigurerSupport {
-
-		@Nullable @Override
-		public CacheErrorHandler errorHandler() {
-			return new TestCacheErrorHandler();
-		}
-
-		@Bean
-		TestCacheableService testCacheableService() {
-			return new TestCacheableService();
-		}
-	}
-
-	@Service
-	static class TestCacheableService {
-
-		@Cacheable(cacheNames = "TestCache")
-		public Object processCacheableOperation(String input) {
-			return "TEST";
+	void applicationCanHandleDriverFailuresDuringCacheGetAndPut() {
+		DriverRegion<Object, Object> failedRegion = new DriverRegion<>() {
+			@Override public String name() { return "TestCache"; }
+			@Override public Object get(Object key) { throw new DriverOperationException("Unavailable", null); }
+			@Override public Object put(Object key, Object value) { throw new DriverOperationException("Unavailable", null); }
+		};
+		try (var context = new AnnotationConfigApplicationContext()) {
+			context.registerBean(CacheManager.class, () -> {
+				SimpleCacheManager manager = new SimpleCacheManager();
+				manager.setCaches(List.of(new GemfireCache(failedRegion)));
+				return manager;
+			});
+			context.register(ErrorConfiguration.class, TestService.class);
+			context.refresh();
+			assertThat(context.getBean(TestService.class).process("key")).isEqualTo("TEST");
+			assertThat(context.getBean(ErrorConfiguration.class).handler.failures.get()).isEqualTo(2);
 		}
 	}
 
-	static class TestCacheErrorHandler extends SimpleCacheErrorHandler {
+	@Configuration(proxyBeanMethods = false)
+	@EnableCaching
+	public static class ErrorConfiguration implements CachingConfigurer {
+		private final TestErrorHandler handler = new TestErrorHandler();
+		@Override public CacheErrorHandler errorHandler() { return handler; }
+	}
+
+	public static class TestService {
+		@Cacheable("TestCache")
+		public String process(String key) { return "TEST"; }
+	}
+
+	private static class TestErrorHandler extends SimpleCacheErrorHandler {
+		private final AtomicInteger failures = new AtomicInteger();
 
 		@Override
-		public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
-			handleCacheGetAndPutError(exception, cache, key, null);
-		}
+		public void handleCacheGetError(RuntimeException ex, Cache cache, Object key) { handle(ex); }
 
 		@Override
-		public void handleCachePutError(RuntimeException exception, Cache cache, Object key, @Nullable Object value) {
-			handleCacheGetAndPutError(exception, cache, key, value);
-		}
+		public void handleCachePutError(RuntimeException ex, Cache cache, Object key, Object value) { handle(ex); }
 
-		private void handleCacheGetAndPutError(RuntimeException exception, Cache cache, Object key, @Nullable Object value) {
-
-			// If the Apache Geode cluster of servers is not available, then effectively disable caching
-			// by not rethrowing the Exception!
-			if (!(exception instanceof NoAvailableServersException)) {
-				throw exception;
-			}
+		private void handle(RuntimeException ex) {
+			if (!(ex instanceof DriverOperationException)) throw ex;
+			failures.incrementAndGet();
 		}
 	}
 }

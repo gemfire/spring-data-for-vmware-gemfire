@@ -5,6 +5,7 @@
 package org.springframework.data.gemfire.client;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -56,6 +57,12 @@ import org.springframework.data.util.ReflectionUtils;
  * @since 1.7.0
  */
 public class PoolFactoryBeanUnitTests {
+
+	@Test
+	public void baseAdapterRejectsUnavailableAvailabilityZone() {
+		assertThatThrownBy(() -> new PoolAdapter() { }.getAvailabilityZone())
+			.isInstanceOf(UnsupportedOperationException.class);
+	}
 
 	private ConnectionEndpoint newConnectionEndpoint(String host, int port) {
 		return new ConnectionEndpoint(host, port);
@@ -392,6 +399,7 @@ public class PoolFactoryBeanUnitTests {
 		Pool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 		assertThat(pool.isDestroyed()).isFalse();
 		assertThat(pool.getFreeConnectionTimeout()).isEqualTo(5000);
 		assertThat(pool.getIdleTimeout()).isEqualTo(120000L);
@@ -456,6 +464,7 @@ public class PoolFactoryBeanUnitTests {
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 
 		poolFactoryBean.setPool(mockPool);
 
@@ -493,6 +502,7 @@ public class PoolFactoryBeanUnitTests {
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 
 		poolFactoryBean.setPool(mockPool);
 
@@ -529,6 +539,7 @@ public class PoolFactoryBeanUnitTests {
 
 		assertThat(pool).isNotSameAs(mockPool);
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 
 		poolFactoryBean.setPool(mockPool);
 		pool.destroy();
@@ -548,6 +559,7 @@ public class PoolFactoryBeanUnitTests {
 		Pool pool = poolFactoryBean.getPool();
 
 		assertThat(pool).isInstanceOf(PoolAdapter.class);
+		assertThat(pool.getAvailabilityZone()).isEqualTo(PoolFactory.DEFAULT_AVAILABILITY_ZONE);
 
 		pool.destroy();
 		pool.destroy(true);

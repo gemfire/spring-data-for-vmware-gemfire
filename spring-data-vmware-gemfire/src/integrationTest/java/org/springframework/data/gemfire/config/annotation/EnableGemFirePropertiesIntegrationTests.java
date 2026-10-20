@@ -153,8 +153,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.security.client.AuthenticationInitializer")
 			.withProperty("spring.data.gemfire.security.peer.authentication-initializer", "example.security.peer.AuthenticationInitializer")
 			.withProperty("spring.data.gemfire.security.manager.class-name", "example.security.SecurityManager")
-			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "example.security.PostProcessor")
-			.withProperty("spring.data.gemfire.security.shiro.ini-resource-path", "/path/to/shiro.ini");
+			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "example.security.PostProcessor");
 
 		newApplicationContext(testPropertySource, TestSecurityGemFirePropertiesConfiguration.class);
 
@@ -172,7 +171,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		Assertions.assertThat(gemfireProperties.getProperty("security-peer-auth-init")).isEqualTo("example.security.peer.AuthenticationInitializer");
 		Assertions.assertThat(gemfireProperties.getProperty("security-manager")).isEqualTo("example.security.SecurityManager");
 		Assertions.assertThat(gemfireProperties.getProperty("security-post-processor")).isEqualTo("example.security.PostProcessor");
-		Assertions.assertThat(gemfireProperties.getProperty("security-shiro-init")).isEqualTo("/path/to/shiro.ini");
+		Assertions.assertThat(gemfireProperties).doesNotContainKey("security-shiro-init");
 	}
 
 	@Test

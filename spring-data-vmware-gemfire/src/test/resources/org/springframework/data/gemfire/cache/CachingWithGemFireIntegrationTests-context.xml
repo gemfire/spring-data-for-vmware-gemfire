@@ -7,7 +7,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:cache="http://www.springframework.org/schema/cache"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:gfe="http://www.springframework.org/schema/geode"
 	   xmlns:p="http://www.springframework.org/schema/p"
 	   xmlns:util="http://www.springframework.org/schema/util"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -15,22 +14,25 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/cache https://www.springframework.org/schema/cache/spring-cache.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd
         http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
   ">
 
-	<util:properties id="gemfireProperties">
-		<prop key="name">SpringGemFireCachingIntegrationTests</prop>
-		<prop key="log-level">error</prop>
-	</util:properties>
 
-	<gfe:client-cache properties-ref="gemfireProperties"/>
-
-	<gfe:region-template id="Template" initial-capacity="51" load-factor="0.75"/>
+  <bean id="driverManager" class="com.vmware.gemfire.driver.core.GemFireDriverManager"/>
+  <bean id="driver" factory-bean="driverManager" factory-method="driver"/>
+  <bean id="driverConfiguration" class="com.vmware.gemfire.driver.spi.CacheConfiguration">
+    <constructor-arg value="CLIENT"/>
+    <constructor-arg><map><entry key="log-level" value="error"/></map></constructor-arg>
+  </bean>
+  <bean id="driverConnection" factory-bean="driver" factory-method="connect" destroy-method="close">
+    <constructor-arg ref="driverConfiguration"/>
+  </bean>
 
 	<cache:annotation-driven/>
 
-	<bean id="cacheManager" class="org.springframework.data.gemfire.cache.GemfireCacheManager" p:cache-ref="gemfireCache"/>
+	<bean id="cacheManager" class="org.springframework.data.gemfire.cache.GemfireCacheManager" depends-on="NamedNumbersRegion">
+    <constructor-arg ref="driverConnection"/>
+  </bean>
 
 	<context:annotation-config/>
 
@@ -56,9 +58,8 @@
 		<property name="namedNumbersRepo" ref="namedNumbersRepo"/>
 	</bean>
 
-	<beans>
-		<gfe:client-region shortcut="LOCAL" id="NamedNumbersRegion" persistent="false" key-constraint="java.lang.String"
-								value-constraint="java.lang.Integer" template="Template"/>
-	</beans>
-
+  <bean id="NamedNumbersRegion" factory-bean="driverConnection" factory-method="createClientRegion">
+    <constructor-arg value="NamedNumbersRegion"/>
+    <constructor-arg value="LOCAL"/>
+  </bean>
 </beans>

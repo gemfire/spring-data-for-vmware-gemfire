@@ -506,6 +506,11 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 		return Optional.ofNullable(this.pool).orElseGet(() -> new PoolAdapter() {
 
 			@Override
+			public String getAvailabilityZone() {
+				return PoolFactory.DEFAULT_AVAILABILITY_ZONE;
+			}
+
+			@Override
 			public boolean isDestroyed() {
 
 				Pool pool = PoolFactoryBean.this.pool;

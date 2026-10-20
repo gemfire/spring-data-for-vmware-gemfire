@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.test.model.Person;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.mock.env.MockPropertySource;
 
 /**
@@ -63,7 +63,7 @@ public class EnableEntityDefinedRegionsIntegrationTests extends SpringApplicatio
 
 		Assertions.assertThat(people).isNotNull();
 		Assertions.assertThat(people.getName()).isEqualTo("People");
-		Assertions.assertThat(people.getFullPath()).isEqualTo(GemfireUtils.toRegionPath("People"));
+		Assertions.assertThat(people.getFullPath()).isEqualTo(RegionPaths.toRegionPath("People"));
 		Assertions.assertThat(people.getAttributes()).isNotNull();
 		Assertions.assertThat(people.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.EMPTY);
 	}

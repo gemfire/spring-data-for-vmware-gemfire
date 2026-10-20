@@ -14,10 +14,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -47,8 +47,8 @@ public class ClientRegionIntegrationTests extends IntegrationTestsSupport {
 	public void clientRegionUsesDefaultPoolWhenUnspecified() {
 
 		Assertions.assertThat(this.example).isNotNull();
-		Assertions.assertThat(this.example.getName()).isEqualTo(GemfireUtils.toRegionName("Example"));
-		Assertions.assertThat(this.example.getFullPath()).isEqualTo(GemfireUtils.toRegionPath("Example"));
+		Assertions.assertThat(this.example.getName()).isEqualTo(RegionPaths.toRegionName("Example"));
+		Assertions.assertThat(this.example.getFullPath()).isEqualTo(RegionPaths.toRegionPath("Example"));
 		Assertions.assertThat(this.example.getAttributes()).isNotNull();
 		Assertions.assertThat(this.example.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		Assertions.assertThat(this.example.getAttributes().getPoolName()).isNull();

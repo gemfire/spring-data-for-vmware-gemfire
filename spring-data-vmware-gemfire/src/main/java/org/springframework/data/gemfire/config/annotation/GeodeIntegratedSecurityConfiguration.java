@@ -11,6 +11,7 @@ import java.util.Properties;
 import org.springframework.data.gemfire.GemFireProperties;
 import org.springframework.data.gemfire.config.annotation.support.EmbeddedServiceConfigurationSupport;
 import org.springframework.data.gemfire.util.PropertiesBuilder;
+import org.springframework.util.StringUtils;
 
 /**
  * The {@link GeodeIntegratedSecurityConfiguration} class is a {@link EmbeddedServiceConfigurationSupport} implementation
@@ -74,6 +75,14 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 
 		PropertiesBuilder gemfireProperties = PropertiesBuilder.create();
 
+		String shiroIniResourcePath = resolveProperty(securityProperty("shiro.ini-resource-path"),
+			(String) annotationAttributes.get("shiroIniResourcePath"));
+
+		if (StringUtils.hasText(shiroIniResourcePath)) {
+			throw new UnsupportedOperationException("security-shiro-init is unavailable in GemFire 10.4; "
+				+ "configure security-manager instead");
+		}
+
 		gemfireProperties.setProperty(SECURITY_CLIENT_AUTH_INIT,
 			resolveProperty(securityProperty("client.authentication-initializer"),
 				(String) annotationAttributes.get("clientAuthenticationInitializer")));
@@ -86,10 +95,6 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 			gemfireProperties.setProperty(SECURITY_MANAGER,
 				resolveProperty(securityProperty("manager.class-name"),
 					(String) annotationAttributes.get("securityManagerClassName")));
-
-			gemfireProperties.setProperty(SECURITY_SHIRO_INIT,
-				resolveProperty(securityProperty("shiro.ini-resource-path"),
-					(String) annotationAttributes.get("shiroIniResourcePath")));
 		}
 
 		gemfireProperties.setProperty(SECURITY_PEER_AUTH_INIT,

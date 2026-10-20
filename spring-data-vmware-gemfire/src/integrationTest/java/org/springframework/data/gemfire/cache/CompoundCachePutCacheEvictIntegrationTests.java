@@ -10,7 +10,14 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+
+import com.vmware.gemfire.driver.core.GemFireDriverManager;
+import com.vmware.gemfire.driver.spi.CacheConfiguration;
+import com.vmware.gemfire.driver.spi.DriverConnection;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
@@ -150,14 +157,14 @@ public class CompoundCachePutCacheEvictIntegrationTests extends IntegrationTests
 	static class Sgf539WorkaroundConfiguration {
 
 		@Bean
-		GemfireCacheManager cacheManager(ClientCache gemfireCache) {
+		GemfireCacheManager cacheManager(DriverConnection gemfireCache) {
 
-			GemfireCacheManager cacheManager = new GemfireCacheManager() {
+			GemfireCacheManager cacheManager = new GemfireCacheManager(gemfireCache) {
 
 				@Override
 				protected org.springframework.cache.Cache decorateCache(org.springframework.cache.Cache cache) {
 
-					return new GemfireCache((org.apache.geode.cache.Region<?, ?>) cache.getNativeCache()) {
+					return new GemfireCache((DriverRegion<?, ?>) cache.getNativeCache()) {
 
 						@Override
 						public void evict(Object key) {
@@ -166,8 +173,6 @@ public class CompoundCachePutCacheEvictIntegrationTests extends IntegrationTests
 					};
 				}
 			};
-
-			cacheManager.setCache(gemfireCache);
 
 			return cacheManager;
 		}
@@ -198,7 +203,21 @@ public class CompoundCachePutCacheEvictIntegrationTests extends IntegrationTests
 	@EnableCachingDefinedRegions(clientRegionShortcut = ClientRegionShortcut.LOCAL)
 	@EnableEntityDefinedRegions(basePackageClasses = Employee.class, clientRegionShortcut = ClientRegionShortcut.LOCAL)
 	@EnableGemfireCaching
-	static class GemFireConfiguration { }
+	static class GemFireConfiguration {
+
+		@Bean
+		GemFireDriverManager driverManager() { return new GemFireDriverManager(); }
+
+		@Bean(destroyMethod = "close")
+		DriverConnection driverConnection(ClientCache existingNativeCache, GemFireDriverManager manager) {
+			// The native client factory returns the already-created client cache. Repository migration
+			// will remove this temporary test dependency on the existing native application config.
+			Properties properties = existingNativeCache.getDistributedSystem().getProperties();
+			return manager.driver().connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
+				properties.stringPropertyNames().stream()
+					.collect(Collectors.toMap(name -> name, properties::getProperty))));
+		}
+	}
 
 	public enum Department {
 

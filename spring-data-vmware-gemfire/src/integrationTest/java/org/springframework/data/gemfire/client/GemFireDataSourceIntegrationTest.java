@@ -23,9 +23,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.repository.sample.Person;
 import org.springframework.data.gemfire.repository.sample.PersonRepository;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -92,14 +92,14 @@ public class GemFireDataSourceIntegrationTest {
 
 		Assertions.assertThat(actualRegion).isNotNull();
 		Assertions.assertThat(actualRegion.getName()).isEqualTo(expectedRegionName);
-		Assertions.assertThat(actualRegion.getFullPath()).isEqualTo(GemfireUtils.toRegionPath(expectedRegionName));
+		Assertions.assertThat(actualRegion.getFullPath()).isEqualTo(RegionPaths.toRegionPath(expectedRegionName));
 		Assertions.assertThat(gemfireClientCache.getRegion(actualRegion.getFullPath())).isSameAs(actualRegion);
 		Assertions.assertThat(applicationContext.containsBean(expectedRegionName)).isTrue();
 		Assertions.assertThat(applicationContext.getBean(expectedRegionName, Region.class)).isSameAs(actualRegion);
 	}
 
 	private void assertRegion(Region<?, ?> region, String name, DataPolicy dataPolicy) {
-		assertRegion(region, name, GemfireUtils.toRegionPath("simple"), dataPolicy);
+		assertRegion(region, name, RegionPaths.toRegionPath("simple"), dataPolicy);
 	}
 
 	private void assertRegion(Region<?, ?> region, String name, String fullPath, DataPolicy dataPolicy) {

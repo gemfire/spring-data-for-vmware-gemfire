@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest;
-import org.springframework.data.gemfire.util.RegionUtils;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -88,7 +88,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 			.isNotNull();
 
 		Assertions.assertThat(shortcutDefaults.getName()).isEqualTo("ShortcutDefaults");
-		Assertions.assertThat(shortcutDefaults.getFullPath()).isEqualTo(RegionUtils.toRegionPath("ShortcutDefaults"));
+		Assertions.assertThat(shortcutDefaults.getFullPath()).isEqualTo(RegionPaths.toRegionPath("ShortcutDefaults"));
 		Assertions.assertThat(shortcutDefaults.getAttributes()).isNotNull();
 		Assertions.assertThat(shortcutDefaults.getAttributes().getCloningEnabled()).isFalse();
 		Assertions.assertThat(shortcutDefaults.getAttributes().getConcurrencyChecksEnabled()).isTrue();
@@ -110,7 +110,7 @@ public class RegionDataPolicyShortcutsIntegrationTests extends IntegrationTestsS
 			.isNotNull();
 
 		Assertions.assertThat(shortcutOverrides.getName()).isEqualTo("ShortcutOverrides");
-		Assertions.assertThat(shortcutOverrides.getFullPath()).isEqualTo(RegionUtils.toRegionPath("ShortcutOverrides"));
+		Assertions.assertThat(shortcutOverrides.getFullPath()).isEqualTo(RegionPaths.toRegionPath("ShortcutOverrides"));
 		Assertions.assertThat(shortcutOverrides.getAttributes()).isNotNull();
 		Assertions.assertThat(shortcutOverrides.getAttributes().getCloningEnabled()).isTrue();
 		Assertions.assertThat(shortcutOverrides.getAttributes().getConcurrencyChecksEnabled()).isFalse();

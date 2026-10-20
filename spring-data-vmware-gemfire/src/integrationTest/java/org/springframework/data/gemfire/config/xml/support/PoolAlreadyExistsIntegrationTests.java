@@ -13,9 +13,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
+import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -46,8 +46,8 @@ public class PoolAlreadyExistsIntegrationTests extends IntegrationTestsSupport {
 	private void assertRegion(Region<?, ?> region, String name) {
 
 		Assertions.assertThat(region).isNotNull();
-		Assertions.assertThat(region.getName()).isEqualTo(GemfireUtils.toRegionName(name));
-		Assertions.assertThat(region.getFullPath()).isEqualTo(GemfireUtils.toRegionPath(name));
+		Assertions.assertThat(region.getName()).isEqualTo(RegionPaths.toRegionName(name));
+		Assertions.assertThat(region.getFullPath()).isEqualTo(RegionPaths.toRegionPath(name));
 		Assertions.assertThat(region.getAttributes()).isNotNull();
 		Assertions.assertThat(region.getAttributes().getPoolName()).isEqualTo("TestPool");
 	}
