@@ -13,13 +13,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver;
+import static org.springframework.data.gemfire.support.RegionServiceRegionResolver.ConnectionResolver;
 import java.util.Optional;
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.ClientCache;
-import org.junit.Before;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -33,13 +30,13 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
- * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.RegionService
- * @see org.apache.geode.cache.client.ClientCache
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
+ * @see com.vmware.gemfire.driver.spi.DriverRegion
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
  * @see org.springframework.data.gemfire.CacheResolver
  * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver
- * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver.RegionServiceResolver
+ * @see org.springframework.data.gemfire.support.RegionServiceRegionResolver.ConnectionResolver
  * @since 2.3.0
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -47,28 +44,20 @@ import org.springframework.data.gemfire.CacheResolver;
 public class RegionServiceRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private DriverRegion mockRegion;
 
-	@Before
-	public void setupMockRegion() {
-
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
-
-		when(this.mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
-		when(mockAttributesMutator.getRegion()).thenReturn(this.mockRegion);
-	}
 
 	@Test
-	public void constructRegionServiceRegionResolverWithNonNullRegionServiceResolver() {
+	public void constructRegionServiceRegionResolverWithNonNullConnectionResolver() {
 
-		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
+		ConnectionResolver mockConnectionResolver = mock(ConnectionResolver.class);
 
-		RegionServiceRegionResolver regionResolver = new RegionServiceRegionResolver(mockRegionServiceResolver);
+		RegionServiceRegionResolver regionResolver = new RegionServiceRegionResolver(mockConnectionResolver);
 
 		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isEqualTo(mockRegionServiceResolver);
+		assertThat(regionResolver.getConnectionResolver()).isEqualTo(mockConnectionResolver);
 
-		verifyNoInteractions(mockRegionServiceResolver);
+		verifyNoInteractions(mockConnectionResolver);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -79,7 +68,7 @@ public class RegionServiceRegionResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("RegionServiceResolver must not be null");
+			assertThat(expected).hasMessage("ConnectionResolver must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -89,18 +78,18 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullCacheResolverResolvingClientCache() {
 
-		ClientCache mockClientCache = mock(ClientCache.class);
+		DriverConnection mockClientCache = mock(DriverConnection.class);
 
 		when(mockClientCache.getRegion(anyString())).thenReturn(this.mockRegion);
 
-		CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+		CacheResolver<DriverConnection> mockClientCacheResolver = mock(CacheResolver.class);
 
 		when(mockClientCacheResolver.resolve()).thenReturn(mockClientCache);
 
 		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockClientCacheResolver);
 
 		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
+		assertThat(regionResolver.getConnectionResolver()).isNotNull();
 		assertThat(regionResolver.doResolve("TestRegion")).isEqualTo(this.mockRegion);
 
 		verify(mockClientCache, times(1)).getRegion(eq("TestRegion"));
@@ -111,14 +100,14 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullCacheResolveResolvingNullCacheResolvesNullRegion() {
 
-		CacheResolver<ClientCache> mockCacheResolver = mock(CacheResolver.class);
+		CacheResolver<DriverConnection> mockCacheResolver = mock(CacheResolver.class);
 
 		when(mockCacheResolver.resolve()).thenReturn(null);
 
 		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockCacheResolver);
 
 		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
+		assertThat(regionResolver.getConnectionResolver()).isNotNull();
 		assertThat(regionResolver.doResolve("TestRegion")).isNull();
 
 		verify(mockCacheResolver, times(1)).resolve();
@@ -128,7 +117,7 @@ public class RegionServiceRegionResolverUnitTests {
 	public void fromNullCacheResolverThrowsIllegalArgumentException() {
 
 		try {
-			RegionServiceRegionResolver.from((CacheResolver<ClientCache>) null);
+			RegionServiceRegionResolver.from((CacheResolver<DriverConnection>) null);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -142,15 +131,15 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNonNullRegionService() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		DriverConnection mockRegionService = mock(DriverConnection.class);
 
 		when(mockRegionService.getRegion(anyString())).thenReturn(this.mockRegion);
 
 		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from(mockRegionService);
 
 		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver().resolve().orElse(null)).isEqualTo(mockRegionService);
+		assertThat(regionResolver.getConnectionResolver()).isNotNull();
+		assertThat(regionResolver.getConnectionResolver().resolve().orElse(null)).isEqualTo(mockRegionService);
 		assertThat(regionResolver.doResolve("TestRegion")).isEqualTo(this.mockRegion);
 
 		verify(mockRegionService, times(1)).getRegion(eq("TestRegion"));
@@ -160,32 +149,32 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void fromNullRegionServiceIsNullSafe() {
 
-		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from((RegionService) null);
+		RegionServiceRegionResolver regionResolver = RegionServiceRegionResolver.from((DriverConnection) null);
 
 		assertThat(regionResolver).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver()).isNotNull();
-		assertThat(regionResolver.getRegionServiceResolver().resolve().orElse(null)).isNull();
+		assertThat(regionResolver.getConnectionResolver()).isNotNull();
+		assertThat(regionResolver.getConnectionResolver().resolve().orElse(null)).isNull();
 		assertThat(regionResolver.doResolve("TestRegion")).isNull();
 	}
 
 	@Test
 	public void resolveCachesAndReturnsRegion() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		DriverConnection mockRegionService = mock(DriverConnection.class);
 
-		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
+		ConnectionResolver mockConnectionResolver = mock(ConnectionResolver.class);
 
 		when(mockRegionService.getRegion(anyString())).thenReturn(this.mockRegion);
-		when(mockRegionServiceResolver.resolve()).thenReturn(Optional.of(mockRegionService));
+		when(mockConnectionResolver.resolve()).thenReturn(Optional.of(mockRegionService));
 
-		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockConnectionResolver));
 
-		assertThat(regionResolver.getRegionServiceResolver()).isEqualTo(mockRegionServiceResolver);
+		assertThat(regionResolver.getConnectionResolver()).isEqualTo(mockConnectionResolver);
 
 		assertThat(regionResolver.resolve("MockRegion")).isEqualTo(this.mockRegion);
 		assertThat(regionResolver.resolve("MockRegion")).isEqualTo(this.mockRegion);
 
-		verify(mockRegionServiceResolver, times(1)).resolve();
+		verify(mockConnectionResolver, times(1)).resolve();
 		verify(mockRegionService, times(1)).getRegion("MockRegion");
 		verify(regionResolver, times(1)).doResolve(eq("MockRegion"));
 	}
@@ -193,21 +182,21 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void resolveReturnsNullWhenRegionServiceReturnsNull() {
 
-		RegionService mockRegionService = mock(RegionService.class);
+		DriverConnection mockRegionService = mock(DriverConnection.class);
 
-		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
+		ConnectionResolver mockConnectionResolver = mock(ConnectionResolver.class);
 
 		when(mockRegionService.getRegion(anyString())).thenReturn(null);
-		when(mockRegionServiceResolver.resolve()).thenReturn(Optional.of(mockRegionService));
+		when(mockConnectionResolver.resolve()).thenReturn(Optional.of(mockRegionService));
 
-		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockConnectionResolver));
 
-		assertThat(regionResolver.getRegionServiceResolver()).isEqualTo(mockRegionServiceResolver);
+		assertThat(regionResolver.getConnectionResolver()).isEqualTo(mockConnectionResolver);
 
 		assertThat(regionResolver.resolve("ProxyRegion")).isNull();
 		assertThat(regionResolver.resolve("ProxyRegion")).isNull();
 
-		verify(mockRegionServiceResolver, times(2)).resolve();
+		verify(mockConnectionResolver, times(2)).resolve();
 		verify(mockRegionService, times(2)).getRegion("ProxyRegion");
 		verify(regionResolver, times(2)).doResolve(eq("ProxyRegion"));
 	}
@@ -215,15 +204,15 @@ public class RegionServiceRegionResolverUnitTests {
 	@Test
 	public void resolveReturnsNullWhenRegionServiceResolvesToNull() {
 
-		RegionServiceResolver mockRegionServiceResolver = mock(RegionServiceResolver.class);
+		ConnectionResolver mockConnectionResolver = mock(ConnectionResolver.class);
 
-		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockRegionServiceResolver));
+		RegionServiceRegionResolver regionResolver = spy(new RegionServiceRegionResolver(mockConnectionResolver));
 
-		assertThat(regionResolver.getRegionServiceResolver()).isEqualTo(mockRegionServiceResolver);
+		assertThat(regionResolver.getConnectionResolver()).isEqualTo(mockConnectionResolver);
 		assertThat(regionResolver.resolve("TestRegion")).isNull();
 		assertThat(regionResolver.resolve("TestRegion")).isNull();
 
-		verify(mockRegionServiceResolver, times(2)).resolve();
+		verify(mockConnectionResolver, times(2)).resolve();
 		verify(regionResolver, times(2)).doResolve(eq("TestRegion"));
 	}
 }

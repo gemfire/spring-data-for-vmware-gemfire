@@ -5,10 +5,8 @@
 package org.springframework.data.gemfire.support;
 
 import java.util.Arrays;
-import java.util.function.Function;
 
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionDestroyedException;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 import org.springframework.data.gemfire.RegionResolver;
 import org.springframework.data.gemfire.util.ArrayUtils;
@@ -21,7 +19,7 @@ import org.springframework.util.Assert;
  * {@link RegionResolver} implementation used to compose a collection of {@link RegionResolver RegionResolvers}.
  *
  * @author John Blum
- * @see Region
+ * @see DriverRegion
  * @see RegionResolver
  * @see AbstractCachingRegionResolver
  * @since 2.3.0
@@ -121,37 +119,10 @@ public class ComposableRegionResolver extends AbstractCachingRegionResolver {
 		return this.regionResolverTwo;
 	}
 
-	/**
-	 * Resolves the first {@literal non-null} reference to cache {@link Region} identified by
-	 * the given {@link String name}, handling any {@link Exception Exceptions} throwing by
-	 * the composed {@link RegionResolver RegionResolvers}, such as a {@link RegionDestroyedException}.
-	 *
-	 * This method may ultimately still result in a thrown {@link Exception}, but it will make a best effort to
-	 * exhaustively consult all composed {@link RegionResolver RegionResolvers}.
-	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionName {@link String name} of the {@link Region} to resolve.
-	 * @return the first, resolved reference to a cache {@link Region} identified by the given {@link String name}.
-	 * @see RegionResolver#resolve(String)
-	 * @see Region
-	 * @see Function
-	 * @see #getRegionResolverOne()
-	 * @see #getRegionResolverTwo()
-	 */
+	/** Resolves in order, falling through only on null. Failures propagate unchanged. */
 	@Nullable @Override
-	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {
-
-		Function<String, Region<K, V>> regionResolverFunction = getRegionResolverTwo()::resolve;
-
-		try {
-
-			Region<K, V> region = getRegionResolverOne().resolve(regionName);
-
-			return region != null ? region : regionResolverFunction.apply(regionName);
-		}
-		catch (Throwable ignore) {
-			return regionResolverFunction.apply(regionName);
-		}
+	protected <K, V> DriverRegion<K, V> doResolve(@Nullable String regionName) {
+		DriverRegion<K, V> region = getRegionResolverOne().resolve(regionName);
+		return region != null ? region : getRegionResolverTwo().resolve(regionName);
 	}
 }

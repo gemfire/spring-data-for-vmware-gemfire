@@ -12,6 +12,8 @@ import com.vmware.gemfire.driver.spi.CacheConfiguration.Mode;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverPool;
+import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.spi.config.RegionShortcut;
@@ -20,9 +22,35 @@ final class MockConnection implements DriverConnection {
 
 	private final Mode mode;
 	private final Map<String, MockRegion<?, ?>> regions = new HashMap<>();
+	private final Map<String, MockPool> pools = new HashMap<>();
 	private volatile boolean closed;
 
 	MockConnection(Mode mode) { this.mode = mode; }
+
+	@Override
+	public DriverPool createPool(String name, PoolConfiguration configuration) {
+		checkPoolAccess(name);
+		if (configuration == null || pools.containsKey(name)) {
+			throw new DriverOperationException("Null pool configuration or duplicate pool name", null);
+		}
+		MockPool pool = new MockPool(name, configuration, this);
+		pools.put(name, pool);
+		return pool;
+	}
+
+	@Override
+	public DriverPool getPool(String name) {
+		checkPoolAccess(name);
+		return pools.get(name);
+	}
+
+	void removePool(String name, MockPool pool) { pools.remove(name, pool); }
+
+	private void checkPoolAccess(String name) {
+		checkOpen();
+		if (mode != Mode.CLIENT) throw new DriverOperationException("Pool access requires a CLIENT cache", null);
+		if (name == null || name.isBlank()) throw new DriverOperationException("Pool name is required", null);
+	}
 
 	@Override
 	public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut) {
@@ -90,6 +118,7 @@ final class MockConnection implements DriverConnection {
 			}
 		}
 		regions.clear();
+		for (MockPool pool : Set.copyOf(pools.values())) pool.destroy();
 		if (failure != null) { throw failure; }
 	}
 

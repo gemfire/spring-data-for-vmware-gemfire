@@ -6,10 +6,11 @@ package org.springframework.data.gemfire.client.support;
 
 import java.util.Optional;
 
+import java.util.function.Supplier;
+
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 
-import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.client.PoolResolver;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -23,41 +24,41 @@ import org.springframework.util.Assert;
  * @author John Blum
  * @see ClientCache
  * @see Pool
- * @see CacheResolver
+ * @see Supplier
  * @see PoolResolver
  * @since 2.3.0
  */
 public class ClientCacheDefaultPoolResolver implements PoolResolver {
 
-	private final CacheResolver<ClientCache> clientCacheResolver;
+	private final Supplier<ClientCache> clientCacheSupplier;
 
 	/**
-	 * Constructs a new instance of {@link ClientCacheDefaultPoolResolver} initialized with a {@link CacheResolver}
+	 * Constructs a new instance of {@link ClientCacheDefaultPoolResolver} initialized with a {@link Supplier}
 	 * used to lazily resolve the {@link ClientCache} instance on {@link Pool} resolution.
 	 *
-	 * @param clientCacheResolver {@link CacheResolver} used to lazily resolve the {@link ClientCache} instance;
+	 * @param clientCacheSupplier {@link Supplier} used to lazily resolve the {@link ClientCache} instance;
 	 * must not be {@literal null}.
-	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
+	 * @throws IllegalArgumentException if {@link Supplier} is {@literal null}.
 	 * @see ClientCache
-	 * @see CacheResolver
+	 * @see Supplier
 	 */
-	public ClientCacheDefaultPoolResolver(@NonNull CacheResolver<ClientCache> clientCacheResolver) {
+	public ClientCacheDefaultPoolResolver(@NonNull Supplier<ClientCache> clientCacheSupplier) {
 
-		Assert.notNull(clientCacheResolver, "CacheResolver for ClientCache must not be null");
+		Assert.notNull(clientCacheSupplier, "Supplier for ClientCache must not be null");
 
-		this.clientCacheResolver = clientCacheResolver;
+		this.clientCacheSupplier = clientCacheSupplier;
 	}
 
 	/**
-	 * Returns a reference to the configured {@link CacheResolver} used to (lazily) resolve
+	 * Returns a reference to the configured {@link Supplier} used to (lazily) resolve
 	 * the {@link ClientCache} instance.
 	 *
-	 * @return the configured {@link CacheResolver} used to resolve the {@link ClientCache} instance.
+	 * @return the configured {@link Supplier} used to resolve the {@link ClientCache} instance.
 	 * @see ClientCache
-	 * @see CacheResolver
+	 * @see Supplier
 	 */
-	protected @NonNull CacheResolver<ClientCache> getClientCacheResolver() {
-		return this.clientCacheResolver;
+	protected @NonNull Supplier<ClientCache> getClientCacheSupplier() {
+		return this.clientCacheSupplier;
 	}
 
 	/**
@@ -66,9 +67,9 @@ public class ClientCacheDefaultPoolResolver implements PoolResolver {
 	@Nullable @Override
 	public Pool resolve(@Nullable String poolName) {
 
-		return Optional.of(getClientCacheResolver())
+		return Optional.of(getClientCacheSupplier())
 			.filter(it -> DEFAULT_POOL_NAME.equals(poolName))
-			.map(CacheResolver::resolve)
+			.map(Supplier::get)
 			.map(ClientCache::getDefaultPool)
 			.orElse(null);
 	}

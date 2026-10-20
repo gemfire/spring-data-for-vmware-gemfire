@@ -12,13 +12,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver;
 
 /**
  * Unit Tests for {@link BeanFactoryCacheResolver}.
@@ -29,7 +28,7 @@ import org.springframework.data.gemfire.client.support.BeanFactoryPoolResolver;
  * @see org.mockito.Mockito
  * @see org.mockito.Spy
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.support.BeanFactoryCacheResolver
  * @since 2.3.0
@@ -41,7 +40,7 @@ public class BeanFactoryCacheResolverUnitTests {
 	private BeanFactory mockBeanFactory;
 
 	@Mock
-	private ClientCache mockCache;
+	private DriverConnection mockCache;
 
 	@Test
 	public void constructBeanFactoryCacheResolver() {
@@ -57,7 +56,7 @@ public class BeanFactoryCacheResolverUnitTests {
 	public void constructWithNullBeanFactoryThrowsIllegalArgumentException() {
 
 		try {
-			new BeanFactoryPoolResolver(null);
+			new BeanFactoryCacheResolver(null);
 		}
 		catch (IllegalArgumentException expected) {
 
@@ -65,43 +64,6 @@ public class BeanFactoryCacheResolverUnitTests {
 			assertThat(expected).hasNoCause();
 
 			throw expected;
-		}
-	}
-
-	@Test
-	public void setAndGetBeanFactory() {
-
-		BeanFactory mockBeanFactoryTwo = mock(BeanFactory.class);
-
-		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
-
-		assertThat(cacheResolver.getBeanFactory()).isSameAs(this.mockBeanFactory);
-
-		cacheResolver.setBeanFactory(mockBeanFactoryTwo);
-
-		assertThat(cacheResolver.getBeanFactory()).isSameAs(mockBeanFactoryTwo);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void setBeanFactoryToNullThrowsIllegalArgumentException() {
-
-		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);
-
-		try {
-
-			assertThat(cacheResolver.getBeanFactory()).isEqualTo(this.mockBeanFactory);
-
-			cacheResolver.setBeanFactory(null);
-		}
-		catch (IllegalArgumentException expected) {
-
-			assertThat(expected).hasMessage("BeanFactory must not be null");
-			assertThat(expected).hasNoCause();
-
-			throw expected;
-		}
-		finally {
-			assertThat(cacheResolver.getBeanFactory()).isEqualTo(this.mockBeanFactory);
 		}
 	}
 
@@ -132,14 +94,14 @@ public class BeanFactoryCacheResolverUnitTests {
 	@Test
 	public void doResolveResolvesGemFireCache() {
 
-		when(this.mockBeanFactory.getBean(eq(ClientCache.class))).thenReturn(this.mockCache);
+		when(this.mockBeanFactory.getBean(eq(DriverConnection.class))).thenReturn(this.mockCache);
 
 		BeanFactoryCacheResolver cacheResolver = spy(new BeanFactoryCacheResolver(this.mockBeanFactory));
 
 		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
 		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
 
-		verify(this.mockBeanFactory, times(1)).getBean(eq(ClientCache.class));
+		verify(this.mockBeanFactory, times(1)).getBean(eq(DriverConnection.class));
 		verify(cacheResolver, times(1)).doResolve();
 		verifyNoInteractions(this.mockCache);
 	}
@@ -147,7 +109,7 @@ public class BeanFactoryCacheResolverUnitTests {
 	@Test
 	public void doResolveQualifiedGemFireCache() {
 
-		when(this.mockBeanFactory.getBean(eq("QualifiedCache"), eq(ClientCache.class)))
+		when(this.mockBeanFactory.getBean(eq("QualifiedCache"), eq(DriverConnection.class)))
 			.thenReturn(this.mockCache);
 
 		BeanFactoryCacheResolver cacheResolver = new BeanFactoryCacheResolver(this.mockBeanFactory);

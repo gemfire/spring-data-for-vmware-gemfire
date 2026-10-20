@@ -1,0 +1,124 @@
+Local artifact API snapshot; inspected 2026-10-21.
+Artifact: com.vmware.gemfire:gemfire-core:10.4.0-build.3056.df98c835
+Cached artifact SHA-1 directory: 747633c557af8a845af3cac42c0efac8297661d5
+Command for each class below: javap -constants -classpath <jar> <class>
+No runtime or server behavior was exercised.
+
+Compiled from "ClientCache.java"
+public interface org.apache.geode.cache.client.ClientCache extends org.apache.geode.cache.GemFireCache {
+  public abstract org.apache.geode.cache.query.QueryService getQueryService(java.lang.String);
+  public abstract org.apache.geode.cache.query.QueryService getLocalQueryService();
+  public abstract void close(boolean);
+  public abstract <K, V> org.apache.geode.cache.client.ClientRegionFactory<K, V> createClientRegionFactory(org.apache.geode.cache.client.ClientRegionShortcut);
+  public abstract <K, V> org.apache.geode.cache.client.ClientRegionFactory<K, V> createClientRegionFactory(java.lang.String);
+  public abstract void readyForEvents();
+  public abstract org.apache.geode.cache.RegionService createAuthenticatedView(java.util.Properties);
+  public abstract org.apache.geode.cache.RegionService createAuthenticatedView(java.util.Properties, java.lang.String);
+  public abstract java.util.Set<java.net.InetSocketAddress> getCurrentServers();
+  public abstract org.apache.geode.cache.client.Pool getDefaultPool();
+}
+
+Compiled from "Pool.java"
+public interface org.apache.geode.cache.client.Pool {
+  public abstract java.lang.String getName();
+  public abstract int getSocketConnectTimeout();
+  public abstract int getFreeConnectionTimeout();
+  public abstract int getServerConnectionTimeout();
+  public abstract int getLoadConditioningInterval();
+  public abstract int getSocketBufferSize();
+  public abstract int getReadTimeout();
+  public abstract int getPingTimeout();
+  public abstract int getMinConnections();
+  public abstract int getMaxConnectionsPerServer();
+  public abstract int getMinConnectionsPerServer();
+  public abstract int getMaxConnections();
+  public abstract long getIdleTimeout();
+  public abstract long getPingInterval();
+  public abstract int getStatisticInterval();
+  public abstract int getRetryAttempts();
+  public abstract boolean getSubscriptionEnabled();
+  public abstract boolean getPRSingleHopEnabled();
+  public abstract int getSubscriptionRedundancy();
+  public abstract int getSubscriptionMessageTrackingTimeout();
+  public abstract int getSubscriptionAckInterval();
+  public abstract java.lang.String getServerGroup();
+  public abstract java.lang.String getAvailabilityZone();
+  public abstract boolean getMultiuserAuthentication();
+  public abstract java.util.List<java.net.InetSocketAddress> getLocators();
+  public abstract java.util.List<java.net.InetSocketAddress> getOnlineLocators();
+  public abstract java.util.List<java.net.InetSocketAddress> getServers();
+  public abstract void destroy(boolean);
+  public abstract void destroy();
+  public abstract boolean isDestroyed();
+  public abstract org.apache.geode.cache.query.QueryService getQueryService();
+  public abstract int getPendingEventCount();
+  public abstract int getSubscriptionTimeoutMultiplier();
+  public abstract org.apache.geode.cache.client.SocketFactory getSocketFactory();
+}
+
+Compiled from "PoolFactory.java"
+public interface org.apache.geode.cache.client.PoolFactory {
+  public static final int DEFAULT_SOCKET_CONNECT_TIMEOUT = 59000;
+  public static final int DEFAULT_FREE_CONNECTION_TIMEOUT = 10000;
+  public static final int DEFAULT_SERVER_CONNECTION_TIMEOUT = 0;
+  public static final int DEFAULT_LOAD_CONDITIONING_INTERVAL = 300000;
+  public static final int DEFAULT_SOCKET_BUFFER_SIZE = 32768;
+  public static final int DEFAULT_READ_TIMEOUT = 10000;
+  public static final int DEFAULT_PING_TIMEOUT = 10000;
+  public static final int DEFAULT_MIN_CONNECTIONS = 1;
+  public static final int DEFAULT_MAX_CONNECTIONS = -1;
+  public static final int DEFAULT_MIN_CONNECTIONS_PER_SERVER = 1;
+  public static final int DEFAULT_MAX_CONNECTIONS_PER_SERVER = -1;
+  public static final long IDLE_TIMEOUT_NEVER = -1l;
+  public static final long DEFAULT_IDLE_TIMEOUT = 120000l;
+  public static final int DEFAULT_RETRY_ATTEMPTS = -1;
+  public static final long DEFAULT_PING_INTERVAL = 10000l;
+  public static final int DEFAULT_STATISTIC_INTERVAL = -1;
+  public static final boolean DEFAULT_SUBSCRIPTION_ENABLED = false;
+  public static final int DEFAULT_SUBSCRIPTION_REDUNDANCY = 0;
+  public static final int DEFAULT_SUBSCRIPTION_MESSAGE_TRACKING_TIMEOUT = 900000;
+  public static final int DEFAULT_SUBSCRIPTION_ACK_INTERVAL = 100;
+  public static final int DEFAULT_SUBSCRIPTION_TIMEOUT_MULTIPLIER = 0;
+  public static final java.lang.String DEFAULT_SERVER_GROUP = "";
+  public static final java.lang.String DEFAULT_AVAILABILITY_ZONE = "";
+  public static final boolean DEFAULT_PR_SINGLE_HOP_ENABLED = true;
+  public static final boolean DEFAULT_MULTIUSER_AUTHENTICATION = false;
+  public static final org.apache.geode.cache.client.SocketFactory DEFAULT_SOCKET_FACTORY;
+  public abstract org.apache.geode.cache.client.PoolFactory setSocketConnectTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setFreeConnectionTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setServerConnectionTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setLoadConditioningInterval(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setSocketBufferSize(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setReadTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setPingTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setMinConnections(int);
+  public default org.apache.geode.cache.client.PoolFactory setMinConnectionsPerServer(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setMaxConnections(int);
+  public default org.apache.geode.cache.client.PoolFactory setMaxConnectionsPerServer(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setIdleTimeout(long);
+  public abstract org.apache.geode.cache.client.PoolFactory setRetryAttempts(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setPingInterval(long);
+  public abstract org.apache.geode.cache.client.PoolFactory setStatisticInterval(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setServerGroup(java.lang.String);
+  public abstract org.apache.geode.cache.client.PoolFactory setAvailabilityZone(java.lang.String);
+  public abstract org.apache.geode.cache.client.PoolFactory addLocator(java.lang.String, int);
+  public abstract org.apache.geode.cache.client.PoolFactory addServer(java.lang.String, int);
+  public abstract org.apache.geode.cache.client.PoolFactory setSubscriptionEnabled(boolean);
+  public abstract org.apache.geode.cache.client.PoolFactory setSubscriptionRedundancy(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setSubscriptionMessageTrackingTimeout(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setSubscriptionTimeoutMultiplier(int);
+  public abstract org.apache.geode.cache.client.PoolFactory setSubscriptionAckInterval(int);
+  public abstract org.apache.geode.cache.client.PoolFactory reset();
+  public abstract org.apache.geode.cache.client.Pool create(java.lang.String);
+  public abstract org.apache.geode.cache.client.PoolFactory setPRSingleHopEnabled(boolean);
+  public abstract org.apache.geode.cache.client.PoolFactory setMultiuserAuthentication(boolean);
+  public abstract org.apache.geode.cache.client.PoolFactory setSocketFactory(org.apache.geode.cache.client.SocketFactory);
+  static {};
+}
+
+Compiled from "SocketFactory.java"
+public interface org.apache.geode.cache.client.SocketFactory {
+  public static final org.apache.geode.cache.client.SocketFactory DEFAULT;
+  public abstract java.net.Socket createSocket() throws java.io.IOException;
+  static {};
+}

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import org.apache.geode.cache.Region;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 /**
  * Unit Tests for {@link RegionResolver}.
@@ -23,7 +23,7 @@ import org.apache.geode.cache.Region;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Region
+ * @see com.vmware.gemfire.driver.spi.DriverRegion
  * @see org.springframework.data.gemfire.RegionResolver
  * @since 2.3.0
  */
@@ -33,7 +33,7 @@ public class RegionResolverUnitTests {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void requiresRegionForNameReturnsRegion() {
 
-		Region mockRegion = mock(Region.class);
+		DriverRegion mockRegion = mock(DriverRegion.class);
 
 		RegionResolver regionResolver = mock(RegionResolver.class);
 

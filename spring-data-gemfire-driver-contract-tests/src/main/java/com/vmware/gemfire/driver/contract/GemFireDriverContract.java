@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.UUID;
 import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -27,6 +29,10 @@ import com.vmware.gemfire.driver.spi.DriverConfiguration;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverPool;
+import com.vmware.gemfire.driver.spi.PoolConfiguration;
+import com.vmware.gemfire.driver.spi.PoolConfiguration.Endpoint;
+import com.vmware.gemfire.driver.spi.DriverRegionLifecycleListener;
 import com.vmware.gemfire.driver.spi.GemFireDriver;
 import com.vmware.gemfire.driver.spi.SpiVersion;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException.Reason;
@@ -144,6 +150,30 @@ public abstract class GemFireDriverContract {
 				r.setCacheLoader(new RecordingLoader(h -> (String) h.getArgument()));
 				assertThat(r.get("key", "argument")).isEqualTo("argument");
 			})));
+		probes.put(DriverRegion.class.getMethod("addLifecycleListener", DriverRegionLifecycleListener.class),
+			new Probe("Region.addLifecycleListener", () -> inRegion(r -> r.addLifecycleListener(new RecordingLifecycle()))));
+		probes.put(DriverConnection.class.getMethod("createPool", String.class, PoolConfiguration.class),
+			new Probe("Connection.createPool", () -> inPool(pool -> assertThat(pool.name()).isNotBlank())));
+		probes.put(DriverConnection.class.getMethod("getPool", String.class),
+			new Probe("Connection.getPool", () -> inCache(Mode.CLIENT, c -> {
+				String name = UUID.randomUUID().toString();
+				assertThat(c.getPool(name)).isNull();
+				DriverPool pool = c.createPool(name, poolConfiguration(false));
+				try { assertThat(c.getPool(name).name()).isEqualTo(name); }
+				finally { pool.destroy(); }
+			})));
+		probes.put(DriverPool.class.getMethod("name"), new Probe("Pool.name", () ->
+			inPool(pool -> assertThat(pool.name()).isNotBlank())));
+		probes.put(DriverPool.class.getMethod("servers"), new Probe("Pool.servers", () ->
+			inPool(pool -> assertThat(pool.servers()).extracting(Endpoint::port).containsExactly(40404))));
+		probes.put(DriverPool.class.getMethod("locators"), new Probe("Pool.locators", () ->
+			inPool(pool -> assertThat(pool.locators()).isEmpty())));
+		probes.put(DriverPool.class.getMethod("minimumConnections"), new Probe("Pool.minimumConnections", () ->
+			inPool(pool -> assertThat(pool.minimumConnections()).isZero())));
+		probes.put(DriverPool.class.getMethod("isDestroyed"), new Probe("Pool.isDestroyed", () ->
+			inPool(pool -> assertThat(pool.isDestroyed()).isFalse())));
+		probes.put(DriverPool.class.getMethod("destroy"), new Probe("Pool.destroy", () ->
+			inPool(pool -> { pool.destroy(); assertThat(pool.isDestroyed()).isTrue(); })));
 		return probes;
 	}
 
@@ -278,6 +308,65 @@ public abstract class GemFireDriverContract {
 		});
 	}
 
+	@Test
+	void localLifecycleRegistrationIdentityAndCleanup() {
+		for (Mode mode : Mode.values()) {
+			inCache(mode, c -> {
+				DriverRegion<String, String> region = localRegion(c, mode);
+				RecordingLifecycle first = new RecordingLifecycle();
+				RecordingLifecycle second = new RecordingLifecycle();
+				region.addLifecycleListener(first);
+				c.getRegion("entries").addLifecycleListener(first);
+				region.addLifecycleListener(second);
+				assertThat(first.events).isEmpty();
+				assertThatThrownBy(() -> region.addLifecycleListener(null)).isInstanceOf(DriverOperationException.class);
+				c.close();
+				c.close();
+				assertThat(first.events).containsExactly("destroy:entries", "close");
+				assertThat(second.events).containsExactly("destroy:entries", "close");
+				assertThatThrownBy(() -> region.addLifecycleListener(first)).isInstanceOf(DriverOperationException.class);
+			});
+		}
+	}
+
+	@Test
+	void callbackRuntimeFailuresDoNotSkipRemainingLifecycleCallbacks() {
+		for (Mode mode : Mode.values()) {
+			inCache(mode, c -> {
+				DriverRegion<String, String> region = localRegion(c, mode);
+				region.addLifecycleListener(new DriverRegionLifecycleListener() {
+					@Override public void afterRegionDestroy(DriverRegion<?, ?> destroyed) {
+						throw new IllegalStateException("expected callback failure");
+					}
+					@Override public void close() { throw new IllegalStateException("expected cleanup failure"); }
+				});
+				RecordingLifecycle listener = new RecordingLifecycle();
+				region.addLifecycleListener(listener);
+				c.close();
+				assertThat(listener.events).containsExactly("destroy:entries", "close");
+			});
+		}
+	}
+
+	@Test
+	void olderRegionImplementationsRejectLifecycleRegistrationWithTypedFailure() {
+		DriverRegion<Object, Object> older = new DriverRegion<>() { };
+		assertThatThrownBy(() -> older.addLifecycleListener(new RecordingLifecycle()))
+			.isInstanceOfSatisfying(com.vmware.gemfire.driver.spi.UnsupportedFeatureException.class, failure -> {
+				assertThat(failure.feature()).isEqualTo("Region.addLifecycleListener");
+				assertThat(failure.reason()).isEqualTo(Reason.NOT_INTRODUCED);
+			});
+	}
+
+	private static class RecordingLifecycle implements DriverRegionLifecycleListener {
+		private final java.util.List<String> events = new java.util.ArrayList<>();
+		@Override public void afterRegionDestroy(DriverRegion<?, ?> region) { events.add("destroy:" + region.name()); }
+		@Override public void close() { events.add("close"); }
+		// Equal but distinct callbacks remain independent registrations.
+		@Override public boolean equals(Object other) { return other instanceof RecordingLifecycle; }
+		@Override public int hashCode() { return 1; }
+	}
+
 	private DriverRegion<String, String> localRegion(DriverConnection connection, Mode mode) {
 		return mode == Mode.PEER ? connection.createRegion("entries", RegionShortcut.LOCAL)
 			: connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
@@ -293,6 +382,73 @@ public abstract class GemFireDriverContract {
 			return action.apply(helper);
 		}
 		@Override public void close() { closes.incrementAndGet(); }
+	}
+
+	@Test
+	void namedPoolMetadataDuplicateRejectionAndRecreation() {
+		for (boolean locators : new boolean[] { false, true }) {
+			inCache(Mode.CLIENT, connection -> {
+				String name = UUID.randomUUID().toString();
+				PoolConfiguration config = poolConfiguration(locators);
+				DriverPool first = connection.createPool(name, config);
+				try {
+					assertThat(first.name()).isEqualTo(name);
+					assertThat(first.minimumConnections()).isZero();
+					assertThat(locators ? first.locators() : first.servers())
+						.extracting(Endpoint::port).containsExactly(locators ? 10334 : 40404);
+					assertThat(locators ? first.servers() : first.locators()).isEmpty();
+					assertThatThrownBy(() -> connection.createPool(name, config))
+						.isInstanceOf(DriverOperationException.class);
+					assertThat(first.isDestroyed()).isFalse();
+					assertThat(connection.getPool(name).minimumConnections()).isZero();
+				}
+				finally { first.destroy(); }
+				assertThat(first.isDestroyed()).isTrue();
+				assertThat(connection.getPool(name)).isNull();
+				DriverPool replacement = connection.createPool(name, config);
+				try {
+					first.destroy(); // A stale handle must not remove the new pool.
+					assertThat(connection.getPool(name).isDestroyed()).isFalse();
+				}
+				finally { replacement.destroy(); }
+			});
+		}
+	}
+
+	@Test
+	void poolAccessRejectsWrongModeClosedConnectionAndInvalidArguments() {
+		for (Mode mode : Mode.values()) {
+			inCache(mode, connection -> {
+				PoolConfiguration config = poolConfiguration(false);
+				if (mode == Mode.PEER) {
+					assertThatThrownBy(() -> connection.createPool("wrong", config)).isInstanceOf(DriverOperationException.class);
+					assertThatThrownBy(() -> connection.getPool("wrong")).isInstanceOf(DriverOperationException.class);
+				}
+				else {
+					for (String name : new String[] { null, "", "  " }) {
+						assertThatThrownBy(() -> connection.createPool(name, config)).isInstanceOf(DriverOperationException.class);
+						assertThatThrownBy(() -> connection.getPool(name)).isInstanceOf(DriverOperationException.class);
+					}
+					assertThatThrownBy(() -> connection.createPool("null", null)).isInstanceOf(DriverOperationException.class);
+				}
+				connection.close();
+				assertThatThrownBy(() -> connection.createPool("closed", config)).isInstanceOf(DriverOperationException.class);
+				assertThatThrownBy(() -> connection.getPool("closed")).isInstanceOf(DriverOperationException.class);
+			});
+		}
+	}
+
+	private PoolConfiguration poolConfiguration(boolean locators) {
+		return new PoolConfiguration(locators ? List.of() : List.of(new Endpoint("127.0.0.1", 40404)),
+			locators ? List.of(new Endpoint("127.0.0.1", 10334)) : List.of(), 0);
+	}
+
+	private void inPool(Consumer<DriverPool> action) {
+		inCache(Mode.CLIENT, connection -> {
+			DriverPool pool = connection.createPool(UUID.randomUUID().toString(), poolConfiguration(false));
+			try { action.accept(pool); }
+			finally { pool.destroy(); }
+		});
 	}
 
 	private void inCache(Mode mode, Consumer<DriverConnection> action) {

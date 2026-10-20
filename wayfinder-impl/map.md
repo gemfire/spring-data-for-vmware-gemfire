@@ -8,10 +8,12 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 ## Notes
 
+- [Native GemFire / Driver SPI gap audit](audits/native-spi-gap-audit.md) (2026-10-21) records the remaining module-wide dependency, API and verification gaps. Scoped migration checks do not establish full compliance. Completion must preserve application-supplied callbacks and reachable public types as well as internal native calls; the audit provides reproducible source inventories and resolved dependency evidence.
+- [SPI gap closure implementation plan](spi-gap-closure-plan.md) indexes the open implementation tickets, their dependency graph and ownership of every audit finding. Follow its shared completion requirements. The API coverage inventory precedes further narrow implementation; full module acceptance requires both behavior preservation and strict native-free boundaries.
 - Architecture is signed off (`wayfinder/rationale.md` §8, revised design approved 2026-10-20) and is not reopened here. Per [wayfinder/issues/17-spec-review-sign-off-process.md](../wayfinder/issues/17-spec-review-sign-off-process.md): a significant change — one that breaks or reverses an already-completed design decision, or changes the overall approach — requires a new sign-off round on the design docs before being acted on. Smaller clarifications/local corrections are handled inline as normal implementation work, with git history as the audit trail.
 - Standing architectural stances carried over from the design effort (do not re-litigate here): the SPI is a thin delegate around the Driver Impl; fail fast everywhere, never silent degradation; two independent bind-time checks (SPI `major.minor` ABI compatibility via the driver stamp; exact GemFire version match, since a driver's version is the GemFire version it wraps — [wayfinder ticket 20](../wayfinder/issues/20-spi-abi-compatibility-and-driver-version-lockstep.md), which superseded the earlier two-range axes); the `Capability` enum is removed, unsupported features fail through default/overridden SPI methods, and existing method behavior is immutable within an SPI major; module/package layout and dependency graph per `wayfinder/technical-spec.md` §3–§4.
 - **No static state, no singletons** (spec §5.7, [wayfinder ticket 19](../wayfinder/issues/19-no-static-state-or-singletons.md)): applies to every ticket on this map. No mutable static state or static service locators; constructor injection; instance loggers; no static reset hooks in tests; immutable `static final` constants and stateless factories on immutable value types are fine. Rules bind new and rewritten code; migrated code obtains the driver by injection.
-- Skills to consult when working any ticket: `/grilling`, `/domain-modeling` — used here only for implementation-time design gaps that genuinely need resolving, not to re-decide anything already settled in `wayfinder/`.
+- Follow the user's skill invocation rule: use only explicitly requested skills. Ticket continuation and implementation do not implicitly authorize `/grilling`, `/domain-modeling` or other additional skills.
 - Branch strategy (per `wayfinder/technical-spec.md` §7): work happens on a dedicated long-lived integration branch (e.g. `driver-spi-migration`), separate from the repo's `support/<gemfire>-<spring>-<sdgf>.x` convention, merged into `develop` once at cutover.
 
 ## Decisions so far
@@ -32,17 +34,26 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 - [Cache/region resolver dependency inventory](../wayfinder-issues/08-cache-region-resolver-migration-dependencies.md) — traced 26 files; selected a complete resolver migration with typed lifecycle callbacks, injected ownership and a typed supplier for the remaining native pool consumer, without requiring factory migration.
 
+- [Cache/region resolver driver migration](../wayfinder-issues/09-cache-region-resolver-driver-migration.md) — resolver interfaces and implementations now borrow driver handles; typed region lifecycle callbacks, lazy qualified bean lookup and fail-fast composition are verified on mock/native runtimes. Native pool lookup uses an injected supplier; cache factories remain native.
+
+- [Cache-factory ownership/configuration inventory](../wayfinder-issues/10-cache-factory-ownership-and-configuration-dependencies.md) — traced native factory behavior and configuration consumers; selected an injected connection owner/borrower foundation, with native cache reuse distinguished from exclusive ownership and legacy entry points kept coherent during staging.
+
+- [Injected driver connection ownership](../wayfinder-issues/11-injected-driver-connection-ownership.md) — native-free Spring factory now owns or explicitly borrows an injected connection; Java/XML cache-manager and resolver wiring, terminal failure cleanup and shutdown are verified on mock/native runtimes. Native compatible cache reuse remains distinct from mock isolation.
+
+- [Pool configuration and resolver migration dependencies](../wayfinder-issues/12-pool-configuration-and-resolver-dependencies.md) — traced pool lifecycle/configuration and native consumers; selected injected named pool creation/ownership before resolver cutover, with native registry/default-pool behavior distinguished from mock configuration records.
+
+- [Required native API coverage matrix](../wayfinder-issues/14-required-native-api-coverage-matrix.md) — versioned 3,851-row baseline covers inherited contracts, callback payloads and application extension points across 292 native types, with frozen requirements and owners; public Cache reachability adds blocking server/WAN/queue implementation tickets.
+
+- [Named driver pool creation and ownership](../wayfinder-issues/13-named-driver-pool-creation-and-ownership.md) — typed named pool creation/lookup and Spring owner/borrower lifecycle work on native and mock drivers; 393 tests and full source compilation pass, with complete pool semantics and legacy cutover still tracked downstream.
+
+- [Whole-module migration boundary enforcement](../wayfinder-issues/15-whole-module-migration-boundary-enforcement.md) — normal verification rejects source/resource/classpath and architecture regressions against an owned, shrinking baseline; 18 fixture tests pass, while strict verification correctly rejects the remaining native boundaries.
+
 ## Not yet specified
 
-The 9-step migration plan from `wayfinder/technical-spec.md` §7, tracked here as the initial implementation backlog — each becomes its own ticket (or several) as work starts on it:
+Known implementation gaps in Steps 3–7 now have explicit tickets, indexed by the [SPI gap closure implementation plan](spi-gap-closure-plan.md). They are no longer unspecified backlog. Member-level inventory may reveal additional reachable native surfaces or require splitting a large implementation group; create precise owned blocking tickets when that evidence appears, without losing the parent requirements.
 
-- Step 3 — Beyond the separately ticketed cache/region resolver driver migration, continue migrating `spring-data-vmware-gemfire` subsystem-by-subsystem in the bottom-up order from §7 (util/root → small low-risk packages → config → client/function/repository/mapping). Use the dependency inventories to group runtime utility methods with their cache-factory, pool, query/template, repository, function and JSON/PDX consumers. Extend the SPI, native driver, mock and contract kit as each consumer requires; exact boundaries of these larger groups remain to be set.
-- Step 4 — Retarget exception translation (`GemfireCacheUtils`-equivalent → `GemFireDriverException`).
-- Step 5 — Retarget annotation attributes to SPI-owned delegation enums.
-- Step 6 — Close the gap to zero native references; turn on the architecture fitness function (banned-import check).
-- Step 7 — Stand up the per-Driver-Impl-version `integrationTest` matrix backing both compatibility axes.
-- Step 8 — Publish the support matrix (documentation/governance only).
-- Step 9 — Cut the major version release (merge integration branch into `develop`).
+- Step 8 — Publish the support matrix using the selected launch releases and their verified official support/EOL policies. Exact release selection remains separate release planning; do not infer a support policy from the currently implemented reference driver.
+- Step 9 — Plan the major-version release and integration-branch merge once technical acceptance and release prerequisites are met. Publishing/merge timing and authorization remain to be established.
 
 ## Out of scope
 

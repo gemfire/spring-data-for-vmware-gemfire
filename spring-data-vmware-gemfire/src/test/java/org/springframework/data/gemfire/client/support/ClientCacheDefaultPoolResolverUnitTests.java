@@ -13,10 +13,11 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
+import java.util.function.Supplier;
+
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
 
-import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.client.PoolResolver;
 
 /**
@@ -28,7 +29,7 @@ import org.springframework.data.gemfire.client.PoolResolver;
  * @see org.mockito.Mockito
  * @see org.apache.geode.cache.client.ClientCache
  * @see org.apache.geode.cache.client.Pool
- * @see org.springframework.data.gemfire.CacheResolver
+ * @see java.util.function.Supplier
  * @see org.springframework.data.gemfire.client.PoolResolver
  * @see org.springframework.data.gemfire.client.support.ClientCacheDefaultPoolResolver
  * @since 2.3.0
@@ -39,12 +40,12 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@SuppressWarnings("unchecked")
 	public void constructClientCacheDefaultPoolResolver() {
 
-		CacheResolver<ClientCache> mockClientCacheResolver = mock(CacheResolver.class);
+		Supplier<ClientCache> mockClientCacheResolver = mock(Supplier.class);
 
 		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(mockClientCacheResolver);
 
 		assertThat(poolResolver).isNotNull();
-		assertThat(poolResolver.getClientCacheResolver()).isEqualTo(mockClientCacheResolver);
+		assertThat(poolResolver.getClientCacheSupplier()).isEqualTo(mockClientCacheResolver);
 
 		verifyNoInteractions(mockClientCacheResolver);
 	}
@@ -57,7 +58,7 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 		}
 		catch (IllegalArgumentException expected) {
 
-			assertThat(expected).hasMessage("CacheResolver for ClientCache must not be null");
+			assertThat(expected).hasMessage("Supplier for ClientCache must not be null");
 			assertThat(expected).hasNoCause();
 
 			throw expected;
@@ -73,12 +74,12 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 
 		when(mockClientCache.getDefaultPool()).thenReturn(mockPool);
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+		Supplier<ClientCache> clientCacheSupplier = () -> mockClientCache;
 
-		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
+		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheSupplier);
 
 		assertThat(poolResolver).isNotNull();
-		assertThat(poolResolver.getClientCacheResolver()).isEqualTo(clientCacheResolver);
+		assertThat(poolResolver.getClientCacheSupplier()).isEqualTo(clientCacheSupplier);
 		assertThat(poolResolver.resolve(PoolResolver.DEFAULT_POOL_NAME)).isEqualTo(mockPool);
 
 		verify(mockClientCache, times(1)).getDefaultPool();
@@ -88,12 +89,12 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 	@Test
 	public void resolvePoolWhenClientCacheResolvesToNullIsNullSafe() {
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> null;
+		Supplier<ClientCache> clientCacheSupplier = () -> null;
 
-		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
+		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheSupplier);
 
 		assertThat(poolResolver).isNotNull();
-		assertThat(poolResolver.getClientCacheResolver()).isEqualTo(clientCacheResolver);
+		assertThat(poolResolver.getClientCacheSupplier()).isEqualTo(clientCacheSupplier);
 		assertThat(poolResolver.resolve(PoolResolver.DEFAULT_POOL_NAME)).isNull();
 	}
 
@@ -102,14 +103,37 @@ public class ClientCacheDefaultPoolResolverUnitTests {
 
 		ClientCache mockClientCache = mock(ClientCache.class);
 
-		CacheResolver<ClientCache> clientCacheResolver = () -> mockClientCache;
+		Supplier<ClientCache> clientCacheSupplier = () -> mockClientCache;
 
-		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheResolver);
+		ClientCacheDefaultPoolResolver poolResolver = new ClientCacheDefaultPoolResolver(clientCacheSupplier);
 
 		assertThat(poolResolver).isNotNull();
-		assertThat(poolResolver.getClientCacheResolver()).isEqualTo(clientCacheResolver);
+		assertThat(poolResolver.getClientCacheSupplier()).isEqualTo(clientCacheSupplier);
 		assertThat(poolResolver.resolve("CUSTOM")).isNull();
 
 		verifyNoInteractions(mockClientCache);
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void invokesSupplierOnlyForExactDefaultNameAndPropagatesFailure() {
+		Supplier<ClientCache> supplier = mock(Supplier.class);
+		ClientCacheDefaultPoolResolver resolver = new ClientCacheDefaultPoolResolver(supplier);
+		for (String name : new String[] { null, "", " ", "default", "DEFAULT ", "CUSTOM" }) {
+			assertThat(resolver.resolve(name)).isNull();
+		}
+		verifyNoInteractions(supplier);
+		RuntimeException failure = new IllegalStateException("failed");
+		when(supplier.get()).thenThrow(failure);
+		org.assertj.core.api.Assertions.assertThatThrownBy(() -> resolver.resolve(PoolResolver.DEFAULT_POOL_NAME))
+			.isSameAs(failure);
+		verify(supplier).get();
+	}
+
+	@Test
+	public void nullDefaultPoolReturnsNull() {
+		ClientCache cache = mock(ClientCache.class);
+		assertThat(new ClientCacheDefaultPoolResolver(() -> cache).resolve(PoolResolver.DEFAULT_POOL_NAME)).isNull();
+		verify(cache).getDefaultPool();
 	}
 }

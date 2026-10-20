@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="otherConnection" class="org.springframework.data.gemfire.support.InjectedResolverIntegrationTests$UnusedConnection" destroy-method=""/>
+    <bean id="entries" factory-bean="connection" factory-method="createClientRegion">
+        <constructor-arg value="entries"/>
+        <constructor-arg value="LOCAL"/>
+    </bean>
+    <bean id="cacheResolver" class="org.springframework.data.gemfire.support.BeanFactoryCacheResolver">
+        <constructor-arg ref="resolverBeanFactory"/>
+        <property name="cacheBeanName" value="connection"/>
+    </bean>
+    <bean id="beanResolver" class="org.springframework.data.gemfire.support.BeanFactoryRegionResolver">
+        <constructor-arg ref="resolverBeanFactory"/>
+    </bean>
+    <bean id="serviceResolver" class="org.springframework.data.gemfire.support.RegionServiceRegionResolver" factory-method="from">
+        <constructor-arg ref="connection"/>
+    </bean>
+    <bean id="cacheManager" class="org.springframework.data.gemfire.cache.GemfireCacheManager">
+        <constructor-arg ref="connection"/>
+    </bean>
+</beans>

@@ -1,0 +1,51 @@
+{
+  "java_files": {
+    "integrationTest": 150,
+    "main": 357,
+    "test": 254
+  },
+  "java_files_with_noncomment_native_references": {
+    "integrationTest": 128,
+    "main": 186,
+    "test": 122
+  },
+  "noncomment_native_reference_lines": {
+    "integrationTest": 446,
+    "main": 581,
+    "test": 350
+  },
+  "java_files_with_raw_native_text_including_comments": {
+    "integrationTest": 133,
+    "main": 198,
+    "test": 127
+  },
+  "unique_imported_native_symbols": {
+    "integrationTest": 71,
+    "main": 147,
+    "test": 83
+  },
+  "main_native_files_by_package": {
+    "(root)": 28,
+    "client": 22,
+    "config": 52,
+    "dao": 1,
+    "domain": 1,
+    "eviction": 5,
+    "expiration": 5,
+    "function": 31,
+    "listener": 4,
+    "mapping": 5,
+    "repository": 13,
+    "serialization": 6,
+    "server": 1,
+    "support": 5,
+    "transaction": 4,
+    "util": 3
+  },
+  "selected_native_free_source_files": {
+    "spiCacheSourceFiles": 21,
+    "spiCacheTestFiles": 23
+  },
+  "raw_resource_reference_lines": 54,
+  "raw_resource_files": 8
+}

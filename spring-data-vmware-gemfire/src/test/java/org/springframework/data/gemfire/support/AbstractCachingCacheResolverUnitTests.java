@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 import edu.umd.cs.mtc.MultithreadedTestCase;
 import edu.umd.cs.mtc.TestFramework;
 import java.util.concurrent.atomic.AtomicReference;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -35,7 +35,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class AbstractCachingCacheResolverUnitTests {
 
 	@Mock
-	private ClientCache mockCache;
+	private DriverConnection mockCache;
 
 	@Test
 	@SuppressWarnings("rawtypes")
@@ -54,6 +54,22 @@ public class AbstractCachingCacheResolverUnitTests {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
+	public void retriesNullAndFailureButRetainsBorrowedHandleAfterClose() {
+		AbstractCachingCacheResolver<DriverConnection> resolver = org.mockito.Mockito.spy(AbstractCachingCacheResolver.class);
+		RuntimeException failure = new IllegalStateException("failed");
+		when(resolver.doResolve()).thenReturn(null).thenThrow(failure).thenReturn(mockCache);
+		assertThat(resolver.resolve()).isNull();
+		org.assertj.core.api.Assertions.assertThatThrownBy(resolver::resolve).isSameAs(failure);
+		assertThat(resolver.resolve()).isSameAs(mockCache);
+		mockCache.close();
+		assertThat(resolver.resolve()).isSameAs(mockCache);
+		verify(resolver, times(3)).doResolve();
+		verify(mockCache).close();
+		org.mockito.Mockito.verifyNoMoreInteractions(mockCache);
+	}
+
+	@Test
 	public void abstractCachinCacheResolverIsThreadSafe() throws Throwable {
 		TestFramework.runOnce(new AbstractCachingCacheResolverMultithreadedTestCase());
 	}
@@ -63,8 +79,8 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		private AbstractCachingCacheResolver<?> mockCacheResolver;
 
-		private AtomicReference<ClientCache> gemfireCacheFromThreadOne = new AtomicReference<>(null);
-		private AtomicReference<ClientCache> gemfireCacheFromThreadTwo = new AtomicReference<>(null);
+		private AtomicReference<DriverConnection> gemfireCacheFromThreadOne = new AtomicReference<>(null);
+		private AtomicReference<DriverConnection> gemfireCacheFromThreadTwo = new AtomicReference<>(null);
 
 		@Override
 		public void initialize() {
@@ -85,7 +101,7 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		public void thread1() {
 
-			Thread.currentThread().setName("ClientCache Access Thread 1");
+			Thread.currentThread().setName("DriverConnection Access Thread 1");
 
 			assertTick(0);
 
@@ -94,7 +110,7 @@ public class AbstractCachingCacheResolverUnitTests {
 
 		public void thread2() {
 
-			Thread.currentThread().setName("ClientCache Access Thread 2");
+			Thread.currentThread().setName("DriverConnection Access Thread 2");
 
 			assertTick(0);
 			waitForTick(1);
@@ -105,7 +121,7 @@ public class AbstractCachingCacheResolverUnitTests {
 		@Override
 		public void finish() {
 
-			ClientCache gemfireCacheFromThreadOne = this.gemfireCacheFromThreadOne.get();
+			DriverConnection gemfireCacheFromThreadOne = this.gemfireCacheFromThreadOne.get();
 
 			assertThat(gemfireCacheFromThreadOne).isNotNull();
 			assertThat(gemfireCacheFromThreadOne).isEqualTo(this.gemfireCacheFromThreadTwo.get());

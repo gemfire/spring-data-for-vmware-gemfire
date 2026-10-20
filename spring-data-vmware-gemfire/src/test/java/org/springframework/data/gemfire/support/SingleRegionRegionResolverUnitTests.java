@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.Region;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 /**
  * Unit Tests for {@link SingleRegionRegionResolver}.
@@ -23,7 +23,7 @@ import org.apache.geode.cache.Region;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
+ * @see com.vmware.gemfire.driver.spi.DriverRegion
  * @see org.springframework.data.gemfire.support.SingleRegionRegionResolver
  * @since 2.3.0
  */
@@ -32,7 +32,7 @@ import org.apache.geode.cache.Region;
 public class SingleRegionRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private DriverRegion mockRegion;
 
 	@Test
 	public void constructSingleRegionRegionResolverWithRegion() {
@@ -61,18 +61,18 @@ public class SingleRegionRegionResolverUnitTests {
 	@Test
 	public void resolveReturnsConfiguredRegionMatchingName() {
 
-		when(this.mockRegion.getName()).thenReturn("MockRegion");
+		when(this.mockRegion.name()).thenReturn("MockRegion");
 
 		assertThat(new SingleRegionRegionResolver(this.mockRegion).resolve("MockRegion"))
 			.isEqualTo(this.mockRegion);
 
-		verify(this.mockRegion, times(1)).getName();
+		verify(this.mockRegion, times(1)).name();
 	}
 
 	@Test
 	public void resolveReturnsNullWhenRegionNameDoesNotMatch() {
 
-		when(this.mockRegion.getName()).thenReturn("MockRegion");
+		when(this.mockRegion.name()).thenReturn("MockRegion");
 
 		SingleRegionRegionResolver regionResolver = new SingleRegionRegionResolver(this.mockRegion);
 
@@ -81,6 +81,6 @@ public class SingleRegionRegionResolverUnitTests {
 		assertThat(regionResolver.resolve("")).isNull();
 		assertThat(regionResolver.resolve(null)).isNull();
 
-		verify(this.mockRegion, times(4)).getName();
+		verify(this.mockRegion, times(4)).name();
 	}
 }

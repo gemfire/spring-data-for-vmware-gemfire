@@ -5,25 +5,24 @@
 package org.springframework.data.gemfire;
 
 import java.util.function.Supplier;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 
 /**
- * Strategy interface for resolving a instance reference to a {@link ClientCache}.
+ * Strategy interface for resolving an instance reference to a {@link DriverConnection}.
  *
  * @author John Blum
- * @param <T> {@link Class subclass} of {@link ClientCache}.
+ * @param <T> {@link Class subclass} of {@link DriverConnection}.
  * @see Supplier
- * @see ClientCache
- * @see org.apache.geode.cache.client.ClientCache
+ * @see DriverConnection
  * @since 2.3.0
  */
 @FunctionalInterface
-public interface CacheResolver<T extends ClientCache> extends Supplier<T> {
+public interface CacheResolver<T extends DriverConnection> extends Supplier<T> {
 
 	/**
-	 * Gets the resolved instance of the {@link ClientCache}.
+	 * Gets the resolved instance of the {@link DriverConnection}.
 	 *
-	 * @return the resolved instance of the {@link ClientCache}.
+	 * @return the resolved instance of the {@link DriverConnection}.
 	 * @see #resolve()
 	 */
 	@Override
@@ -32,9 +31,9 @@ public interface CacheResolver<T extends ClientCache> extends Supplier<T> {
 	}
 
 	/**
-	 * Resolves the instance reference to the {@link ClientCache} implementation.
+	 * Resolves the instance reference to the {@link DriverConnection} implementation.
 	 *
-	 * @return a instance reference to a {@link ClientCache} implementation.
+	 * @return an instance reference to a {@link DriverConnection} implementation.
 	 */
 	T resolve();
 

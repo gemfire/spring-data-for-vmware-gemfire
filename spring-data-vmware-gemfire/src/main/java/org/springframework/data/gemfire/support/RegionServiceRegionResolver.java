@@ -5,9 +5,8 @@
 package org.springframework.data.gemfire.support;
 
 import java.util.Optional;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionService;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.data.gemfire.RegionResolver;
 import org.springframework.lang.NonNull;
@@ -15,37 +14,34 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * {@link RegionResolver} implementation used to resolve a cache {@link Region} identified by {@link String name}
- * using the configured {@link RegionService}.
+ * {@link RegionResolver} implementation used to resolve a cache {@link DriverRegion} identified by {@link String name}
+ * using the configured {@link DriverConnection}.
  *
  * @author John Blum
- * @see ClientCache
- * @see Region
- * @see RegionService
- * @see ClientCache
+ * @see DriverConnection
+ * @see DriverRegion
  * @see CacheResolver
  * @see RegionResolver
  * @see AbstractCachingRegionResolver
  * @since 2.3.0
  */
-public class RegionServiceRegionResolver<T extends RegionService> extends AbstractCachingRegionResolver {
+public class RegionServiceRegionResolver<T extends DriverConnection> extends AbstractCachingRegionResolver {
 
 	/**
 	 * Factory method used to construct a {@link RegionServiceRegionResolver} from a {@link CacheResolver}.
 	 *
-	 * The {@link CacheResolver} will resolve an instance of {@link ClientCache}, such as a {@link ClientCache},
-	 * which is a {@link RegionService} capable of resolving a {@link Region}
+	 * The {@link CacheResolver} supplies a borrowed {@link DriverConnection} capable of resolving a {@link DriverRegion}
 	 * identified by {@link String name}.
 	 *
-	 * @param <S> {@link Class subclass} of {@link ClientCache}.
-	 * @param cacheResolver {@link CacheResolver} used to resolve the {@link RegionService}.
+	 * @param <S> {@link Class subclass} of {@link DriverConnection}.
+	 * @param cacheResolver {@link CacheResolver} used to resolve the {@link DriverConnection}.
 	 * @return a new instance of {@link RegionServiceRegionResolver}.
 	 * @throws IllegalArgumentException if {@link CacheResolver} is {@literal null}.
-	 * @see #RegionServiceRegionResolver(RegionServiceResolver)
+	 * @see #RegionServiceRegionResolver(ConnectionResolver)
 	 * @see CacheResolver
 	 */
 	@NonNull
-	public static <S extends ClientCache> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
+	public static <S extends DriverConnection> RegionServiceRegionResolver<S> from(@NonNull CacheResolver<S> cacheResolver) {
 
 		Assert.notNull(cacheResolver, "CacheResolver must not be null");
 
@@ -54,71 +50,69 @@ public class RegionServiceRegionResolver<T extends RegionService> extends Abstra
 
 	/**
 	 * Factory method used to construct a {@link RegionServiceRegionResolver} initialized with
-	 * the given {@link RegionService}.
+	 * the given {@link DriverConnection}.
 	 *
-	 * The {@link RegionService} may be an instance of {@link ClientCache}, such as a {@link ClientCache}.
-	 *
-	 * @param regionService {@link RegionService} used to resolve cache {@link Region Regions}
+	 * @param connection {@link DriverConnection} used to resolve cache {@link DriverRegion Regions}
 	 * identified by {@link String name}; may be {@literal null}.
 	 * @return a new instance of {@link RegionServiceRegionResolver}.
-	 * @see #RegionServiceRegionResolver(RegionServiceResolver)
-	 * @see RegionService
+	 * @see #RegionServiceRegionResolver(ConnectionResolver)
+	 * @see DriverConnection
 	 */
 	@NonNull
-	public static RegionServiceRegionResolver<RegionService> from(@Nullable RegionService regionService) {
-		return new RegionServiceRegionResolver<>(() -> Optional.ofNullable(regionService));
+	public static RegionServiceRegionResolver<DriverConnection> from(@Nullable DriverConnection connection) {
+		return new RegionServiceRegionResolver<>(() -> Optional.ofNullable(connection));
 	}
 
-	private final RegionServiceResolver<T> resolver;
+	private final ConnectionResolver<T> resolver;
 
 	/**
 	 * Constructs a new instance of {@link RegionServiceRegionResolver} initialized with
-	 * the given {@link RegionServiceResolver}.
+	 * the given {@link ConnectionResolver}.
 	 *
-	 * @param resolver {@link RegionServiceResolver} used to resolve the {@link RegionService} that is used to resolve
-	 * cache {@link Region Regions} by {@link String name}.
-	 * @throws IllegalArgumentException if {@link RegionServiceResolver} is {@literal null}.
-	 * @see RegionServiceResolver
+	 * @param resolver {@link ConnectionResolver} used to resolve the {@link DriverConnection} that is used to resolve
+	 * cache {@link DriverRegion Regions} by {@link String name}.
+	 * @throws IllegalArgumentException if {@link ConnectionResolver} is {@literal null}.
+	 * @see ConnectionResolver
 	 */
-	public RegionServiceRegionResolver(RegionServiceResolver<T> resolver) {
+	public RegionServiceRegionResolver(ConnectionResolver<T> resolver) {
 
-		Assert.notNull(resolver, "RegionServiceResolver must not be null");
+		Assert.notNull(resolver, "ConnectionResolver must not be null");
 
 		this.resolver = resolver;
 	}
 
 	/**
-	 * Returns the configured {@link RegionServiceResolver} used to resolve the {@link RegionService} that is then used
-	 * to resolve cache {@link Region Regions} by {@link String name}.
+	 * Returns the configured {@link ConnectionResolver} used to resolve the {@link DriverConnection} that is then used
+	 * to resolve cache {@link DriverRegion Regions} by {@link String name}.
 	 *
-	 * @return the configured {@link RegionServiceResolver}.
-	 * @see RegionServiceResolver
+	 * @return the configured {@link ConnectionResolver}.
+	 * @see ConnectionResolver
 	 */
-	protected RegionServiceResolver<T> getRegionServiceResolver() {
+	protected ConnectionResolver<T> getConnectionResolver() {
 		return this.resolver;
 	}
 
 	/**
-	 * Resolves a cache {@link Region} identified by the given {@link String name} using the configured
-	 * {@link RegionService} resolved from the {@link RegionServiceResolver}.
+	 * Resolves a cache {@link DriverRegion} identified by the given {@link String name} using the configured
+	 * {@link DriverConnection} resolved from the {@link ConnectionResolver}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @param regionName {@link String name} of the {@link Region} to resolve.
-	 * @return the resolved cache {@link Region} identified by the given {@link String name}; may be {@literal null}.
-	 * @see RegionService#getRegion(String)
-	 * @see #getRegionServiceResolver()
+	 * @param <K> {@link Class type} of the {@link DriverRegion} key.
+	 * @param <V> {@link Class type} of the {@link DriverRegion} value.
+	 * @param regionName {@link String name} of the {@link DriverRegion} to resolve.
+	 * @return the resolved cache {@link DriverRegion} identified by the given {@link String name}; may be {@literal null}.
+	 * @see DriverConnection#getRegion(String)
+	 * @see #getConnectionResolver()
 	 */
 	@Nullable @Override
-	protected <K, V> Region<K, V> doResolve(@Nullable String regionName) {
+	protected <K, V> DriverRegion<K, V> doResolve(@Nullable String regionName) {
 
-		return getRegionServiceResolver().resolve()
-			.<Region<K, V>>map(regionService -> regionService.getRegion(regionName))
+		return getConnectionResolver().resolve()
+			.<DriverRegion<K, V>>map(connection -> connection.getRegion(regionName))
 			.orElse(null);
 	}
 
 	@FunctionalInterface
-	protected interface RegionServiceResolver<T extends RegionService> {
+	protected interface ConnectionResolver<T extends DriverConnection> {
 		Optional<T> resolve();
 	}
 }

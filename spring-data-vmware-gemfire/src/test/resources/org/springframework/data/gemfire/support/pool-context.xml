@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="driverManager" class="com.vmware.gemfire.driver.core.GemFireDriverManager"/>
+    <bean id="configuration" class="com.vmware.gemfire.driver.spi.CacheConfiguration">
+        <constructor-arg value="CLIENT"/>
+        <constructor-arg><map>
+            <entry key="mcast-port" value="0"/>
+            <entry key="locators" value=""/>
+            <entry key="log-level" value="error"/>
+        </map></constructor-arg>
+    </bean>
+    <bean id="connection" class="org.springframework.data.gemfire.DriverConnectionFactoryBean">
+        <constructor-arg ref="driverManager"/>
+        <constructor-arg ref="configuration"/>
+    </bean>
+    <bean id="otherConnection" class="org.springframework.data.gemfire.support.InjectedPoolIntegrationTests$UnusedConnection" destroy-method=""/>
+    <bean id="poolName" class="java.util.UUID" factory-method="randomUUID"/>
+    <bean id="poolConfiguration" class="com.vmware.gemfire.driver.spi.PoolConfiguration">
+        <constructor-arg index="0"><list>
+            <bean class="com.vmware.gemfire.driver.spi.PoolConfiguration$Endpoint">
+                <constructor-arg value="127.0.0.1"/><constructor-arg value="40404"/>
+            </bean>
+        </list></constructor-arg>
+        <constructor-arg index="1"><list/></constructor-arg>
+        <constructor-arg index="2" value="0"/>
+    </bean>
+    <bean id="pool" class="org.springframework.data.gemfire.DriverPoolFactoryBean">
+        <constructor-arg ref="connection"/>
+        <constructor-arg value="#{poolName.toString()}"/>
+        <constructor-arg ref="poolConfiguration"/>
+    </bean>
+</beans>

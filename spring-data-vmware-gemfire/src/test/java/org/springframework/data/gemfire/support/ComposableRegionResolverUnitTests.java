@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Supplier;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -23,9 +22,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionDestroyedException;
+import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverOperationException;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.springframework.data.gemfire.RegionResolver;
 
@@ -36,7 +36,7 @@ import org.springframework.data.gemfire.RegionResolver;
  * @see org.junit.Test
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.Region
+ * @see com.vmware.gemfire.driver.spi.DriverRegion
  * @see org.springframework.data.gemfire.RegionResolver
  * @see org.springframework.data.gemfire.support.ComposableRegionResolver
  * @since 2.3.0
@@ -46,7 +46,7 @@ import org.springframework.data.gemfire.RegionResolver;
 public class ComposableRegionResolverUnitTests {
 
 	@Mock
-	private Region mockRegion;
+	private DriverRegion mockRegion;
 
 	@Mock(name = "MockRegionResolverOne")
 	private RegionResolver mockRegionResolverOne;
@@ -57,14 +57,6 @@ public class ComposableRegionResolverUnitTests {
 	@Mock(name = "MockRegionResolverThree")
 	private RegionResolver mockRegionResolverThree;
 
-	@Before
-	public void setupMockRegion() {
-
-		AttributesMutator mockAttributesMutator = mock(AttributesMutator.class);
-
-		when(this.mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
-		when(mockAttributesMutator.getRegion()).thenReturn(this.mockRegion);
-	}
 
 	@Test
 	public void constructComposableRegionResolver() {
@@ -229,7 +221,7 @@ public class ComposableRegionResolverUnitTests {
 			.compose(this.mockRegionResolverOne, this.mockRegionResolverTwo, this.mockRegionResolverThree);
 
 		when(this.mockRegionResolverOne.resolve(anyString()))
-			.thenThrow(new RegionDestroyedException("TEST", "/MockRegion"));
+			.thenReturn(null);
 
 		when(this.mockRegionResolverTwo.resolve(anyString())).thenReturn(this.mockRegion);
 
@@ -242,5 +234,24 @@ public class ComposableRegionResolverUnitTests {
 		inOrder.verify(this.mockRegionResolverOne, times(1)).resolve(eq("MockRegion"));
 		inOrder.verify(this.mockRegionResolverTwo, times(1)).resolve(eq("MockRegion"));
 		inOrder.verify(this.mockRegionResolverThree, never()).resolve(eq("MockRegion"));
+	}
+
+	@Test
+	public void failuresStopCompositionWithoutRetryOrFallback() {
+		for (Throwable failure : new Throwable[] { new DriverOperationException("failed", null),
+			UnsupportedFeatureException.notIntroduced("test"), new IllegalStateException("failed"),
+			new AssertionError("failed") }) {
+			for (boolean failFirst : new boolean[] { true, false }) {
+				RegionResolver first = mock(RegionResolver.class);
+				RegionResolver second = mock(RegionResolver.class);
+				RegionResolver third = mock(RegionResolver.class);
+				when((failFirst ? first : second).resolve("entries")).thenThrow(failure);
+				RegionResolver composed = ComposableRegionResolver.compose(first, second, third);
+				assertThatThrownBy(() -> composed.resolve("entries")).isSameAs(failure);
+				verify(first).resolve("entries");
+				verify(second, times(failFirst ? 0 : 1)).resolve("entries");
+				verify(third, never()).resolve(anyString());
+			}
+		}
 	}
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="driverManager" class="com.vmware.gemfire.driver.core.GemFireDriverManager"/>
+    <bean id="configuration" class="com.vmware.gemfire.driver.spi.CacheConfiguration">
+        <constructor-arg value="CLIENT"/>
+        <constructor-arg><map>
+            <entry key="mcast-port" value="0"/>
+            <entry key="locators" value=""/>
+            <entry key="log-level" value="error"/>
+        </map></constructor-arg>
+    </bean>
+    <bean id="connection" class="org.springframework.data.gemfire.DriverConnectionFactoryBean">
+        <constructor-arg ref="driverManager"/>
+        <constructor-arg ref="configuration"/>
+    </bean>
+    <import resource="resolver-consumers-context.xml"/>
+</beans>

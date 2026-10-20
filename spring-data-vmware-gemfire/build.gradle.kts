@@ -251,10 +251,40 @@ tasks.register<Jar>("testJar") {
 // Transitional verification of the actual migrated sources. These source sets do not inherit
 // main/test's native dependencies; expand their inventory as the migration advances.
 val spiCacheSourceFiles = listOf(
+  "org/springframework/data/gemfire/DriverConnectionFactoryBean.java",
+  "org/springframework/data/gemfire/DriverPoolFactoryBean.java",
+  "org/springframework/data/gemfire/CacheResolver.java",
+  "org/springframework/data/gemfire/RegionResolver.java",
+  "org/springframework/data/gemfire/support/AbstractCachingCacheResolver.java",
+  "org/springframework/data/gemfire/support/SingleCacheCacheResolver.java",
+  "org/springframework/data/gemfire/support/BeanFactoryCacheResolver.java",
+  "org/springframework/data/gemfire/support/ComposableCacheResolver.java",
+  "org/springframework/data/gemfire/support/AbstractCachingRegionResolver.java",
+  "org/springframework/data/gemfire/support/SingleRegionRegionResolver.java",
+  "org/springframework/data/gemfire/support/BeanFactoryRegionResolver.java",
+  "org/springframework/data/gemfire/support/RegionServiceRegionResolver.java",
+  "org/springframework/data/gemfire/support/ComposableRegionResolver.java",
+  "org/springframework/data/gemfire/util/ArrayUtils.java",
+  "org/springframework/data/gemfire/util/CollectionUtils.java",
   "org/springframework/data/gemfire/cache/**/*.java",
   "org/springframework/data/gemfire/util/RegionPaths.java"
 )
 val spiCacheTestFiles = listOf(
+  "org/springframework/data/gemfire/DriverConnectionFactoryBeanTests.java",
+  "org/springframework/data/gemfire/DriverPoolFactoryBeanTests.java",
+  "org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+  "org/springframework/data/gemfire/CacheResolverUnitTests.java",
+  "org/springframework/data/gemfire/RegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/AbstractCachingCacheResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/SingleCacheCacheResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/BeanFactoryCacheResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/ComposableCacheResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/AbstractCachingRegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/SingleRegionRegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/BeanFactoryRegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/RegionServiceRegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/ComposableRegionResolverUnitTests.java",
+  "org/springframework/data/gemfire/support/InjectedResolverIntegrationTests.java",
   "org/springframework/data/gemfire/util/RegionPathsTests.java",
   "org/springframework/data/gemfire/cache/CallableCacheLoaderAdapterTest.java",
   "org/springframework/data/gemfire/cache/GemfireCacheUnitTests.java",
@@ -272,7 +302,8 @@ val spiCacheTest = sourceSets.create("spiCacheTest") {
   java.setSrcDirs(sourceSets.test.get().java.srcDirs + sourceSets["integrationTest"].java.srcDirs)
   java.setIncludes(spiCacheTestFiles)
   resources.setSrcDirs(sourceSets.test.get().resources.srcDirs)
-  resources.include("org/springframework/data/gemfire/cache/*-context.xml")
+  resources.include("org/springframework/data/gemfire/cache/*-context.xml",
+    "org/springframework/data/gemfire/support/*-context.xml")
   compileClasspath += spiCache.output
   runtimeClasspath += spiCache.output
 }
@@ -280,7 +311,8 @@ val spiCacheIntegrationTest = sourceSets.create("spiCacheIntegrationTest") {
   java.setSrcDirs(sourceSets.test.get().java.srcDirs + sourceSets["integrationTest"].java.srcDirs)
   java.setIncludes(spiCacheTestFiles)
   resources.setSrcDirs(sourceSets.test.get().resources.srcDirs)
-  resources.include("org/springframework/data/gemfire/cache/*-context.xml")
+  resources.include("org/springframework/data/gemfire/cache/*-context.xml",
+    "org/springframework/data/gemfire/support/*-context.xml")
   compileClasspath += spiCache.output
   runtimeClasspath += spiCache.output
 }
@@ -294,6 +326,10 @@ dependencies {
     add(suite.implementationConfigurationName, platform(libs.junit.jupiter.bom))
     add(suite.implementationConfigurationName, libs.junit.jupiter.api)
     add(suite.implementationConfigurationName, libs.assertJ)
+    add(suite.implementationConfigurationName, libs.junit)
+    add(suite.implementationConfigurationName, libs.mockito)
+    add(suite.implementationConfigurationName, libs.multithreadedtc)
+    add(suite.runtimeOnlyConfigurationName, libs.junit.vintage.engine)
     add(suite.runtimeOnlyConfigurationName, libs.junit.jupiter.engine)
     add(suite.runtimeOnlyConfigurationName, libs.junit.platform.launcher)
   }
@@ -313,13 +349,13 @@ val verifySpiCacheBoundary = tasks.register("verifySpiCacheBoundary") {
         val id = component.id as? org.gradle.api.artifacts.component.ModuleComponentIdentifier
         check(id == null || !(id.group.startsWith("org.apache.geode") ||
           (id.group == "com.vmware.gemfire" && id.module.startsWith("gemfire-")))) {
-          "Native GemFire dependency on migrated cache/utility classpath: $id"
+          "Native GemFire dependency on migrated cache/utility/resolver/connection classpath: $id"
         }
       }
       classpath.files.filter { it.extension == "jar" }.forEach { jar ->
         ZipFile(jar).use { zip ->
           check(zip.entries().asSequence().none { it.name.startsWith("org/apache/geode/") }) {
-            "Native GemFire classes on migrated cache/utility classpath: ${jar.name}"
+            "Native GemFire classes on migrated cache/utility/resolver/connection classpath: ${jar.name}"
           }
         }
       }
@@ -327,14 +363,14 @@ val verifySpiCacheBoundary = tasks.register("verifySpiCacheBoundary") {
   }
 }
 val spiCacheTestTask = tasks.register<Test>("spiCacheTest") {
-  description = "Tests the migrated Spring Cache and utility sources with a native-free mock runtime."
+  description = "Tests the migrated Spring Cache, utility, resolver and connection sources with a native-free mock runtime."
   group = "verification"
   testClassesDirs = spiCacheTest.output.classesDirs
   classpath = spiCacheTest.runtimeClasspath
   dependsOn(verifySpiCacheBoundary)
 }
 val spiCacheIntegrationTestTask = tasks.register<Test>("spiCacheIntegrationTest") {
-  description = "Runs the same Spring Cache and utility behavior tests against the resolved native 10.4 driver."
+  description = "Runs the same Spring Cache, utility, resolver and connection behavior tests against the resolved native 10.4 driver."
   group = "verification"
   testClassesDirs = spiCacheIntegrationTest.output.classesDirs
   classpath = spiCacheIntegrationTest.runtimeClasspath

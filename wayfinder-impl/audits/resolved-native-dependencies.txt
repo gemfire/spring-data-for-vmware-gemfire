@@ -1,0 +1,27 @@
+Resolved dependency evidence for the native/SPI gap audit
+Date: 2026-10-21
+Reports succeeded in offline mode; no compile or runtime tests run.
+
+Configuration: compileClasspath
+Command: ./gradlew -I /private/tmp/sdgf-resolver-validation.init.gradle :spring-data-vmware-gemfire:dependencies --configuration compileClasspath -DgemfireVersion=10.4.+ --offline --console=plain
++--- com.vmware.gemfire:gemfire-core:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-cq:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-deployment-chained-classloader:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-gfsh:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-logging:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-tcp-server:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-wan:10.4.+ -> 10.4.0-build.3056.df98c835
+BUILD SUCCESSFUL in 5s
+
+Configuration: testRuntimeClasspath
+Command: ./gradlew -I /private/tmp/sdgf-resolver-validation.init.gradle :spring-data-vmware-gemfire:dependencies --configuration testRuntimeClasspath -DgemfireVersion=10.4.+ --offline --console=plain
++--- com.vmware.gemfire:gemfire-core:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-cq:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-deployment-chained-classloader:10.4.+ -> 10.4.0-build.3056.df98c835 (*)
++--- com.vmware.gemfire:gemfire-gfsh:10.4.+ -> 10.4.0-build.3056.df98c835
++--- com.vmware.gemfire:gemfire-logging:10.4.+ -> 10.4.0-build.3056.df98c835 (*)
++--- com.vmware.gemfire:gemfire-tcp-server:10.4.+ -> 10.4.0-build.3056.df98c835 (*)
++--- com.vmware.gemfire:gemfire-wan:10.4.+ -> 10.4.0-build.3056.df98c835
++--- project ':spring-test-vmware-gemfire'
++--- project ':spring-data-gemfire-driver-mock'
+BUILD SUCCESSFUL in 4s

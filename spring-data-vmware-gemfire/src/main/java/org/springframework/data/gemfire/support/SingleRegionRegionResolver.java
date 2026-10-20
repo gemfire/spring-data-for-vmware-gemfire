@@ -4,7 +4,7 @@
  */
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.Region;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 import org.springframework.data.gemfire.RegionResolver;
 import org.springframework.lang.NonNull;
@@ -12,26 +12,26 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * {@link RegionResolver} implementation resolving a single, configured {@link Region} object.
+ * {@link RegionResolver} implementation resolving a single, configured {@link DriverRegion} object.
  *
  * @author John Blum
- * @see Region
+ * @see DriverRegion
  * @see RegionResolver
  * @since 2.3.0
  */
 @SuppressWarnings("rawtypes")
 public class SingleRegionRegionResolver implements RegionResolver {
 
-	private final Region region;
+	private final DriverRegion region;
 
 	/**
-	 * Constructs a new instance of {@link SingleRegionRegionResolver} with the given {@link Region}.
+	 * Constructs a new instance of {@link SingleRegionRegionResolver} with the given {@link DriverRegion}.
 	 *
-	 * @param region {@link Region} returned in the resolution process; must not be {@literal null}.
-	 * @throws IllegalArgumentException if {@link Region} is {@literal null}.
-	 * @see Region
+	 * @param region {@link DriverRegion} returned in the resolution process; must not be {@literal null}.
+	 * @throws IllegalArgumentException if {@link DriverRegion} is {@literal null}.
+	 * @see DriverRegion
 	 */
-	public SingleRegionRegionResolver(@NonNull Region region) {
+	public SingleRegionRegionResolver(@NonNull DriverRegion region) {
 
 		Assert.notNull(region, "Region must not be null");
 
@@ -39,15 +39,15 @@ public class SingleRegionRegionResolver implements RegionResolver {
 	}
 
 	/**
-	 * Returns a reference to the configured {@link Region}.
+	 * Returns a reference to the configured {@link DriverRegion}.
 	 *
-	 * @param <K> {@link Class type} of the {@link Region} key.
-	 * @param <V> {@link Class type} of the {@link Region} value.
-	 * @return a reference to the configured {@link Region}.
-	 * @see Region
+	 * @param <K> {@link Class type} of the {@link DriverRegion} key.
+	 * @param <V> {@link Class type} of the {@link DriverRegion} value.
+	 * @return a reference to the configured {@link DriverRegion}.
+	 * @see DriverRegion
 	 */
 	@SuppressWarnings("unchecked")
-	protected @NonNull <K, V> Region<K, V> getRegion() {
+	protected @NonNull <K, V> DriverRegion<K, V> getRegion() {
 		return this.region;
 	}
 
@@ -55,10 +55,10 @@ public class SingleRegionRegionResolver implements RegionResolver {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public @Nullable <K, V> Region<K, V> resolve(@Nullable String regionName) {
+	public @Nullable <K, V> DriverRegion<K, V> resolve(@Nullable String regionName) {
 
-		Region<K, V> region = getRegion();
+		DriverRegion<K, V> region = getRegion();
 
-		return region.getName().equals(regionName) ? region : null;
+		return region.name().equals(regionName) ? region : null;
 	}
 }

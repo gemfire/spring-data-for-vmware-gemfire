@@ -10,6 +10,7 @@ import org.apache.geode.cache.Region;
 
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverRegionLifecycleListener;
 import com.vmware.gemfire.driver.spi.DriverCacheLoader;
 
 final class GemFireRegion<K, V> implements DriverRegion<K, V> {
@@ -18,6 +19,14 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 
 	GemFireRegion(Region<K, V> region) {
 		this.region = region;
+	}
+
+	@Override
+	public void addLifecycleListener(DriverRegionLifecycleListener listener) {
+		invoke("addLifecycleListener", () -> {
+			region.getAttributesMutator().addCacheListener(new GemFireRegionLifecycleListener<>(listener));
+			return null;
+		});
 	}
 
 	@Override

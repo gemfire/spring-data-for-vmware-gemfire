@@ -16,6 +16,20 @@ import com.vmware.gemfire.driver.spi.config.RegionShortcut;
  */
 public interface DriverConnection extends AutoCloseable {
 
+	/**
+	 * Creates a named pool on an open CLIENT connection. Requires a nonblank name and nonnull
+	 * configuration. Duplicate creation fails; it never adopts an existing pool. Native registry
+	 * visibility can span compatible connection handles. Failures use DriverOperationException.
+	 */
+	default DriverPool createPool(String name, PoolConfiguration configuration) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.createPool");
+	}
+
+	/** Named lookup on an open CLIENT connection with a nonblank name; null means absence only. */
+	default DriverPool getPool(String name) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getPool");
+	}
+
 	/** Returns the root regions currently defined in this cache. */
 	default Set<DriverRegion<?, ?>> rootRegions() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.rootRegions");

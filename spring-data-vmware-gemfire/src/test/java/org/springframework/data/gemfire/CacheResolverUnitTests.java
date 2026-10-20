@@ -10,7 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.junit.Test;
 
 /**
@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.client.ClientCache
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
  * @see org.springframework.data.gemfire.CacheResolver
  * @since 2.3.0
  */
@@ -29,7 +29,7 @@ public class CacheResolverUnitTests {
 	@SuppressWarnings("rawtypes")
 	public void getCallsResolve() {
 
-		ClientCache mockCache = mock(ClientCache.class);
+		DriverConnection mockCache = mock(DriverConnection.class);
 
 		CacheResolver mockCacheResolver = mock(CacheResolver.class);
 

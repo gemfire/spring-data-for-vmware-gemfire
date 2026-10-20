@@ -4,19 +4,19 @@
  */
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.springframework.data.gemfire.CacheResolver;
 
 /**
  * Thread-safe, abstract {@link CacheResolver} implementation to "cache" the instance reference to the (single)
- * {@link ClientCache} so that the {@link ClientCache} object is only ever resolved once.
+ * {@link DriverConnection} so that the {@link DriverConnection} object is only ever resolved once.
  *
  * @author John Blum
- * @see ClientCache
+ * @see DriverConnection
  * @see CacheResolver
  * @since 2.3.0
  */
-public abstract class AbstractCachingCacheResolver<T extends ClientCache> implements CacheResolver<T> {
+public abstract class AbstractCachingCacheResolver<T extends DriverConnection> implements CacheResolver<T> {
 
 	private T cacheReference;
 
@@ -34,7 +34,7 @@ public abstract class AbstractCachingCacheResolver<T extends ClientCache> implem
 	}
 
 	/**
-	 * Performs the actual resolution process of the {@link ClientCache} object iff the cache reference
+	 * Performs the actual resolution process of the {@link DriverConnection} object iff the cache reference
 	 * is not already cached.
 	 *
 	 * @see #resolve()

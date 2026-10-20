@@ -19,8 +19,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import org.apache.geode.cache.AttributesMutator;
-import org.apache.geode.cache.Region;
+import com.vmware.gemfire.driver.spi.DriverRegion;
 
 import org.springframework.beans.factory.BeanFactory;
 
@@ -30,7 +29,7 @@ import org.springframework.beans.factory.BeanFactory;
  * @author John Blum
  * @see org.junit.Test
  * @see org.mockito.Mockito
- * @see org.apache.geode.cache.Region
+ * @see com.vmware.gemfire.driver.spi.DriverRegion
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.data.gemfire.RegionResolver
  * @see org.springframework.data.gemfire.support.BeanFactoryRegionResolver
@@ -43,14 +42,11 @@ public class BeanFactoryRegionResolverUnitTests {
 	private BeanFactory mockBeanFactory;
 
 	@SuppressWarnings("unchecked")
-	private <K, V> Region<K, V> mockRegion() {
+	private <K, V> DriverRegion<K, V> mockRegion() {
 
-		Region<K, V> mockRegion = mock(Region.class);
+		DriverRegion<K, V> mockRegion = mock(DriverRegion.class);
 
-		AttributesMutator<K, V> mockAttributesMutator = mock(AttributesMutator.class);
 
-		when(mockRegion.getAttributesMutator()).thenReturn(mockAttributesMutator);
-		when(mockAttributesMutator.getRegion()).thenReturn(mockRegion);
 
 		return mockRegion;
 	}
@@ -83,10 +79,10 @@ public class BeanFactoryRegionResolverUnitTests {
 	@SuppressWarnings("rawtypes")
 	public void doResolveReturnsRegionForName() {
 
-		Region mockRegion = mockRegion();
+		DriverRegion mockRegion = mockRegion();
 
 		when(this.mockBeanFactory.containsBean(anyString())).thenReturn(true);
-		when(this.mockBeanFactory.getBean(anyString(), eq(Region.class))).thenReturn(mockRegion);
+		when(this.mockBeanFactory.getBean(anyString(), eq(DriverRegion.class))).thenReturn(mockRegion);
 
 		BeanFactoryRegionResolver regionResolver = spy(new BeanFactoryRegionResolver(this.mockBeanFactory));
 
@@ -94,7 +90,7 @@ public class BeanFactoryRegionResolverUnitTests {
 		assertThat(regionResolver.resolve("MockRegion")).isEqualTo(mockRegion);
 
 		verify(this.mockBeanFactory, times(1)).containsBean(eq("MockRegion"));
-		verify(this.mockBeanFactory, times(1)).getBean(eq("MockRegion"), eq(Region.class));
+		verify(this.mockBeanFactory, times(1)).getBean(eq("MockRegion"), eq(DriverRegion.class));
 		verify(regionResolver, times(1)).doResolve(eq("MockRegion"));
 	}
 
@@ -109,7 +105,7 @@ public class BeanFactoryRegionResolverUnitTests {
 		assertThat(regionResolver.resolve("MockRegion")).isNull();
 
 		verify(this.mockBeanFactory, times(2)).containsBean(eq("MockRegion"));
-		verify(this.mockBeanFactory, never()).getBean(eq("MockRegion"), eq(Region.class));
+		verify(this.mockBeanFactory, never()).getBean(eq("MockRegion"), eq(DriverRegion.class));
 		verify(regionResolver, times(2)).doResolve(eq("MockRegion"));
 	}
 
@@ -120,7 +116,7 @@ public class BeanFactoryRegionResolverUnitTests {
 		assertThat(regionResolver.doResolve(regionBeanName)).isNull();
 
 		verify(this.mockBeanFactory, never()).containsBean(anyString());
-		verify(this.mockBeanFactory, never()).getBean(anyString(), eq(Region.class));
+		verify(this.mockBeanFactory, never()).getBean(anyString(), eq(DriverRegion.class));
 	}
 
 	@Test

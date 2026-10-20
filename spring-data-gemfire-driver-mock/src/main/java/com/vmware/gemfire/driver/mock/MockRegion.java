@@ -4,6 +4,8 @@
  */
 package com.vmware.gemfire.driver.mock;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Supplier;
@@ -12,18 +14,32 @@ import com.vmware.gemfire.driver.spi.DriverCacheLoader;
 import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverRegionLifecycleListener;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 
 final class MockRegion<K, V> implements DriverRegion<K, V> {
 
+	private final System.Logger logger = System.getLogger(getClass().getName());
 	private final String name;
 	private final MockConnection connection;
 	private final ConcurrentMap<K, V> entries = new ConcurrentHashMap<>();
 	private DriverCacheLoader<K, V> loader;
+	private final List<DriverRegionLifecycleListener> lifecycleListeners = new ArrayList<>();
 
 	MockRegion(String name, MockConnection connection) {
 		this.name = name;
 		this.connection = connection;
+	}
+
+	@Override
+	public synchronized void addLifecycleListener(DriverRegionLifecycleListener listener) {
+		connection.checkOpen();
+		if (listener == null) {
+			throw new DriverOperationException("Region lifecycle listener must not be null.", null);
+		}
+		if (lifecycleListeners.stream().noneMatch(current -> current == listener)) {
+			lifecycleListeners.add(listener);
+		}
 	}
 
 	@Override
@@ -137,7 +153,22 @@ final class MockRegion<K, V> implements DriverRegion<K, V> {
 		entries.clear();
 		DriverCacheLoader<K, V> previous = loader;
 		loader = null;
-		closeLoader(previous);
+		List<DriverRegionLifecycleListener> listeners = List.copyOf(lifecycleListeners);
+		lifecycleListeners.clear();
+		try {
+			// Local peer/client cache closure delivers destruction before listener cleanup.
+			// Like native listener dispatch, a callback's runtime failure does not skip later callbacks.
+			for (DriverRegionLifecycleListener listener : listeners) {
+				try { listener.afterRegionDestroy(this); }
+				catch (RuntimeException failure) { logger.log(System.Logger.Level.WARNING, "Region destruction callback failed", failure); }
+			}
+		} finally {
+			for (DriverRegionLifecycleListener listener : listeners) {
+				try { listener.close(); }
+				catch (RuntimeException failure) { logger.log(System.Logger.Level.WARNING, "Region listener cleanup failed", failure); }
+			}
+			closeLoader(previous);
+		}
 	}
 
 	private void closeLoader(DriverCacheLoader<K, V> previous) {

@@ -5,6 +5,7 @@
 package com.vmware.gemfire.driver.gemfire104;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -12,11 +13,16 @@ import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.Pool;
+import org.apache.geode.cache.client.PoolFactory;
+import org.apache.geode.cache.client.PoolManager;
 
 import com.vmware.gemfire.driver.spi.CacheConfiguration.Mode;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
+import com.vmware.gemfire.driver.spi.DriverPool;
+import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 
@@ -28,6 +34,34 @@ final class GemFireConnection implements DriverConnection {
 	GemFireConnection(GemFireCache cache, Mode mode) {
 		this.cache = cache;
 		this.mode = mode;
+	}
+
+	@Override
+	public DriverPool createPool(String name, PoolConfiguration configuration) {
+		return invoke("createPool", () -> {
+			checkPoolAccess(name);
+			Objects.requireNonNull(configuration, "configuration");
+			PoolFactory factory = PoolManager.createFactory();
+			configuration.servers().forEach(endpoint -> factory.addServer(endpoint.host(), endpoint.port()));
+			configuration.locators().forEach(endpoint -> factory.addLocator(endpoint.host(), endpoint.port()));
+			configuration.minimumConnections().ifPresent(factory::setMinConnections);
+			return new GemFirePool(factory.create(name));
+		});
+	}
+
+	@Override
+	public DriverPool getPool(String name) {
+		return invoke("getPool", () -> {
+			checkPoolAccess(name);
+			Pool pool = PoolManager.find(name);
+			return pool == null ? null : new GemFirePool(pool);
+		});
+	}
+
+	private void checkPoolAccess(String name) {
+		if (cache.isClosed()) throw new IllegalStateException("Cache is closed");
+		if (mode != Mode.CLIENT) throw new IllegalStateException("Pool access requires a CLIENT cache");
+		if (name == null || name.isBlank()) throw new IllegalArgumentException("Pool name is required");
 	}
 
 	@Override

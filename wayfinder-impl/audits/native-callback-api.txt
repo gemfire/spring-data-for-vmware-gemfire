@@ -1,0 +1,102 @@
+Native callback API evidence, inspected 2026-10-21
+Artifact: com.vmware.gemfire:gemfire-core:10.4.0-build.3056.df98c835
+Command: javap -public -classpath <cached artifact> <class>
+This is a signature inventory, not runtime validation.
+
+Compiled from "CacheCallback.java"
+public interface org.apache.geode.cache.CacheCallback extends org.apache.geode.cache.Declarable {
+  public default void close();
+}
+
+Compiled from "CacheListener.java"
+public interface org.apache.geode.cache.CacheListener<K, V> extends org.apache.geode.cache.CacheCallback {
+  public abstract void afterCreate(org.apache.geode.cache.EntryEvent<K, V>);
+  public abstract void afterUpdate(org.apache.geode.cache.EntryEvent<K, V>);
+  public abstract void afterInvalidate(org.apache.geode.cache.EntryEvent<K, V>);
+  public abstract void afterDestroy(org.apache.geode.cache.EntryEvent<K, V>);
+  public abstract void afterRegionInvalidate(org.apache.geode.cache.RegionEvent<K, V>);
+  public abstract void afterRegionDestroy(org.apache.geode.cache.RegionEvent<K, V>);
+  public abstract void afterRegionClear(org.apache.geode.cache.RegionEvent<K, V>);
+  public abstract void afterRegionCreate(org.apache.geode.cache.RegionEvent<K, V>);
+  public abstract void afterRegionLive(org.apache.geode.cache.RegionEvent<K, V>);
+}
+
+Compiled from "CacheWriter.java"
+public interface org.apache.geode.cache.CacheWriter<K, V> extends org.apache.geode.cache.CacheCallback {
+  public abstract void beforeUpdate(org.apache.geode.cache.EntryEvent<K, V>) throws org.apache.geode.cache.CacheWriterException;
+  public abstract void beforeCreate(org.apache.geode.cache.EntryEvent<K, V>) throws org.apache.geode.cache.CacheWriterException;
+  public abstract void beforeDestroy(org.apache.geode.cache.EntryEvent<K, V>) throws org.apache.geode.cache.CacheWriterException;
+  public abstract void beforeRegionDestroy(org.apache.geode.cache.RegionEvent<K, V>) throws org.apache.geode.cache.CacheWriterException;
+  public abstract void beforeRegionClear(org.apache.geode.cache.RegionEvent<K, V>) throws org.apache.geode.cache.CacheWriterException;
+}
+
+Compiled from "CacheEvent.java"
+public interface org.apache.geode.cache.CacheEvent<K, V> {
+  public abstract org.apache.geode.cache.Region<K, V> getRegion();
+  public abstract org.apache.geode.cache.Operation getOperation();
+  public abstract java.lang.Object getCallbackArgument();
+  public abstract boolean isCallbackArgumentAvailable();
+  public abstract boolean isOriginRemote();
+  public abstract org.apache.geode.distributed.DistributedMember getDistributedMember();
+}
+
+Compiled from "EntryEvent.java"
+public interface org.apache.geode.cache.EntryEvent<K, V> extends org.apache.geode.cache.CacheEvent<K, V> {
+  public abstract K getKey();
+  public abstract V getOldValue();
+  public abstract org.apache.geode.cache.SerializedCacheValue<V> getSerializedOldValue();
+  public abstract V getNewValue();
+  public abstract org.apache.geode.cache.SerializedCacheValue<V> getSerializedNewValue();
+  public abstract org.apache.geode.cache.TransactionId getTransactionId();
+  public abstract boolean hasClientOrigin();
+  public abstract boolean isOldValueAvailable();
+}
+
+Compiled from "RegionEvent.java"
+public interface org.apache.geode.cache.RegionEvent<K, V> extends org.apache.geode.cache.CacheEvent<K, V> {
+  public abstract boolean isReinitializing();
+}
+
+Compiled from "TransactionListener.java"
+public interface org.apache.geode.cache.TransactionListener extends org.apache.geode.cache.CacheCallback {
+  public abstract void afterCommit(org.apache.geode.cache.TransactionEvent);
+  public abstract void afterFailedCommit(org.apache.geode.cache.TransactionEvent);
+  public abstract void afterRollback(org.apache.geode.cache.TransactionEvent);
+}
+
+Compiled from "TransactionWriter.java"
+public interface org.apache.geode.cache.TransactionWriter extends org.apache.geode.cache.CacheCallback {
+  public abstract void beforeCommit(org.apache.geode.cache.TransactionEvent) throws org.apache.geode.cache.TransactionWriterException;
+}
+
+Compiled from "CustomExpiry.java"
+public interface org.apache.geode.cache.CustomExpiry<K, V> extends org.apache.geode.cache.CacheCallback {
+  public abstract org.apache.geode.cache.ExpirationAttributes getExpiry(org.apache.geode.cache.Region$Entry<K, V>);
+}
+
+Compiled from "CqListener.java"
+public interface org.apache.geode.cache.query.CqListener extends org.apache.geode.cache.CacheCallback {
+  public abstract void onEvent(org.apache.geode.cache.query.CqEvent);
+  public abstract void onError(org.apache.geode.cache.query.CqEvent);
+}
+
+Compiled from "PdxSerializer.java"
+public interface org.apache.geode.pdx.PdxSerializer {
+  public abstract boolean toData(java.lang.Object, org.apache.geode.pdx.PdxWriter);
+  public abstract java.lang.Object fromData(java.lang.Class<?>, org.apache.geode.pdx.PdxReader);
+}
+
+Compiled from "ResultCollector.java"
+public interface org.apache.geode.cache.execute.ResultCollector<T, S> {
+  public abstract S getResult() throws org.apache.geode.cache.execute.FunctionException;
+  public abstract S getResult(long, java.util.concurrent.TimeUnit) throws org.apache.geode.cache.execute.FunctionException, java.lang.InterruptedException;
+  public abstract void addResult(org.apache.geode.distributed.DistributedMember, T);
+  public abstract void endResults();
+  public abstract void clearResults();
+}
+
+Compiled from "SocketFactory.java"
+public interface org.apache.geode.cache.client.SocketFactory {
+  public static final org.apache.geode.cache.client.SocketFactory DEFAULT;
+  public abstract java.net.Socket createSocket() throws java.io.IOException;
+}

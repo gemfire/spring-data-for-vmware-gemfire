@@ -1,0 +1,1432 @@
+{
+  "native_version": "10.4.0-build.3056.df98c835",
+  "ownership": [
+    {
+      "pattern": "\\.cache\\.(?:InterestRegistrationListener|InterestRegistrationEvent|ClientSession)$",
+      "ticket": 42
+    },
+    {
+      "pattern": "\\.cache\\.(?:RegionMembershipListener|RegionRoleListener|RoleEvent)$|\\.cache\\.util\\.(?:RegionMembershipListenerAdapter|RegionRoleListenerAdapter|TimestampedEntryEvent)$",
+      "ticket": 17
+    },
+    {
+      "pattern": "\\.cache\\.util\\.Gateway",
+      "ticket": 43
+    },
+    {
+      "pattern": "\\.cache\\.util\\.Cq",
+      "ticket": 22
+    },
+    {
+      "pattern": "\\.cache\\.util\\.Transaction",
+      "ticket": 28
+    },
+    {
+      "pattern": "\\.cache\\.Document$",
+      "ticket": 26
+    },
+    {
+      "pattern": "\\.management\\.internal\\.cli\\.",
+      "ticket": 23
+    },
+    {
+      "pattern": "(?:Exception|Error)$",
+      "ticket": 16
+    },
+    {
+      "pattern": "\\.cache\\.(?:wan|asyncqueue)\\.",
+      "ticket": 43
+    },
+    {
+      "pattern": "\\.cache\\.server\\.",
+      "ticket": 42
+    },
+    {
+      "pattern": "\\.cache\\.query\\.(?:Cq|Continuous|ExcludedEvent)",
+      "ticket": 22
+    },
+    {
+      "pattern": "\\.cache\\.query\\.",
+      "ticket": 21
+    },
+    {
+      "pattern": "\\.cache\\.execute\\.|\\.cli\\.",
+      "ticket": 25
+    },
+    {
+      "pattern": "\\.pdx\\.|\\.(?:DataSerializable|DataSerializer|Instantiator|InternalDataSerializer)$|\\.internal\\.serialization\\.",
+      "ticket": 26
+    },
+    {
+      "pattern": "\\.security\\.|\\.internal\\.(?:jndi|datasource)\\.",
+      "ticket": 24
+    },
+    {
+      "pattern": "\\.cache\\.(?:CacheTransactionManager|Transaction\\w*)$",
+      "ticket": 28
+    },
+    {
+      "pattern": "\\.cache\\.(?:Disk\\w*)$|\\.cache\\.control\\.",
+      "ticket": 27
+    },
+    {
+      "pattern": "\\.cache\\.(?:CacheListener|CacheLoader|CacheWriter|CacheCallback|Declarable|LoaderHelper|CacheEvent|EntryEvent|RegionEvent|Operation|SerializedCacheValue)$|\\.cache\\.util\\.(?:CacheListenerAdapter|CacheWriterAdapter|CacheLoaderAdapter|RegionMembershipListener|RegionRoleListener|TransactionListenerAdapter|TransactionWriterAdapter|Gateway\\w*)$",
+      "ticket": 17
+    },
+    {
+      "pattern": "\\.cache\\.client\\.(?:Pool\\w*|SocketFactory)$",
+      "ticket": 20
+    },
+    {
+      "pattern": "\\.cache\\.client\\.(?:ClientCache|ClientCacheFactory)$|\\.cache\\.(?:Cache|CacheFactory|GemFireCache|RegionService)$",
+      "ticket": 29
+    },
+    {
+      "pattern": "\\.cache\\.(?:Region|Region\\$\\w+|CacheStatistics)$|\\.cache\\.snapshot\\.",
+      "ticket": 18
+    },
+    {
+      "pattern": "\\.internal\\.cache\\.",
+      "ticket": 36
+    },
+    {
+      "pattern": "\\.cache\\.|\\.compression\\.",
+      "ticket": 19
+    },
+    {
+      "pattern": "\\.internal\\.",
+      "ticket": 36
+    },
+    {
+      "pattern": "\\.i18n\\.",
+      "ticket": 23
+    },
+    {
+      "pattern": "\\.json\\.",
+      "ticket": 26
+    },
+    {
+      "pattern": "\\.lang\\.",
+      "ticket": 23
+    },
+    {
+      "pattern": "\\.distributed\\.|\\.admin\\.|\\.management\\.|^org\\.apache\\.geode\\.[^.]+$",
+      "ticket": 23
+    }
+  ],
+  "behavior": {
+    "16": "Preserve failure category, cause and Spring translation; sanitize boundary diagnostics.",
+    "17": "Deliver every callback, full typed payload and inherited declarative initialization; preserve native timing/lifecycle and writer veto semantics.",
+    "18": "Preserve all overloads, map/view semantics, metadata, callback arguments and region lifecycle; expose typed results.",
+    "19": "Preserve configuration values/defaults, callbacks, mutability and validation; apply native expiration/eviction/partition behavior.",
+    "20": "Delegate creation, lookup, defaults, connection/durable/subscription settings and lifecycle; preserve ownership and socket callbacks.",
+    "21": "Preserve query execution, bindings, result shape/types, index metadata and lifecycle.",
+    "22": "Preserve CQ state, listener/event payloads, initial results, durable behavior and errors.",
+    "23": "Delegate system/member identity, discovery, statistics/logging/runtime services and lifecycle through injected contracts.",
+    "24": "Preserve credentials/authentication callbacks, authenticated views and security/resource/JNDI lifecycle without native exposure.",
+    "25": "Preserve registration, execution targets, context, filters, results, collector callbacks and failure semantics.",
+    "26": "Preserve serialization/PDX field access, identity, readers/writers/factories, JSON and application serialization hooks.",
+    "27": "Delegate disk persistence/recovery, directory/size settings, resource thresholds and rebalance controls.",
+    "28": "Preserve transaction identity, context/state, suspend/resume, callbacks and event payloads.",
+    "29": "Assemble typed cache creation/configuration and services; preserve ownership, reuse and public connection operations.",
+    "36": "Replace evidenced native implementation access with a bounded typed driver operation; do not mirror engine internals.",
+    "42": "Delegate server lifecycle/configuration, subscription/load/interest callbacks and full typed payloads.",
+    "43": "Delegate reachable WAN and asynchronous queue factories, lifecycle, routing, filters, callbacks and delivery settings."
+  },
+  "consumer_owner": {
+    "16": 31,
+    "17": 30,
+    "18": 31,
+    "19": 30,
+    "20": 35,
+    "21": 31,
+    "22": 33,
+    "23": 36,
+    "24": 35,
+    "25": 32,
+    "26": 31,
+    "27": 30,
+    "28": 34,
+    "29": 35,
+    "36": 36,
+    "42": 36,
+    "43": 36
+  },
+  "members": {
+    "org.apache.geode.cache.Region#isDestroyed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#isDestroyed()Z",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#clear()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#clear()V",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#putIfAbsent(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#putIfAbsent(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#getName()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#name()Ljava/lang/String;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#get(Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#get(Ljava/lang/Object;)Ljava/lang/Object;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#get(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#get(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#remove(Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#remove(Ljava/lang/Object;)Ljava/lang/Object;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#containsKey(Ljava/lang/Object;)Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#containsKey(Ljava/lang/Object;)Z",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.Region#size()I": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#size()I",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion."
+    },
+    "org.apache.geode.cache.AttributesMutator#setCacheLoader(Lorg/apache/geode/cache/CacheLoader;)Lorg/apache/geode/cache/CacheLoader;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#setCacheLoader",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Installs/replaces loader, but mutator returns old loader natively; declarative initialization and full callback surface missing."
+    },
+    "org.apache.geode.cache.AttributesMutator#addCacheListener(Lorg/apache/geode/cache/CacheListener;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#addLifecycleListener",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Only lifecycle listener registration, not the full native listener contract."
+    },
+    "org.apache.geode.cache.RegionService#rootRegions()Ljava/util/Set;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#rootRegions",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.GemFireCache#rootRegions()Ljava/util/Set;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#rootRegions",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.Cache#rootRegions()Ljava/util/Set;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#rootRegions",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.client.ClientCache#rootRegions()Ljava/util/Set;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#rootRegions",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.RegionService#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#getRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.GemFireCache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#getRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.Cache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#getRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.client.ClientCache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#getRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.RegionService#isClosed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#isClosed",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.GemFireCache#isClosed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#isClosed",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.Cache#isClosed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#isClosed",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.client.ClientCache#isClosed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#isClosed",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.RegionService#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.GemFireCache#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.Cache#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.client.ClientCache#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain."
+    },
+    "org.apache.geode.cache.Cache#createRegionFactory(Lorg/apache/geode/cache/RegionShortcut;)Lorg/apache/geode/cache/RegionFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#createRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Shortcut plus create(name) only; complete typed region factory configuration is missing."
+    },
+    "org.apache.geode.cache.client.ClientCache#createClientRegionFactory(Lorg/apache/geode/cache/client/ClientRegionShortcut;)Lorg/apache/geode/cache/client/ClientRegionFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#createClientRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Shortcut plus create(name) only; complete typed client region factory configuration is missing."
+    },
+    "org.apache.geode.cache.CacheLoader#load(Lorg/apache/geode/cache/LoaderHelper;)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverCacheLoader.java#load",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Load delegates, but helper exposes only a small region contract and inherited initialization is absent."
+    },
+    "org.apache.geode.cache.CacheLoader#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverCacheLoader.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Loader close delegates; full callback initialization contract remains missing."
+    },
+    "org.apache.geode.cache.CacheListener#afterRegionDestroy(Lorg/apache/geode/cache/RegionEvent;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegionLifecycleListener.java#afterRegionDestroy",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionLifecycleListener.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Only event.getRegion is forwarded; operation, callback argument, origin and member payloads are lost."
+    },
+    "org.apache.geode.cache.CacheListener#close()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegionLifecycleListener.java#close",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionLifecycleListener.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Lifecycle cleanup delegates; all entry callbacks and other region callbacks are absent."
+    },
+    "org.apache.geode.cache.LoaderHelper#getKey()Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverLoaderHelper.java#getKey",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context."
+    },
+    "org.apache.geode.cache.LoaderHelper#getArgument()Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverLoaderHelper.java#getArgument",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context."
+    },
+    "org.apache.geode.cache.LoaderHelper#getRegion()Lorg/apache/geode/cache/Region;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverLoaderHelper.java#getRegion",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context."
+    },
+    "org.apache.geode.cache.LoaderHelper#netSearch(Z)Ljava/lang/Object;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverLoaderHelper.java#netSearch",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "local behavior exists; full native semantics remain pending",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full member semantics pending",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context."
+    },
+    "org.apache.geode.cache.DataPolicy#EMPTYLorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#EMPTY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#NORMALLorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#NORMAL",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#PARTITIONLorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#PARTITION",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#PERSISTENT_PARTITIONLorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#PERSISTENT_PARTITION",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#PERSISTENT_REPLICATELorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#PERSISTENT_REPLICATE",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#PRELOADEDLorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#PRELOADED",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.DataPolicy#REPLICATELorg/apache/geode/cache/DataPolicy;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java#REPLICATE",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#LOCALLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#LOCAL",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#LOCAL_HEAP_LRULorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#LOCAL_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#LOCAL_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#LOCAL_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#LOCAL_PERSISTENTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#LOCAL_PERSISTENT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#LOCAL_PERSISTENT_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#LOCAL_PERSISTENT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITIONLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_HEAP_LRULorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_PERSISTENTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_PERSISTENT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_PERSISTENT_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_PERSISTENT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_PROXYLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_PROXY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_PROXY_REDUNDANTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_PROXY_REDUNDANT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_REDUNDANTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_REDUNDANT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_REDUNDANT_HEAP_LRULorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_REDUNDANT_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_REDUNDANT_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_REDUNDANT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_REDUNDANT_PERSISTENTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_REDUNDANT_PERSISTENT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#PARTITION_REDUNDANT_PERSISTENT_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#PARTITION_REDUNDANT_PERSISTENT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATELorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATE_HEAP_LRULorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATE_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATE_PERSISTENTLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE_PERSISTENT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATE_PERSISTENT_OVERFLOWLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE_PERSISTENT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.RegionShortcut#REPLICATE_PROXYLorg/apache/geode/cache/RegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java#REPLICATE_PROXY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#CACHING_PROXYLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#CACHING_PROXY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#CACHING_PROXY_HEAP_LRULorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#CACHING_PROXY_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#CACHING_PROXY_OVERFLOWLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#CACHING_PROXY_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#LOCALLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#LOCAL",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#LOCAL_HEAP_LRULorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#LOCAL_HEAP_LRU",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#LOCAL_OVERFLOWLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#LOCAL_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#LOCAL_PERSISTENTLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#LOCAL_PERSISTENT",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#LOCAL_PERSISTENT_OVERFLOWLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#LOCAL_PERSISTENT_OVERFLOW",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#PROXYLorg/apache/geode/cache/client/ClientRegionShortcut;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java#PROXY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "local shortcut subset; other shortcuts explicitly unsupported",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; full enum/config migration pending",
+      "remaining": "SPI constant exists; native helpers, full config wiring and Spring annotation defaults remain native."
+    },
+    "org.apache.geode.cache.Region#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.CacheListener#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegionLifecycleListener.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionLifecycleListener.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.CacheLoader#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverCacheLoader.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.LoaderHelper#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverLoaderHelper.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.Cache#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.GemFireCache#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.RegionService#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.client.ClientCache#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "existing local subset only",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Foundation handle/callback exists; all missing members and payloads below still require implementation."
+    },
+    "org.apache.geode.cache.DataPolicy#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/DataPolicy.java",
+      "native_impl": "pending full configuration adoption",
+      "mock": "local shortcut subset only",
+      "tests": "pending full enum/configuration coverage",
+      "remaining": "SPI values exist; full native helper behavior and annotation/factory adoption remain."
+    },
+    "org.apache.geode.cache.RegionShortcut#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/RegionShortcut.java",
+      "native_impl": "pending full configuration adoption",
+      "mock": "local shortcut subset only",
+      "tests": "pending full enum/configuration coverage",
+      "remaining": "SPI values exist; full native helper behavior and annotation/factory adoption remain."
+    },
+    "org.apache.geode.cache.client.ClientRegionShortcut#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/config/ClientRegionShortcut.java",
+      "native_impl": "pending full configuration adoption",
+      "mock": "local shortcut subset only",
+      "tests": "pending full enum/configuration coverage",
+      "remaining": "SPI values exist; full native helper behavior and annotation/factory adoption remain."
+    },
+    "org.apache.geode.cache.client.Pool#destroy()V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#destroy()V",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.Pool#getLocators()Ljava/util/List;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#locators()Ljava/util/List;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.Pool#getMinConnections()I": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#minimumConnections()I",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.Pool#getName()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#name()Ljava/lang/String;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.Pool#getServers()Ljava/util/List;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#servers()Ljava/util/List;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.Pool#isDestroyed()Z": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#isDestroyed()Z",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolFactory#addLocator(Ljava/lang/String;I)Lorg/apache/geode/cache/client/PoolFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/PoolConfiguration.java#locators()Ljava/util/List;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolFactory#addServer(Ljava/lang/String;I)Lorg/apache/geode/cache/client/PoolFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/PoolConfiguration.java#servers()Ljava/util/List;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolFactory#create(Ljava/lang/String;)Lorg/apache/geode/cache/client/Pool;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#createPool(Ljava/lang/String;Lcom/vmware/gemfire/driver/spi/PoolConfiguration;)Lcom/vmware/gemfire/driver/spi/DriverPool;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolFactory#setMinConnections(I)Lorg/apache/geode/cache/client/PoolFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/PoolConfiguration.java#minimumConnections()Ljava/util/OptionalInt;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolManager#createFactory()Lorg/apache/geode/cache/client/PoolFactory;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#createPool(Ljava/lang/String;Lcom/vmware/gemfire/driver/spi/PoolConfiguration;)Lcom/vmware/gemfire/driver/spi/DriverPool;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    },
+    "org.apache.geode.cache.client.PoolManager#find(Ljava/lang/String;)Lorg/apache/geode/cache/client/Pool;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverConnection.java#getPool(Ljava/lang/String;)Lcom/vmware/gemfire/driver/spi/DriverPool;",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockPool.java; per-connection records only, default minimum 1, no connectivity or native attachment simulation",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativePoolTests.java; spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35."
+    }
+  },
+  "reference_explanations": [
+    {
+      "symbol": "org\\.apache\\.geode\\.cache\\.query\\.CqInvalidException",
+      "ticket": 16,
+      "explanation": "optional-reflective-legacy-exception-name: absent from selected native artifact; preserve fallback behavior via exception translation"
+    },
+    {
+      "symbol": "org\\.apache\\.geode",
+      "ticket": 37,
+      "explanation": "logger-category-only: no class linking; review when replacing native test resources",
+      "source": "/test/"
+    },
+    {
+      "symbol": "(?:com\\.gemstone\\.gemfire|org\\.apache\\.geode)",
+      "source": "MappingPdxSerializer.java",
+      "ticket": 26,
+      "explanation": "serialization-package-exclusion-rule: string policy, not a class; preserve driver-side classification behavior"
+    }
+  ],
+  "subtype_families": [
+    "\\.cache\\.(?:CacheCallback|CacheListener|CacheLoader|CacheWriter|CacheEvent|EntryEvent|RegionEvent|RegionMembershipListener|RegionRoleListener|PartitionResolver)$",
+    "\\.cache\\.(?:query\\.(?:CqListener|types\\.ObjectType|SelectResults)|partition\\.PartitionListener|server\\.ServerLoadProbe|wan\\.GatewayEventFailureListener)$",
+    "\\.pdx\\.(?:PdxSerializer|PdxInstance)$",
+    "\\.cache\\.util\\.(?:CacheListenerAdapter|RegionMembershipListenerAdapter)$"
+  ],
+  "semantic_roots": [
+    {
+      "type": "org.apache.geode.cache.query.Struct",
+      "origin": "org.apache.geode.cache.query.Query#execute",
+      "reason": "dynamic-OQL-projection-result: Query.execute returns Object; Struct exposes named projection fields"
+    }
+  ],
+  "existing_spi": [
+    {
+      "spi": "DriverRegion#isDestroyed()Z",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#isDestroyed()Z"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#clear()V",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#clear()V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#putIfAbsent(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#putIfAbsent(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#name()Ljava/lang/String;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#getName()Ljava/lang/String;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#get(Ljava/lang/Object;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#get(Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#get(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#get(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#remove(Ljava/lang/Object;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#remove(Ljava/lang/Object;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#containsKey(Ljava/lang/Object;)Z",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#containsKey(Ljava/lang/Object;)Z"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#size()I",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#size()I"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Local operations are implemented/tested; typed failure categories and full region semantics need completion.",
+      "owner": 18
+    },
+    {
+      "spi": "DriverRegion#setCacheLoader",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.AttributesMutator#setCacheLoader(Lorg/apache/geode/cache/CacheLoader;)Lorg/apache/geode/cache/CacheLoader;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Installs/replaces loader, but mutator returns old loader natively; declarative initialization and full callback surface missing.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverRegion#addLifecycleListener",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.AttributesMutator#addCacheListener(Lorg/apache/geode/cache/CacheListener;)V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Only lifecycle listener registration, not the full native listener contract.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverConnection#rootRegions",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.RegionService#rootRegions()Ljava/util/Set;",
+        "org.apache.geode.cache.GemFireCache#rootRegions()Ljava/util/Set;",
+        "org.apache.geode.cache.Cache#rootRegions()Ljava/util/Set;",
+        "org.apache.geode.cache.client.ClientCache#rootRegions()Ljava/util/Set;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverConnection#getRegion",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.RegionService#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;",
+        "org.apache.geode.cache.GemFireCache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;",
+        "org.apache.geode.cache.Cache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;",
+        "org.apache.geode.cache.client.ClientCache#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverConnection#isClosed",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.RegionService#isClosed()Z",
+        "org.apache.geode.cache.GemFireCache#isClosed()Z",
+        "org.apache.geode.cache.Cache#isClosed()Z",
+        "org.apache.geode.cache.client.ClientCache#isClosed()Z"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverConnection#close",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.RegionService#close()V",
+        "org.apache.geode.cache.GemFireCache#close()V",
+        "org.apache.geode.cache.Cache#close()V",
+        "org.apache.geode.cache.client.ClientCache#close()V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Basic cache operation exists; full region handles, failure categories and legacy consumer cutover remain.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverConnection#createRegion",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Cache#createRegionFactory(Lorg/apache/geode/cache/RegionShortcut;)Lorg/apache/geode/cache/RegionFactory;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Shortcut plus create(name) only; complete typed region factory configuration is missing.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverConnection#createClientRegion",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.ClientCache#createClientRegionFactory(Lorg/apache/geode/cache/client/ClientRegionShortcut;)Lorg/apache/geode/cache/client/ClientRegionFactory;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Shortcut plus create(name) only; complete typed client region factory configuration is missing.",
+      "owner": 29
+    },
+    {
+      "spi": "DriverCacheLoader#load",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.CacheLoader#load(Lorg/apache/geode/cache/LoaderHelper;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Load delegates, but helper exposes only a small region contract and inherited initialization is absent.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverCacheLoader#close",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.CacheLoader#close()V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Loader close delegates; full callback initialization contract remains missing.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverRegionLifecycleListener#afterRegionDestroy",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.CacheListener#afterRegionDestroy(Lorg/apache/geode/cache/RegionEvent;)V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionLifecycleListener.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Only event.getRegion is forwarded; operation, callback argument, origin and member payloads are lost.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverRegionLifecycleListener#close",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.CacheListener#close()V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionLifecycleListener.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Lifecycle cleanup delegates; all entry callbacks and other region callbacks are absent.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverLoaderHelper#getKey",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.LoaderHelper#getKey()Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverLoaderHelper#getArgument",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.LoaderHelper#getArgument()Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverLoaderHelper#getRegion",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.LoaderHelper#getRegion()Lorg/apache/geode/cache/Region;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverLoaderHelper#netSearch",
+      "kind": "callback",
+      "native_keys": [
+        "org.apache.geode.cache.LoaderHelper#netSearch(Z)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireCacheLoader.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Helper method delegates; returned region is incomplete and netSearch is explicitly unsupported in local mock/synthetic callable context.",
+      "owner": 17
+    },
+    {
+      "spi": "DriverPool#destroy()V",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#destroy()V"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverPool#locators()Ljava/util/List;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#getLocators()Ljava/util/List;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverPool#minimumConnections()I",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#getMinConnections()I"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverPool#name()Ljava/lang/String;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#getName()Ljava/lang/String;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverPool#servers()Ljava/util/List;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#getServers()Ljava/util/List;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverPool#isDestroyed()Z",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#isDestroyed()Z"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverConnection#createPool(Ljava/lang/String;Lcom/vmware/gemfire/driver/spi/PoolConfiguration;)Lcom/vmware/gemfire/driver/spi/DriverPool;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.PoolFactory#create(Ljava/lang/String;)Lorg/apache/geode/cache/client/Pool;",
+        "org.apache.geode.cache.client.PoolManager#createFactory()Lorg/apache/geode/cache/client/PoolFactory;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    },
+    {
+      "spi": "DriverConnection#getPool(Ljava/lang/String;)Lcom/vmware/gemfire/driver/spi/DriverPool;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.PoolManager#find(Ljava/lang/String;)Lorg/apache/geode/cache/client/Pool;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "status": "partial",
+      "remaining": "Named-pool foundation completed in ticket 13. Full pool settings/default-cache/durable behavior remain in ticket 20; typed exception categories in ticket 16; legacy Spring adoption in ticket 35.",
+      "owner": 20
+    }
+  ],
+  "public_internal_payloads": [
+    "org.apache.geode.internal.datasource.ConfigProperty"
+  ],
+  "internal_boundaries": {
+    "org.apache.geode.distributed.internal.InternalDistributedSystem": "Replace getAnyInstance and inherited protected system bookkeeping with injected distributed-system handles; public DistributedSystem contracts are inventoried separately.",
+    "org.apache.geode.distributed.internal.InternalLocator": "Replace native global locator lookup with injected locator service; public Locator contracts are inventoried separately.",
+    "org.apache.geode.distributed.internal.tcpserver.HostAddress": "Locator protected address storage becomes typed endpoint metadata; do not expose the native TCP implementation.",
+    "org.apache.geode.internal.InternalDataSerializer": "Delegate evidenced serializer lookup/unregister inside driver; DataSerializer and Instantiator contracts are inventoried separately.",
+    "org.apache.geode.internal.cache.GemFireCacheImpl": "Native implementation class identification in GemfireUtils moves behind the driver; cache behavior is represented by the public Cache/ClientCache contracts.",
+    "org.apache.geode.internal.cache.InternalAttributesFactory": "Inherited public/protected factory members are already recorded under AttributesFactory; hide the native base class.",
+    "org.apache.geode.internal.cache.InternalCache": "RegionFactory constructor/getCache dependency becomes the SPI connection handle; preserve public cache services, not engine management implementation methods.",
+    "org.apache.geode.internal.cache.InternalRegionAttributes": "AttributesFactory protected regionAttributes field becomes SPI region-configuration state; public RegionAttributes contracts are recorded separately.",
+    "org.apache.geode.internal.cache.LocalRegion": "Replace implementation-class identification/region internals in Spring with typed region operations; Region contracts are recorded separately.",
+    "org.apache.geode.internal.cache.execute.FunctionExecutionService": "FunctionService implementation injection becomes typed execution service; preserve FunctionService/Execution behavior through driver adaptation.",
+    "org.apache.geode.internal.datasource.DataSourceCreateException": "Map JNDI creation failure category/cause to SPI exception semantics; no native throwable escapes as the public exception contract.",
+    "org.apache.geode.internal.jndi.JNDIInvoker": "Delegate mapDatasource using typed data-source configuration; preserve naming/resource lifecycle inside driver.",
+    "org.apache.geode.logging.internal.deprecation.DeprecatedSystemProperty": "GatewaySender deprecated property holder becomes a driver-owned setting interpretation, preserving native behavior without exposing a native utility object.",
+    "org.apache.geode.management.internal.cli.domain.RegionInformation": "Cluster discovery returns typed region names/metadata; preserve the observed getName contract without exposing CLI result implementation.",
+    "org.apache.geode.management.internal.cli.functions.GetRegionsFunction": "Delegate existing server region-discovery function through injected runtime/function services; native function instance stays inside driver."
+  }
+}

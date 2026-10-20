@@ -4,28 +4,28 @@
  */
 package org.springframework.data.gemfire.support;
 
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.springframework.data.gemfire.CacheResolver;
 import org.springframework.lang.Nullable;
 
 /**
- * {@link CacheResolver} implementation that resolves to a configured, single {@link ClientCache} instance.
+ * {@link CacheResolver} implementation that resolves to a configured, single {@link DriverConnection} instance.
  *
  * @author John Blum
- * @see ClientCache
+ * @see DriverConnection
  * @since 2.3.0
  */
 public abstract class SingleCacheCacheResolver {
 
 	/**
-	 * Factory method used to resolve a single, configured instance of a {@link ClientCache}.
+	 * Factory method used to resolve a single, configured instance of a {@link DriverConnection}.
 	 *
-	 * @param clientCache {@link ClientCache} to resolve.
-	 * @return a single, configured instance of a {@link ClientCache}.
+	 * @param connection {@link DriverConnection} to resolve.
+	 * @return a single, configured instance of a {@link DriverConnection}.
 	 * @see CacheResolver
-	 * @see ClientCache
+	 * @see DriverConnection
 	 */
-	public static CacheResolver<ClientCache> from(@Nullable ClientCache clientCache) {
-		return () -> clientCache;
+	public static CacheResolver<DriverConnection> from(@Nullable DriverConnection connection) {
+		return () -> connection;
 	}
 }

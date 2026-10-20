@@ -1,5 +1,6 @@
 Type: task
-Status: open
+Status: resolved
+Assignee: Codex (resumed 2026-10-21)
 Blocked by: 08
 
 ## Question
@@ -40,3 +41,56 @@ Gradle execution is authorized for the current user session only. Do not persist
 ## Completion
 
 Record changed contracts, exact runtime version, executed checks and remaining limits. Update the map with the completed boundary and create the next precise migration/investigation ticket from the remaining utility/root dependencies. Factory, pool, query/function and legacy namespace migration remain later work; the signed-off architecture is unchanged.
+
+
+## Answer
+
+Implemented 2026-10-21 on `wayfinder/unified_driver`.
+
+### Completed boundary
+
+- `CacheResolver` and its four implementations use borrowed `DriverConnection` handles. Region resolvers use `DriverRegion`; `RegionServiceRegionResolver` accepts injected connections/cache resolvers and its nested strategy is now `ConnectionResolver`. Both bean-factory dependencies are final constructor arguments; setter replacement is removed. Named cache lookup uses a lazy type fallback, verified with two connection beans and an explicit qualifier.
+- Removed the global cache resolver and replaced its singleton-based integration fixture with `InjectedResolverIntegrationTests`. Java configuration and ordinary Spring bean XML explicitly register driver connections/regions. The tests verify application ownership of shutdown and run on both driver runtimes. Legacy cache factories, annotations and the `gfe` namespace still produce native objects and are not interchangeable with the migrated resolver beans.
+- Native `ClientCacheDefaultPoolResolver` now takes `Supplier<ClientCache>` and calls `get()` only for the exact default-pool name. It remains outside the native-free boundary. No pool SPI, native unwrap or forwarding facade was introduced.
+- Cache and region compositions fall through only on null. Driver exceptions, typed unsupported failures, other runtime exceptions and errors propagate unchanged; later resolvers are not invoked and a failing resolver is not retried within the same resolution. This intentionally replaces legacy exception swallowing and duplicate invocation.
+- Extended isolated source compilation and native-free classpath/import checks to the resolver interfaces, all retained implementations, and their existing `ArrayUtils`/`CollectionUtils` dependencies. The whole cache package and `RegionPaths` remain covered. All eleven resolver unit classes and the new wiring fixture run in both focused suites; the native pool suite runs separately.
+
+### Lifecycle behavior and limits
+
+Added `DriverRegion.addLifecycleListener(DriverRegionLifecycleListener)`, defaulting to `UnsupportedFeatureException` with feature `Region.addLifecycleListener` and reason `NOT_INTRODUCED`. The callback exposes only `afterRegionDestroy(DriverRegion<?, ?>)` and `close()`; it does not expose a native event/mutator or add a destruction operation solely for tests.
+
+Native fixtures established that local peer region destruction, region close, and peer/client cache close deliver destruction followed by listener cleanup. Re-registering the same callback instance on the same underlying region is a no-op, including through separate SPI handles; distinct callbacks remain separate even if their `equals` methods consider them equal. The native adapter preserves identity through its equality implementation and delegates to native listener registration. Null registration and registration after closure fail through the driver exception boundary.
+
+The mock implements this observed local lifecycle on connection close and releases its listener registrations. Native dispatch logs runtime callback failures and continues other notifications/cleanup; the mock follows that behavior with an instance logger, verified in the shared contract tests. This callback-dispatch behavior does not relax resolver failure propagation. No distributed delivery, additional ordering guarantee, or synthetic SPI-wide close notification is promised.
+
+Resolvers retain serialized initial resolution, retry null misses and failed registrations, and borrow rather than close handles. Destruction invalidation remains keyed by the destroyed region's **name**: cached aliases and `/path` entries retain their existing limitation, covered explicitly by tests. Listener cleanup alone does not invalidate entries or reconnect. Cached connection handles remain cached after closure; single-region resolution does not probe destruction.
+
+### Validation
+
+All checks below passed against native GemFire **10.4.0-build.3056.df98c835**. The generated and packaged driver stamps both report that exact version and SPI `1.0`; the contract suite verifies runtime/stamp matching.
+
+| Validation | Result |
+| --- | --- |
+| Main/test sources in both modules and Spring Data integration-test sources | Compilation passed |
+| Focused cache/utility/resolver suite on native-free mock runtime | 118 tests passed |
+| Same focused suite on native 10.4 runtime | 118 tests passed |
+| Targeted resolver/pool tests plus explicit wiring fixture in normal test source set | 84 tests passed |
+| SPI / core / contract-tool / mock / native-driver checks | 11 / 24 / 6 / 17 / 19 tests passed |
+
+The selected reports total **397 passing test executions**, no failures/errors/skips. This is targeted validation, not a claim that the entire legacy integration suite ran. Reviewed the changed boundary/callers, checked for remaining native imports and deleted-global-resolver references in source, and passed `git diff --check`.
+
+The existing user edit disables `spring-test-vmware-gemfire` in `settings.gradle.kts`, although Spring Data's build still depends on that project. An unmodified Gradle invocation therefore fails project configuration. Validation preserved both existing user-edited files and used `/private/tmp/sdgf-resolver-validation.init.gradle` with:
+
+```groovy
+settingsEvaluated { settings ->
+    if (new File(settings.settingsDir, 'spring-test-vmware-gemfire').isDirectory()) {
+        settings.include(':spring-test-vmware-gemfire')
+    }
+}
+```
+
+The guard avoids changing included build-tools projects. Run the commands in this ticket with `-I /private/tmp/sdgf-resolver-validation.init.gradle` and `-DgemfireVersion=10.4.+`; the targeted test invocation additionally included `--tests '*InjectedResolverIntegrationTests'`. No persistent Gradle permission rule was requested.
+
+Final logs: `/private/tmp/sdgf-resolver-final-compile-tests.log` and `/private/tmp/sdgf-resolver-final-driver-tests.log`; initial native characterization: `/private/tmp/sdgf-resolver-native-lifecycle.log`.
+
+Next: [Cache factory ownership and configuration dependencies](10-cache-factory-ownership-and-configuration-dependencies.md). This is the next investigation, not a completed factory migration. The signed-off architecture remains unchanged.

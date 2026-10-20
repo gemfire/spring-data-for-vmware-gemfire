@@ -20,6 +20,7 @@ import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 import com.vmware.gemfire.driver.spi.config.RegionShortcut;
+import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 
 class MockIsolationTests {
 
@@ -32,6 +33,20 @@ class MockIsolationTests {
 			assertThat(second.getRegion("entries")).isNull();
 			second.createRegion("entries", RegionShortcut.LOCAL).put("key", "second");
 			first.close();
+			assertThat(second.getRegion("entries").get("key")).isEqualTo("second");
+		}
+	}
+
+	@Test
+	void compatibleClientConnectionsRemainIndependentInTheLocalMock() {
+		var driver = new MockGemFireDriver();
+		var configuration = new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of());
+		try (DriverConnection first = driver.connect(configuration); DriverConnection second = driver.connect(configuration)) {
+			first.createClientRegion("entries", ClientRegionShortcut.LOCAL).put("key", "first");
+			assertThat(second.getRegion("entries")).isNull();
+			second.createClientRegion("entries", ClientRegionShortcut.LOCAL).put("key", "second");
+			first.close();
+			assertThat(second.isClosed()).isFalse();
 			assertThat(second.getRegion("entries").get("key")).isEqualTo("second");
 		}
 	}

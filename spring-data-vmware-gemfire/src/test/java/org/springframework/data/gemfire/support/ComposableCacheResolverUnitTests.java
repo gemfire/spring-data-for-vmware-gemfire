@@ -10,8 +10,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.function.Supplier;
-import org.apache.geode.cache.CacheClosedException;
-import org.apache.geode.cache.client.ClientCache;
+import com.vmware.gemfire.driver.spi.DriverOperationException;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import com.vmware.gemfire.driver.spi.DriverConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -26,7 +28,7 @@ import org.springframework.data.gemfire.CacheResolver;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.junit.MockitoJUnitRunner
- * @see org.apache.geode.cache.client.ClientCache
+ * @see com.vmware.gemfire.driver.spi.DriverConnection
  * @see org.springframework.data.gemfire.support.ComposableCacheResolver
  * @since 2.3.0
  */
@@ -35,7 +37,7 @@ import org.springframework.data.gemfire.CacheResolver;
 public class ComposableCacheResolverUnitTests {
 
 	@Mock
-	private ClientCache mockCache;
+	private DriverConnection mockCache;
 
 	@Mock(name = "CacheResolverOne")
 	private CacheResolver mockCacheResolverOne;
@@ -204,40 +206,22 @@ public class ComposableCacheResolverUnitTests {
 	}
 
 	@Test
-	public void resolvesGemFireCacheFromLastCacheResolverWithExceptionThrowingCacheResolvers() {
-
-		when(this.mockCacheResolverOne.resolve()).thenThrow(new CacheClosedException("ONE"));
-		when(this.mockCacheResolverTwo.resolve()).thenThrow(new CacheClosedException("ONE"));
-		when(this.mockCacheResolverThree.resolve()).thenReturn(this.mockCache);
-
-		CacheResolver cacheResolver = ComposableCacheResolver
-			.compose(this.mockCacheResolverOne, this.mockCacheResolverTwo, this.mockCacheResolverThree);
-
-		assertThat(cacheResolver).isNotNull();
-		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
-
-		verify(this.mockCacheResolverOne, times(1)).resolve();
-		verify(this.mockCacheResolverTwo, times(1)).resolve();
-		verify(this.mockCacheResolverThree, times(1)).resolve();
-	}
-
-	@Test
-	public void resolvesGemFireCacheFromLastCacheResolverWithNullReturningAndExceptionThrowingCacheResolvers() {
-
-		when(this.mockCacheResolverOne.resolve()).thenReturn(null);
-		when(this.mockCacheResolverTwo.resolve()).thenThrow(new CacheClosedException("ONE"));
-		when(this.mockCacheResolverThree.resolve()).thenReturn(this.mockCache);
-
-		CacheResolver cacheResolver = ComposableCacheResolver
-			.compose(this.mockCacheResolverOne, null, this.mockCacheResolverTwo, null,
-				this.mockCacheResolverThree);
-
-		assertThat(cacheResolver).isNotNull();
-		assertThat(cacheResolver.resolve()).isEqualTo(this.mockCache);
-
-		verify(this.mockCacheResolverOne, times(1)).resolve();
-		verify(this.mockCacheResolverTwo, times(2)).resolve();
-		verify(this.mockCacheResolverThree, times(1)).resolve();
+	public void failuresStopCompositionWithoutRetryOrFallback() {
+		for (Throwable failure : new Throwable[] { new DriverOperationException("failed", null),
+			UnsupportedFeatureException.notIntroduced("test"), new IllegalStateException("failed"),
+			new AssertionError("failed") }) {
+			for (boolean failFirst : new boolean[] { true, false }) {
+				CacheResolver<DriverConnection> first = org.mockito.Mockito.mock(CacheResolver.class);
+				CacheResolver<DriverConnection> second = org.mockito.Mockito.mock(CacheResolver.class);
+				CacheResolver<DriverConnection> third = org.mockito.Mockito.mock(CacheResolver.class);
+				when((failFirst ? first : second).resolve()).thenThrow(failure);
+				CacheResolver<DriverConnection> composed = ComposableCacheResolver.compose(first, second, third);
+				assertThatThrownBy(composed::resolve).isSameAs(failure);
+				verify(first).resolve();
+				verify(second, times(failFirst ? 0 : 1)).resolve();
+				verify(third, never()).resolve();
+			}
+		}
 	}
 
 	@Test
@@ -259,7 +243,7 @@ public class ComposableCacheResolverUnitTests {
 	@Test
 	public void shortCircuitsAndResolvesGemFireCacheFromSecondCacheResolver() {
 
-		when(this.mockCacheResolverOne.resolve()).thenThrow(new CacheClosedException("ONE"));
+		when(this.mockCacheResolverOne.resolve()).thenReturn(null);
 		when(this.mockCacheResolverTwo.resolve()).thenReturn(this.mockCache);
 
 		CacheResolver cacheResolver = ComposableCacheResolver

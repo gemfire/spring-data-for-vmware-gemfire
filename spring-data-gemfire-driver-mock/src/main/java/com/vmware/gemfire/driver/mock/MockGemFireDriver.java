@@ -14,6 +14,8 @@ import com.vmware.gemfire.driver.spi.GemFireDriver;
 /**
  * Native-free in-memory test provider. Each connection has independent state. The synthetic
  * native version "mock" identifies this stand-in; it does not claim compatibility with a native engine.
+ * Named pools are per-connection configuration records with default minimum connections 1;
+ * they open no sockets and do not simulate native registry sharing or region attachment.
  * Only LOCAL regions are implemented. Distribution, persistence and eviction are not simulated.
  */
 public final class MockGemFireDriver implements GemFireDriver {
