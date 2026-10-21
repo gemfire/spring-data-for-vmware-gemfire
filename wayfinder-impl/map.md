@@ -52,6 +52,12 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 - [Complete region events, listeners and writers](../wayfinder-issues/17-complete-region-events-listeners-and-writers.md) — full callback contracts, lazy payloads and native/mock registration/lifecycle are implemented; real remote/role/serialization/live fixtures and 430 behavior tests pass, with broader reachable contracts and Spring adoption retained downstream.
 
+- [Complete region operations and metadata SPI](../wayfinder-issues/18-complete-region-operations-and-metadata-spi.md) — direct region/Map/bulk/local/server operations, live typed views, routing metadata and exception payloads are implemented; 443 tests and full compilation pass, with snapshot/subscription blockers and subsystem ownership preserved.
+
+- [Typed region creation and attribute access](../wayfinder-issues/46-typed-region-creation-and-attribute-access.md) — optional typed configuration, attributes/mutators and peer/client/subregion creation preserve native defaults and callback identity; local mock hierarchy and real server routing pass 463 tests. The complete configuration parent remains open with explicit blocking children.
+
+- [Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) — 25 optional settings, effective inspection and socket adaptation preserve native defaults/validation; real server socket use and 476 tests pass. Default-cache selection and durable/runtime lifecycle remain explicit blockers of the complete pool parent.
+
 ## Not yet specified
 
 Known implementation gaps in Steps 3–7 now have explicit tickets, indexed by the [SPI gap closure implementation plan](spi-gap-closure-plan.md). They are no longer unspecified backlog. Member-level inventory may reveal additional reachable native surfaces or require splitting a large implementation group; create precise owned blocking tickets when that evidence appears, without losing the parent requirements.

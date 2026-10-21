@@ -20,10 +20,31 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 
-	private final Region<K, V> region;
+	final Region<K, V> region;
 
 	GemFireRegion(Region<K, V> region) {
 		this.region = region;
+	}
+
+	@Override public DriverRegionAttributes<K, V> getAttributes() { return invoke("getAttributes", () -> new GemFireRegionAttributes<>(this)); }
+	@Override public DriverRegionAttributesMutator<K, V> getAttributesMutator() { return invoke("getAttributesMutator", () -> new GemFireRegionAttributesMutator<>(this)); }
+	@Override public <SK, SV> DriverRegion<SK, SV> createSubregion(String name,
+		com.vmware.gemfire.driver.spi.config.RegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
+		return invoke("createSubregion", () -> {
+			if (((org.apache.geode.internal.cache.InternalCache) region.getCache()).isClient()) throw new IllegalStateException("Peer subregion requires a peer cache");
+			var factory = ((org.apache.geode.cache.Cache) region.getCache()).<SK, SV>createRegionFactory(org.apache.geode.cache.RegionShortcut.valueOf(shortcut.name()));
+			new GemFireRegionConfiguration().apply(configuration, factory);
+			return new GemFireRegion<>(factory.createSubregion(region, name));
+		});
+	}
+	@Override public <SK, SV> DriverRegion<SK, SV> createClientSubregion(String name,
+		com.vmware.gemfire.driver.spi.config.ClientRegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
+		return invoke("createClientSubregion", () -> {
+			if (!((org.apache.geode.internal.cache.InternalCache) region.getCache()).isClient()) throw new IllegalStateException("Client subregion requires a client cache");
+			var factory = ((org.apache.geode.cache.client.ClientCache) region.getCache()).<SK, SV>createClientRegionFactory(org.apache.geode.cache.client.ClientRegionShortcut.valueOf(shortcut.name()));
+			new GemFireRegionConfiguration().apply(configuration, factory);
+			return new GemFireRegion<>(factory.createSubregion(region, name));
+		});
 	}
 
 	@Override public void addCacheListener(DriverCacheListener<K, V> listener) {
@@ -154,4 +175,65 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 			throw exceptions.translate(operation, ex);
 		}
 	}
+	@Override public void create(K key, V value) { invoke("create", () -> { region.create(key, value); return null; }); }
+	@Override public void create(K key, V value, Object argument) { invoke("create", () -> { region.create(key, value, argument); return null; }); }
+	@Override public V destroy(K key) { return invoke("destroy", () -> region.destroy(key)); }
+	@Override public void invalidate(K key) { invoke("invalidate", () -> { region.invalidate(key); return null; }); }
+	@Override public void destroyRegion() { invoke("destroyRegion", () -> { region.destroyRegion(); return null; }); }
+	@Override public void invalidateRegion() { invoke("invalidateRegion", () -> { region.invalidateRegion(); return null; }); }
+	@Override public void closeRegion() { invoke("close", () -> { region.close(); return null; }); }
+	@Override public boolean containsValue(Object value) { return invoke("containsValue", () -> region.containsValue(value)); }
+	@Override public boolean containsValueForKey(K key) { return invoke("containsValueForKey", () -> region.containsValueForKey(key)); }
+	@Override public boolean isEmpty() { return invoke("isEmpty", () -> region.isEmpty()); }
+	@Override public long sizeLong() { return invoke("sizeLong", () -> region.sizeLong()); }
+	@Override public V replace(K key, V value) { return invoke("replace", () -> region.replace(key, value)); }
+	@Override public boolean replace(K key, V oldValue, V newValue) { return invoke("replace", () -> region.replace(key, oldValue, newValue)); }
+	@Override public boolean remove(K key, Object value) { return invoke("remove", () -> region.remove(key, value)); }
+	@Override public V getOrDefault(K key, V defaultValue) { return invoke("getOrDefault", () -> region.getOrDefault(key, defaultValue)); }
+	@Override public V compute(K key, java.util.function.BiFunction<? super K, ? super V, ? extends V> function) { return invoke("compute", () -> region.compute(key, function)); }
+	@Override public V computeIfAbsent(K key, java.util.function.Function<? super K, ? extends V> function) { return invoke("computeIfAbsent", () -> region.computeIfAbsent(key, function)); }
+	@Override public V computeIfPresent(K key, java.util.function.BiFunction<? super K, ? super V, ? extends V> function) { return invoke("computeIfPresent", () -> region.computeIfPresent(key, function)); }
+	@Override public V merge(K key, V value, java.util.function.BiFunction<? super V, ? super V, ? extends V> function) { return invoke("merge", () -> region.merge(key, value, function)); }
+	@Override public void forEach(java.util.function.BiConsumer<? super K, ? super V> action) { invoke("forEach", () -> { region.forEach(action); return null; }); }
+	@Override public void replaceAll(java.util.function.BiFunction<? super K, ? super V, ? extends V> function) { invoke("replaceAll", () -> { region.replaceAll(function); return null; }); }
+	@Override public void putAll(java.util.Map<? extends K, ? extends V> values) { invoke("putAll", () -> { region.putAll(values); return null; }); }
+	@Override public void putAll(java.util.Map<? extends K, ? extends V> values, Object argument) { invoke("putAll", () -> { region.putAll(values, argument); return null; }); }
+	@Override public java.util.Map<K, V> getAll(java.util.Collection<? extends K> keys) { return invoke("getAll", () -> region.getAll(keys)); }
+	@Override public <T extends K> java.util.Map<T, V> getAll(java.util.Collection<T> keys, Object argument) { return invoke("getAll", () -> region.getAll(keys, argument)); }
+	@Override public void removeAll(java.util.Collection<? extends K> keys) { invoke("removeAll", () -> { region.removeAll(keys); return null; }); }
+	@Override public void removeAll(java.util.Collection<? extends K> keys, Object argument) { invoke("removeAll", () -> { region.removeAll(keys, argument); return null; }); }
+	@Override public void localClear() { invoke("localClear", () -> { region.localClear(); return null; }); }
+	@Override public void localDestroy(K key) { invoke("localDestroy", () -> { region.localDestroy(key); return null; }); }
+	@Override public void localDestroy(K key, Object argument) { invoke("localDestroy", () -> { region.localDestroy(key, argument); return null; }); }
+	@Override public void localInvalidate(K key) { invoke("localInvalidate", () -> { region.localInvalidate(key); return null; }); }
+	@Override public void localInvalidate(K key, Object argument) { invoke("localInvalidate", () -> { region.localInvalidate(key, argument); return null; }); }
+	@Override public void localDestroyRegion() { invoke("localDestroyRegion", () -> { region.localDestroyRegion(); return null; }); }
+	@Override public void localDestroyRegion(Object argument) { invoke("localDestroyRegion", () -> { region.localDestroyRegion(argument); return null; }); }
+	@Override public void localInvalidateRegion() { invoke("localInvalidateRegion", () -> { region.localInvalidateRegion(); return null; }); }
+	@Override public void localInvalidateRegion(Object argument) { invoke("localInvalidateRegion", () -> { region.localInvalidateRegion(argument); return null; }); }
+	@Override public String getFullPath() { return invoke("getFullPath", () -> region.getFullPath()); }
+	@Override public DriverRegion<?, ?> getParentRegion() { return invoke("getParentRegion", () -> wrap(region.getParentRegion())); }
+	@Override public DriverRegion<?, ?> getSubregion(String path) { return invoke("getSubregion", () -> wrap(region.getSubregion(path))); }
+	@Override public java.util.Set<DriverRegion<?, ?>> subregions(boolean recursive) { return invoke("subregions", () -> new GemFireRegionViews().regions(region.subregions(recursive))); }
+	@Override public DriverRegionEntry<K, V> getEntry(K key) { return invoke("getEntry", () -> entry(region.getEntry(key))); }
+	@Override public java.util.Set<K> keySet() { return invoke("keySet", () -> new GemFireRegionViews().set(region.keySet(), java.util.function.Function.identity())); }
+	@Override public java.util.Collection<V> values() { return invoke("values", () -> new GemFireRegionViews().collection(region.values(), java.util.function.Function.identity())); }
+	@Override public java.util.Set<java.util.Map.Entry<K, V>> entrySet() { return invoke("entrySet", () -> new GemFireRegionViews().mappedSet(region.entrySet(), e -> new GemFireMapEntry<>(e))); }
+	@Override public java.util.Set<DriverRegionEntry<?, ?>> entrySet(boolean recursive) { return invoke("entrySet", () -> new GemFireRegionViews().mappedSet(region.entrySet(recursive), e -> new GemFireRegionEntry<>(e))); }
+	@Override public DriverRegionService getRegionService() { return invoke("getRegionService", () -> new GemFireRegionService(region.getRegionService())); }
+	@Override public DriverConnection getCache() { return invoke("getCache", () -> new GemFireConnection(region.getCache(), ((org.apache.geode.internal.cache.InternalCache) region.getCache()).isClient() ? CacheConfiguration.Mode.CLIENT : CacheConfiguration.Mode.PEER)); }
+	@Override public Object getUserAttribute() { return invoke("getUserAttribute", () -> region.getUserAttribute()); }
+	@Override public void setUserAttribute(Object value) { invoke("setUserAttribute", () -> { region.setUserAttribute(value); return null; }); }
+	@Override public DriverCacheStatistics getStatistics() { return invoke("getStatistics", () -> new GemFireCacheStatistics(region.getStatistics())); }
+	@Override public RegionMetadata metadata() { return invoke("metadata", () -> new RegionMetadata(com.vmware.gemfire.driver.spi.config.DataPolicy.valueOf(region.getAttributes().getDataPolicy().toString()), region.getAttributes().getPoolName())); }
+	@Override public boolean containsKeyOnServer(K key) { return invoke("containsKeyOnServer", () -> region.containsKeyOnServer(key)); }
+	@Override public java.util.Set<K> keySetOnServer() { return invoke("keySetOnServer", () -> region.keySetOnServer()); }
+	@Override public int sizeOnServer() { return invoke("sizeOnServer", () -> region.sizeOnServer()); }
+	@Override public long sizeLongOnServer() { return invoke("sizeLongOnServer", () -> region.sizeLongOnServer()); }
+	@Override public boolean isEmptyOnServer() { return invoke("isEmptyOnServer", () -> region.isEmptyOnServer()); }
+
+	private DriverRegion<?, ?> wrap(Region<?, ?> value) { return value == null ? null : new GemFireRegion<>(value); }
+	private DriverRegionEntry<K, V> entry(Region.Entry<K, V> value) { return value == null ? null : new GemFireRegionEntry<>(value); }
+	@Override public boolean equals(Object other) { return other instanceof GemFireRegion<?, ?> handle && region.equals(handle.region); }
+	@Override public int hashCode() { return region.hashCode(); }
 }

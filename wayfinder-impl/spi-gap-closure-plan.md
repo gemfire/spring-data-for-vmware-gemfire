@@ -8,7 +8,7 @@ The audit baseline is 186 production, 122 unit-test and 128 integration-test Jav
 
 ## Next work
 
-[Complete region events, listeners and writers](../wayfinder-issues/17-complete-region-events-listeners-and-writers.md) is resolved as the callback foundation. The next unblocked, unassigned ticket in ascending order is [Complete region operations and metadata SPI](../wayfinder-issues/18-complete-region-operations-and-metadata-spi.md). The [callback evidence](investigations/region-callback-contracts.md) records native/mock behavior, real network fixtures and remaining reachable-contract/consumer owners. [Boundary checks](../build-tools/migration-boundary/README.md) continue enforcing a shrinking baseline; their pass is not native-free compliance. Current production native file count is 182 (down from the original 186); unit/integration counts remain 122/128.
+[Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) is resolved; [pool evidence](investigations/named-pool-configuration-and-sockets.md) records behavior and validation. The complete [pool/default-cache/durable parent](../wayfinder-issues/20-complete-pool-default-cache-and-durable-spi.md) remains open, blocked by default-cache assembly and durable/runtime lifecycle. The next unblocked, unassigned ticket in ascending order is [PDX, serialization and JSON SPI](../wayfinder-issues/26-pdx-serialization-and-json-spi.md). Default-cache assembly is also now eligible. [Boundary checks](../build-tools/migration-boundary/README.md) continue enforcing the existing shrinking baseline; a pass is not native-free compliance. Current production native file count remains 182, with unit/integration counts 122/128.
 
 Remaining implementation tickets are open and unassigned. Claim the next eligible ticket before implementation; a ticket is eligible only when every `Blocked by:` ticket is resolved. Comma-separated local IDs in metadata express dependencies, while the links below and in ticket bodies provide their names. Use ascending ticket order among eligible tickets unless the user names another. Do not automatically start additional skills or parallel agents.
 
@@ -103,3 +103,29 @@ Every audit finding has implementation and final acceptance owners. The member-l
 - Native GemFire globals may pass through inside a driver; adding a driver-owned global registry remains forbidden. Mock independence is not a shared native isolation guarantee.
 - The separate Spring Test module's native migration remains out of scope. Its compilation and Spring Data's removal of native helper usage are explicitly owned above.
 - Initial supported release selection, official support/EOL documentation and publication/merge scheduling remain release planning. Technical acceptance does not authorize those actions or establish an unverified support policy.
+
+## Region-operation decomposition
+
+- [Region and cache snapshot services SPI](../wayfinder-issues/44-region-and-cache-snapshot-services-spi.md), blocked by region operations and PDX/serialization, blocks cache assembly and template/repository migration.
+- [Region interest registration and subscription SPI](../wayfinder-issues/45-region-interest-registration-and-subscription-spi.md), blocked by region operations, configuration and pool completion, blocks cache assembly and continuous-query SPI.
+
+These preserve all frozen Region-reachable requirements. Configuration, query, locks and disk operations remain with their respective existing subsystem owners; the coverage matrix records exact per-member ownership.
+
+## Region-configuration decomposition
+
+The parent configuration task remains open and blocks its original consumers. Its implementation children are:
+
+- [Typed region creation and attribute access](../wayfinder-issues/46-typed-region-creation-and-attribute-access.md).
+- [Expiration, eviction and compression SPI](../wayfinder-issues/47-expiration-eviction-and-compression-spi.md).
+- [Partition and membership configuration SPI](../wayfinder-issues/48-partition-and-membership-configuration-spi.md).
+- [Legacy region configuration values and enums](../wayfinder-issues/49-legacy-region-configuration-values-and-enums.md).
+
+## Pool-configuration decomposition
+
+The complete pool parent retains all original downstream blockers. Its implementation children are:
+
+- [Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md), dependent on named pool creation, coverage inventory and exception semantics.
+- [Default client-cache pool assembly and selection](../wayfinder-issues/51-default-client-cache-pool-assembly-and-selection.md), dependent on named pool configuration.
+- [Durable client readiness and pool runtime lifecycle](../wayfinder-issues/52-durable-client-readiness-and-pool-runtime-lifecycle.md), dependent on named configuration and default-cache assembly.
+
+The coverage matrix reassigns exact ClientCacheFactory setters/default lookup and ClientCache runtime/durable methods to these children, while full cache assembly remains open. Pool query-service operations retain the existing query owner. No frozen requirement or downstream dependency was removed.

@@ -20,10 +20,11 @@ final class MockPool implements DriverPool {
 
 	MockPool(String name, PoolConfiguration configuration, MockConnection connection) {
 		this.name = name;
-		this.configuration = configuration;
+		this.configuration = new MockPoolConfiguration().resolve(configuration);
 		this.connection = connection;
 	}
 
+	@Override public PoolConfiguration configuration() { return configuration; }
 	@Override public String name() { return name; }
 	@Override public List<Endpoint> servers() { return configuration.servers(); }
 	@Override public List<Endpoint> locators() { return configuration.locators(); }

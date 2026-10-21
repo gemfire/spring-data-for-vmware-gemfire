@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 16, 18, 21, 26, 30
+Blocked by: 16, 18, 21, 26, 30, 44
 
 # Template, repository and mapping migration
 
@@ -29,3 +29,7 @@ Prerequisites: [Driver exception semantics and translation](16-driver-exception-
 ## Completion
 
 Template/repository/mapping/serialization consumer rows migrated with behavioral parity and no native product escape. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation follow-up prerequisites: [Region and cache snapshot services SPI](44-region-and-cache-snapshot-services-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.
+
+Region-operation handoff: bulk/conditional/Map operations and lazy entry/collection views now have native/mock contracts; use direct typed operations rather than reconstructing bulk behavior in Spring. Duplicate-entry old value, existing-region handle and region path payloads are available as typed exceptions. Entry isDestroyed observation is sticky while accessors resolve the current key; preserve this tested behavior. Full native constructor/string replacement and consumer migration remain here. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

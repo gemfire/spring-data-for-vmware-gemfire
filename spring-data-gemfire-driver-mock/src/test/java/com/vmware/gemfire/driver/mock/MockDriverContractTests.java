@@ -16,5 +16,15 @@ class MockDriverContractTests extends GemFireDriverContract {
 	protected String expectedNativeVersion() { return "mock"; }
 
 	@Override
-	protected Map<Method, Reason> expectedUnsupportedMethods() { return Map.of(); }
+	protected Map<Method, Reason> expectedUnsupportedMethods() {
+		try {
+			Map<Method, Reason> unsupported = new java.util.HashMap<>();
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("containsKeyOnServer", Object.class), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("isEmptyOnServer"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("keySetOnServer"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("sizeLongOnServer"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("sizeOnServer"), Reason.NOT_INTRODUCED);
+			return unsupported;
+		} catch (ReflectiveOperationException ex) { throw new AssertionError(ex); }
+	}
 }

@@ -31,3 +31,5 @@ Prerequisites: [Complete region operations and metadata SPI](18-complete-region-
 ## Completion
 
 Region factory public APIs/configuration and their migrated tests are native-free, with no legacy dual-type overload retained. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation handoff: DriverRegion.closeRegion deliberately avoids Spring inferred bean destruction while exposing native Region.close. Preserve explicit factory ownership. Reuse entry/statistics/service views and routing metadata; complete configuration, subregion creation and subscription wiring with their respective owners. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

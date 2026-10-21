@@ -65,10 +65,23 @@ class GemFireExceptionMapperTests {
 		assertThat(mapper.translate("create", nativeWrapper))
 			.isInstanceOfSatisfying(DriverOperationException.class,
 				failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.DUPLICATE_ENTRY))
+			.isInstanceOfSatisfying(DriverEntryExistsException.class, failure -> assertThat(failure.getOldValue()).isEqualTo("old-secret"))
 			.hasCause(nativeWrapper).hasRootCause(duplicate);
 		var unknown = new RuntimeException("secret", duplicate);
 		assertThat(mapper.translate("test", unknown)).isInstanceOfSatisfying(DriverOperationException.class,
 			failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.UNKNOWN)).hasCause(unknown);
+	}
+
+	@Test
+	void regionFailurePayloadsKeepPathsOutOfMessages() {
+		var nativeFailure = new RegionDestroyedException("private-message", "/private-region");
+		assertThat(mapper.translate("read", nativeFailure))
+			.isInstanceOfSatisfying(DriverRegionUnavailableException.class, failure ->
+				assertThat(failure.getRegionFullPath()).isEqualTo("/private-region"))
+			.hasMessage("GemFire operation failed: read");
+		assertThat(mapper.translate("lookup", new org.apache.geode.admin.RegionNotFoundException("private-message", "/private-region")))
+			.isInstanceOfSatisfying(DriverRegionUnavailableException.class, failure ->
+				assertThat(failure.getRegionFullPath()).isEqualTo("/private-region"));
 	}
 
 	@Test

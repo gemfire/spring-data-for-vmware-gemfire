@@ -4,7 +4,7 @@
  */
 package com.vmware.gemfire.driver.gemfire104;
 
-import com.vmware.gemfire.driver.spi.DriverFailureKind;
+import com.vmware.gemfire.driver.spi.*;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.GemFireDriverException;
 
@@ -18,6 +18,16 @@ final class GemFireExceptionMapper {
 		if ((failure instanceof org.apache.geode.cache.CacheLoaderException
 				|| failure instanceof org.apache.geode.cache.CacheWriterException)
 				&& failure.getCause() instanceof GemFireDriverException driverFailure) return driverFailure;
+		Exception payload = failure instanceof org.apache.geode.GemFireCacheException wrapped && wrapped.getCacheException() != null
+			? wrapped.getCacheException() : failure;
+		if (payload instanceof org.apache.geode.cache.EntryExistsException e)
+			return new DriverEntryExistsException("GemFire operation failed: " + operation, e.getOldValue(), failure);
+		if (payload instanceof org.apache.geode.cache.RegionExistsException e)
+			return new DriverRegionExistsException("GemFire operation failed: " + operation, e.getRegion() == null ? null : new GemFireRegion<>(e.getRegion()), failure);
+		if (payload instanceof org.apache.geode.cache.RegionDestroyedException e)
+			return new DriverRegionUnavailableException("GemFire operation failed: " + operation, e.getRegionFullPath(), failure);
+		if (payload instanceof org.apache.geode.admin.RegionNotFoundException e)
+			return new DriverRegionUnavailableException("GemFire operation failed: " + operation, e.getRegionFullPath(), failure);
 		return new DriverOperationException(classify(failure), "GemFire operation failed: " + operation, failure);
 	}
 

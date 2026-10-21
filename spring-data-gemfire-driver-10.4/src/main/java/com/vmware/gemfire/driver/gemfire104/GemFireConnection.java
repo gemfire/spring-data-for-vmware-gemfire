@@ -23,6 +23,7 @@ import com.vmware.gemfire.driver.spi.DriverRegion;
 import com.vmware.gemfire.driver.spi.DriverPool;
 import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.RegionCallbacks;
+import com.vmware.gemfire.driver.spi.RegionConfiguration;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 
@@ -38,15 +39,30 @@ final class GemFireConnection implements DriverConnection {
 		this.mode = mode;
 	}
 
+	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		return invoke("createConfiguredRegion", () -> {
+			if (mode != Mode.PEER || !(cache instanceof Cache peer)) throw new IllegalStateException("Peer region creation requires a peer cache");
+			var factory = peer.<K, V>createRegionFactory(org.apache.geode.cache.RegionShortcut.valueOf(shortcut.name()));
+			new GemFireRegionConfiguration().apply(configuration, factory);
+			return new GemFireRegion<>(factory.create(name));
+		});
+	}
+	@Override public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		return invoke("createConfiguredClientRegion", () -> {
+			if (mode != Mode.CLIENT || !(cache instanceof ClientCache client)) throw new IllegalStateException("Client region creation requires a client cache");
+			var factory = client.<K, V>createClientRegionFactory(org.apache.geode.cache.client.ClientRegionShortcut.valueOf(shortcut.name()));
+			new GemFireRegionConfiguration().apply(configuration, factory);
+			return new GemFireRegion<>(factory.create(name));
+		});
+	}
+
 	@Override
 	public DriverPool createPool(String name, PoolConfiguration configuration) {
 		return invoke("createPool", () -> {
 			checkPoolAccess(name);
 			Objects.requireNonNull(configuration, "configuration");
 			PoolFactory factory = PoolManager.createFactory();
-			configuration.servers().forEach(endpoint -> factory.addServer(endpoint.host(), endpoint.port()));
-			configuration.locators().forEach(endpoint -> factory.addLocator(endpoint.host(), endpoint.port()));
-			configuration.minimumConnections().ifPresent(factory::setMinConnections);
+			new GemFirePoolConfiguration().apply(configuration, factory);
 			return new GemFirePool(factory.create(name));
 		});
 	}

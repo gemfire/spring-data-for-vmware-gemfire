@@ -31,3 +31,5 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Complete assigned disk/resource contracts ready for cache and region factory adoption. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation handoff: Region.writeToDisk/forceRolling rows are assigned here. Snapshot services and legacy stream snapshot methods retain their separate snapshot owner; do not conflate disk-store configuration with snapshot format support. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

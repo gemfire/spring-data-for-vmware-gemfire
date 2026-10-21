@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 13, 14, 16
+Blocked by: 13, 14, 16, 50, 51, 52
 
 # Complete pool, default-cache and durable SPI
 
@@ -29,3 +29,11 @@ Prerequisites: [Named driver pool creation and ownership](13-named-driver-pool-c
 ## Completion
 
 Complete pool configuration/lifecycle contracts; native resolvers and namespace consumers remain assigned to their cutover owners. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Blocking implementation children
+
+- [Named pool configuration and socket callbacks](50-named-pool-configuration-and-socket-callbacks.md) owns typed settings, merging/inspection, native mappings, removed thread-local handling and socket adaptation.
+- [Default client-cache pool assembly and selection](51-default-client-cache-pool-assembly-and-selection.md) owns configuration before connection creation and actual default selection/reuse.
+- [Durable client readiness and pool runtime lifecycle](52-durable-client-readiness-and-pool-runtime-lifecycle.md) owns durable identity/timeout, readiness, keep-alive, queue retention, runtime topology and pool registry lifecycle.
+
+The parent remains open, and all existing consumers continue to depend on it. Child completion does not establish full pool or client-cache migration.

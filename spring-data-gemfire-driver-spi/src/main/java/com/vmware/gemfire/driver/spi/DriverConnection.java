@@ -14,7 +14,16 @@ import com.vmware.gemfire.driver.spi.config.RegionShortcut;
  * cache without adding thread-safety guarantees. Default methods preserve compatibility with older
  * drivers and fail explicitly when a feature has not been implemented.
  */
-public interface DriverConnection extends AutoCloseable {
+public interface DriverConnection extends DriverRegionService {
+
+	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.createConfiguredRegion");
+	}
+
+	default <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.createConfiguredClientRegion");
+	}
+
 
 	/** Install injected callbacks before creation, so region-create notifications are observable. */
 	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {

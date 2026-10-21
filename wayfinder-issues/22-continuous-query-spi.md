@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 14, 17, 20, 21
+Blocked by: 14, 17, 20, 21, 45
 
 # Continuous query SPI
 
@@ -31,3 +31,5 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Complete required CQ contracts ready for Spring listener-container migration. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation follow-up prerequisites: [Region interest registration and subscription SPI](45-region-interest-registration-and-subscription-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.

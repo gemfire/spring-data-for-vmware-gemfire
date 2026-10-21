@@ -31,3 +31,5 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Complete assigned query/result/index contracts with native evidence and explicit mock disposition. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation handoff: use DriverRegionService and RegionMetadata (dataPolicy, poolName) for query routing without native cache/region casts in Spring. Region.query/existsValue/selectValue rows are assigned here. The real proxy fixture demonstrates local size zero alongside nonzero server state; do not infer query routing from local contents. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

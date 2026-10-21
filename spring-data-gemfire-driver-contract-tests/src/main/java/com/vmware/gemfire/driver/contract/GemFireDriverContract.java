@@ -47,7 +47,7 @@ import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
  * Native runs use isolated local regions; no locator/server or fixed port is required. Each driver
  * declares its unsupported methods explicitly; adding a default SPI method without a probe fails.
  */
-public abstract class GemFireDriverContract extends RegionCallbackContract {
+public abstract class GemFireDriverContract extends PoolConfigurationContract {
 
 	protected abstract String expectedNativeVersion();
 
@@ -176,7 +176,12 @@ public abstract class GemFireDriverContract extends RegionCallbackContract {
 			inPool(pool -> assertThat(pool.isDestroyed()).isFalse())));
 		probes.put(DriverPool.class.getMethod("destroy"), new Probe("Pool.destroy", () ->
 			inPool(pool -> { pool.destroy(); assertThat(pool.isDestroyed()).isTrue(); })));
+		probes.put(DriverPool.class.getMethod("configuration"), new Probe("Pool.configuration", () ->
+			inPool(pool -> { assertThat(pool.configuration().minimumConnections()).hasValue(0);
+				assertThat(pool.configuration().servers()).isEqualTo(pool.servers()); })));
 		probes.putAll(callbackProbes());
+		probes.putAll(regionOperationProbes());
+		probes.putAll(regionConfigurationProbes());
 		return probes;
 	}
 

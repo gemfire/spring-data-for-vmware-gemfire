@@ -16,7 +16,7 @@ import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
 
 /** Local callback behavior shared by official native and mock providers. */
-public abstract class RegionCallbackContract {
+public abstract class RegionCallbackContract extends RegionOperationsContract {
 	protected abstract GemFireDriver driver();
 	protected abstract CacheConfiguration configuration(CacheConfiguration.Mode mode);
 	private void withCache(Consumer<DriverConnection> action) {

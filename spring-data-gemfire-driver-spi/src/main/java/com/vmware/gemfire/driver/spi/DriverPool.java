@@ -15,6 +15,9 @@ import com.vmware.gemfire.driver.spi.PoolConfiguration.Endpoint;
  */
 public interface DriverPool {
 
+	/** Effective immutable settings, including version-specific defaults. This is not live topology. */
+	default PoolConfiguration configuration() { throw UnsupportedFeatureException.notIntroduced("Pool.configuration"); }
+
 	default String name() { throw UnsupportedFeatureException.notIntroduced("Pool.name"); }
 	default List<Endpoint> servers() { throw UnsupportedFeatureException.notIntroduced("Pool.servers"); }
 	default List<Endpoint> locators() { throw UnsupportedFeatureException.notIntroduced("Pool.locators"); }

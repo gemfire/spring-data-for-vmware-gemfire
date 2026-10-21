@@ -46,9 +46,9 @@ class PoolConfigurationTests {
 		DriverPool pool = new DriverPool() {};
 		List<org.assertj.core.api.ThrowableAssert.ThrowingCallable> calls = List.of(
 			() -> connection.createPool("pool", null), () -> connection.getPool("pool"),
-			pool::name, pool::servers, pool::locators, pool::minimumConnections, pool::isDestroyed, pool::destroy);
+			pool::name, pool::servers, pool::locators, pool::minimumConnections, pool::isDestroyed, pool::destroy, pool::configuration);
 		List<String> features = List.of("Connection.createPool", "Connection.getPool", "Pool.name", "Pool.servers",
-			"Pool.locators", "Pool.minimumConnections", "Pool.isDestroyed", "Pool.destroy");
+			"Pool.locators", "Pool.minimumConnections", "Pool.isDestroyed", "Pool.destroy", "Pool.configuration");
 		for (int i = 0; i < calls.size(); i++) {
 			String feature = features.get(i);
 			assertThatThrownBy(calls.get(i)).isInstanceOfSatisfying(UnsupportedFeatureException.class, failure -> {
@@ -57,5 +57,21 @@ class PoolConfigurationTests {
 				assertThat(failure.gemFireVersion()).isEmpty();
 			});
 		}
+	}
+	@Test void overlaysRetainUnsetValuesAndReplaceEndpointKindsWithoutMutation() {
+		var endpoints = new java.util.ArrayList<>(List.of(new Endpoint("localhost", 40404)));
+		var builder = PoolConfiguration.builder().servers(endpoints).minimumConnections(0).subscriptionEnabled(true).serverGroup("group");
+		var original = builder.build(); endpoints.clear(); builder.minimumConnections(8);
+		var inherited = PoolConfiguration.builder().build().withFallback(original);
+		assertThat(inherited.servers()).hasSize(1); assertThat(inherited.minimumConnections()).hasValue(0);
+		var replacement = PoolConfiguration.builder().locators(List.of(new Endpoint("locator", 10334)))
+			.subscriptionEnabled(false).serverGroup(null).build().withFallback(original);
+		assertThat(replacement.servers()).isEmpty(); assertThat(replacement.locators()).hasSize(1);
+		assertThat(replacement.subscriptionEnabled()).contains(false); assertThat(replacement.serverGroup()).contains("");
+		assertThat(replacement.minimumConnections()).hasValue(0); assertThat(original.subscriptionEnabled()).contains(true);
+		assertThatThrownBy(() -> original.servers().clear()).isInstanceOf(UnsupportedOperationException.class);
+		assertThatThrownBy(() -> PoolConfiguration.builder().servers(original.servers()).locators(replacement.locators()).build())
+			.isInstanceOf(IllegalArgumentException.class);
+		assertThat(PoolConfiguration.builder().build().socketFactory()).isEmpty();
 	}
 }

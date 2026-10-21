@@ -31,3 +31,5 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Typed security/view contracts and native evidence for the required public security surface. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Configuration decomposition handoff: the frozen OperationContext and OperationCode contracts (47 rows) belong to security authorization context, not region settings. The coverage policy now assigns them here. Preserve all operation codes, predicates and context lifecycle in the authenticated/security implementation; [Legacy region configuration values and enums](49-legacy-region-configuration-values-and-enums.md) verifies this ownership without introducing a dependency cycle.

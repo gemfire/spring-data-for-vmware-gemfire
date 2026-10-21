@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import com.vmware.gemfire.driver.spi.RegionCallbacks;
+import com.vmware.gemfire.driver.spi.RegionConfiguration;
 import com.vmware.gemfire.driver.spi.DriverMember;
 import java.util.Set;
 
@@ -28,12 +29,38 @@ final class MockConnection implements DriverConnection {
 	private final Mode mode;
 	private final MockMember member = new MockMember();
 	DriverMember member() { return member; }
-	void removeRegion(String name, MockRegion<?, ?> region) { regions.remove(name, region); }
+	void removeRegion(String name, MockRegion<?, ?> region) { regions.remove(region.getFullPath().substring(1), region); }
 	private final Map<String, MockRegion<?, ?>> regions = new HashMap<>();
 	private final Map<String, MockPool> pools = new HashMap<>();
 	private volatile boolean closed;
 
 	MockConnection(Mode mode) { this.mode = mode; }
+
+	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		return createConfigured(name, shortcut, configuration, null);
+	}
+	<K, V> DriverRegion<K, V> createConfigured(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration, MockRegion<?, ?> parent) {
+		checkMode(Mode.PEER);
+		if (shortcut == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null shortcut", null);
+		if (shortcut != RegionShortcut.LOCAL) throw UnsupportedFeatureException.notIntroduced("RegionShortcut." + shortcut);
+		return create(name, configuration, parent);
+	}
+	@Override public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
+		return createConfiguredClient(name, shortcut, configuration, null);
+	}
+	<K, V> DriverRegion<K, V> createConfiguredClient(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration, MockRegion<?, ?> parent) {
+		checkMode(Mode.CLIENT);
+		if (shortcut == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null shortcut", null);
+		if (shortcut != ClientRegionShortcut.LOCAL) throw UnsupportedFeatureException.notIntroduced("ClientRegionShortcut." + shortcut);
+		return create(name, configuration, parent);
+	}
+	Set<DriverRegion<?, ?>> subregions(MockRegion<?, ?> parent, boolean recursive) {
+		Set<DriverRegion<?, ?>> result = new java.util.HashSet<>();
+		for (var region : regions.values()) {
+			if (region.getParentRegion() == parent || recursive && region.getFullPath().startsWith(parent.getFullPath() + "/")) result.add(region);
+		}
+		return result;
+	}
 
 	@Override
 	public DriverPool createPool(String name, PoolConfiguration configuration) {
@@ -98,17 +125,21 @@ final class MockConnection implements DriverConnection {
 	}
 
 	private <K, V> DriverRegion<K, V> create(String name, RegionCallbacks<K, V> callbacks) {
-		if (regions.containsKey(name)) {
-			throw new DriverOperationException(DriverFailureKind.REGION_EXISTS, "Region already exists", null);
-		}
-		if (name == null || name.isEmpty() || name.contains("/")) {
-			throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Invalid or duplicate mock region name.", null);
-		}
-		if (callbacks == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Callbacks must not be null", null);
-		MockRegion<K, V> region = new MockRegion<>(name, this);
-		regions.put(name, region);
+		if (callbacks == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null callbacks", null);
+		return create(name, RegionConfiguration.<K, V>builder().callbacks(callbacks).build(), null);
+	}
+	private <K, V> DriverRegion<K, V> create(String name, RegionConfiguration<K, V> config, MockRegion<?, ?> parent) {
+		if (name == null || name.isEmpty() || name.contains("/")) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Invalid mock region name", null);
+		if (config == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null region configuration", null);
+		if (parent != null) parent.checkOpen();
+		String path = parent == null ? name : parent.getFullPath().substring(1) + "/" + name;
+		if (regions.containsKey(path)) throw new com.vmware.gemfire.driver.spi.DriverRegionExistsException(regions.get(path), null);
+		var callbacks = config.callbacks().isSet() ? config.callbacks().value() : new RegionCallbacks<K, V>(List.of(), null, null);
+		if (mode == Mode.CLIENT && (callbacks.loader() != null || callbacks.writer() != null)) throw UnsupportedFeatureException.notIntroduced("ClientRegion.creationLoaderWriter");
+		MockRegion<K, V> region = new MockRegion<>(name, this, parent, config, mode == Mode.CLIENT);
+		regions.put(path, region);
 		try { region.created(callbacks); }
-		catch (RuntimeException failure) { regions.remove(name, region); throw failure; }
+		catch (RuntimeException failure) { regions.remove(path, region); throw failure; }
 		return region;
 	}
 
@@ -125,7 +156,8 @@ final class MockConnection implements DriverConnection {
 	@Override
 	public Set<DriverRegion<?, ?>> rootRegions() {
 		checkOpen();
-		return Set.copyOf(regions.values());
+		return regions.values().stream().filter(region -> region.getParentRegion() == null)
+			.collect(java.util.stream.Collectors.toUnmodifiableSet());
 	}
 
 	@Override

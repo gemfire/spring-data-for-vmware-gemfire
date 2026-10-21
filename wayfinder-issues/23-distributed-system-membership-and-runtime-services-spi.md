@@ -31,3 +31,5 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Required runtime-service rows implemented or tracked by blocking children; diagnostics remain independent of global service discovery. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation handoff: Region.getDistributedLock/getRegionDistributedLock/becomeLockGrantor rows are assigned here. Region-service/entry access and typed region failure payloads already exist; distributed locks are still unimplemented and require native lifecycle/ownership validation. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

@@ -6,6 +6,21 @@ package com.vmware.gemfire.driver.spi;
 
 /** A thin region handle. Values, failures and concurrency follow the underlying native region. */
 public interface DriverRegion<K, V> {
+	default DriverRegionAttributes<K, V> getAttributes() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getAttributes");
+	}
+	default DriverRegionAttributesMutator<K, V> getAttributesMutator() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getAttributesMutator");
+	}
+	default <SK, SV> DriverRegion<SK, SV> createSubregion(String name,
+		com.vmware.gemfire.driver.spi.config.RegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
+		throw UnsupportedFeatureException.notIntroduced("Region.createSubregion");
+	}
+	default <SK, SV> DriverRegion<SK, SV> createClientSubregion(String name,
+		com.vmware.gemfire.driver.spi.config.ClientRegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
+		throw UnsupportedFeatureException.notIntroduced("Region.createClientSubregion");
+	}
+
 
 	/** General callbacks are managed independently of resolver lifecycle registrations.
 	 * Identity, order, replacement and cleanup follow native registration semantics.
@@ -118,4 +133,234 @@ public interface DriverRegion<K, V> {
 	default int size() {
 		throw UnsupportedFeatureException.notIntroduced("Region.size");
 	}
+
+	/** Native region path separators. */
+	String SEPARATOR = "/";
+	char SEPARATOR_CHAR = '/';
+
+	default void create(K key, V value) {
+		throw UnsupportedFeatureException.notIntroduced("Region.create");
+	}
+
+	default void create(K key, V value, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.create");
+	}
+
+	default V destroy(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.destroy");
+	}
+
+	default void invalidate(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.invalidate");
+	}
+
+	default void destroyRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.destroyRegion");
+	}
+
+	default void invalidateRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.invalidateRegion");
+	}
+
+	/** Delegates native Region.close(). Named explicitly so Spring does not infer bean ownership. */
+	default void closeRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.closeRegion");
+	}
+
+	default boolean containsValue(Object value) {
+		throw UnsupportedFeatureException.notIntroduced("Region.containsValue");
+	}
+
+	default boolean containsValueForKey(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.containsValueForKey");
+	}
+
+	default boolean isEmpty() {
+		throw UnsupportedFeatureException.notIntroduced("Region.isEmpty");
+	}
+
+	default long sizeLong() {
+		throw UnsupportedFeatureException.notIntroduced("Region.sizeLong");
+	}
+
+	default V replace(K key, V value) {
+		throw UnsupportedFeatureException.notIntroduced("Region.replace");
+	}
+
+	default boolean replace(K key, V oldValue, V newValue) {
+		throw UnsupportedFeatureException.notIntroduced("Region.replace");
+	}
+
+	default boolean remove(K key, Object value) {
+		throw UnsupportedFeatureException.notIntroduced("Region.remove");
+	}
+
+	default V getOrDefault(K key, V defaultValue) {
+		throw UnsupportedFeatureException.notIntroduced("Region.getOrDefault");
+	}
+
+	default V compute(K key, java.util.function.BiFunction<? super K, ? super V, ? extends V> function) {
+		throw UnsupportedFeatureException.notIntroduced("Region.compute");
+	}
+
+	default V computeIfAbsent(K key, java.util.function.Function<? super K, ? extends V> function) {
+		throw UnsupportedFeatureException.notIntroduced("Region.computeIfAbsent");
+	}
+
+	default V computeIfPresent(K key, java.util.function.BiFunction<? super K, ? super V, ? extends V> function) {
+		throw UnsupportedFeatureException.notIntroduced("Region.computeIfPresent");
+	}
+
+	default V merge(K key, V value, java.util.function.BiFunction<? super V, ? super V, ? extends V> function) {
+		throw UnsupportedFeatureException.notIntroduced("Region.merge");
+	}
+
+	default void forEach(java.util.function.BiConsumer<? super K, ? super V> action) {
+		throw UnsupportedFeatureException.notIntroduced("Region.forEach");
+	}
+
+	default void replaceAll(java.util.function.BiFunction<? super K, ? super V, ? extends V> function) {
+		throw UnsupportedFeatureException.notIntroduced("Region.replaceAll");
+	}
+
+	default void putAll(java.util.Map<? extends K, ? extends V> values) {
+		throw UnsupportedFeatureException.notIntroduced("Region.putAll");
+	}
+
+	default void putAll(java.util.Map<? extends K, ? extends V> values, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.putAll");
+	}
+
+	default java.util.Map<K, V> getAll(java.util.Collection<? extends K> keys) {
+		throw UnsupportedFeatureException.notIntroduced("Region.getAll");
+	}
+
+	default <T extends K> java.util.Map<T, V> getAll(java.util.Collection<T> keys, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.getAll");
+	}
+
+	default void removeAll(java.util.Collection<? extends K> keys) {
+		throw UnsupportedFeatureException.notIntroduced("Region.removeAll");
+	}
+
+	default void removeAll(java.util.Collection<? extends K> keys, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.removeAll");
+	}
+
+	default void localClear() {
+		throw UnsupportedFeatureException.notIntroduced("Region.localClear");
+	}
+
+	default void localDestroy(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localDestroy");
+	}
+
+	default void localDestroy(K key, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localDestroy");
+	}
+
+	default void localInvalidate(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localInvalidate");
+	}
+
+	default void localInvalidate(K key, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localInvalidate");
+	}
+
+	default void localDestroyRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.localDestroyRegion");
+	}
+
+	default void localDestroyRegion(Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localDestroyRegion");
+	}
+
+	default void localInvalidateRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.localInvalidateRegion");
+	}
+
+	default void localInvalidateRegion(Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.localInvalidateRegion");
+	}
+
+	default String getFullPath() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getFullPath");
+	}
+
+	default DriverRegion<?, ?> getParentRegion() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getParentRegion");
+	}
+
+	default DriverRegion<?, ?> getSubregion(String path) {
+		throw UnsupportedFeatureException.notIntroduced("Region.getSubregion");
+	}
+
+	default java.util.Set<DriverRegion<?, ?>> subregions(boolean recursive) {
+		throw UnsupportedFeatureException.notIntroduced("Region.subregions");
+	}
+
+	default DriverRegionEntry<K, V> getEntry(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.getEntry");
+	}
+
+	default java.util.Set<K> keySet() {
+		throw UnsupportedFeatureException.notIntroduced("Region.keySet");
+	}
+
+	default java.util.Collection<V> values() {
+		throw UnsupportedFeatureException.notIntroduced("Region.values");
+	}
+
+	default java.util.Set<java.util.Map.Entry<K, V>> entrySet() {
+		throw UnsupportedFeatureException.notIntroduced("Region.entrySet");
+	}
+
+	default java.util.Set<DriverRegionEntry<?, ?>> entrySet(boolean recursive) {
+		throw UnsupportedFeatureException.notIntroduced("Region.entrySet");
+	}
+
+	default DriverRegionService getRegionService() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getRegionService");
+	}
+
+	default DriverConnection getCache() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getCache");
+	}
+
+	default Object getUserAttribute() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getUserAttribute");
+	}
+
+	default void setUserAttribute(Object value) {
+		throw UnsupportedFeatureException.notIntroduced("Region.setUserAttribute");
+	}
+
+	default DriverCacheStatistics getStatistics() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getStatistics");
+	}
+
+	default RegionMetadata metadata() {
+		throw UnsupportedFeatureException.notIntroduced("Region.metadata");
+	}
+
+	default boolean containsKeyOnServer(K key) {
+		throw UnsupportedFeatureException.notIntroduced("Region.containsKeyOnServer");
+	}
+
+	default java.util.Set<K> keySetOnServer() {
+		throw UnsupportedFeatureException.notIntroduced("Region.keySetOnServer");
+	}
+
+	default int sizeOnServer() {
+		throw UnsupportedFeatureException.notIntroduced("Region.sizeOnServer");
+	}
+
+	default long sizeLongOnServer() {
+		throw UnsupportedFeatureException.notIntroduced("Region.sizeLongOnServer");
+	}
+
+	default boolean isEmptyOnServer() {
+		throw UnsupportedFeatureException.notIntroduced("Region.isEmptyOnServer");
+	}
+
 }

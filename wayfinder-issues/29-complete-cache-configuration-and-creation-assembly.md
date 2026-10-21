@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 17, 19, 20, 23, 24, 26, 27, 28
+Blocked by: 17, 19, 20, 23, 24, 26, 27, 28, 44, 45
 
 # Complete cache configuration and creation assembly
 
@@ -33,3 +33,7 @@ Prerequisites: [Complete region events, listeners and writers](17-complete-regio
 ## Completion
 
 Connection/configuration foundation can express every required legacy cache factory setting without native public types. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+Region-operation follow-up prerequisites: [Region and cache snapshot services SPI](44-region-and-cache-snapshot-services-spi.md); [Region interest registration and subscription SPI](45-region-interest-registration-and-subscription-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.
+
+Region-operation handoff: DriverConnection now extends DriverRegionService while preserving existing defaults. Region service access is typed and native services are adapted without assuming a full cache. DriverRegion.closeRegion maps native Region.close; a close-named method would trigger Spring destroy-method inference and break borrowing. Preserve the existing owner/borrower tests and the new snapshot/subscription blockers. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).

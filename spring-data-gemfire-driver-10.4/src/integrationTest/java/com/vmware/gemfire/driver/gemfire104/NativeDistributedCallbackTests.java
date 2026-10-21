@@ -93,6 +93,60 @@ class NativeDistributedCallbackTests {
 		}
 	}
 
+	@Test
+	void proxyRegionOperationsUseServerStateAndExposePoolRoutingMetadata() throws Exception {
+		try (var server = new Peer("server")) {
+			try (var cache = new ClientCacheFactory().set("log-level", "error")
+				.addPoolServer("localhost", server.port).create()) {
+				var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+				DriverRegion<String, String> region = connection.createClientRegion("distributed",
+					com.vmware.gemfire.driver.spi.config.ClientRegionShortcut.PROXY);
+				assertThat(region.isEmptyOnServer()).isTrue();
+				region.putAll(Map.of("one", "1", "two", "2"));
+				assertThat(region.size()).isZero();
+				assertThat(region.sizeOnServer()).isEqualTo(2); assertThat(region.sizeLongOnServer()).isEqualTo(2L);
+				assertThat(region.containsKeyOnServer("one")).isTrue(); assertThat(region.containsKeyOnServer("absent")).isFalse();
+				assertThat(region.keySetOnServer()).containsExactlyInAnyOrder("one", "two");
+				assertThat(region.getAll(List.of("one", "two"))).containsExactlyInAnyOrderEntriesOf(Map.of("one", "1", "two", "2"));
+				assertThat(region.replace("one", "1", "new")).isTrue();
+				assertThat(region.remove("one", "bad")).isFalse(); assertThat(region.remove("one", "new")).isTrue();
+				region.removeAll(List.of("two")); assertThat(region.isEmptyOnServer()).isTrue();
+				assertThat(region.metadata().dataPolicy()).isEqualTo(com.vmware.gemfire.driver.spi.config.DataPolicy.EMPTY);
+				assertThat(region.metadata().poolName()).isEqualTo(cache.getDefaultPool().getName());
+				assertThat(region.getCache().getPool(region.metadata().poolName())).isNotNull();
+				assertThat(region.getRegionService().getRegion("distributed")).isEqualTo(region);
+			}
+		}
+	}
+
+	@Test void configuredClientRegionCanRouteToADifferentlyNamedServerRegion() throws Exception {
+		try (var server = new Peer("server"); var cache = new ClientCacheFactory().set("log-level", "error")
+			.addPoolServer("localhost", server.port).create()) {
+			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var region = connection.createClientRegion("alias", com.vmware.gemfire.driver.spi.config.ClientRegionShortcut.PROXY,
+				RegionConfiguration.<String, String>builder().serverRegionName("distributed").poolName(cache.getDefaultPool().getName()).build());
+			region.put("routed", "value");
+			assertThat(region.get("routed")).isEqualTo("value"); assertThat(region.containsKeyOnServer("routed")).isTrue();
+			assertThat(region.name()).isEqualTo("alias"); assertThat(region.getAttributes().getPoolName()).isEqualTo(cache.getDefaultPool().getName());
+		}
+	}
+
+	@Test void configuredSocketFactoryCreatesSocketsUsedForRealServerOperations() throws Exception {
+		try (var server = new Peer("server"); var cache = new ClientCacheFactory().set("log-level", "error").create()) {
+			var created = new java.util.concurrent.atomic.AtomicInteger();
+			DriverSocketFactory sockets = () -> { created.incrementAndGet(); return new java.net.Socket(); };
+			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var pool = connection.createPool("custom-sockets", PoolConfiguration.builder()
+				.servers(List.of(new PoolConfiguration.Endpoint("localhost", server.port)))
+				.minimumConnections(0).subscriptionEnabled(true).socketFactory(sockets).build());
+			var region = connection.createClientRegion("socket-alias", com.vmware.gemfire.driver.spi.config.ClientRegionShortcut.PROXY,
+				RegionConfiguration.<String, String>builder().poolName(pool.name()).serverRegionName("distributed").build());
+			region.put("socket", "value"); assertThat(region.get("socket")).isEqualTo("value");
+			assertThat(created.get()).isPositive(); assertThat(pool.configuration().socketFactory()).containsSame(sockets);
+			assertThat(PoolManager.find(pool.name()).getSubscriptionEnabled()).isTrue();
+		}
+	}
+
 	private class Peer implements AutoCloseable {
 		private final Process process;
 		private final ExecutorService reader = Executors.newSingleThreadExecutor();

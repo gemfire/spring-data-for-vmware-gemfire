@@ -36,7 +36,8 @@ class NativePoolTests {
 			try {
 				assertThat(second.getPool(name).name()).isEqualTo(name);
 				assertThatThrownBy(() -> second.createPool(name, config)).isInstanceOf(DriverOperationException.class)
-					.hasCauseInstanceOf(IllegalStateException.class);
+					.hasCauseInstanceOf(IllegalStateException.class)
+					.satisfies(failure -> assertThat(((DriverOperationException) failure).kind()).isEqualTo(com.vmware.gemfire.driver.spi.DriverFailureKind.INVALID_STATE));
 				assertThat(pool.isDestroyed()).isFalse();
 				assertThat(PoolManager.find(name).isDestroyed()).isFalse();
 			}
@@ -73,7 +74,8 @@ class NativePoolTests {
 					.setPoolName(pool.name()).create("attached");
 				try {
 					assertThatThrownBy(pool::destroy).isInstanceOf(DriverOperationException.class)
-						.hasCauseInstanceOf(IllegalStateException.class);
+						.hasCauseInstanceOf(IllegalStateException.class)
+					.satisfies(failure -> assertThat(((DriverOperationException) failure).kind()).isEqualTo(com.vmware.gemfire.driver.spi.DriverFailureKind.INVALID_STATE));
 					assertThat(pool.isDestroyed()).isFalse();
 					assertThat(connection.getPool(pool.name())).isNotNull();
 				}
