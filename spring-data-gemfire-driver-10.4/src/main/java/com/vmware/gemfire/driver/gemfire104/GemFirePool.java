@@ -10,11 +10,12 @@ import java.util.function.Supplier;
 
 import org.apache.geode.cache.client.Pool;
 
-import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverPool;
 import com.vmware.gemfire.driver.spi.PoolConfiguration.Endpoint;
 
 final class GemFirePool implements DriverPool {
+
+	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 
 	private final Pool pool;
 
@@ -34,7 +35,7 @@ final class GemFirePool implements DriverPool {
 	private <T> T invoke(String operation, Supplier<T> action) {
 		try { return action.get(); }
 		catch (RuntimeException failure) {
-			throw new DriverOperationException("GemFire pool operation failed: " + operation, failure);
+			throw exceptions.translate(operation, failure);
 		}
 	}
 }

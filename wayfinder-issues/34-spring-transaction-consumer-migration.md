@@ -19,6 +19,8 @@ Prerequisites: [Transaction lifecycle and callbacks SPI](28-transaction-lifecycl
 - Preserve transaction synchronization, thread association, suspend/resume and existing Spring error classifications.
 - Remove direct native exception checks and native event types from all affected public APIs and tests.
 
+- Exception foundation follow-up: Preserve CannotCreateTransactionException, GemfireTransactionCommitException and NoTransactionException phase behavior while replacing native transaction catches and writer veto signatures. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Run Spring @Transactional/programmatic transaction scenarios with commit/rollback, propagation/suspension, listener/writer failures and cleanup.

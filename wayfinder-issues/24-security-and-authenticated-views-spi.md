@@ -21,6 +21,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Replace the public `ClientCacheFactoryBean.JndiDataSource` generic `List<ConfigProperty>` payload with typed native-free name/type/value configuration. Both constructors and all six accessors are in the [coverage matrix](../wayfinder-impl/coverage/README.md); treating this internal class as opaque would lose a public configuration contract.
 
+- Exception foundation follow-up: Preserve authentication failure/expiry versus authorization distinctions and typed principal/security payloads. Cache binding retains its separate bind-failure contract; do not inspect native causes in Spring. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Use native authenticated client/server tests for successful and rejected authentication, user separation and view closure.

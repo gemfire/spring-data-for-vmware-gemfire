@@ -48,6 +48,10 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 - [Whole-module migration boundary enforcement](../wayfinder-issues/15-whole-module-migration-boundary-enforcement.md) — normal verification rejects source/resource/classpath and architecture regressions against an owned, shrinking baseline; 18 fixture tests pass, while strict verification correctly rejects the remaining native boundaries.
 
+- [Driver exception semantics and translation](../wayfinder-issues/16-driver-exception-semantics-and-translation.md) — typed failure categories, sanitized native mapping and native-free Spring translation preserve cause/outcome distinctions; 409 tests and full source compilation pass, with payload and consumer obligations retained under open owners.
+
+- [Complete region events, listeners and writers](../wayfinder-issues/17-complete-region-events-listeners-and-writers.md) — full callback contracts, lazy payloads and native/mock registration/lifecycle are implemented; real remote/role/serialization/live fixtures and 430 behavior tests pass, with broader reachable contracts and Spring adoption retained downstream.
+
 ## Not yet specified
 
 Known implementation gaps in Steps 3–7 now have explicit tickets, indexed by the [SPI gap closure implementation plan](spi-gap-closure-plan.md). They are no longer unspecified backlog. Member-level inventory may reveal additional reachable native surfaces or require splitting a large implementation group; create precise owned blocking tickets when that evidence appears, without losing the parent requirements.

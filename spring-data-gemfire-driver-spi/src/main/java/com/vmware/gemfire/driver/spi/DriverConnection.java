@@ -16,6 +16,19 @@ import com.vmware.gemfire.driver.spi.config.RegionShortcut;
  */
 public interface DriverConnection extends AutoCloseable {
 
+	/** Install injected callbacks before creation, so region-create notifications are observable. */
+	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.createRegionWithCallbacks");
+	}
+
+	/** Client creation supports listeners. Native 10.4 cannot install a loader/writer before creation;
+	 * use the region setters afterward, or receive an explicit unsupported failure here.
+	 */
+	default <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.createClientRegionWithCallbacks");
+	}
+
+
 	/**
 	 * Creates a named pool on an open CLIENT connection. Requires a nonblank name and nonnull
 	 * configuration. Duplicate creation fails; it never adopts an existing pool. Native registry

@@ -21,6 +21,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Include `CqStatusListener` connection/disconnection callbacks and inherited declarative initialization even though Spring never invokes these application callbacks directly; see the [coverage matrix](../wayfinder-impl/coverage/README.md).
 
+- Exception foundation follow-up: Preserve CQ closed/existing/query distinctions and listener error payloads with the common failure mapper. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Use native client/server fixtures for initial results, event delivery, listener errors and CQ start/stop/close behavior.

@@ -19,6 +19,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 - Support application-supplied functions/collectors through SPI types, including native context/member/region values reachable from their signatures.
 - Delegate native operations without strengthening ordering/concurrency guarantees; document local mock execution and reject unavailable distribution/retry semantics.
 
+- Exception foundation follow-up: Preserve native function exception collections through typed SPI payloads and result metadata; expose no-result state without requiring Spring to parse exception messages. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Test native registration and each required target kind, result collection, timeout/errors, arguments/filters and callback payloads.

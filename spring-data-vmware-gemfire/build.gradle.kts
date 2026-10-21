@@ -251,6 +251,11 @@ tasks.register<Jar>("testJar") {
 // Transitional verification of the actual migrated sources. These source sets do not inherit
 // main/test's native dependencies; expand their inventory as the migration advances.
 val spiCacheSourceFiles = listOf(
+  "org/springframework/data/gemfire/GemfireExceptionTranslator.java",
+  "org/springframework/data/gemfire/GemfireQueryException.java",
+  "org/springframework/data/gemfire/GemfireIndexException.java",
+  "org/springframework/data/gemfire/GemfireCancellationException.java",
+  "org/springframework/data/gemfire/GemfireSystemException.java",
   "org/springframework/data/gemfire/DriverConnectionFactoryBean.java",
   "org/springframework/data/gemfire/DriverPoolFactoryBean.java",
   "org/springframework/data/gemfire/CacheResolver.java",
@@ -270,6 +275,7 @@ val spiCacheSourceFiles = listOf(
   "org/springframework/data/gemfire/util/RegionPaths.java"
 )
 val spiCacheTestFiles = listOf(
+  "org/springframework/data/gemfire/GemfireExceptionTranslatorTests.java",
   "org/springframework/data/gemfire/DriverConnectionFactoryBeanTests.java",
   "org/springframework/data/gemfire/DriverPoolFactoryBeanTests.java",
   "org/springframework/data/gemfire/support/InjectedPoolIntegrationTests.java",

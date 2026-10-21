@@ -12,6 +12,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
 
 /**
  * Exposes a single, explicitly initialized driver connection to Spring consumers.
@@ -34,7 +36,9 @@ import org.springframework.util.Assert;
  * <p>Synchronization protects only this factory's lifecycle, not operations on its product.
  */
 public final class DriverConnectionFactoryBean
-		implements FactoryBean<DriverConnection>, InitializingBean, DisposableBean {
+		implements FactoryBean<DriverConnection>, InitializingBean, DisposableBean, PersistenceExceptionTranslator {
+
+	private final GemfireExceptionTranslator exceptionTranslator = new GemfireExceptionTranslator();
 
 	private enum State { NEW, INITIALIZING, READY, FAILED, DESTROYED }
 
@@ -113,6 +117,12 @@ public final class DriverConnectionFactoryBean
 		connection = null;
 		state = State.DESTROYED;
 		if (owned != null) owned.close();
+	}
+
+	/** Allows Spring repository exception advice to discover translation through the connection factory. */
+	@Override
+	public DataAccessException translateExceptionIfPossible(RuntimeException failure) {
+		return exceptionTranslator.translateExceptionIfPossible(failure);
 	}
 
 	private void requireState(State expected) {

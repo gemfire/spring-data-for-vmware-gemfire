@@ -1,23 +1,20 @@
 /*
- * Copyright 2022-2024 Broadcom. All rights reserved.
+ * Copyright 2022-2026 Broadcom. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 package org.springframework.data.gemfire;
-
-import org.apache.geode.CancelException;
 
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 
-/**
- * GemFire-specific class for exceptions caused by system cancellations.
- *
- * @author Costin Leau
- */
+/** Cache or distributed-system cancellation. Native causes are diagnostic only, never a public type contract. */
 @SuppressWarnings("serial")
 public class GemfireCancellationException extends InvalidDataAccessResourceUsageException {
 
-	public GemfireCancellationException(CancelException ex) {
-		super(ex.getMessage(), ex);
+	public GemfireCancellationException(Throwable cause) {
+		this(cause.getMessage(), cause);
+	}
+
+	public GemfireCancellationException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

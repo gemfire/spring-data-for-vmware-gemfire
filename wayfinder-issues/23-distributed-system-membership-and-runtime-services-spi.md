@@ -19,6 +19,10 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 - Provide explicit native-boundary replacements for internal serialization/JNDI/runtime accesses as required; never expose native internal classes or add global Spring/driver registries.
 - The [coverage matrix](../wayfinder-impl/coverage/README.md) confirms public Cache reachability of server/WAN/queue APIs. Integrate the blocking [Cache-server lifecycle and application callbacks SPI](42-cache-server-lifecycle-and-callbacks-spi.md) and [WAN and asynchronous queue contracts and callbacks SPI](43-wan-and-async-queue-contracts-spi.md); these are required contracts, not unresolved scope. Preserve typed runtime discovery and service access without native implementation exposure.
 
+- Exception foundation follow-up: Complete assigned native exception constructor/member equivalents and system/lease failure emission under the exception coverage rows. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: Reuse DriverMember/DriverRole and the event mapper's identity/metadata views. Durable client attributes are currently immutable event metadata; mutable attributes and full distributed runtime contracts remain here. Real membership/role callback fixtures already exist, including the 10.4 RoleEvent Set<String>/Role payload discrepancy; see [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 - Verify actual connectedness and membership operations natively; cache-not-closed must not stand in for distributed connectivity.

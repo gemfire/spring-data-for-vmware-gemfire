@@ -8,12 +8,16 @@ import org.apache.geode.cache.CacheLoader;
 import org.apache.geode.cache.LoaderHelper;
 
 import com.vmware.gemfire.driver.spi.DriverCacheLoader;
-import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
+import com.vmware.gemfire.driver.spi.DriverFailureKind;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
+import com.vmware.gemfire.driver.spi.GemFireDriverException;
+import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
 import com.vmware.gemfire.driver.spi.DriverRegion;
 
 /** The native callback boundary; no native helper or region escapes into application callbacks. */
 final class GemFireCacheLoader<K, V> implements CacheLoader<K, V> {
+
+	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 
 	private final DriverCacheLoader<K, V> delegate;
 
@@ -21,23 +25,45 @@ final class GemFireCacheLoader<K, V> implements CacheLoader<K, V> {
 
 	DriverCacheLoader<K, V> delegate() { return delegate; }
 
-	@Override
-	public V load(LoaderHelper<K, V> helper) {
-		return delegate.load(new DriverLoaderHelper<>() {
-			@Override public K getKey() { return helper.getKey(); }
-			@Override public DriverRegion<K, V> getRegion() { return new GemFireRegion<>(helper.getRegion()); }
-			@Override public Object getArgument() { return helper.getArgument(); }
-			@Override public V netSearch(boolean doNetLoad) {
-				try {
-					return helper.netSearch(doNetLoad);
-				}
-				catch (RuntimeException ex) {
-					throw new DriverOperationException("GemFire loader operation failed: netSearch", ex);
-				}
-			}
-		});
+	@Override public void init(java.util.Properties properties) {
+		try { delegate.init(properties); }
+		catch (RuntimeException failure) { throw exceptions.translate("Loader.init", failure); }
+	}
+
+	@Override public void initialize(org.apache.geode.cache.Cache cache, java.util.Properties properties) {
+		try { delegate.initialize(new GemFireConnection(cache, com.vmware.gemfire.driver.spi.CacheConfiguration.Mode.PEER), properties); }
+		catch (RuntimeException failure) { throw exceptions.translate("Loader.initialize", failure); }
 	}
 
 	@Override
-	public void close() { delegate.close(); }
+	public V load(LoaderHelper<K, V> helper) {
+		try {
+			return delegate.load(new DriverLoaderHelper<>() {
+				@Override public K getKey() { return helper.getKey(); }
+				@Override public DriverRegion<K, V> getRegion() { return new GemFireRegion<>(helper.getRegion()); }
+				@Override public Object getArgument() { return helper.getArgument(); }
+				@Override public V netSearch(boolean doNetLoad) {
+					try {
+						return helper.netSearch(doNetLoad);
+					}
+					catch (RuntimeException ex) {
+						throw exceptions.translate("LoaderHelper.netSearch", ex);
+					}
+				}
+			});
+		}
+		catch (GemFireDriverException failure) { throw failure; }
+		catch (RuntimeException failure) {
+			throw new DriverOperationException(DriverFailureKind.LOADER_FAILURE, "Cache loader failed", failure);
+		}
+	}
+
+	@Override
+	public void close() {
+		try { delegate.close(); }
+		catch (GemFireDriverException failure) { throw failure; }
+		catch (RuntimeException failure) {
+			throw new DriverOperationException(DriverFailureKind.LOADER_FAILURE, "Cache loader cleanup failed", failure);
+		}
+	}
 }

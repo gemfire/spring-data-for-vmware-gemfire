@@ -20,6 +20,8 @@ Prerequisites: [Complete pool, default-cache and durable SPI](20-complete-pool-d
 - Replace global/static registration guards and native factory initializer hooks; preserve all matrix-listed settings, named/default pool distinctions and resource ownership.
 - Handle Spring Test's compile coupling to removed initializer/factory types concretely while keeping that separate module's native implementation outside this migration's scope; assign remaining test-helper usage to the test migration ticket.
 
+- Exception foundation follow-up: Migrate remaining cache-factory native exception dispatch and authentication/pool declarations; use the connection factory/common translator for Spring repository advice. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Exercise existing public Java/annotation/namespace entry points through driver-backed templates, regions, functions, CQ and transactions.

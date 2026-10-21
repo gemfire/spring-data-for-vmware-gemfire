@@ -448,7 +448,7 @@ def main():
                                         else "api-edges.tsv#") + row["native_type"])
         row["required_behavior"] = policy["internal_boundaries"].get(
             row["native_type"], policy["behavior"][str(owner(row["native_type"]))])
-        row["consumer_owner"] = ticket(policy["consumer_owner"][str(owner(row["native_type"]))])
+        row.setdefault("consumer_owner", ticket(policy["consumer_owner"][str(owner(row["native_type"]))]))
         assert row["status"] in {"missing", "partial", "implemented", "removed"}
         if row["status"] == "implemented":
             assert row["spi"] and row["native_impl"] != "pending" and not row["tests"].startswith("pending")

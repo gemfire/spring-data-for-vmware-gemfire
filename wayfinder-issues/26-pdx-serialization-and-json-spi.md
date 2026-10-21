@@ -21,6 +21,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Include native `JsonDocument`/`JsonDocumentFactory`, writable PDX, instance factories, unread fields and `ReflectionBasedAutoSerializer` hooks found through public signatures/callback specialization in the [coverage matrix](../wayfinder-impl/coverage/README.md).
 
+- Exception foundation follow-up: Complete serialization/JSON failure emission and assigned exception constructor/member equivalents without leaking native result or throwable type contracts. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Verify native round trips, schema/type/identity handling, application serializer callbacks and JSON conversion/error behavior.

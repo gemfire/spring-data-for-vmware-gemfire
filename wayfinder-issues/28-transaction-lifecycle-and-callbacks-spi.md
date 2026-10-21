@@ -19,6 +19,10 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 - Preserve native thread association and supported cache-mode behavior without manufacturing stronger transaction guarantees.
 - Specify actual mock transaction support or typed unsupported behavior; existing stored-only writer settings must not be mistaken for implemented registration.
 
+- Exception foundation follow-up: Preserve transaction veto/conflict/incomplete/general distinctions and checked transaction-writer failures through actual transaction callbacks. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: Reuse DriverTransactionId equality/member identity from entry events. Native transaction identity is tested through real commit callbacks; externalization and runtime transaction operations remain here. See [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 - Verify native commit/rollback, conflict/failure, suspension/resumption and listener/writer callbacks.

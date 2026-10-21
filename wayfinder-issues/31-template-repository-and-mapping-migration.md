@@ -19,6 +19,8 @@ Prerequisites: [Driver exception semantics and translation](16-driver-exception-
 - Migrate MappingPdxSerializer, serializer helpers and JSONRegionAdvice, plus native-backed mapping annotations and result conversions.
 - Use the common exception translator and injected services; remove native Region/query/PDX references from this complete consumer group and its tests.
 
+- Exception foundation follow-up: Migrate GemfireAccessor, GemfireTemplate and GemfireCallback from native exception dispatch to the common SPI/Spring translator and retain callback/query outcomes. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Verify repository CRUD, paging/query/result conversion, template bulk/conditional operations, user callbacks and mapping/JSON round trips.

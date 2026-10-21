@@ -19,6 +19,10 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 - Expose lifecycle operations needed by real users and listener tests, plus typed metadata needed for client pool association and query routing. Query execution itself is owned by Query and index SPI.
 - Ensure methods involving callbacks use the full event/listener/writer contracts and that unavailable network operations fail explicitly.
 
+- Exception foundation follow-up: Preserve typed exception payloads for EntryExistsException old value, existing region handles and region paths; failure kinds alone do not complete these member rows. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: The callback foundation adds callback-argument put, invalidate/destroy, region invalidate/destroy, plus callback lookup/registration. Reuse these typed events and preserve destroy's previous-value result. Complete remaining overloads, inherited Map behavior and event-reachable region contracts without losing callback timing; see [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 - Cover required CRUD/bulk/conditional operations, callback arguments, entry/region lifecycle, destroyed handles and return semantics on mock/native where supported.

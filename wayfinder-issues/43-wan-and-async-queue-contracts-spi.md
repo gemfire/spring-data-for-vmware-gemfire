@@ -16,6 +16,10 @@ Implement Cache-accessible gateway sender/receiver and asynchronous event queue 
 
 Use the [coverage matrix and update procedure](../wayfinder-impl/coverage/README.md) to identify every owned member, including inherited contracts. Follow the [shared completion requirements](../wayfinder-impl/spi-gap-closure-plan.md#shared-completion-requirements) and the [signed-off specification](../wayfinder/technical-spec.md). Existing public exposure through a native Cache is evidence of required capability, even when Spring itself never calls an operation. Do not silently narrow application APIs.
 
+- Exception foundation follow-up: Preserve gateway failure resource semantics and finish assigned exception contract rows during WAN/queue execution integration. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: DriverTimestampedEntryEvent and native lazy timestamp/value views now exist with payload fixtures. Actual WAN conflict resolver delivery and gateway event contracts remain here; do not mistake fixture mapping for WAN integration coverage. Reuse DriverOperation and callback failure semantics; see [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 Verify complete typed contracts, native delegation, callback payload/lifecycle and exception mapping. Exercise real native server/cluster behavior in integration tests and honest mock unsupported behavior in shared contract tests. Update every owned matrix row with SPI/native/mock/test evidence and compile affected consumers.

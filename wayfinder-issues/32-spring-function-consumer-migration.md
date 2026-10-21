@@ -19,6 +19,8 @@ Prerequisites: [Function registration, execution and results SPI](25-function-re
 - Remove native PoolResolver and static FunctionService/cache/member lookup dependencies; use injected pool/connection/member services.
 - Update error translation, schema declarations and all affected test fixtures without native-backed public overloads.
 
+- Exception foundation follow-up: Migrate native function exception subclasses, result-collection errors and timeout/interruption handling; replace the existing no-result message-substring workaround with typed metadata. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Run actual Spring proxy/template/registration scenarios on mock/native supported paths and native distributed target fixtures.

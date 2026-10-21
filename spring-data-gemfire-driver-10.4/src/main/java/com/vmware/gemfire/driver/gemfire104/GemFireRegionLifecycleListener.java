@@ -14,8 +14,10 @@ import com.vmware.gemfire.driver.spi.DriverRegionLifecycleListener;
 final class GemFireRegionLifecycleListener<K, V> extends CacheListenerAdapter<K, V> {
 
 	private final DriverRegionLifecycleListener delegate;
+	private final org.apache.geode.cache.Region<K, V> region;
 
-	GemFireRegionLifecycleListener(DriverRegionLifecycleListener delegate) {
+	GemFireRegionLifecycleListener(DriverRegionLifecycleListener delegate, org.apache.geode.cache.Region<K, V> region) {
+		this.region = region;
 		this.delegate = Objects.requireNonNull(delegate, "Region lifecycle listener must not be null");
 	}
 
@@ -25,7 +27,11 @@ final class GemFireRegionLifecycleListener<K, V> extends CacheListenerAdapter<K,
 	}
 
 	@Override
-	public void close() { delegate.close(); }
+	public void close() {
+		// General listener reinitialization retains this registration. Native init closes even retained
+		// callbacks; the resolver's region-owned lifetime ends only with region/cache destruction.
+		if (region.isDestroyed() || region.getRegionService().isClosed()) delegate.close();
+	}
 
 	// Native registration deduplicates by equality. Preserve callback identity across SPI handles.
 	@Override

@@ -7,6 +7,61 @@ package com.vmware.gemfire.driver.spi;
 /** A thin region handle. Values, failures and concurrency follow the underlying native region. */
 public interface DriverRegion<K, V> {
 
+	/** General callbacks are managed independently of resolver lifecycle registrations.
+	 * Identity, order, replacement and cleanup follow native registration semantics.
+	 * Null removes writers/loaders; null listeners are invalid. */
+	default void addCacheListener(DriverCacheListener<K, V> listener) {
+		throw UnsupportedFeatureException.notIntroduced("Region.addCacheListener");
+	}
+
+	default void removeCacheListener(DriverCacheListener<K, V> listener) {
+		throw UnsupportedFeatureException.notIntroduced("Region.removeCacheListener");
+	}
+
+	/** Replace the general listener list. Retained instances are closed too, as in native init.
+	 * A null or empty list removes all general listeners; resolver lifecycle registrations remain active.
+	 * Duplicate list entries are retained. Registration adds no atomicity guarantee.
+	 */
+	default void initCacheListeners(java.util.List<DriverCacheListener<K, V>> listeners) {
+		throw UnsupportedFeatureException.notIntroduced("Region.initCacheListeners");
+	}
+
+	default java.util.List<DriverCacheListener<K, V>> getCacheListeners() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getCacheListeners");
+	}
+
+	default void setCacheWriter(DriverCacheWriter<K, V> writer) {
+		throw UnsupportedFeatureException.notIntroduced("Region.setCacheWriter");
+	}
+
+	default DriverCacheWriter<K, V> getCacheWriter() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getCacheWriter");
+	}
+
+	default DriverCacheLoader<K, V> getCacheLoader() {
+		throw UnsupportedFeatureException.notIntroduced("Region.getCacheLoader");
+	}
+
+	default void invalidate(K key, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.invalidate");
+	}
+
+	default void invalidateRegion(Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.invalidateRegion");
+	}
+
+	default V destroy(K key, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.destroy");
+	}
+
+	default void destroyRegion(Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.destroyRegion");
+	}
+
+	default V put(K key, V value, Object argument) {
+		throw UnsupportedFeatureException.notIntroduced("Region.putWithArgument");
+	}
+
 	/**
 	 * Registers a nonnull lifecycle listener. Re-registering the same listener instance on the
 	 * same underlying region is a no-op, including through another handle. Distinct instances

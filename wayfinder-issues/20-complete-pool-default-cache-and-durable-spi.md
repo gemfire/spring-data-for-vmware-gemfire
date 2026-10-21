@@ -19,6 +19,8 @@ Prerequisites: [Named driver pool creation and ownership](13-named-driver-pool-c
 - Model durable ID/timeout, readiness and keep-alive lifecycle with native semantics and explicit ownership; reject removed/stored-only options rather than silently accepting them.
 - Provide typed configuration merging/inspection required to replace native configuration-view PoolAdapters. Leave query-service operations to Query and index SPI and authenticated-view operations to Security and authenticated views SPI.
 
+- Exception foundation follow-up: Use typed connectivity/resource/argument/state failures for pool operations; preserve distinct native errors without classifying by message. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Verify all configuration mappings and precedence using native observations, including mixed endpoints, defaults, duplicate names and unsupported removed settings.

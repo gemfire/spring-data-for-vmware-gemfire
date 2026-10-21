@@ -21,6 +21,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Include reachable rebalance/restore-redundancy factories, operations and result payloads, not just heap threshold setters; the [coverage matrix](../wayfinder-impl/coverage/README.md) records the required surface.
 
+- Exception foundation follow-up: Preserve disk failure metadata including the remote flag through a native-free exception payload, as well as the resource-failure category. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Use native temporary-directory tests for store creation/lookup, persistence/recovery where required, invalid configuration and cleanup.

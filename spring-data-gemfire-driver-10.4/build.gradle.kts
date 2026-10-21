@@ -54,6 +54,7 @@ val integrationTestTask = tasks.register<Test>("integrationTest") {
   maxParallelForks = 1
   forkEvery = 1
   systemProperty("expectedGemFireVersion", resolvedNativeVersion)
+  systemProperty("nativeFixtureClasspath", integrationTest.runtimeClasspath.asPath)
   jvmArgs("--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
     "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.nio=ALL-UNNAMED")
 }

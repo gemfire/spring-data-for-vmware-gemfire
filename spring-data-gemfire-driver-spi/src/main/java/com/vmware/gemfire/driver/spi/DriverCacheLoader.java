@@ -10,7 +10,7 @@ package com.vmware.gemfire.driver.spi;
  * removal or region/cache shutdown closes the installed loader. Callers implement both
  * operations explicitly; the SPI adds no callback synchronization or exception suppression.
  */
-public interface DriverCacheLoader<K, V> extends AutoCloseable {
+public interface DriverCacheLoader<K, V> extends DriverCacheCallback {
 
 	V load(DriverLoaderHelper<K, V> helper);
 

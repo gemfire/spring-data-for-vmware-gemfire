@@ -1502,10 +1502,8 @@ org.apache.geode.cache.query.Index#getRegion()Lorg/apache/geode/cache/Region;	or
 org.apache.geode.cache.query.Index#getStatistics()Lorg/apache/geode/cache/query/IndexStatistics;	org.apache.geode.cache.query.IndexStatistics	member-signature
 org.apache.geode.cache.query.Index#getType()Lorg/apache/geode/cache/query/IndexType;	org.apache.geode.cache.query.IndexType	member-signature
 org.apache.geode.cache.query.IndexCreationException	org.apache.geode.cache.query.IndexCreationException	frozen-baseline-root
-org.apache.geode.cache.query.IndexCreationException	org.apache.geode.cache.query.IndexCreationException	spring-root
 org.apache.geode.cache.query.IndexCreationException#<type>	org.apache.geode.cache.query.QueryException	type-hierarchy-or-bound
 org.apache.geode.cache.query.IndexExistsException	org.apache.geode.cache.query.IndexExistsException	frozen-baseline-root
-org.apache.geode.cache.query.IndexExistsException	org.apache.geode.cache.query.IndexExistsException	spring-root
 org.apache.geode.cache.query.IndexExistsException#<type>	org.apache.geode.cache.query.QueryException	type-hierarchy-or-bound
 org.apache.geode.cache.query.IndexInvalidException	org.apache.geode.cache.query.IndexInvalidException	frozen-baseline-root
 org.apache.geode.cache.query.IndexInvalidException	org.apache.geode.cache.query.IndexInvalidException	spring-root
@@ -1514,7 +1512,6 @@ org.apache.geode.cache.query.IndexMaintenanceException	org.apache.geode.cache.qu
 org.apache.geode.cache.query.IndexMaintenanceException	org.apache.geode.cache.query.IndexMaintenanceException	spring-root
 org.apache.geode.cache.query.IndexMaintenanceException#<type>	org.apache.geode.cache.CacheRuntimeException	type-hierarchy-or-bound
 org.apache.geode.cache.query.IndexNameConflictException	org.apache.geode.cache.query.IndexNameConflictException	frozen-baseline-root
-org.apache.geode.cache.query.IndexNameConflictException	org.apache.geode.cache.query.IndexNameConflictException	spring-root
 org.apache.geode.cache.query.IndexNameConflictException#<type>	org.apache.geode.cache.query.QueryException	type-hierarchy-or-bound
 org.apache.geode.cache.query.IndexStatistics	org.apache.geode.cache.query.IndexStatistics	frozen-baseline-root
 org.apache.geode.cache.query.IndexStatistics	org.apache.geode.cache.query.IndexStatistics	spring-root

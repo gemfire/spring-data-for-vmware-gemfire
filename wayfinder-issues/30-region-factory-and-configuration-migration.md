@@ -19,6 +19,10 @@ Prerequisites: [Complete region operations and metadata SPI](18-complete-region-
 - Preserve creation versus lookup, named/default pool semantics, callbacks/interest registration and destruction dependencies; use injected driver connections and pool handles.
 - Update region namespace schema exports and tests. Remove native PoolResolver dependence from migrated region consumers so pool resolver cutover can happen later without an unwrap.
 
+- Exception foundation follow-up: Migrate DefinedIndexesApplicationListener error handling with typed failed-index payloads; preserve callback and disk failure outcomes during configuration. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: Use DriverCacheListener/DriverCacheWriter and their explicit no-op/specialized adapters as the target for composable callbacks, annotations/XML and factory signatures. RegionCallbacks permits creation-time listener delivery. Preserve distinct declarable initialization, callback instance identity, replacement and resolver lifecycle ownership; see [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 - Run Java, annotation and namespace region configuration tests against mock/native as applicable, including every required configuration/callback family.

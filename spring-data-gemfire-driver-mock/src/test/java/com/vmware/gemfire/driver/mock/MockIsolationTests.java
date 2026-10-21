@@ -25,6 +25,21 @@ import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 class MockIsolationTests {
 
 	@Test
+	void distributedListenersAreRejectedBeforeRegistrationOrCreation() {
+		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(CacheConfiguration.Mode.PEER, Map.of()))) {
+			var listener = new com.vmware.gemfire.driver.spi.DriverRegionRoleListenerAdapter<String, String>() { };
+			DriverRegion<String, String> region = connection.createRegion("local", RegionShortcut.LOCAL);
+			assertThatThrownBy(() -> region.addCacheListener(listener)).isInstanceOfSatisfying(UnsupportedFeatureException.class,
+				e -> assertThat(e.feature()).isEqualTo("Region.distributedListeners"));
+			assertThat(region.getCacheListeners()).isEmpty();
+			assertThatThrownBy(() -> connection.createRegion("rejected", RegionShortcut.LOCAL,
+				new com.vmware.gemfire.driver.spi.RegionCallbacks<>(java.util.List.of(listener), null, null)))
+				.isInstanceOf(UnsupportedFeatureException.class);
+			assertThat(connection.getRegion("rejected")).isNull();
+		}
+	}
+
+	@Test
 	void connectionsHaveIndependentStateEvenWithinOneDriver() {
 		MockGemFireDriver driver = new MockGemFireDriver();
 		CacheConfiguration config = new CacheConfiguration(CacheConfiguration.Mode.PEER, Map.of());
@@ -75,8 +90,7 @@ class MockIsolationTests {
 				@Override public String load(DriverLoaderHelper<String, String> helper) { return helper.netSearch(true); }
 				@Override public void close() { }
 			});
-			assertThatThrownBy(() -> region.get("key")).isInstanceOf(DriverOperationException.class)
-				.cause().isInstanceOfSatisfying(UnsupportedFeatureException.class, ex -> {
+			assertThatThrownBy(() -> region.get("key")).isInstanceOfSatisfying(UnsupportedFeatureException.class, ex -> {
 					assertThat(ex.feature()).isEqualTo("LoaderHelper.netSearch");
 					assertThat(ex.reason()).isEqualTo(UnsupportedFeatureException.Reason.NOT_INTRODUCED);
 				});
@@ -101,6 +115,25 @@ class MockIsolationTests {
 			.hasMessageNotContaining("callback-secret");
 		connection.close();
 		assertThat(connection.isClosed()).isTrue();
+		assertThat(closes.get()).isEqualTo(2);
+	}
+
+	@Test
+	void sharedTypedCleanupFailureDoesNotSkipOtherLoadersOrSuppressItself() {
+		DriverConnection connection = new MockGemFireDriver().connect(
+			new CacheConfiguration(CacheConfiguration.Mode.PEER, Map.of()));
+		var failure = UnsupportedFeatureException.notIntroduced("loader.cleanup");
+		AtomicInteger closes = new AtomicInteger();
+		for (String name : new String[] { "first", "second" }) {
+			connection.createRegion(name, RegionShortcut.LOCAL).setCacheLoader(new DriverCacheLoader<>() {
+				@Override public Object load(DriverLoaderHelper<Object, Object> helper) { return null; }
+				@Override public void close() { closes.incrementAndGet(); throw failure; }
+			});
+		}
+		assertThatThrownBy(connection::close).isSameAs(failure);
+		assertThat(closes.get()).isEqualTo(2);
+		assertThat(failure.getSuppressed()).isEmpty();
+		connection.close();
 		assertThat(closes.get()).isEqualTo(2);
 	}
 

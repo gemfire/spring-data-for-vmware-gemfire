@@ -19,6 +19,8 @@ Prerequisites: [Region factory and configuration migration](30-region-factory-an
 - Finish annotation defaults, native-backed wrapper enums, resource/schema exports and initializer leftovers. Preserve requirements via matrix rows rather than deleting APIs solely to reach zero imports.
 - Delete temporary native compatibility code and redundant staging factories after all callers have moved; investigate every residual row and assign blocking children if work exceeds this ticket.
 
+- Exception foundation follow-up: Retire final GemfireCacheUtils/CacheUtils native dispatch/reflection after the assigned callers move. Complete remaining general exception constructor/root-cause/serialization-equivalent coverage rows. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Regenerate the whole-module audit and verify zero required native production code/type contracts remain, including reflective class strings.

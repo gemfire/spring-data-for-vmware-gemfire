@@ -21,6 +21,8 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Cover inherited collection methods, `Struct` projection results and `StructType`, as well as query/result/index methods in the [coverage matrix](../wayfinder-impl/coverage/README.md). `Query.execute` returning Object must not hide typed projection payload requirements.
 
+- Exception foundation follow-up: Preserve MultiIndexCreationException failed-index names and exception map through typed SPI payloads; retain query/index failure kinds and Spring outcomes. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
 ## Required validation
 
 - Run native query/result/index scenarios, including parameters, empty/scalar/collection/struct results and error categories.

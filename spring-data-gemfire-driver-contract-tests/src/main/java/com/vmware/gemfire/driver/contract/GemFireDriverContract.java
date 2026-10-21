@@ -28,6 +28,8 @@ import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
 import com.vmware.gemfire.driver.spi.DriverConfiguration;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
+import com.vmware.gemfire.driver.spi.DriverFailureKind;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 import com.vmware.gemfire.driver.spi.DriverRegion;
 import com.vmware.gemfire.driver.spi.DriverPool;
 import com.vmware.gemfire.driver.spi.PoolConfiguration;
@@ -45,7 +47,7 @@ import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
  * Native runs use isolated local regions; no locator/server or fixed port is required. Each driver
  * declares its unsupported methods explicitly; adding a default SPI method without a probe fails.
  */
-public abstract class GemFireDriverContract {
+public abstract class GemFireDriverContract extends RegionCallbackContract {
 
 	protected abstract String expectedNativeVersion();
 
@@ -174,6 +176,7 @@ public abstract class GemFireDriverContract {
 			inPool(pool -> assertThat(pool.isDestroyed()).isFalse())));
 		probes.put(DriverPool.class.getMethod("destroy"), new Probe("Pool.destroy", () ->
 			inPool(pool -> { pool.destroy(); assertThat(pool.isDestroyed()).isTrue(); })));
+		probes.putAll(callbackProbes());
 		return probes;
 	}
 
@@ -301,10 +304,38 @@ public abstract class GemFireDriverContract {
 			region.setCacheLoader(loader);
 			assertThatThrownBy(() -> region.get("key", "argument"))
 				.isInstanceOf(DriverOperationException.class).hasRootCause(failure)
-				.hasMessageNotContaining("callback-secret");
+				.hasMessageNotContaining("callback-secret")
+				.satisfies(ex -> assertThat(((DriverOperationException) ex).kind()).isEqualTo(DriverFailureKind.LOADER_FAILURE));
 			assertThat(region.containsKey("key")).isFalse();
 			assertThatThrownBy(() -> region.get(null, "argument")).isInstanceOf(DriverOperationException.class);
 			assertThat(loader.loads.get()).isEqualTo(1);
+		});
+	}
+
+	@Test
+	void loaderUnsupportedAndTypedVetoAreNotReclassifiedOrTreatedAsMisses() {
+		inRegion(region -> {
+			for (RuntimeException failure : new RuntimeException[] {
+				UnsupportedFeatureException.notIntroduced("loader.remote"),
+				UnsupportedFeatureException.removed("loader.remote", expectedNativeVersion()),
+				new DriverOperationException(DriverFailureKind.WRITER_VETO, "Application veto", null) }) {
+				region.setCacheLoader(new RecordingLoader(helper -> { throw failure; }));
+				assertThatThrownBy(() -> region.get("key")).isSameAs(failure);
+				assertThat(region.containsKey("key")).isFalse();
+			}
+		});
+	}
+
+	@Test
+	void duplicateRegionAndInvalidArgumentHaveDistinctSemantics() {
+		inCache(Mode.PEER, connection -> {
+			var region = connection.createRegion("entries", RegionShortcut.LOCAL);
+			assertThatThrownBy(() -> connection.createRegion("entries", RegionShortcut.LOCAL))
+				.isInstanceOfSatisfying(DriverOperationException.class,
+					failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.REGION_EXISTS));
+			assertThatThrownBy(() -> region.get(null))
+				.isInstanceOfSatisfying(DriverOperationException.class,
+					failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.INVALID_ARGUMENT));
 		});
 	}
 

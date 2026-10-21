@@ -21,6 +21,10 @@ Prerequisites: [Complete region events, listeners and writers](17-complete-regio
 
 - Preserve Cache-exposed server, WAN and asynchronous queue entry points using the completed runtime-service children. Assemble the typed contracts from the [coverage matrix](../wayfinder-impl/coverage/README.md); connection creation alone is not a full Cache replacement.
 
+- Exception foundation follow-up: Preserve cache-exists failure payload as an SPI cache/connection handle and retain cancellation/bind semantics. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
+
+- Callback foundation follow-up: DriverDeclarable preserves distinct init(Properties) and initialize(DriverConnection, Properties) hooks; registration is deliberately not automatic initialization. Assemble injected callbacks with explicit initialization in native-equivalent order and preserve borrowed connection ownership. Client creation currently accepts listeners only; native loader/writer setters remain post-creation operations. See [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
+
 ## Required validation
 
 - Exercise complete Java/ordinary XML connection configurations with native and mock where supported, including precedence, borrowed handles and refresh failure cleanup.
