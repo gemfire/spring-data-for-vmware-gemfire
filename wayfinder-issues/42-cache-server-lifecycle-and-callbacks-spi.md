@@ -8,6 +8,6 @@ Resolution: superseded by client-only scope; not implemented
 
 The user explicitly requested a client-only backlog and removal of existing server-side SPI work. This server-hosting requirement is retired by the [approved scope correction](../wayfinder-impl/client-only-scope.md). Native Cache reachability alone does not make server hosting or WAN/queue administration a required client capability.
 
-[Remove server-only SPI and reconcile client scope](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal of existing code and coverage reclassification. Ticket 42 was in progress: its uncommitted server adapters and contract tests are unfinished cleanup input, not accepted implementation.
+[Remove server-only SPI and reconcile client scope](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal of existing code and coverage reclassification. Ticket 42 was in progress; its uncommitted server adapters and contract tests were subsequently discarded during the authorized working-tree cleanup. The client `InterestResultPolicy` value was retained. This does not complete removal of already-committed server APIs or coverage reclassification.
 
 This resolution means superseded, not delivered or behavior-validated. Client operations against servers, client subscriptions and private native server fixtures remain in scope. No active task may depend on delivery of this former server contract.

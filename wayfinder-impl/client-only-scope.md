@@ -23,7 +23,7 @@ Native servers, locators and server functions may exist as private fixtures insi
 
 ## Backlog disposition
 
-- Tickets 42 and 43 are resolved **as superseded**, not implemented. Their former server/WAN requirements are retired. Ticket 42's unfinished working-tree additions are cleanup input.
+- Tickets 42 and 43 are resolved **as superseded**, not implemented. Their former server/WAN requirements are retired. Ticket 42's unfinished server additions were discarded during the authorized working-tree cleanup; its client `InterestResultPolicy` was retained.
 - Ticket 59 removes existing server-only work, including committed foundations and unfinished additions, and reconciles the coverage inventory. It is the next task and blocks all remaining implementation work.
 - Tickets 19, 21, 23–25, 27, 29–32, 34, 44, 47–49 and 54 have narrowed client contracts. Ticket 48 now covers client subscription/interest configuration, not partitions or peer membership.
 - Tickets 20, 22, 26, 33, 35–38, 40–41, 45, 51–52 and 55–58 retain their client goals, with cleanup and client-only acceptance explicit. Resolved foundations remain historical evidence; ticket 59 owns their server-only corrections.

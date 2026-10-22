@@ -29,3 +29,23 @@ Remove the server-side SPI work already introduced and align implementations, co
 ## Completion
 
 Resolve only when existing server-only code and test requirements are removed, retained client behavior passes relevant checks, coverage dispositions are complete and no stale dependency requires implementation of tickets 42/43. If this needs bounded children, add them as blockers and keep this parent open. Full Spring migration, native-free acceptance and all-version integration remain owned by tickets 29–41; completing this cleanup alone does not satisfy those gates. Do not commit or publish without instruction.
+
+## Partial progress — working-tree cleanup
+
+The user authorized committing valid work and removing the rest. Discarded ticket 42's 16 untracked server SPI/adapter/contract/fixture files and reverted its additions to connection APIs, contract inheritance, mock probes and native contract setup. Removed the now-unused member unwrapping helper and the IOException translation added for server startup; existing client socket/transaction IOException behavior remains unchanged. The discarded native fixture pair exercised the removed server-session SPI; existing private native client/server callback fixtures remain.
+
+Retained the native-free `InterestResultPolicy` enum for client registration, with `NativeInterestResultPolicyTests` comparing every policy predicate and the default against native GemFire. This retains a configuration value, not an implementation of client interest registration; tickets 45/48 remain open. Reverted incidental Gradle 9.8.1 and global `10.4.+` overrides; validation uses the committed Gradle 9.7.0 wrapper and an explicit native version pin.
+
+This completes only the unfinished working-tree cleanup in item 3 and the fixture disposition in item 6. Previously committed peer/server APIs (including `RegionShortcut`), consumer migrations and coverage classification remain outstanding; this task stays open.
+
+Validation passed with native **10.4.0-build.3056.df98c835**: 158 JUnit tests (24 SPI, 58 mock, 31 core, 45 focused native), zero failures/errors/skips; mock native-free classpath verification; 32 compiled ABI/stamp fixtures and packaged core/provider stamp checks. The ABI gate correctly reports no released baseline. No full Spring compilation or coverage reclassification is claimed by this bounded cleanup.
+
+```sh
+./gradlew --offline -DgemfireVersion=10.4.0-build.3056.df98c835 \
+  :spring-data-gemfire-driver-spi:test \
+  :spring-data-gemfire-driver-mock:test \
+  :spring-data-gemfire-driver-mock:verifyNativeFreeClasspath \
+  :spring-data-gemfire-driver-10.4:integrationTest \
+  --tests '*NativeInterestResultPolicyTests' \
+  --tests '*GemFire104DriverContractTests' verifyDriverCompatibility
+```
