@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 38, 39
+Blocked by: 38, 39, 59
 
 # Complete driver contract and native integration matrix
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -20,6 +24,8 @@ Prerequisites: [Whole-module native dependency removal](38-whole-module-native-d
 - Keep mock local semantics honest and provider-specific unsupported declarations precise. No missing API is equivalent to an expected unsupported implementation, and no broad exclusion may replace parity evidence.
 
 ## Required validation
+
+Validate each supported native driver against its exact native artifact and the retained client contract, including real server-backed scenarios. Shared mock contracts must not require server hosting. Scope exclusions require evidence and must not count as implemented coverage.
 
 - Run all driver/core/mock/contract and complete Spring suites on the selected matrix, with repeatable service setup/teardown and exact version evidence.
 - Demonstrate coverage checks catch an unrepresented required callback or an untested new interface, not merely an unprobed existing default method.

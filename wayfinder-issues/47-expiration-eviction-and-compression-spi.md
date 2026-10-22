@@ -1,14 +1,18 @@
 Type: task
 Status: open
-Blocked by: 46
+Blocked by: 46, 59
 
 # Expiration, eviction and compression SPI
 
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
+
 ## Question
 
-Implement expiration actions/attributes/reset policies, CustomExpiry and entry contexts, all eviction algorithms/actions/factories/mutators, ObjectSizer and compressor callbacks/defaults. Add region creation/readback/mutation integration. Verify native expiration, eviction, overflow and compression effects plus callback lifecycle; local mock must reject unavailable behavior. Migrate independently separable Spring values/converters and record remaining consumer owners.
+Implement expiration actions/attributes/reset policies, CustomExpiry and entry contexts, client-supported eviction algorithms/actions/factories/mutators, ObjectSizer and compressor callbacks/defaults. Add region creation/readback/mutation integration. Verify native expiration, eviction, overflow and compression effects plus callback lifecycle; local mock must reject unavailable behavior. Migrate independently separable Spring values/converters and record remaining consumer owners.
 
-Required implementation child of [Region configuration, enums, expiration and eviction](19-region-configuration-enums-expiration-and-eviction.md). Apply the [shared completion requirements](../wayfinder-impl/spi-gap-closure-plan.md#shared-completion-requirements). All frozen coverage rows remain required.
+Required implementation child of [Region configuration, enums, expiration and eviction](19-region-configuration-enums-expiration-and-eviction.md). Apply the [shared completion requirements](../wayfinder-impl/spi-gap-closure-plan.md#shared-completion-requirements). All historical rows require a disposition; only client-required rows remain implementation obligations. Exclude peer-only actions/settings through ticket 59.
 
 ## Completion
 

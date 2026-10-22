@@ -1,14 +1,18 @@
 Type: task
 Status: open
-Blocked by: 53
+Blocked by: 53, 59
 
 # PDX callbacks and cache configuration
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
 Child of [PDX, serialization and JSON SPI](26-pdx-serialization-and-json-spi.md). Apply the [shared completion requirements](../wayfinder-impl/spi-gap-closure-plan.md#shared-completion-requirements).
 
-Implement all PdxReader/PdxWriter/PdxUnreadFields/PdxSerializer and application PdxSerializable equivalents, typed cache PDX configuration (readSerialized, ignoreUnreadFields, persistence, disk store, serializer), native adaptation/identity and meaningful local mock behavior. Preserve unread fields across schema evolution, nested callbacks, serializer decline, checked/unchecked errors and cache compatibility. Verify real native round trips and effective peer/client settings. Discover and freeze any required callback types omitted by the initial inventory.
+Implement all PdxReader/PdxWriter/PdxUnreadFields/PdxSerializer and application PdxSerializable equivalents, typed cache PDX configuration (readSerialized, ignoreUnreadFields, persistence, disk store, serializer), native adaptation/identity and meaningful local mock behavior. Preserve unread fields across schema evolution, nested callbacks, serializer decline, checked/unchecked errors and cache compatibility. Verify real native round trips and effective client-cache settings. Discover and freeze any required callback types omitted by the initial inventory.
 
 ## Completion
 

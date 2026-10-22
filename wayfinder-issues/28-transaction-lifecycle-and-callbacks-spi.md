@@ -5,6 +5,9 @@ Blocked by: 14, 16, 17, 18
 
 # Transaction lifecycle and callbacks SPI
 
+
+> Scope amendment (2026-10-22): implementation and test evidence below is historical. The [client-only decision](../wayfinder-impl/client-only-scope.md) supersedes peer/server requirements; [ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal and coverage reconciliation. This ticket does not authorize further server implementation.
+
 ## Question
 
 Provide transaction operations, identifiers and event callbacks required by Spring transaction integration.

@@ -1,24 +1,28 @@
 Type: task
 Status: open
-Blocked by: 18, 26
+Blocked by: 18, 26, 59
 
-# Region and cache snapshot services SPI
+# Client-local snapshot services SPI
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
-Implement the complete region/cache snapshot contract discovered through Region reachability. This is the snapshot portion split from [Complete region operations and metadata SPI](18-complete-region-operations-and-metadata-spi.md), not a scope exclusion.
+Determine and implement the snapshot operations valid for retained client-local regions. Broad Region/Cache reachability alone does not require cluster snapshot administration.
 
 ## Required implementation
 
-- Add typed RegionSnapshotService, CacheSnapshotService, SnapshotOptions, SnapshotFilter and both native format names, preserving their defaults, mutable option behavior and serializable filter contract.
-- Adapt region/service acquisition, file and directory save/load overloads, explicit file-array loads, filter entry views, callback invocation and parallel mode. Preserve checked I/O/class-loading failure semantics and native limitations.
-- Account for legacy Region.saveSnapshot/loadSnapshot stream overloads with verified native behavior; do not mark unsupported or removed from absence of an implementation.
-- Delegate native serialization without introducing another snapshot format. The mock must explicitly reject unavailable native-format behavior unless a verified compatible implementation is supplied.
+- Verify exact-version client availability of region/cache snapshot acquisition, file/stream overloads, formats, filters and options. Record evidence for every historical snapshot row before implementation.
+- Implement required client-local save/load and filter callbacks where supported, preserving native serialization, defaults, checked I/O/class-loading failures and entry/value adaptation.
+- Exclude cluster-wide/partitioned/parallel server administration through ticket 59. Treat unsupported legacy stream methods according to verified native behavior; do not invent a format or silently accept unsupported options.
+- The mock must explicitly reject unavailable native snapshot formats unless verified compatibility is implemented. If no snapshot operation belongs to the retained client contract, record that evidence, resolve as superseded and remove dependent blockers explicitly.
 
 ## Required validation
 
-Real native save/load round trips, filters, callbacks on/off, invalid paths/formats, parallel-mode constraints, cache-wide operation and stream-overload disposition. Retain metadata and serialization ownership from the PDX/serialization ticket.
+Native client-local round trips for retained operations, filter/options/errors and explicit unsupported cases. Private server fixtures may support client tests but must not turn this task into server snapshot management.
 
 ## Completion
 
-Complete every snapshot-owned coverage row. This ticket blocks template/repository migration and cache assembly. Record exact version, commands, files, behavior and remaining consumer obligations before resolving.
+Every historical snapshot row has a reviewed disposition; every required client row has implementation/test evidence. Keep cache assembly and template/repository blockers until this disposition and implementation are complete.

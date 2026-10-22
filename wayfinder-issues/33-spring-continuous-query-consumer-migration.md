@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 22
+Blocked by: 22, 59
 
 # Spring continuous-query consumer migration
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 

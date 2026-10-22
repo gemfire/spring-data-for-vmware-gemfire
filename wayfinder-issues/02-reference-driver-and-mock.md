@@ -3,6 +3,9 @@ Status: resolved
 Assignee: uk016635
 Blocked by: 01
 
+> Scope amendment (2026-10-22): implementation and test evidence below is historical. The [client-only decision](../wayfinder-impl/client-only-scope.md) supersedes peer/server requirements; [ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal and coverage reconciliation. This ticket does not authorize further server implementation.
+
+
 ## Question
 
 Implement Step 2 of the signed-off migration plan: a reference Driver Impl for the currently targeted GemFire version, the official native-free mock, generated driver stamps and the shared driver contract test kit.

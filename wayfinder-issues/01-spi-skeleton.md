@@ -1,6 +1,9 @@
 Type: task
 Status: resolved
 
+> Scope amendment (2026-10-22): implementation and test evidence below is historical. The [client-only decision](../wayfinder-impl/client-only-scope.md) supersedes peer/server requirements; [ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal and coverage reconciliation. This ticket does not authorize further server implementation.
+
+
 ## Question
 
 Step 1 of the migration plan (`wayfinder/technical-spec.md` §7.1): stand up `spring-data-gemfire-driver-spi` and `spring-data-gemfire-driver-core` as Gradle subprojects with `GemFireDriver`, `GemFireDriverManager`, `Capability`, the exception hierarchy, and the SPI-owned annotation config enums. No behavior yet — types and contracts only (except `GemFireDriverManager`'s resolve/validate logic, which the spec names explicitly as in-scope for this step).

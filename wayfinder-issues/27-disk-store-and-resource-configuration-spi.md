@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 14, 16, 19
+Blocked by: 14, 16, 19, 59
 
 # Disk-store and resource configuration SPI
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -15,11 +19,11 @@ Audit coverage: **G3, G4** in the [native/SPI gap audit](../wayfinder-impl/audit
 Prerequisites: [Required native API coverage matrix](14-required-native-api-coverage-matrix.md); [Driver exception semantics and translation](16-driver-exception-semantics-and-translation.md); [Region configuration, enums, expiration and eviction](19-region-configuration-enums-expiration-and-eviction.md).
 
 - Add required disk-store creation/lookup/configuration/lifecycle operations and typed directory/configuration values.
-- Cover resource-manager heap/off-heap thresholds and related existing cache configuration without copying internal types into SPI.
+- Cover resource thresholds and settings demonstrated to work on client caches; audit off-heap settings rather than inheriting peer support assumptions. Do not copy internal types into SPI.
 - Preserve dependency ordering for disk stores referenced by regions/PDX and failure cleanup when creation only partially succeeds.
 - Document supported mock metadata and explicitly reject persistence, recovery or memory-pressure guarantees that are not implemented.
 
-- Include reachable rebalance/restore-redundancy factories, operations and result payloads, not just heap threshold setters; the [coverage matrix](../wayfinder-impl/coverage/README.md) records the required surface.
+- Exclude rebalance/restore-redundancy factories, operations and results. Ticket 59 records their server-only dispositions. Retain client-local disk, overflow and PDX persistence requirements.
 
 - Exception foundation follow-up: Preserve disk failure metadata including the remote flag through a native-free exception payload, as well as the resource-failure category. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
 

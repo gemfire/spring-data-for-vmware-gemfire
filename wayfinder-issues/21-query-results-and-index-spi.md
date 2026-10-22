@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 14, 16, 18, 20
+Blocked by: 14, 16, 18, 20, 59
 
 # Query, results and index SPI
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -16,7 +20,7 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 - Implement local/client/pool query-service routing, parameterized query execution and required query inspection/lifecycle operations.
 - Model SelectResults, collection/object/struct result types and nested values required by public Spring APIs; do not expose native result instances through Object.
-- Implement index definition/create/list/remove/statistics and deferred index creation, with typed errors preserving Spring translation.
+- Implement index definition/create/list/remove/statistics and deferred creation only where verified for client-local query services. Remote server index administration is excluded. Preserve typed errors for retained operations.
 - Map required query methods exposed through Region and application callbacks as well as template internals; CQ callbacks/lifecycle belong to Continuous query SPI.
 
 - Cover inherited collection methods, `Struct` projection results and `StructType`, as well as query/result/index methods in the [coverage matrix](../wayfinder-impl/coverage/README.md). `Query.execute` returning Object must not hide typed projection payload requirements.

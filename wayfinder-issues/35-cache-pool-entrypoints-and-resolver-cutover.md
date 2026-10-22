@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 20, 29, 30, 31, 32, 33, 34
+Blocked by: 20, 29, 30, 31, 32, 33, 34, 59
 
 # Cache/pool entry points and resolver cutover
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 

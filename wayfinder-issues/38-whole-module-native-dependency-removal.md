@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 15, 36, 37
+Blocked by: 15, 36, 37, 59
 
 # Whole-module native dependency removal
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -20,6 +24,8 @@ Prerequisites: [Whole-module migration boundary enforcement](15-whole-module-mig
 - Consolidate transitional source sets where no longer needed and ensure no exclusions/stubs/source deletion manufacture a green build.
 
 ## Required validation
+
+The approved client-scope exclusions are distinct from native-boundary exemptions. Ticket 59 records justified server API/test retirement; no retained client test may be deleted to manufacture compliance.
 
 - Cleanly compile every production/unit/integration source with native-free compile classpaths and run all unit tests on the mock.
 - Produce dependency reports and public API/native-reference scans; demonstrate a deliberately introduced native dependency/reference fails normal verification.

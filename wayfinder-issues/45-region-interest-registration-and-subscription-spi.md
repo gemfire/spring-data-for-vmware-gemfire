@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 18, 19, 20
+Blocked by: 18, 19, 20, 59
 
 # Region interest registration and subscription SPI
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -13,7 +17,7 @@ Complete application Region interest registration and list inspection, including
 - Implement every registerInterest, registerInterestRegex, registerInterestForAllKeys and registerInterestForKeys overload, unregister variants, getInterestList and getInterestListRegex.
 - Use typed InterestResultPolicy from region configuration; preserve default policy, durable and receive-values flags, iterable handling, key/regex identity and unsupported local/proxy combinations.
 - Delegate to native overloads and preserve pool subscription settings and durable-client lifecycle; reject remote subscription behavior explicitly in the local mock.
-- Keep server InterestRegistrationListener/InterestRegistrationEvent work with cache-server SPI and CQ contracts with their own owner; test cross-boundary interaction where required.
+- Server InterestRegistrationListener/InterestRegistrationEvent APIs are excluded and removed by ticket 59. Preserve client interest registration and delivery; CQ remains with ticket 22. Native server fixtures stay private to driver integration tests.
 
 ## Required validation
 

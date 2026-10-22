@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 14, 16, 20, 21, 23
+Blocked by: 14, 16, 20, 21, 23, 59
 
 # Security and authenticated views SPI
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -32,4 +36,4 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 
 Typed security/view contracts and native evidence for the required public security surface. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
 
-Configuration decomposition handoff: the frozen OperationContext and OperationCode contracts (47 rows) belong to security authorization context, not region settings. The coverage policy now assigns them here. Preserve all operation codes, predicates and context lifecycle in the authenticated/security implementation; [Legacy region configuration values and enums](49-legacy-region-configuration-values-and-enums.md) verifies this ownership without introducing a dependency cycle.
+Configuration scope correction: server authorization OperationContext/OperationCode hooks are excluded, with their 47 historical rows classified by ticket 59. Retain client credential initialization, authenticated views and authorization failures returned to clients. Verify JNDI configuration against actual ClientCacheFactoryBean usage; do not add server security management.

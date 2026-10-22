@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 36
+Blocked by: 36, 59
 
 # Native-free Spring tests and helper decoupling
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -22,6 +26,8 @@ Prerequisites: [Residual native utilities and support cleanup](36-residual-nativ
 - Transaction fixture follow-up: ticket 28 exposes the full manager/callback SPI but the official mock explicitly rejects transaction operations. Retain all Spring transaction orchestration assertions using SPI fixtures; retain commit/rollback/conflict storage assertions in native provider integration. Add any local mock transaction behavior required to run the preserved unit suite, with its own behavioral tests. Unsupported responses cannot substitute for successful transaction assertions or justify exclusions. See [transaction evidence](../wayfinder-impl/investigations/transaction-lifecycle-and-callbacks.md).
 
 ## Required validation
+
+Preserve the entire retained client unit suite against the official mock and native-free collaborators. Server-only test retirement requires the ticket 59 disposition ledger; native server/locator fixtures belong in native driver integration suites. Mock unsupported paths must not replace assertions of supported client behavior.
 
 - Run the complete Spring unit suite with the official mock and no native jars, then shared integration source compilation.
 - Audit test resources and public fixture types; no native test helper leakage, reset hooks or blanket test exclusions may hide remaining requirements.

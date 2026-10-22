@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 17, 19, 20, 23, 24, 26, 27, 28, 44, 45
+Blocked by: 17, 19, 20, 23, 24, 26, 27, 28, 44, 45, 59
 
 # Complete cache configuration and creation assembly
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -17,9 +21,9 @@ Prerequisites: [Complete region events, listeners and writers](17-complete-regio
 - Extend connection creation/configuration to cover all required legacy properties, PDX, pool, transaction, resource, XML and JNDI inputs using typed collaborators.
 - Preserve explicit/default/configurer precedence and initialization ordering; support callbacks through injection rather than GemfireBeanFactoryLocator.
 - Handle cache XML stream ownership, callback construction and native resource cleanup on post-create failures. Distinguish creation, native reuse and explicit borrowing.
-- Complete DriverConnectionFactoryBean integration for this configuration while preserving its existing ownership contract. Document peer/client restrictions and typed unsupported settings.
+- Complete DriverConnectionFactoryBean integration for this configuration while preserving its existing ownership contract. Support client cache creation and typed unsupported client settings; peer creation is excluded.
 
-- Preserve Cache-exposed server, WAN and asynchronous queue entry points using the completed runtime-service children. Assemble the typed contracts from the [coverage matrix](../wayfinder-impl/coverage/README.md); connection creation alone is not a full Cache replacement.
+- Assemble retained client contracts only. Ticket 59 removes server, WAN and asynchronous queue entry points, including server-only XML/configuration. Do not accept server settings silently.
 
 - Exception foundation follow-up: Preserve cache-exists failure payload as an SPI cache/connection handle and retain cancellation/bind semantics. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
 
@@ -32,7 +36,7 @@ Prerequisites: [Complete region events, listeners and writers](17-complete-regio
 
 ## Completion
 
-Connection/configuration foundation can express every required legacy cache factory setting without native public types. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+Connection/configuration foundation can express every retained client cache factory setting without native public types. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
 
 Region-operation follow-up prerequisites: [Region and cache snapshot services SPI](44-region-and-cache-snapshot-services-spi.md); [Region interest registration and subscription SPI](45-region-interest-registration-and-subscription-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.
 

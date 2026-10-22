@@ -16,6 +16,14 @@ This is a **breaking major version migration**, not an additive one. There is no
 
 Out of scope for this spec: the `Gud*` naming convention or any other artifact of the `unified_driver` prior-art branch, any production code changes (this document is the handoff artifact that precedes that work), and whether `spring-test-vmware-gemfire` migrates off its current direct native GemFire dependency (§11).
 
+### Client-only scope amendment — 2026-10-22
+
+The user explicitly directed the backlog to be client-only and requested removal of server-side SPI work. The [scope decision](../wayfinder-impl/client-only-scope.md) defines this approved correction; [implementation ticket 59](../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md) owns cleanup of existing code.
+
+Required SPI coverage comprises client caches/regions (including local regions), pools, queries/CQ, client function invocation, subscriptions/durability, authentication, PDX/serialization and supported client transactions/local storage. It excludes peer-cache/region hosting, cache servers, WAN/queues, partition/rebalance administration and server-only callbacks/configuration. Native API reachability is discovery evidence, not automatic product scope. Mixed surfaces require member-level client evidence. Client operations against servers remain required, with private native server fixtures for integration tests.
+
+The full retained Spring client unit suite must run with the official mock and native-free collaborators; each supported native driver retains compatibility and integration tests. This correction changes scope, not the SPI/core-only dependency boundary or ABI/stamp enforcement. Server-only public APIs, annotation/XML settings and tests are retired with explicit evidence in this breaking migration; client behavior is preserved.
+
 ## 2. Background and prior art
 
 A prior implementation exists on branch `udo.kohlmeyer/unified_driver` (`gud-api`, `gud-core`, `gud-driver-gemfire-10.1/10.2/10.3`), which reached a compile-complete state but left 7 of 9 tracked correctness/test issues open. That branch is treated here as **informative background only**: its architecture invariants — zero native GemFire deps in the Spring Data module, no reflection, `ServiceLoader`-based discovery, a mock driver for unit tests — are useful precedent, but this spec is a clean-slate design and does not inherit its module boundaries, type names, or unresolved defects.
@@ -70,7 +78,7 @@ Maven/Gradle group `com.vmware.gemfire`, alongside the existing `spring-data-vmw
 |---|---|---|
 | `spring-data-gemfire-driver-spi` | (nothing GemFire-specific) | `GemFireDriver`, `DriverMetadata`, `SpiVersion`, SPI exception hierarchy, SPI-owned annotation attribute enums |
 | `spring-data-gemfire-driver-core` | `spring-data-gemfire-driver-spi` | `GemFireDriverManager` — `ServiceLoader` discovery, SPI-version and native-version bind-time checks (§5.2, §6) |
-| `spring-data-vmware-gemfire` | `spring-data-gemfire-driver-spi`, `spring-data-gemfire-driver-core` | Repositories, cache/region configuration, annotation processing, function execution, CQ, PDX, WAN support — all routed through the SPI |
+| `spring-data-vmware-gemfire` | `spring-data-gemfire-driver-spi`, `spring-data-gemfire-driver-core` | Repositories, client cache/region configuration, annotation processing, client function execution, CQ and PDX — all routed through the SPI |
 | `spring-data-gemfire-driver-<gemfire-version>` (e.g. `spring-data-gemfire-driver-10.3`) | `spring-data-gemfire-driver-spi` only, native `com.vmware.gemfire:gemfire-core:<resolved-version>` (and related artifacts) | Concrete `GemFireDriver` implementation, native↔SPI type/exception translation for that GemFire version; the build-generated driver stamp (§6.2) |
 | `spring-data-gemfire-driver-mock` (test only — see §10) | `spring-data-gemfire-driver-spi` only | In-memory mock `GemFireDriver` implementation; standard unit-test runtime (§10) |
 | `spring-data-gemfire-driver-contract-tests` (test only) | `driver-spi`, `driver-core`, JUnit Jupiter, AssertJ | Shared provider, cache/region and default-method contract tests; no native GemFire dependency |
@@ -122,9 +130,9 @@ public final class SpiVersion implements Comparable<SpiVersion> {
 
 The SPI carries no capability set and no version range. Which features a driver supports is expressed by the methods it implements (§5.3).
 
-**Step 2 implementation boundary (2026-10-20).** The initial usable connection surface is `CacheConfiguration` (peer/client mode and defensively copied native properties), `DriverConnection` (peer/client region creation, region lookup and cache lifecycle), and `DriverRegion<K,V>` (name, get/put/remove, containsKey and size). Configuration diagnostics redact property values. Connections are `AutoCloseable`; the caller owns closing the underlying cache. New connection/region methods default to typed `NOT_INTRODUCED` failures. Native exceptions are translated at the driver boundary.
+**Step 2 implementation boundary (amended 2026-10-22).** The usable connection surface is `CacheConfiguration` (client configuration and defensively copied native properties), `DriverConnection` (client-region creation, lookup and lifecycle), and `DriverRegion<K,V>` (client operations). Configuration diagnostics redact property values. Connections are `AutoCloseable`; the caller owns closing the underlying cache. New connection/region methods default to typed `NOT_INTRODUCED` failures. Native exceptions are translated at the driver boundary.
 
-The reference driver delegates these operations to native GemFire; the mock holds independent in-memory state per connection. The mock implements `LOCAL` peer/client regions only and explicitly rejects other shortcuts; it does not simulate distribution, persistence or eviction. Its synthetic stamped/runtime identity is `mock`, not a supported native GemFire release. Pool configuration, queries, functions, transactions, PDX, WAN and the remaining Spring Data API surface are expanded as their consumers are migrated in Step 3. See [Reference driver and mock](../wayfinder-issues/02-reference-driver-and-mock.md).
+The native driver delegates client operations; the mock holds independent in-memory state per connection, implements supported local client behavior and explicitly rejects unavailable distribution, persistence or eviction. Its synthetic identity is `mock`, not a native release. Existing peer mode/creation and `RegionShortcut` are historical implementation to remove under ticket 59. Pools, queries, client functions/transactions, PDX and remaining retained client APIs expand through consumer migration. See [Reference driver and mock](../wayfinder-issues/02-reference-driver-and-mock.md).
 
 
 **Step 3 Spring Cache slice (2026-10-20).** `GemfireCache` now adapts a `DriverRegion`; `GemfireCacheManager` takes a constructor-injected `DriverConnection`, with the connection owner retaining shutdown responsibility. Region enumeration, lifecycle status, clear and put-if-absent have been added to the SPI and both drivers. `@EnableGemfireCaching` requires an application-supplied `DriverConnection` bean; XML uses the same injected connection. Native cache setters/factory entry points on these migrated adapters are replaced by their SPI constructors. The remaining cache/util/root APIs proceed in subsequent slices. See [Spring Cache driver migration](../wayfinder-issues/03-spring-cache-driver-migration.md).
@@ -283,7 +291,7 @@ Spring Data GemFire code never catches, references, or type-tests a native GemFi
 
 ### 5.5 Annotation attribute types
 
-Annotation attributes currently typed as native GemFire enums (e.g. `@ClientCacheApplication(dataPolicy = DataPolicy.PERSISTENT_REPLICATE)`) are retyped to **SPI-owned delegation enums** that mirror the native ones. No annotation-driven capability is removed.
+Retained client annotation attributes typed as native GemFire enums are retyped to **SPI-owned delegation enums** covering verified client values. Preserve client defaults and capabilities, including valid client-local persistence policies. Do not mirror entire native enums: server-side `RegionShortcut` and server-only annotation/configuration attributes are removed under the approved client-only amendment; retain `ClientRegionShortcut`.
 
 ```java
 package com.vmware.gemfire.driver.spi.config;
@@ -382,7 +390,7 @@ This is sequencing guidance for implementation, not a schedule commitment.
 2. **Reference Driver Impl(s) and mock.** Implement `spring-data-gemfire-driver-<X.Y>` for the GemFire version(s) Spring Data GemFire currently targets, wrapping today's native calls behind the new SPI contract, the Gradle step that generates each driver's stamp (§6.2), the driver contract test kit (§10), and the official `spring-data-gemfire-driver-mock` for unit testing (§10).
 3. **Migrate `spring-data-vmware-gemfire` subsystem-by-subsystem, bottom-up by dependency, not by size:**
    1. `cache`, `util`, and the root package (`org.springframework.data.gemfire`) — the `*FactoryBean` hierarchy, `GemfireTemplate`/`GemfireOperations`, `RegionResolver`/`CacheResolver`, the `*Converter`s. This is the seam nearly everything else calls into to obtain a `Cache`/`Region`; foundational and small enough to prove the SPI pattern cheaply before committing to it everywhere.
-   2. `eviction`, `expiration`, `transaction`, `serialization`, `listener`, `domain`, `dao`, `server` — small, low-risk packages, each touching only a narrow native surface.
+   2. `eviction`, `expiration`, `transaction`, `serialization`, `listener`, `domain`, `dao` and client-needed utilities — retain client behavior; retire server-only surfaces under ticket 59.
    3. `config` — the largest package by file count, but majority Spring bean-wiring rather than direct native usage; migrated once step 1's seam is already SPI-based, so the wiring changes are mechanical.
    4. `client`, `function`, `repository`, `mapping` — last. `client` sits directly on the SPI and is heavily geode-typed; the others are the widest-radius consumers of everything below them and benefit most from migrating against an already-proven, stable SPI.
 
@@ -420,6 +428,8 @@ Out of scope for this testing strategy: whether `spring-test-vmware-gemfire` its
 
 ## 11. Out of scope
 
+- Public peer/server hosting, WAN/queues, partition/rebalance administration and server-only configuration/callbacks. Private native servers remain permitted as client integration-test infrastructure. See the approved client-only amendment in §1.
+
 - The `Gud*` naming convention or any other artifact/naming carried over from the `unified_driver` prior-art branch.
 - Any production code changes as part of producing this spec — this document is the handoff artifact; implementation follows it.
 - Whether `spring-test-vmware-gemfire` should migrate off its current direct dependency on native GemFire — it keeps that dependency; not migrated as part of this effort (§10).
@@ -428,7 +438,7 @@ Out of scope for this testing strategy: whether `spring-test-vmware-gemfire` its
 
 | Section | Decision ticket |
 |---|---|
-| §1 | `wayfinder/issues/01-deliverables-and-destination.md` |
+| §1 | `wayfinder/issues/01-deliverables-and-destination.md`; [client-only amendment](../wayfinder-impl/client-only-scope.md) (2026-10-22) |
 | §2 | `wayfinder/issues/02-prior-art-disposition.md` |
 | §3 | `wayfinder/issues/03-driver-spi-architecture-model.md` |
 | §4, §7 (breaking-change framing) | `wayfinder/issues/04-major-version-breaking-migration.md` |

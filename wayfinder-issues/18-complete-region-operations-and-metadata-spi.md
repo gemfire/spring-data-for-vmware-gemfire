@@ -5,6 +5,9 @@ Blocked by: 14, 16, 17
 
 # Complete region operations and metadata SPI
 
+
+> Scope amendment (2026-10-22): implementation and test evidence below is historical. The [client-only decision](../wayfinder-impl/client-only-scope.md) supersedes peer/server requirements; [ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal and coverage reconciliation. This ticket does not authorize further server implementation.
+
 ## Question
 
 Complete the region/service operation surface required by templates, factories and application Region callbacks.

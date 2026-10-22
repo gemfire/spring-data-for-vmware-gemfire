@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 18, 19, 20, 24, 26, 27, 29
+Blocked by: 18, 19, 20, 24, 26, 27, 29, 59
 
 # Region factory and configuration migration
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -24,6 +28,8 @@ Prerequisites: [Complete region operations and metadata SPI](18-complete-region-
 - Callback foundation follow-up: Use DriverCacheListener/DriverCacheWriter and their explicit no-op/specialized adapters as the target for composable callbacks, annotations/XML and factory signatures. RegionCallbacks permits creation-time listener delivery. Preserve distinct declarable initialization, callback instance identity, replacement and resolver lifecycle ownership; see [callback evidence](../wayfinder-impl/investigations/region-callback-contracts.md).
 
 ## Required validation
+
+Retire server-shortcut attributes, peer-only region configuration and their schema/annotation exports with ticket 59; migrate retained ClientRegionShortcut and client-local settings without copying server enums.
 
 - Run Java, annotation and namespace region configuration tests against mock/native as applicable, including every required configuration/callback family.
 - Verify fail-fast invalid/unsupported settings, qualified wiring and region-before-pool teardown; compile dependent main/unit/integration sources.

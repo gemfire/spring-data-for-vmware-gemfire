@@ -1,8 +1,12 @@
 Type: task
 Status: open
-Blocked by: 30, 31, 32, 33, 34, 35
+Blocked by: 30, 31, 32, 33, 34, 35, 59
 
 # Residual native utilities and support cleanup
+
+## Client-only scope — 2026-10-22
+
+Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
 
 ## Question
 
@@ -22,6 +26,8 @@ Prerequisites: [Region factory and configuration migration](30-region-factory-an
 - Exception foundation follow-up: Retire final GemfireCacheUtils/CacheUtils native dispatch/reflection after the assigned callers move. Complete remaining general exception constructor/root-cause/serialization-equivalent coverage rows. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
 
 ## Required validation
+
+Audit residual server-package utilities by actual client use. Remove server-only public surfaces under ticket 59; preserve native-free helpers needed by client applications.
 
 - Regenerate the whole-module audit and verify zero required native production code/type contracts remain, including reflective class strings.
 - Run consumer regression checks and production compilation; inspect public signatures and resources for hidden native escapes.

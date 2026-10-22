@@ -5,6 +5,9 @@ Blocked by: 14, 17, 18
 
 # Typed region creation and attribute access
 
+
+> Scope amendment (2026-10-22): implementation and test evidence below is historical. The [client-only decision](../wayfinder-impl/client-only-scope.md) supersedes peer/server requirements; [ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) owns removal and coverage reconciliation. This ticket does not authorize further server implementation.
+
 ## Question
 
 Implement immutable optional region settings, typed attribute/mutator views, peer/client/subregion creation, scalar getters and callback identity. Preserve shortcut defaults and explicit false/zero, native validation and ownership. Validate local mock hierarchy/constraints and explicitly reject unavailable configured behavior. Native tests compare all mapped settings with native attributes; shared tests exercise creation, views, mutation and failure cases.

@@ -1,5 +1,7 @@
 # Required native API coverage baseline
 
+> **Client-only amendment (2026-10-22):** the [approved scope](../client-only-scope.md) supersedes the full-native-reachability requirement. Counts and generated files below remain historical, pending [ticket 59](../../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md). They are not the required-client backlog. Ticket 59 must preserve stable IDs/evidence, add explicit scope dispositions/rationales, update policy/generator/validator and regenerate separate required-client/excluded counts. Excluded server APIs are neither implemented features nor native `removed` features. Native-free boundary checks remain mandatory.
+
 Recorded 2026-10-21 for [Required native API coverage matrix](../../wayfinder-issues/14-required-native-api-coverage-matrix.md), against GemFire **10.4.0-build.3056.df98c835**. This is the implementation inventory for the [gap closure plan](../spi-gap-closure-plan.md); it does not close the native dependency or behavioral gaps.
 
 The inventory contains **3,851 rows across 292 native types**, **588 current Spring signature exposures**, **419 required direct bytecode member references**, and **624 current source/resource references**. All 144 current production imported native symbols are accounted for; earlier frozen requirements remain. After transaction lifecycle and callbacks, there are **2,921 missing**, **650 partial** and **280 implemented** rows. These are coverage obligations, not 3,851 distinct methods or a completion percentage: rows include types, constructors, constants, overloads and inherited contracts repeated under different receivers.
@@ -24,7 +26,7 @@ API IDs are `API-` plus the first 16 SHA-256 hex digits of `native-type#member` 
 
 `missing` means the requirement has no complete recorded SPI implementation. `partial` means a value, method or narrow adapter exists, but the row names outstanding semantics or adoption. `implemented` requires complete native/mock/test evidence and preserved reachable contracts. `removed` is reserved for verified native removal with the specified typed failure; absence of an SPI method is never evidence of native removal. Implemented leaf/value rows have native and mock/test evidence; partial rows retain reachable-contract and consumer obligations. No row is marked removed.
 
-An SPI equivalent need not copy the native Java shape. For example, cache factory creation can become injected connection creation, native constants can become SPI values, and string native properties can pass through `CacheConfiguration`. Owners must document those mappings and tests. A row is not permission to add static registries, an unwrap method or native types to SPI. Existing native methods retain their required behavior through the typed replacement.
+An SPI equivalent need not copy the native Java shape. For example, cache factory creation can become injected connection creation, native constants can become SPI values, and string native properties can pass through `CacheConfiguration`. Owners must document those mappings and tests. A row is not permission to add static registries, an unwrap method or native types to SPI. Retained client methods preserve their required behavior through typed replacements; server exclusions need the approved scope decision and member-level evidence.
 
 ## Confirmed gaps beyond imports
 
@@ -43,14 +45,11 @@ An SPI equivalent need not copy the native Java shape. For example, cache factor
 
 The existing `DefaultMethodContract` verifies methods already declared in SPI. It cannot detect a callback or entire interface that has never been declared. The frozen baseline and validation below close that inventory blind spot; whole-module CI wiring still belongs to [boundary enforcement](../../wayfinder-issues/15-whole-module-migration-boundary-enforcement.md) and the [complete test matrix](../../wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md).
 
-## Newly specified implementation work
+## Client scope and retired server work
 
-Native `Cache` is exposed by the existing factory/callback APIs. Its `addCacheServer/getCacheServers`, `createGatewaySenderFactory`, `createGatewayReceiverFactory`, `createAsyncEventQueueFactory`, lookup and conflict-resolver methods make server/WAN/queue contracts reachable. The source-only absence of a Spring call to those methods does not remove the application contract.
+Native Cache reachability discovered hosting/WAN/queue APIs but does not establish client product requirements. Tickets [42](../../wayfinder-issues/42-cache-server-lifecycle-and-callbacks-spi.md) and [43](../../wayfinder-issues/43-wan-and-async-queue-contracts-spi.md) are resolved as superseded, not implemented. They no longer block client runtime services.
 
-- [Cache-server lifecycle and application callbacks SPI](../../wayfinder-issues/42-cache-server-lifecycle-and-callbacks-spi.md): server lifecycle/settings, subscription configuration, load probes/metrics, client sessions and interest listeners/events.
-- [WAN and asynchronous queue contracts and callbacks SPI](../../wayfinder-issues/43-wan-and-async-queue-contracts-spi.md): sender/receiver/queue factories and lifecycle, filters, asynchronous listeners, conflict resolution, failure listeners, routing/order policies and event payloads.
-
-Both block [Distributed-system, membership and runtime services SPI](../../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md), and therefore cache assembly and final acceptance. Existing owners retain partition/resolver callbacks, rebalance/redundancy results, security and serialization families; those discoveries do not require duplicate tickets. Named pool creation remains a foundation under the complete pool owner, not a claim of full pool coverage.
+[Ticket 59](../../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md) removes existing server SPI work and classifies every mixed or excluded row. Client interest registration, pools, CQ and client operations against servers remain required. Historical server-only implementation evidence below must not be read as a mandate to retain those APIs.
 
 ## Extraction boundaries
 
