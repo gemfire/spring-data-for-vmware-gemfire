@@ -1,5 +1,6 @@
 Type: task
-Status: open
+Status: resolved
+Assignee: Codex
 Blocked by: 14, 16, 17, 18
 
 # Transaction lifecycle and callbacks SPI
@@ -31,3 +32,13 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Complete transaction SPI rows ready for Spring transaction manager/configuration adoption. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Answer
+
+Implemented the complete native transaction manager surface, typed transaction listener/writer/event contracts, checked writer vetoes and transaction-ID externalization through the injected connection. Native entry and transaction events share ID equality/member semantics. Callback registration/identity/lifecycle, cross-thread suspension/resumption and real peer/client commit/rollback behavior delegate to GemFire. All 23 mock manager operations fail explicitly as unsupported; the mock does not claim transaction support.
+
+[Implementation evidence](../wayfinder-impl/investigations/transaction-lifecycle-and-callbacks.md) records contracts, exact behavior, all commands/results, the 10.4.0-build.3056.df98c835 artifact and limitations. There are 24 added default methods with shared probes and four added callback declarations. The 66 original rows plus three inherited cache getters have partial mappings retaining Spring consumer and reachable subsystem obligations. No frozen requirement was removed.
+
+Validation: **513 tests passed**, zero failures/errors/skips; full Spring Data main/unit/integration and Spring Test main/unit compilation; normal migration boundary; 18 boundary fixtures; coverage regeneration/check and independent javap validation. Actual conflict and veto behavior is exercised through commits. Incomplete/synchronization failures use injected native failures; multi-peer distributed recovery is not claimed. Timed resume is not transaction lifetime configuration.
+
+Tickets 34 and 37 explicitly retain Spring orchestration/timeout and native-free test acceptance, including additional mock behavior if preserved unit tests require it. This resolves the transaction SPI foundation, not the Spring consumer cutover or the overall native-free goal. Changes remain uncommitted.

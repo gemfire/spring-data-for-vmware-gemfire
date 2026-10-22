@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 14, 16
+Blocked by: 14, 16, 53, 54, 55, 56, 57, 58
 
 # PDX, serialization and JSON SPI
 
@@ -31,3 +31,14 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Complete required serialization/PDX/JSON contracts with downstream adoption owners. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Blocking implementation children
+
+The 378 originally assigned rows span distinct serialization systems. The parent remains open and retains every downstream dependency.
+
+- [PDX values and instance factories](53-pdx-values-and-instance-factories.md).
+- [PDX callbacks and cache configuration](54-pdx-callbacks-and-cache-configuration.md).
+- [Binary serialization and registration](55-binary-serialization-and-registration.md).
+- [JSON documents and PDX conversion](56-json-documents-and-pdx-conversion.md).
+- [Reflection-based PDX serialization](57-reflection-based-pdx-serialization.md).
+- [Serialization value boundary adaptation](58-serialization-value-boundary-adaptation.md).

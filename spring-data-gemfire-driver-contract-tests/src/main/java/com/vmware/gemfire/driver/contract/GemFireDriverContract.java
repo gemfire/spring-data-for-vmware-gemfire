@@ -47,7 +47,7 @@ import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
  * Native runs use isolated local regions; no locator/server or fixed port is required. Each driver
  * declares its unsupported methods explicitly; adding a default SPI method without a probe fails.
  */
-public abstract class GemFireDriverContract extends PoolConfigurationContract {
+public abstract class GemFireDriverContract extends TransactionContract {
 
 	protected abstract String expectedNativeVersion();
 
@@ -179,6 +179,13 @@ public abstract class GemFireDriverContract extends PoolConfigurationContract {
 		probes.put(DriverPool.class.getMethod("configuration"), new Probe("Pool.configuration", () ->
 			inPool(pool -> { assertThat(pool.configuration().minimumConnections()).hasValue(0);
 				assertThat(pool.configuration().servers()).isEqualTo(pool.servers()); })));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("createPdxInstanceFactory", String.class),
+			new Probe("RegionService.createPdxInstanceFactory", () -> inCache(Mode.PEER, c ->
+				assertThat(c.createPdxInstanceFactory("Probe").writeInt("id", 1).create().getField("id")).isEqualTo(1))));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("createPdxEnum", String.class, String.class, int.class),
+			new Probe("RegionService.createPdxEnum", () -> inCache(Mode.PEER, c ->
+				assertThat(c.createPdxEnum("ProbeEnum", "ONE", 0).getField("name")).isEqualTo("ONE"))));
+		probes.putAll(transactionProbes());
 		probes.putAll(callbackProbes());
 		probes.putAll(regionOperationProbes());
 		probes.putAll(regionConfigurationProbes());

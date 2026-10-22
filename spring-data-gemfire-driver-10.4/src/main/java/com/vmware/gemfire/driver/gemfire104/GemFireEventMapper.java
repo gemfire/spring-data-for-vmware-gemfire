@@ -17,6 +17,12 @@ import com.vmware.gemfire.driver.spi.*;
 /** Lazy views: native off-heap values are not read unless the application requests them. */
 final class GemFireEventMapper {
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
+	<K, V> DriverCacheEvent<K, V> cacheEvent(CacheEvent<K, V> event) {
+		if (event instanceof EntryEvent<K, V> entry) return entry(entry);
+		if (event instanceof RegionEvent<K, V> region) return region(region);
+		return new Event<>(event);
+	}
+
 	<K, V> DriverEntryEvent<K, V> entry(EntryEvent<K, V> event) {
 		return event instanceof TimestampedEntryEvent timestamped ? new Timestamped<>(timestamped) : new Entry<>(event);
 	}
@@ -46,7 +52,7 @@ final class GemFireEventMapper {
 		@Override public boolean hasClientOrigin() { return read("hasClientOrigin", () -> event.hasClientOrigin()); }
 		@Override public boolean isOldValueAvailable() { return read("isOldValueAvailable", () -> event.isOldValueAvailable()); }
 		@Override public DriverTransactionId getTransactionId() { return read("getTransactionId", () -> {
-				var id = event.getTransactionId(); return id == null ? null : new Transaction(id);
+				var id = event.getTransactionId(); return id == null ? null : new GemFireTransactionId(id);
 			}); }
 		@Override public DriverSerializedCacheValue<V> getSerializedOldValue() { return read("getSerializedOldValue", () -> serialized(event.getSerializedOldValue())); }
 		@Override public DriverSerializedCacheValue<V> getSerializedNewValue() { return read("getSerializedNewValue", () -> serialized(event.getSerializedNewValue())); }
@@ -120,13 +126,5 @@ final class GemFireEventMapper {
 		}
 		@Override public boolean equals(Object other) { return other instanceof RoleViewMember value && role.equals(value.role); }
 		@Override public int hashCode() { return role.hashCode(); }
-	}
-	private final class Transaction implements DriverTransactionId {
-		private final TransactionId transaction;
-		Transaction(TransactionId transaction) { this.transaction = transaction; }
-		@Override public DriverMember getMemberId() { return read("Transaction.getMemberId", () -> member(transaction.getMemberId())); }
-		@Override public boolean equals(Object other) { return other instanceof Transaction value && transaction.equals(value.transaction); }
-		@Override public int hashCode() { return transaction.hashCode(); }
-		@Override public String toString() { return transaction.toString(); }
 	}
 }

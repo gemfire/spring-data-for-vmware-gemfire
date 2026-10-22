@@ -21,6 +21,9 @@ Prerequisites: [Transaction lifecycle and callbacks SPI](28-transaction-lifecycl
 
 - Exception foundation follow-up: Preserve CannotCreateTransactionException, GemfireTransactionCommitException and NoTransactionException phase behavior while replacing native transaction catches and writer veto signatures. See [exception semantics and ownership](../wayfinder-impl/investigations/exception-semantics-and-translation.md).
 
+- Transaction foundation follow-up: use `DriverConnection.getTransactionManager`, typed listener/writer/event contracts and the checked `DriverTransactionWriterException`. Timed `tryResume` waits for suspension; preserve Spring timeout validation separately. Native callbacks retain their engine lifecycle, including no automatic writer close on replacement. See [transaction evidence](../wayfinder-impl/investigations/transaction-lifecycle-and-callbacks.md).
+- The official mock currently rejects every transaction operation explicitly. Preserve Spring orchestration unit coverage with native-free SPI collaborators, and real transactional storage behavior in provider integration suites. If a migrated unit test needs actual mock transactions, implement and test that support before acceptance; do not skip/delete the test or treat unsupported as transactional success.
+
 ## Required validation
 
 - Run Spring @Transactional/programmatic transaction scenarios with commit/rollback, propagation/suspension, listener/writer failures and cleanup.

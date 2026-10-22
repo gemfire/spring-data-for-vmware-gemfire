@@ -9,6 +9,12 @@ package com.vmware.gemfire.driver.spi;
  * Query and serialization services are supplied by their respective SPI contracts.
  */
 public interface DriverRegionService extends AutoCloseable {
+	default DriverPdxInstanceFactory createPdxInstanceFactory(String className) {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.createPdxInstanceFactory");
+	}
+	default DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.createPdxEnum");
+	}
 	<K, V> DriverRegion<K, V> getRegion(String path);
 	java.util.Set<DriverRegion<?, ?>> rootRegions();
 	boolean isClosed();

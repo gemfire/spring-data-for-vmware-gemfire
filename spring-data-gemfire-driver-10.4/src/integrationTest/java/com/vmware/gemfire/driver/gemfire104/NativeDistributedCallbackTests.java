@@ -147,6 +147,40 @@ class NativeDistributedCallbackTests {
 		}
 	}
 
+	@Test
+	void clientPdxFactoriesRegisterSchemasAndEnumsWithARealServer() throws Exception {
+		try (var server = new Peer("server"); var cache = new ClientCacheFactory().set("log-level", "error")
+			.addPoolServer("localhost", server.port).setPdxReadSerialized(true).create()) {
+			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var region = cache.<String, Object>createClientRegionFactory(ClientRegionShortcut.PROXY).create("distributed");
+			var value = connection.createPdxInstanceFactory("ClientValue").neverDeserialize()
+				.writeInt("id", 42).markIdentityField("id").writeString("name", "client").create();
+			var enumValue = connection.createPdxEnum("ClientEnum", "READY", 0);
+			assertThat(enumValue.getField("name")).isEqualTo("READY");
+			// Native region is a wire fixture; SPI region value transport is an explicit blocking child.
+			region.put("pdx", new GemFirePdxValues().toNative(value));
+			region.put("enum", new GemFirePdxValues().toNative(enumValue));
+			assertThat(new GemFirePdxValues().fromNative(region.get("pdx"))).isEqualTo(value);
+			assertThat(new GemFirePdxValues().fromNative(region.get("enum"))).isEqualTo(enumValue);
+		}
+	}
+
+	@Test
+	void clientTransactionsCommitAndRollbackAgainstARealServer() throws Exception {
+		try (var server = new Peer("server"); var cache = new ClientCacheFactory().set("log-level", "error")
+			.addPoolServer("localhost", server.port).create()) {
+			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			DriverRegion<String, String> region = connection.createClientRegion("distributed", com.vmware.gemfire.driver.spi.config.ClientRegionShortcut.PROXY);
+			var manager = connection.getTransactionManager();
+			manager.begin(); region.put("first", "committed"); region.put("second", "committed"); var id = manager.suspend();
+			assertThat(region.get("first")).isNull(); manager.resume(id); manager.commit();
+			assertThat(region.getAll(List.of("first", "second"))).containsExactlyInAnyOrderEntriesOf(Map.of("first", "committed", "second", "committed"));
+			manager.begin(); region.put("first", "rolled back"); region.destroy("second"); manager.rollback();
+			assertThat(region.get("first")).isEqualTo("committed"); assertThat(region.get("second")).isEqualTo("committed");
+			assertThat(manager.exists()).isFalse();
+		}
+	}
+
 	private class Peer implements AutoCloseable {
 		private final Process process;
 		private final ExecutorService reader = Executors.newSingleThreadExecutor();

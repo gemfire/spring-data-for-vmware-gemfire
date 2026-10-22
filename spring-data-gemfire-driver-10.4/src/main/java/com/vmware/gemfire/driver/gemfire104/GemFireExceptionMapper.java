@@ -18,6 +18,10 @@ final class GemFireExceptionMapper {
 		if ((failure instanceof org.apache.geode.cache.CacheLoaderException
 				|| failure instanceof org.apache.geode.cache.CacheWriterException)
 				&& failure.getCause() instanceof GemFireDriverException driverFailure) return driverFailure;
+		// The engine wraps transaction-writer vetoes in CommitConflictException. Inspect only this documented wrapper.
+		if (failure instanceof org.apache.geode.cache.CommitConflictException
+				&& failure.getCause() instanceof org.apache.geode.cache.TransactionWriterException writer
+				&& writer.getCause() instanceof GemFireDriverException driverFailure) return driverFailure;
 		Exception payload = failure instanceof org.apache.geode.GemFireCacheException wrapped && wrapped.getCacheException() != null
 			? wrapped.getCacheException() : failure;
 		if (payload instanceof org.apache.geode.cache.EntryExistsException e)
@@ -43,6 +47,8 @@ final class GemFireExceptionMapper {
 		if (failure instanceof org.apache.geode.cache.SynchronizationCommitConflictException
 				|| failure instanceof org.apache.geode.cache.FailedSynchronizationException
 				|| failure instanceof org.apache.geode.distributed.LeaseExpiredException) return DriverFailureKind.LOCK_FAILURE;
+		if (failure instanceof org.apache.geode.cache.CommitConflictException
+				&& failure.getCause() instanceof org.apache.geode.cache.TransactionWriterException) return DriverFailureKind.TRANSACTION_VETO;
 		if (failure instanceof org.apache.geode.cache.CommitConflictException) return DriverFailureKind.COMMIT_CONFLICT;
 		if (failure instanceof org.apache.geode.cache.CommitIncompleteException) return DriverFailureKind.COMMIT_INCOMPLETE;
 		if (failure instanceof org.apache.geode.cache.TransactionWriterException) return DriverFailureKind.TRANSACTION_VETO;

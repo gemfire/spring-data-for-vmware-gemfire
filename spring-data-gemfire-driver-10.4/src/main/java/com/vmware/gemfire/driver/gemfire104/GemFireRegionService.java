@@ -12,6 +12,13 @@ final class GemFireRegionService implements DriverRegionService {
 	private final RegionService service;
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 	GemFireRegionService(RegionService service) { this.service = service; }
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstanceFactory createPdxInstanceFactory(String className) {
+		return invoke(() -> new GemFirePdxInstanceFactory(service.createPdxInstanceFactory(className)));
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
+		return invoke(() -> new GemFirePdxInstance(service.createPdxEnum(className, name, ordinal)));
+	}
+
 	@Override public <K, V> DriverRegion<K, V> getRegion(String path) {
 		return invoke(() -> { var value = service.<K, V>getRegion(path); return value == null ? null : new GemFireRegion<>(value); });
 	}

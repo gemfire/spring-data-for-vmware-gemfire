@@ -58,6 +58,10 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 - [Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) — 25 optional settings, effective inspection and socket adaptation preserve native defaults/validation; real server socket use and 476 tests pass. Default-cache selection and durable/runtime lifecycle remain explicit blockers of the complete pool parent.
 
+- [PDX values and instance factories](../wayfinder-issues/53-pdx-values-and-instance-factories.md) — typed document/PDX/writable values and complete instance factories preserve native schema/identity behavior; local mock snapshots and real byte/server round trips pass 498 tests. Serialization callbacks, JSON, binary/reflection support and operation-boundary integration remain blocking children of the open parent.
+
+- [Transaction lifecycle and callbacks SPI](../wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md) — all manager operations, typed outcomes/writer vetoes and native ID externalization are implemented; real conflict, cross-thread resume and client/server commit/rollback pass within 513 tests. The mock explicitly rejects transactions; Spring consumer migration and preserved native-free unit coverage remain downstream obligations.
+
 ## Not yet specified
 
 Known implementation gaps in Steps 3–7 now have explicit tickets, indexed by the [SPI gap closure implementation plan](spi-gap-closure-plan.md). They are no longer unspecified backlog. Member-level inventory may reveal additional reachable native surfaces or require splitting a large implementation group; create precise owned blocking tickets when that evidence appears, without losing the parent requirements.

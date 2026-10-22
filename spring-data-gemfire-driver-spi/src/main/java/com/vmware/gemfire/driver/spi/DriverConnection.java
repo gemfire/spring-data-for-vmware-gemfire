@@ -16,6 +16,10 @@ import com.vmware.gemfire.driver.spi.config.RegionShortcut;
  */
 public interface DriverConnection extends DriverRegionService {
 
+	default DriverTransactionManager getTransactionManager() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getTransactionManager");
+	}
+
 	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		throw UnsupportedFeatureException.notIntroduced("Connection.createConfiguredRegion");
 	}

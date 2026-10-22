@@ -8,7 +8,7 @@ The audit baseline is 186 production, 122 unit-test and 128 integration-test Jav
 
 ## Next work
 
-[Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) is resolved; [pool evidence](investigations/named-pool-configuration-and-sockets.md) records behavior and validation. The complete [pool/default-cache/durable parent](../wayfinder-issues/20-complete-pool-default-cache-and-durable-spi.md) remains open, blocked by default-cache assembly and durable/runtime lifecycle. The next unblocked, unassigned ticket in ascending order is [PDX, serialization and JSON SPI](../wayfinder-issues/26-pdx-serialization-and-json-spi.md). Default-cache assembly is also now eligible. [Boundary checks](../build-tools/migration-boundary/README.md) continue enforcing the existing shrinking baseline; a pass is not native-free compliance. Current production native file count remains 182, with unit/integration counts 122/128.
+[Transaction lifecycle and callbacks SPI](../wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md) is resolved with all native manager operations/callbacks, ID externalization and explicit unsupported mock behavior. Spring transaction adoption and complete native-free unit coverage remain with their existing owners. The next unblocked, unassigned ticket in ascending order is [SPI ABI compatibility and stamp enforcement](../wayfinder-issues/39-spi-abi-compatibility-and-stamp-enforcement.md). The decomposed PDX parent remains open until all children complete. [Boundary checks](../build-tools/migration-boundary/README.md) continue enforcing the shrinking baseline; a pass is not native-free compliance. Current production native file count remains 182, with unit/integration counts 122/128.
 
 Remaining implementation tickets are open and unassigned. Claim the next eligible ticket before implementation; a ticket is eligible only when every `Blocked by:` ticket is resolved. Comma-separated local IDs in metadata express dependencies, while the links below and in ticket bodies provide their names. Use ascending ticket order among eligible tickets unless the user names another. Do not automatically start additional skills or parallel agents.
 
@@ -129,3 +129,16 @@ The complete pool parent retains all original downstream blockers. Its implement
 - [Durable client readiness and pool runtime lifecycle](../wayfinder-issues/52-durable-client-readiness-and-pool-runtime-lifecycle.md), dependent on named configuration and default-cache assembly.
 
 The coverage matrix reassigns exact ClientCacheFactory setters/default lookup and ClientCache runtime/durable methods to these children, while full cache assembly remains open. Pool query-service operations retain the existing query owner. No frozen requirement or downstream dependency was removed.
+
+## Serialization decomposition
+
+The complete serialization parent retains every original downstream blocker. Its children are:
+
+- [PDX values and instance factories](../wayfinder-issues/53-pdx-values-and-instance-factories.md), dependent on coverage and exception foundations.
+- [PDX callbacks and cache configuration](../wayfinder-issues/54-pdx-callbacks-and-cache-configuration.md), dependent on PDX values.
+- [Binary serialization and registration](../wayfinder-issues/55-binary-serialization-and-registration.md), dependent on coverage and exception foundations.
+- [JSON documents and PDX conversion](../wayfinder-issues/56-json-documents-and-pdx-conversion.md), dependent on PDX values.
+- [Reflection-based PDX serialization](../wayfinder-issues/57-reflection-based-pdx-serialization.md), dependent on PDX callbacks/configuration.
+- [Serialization value boundary adaptation](../wayfinder-issues/58-serialization-value-boundary-adaptation.md), dependent on all five serialization foundations.
+
+All 378 original serialization rows are retained and assigned to bounded children. Eight inherited cache creation rows and 28 cache PDX configuration rows move from cache assembly to their serialization foundations; cache assembly continues to wait for the complete parent. The boundary-adaptation child owns integration acceptance for PDX value rows and coordinates later query/function value paths with their existing owners. No API requirement, Spring consumer blocker or native wire-format obligation is removed.

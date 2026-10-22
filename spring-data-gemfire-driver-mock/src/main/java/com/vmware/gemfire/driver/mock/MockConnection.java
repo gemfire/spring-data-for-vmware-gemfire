@@ -32,9 +32,31 @@ final class MockConnection implements DriverConnection {
 	void removeRegion(String name, MockRegion<?, ?> region) { regions.remove(region.getFullPath().substring(1), region); }
 	private final Map<String, MockRegion<?, ?>> regions = new HashMap<>();
 	private final Map<String, MockPool> pools = new HashMap<>();
+	private final Map<java.util.List<String>, Integer> pdxEnumOrdinals = new HashMap<>();
+	private final MockTransactionManager transactions = new MockTransactionManager();
 	private volatile boolean closed;
 
 	MockConnection(Mode mode) { this.mode = mode; }
+
+	@Override public com.vmware.gemfire.driver.spi.DriverTransactionManager getTransactionManager() {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		return transactions;
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstanceFactory createPdxInstanceFactory(String className) {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		return new MockPdxInstanceFactory(className);
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		if (className == null || name == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "PDX enum class and name are required", null);
+		Integer previous = pdxEnumOrdinals.putIfAbsent(java.util.List.of(className, name), ordinal);
+		if (previous != null && previous != ordinal) throw new DriverOperationException(DriverFailureKind.RESOURCE_FAILURE, "PDX enum ordinal cannot change", null);
+		Map<String, MockPdxField> fields = new java.util.LinkedHashMap<>();
+		fields.put("name", new MockPdxField(String.class, name, false));
+		fields.put("ordinal", new MockPdxField(int.class, ordinal, false));
+		return new MockPdxInstance(className, fields, true, true);
+	}
 
 	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		return createConfigured(name, shortcut, configuration, null);

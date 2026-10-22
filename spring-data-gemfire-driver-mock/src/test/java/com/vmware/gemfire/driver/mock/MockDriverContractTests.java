@@ -24,6 +24,9 @@ class MockDriverContractTests extends GemFireDriverContract {
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("keySetOnServer"), Reason.NOT_INTRODUCED);
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("sizeLongOnServer"), Reason.NOT_INTRODUCED);
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("sizeOnServer"), Reason.NOT_INTRODUCED);
+			for (Method method : com.vmware.gemfire.driver.spi.DriverTransactionManager.class.getDeclaredMethods()) {
+				if (method.isDefault()) unsupported.put(method, Reason.NOT_INTRODUCED);
+			}
 			return unsupported;
 		} catch (ReflectiveOperationException ex) { throw new AssertionError(ex); }
 	}

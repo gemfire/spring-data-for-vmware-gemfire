@@ -39,6 +39,18 @@ final class GemFireConnection implements DriverConnection {
 		this.mode = mode;
 	}
 
+	org.apache.geode.cache.GemFireCache cacheForTransactionCallback() { return cache; }
+	@Override public com.vmware.gemfire.driver.spi.DriverTransactionManager getTransactionManager() {
+		return invoke("getTransactionManager", () -> new GemFireTransactionManager(cache.getCacheTransactionManager()));
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstanceFactory createPdxInstanceFactory(String className) {
+		return invoke("createPdxInstanceFactory", () -> new GemFirePdxInstanceFactory(cache.createPdxInstanceFactory(className)));
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
+		return invoke("createPdxEnum", () -> new GemFirePdxInstance(cache.createPdxEnum(className, name, ordinal)));
+	}
+
 	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		return invoke("createConfiguredRegion", () -> {
 			if (mode != Mode.PEER || !(cache instanceof Cache peer)) throw new IllegalStateException("Peer region creation requires a peer cache");
