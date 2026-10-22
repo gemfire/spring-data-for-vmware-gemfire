@@ -18,6 +18,7 @@ tasks.withType<JavaCompile>().configureEach {
 // The SPI's own major.minor — the ABI compatibility unit (spec §6.1). Minor bumps are additive only; a major
 // bump is the only point at which anything is removed or changed.
 val spiVersion = "1.0"
+version = spiVersion
 
 tasks.processResources {
   inputs.property("spiVersion", spiVersion)

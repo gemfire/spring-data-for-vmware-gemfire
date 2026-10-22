@@ -62,6 +62,8 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 - [Transaction lifecycle and callbacks SPI](../wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md) — all manager operations, typed outcomes/writer vetoes and native ID externalization are implemented; real conflict, cross-thread resume and client/server commit/rollback pass within 513 tests. The mock explicitly rejects transactions; Spring consumer migration and preserved native-free unit coverage remain downstream obligations.
 
+- [SPI ABI compatibility and stamp enforcement](../wayfinder-issues/39-spi-abi-compatibility-and-stamp-enforcement.md) — japicmp and packaged-stamp gates now run during verification/publication; core independently checks its resolved SPI requirement before provider discovery. Fresh compiled fixtures cover interface/callback evolution and bind failures; 32 ABI/stamp fixtures and 520 JUnit tests pass. No released SPI baseline exists yet, so historical ABI compatibility is explicitly unclaimed. Complete integration coverage and native-free migration remain downstream.
+
 ## Not yet specified
 
 Known implementation gaps in Steps 3–7 now have explicit tickets, indexed by the [SPI gap closure implementation plan](spi-gap-closure-plan.md). They are no longer unspecified backlog. Member-level inventory may reveal additional reachable native surfaces or require splitting a large implementation group; create precise owned blocking tickets when that evidence appears, without losing the parent requirements.

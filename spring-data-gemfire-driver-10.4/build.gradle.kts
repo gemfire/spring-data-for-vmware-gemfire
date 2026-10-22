@@ -21,7 +21,10 @@ val nativeEngineVersion = configurations.create("nativeEngineVersion") {
   isCanBeConsumed = false
   isTransitive = false
 }
-dependencies { add(nativeEngineVersion.name, "com.vmware.gemfire:gemfire-core:10.4.+") }
+val requestedNativeVersion = providers.systemProperty("gemfireVersion")
+  .orElse(providers.gradleProperty("gemfireVersion")).orElse("10.4.+").get()
+require(requestedNativeVersion.startsWith("10.4.")) { "This driver supports the GemFire 10.4 line" }
+dependencies { add(nativeEngineVersion.name, "com.vmware.gemfire:gemfire-core:$requestedNativeVersion") }
 val resolvedNativeVersion = nativeEngineVersion.incoming.resolutionResult.allComponents.mapNotNull {
   (it.id as? ModuleComponentIdentifier)?.takeIf {
     it.group == "com.vmware.gemfire" && it.module == "gemfire-core"

@@ -1,5 +1,6 @@
 Type: task
-Status: open
+Status: resolved
+Assignee: Codex
 Blocked by: 14
 
 # SPI ABI compatibility and stamp enforcement
@@ -27,3 +28,13 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 ## Completion
 
 Executable ABI/stamp compatibility gates with honest pre-first-release status and documented baseline procedure. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Answer
+
+Implemented the japicmp ABI gate, strict interface/callback evolution checks, immutable released-baseline policy and independent packaged-stamp verification. Core now carries and checks its own resolved SPI requirement before discovering providers; core/SPI artifact versions match. Provider construction and runtime-version linkage errors produce typed bind failures. The native selector now honors an explicit GemFire pin before resolving its exact dependencies, artifact version and stamp.
+
+[Implementation evidence](../wayfinder-impl/investigations/spi-abi-compatibility-and-stamps.md) records changed sources, commands, native build **10.4.0-build.3056.df98c835**, initial selector findings and limitations. [Gate documentation](../build-tools/spi-compatibility/README.md) describes normal verification/publication wiring and the reviewed baseline/version-update procedure. No SPI Java declarations or coverage rows changed.
+
+Validation: **32 compiled ABI/stamp fixtures and 520 JUnit tests passed**, zero failures/errors/skips; full Spring Data main/unit/integration and Spring Test main/unit compilation; normal migration boundary and all 18 boundary fixtures; coverage/javap/ownership checks. Dry runs confirm compatibility verification precedes publication, without publishing.
+
+There is no released SPI baseline: the gate explicitly reports pre-first-release status and does not claim historical ABI compatibility. Behavioral compatibility, complete per-driver integration coverage, remaining SPI implementations and Spring's native-free cutover retain their existing owners. In particular, tickets 37–38, 40 and 41 remain open.

@@ -28,11 +28,21 @@ public final class GemFireDriverManager {
 	private final GemFireDriver driver;
 
 	public GemFireDriverManager() {
-		this(DriverCandidate.discover(ServiceLoader.load(GemFireDriver.class)), SpiVersion.runtime());
+		this(Thread.currentThread().getContextClassLoader());
 	}
 
 	public GemFireDriverManager(ClassLoader classLoader) {
-		this(DriverCandidate.discover(ServiceLoader.load(GemFireDriver.class, classLoader)), SpiVersion.runtime());
+		this(validateCore(), classLoader);
+	}
+
+	private GemFireDriverManager(SpiVersion runtime, ClassLoader classLoader) {
+		this(DriverCandidate.discover(ServiceLoader.load(GemFireDriver.class, classLoader)), runtime);
+	}
+
+	private static SpiVersion validateCore() {
+		SpiVersion runtime = SpiVersion.runtime();
+		CoreStamp.read().validate(runtime);
+		return runtime;
 	}
 
 	// Package-private: lets tests supply candidates and an SPI version without any static reset hook.
@@ -84,7 +94,14 @@ public final class GemFireDriverManager {
 
 	// driver-core has no native GemFire dependency, so the runtime version comes from the driver (§5.1).
 	private void validateRuntimeGemFireVersion(GemFireDriver instance, DriverCandidate candidate) {
-		String runtimeVersion = instance.runtimeGemFireVersion();
+		String runtimeVersion;
+		try {
+			runtimeVersion = instance.runtimeGemFireVersion();
+		}
+		catch (LinkageError | ServiceConfigurationError ex) {
+			throw new DriverBindException("Driver Impl " + candidate.providerClass()
+				+ " could not report its runtime GemFire version.", ex);
+		}
 		String stampedVersion = candidate.stamp().gemFireVersion();
 		if (!stampedVersion.equals(runtimeVersion)) {
 			throw new NativeVersionIncompatibleException(candidate.providerClass(), stampedVersion, runtimeVersion);

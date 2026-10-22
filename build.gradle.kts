@@ -53,6 +53,7 @@ plugins {
 }
 
 apply(from = "build-tools/migration-boundary/migration-boundary.gradle.kts")
+apply(from = "build-tools/spi-compatibility/spi-compatibility.gradle.kts")
 
 // Suppress warning from gemfire-artifactory plugin. We need the module to be on this project in order to get buildInfo
 // uploaded, but there is no artifact on the root project, so we skip that part.

@@ -55,7 +55,7 @@ record DriverCandidate(String providerClass, DriverStamp stamp, Supplier<GemFire
 			properties.load(in);
 			return DriverStamp.parse(properties, providerClass);
 		}
-		catch (IOException ex) {
+		catch (IOException | IllegalArgumentException ex) {
 			throw new DriverBindException("Unable to read the stamp of Driver Impl " + providerClass + ".", ex);
 		}
 	}
