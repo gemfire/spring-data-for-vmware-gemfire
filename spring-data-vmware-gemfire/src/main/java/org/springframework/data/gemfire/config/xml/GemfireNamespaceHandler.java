@@ -30,7 +30,6 @@ class GemfireNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser("function-service", new FunctionServiceParser());
 		registerBeanDefinitionParser("lookup-region", new LookupRegionParser());
 		registerBeanDefinitionParser("pool", new PoolParser());
-		registerBeanDefinitionParser("region-template", new TemplateRegionParser());
 		registerBeanDefinitionParser("transaction-manager", new TransactionManagerParser());
 	}
 }

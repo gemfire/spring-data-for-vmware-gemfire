@@ -23,8 +23,7 @@ import com.vmware.gemfire.driver.spi.PoolConfiguration.Endpoint;
 
 /** Native registry and attachment behavior is deliberately outside mock isolation claims. */
 class NativePoolTests {
-	private final CacheConfiguration cache = new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-		Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
+	private final CacheConfiguration cache = new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
 	private final PoolConfiguration config = new PoolConfiguration(List.of(new Endpoint("127.0.0.1", 40404)), List.of(), 0);
 
 	@Test
@@ -67,7 +66,7 @@ class NativePoolTests {
 	@Test
 	void attachedProxyRegionRejectsDestructionUntilDetached() {
 		try (var nativeCache = new ClientCacheFactory(cache.properties()).create()) {
-			DriverConnection connection = new GemFireConnection(nativeCache, CacheConfiguration.Mode.CLIENT);
+			DriverConnection connection = new GemFireConnection(nativeCache);
 			var pool = connection.createPool(UUID.randomUUID().toString(), config);
 			try {
 				var region = nativeCache.createClientRegionFactory(ClientRegionShortcut.PROXY)

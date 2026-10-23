@@ -12,7 +12,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
 
@@ -37,7 +36,6 @@ import org.springframework.data.gemfire.mapping.annotation.ClientRegion;
  * @see Retention
  * @see Target
  * @see Region
- * @see RegionShortcut
  * @see ClientRegionShortcut
  * @see Pool
  * @see Configuration
@@ -74,15 +72,5 @@ public @interface EnableCachingDefinedRegions {
 	 * Defaults to {@literal DEFAULT}.
 	 */
 	String poolName() default ClientRegionFactoryBean.DEFAULT_POOL_NAME;
-
-	/**
-	 * When this annotation is applied to a peer cache application, the {@literal serverRegionShortcut} attribute
-	 * specifies the data management policy applied to server {@link Region Regions} where persistent entities are
-	 * only annotated with the generic {@link org.springframework.data.gemfire.mapping.annotation.Region}
-	 * mapping annotation, or the non-data policy specific mapping annotation.
-	 *
-	 * Defaults to {@link RegionShortcut#REPLICATE}.
-	 */
-	RegionShortcut serverRegionShortcut() default RegionShortcut.REPLICATE;
 
 }

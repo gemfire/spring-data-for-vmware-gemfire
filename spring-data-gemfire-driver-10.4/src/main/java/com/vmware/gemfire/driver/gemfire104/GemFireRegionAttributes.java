@@ -5,7 +5,6 @@
 package com.vmware.gemfire.driver.gemfire104;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 import com.vmware.gemfire.driver.spi.*;
 import com.vmware.gemfire.driver.spi.config.DataPolicy;
@@ -26,18 +25,11 @@ final class GemFireRegionAttributes<K, V> implements DriverRegionAttributes<K, V
 	@Override public boolean getConcurrencyChecksEnabled() { return invoke("getConcurrencyChecksEnabled", () -> attributes.getConcurrencyChecksEnabled()); }
 	@Override public boolean getStatisticsEnabled() { return invoke("getStatisticsEnabled", () -> attributes.getStatisticsEnabled()); }
 	@Override public boolean getIgnoreJTA() { return invoke("getIgnoreJTA", () -> attributes.getIgnoreJTA()); }
-	@Override public boolean isLockGrantor() { return invoke("isLockGrantor", () -> attributes.isLockGrantor()); }
-	@Override public boolean getMulticastEnabled() { return invoke("getMulticastEnabled", () -> attributes.getMulticastEnabled()); }
 	@Override public String getPoolName() { return invoke("getPoolName", () -> attributes.getPoolName()); }
 	@Override public boolean getCloningEnabled() { return invoke("getCloningEnabled", () -> attributes.getCloningEnabled()); }
 	@Override public String getDiskStoreName() { return invoke("getDiskStoreName", () -> attributes.getDiskStoreName()); }
 	@Override public boolean isDiskSynchronous() { return invoke("isDiskSynchronous", () -> attributes.isDiskSynchronous()); }
 	@Override public boolean getIndexMaintenanceSynchronous() { return invoke("getIndexMaintenanceSynchronous", () -> attributes.getIndexMaintenanceSynchronous()); }
-	@Override public boolean getEnableSubscriptionConflation() { return invoke("getEnableSubscriptionConflation", () -> attributes.getEnableSubscriptionConflation()); }
-	@Override public boolean getEarlyAck() { return invoke("getEarlyAck", () -> attributes.getEarlyAck()); }
-	@Override public boolean getPublisher() { return invoke("getPublisher", () -> attributes.getPublisher()); }
-	@Override public Set<String> getGatewaySenderIds() { return invoke("getGatewaySenderIds", () -> Set.copyOf(attributes.getGatewaySenderIds())); }
-	@Override public Set<String> getAsyncEventQueueIds() { return invoke("getAsyncEventQueueIds", () -> Set.copyOf(attributes.getAsyncEventQueueIds())); }
 	@Override public List<DriverCacheListener<K, V>> getCacheListeners() { return region.getCacheListeners(); }
 	@Override public DriverCacheLoader<K, V> getCacheLoader() { return region.getCacheLoader(); }
 	@Override public DriverCacheWriter<K, V> getCacheWriter() { return region.getCacheWriter(); }

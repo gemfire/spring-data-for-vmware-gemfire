@@ -11,19 +11,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import com.vmware.gemfire.driver.spi.*;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
 
 /** Local callback behavior shared by official native and mock providers. */
 public abstract class RegionCallbackContract extends RegionOperationsContract {
 	protected abstract GemFireDriver driver();
-	protected abstract CacheConfiguration configuration(CacheConfiguration.Mode mode);
+	protected abstract CacheConfiguration configuration();
 	private void withCache(Consumer<DriverConnection> action) {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) { action.accept(connection); }
+		try (var connection = connect()) { action.accept(connection); }
 	}
 	private void withRegion(Consumer<DriverRegion<String, String>> action) {
-		withCache(c -> action.accept(c.createRegion("callbacks", RegionShortcut.LOCAL)));
+		withCache(c -> action.accept(c.createClientRegion("callbacks", ClientRegionShortcut.LOCAL)));
 	}
 	protected Map<Method, Probe> callbackProbes() throws Exception {
 		Map<Method, Probe> probes = new LinkedHashMap<>();
@@ -55,15 +54,9 @@ public abstract class RegionCallbackContract extends RegionOperationsContract {
 			new Probe("Declarable.init", () -> new DriverDeclarable() { }.init(new Properties())));
 		probes.put(DriverDeclarable.class.getMethod("initialize", DriverConnection.class, Properties.class),
 			new Probe("Declarable.initialize", () -> withCache(c -> new DriverDeclarable() { }.initialize(c, new Properties()))));
-		probes.put(DriverConnection.class.getMethod("createRegion", String.class, RegionShortcut.class, RegionCallbacks.class),
-			new Probe("Connection.createRegionWithCallbacks", () -> withCache(c -> {
-				var listener = new RecordingListener();
-				c.createRegion("created", RegionShortcut.LOCAL, new RegionCallbacks<>(List.of(listener), null, null));
-				assertThat(listener.calls).containsExactly("afterRegionCreate");
-			})));
 		probes.put(DriverConnection.class.getMethod("createClientRegion", String.class, ClientRegionShortcut.class, RegionCallbacks.class),
 			new Probe("Connection.createClientRegionWithCallbacks", () -> {
-				try (var c = driver().connect(configuration(CacheConfiguration.Mode.CLIENT))) {
+				try (var c = connect()) {
 					var listener = new RecordingListener();
 					c.createClientRegion("created", ClientRegionShortcut.LOCAL, new RegionCallbacks<>(List.of(listener), null, null));
 					assertThat(listener.calls).contains("afterRegionCreate");
@@ -76,8 +69,9 @@ public abstract class RegionCallbackContract extends RegionOperationsContract {
 	void deliversLocalEntryAndRegionEventsWithPayloadsAndWriterOrdering() {
 		withCache(c -> {
 			var listener = new RecordingListener(); var writer = new RecordingWriter();
-			DriverRegion<String, String> region = c.createRegion("entries", RegionShortcut.LOCAL,
-				new RegionCallbacks<>(List.of(listener), null, writer));
+			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL,
+				new RegionCallbacks<>(List.of(listener), null, null));
+			region.setCacheWriter(writer);
 			assertThat(listener.operations).containsExactly(DriverOperation.REGION_CREATE);
 			region.put("key", "one", "create-argument");
 			region.put("key", "two", "update-argument");
@@ -138,7 +132,7 @@ public abstract class RegionCallbackContract extends RegionOperationsContract {
 	@Test
 	void registrationIdentityReplacementAndCleanupAreSharedAcrossHandles() {
 		withCache(c -> {
-			DriverRegion<String, String> region = c.createRegion("entries", RegionShortcut.LOCAL);
+			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 			DriverRegion<String, String> other = c.getRegion("entries");
 			var first = new RecordingListener(); var second = new RecordingListener();
 			region.addCacheListener(first); other.addCacheListener(first); other.addCacheListener(second);
@@ -226,8 +220,9 @@ public abstract class RegionCallbackContract extends RegionOperationsContract {
 			};
 			loader.init(properties); loader.initialize(c, properties);
 			var listener = new RecordingListener();
-			DriverRegion<String, String> region = c.createRegion("loaded", RegionShortcut.LOCAL,
-				new RegionCallbacks<>(List.of(listener), loader, null));
+			DriverRegion<String, String> region = c.createClientRegion("loaded", ClientRegionShortcut.LOCAL,
+				new RegionCallbacks<>(List.of(listener), null, null));
+			region.setCacheLoader(loader);
 			assertThat(region.getCacheLoader()).isSameAs(loader);
 			assertThat(calls).containsExactly("init", "initialize");
 			assertThat(region.get("key", "argument")).isEqualTo("loaded");

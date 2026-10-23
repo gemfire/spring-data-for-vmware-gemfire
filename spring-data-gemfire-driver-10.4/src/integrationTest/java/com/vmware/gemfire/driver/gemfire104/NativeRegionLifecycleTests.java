@@ -9,10 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionEvent;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.util.CacheListenerAdapter;
@@ -21,11 +19,11 @@ import org.junit.jupiter.api.Test;
 class NativeRegionLifecycleTests {
 
 	@Test
-	void peerDestroyRegionCloseAndCacheCloseDeliverNativeLifecycle() {
+	void clientDestroyRegionCloseAndCacheCloseDeliverNativeLifecycle() {
 		for (String operation : List.of("destroy", "regionClose", "cacheClose")) {
-			try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "")
+			try (var cache = new ClientCacheFactory().set("mcast-port", "0").set("locators", "")
 				.set("log-level", "error").create()) {
-				Region<Object, Object> region = cache.createRegionFactory(RegionShortcut.LOCAL).create("entries");
+				Region<Object, Object> region = cache.createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 				RecordingListener listener = registerTwice(region);
 				switch (operation) {
 					case "destroy" -> region.localDestroyRegion();
@@ -50,9 +48,9 @@ class NativeRegionLifecycleTests {
 
 	@Test
 	void adapterDeliversNativeDestroyAndCleanupAcrossHandles() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "")
+		try (var cache = new ClientCacheFactory().set("mcast-port", "0").set("locators", "")
 			.set("log-level", "error").create()) {
-			Region<Object, Object> region = cache.createRegionFactory(RegionShortcut.LOCAL).create("entries");
+			Region<Object, Object> region = cache.createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 			List<String> events = new ArrayList<>();
 			var listener = new com.vmware.gemfire.driver.spi.DriverRegionLifecycleListener() {
 				@Override public void afterRegionDestroy(com.vmware.gemfire.driver.spi.DriverRegion<?, ?> destroyed) {
@@ -73,9 +71,9 @@ class NativeRegionLifecycleTests {
 
 	@Test
 	void nativeRuntimeCallbackFailuresDoNotPreventOtherNotificationsOrCleanup() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "")
+		try (var cache = new ClientCacheFactory().set("mcast-port", "0").set("locators", "")
 			.set("log-level", "error").create()) {
-			Region<Object, Object> region = cache.createRegionFactory(RegionShortcut.LOCAL).create("entries");
+			Region<Object, Object> region = cache.createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 			region.getAttributesMutator().addCacheListener(new CacheListenerAdapter<>() {
 				@Override public void afterRegionDestroy(RegionEvent<Object, Object> event) {
 					throw new IllegalStateException("expected destruction callback failure");

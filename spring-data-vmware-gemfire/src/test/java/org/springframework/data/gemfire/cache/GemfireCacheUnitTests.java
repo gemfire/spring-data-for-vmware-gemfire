@@ -37,7 +37,7 @@ class GemfireCacheUnitTests {
 	@BeforeEach
 	void createCache() {
 		connection = new GemFireDriverManager().driver()
-				.connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()));
+				.connect(new CacheConfiguration(Map.of()));
 		region = connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 		cache = new GemfireCache(region);
 	}

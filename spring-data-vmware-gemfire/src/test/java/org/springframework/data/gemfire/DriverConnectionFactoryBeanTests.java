@@ -24,7 +24,7 @@ import com.vmware.gemfire.driver.spi.GemFireDriver;
 
 class DriverConnectionFactoryBeanTests {
 
-	private final CacheConfiguration configuration = new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of());
+	private final CacheConfiguration configuration = new CacheConfiguration(Map.of());
 	private final RecordingConnection connection = new RecordingConnection();
 	private final RecordingDriver driver = new RecordingDriver();
 

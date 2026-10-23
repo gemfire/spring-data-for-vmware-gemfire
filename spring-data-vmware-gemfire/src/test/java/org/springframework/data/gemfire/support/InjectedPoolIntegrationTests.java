@@ -135,8 +135,7 @@ class InjectedPoolIntegrationTests {
 	}
 
 	private CacheConfiguration cacheConfiguration() {
-		return new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-			Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
+		return new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
 	}
 	private PoolConfiguration poolConfiguration() {
 		return new PoolConfiguration(List.of(new Endpoint("127.0.0.1", 40404)), List.of(), 0);
@@ -146,8 +145,7 @@ class InjectedPoolIntegrationTests {
 	public static class Owners {
 		@Bean public DriverConnectionFactoryBean connection() {
 			return new DriverConnectionFactoryBean(new GemFireDriverManager(),
-				new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-					Map.of("mcast-port", "0", "locators", "", "log-level", "error")));
+				new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error")));
 		}
 		@Bean(destroyMethod = "") public DriverConnection otherConnection() { return new UnusedConnection(); }
 		@Bean public DriverPoolFactoryBean pool(@Qualifier("connection") DriverConnection connection) {

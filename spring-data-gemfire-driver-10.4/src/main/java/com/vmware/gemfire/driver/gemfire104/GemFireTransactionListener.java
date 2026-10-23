@@ -15,7 +15,7 @@ final class GemFireTransactionListener implements TransactionListener {
 	@Override public void afterFailedCommit(TransactionEvent event) { delegate.afterFailedCommit(new GemFireTransactionEvent(event)); }
 	@Override public void afterRollback(TransactionEvent event) { delegate.afterRollback(new GemFireTransactionEvent(event)); }
 	@Override public void init(Properties properties) { delegate.init(properties); }
-	@Override public void initialize(Cache cache, Properties properties) { delegate.initialize(new GemFireConnection(cache, ((org.apache.geode.internal.cache.InternalCache) cache).isClient() ? CacheConfiguration.Mode.CLIENT : CacheConfiguration.Mode.PEER), properties); }
+	@Override public void initialize(Cache cache, Properties properties) { delegate.initialize(new GemFireConnection(cache), properties); }
 	@Override public void close() { delegate.close(); }
 	@Override public boolean equals(Object other) { return other instanceof GemFireTransactionListener listener && delegate.equals(listener.delegate); }
 	@Override public int hashCode() { return delegate.hashCode(); }

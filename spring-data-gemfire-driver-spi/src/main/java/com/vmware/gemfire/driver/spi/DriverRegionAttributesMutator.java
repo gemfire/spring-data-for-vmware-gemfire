@@ -11,10 +11,6 @@ public interface DriverRegionAttributesMutator<K, V> {
 	DriverRegion<K, V> getRegion();
 	void setCloningEnabled(boolean enabled);
 	boolean getCloningEnabled();
-	void addGatewaySenderId(String id);
-	void removeGatewaySenderId(String id);
-	void addAsyncEventQueueId(String id);
-	void removeAsyncEventQueueId(String id);
 	void addCacheListener(DriverCacheListener<K, V> listener);
 	void removeCacheListener(DriverCacheListener<K, V> listener);
 	void initCacheListeners(List<DriverCacheListener<K, V>> listeners);

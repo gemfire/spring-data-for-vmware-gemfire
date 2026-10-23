@@ -4,7 +4,7 @@
  */
 package com.vmware.gemfire.driver.spi;
 
-/** Context valid during a loader invocation. Network search follows native region semantics. */
+/** Context valid during a client loader invocation. */
 public interface DriverLoaderHelper<K, V> {
 
 	K getKey();
@@ -12,7 +12,4 @@ public interface DriverLoaderHelper<K, V> {
 	DriverRegion<K, V> getRegion();
 
 	Object getArgument();
-
-	/** Unavailable in synthetic callable contexts and the local-only mock. */
-	V netSearch(boolean doNetLoad);
 }

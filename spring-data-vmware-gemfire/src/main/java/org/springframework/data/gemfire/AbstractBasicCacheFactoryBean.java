@@ -13,7 +13,6 @@ import org.apache.geode.GemFireException;
 import org.apache.geode.cache.DiskStore;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.pdx.PdxSerializer;
@@ -73,7 +72,6 @@ import org.springframework.util.StringUtils;
  * @see ClientCache
  * @see Region
  * @see TransactionListener
- * @see TransactionWriter
  * @see ClientCache
  * @see ClientCacheFactory
  * @see PdxSerializer
@@ -116,7 +114,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 
 	private String pdxDiskStoreName;
 
-	private TransactionWriter transactionWriter;
 
 	/**
 	 * Sets a reference to the constructed, configured an initialized {@link ClientCache} instance created by
@@ -491,27 +488,6 @@ public abstract class AbstractBasicCacheFactoryBean extends AbstractFactoryBeanS
 	 */
 	public List<TransactionListener> getTransactionListeners() {
 		return CollectionUtils.nullSafeList(this.transactionListeners);
-	}
-
-	/**
-	 * Configures a {@link TransactionWriter} implemented by the application to receive transaction events and perform
-	 * a action, like a veto.
-	 *
-	 * @param transactionWriter {@link TransactionWriter} receiving transaction events.
-	 * @see TransactionWriter
-	 */
-	public void setTransactionWriter(@Nullable TransactionWriter transactionWriter) {
-		this.transactionWriter = transactionWriter;
-	}
-
-	/**
-	 * Return the configured {@link TransactionWriter} used to process and handle transaction events.
-	 *
-	 * @return the configured {@link TransactionWriter}.
-	 * @see TransactionWriter
-	 */
-	public @Nullable TransactionWriter getTransactionWriter() {
-		return this.transactionWriter;
 	}
 
 	/**

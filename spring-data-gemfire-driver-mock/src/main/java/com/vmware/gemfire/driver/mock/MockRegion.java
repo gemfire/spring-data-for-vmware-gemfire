@@ -28,16 +28,12 @@ final class MockRegion<K, V> implements DriverRegion<K, V> {
 	private final Map<K, Object> entryAttributes = new HashMap<>();
 	private final Map<K, Object> entryIdentities = new HashMap<>();
 
-	MockRegion(String name, MockConnection connection, MockRegion<?, ?> parent, RegionConfiguration<K, V> config, boolean client) {
+	MockRegion(String name, MockConnection connection, MockRegion<?, ?> parent, RegionConfiguration<K, V> config) {
 		this.name = name; this.connection = connection; this.parent = parent;
-		this.attributes = new MockRegionAttributes<>(this, config, client);
+		this.attributes = new MockRegionAttributes<>(this, config);
 	}
 	@Override public DriverRegionAttributes<K, V> getAttributes() { return attributes; }
 	@Override public DriverRegionAttributesMutator<K, V> getAttributesMutator() { checkOpen(); return new MockRegionAttributesMutator<>(this); }
-	@Override public <SK, SV> DriverRegion<SK, SV> createSubregion(String name,
-		com.vmware.gemfire.driver.spi.config.RegionShortcut shortcut, RegionConfiguration<SK, SV> config) {
-		checkOpen(); return connection.createConfigured(name, shortcut, config, this);
-	}
 	@Override public <SK, SV> DriverRegion<SK, SV> createClientSubregion(String name,
 		com.vmware.gemfire.driver.spi.config.ClientRegionShortcut shortcut, RegionConfiguration<SK, SV> config) {
 		checkOpen(); return connection.createConfiguredClient(name, shortcut, config, this);
@@ -53,9 +49,6 @@ final class MockRegion<K, V> implements DriverRegion<K, V> {
 	}
 	private void checkListener(DriverCacheListener<K, V> listener) {
 		if (listener == null) throw failure(DriverFailureKind.INVALID_ARGUMENT, "Listener must not be null", null);
-		if (listener instanceof DriverRegionMembershipListener || listener instanceof DriverRegionRoleListener) {
-			throw UnsupportedFeatureException.notIntroduced("Region.distributedListeners");
-		}
 	}
 	@Override public synchronized void addCacheListener(DriverCacheListener<K, V> listener) {
 		checkOpen(); checkListener(listener);
@@ -109,7 +102,6 @@ final class MockRegion<K, V> implements DriverRegion<K, V> {
 				@Override public K getKey() { return key; }
 				@Override public DriverRegion<K, V> getRegion() { return MockRegion.this; }
 				@Override public Object getArgument() { return argument; }
-				@Override public V netSearch(boolean doNetLoad) { throw UnsupportedFeatureException.notIntroduced("LoaderHelper.netSearch"); }
 			});
 		} catch (GemFireDriverException failure) { throw failure; }
 		catch (RuntimeException failure) { throw failure(DriverFailureKind.LOADER_FAILURE, "Cache loader failed", failure); }

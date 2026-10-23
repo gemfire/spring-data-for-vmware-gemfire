@@ -15,6 +15,8 @@ import zipfile
 from collections import Counter, defaultdict, deque
 from pathlib import Path
 
+from scope_policy import classify, counts, status_counts
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 VERSION = "10.4.0-build.3056.df98c835"
@@ -306,6 +308,9 @@ def main():
                                 kind="resource", text=r["source"]))
 
     policy = json.loads((HERE / "coverage-policy.json").read_text())
+    scope_path = HERE / policy["scope_policy"]
+    scope_policy = json.loads(scope_path.read_text())
+    assert scope_policy["native_version"] == VERSION, "Review scope when changing native version"
     exposed_internals = {r["native_type"] for r in exposure if ".internal." in r["native_type"]}
     assert exposed_internals <= set(policy["public_internal_payloads"]), "Classify newly exposed internal payloads explicitly"
     baseline = json.loads((HERE / "native-api-baseline.json").read_text())
@@ -452,6 +457,9 @@ def main():
         assert row["status"] in {"missing", "partial", "implemented", "removed"}
         if row["status"] == "implemented":
             assert row["spi"] and row["native_impl"] != "pending" and not row["tests"].startswith("pending")
+    scope_fields = classify(list(rows.values()), scope_policy, ROOT)
+    for row in rows.values():
+        row.update(scope_fields[row["id"]])
     # Never silently lose lexical references, including an old reflective name
     # absent from the selected runtime or documentation/tooling declarations.
     source_rows = []
@@ -471,7 +479,15 @@ def main():
             assert len(matched) == 1, f"Unexplained lexical reference: {item}"
             explanation = matched[0]
             api, disposition, own = "", explanation["explanation"], explanation["ticket"]
-        source_rows.append(dict(id=row_id("REF", key), **item, api_row=api, disposition=disposition, owner=ticket(own)))
+        scope = scope_fields[api] if api else dict(scope="unresolved", scope_owner=scope_policy["unresolved"]["owner"])
+        source_owner = ticket(own)
+        if api and not is_test:
+            source_owner = rows[name + "#<type>"]["owner"]
+            disposition = {"required-client": "required-client-reference",
+                           "excluded-server": "excluded-server-reference",
+                           "unresolved": "unresolved-client-scope-reference"}[scope["scope"]]
+        source_rows.append(dict(id=row_id("REF", key), **item, api_row=api, disposition=disposition,
+                                owner=source_owner, scope=scope["scope"], scope_owner=scope["scope_owner"]))
     # Scope and evidence fingerprints make source/native drift reviewable.
     products = {
         "api-coverage.tsv": encoded_tsv(list(next(iter(rows.values()))), [rows[k] for k in sorted(rows)]),
@@ -482,17 +498,18 @@ def main():
         "spring-annotation-defaults.tsv": encoded_tsv(["spring_type", "member", "descriptor", "value", "source"],
             sorted(annotation_defaults, key=lambda r: tuple(r.values()))),
         "source-coverage.tsv": encoded_tsv(
-            ["id", "source", "symbol", "native_type", "kind", "text", "api_row", "disposition", "owner"], source_rows),
+            ["id", "source", "symbol", "native_type", "kind", "text", "api_row", "disposition", "owner", "scope", "scope_owner"], source_rows),
         "spring-evidence.tsv": encoded_tsv(["native_type", "source_or_signature"],
             [dict(native_type=n, source_or_signature=e) for n in sorted(evidence) for e in sorted(evidence[n])]),
         "direct-members.tsv": encoded_tsv(["native_type", "member", "descriptor", "api_row"],
             [dict(native_type=n, member=m, descriptor=d, api_row=rows[n + "#" + m + d]["id"])
              for n in sorted(direct) for m, d in sorted(direct[n])]),
         "existing-spi-coverage.tsv": encoded_tsv(
-            ["spi", "kind", "native_rows", "native_impl", "tests", "status", "remaining", "owner"],
+            ["spi", "kind", "native_rows", "native_impl", "tests", "status", "remaining", "owner", "scopes"],
             [dict(spi=r["spi"], kind=r["kind"], native_rows=";".join(rows[k]["id"] for k in r["native_keys"]),
                   native_impl=r["native_impl"], tests=r["tests"], status=r["status"], remaining=r["remaining"],
-                  owner=ticket(r["owner"])) for r in policy["existing_spi"]]),
+                  owner=ticket(r["owner"]), scopes=";".join(sorted({rows[k]["scope"] for k in r["native_keys"]})))
+             for r in policy["existing_spi"]]),
     }
     evidence_hashes = {str(p.relative_to(ROOT)): digest(p.read_bytes())
                        for module in ("spring-data-gemfire-driver-spi", "spring-data-gemfire-driver-10.4",
@@ -500,7 +517,12 @@ def main():
                        for p in sorted((ROOT / module / "src").rglob("*.java"))}
     evidence_hashes.update({str(p.relative_to(ROOT)): digest(p.read_bytes()) for p in
                            [HERE / "coverage-policy.json", HERE / "build_api_coverage.py",
+                            scope_path, HERE / "scope_policy.py", HERE / "validate_coverage.py",
+                            HERE.parent / "client-only-scope.md",
                             AUDIT / "native-references.tsv", AUDIT / "native-resource-references.tsv"]})
+    for decision in [scope_policy["unresolved"]] + scope_policy["decisions"]:
+        path = ROOT / decision["evidence"].split("#", 1)[0]
+        evidence_hashes[str(path.relative_to(ROOT))] = digest(path.read_bytes())
     evidence_hashes[str((HERE / "native-api-baseline.json").relative_to(ROOT))] = digest((HERE / "native-api-baseline.json").read_bytes())
     manifest = dict(native_version=VERSION, jars=jar_manifest, source_sha256=sources,
                     evidence_sha256=evidence_hashes,
@@ -508,6 +530,8 @@ def main():
                     spring_exposures=len(exposure), source_references=len(source_rows),
                     spring_annotation_defaults=len(annotation_defaults),
                     statuses=dict(sorted(Counter(r["status"] for r in rows.values()).items())),
+                    scopes=counts(list(rows.values())), scope_statuses=status_counts(list(rows.values())),
+                    source_scopes=counts(source_rows),
                     owner_counts=dict(sorted(Counter(r["owner"] for r in rows.values()).items())),
                     output_sha256={k: digest(v) for k, v in products.items()})
     products["coverage-manifest.json"] = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode()
@@ -519,6 +543,7 @@ def main():
             path.write_bytes(data)
     for name, count in [("Native types", len(visited)), ("API rows", len(rows)), ("Spring exposures", len(exposure))]:
         print(f"{name}: {count}")
+    print("API scope: " + ", ".join(f"{scope}={count}" for scope, count in manifest["scopes"].items()))
     print("Coverage check passed" if args.check else "Coverage generated")
 
 

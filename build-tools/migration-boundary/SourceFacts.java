@@ -123,9 +123,20 @@ public class SourceFacts {
         }
 
         private boolean immutableEnum(ClassTree node) {
+            Set<String> constants = new HashSet<>();
+            for (var member : node.getMembers()) {
+                if (member instanceof VariableTree v && v.getInitializer() instanceof NewClassTree
+                    && v.getType().toString().equals(node.getSimpleName().toString())
+                    && v.getModifiers().getFlags().containsAll(Set.of(Modifier.STATIC, Modifier.FINAL)))
+                    constants.add(v.getName().toString());
+            }
             return node.getMembers().stream().filter(m -> m instanceof VariableTree).map(m -> (VariableTree) m)
-                .allMatch(v -> v.getInitializer() instanceof NewClassTree ||
-                    v.getModifiers().getFlags().contains(Modifier.FINAL) && immutableType(v.getType().toString()));
+                .allMatch(v -> constants.contains(v.getName().toString()) ||
+                    v.getModifiers().getFlags().contains(Modifier.FINAL) && (immutableType(v.getType().toString()) ||
+                        v.getModifiers().getFlags().contains(Modifier.STATIC)
+                        && v.getType().toString().equals(node.getSimpleName().toString())
+                        && v.getInitializer() instanceof IdentifierTree alias
+                        && constants.contains(alias.getName().toString())));
         }
 
         private String context(Tree node) {

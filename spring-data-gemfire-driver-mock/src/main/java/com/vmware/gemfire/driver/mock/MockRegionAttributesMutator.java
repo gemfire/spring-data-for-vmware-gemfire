@@ -15,24 +15,6 @@ final class MockRegionAttributesMutator<K, V> implements DriverRegionAttributesM
 	@Override public void setCloningEnabled(boolean enabled) {
 		region.checkOpen(); if (enabled) throw UnsupportedFeatureException.notIntroduced("RegionConfiguration.cloningEnabled");
 	}
-	@Override public void addGatewaySenderId(String id) {
-		region.checkOpen();
-		if (id == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null identifier", null);
-		throw UnsupportedFeatureException.notIntroduced("AttributesMutator.addGatewaySenderId");
-	}
-	@Override public void removeGatewaySenderId(String id) {
-		region.checkOpen();
-		if (id == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null identifier", null);
-	}
-	@Override public void addAsyncEventQueueId(String id) {
-		region.checkOpen();
-		if (id == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null identifier", null);
-		throw UnsupportedFeatureException.notIntroduced("AttributesMutator.addAsyncEventQueueId");
-	}
-	@Override public void removeAsyncEventQueueId(String id) {
-		region.checkOpen();
-		if (id == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null identifier", null);
-	}
 	@Override public void addCacheListener(DriverCacheListener<K, V> listener) { region.addCacheListener(listener); }
 	@Override public void removeCacheListener(DriverCacheListener<K, V> listener) { region.removeCacheListener(listener); }
 	@Override public void initCacheListeners(List<DriverCacheListener<K, V>> listeners) { region.initCacheListeners(listeners); }

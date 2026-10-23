@@ -34,10 +34,6 @@ public abstract class TransactionContract extends PdxValueContract {
 		probes.put(DriverTransactionManager.class.getMethod("addListener", DriverTransactionListener.class), new Probe("TransactionManager.addListener", () -> withManager(m -> { var listener = new DriverTransactionListenerAdapter(); m.addListener(listener); assertThat(m.getListeners()).containsExactly(listener); })));
 		probes.put(DriverTransactionManager.class.getMethod("removeListener", DriverTransactionListener.class), new Probe("TransactionManager.removeListener", () -> withManager(m -> { m.removeListener(new DriverTransactionListenerAdapter()); assertThat(m.getListeners()).isEmpty(); })));
 		probes.put(DriverTransactionManager.class.getMethod("initListeners", DriverTransactionListener[].class), new Probe("TransactionManager.initListeners", () -> withManager(m -> { var listener = new DriverTransactionListenerAdapter(); m.initListeners(new DriverTransactionListener[] {listener}); assertThat(m.getListeners()).containsExactly(listener); })));
-		probes.put(DriverTransactionManager.class.getMethod("setWriter", DriverTransactionWriter.class), new Probe("TransactionManager.setWriter", () -> withManager(m -> { m.setWriter(null); assertThat(m.getWriter()).isNull(); })));
-		probes.put(DriverTransactionManager.class.getMethod("getWriter"), new Probe("TransactionManager.getWriter", () -> withManager(m -> { assertThat(m.getWriter()).isNull(); })));
-		probes.put(DriverTransactionManager.class.getMethod("setDistributed", boolean.class), new Probe("TransactionManager.setDistributed", () -> withManager(m -> { m.setDistributed(true); assertThat(m.isDistributed()).isTrue(); })));
-		probes.put(DriverTransactionManager.class.getMethod("isDistributed"), new Probe("TransactionManager.isDistributed", () -> withManager(m -> { assertThat(m.isDistributed()).isFalse(); })));
 		probes.put(DriverTransactionManager.class.getMethod("writeTransactionId", DriverTransactionId.class, ObjectOutput.class), new Probe("TransactionManager.writeTransactionId", () -> withManager(m -> { var id = prepare(m, false); var bytes = new ByteArrayOutputStream(); try (var output = new ObjectOutputStream(bytes)) { m.writeTransactionId(id, output); } assertThat(bytes.size()).isGreaterThan(4); })));
 		probes.put(DriverTransactionManager.class.getMethod("readTransactionId", ObjectInput.class), new Probe("TransactionManager.readTransactionId", () -> withManager(m -> { var id = prepare(m, false); var bytes = new ByteArrayOutputStream(); try (var output = new ObjectOutputStream(bytes)) { if (id != null) m.writeTransactionId(id, output); } try (var input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()))) { assertThat(m.readTransactionId(input)).isEqualTo(id); } })));
 		return probes;
@@ -47,7 +43,7 @@ public abstract class TransactionContract extends PdxValueContract {
 		catch (UnsupportedFeatureException unsupported) { return null; }
 	}
 	private void withManager(Action action) throws Exception {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) { action.run(connection.getTransactionManager()); }
+		try (var connection = connect()) { action.run(connection.getTransactionManager()); }
 	}
 	@FunctionalInterface private interface Action { void run(DriverTransactionManager manager) throws Exception; }
 }

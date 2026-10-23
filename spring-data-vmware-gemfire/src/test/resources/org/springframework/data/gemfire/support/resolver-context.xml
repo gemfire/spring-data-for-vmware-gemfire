@@ -4,7 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="driverManager" class="com.vmware.gemfire.driver.core.GemFireDriverManager"/>
     <bean id="configuration" class="com.vmware.gemfire.driver.spi.CacheConfiguration">
-        <constructor-arg value="CLIENT"/>
         <constructor-arg><map>
             <entry key="mcast-port" value="0"/>
             <entry key="locators" value=""/>

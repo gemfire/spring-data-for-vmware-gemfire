@@ -16,20 +16,14 @@ import org.junit.Test;
 
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.ExpirationAction;
-import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.InterestResultPolicy;
-import org.apache.geode.cache.Scope;
 
 import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.data.gemfire.InterestPolicyConverter;
-import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
 import org.springframework.data.gemfire.eviction.EvictionActionConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyType;
 import org.springframework.data.gemfire.expiration.ExpirationActionConverter;
-import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
-import org.springframework.data.gemfire.server.SubscriptionEvictionPolicyConverter;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.support.ConnectionEndpointList;
 import org.springframework.util.StringUtils;
@@ -68,14 +62,8 @@ public class CustomEditorBeanFactoryPostProcessorUnitTests {
 			isA(EvictionPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(ExpirationAction.class),
 			isA(ExpirationActionConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestPolicy.class),
-			isA(InterestPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestResultPolicy.class),
 			isA(InterestResultPolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(SubscriptionEvictionPolicy.class),
-			isA(SubscriptionEvictionPolicyConverter.class));
 
 		verifyNoMoreInteractions(mockRegistry);
 	}

@@ -6,9 +6,7 @@ package com.vmware.gemfire.driver.gemfire104;
 
 import java.util.Objects;
 import java.util.Properties;
-import java.util.Arrays;
 import org.apache.geode.cache.*;
-import org.apache.geode.distributed.DistributedMember;
 import com.vmware.gemfire.driver.spi.*;
 
 /** Every native listener method is explicitly forwarded; no inherited native adapter no-ops. */
@@ -33,37 +31,11 @@ class GemFireCacheListener<K, V> implements CacheListener<K, V> {
 	@Override public void close() { dispatch("close", delegate::close); }
 	@Override public void init(Properties properties) { dispatch("init", () -> delegate.init(properties)); }
 	@Override public void initialize(Cache cache, Properties properties) {
-		dispatch("initialize", () -> delegate.initialize(new GemFireConnection(cache, CacheConfiguration.Mode.PEER), properties));
+		dispatch("initialize", () -> delegate.initialize(new GemFireConnection(cache), properties));
 	}
 	@Override public boolean equals(Object other) {
-		return new GemFireCacheListenerFactory().applicationAdapter(other) instanceof GemFireCacheListener<?, ?> listener
+		return other instanceof GemFireCacheListener<?, ?> listener
 			&& delegate == listener.delegate;
 	}
 	@Override public int hashCode() { return System.identityHashCode(delegate); }
-	static class Membership<K, V> extends GemFireCacheListener<K, V> implements RegionMembershipListener<K, V> {
-		private final DriverRegionMembershipListener<K, V> membership;
-		@SuppressWarnings("unchecked")
-		Membership(DriverCacheListener<K, V> listener) { super(listener); membership = (DriverRegionMembershipListener<K, V>) listener; }
-		@Override public void initialMembers(Region<K, V> region, DistributedMember[] members) {
-			dispatch("initialMembers", () -> membership.initialMembers(new GemFireRegion<>(region),
-				Arrays.stream(members).map(events::member).toArray(DriverMember[]::new)));
-		}
-		@Override public void afterRemoteRegionCreate(RegionEvent<K, V> event) { dispatch("afterRemoteRegionCreate", () -> membership.afterRemoteRegionCreate(events.region(event))); }
-		@Override public void afterRemoteRegionDeparture(RegionEvent<K, V> event) { dispatch("afterRemoteRegionDeparture", () -> membership.afterRemoteRegionDeparture(events.region(event))); }
-		@Override public void afterRemoteRegionCrash(RegionEvent<K, V> event) { dispatch("afterRemoteRegionCrash", () -> membership.afterRemoteRegionCrash(events.region(event))); }
-	}
-	static final class Roles<K, V> extends GemFireCacheListener<K, V> implements RegionRoleListener<K, V> {
-		private final DriverRegionRoleListener<K, V> roles;
-		@SuppressWarnings("unchecked")
-		Roles(DriverCacheListener<K, V> listener) { super(listener); roles = (DriverRegionRoleListener<K, V>) listener; }
-		@Override public void afterRoleGain(RoleEvent<K, V> event) { dispatch("afterRoleGain", () -> roles.afterRoleGain(events.role(event))); }
-		@Override public void afterRoleLoss(RoleEvent<K, V> event) { dispatch("afterRoleLoss", () -> roles.afterRoleLoss(events.role(event))); }
-	}
-	static final class Both<K, V> extends Membership<K, V> implements RegionRoleListener<K, V> {
-		private final DriverRegionRoleListener<K, V> roles;
-		@SuppressWarnings("unchecked")
-		Both(DriverCacheListener<K, V> listener) { super(listener); roles = (DriverRegionRoleListener<K, V>) listener; }
-		@Override public void afterRoleGain(RoleEvent<K, V> event) { dispatch("afterRoleGain", () -> roles.afterRoleGain(events.role(event))); }
-		@Override public void afterRoleLoss(RoleEvent<K, V> event) { dispatch("afterRoleLoss", () -> roles.afterRoleLoss(events.role(event))); }
-	}
 }

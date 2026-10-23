@@ -562,7 +562,6 @@ org.apache.geode.cache.GemFireCache#loadCacheXml(Ljava/io/InputStream;)V	org.apa
 org.apache.geode.cache.GemFireCache#rootRegions()Ljava/util/Set;	org.apache.geode.cache.Region	inherited-member-signature
 org.apache.geode.cache.GemFireCache#setRegionAttributes(Ljava/lang/String;Lorg/apache/geode/cache/RegionAttributes;)V	org.apache.geode.cache.RegionAttributes	member-signature
 org.apache.geode.cache.InterestPolicy	org.apache.geode.cache.InterestPolicy	frozen-baseline-root
-org.apache.geode.cache.InterestPolicy	org.apache.geode.cache.InterestPolicy	spring-root
 org.apache.geode.cache.InterestPolicy#ALLLorg/apache/geode/cache/InterestPolicy;	org.apache.geode.cache.InterestPolicy	member-signature
 org.apache.geode.cache.InterestPolicy#CACHE_CONTENTLorg/apache/geode/cache/InterestPolicy;	org.apache.geode.cache.InterestPolicy	member-signature
 org.apache.geode.cache.InterestPolicy#DEFAULTLorg/apache/geode/cache/InterestPolicy;	org.apache.geode.cache.InterestPolicy	member-signature
@@ -586,7 +585,6 @@ org.apache.geode.cache.LoaderHelper#getRegion()Lorg/apache/geode/cache/Region;	o
 org.apache.geode.cache.LoaderHelper#netSearch(Z)Ljava/lang/Object;	org.apache.geode.cache.CacheLoaderException	member-signature
 org.apache.geode.cache.LoaderHelper#netSearch(Z)Ljava/lang/Object;	org.apache.geode.cache.TimeoutException	member-signature
 org.apache.geode.cache.LossAction	org.apache.geode.cache.LossAction	frozen-baseline-root
-org.apache.geode.cache.LossAction	org.apache.geode.cache.LossAction	spring-root
 org.apache.geode.cache.LossAction#FULL_ACCESSLorg/apache/geode/cache/LossAction;	org.apache.geode.cache.LossAction	member-signature
 org.apache.geode.cache.LossAction#LIMITED_ACCESSLorg/apache/geode/cache/LossAction;	org.apache.geode.cache.LossAction	member-signature
 org.apache.geode.cache.LossAction#NO_ACCESSLorg/apache/geode/cache/LossAction;	org.apache.geode.cache.LossAction	member-signature
@@ -595,7 +593,6 @@ org.apache.geode.cache.LossAction#VALUESLjava/util/List;	org.apache.geode.cache.
 org.apache.geode.cache.LossAction#fromName(Ljava/lang/String;)Lorg/apache/geode/cache/LossAction;	org.apache.geode.cache.LossAction	member-signature
 org.apache.geode.cache.LossAction#fromOrdinal(B)Lorg/apache/geode/cache/LossAction;	org.apache.geode.cache.LossAction	member-signature
 org.apache.geode.cache.MembershipAttributes	org.apache.geode.cache.MembershipAttributes	frozen-baseline-root
-org.apache.geode.cache.MembershipAttributes	org.apache.geode.cache.MembershipAttributes	spring-root
 org.apache.geode.cache.MembershipAttributes#<init>([Ljava/lang/String;Lorg/apache/geode/cache/LossAction;Lorg/apache/geode/cache/ResumptionAction;)V	org.apache.geode.cache.LossAction	member-signature
 org.apache.geode.cache.MembershipAttributes#<init>([Ljava/lang/String;Lorg/apache/geode/cache/LossAction;Lorg/apache/geode/cache/ResumptionAction;)V	org.apache.geode.cache.ResumptionAction	member-signature
 org.apache.geode.cache.MembershipAttributes#<type>	org.apache.geode.DataSerializable	type-hierarchy-or-bound
@@ -948,7 +945,6 @@ org.apache.geode.cache.RegionService#getQueryService()Lorg/apache/geode/cache/qu
 org.apache.geode.cache.RegionService#getRegion(Ljava/lang/String;)Lorg/apache/geode/cache/Region;	org.apache.geode.cache.Region	member-signature
 org.apache.geode.cache.RegionService#rootRegions()Ljava/util/Set;	org.apache.geode.cache.Region	member-signature
 org.apache.geode.cache.RegionShortcut	org.apache.geode.cache.RegionShortcut	frozen-baseline-root
-org.apache.geode.cache.RegionShortcut	org.apache.geode.cache.RegionShortcut	spring-root
 org.apache.geode.cache.RegionShortcut#<type>	org.apache.geode.cache.RegionShortcut	type-hierarchy-or-bound
 org.apache.geode.cache.RegionShortcut#LOCALLorg/apache/geode/cache/RegionShortcut;	org.apache.geode.cache.RegionShortcut	member-signature
 org.apache.geode.cache.RegionShortcut#LOCAL_HEAP_LRULorg/apache/geode/cache/RegionShortcut;	org.apache.geode.cache.RegionShortcut	member-signature
@@ -979,7 +975,6 @@ org.apache.geode.cache.ResourceException	org.apache.geode.cache.ResourceExceptio
 org.apache.geode.cache.ResourceException	org.apache.geode.cache.ResourceException	spring-root
 org.apache.geode.cache.ResourceException#<type>	org.apache.geode.cache.CacheRuntimeException	type-hierarchy-or-bound
 org.apache.geode.cache.ResumptionAction	org.apache.geode.cache.ResumptionAction	frozen-baseline-root
-org.apache.geode.cache.ResumptionAction	org.apache.geode.cache.ResumptionAction	spring-root
 org.apache.geode.cache.ResumptionAction#NONELorg/apache/geode/cache/ResumptionAction;	org.apache.geode.cache.ResumptionAction	member-signature
 org.apache.geode.cache.ResumptionAction#REINITIALIZELorg/apache/geode/cache/ResumptionAction;	org.apache.geode.cache.ResumptionAction	member-signature
 org.apache.geode.cache.ResumptionAction#VALUESLjava/util/List;	org.apache.geode.cache.ResumptionAction	member-signature
@@ -1004,7 +999,6 @@ org.apache.geode.cache.StatisticsDisabledException	org.apache.geode.cache.Statis
 org.apache.geode.cache.StatisticsDisabledException	org.apache.geode.cache.StatisticsDisabledException	spring-root
 org.apache.geode.cache.StatisticsDisabledException#<type>	org.apache.geode.cache.CacheRuntimeException	type-hierarchy-or-bound
 org.apache.geode.cache.SubscriptionAttributes	org.apache.geode.cache.SubscriptionAttributes	frozen-baseline-root
-org.apache.geode.cache.SubscriptionAttributes	org.apache.geode.cache.SubscriptionAttributes	spring-root
 org.apache.geode.cache.SubscriptionAttributes#<init>(Lorg/apache/geode/cache/InterestPolicy;)V	org.apache.geode.cache.InterestPolicy	member-signature
 org.apache.geode.cache.SubscriptionAttributes#<type>	org.apache.geode.DataSerializable	type-hierarchy-or-bound
 org.apache.geode.cache.SubscriptionAttributes#getInterestPolicy()Lorg/apache/geode/cache/InterestPolicy;	org.apache.geode.cache.InterestPolicy	member-signature
@@ -1037,13 +1031,11 @@ org.apache.geode.cache.TransactionListener#afterFailedCommit(Lorg/apache/geode/c
 org.apache.geode.cache.TransactionListener#afterRollback(Lorg/apache/geode/cache/TransactionEvent;)V	org.apache.geode.cache.TransactionEvent	member-signature
 org.apache.geode.cache.TransactionListener#initialize(Lorg/apache/geode/cache/Cache;Ljava/util/Properties;)V	org.apache.geode.cache.Cache	inherited-member-signature
 org.apache.geode.cache.TransactionWriter	org.apache.geode.cache.TransactionWriter	frozen-baseline-root
-org.apache.geode.cache.TransactionWriter	org.apache.geode.cache.TransactionWriter	spring-root
 org.apache.geode.cache.TransactionWriter#<type>	org.apache.geode.cache.CacheCallback	type-hierarchy-or-bound
 org.apache.geode.cache.TransactionWriter#beforeCommit(Lorg/apache/geode/cache/TransactionEvent;)V	org.apache.geode.cache.TransactionEvent	member-signature
 org.apache.geode.cache.TransactionWriter#beforeCommit(Lorg/apache/geode/cache/TransactionEvent;)V	org.apache.geode.cache.TransactionWriterException	member-signature
 org.apache.geode.cache.TransactionWriter#initialize(Lorg/apache/geode/cache/Cache;Ljava/util/Properties;)V	org.apache.geode.cache.Cache	member-signature
 org.apache.geode.cache.TransactionWriterException	org.apache.geode.cache.TransactionWriterException	frozen-baseline-root
-org.apache.geode.cache.TransactionWriterException	org.apache.geode.cache.TransactionWriterException	spring-root
 org.apache.geode.cache.VersionException	org.apache.geode.cache.VersionException	frozen-baseline-root
 org.apache.geode.cache.VersionException	org.apache.geode.cache.VersionException	spring-root
 org.apache.geode.cache.VersionException#<type>	org.apache.geode.GemFireCheckedException	type-hierarchy-or-bound
@@ -1679,7 +1671,6 @@ org.apache.geode.cache.server.CacheServer#registerInterestRegistrationListener(L
 org.apache.geode.cache.server.CacheServer#setLoadProbe(Lorg/apache/geode/cache/server/ServerLoadProbe;)V	org.apache.geode.cache.server.ServerLoadProbe	member-signature
 org.apache.geode.cache.server.CacheServer#unregisterInterestRegistrationListener(Lorg/apache/geode/cache/InterestRegistrationListener;)V	org.apache.geode.cache.InterestRegistrationListener	member-signature
 org.apache.geode.cache.server.ClientSubscriptionConfig	org.apache.geode.cache.server.ClientSubscriptionConfig	frozen-baseline-root
-org.apache.geode.cache.server.ClientSubscriptionConfig	org.apache.geode.cache.server.ClientSubscriptionConfig	spring-root
 org.apache.geode.cache.server.ServerLoad#<type>	org.apache.geode.DataSerializable	type-hierarchy-or-bound
 org.apache.geode.cache.server.ServerLoadProbe#<type>	org.apache.geode.cache.CacheCallback	type-hierarchy-or-bound
 org.apache.geode.cache.server.ServerLoadProbe#<type>	org.apache.geode.cache.server.ServerLoadProbeAdapter	public-callback-or-result-specialization

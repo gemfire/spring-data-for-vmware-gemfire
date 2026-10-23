@@ -929,7 +929,7 @@
       "path": "spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd",
       "line": 431,
       "detail": "tool:exports@type=org.apache.geode.cache.CacheLoader",
-      "count": 3,
+      "count": 2,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
     {
@@ -937,7 +937,7 @@
       "path": "spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd",
       "line": 447,
       "detail": "tool:exports@type=org.apache.geode.cache.CacheWriter",
-      "count": 3,
+      "count": 2,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
     {
@@ -961,7 +961,7 @@
       "path": "spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd",
       "line": 345,
       "detail": "tool:exports@type=org.apache.geode.cache.Region",
-      "count": 7,
+      "count": 5,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
     {
@@ -1929,14 +1929,6 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/RegionDataPolicyShortcutsIntegrationTests.java",
       "line": 10,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/RegionDataPolicyShortcutsIntegrationTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -7447,30 +7439,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
-      "line": 148,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy expectedInterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
-      "line": 144,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
-      "line": 18,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
       "line": 259,
       "detail": "org.apache.geode.cache.LoaderHelper :: LoaderHelper loaderHelper",
       "count": 1,
@@ -7521,22 +7489,6 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
       "line": 20,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
-      "line": 141,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: SubscriptionAttributes subscriptionAttributes",
-      "count": 2,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/TemplateRegionsNamespaceIntegrationTests.java",
-      "line": 21,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: org.apache.geode.cache.SubscriptionAttributes",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -10231,22 +10183,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/transaction/AutoTransactionalEventListenerIntegrationTests.java",
-      "line": 76,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/transaction/AutoTransactionalEventListenerIntegrationTests.java",
-      "line": 13,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/transaction/AutoTransactionalEventListenerIntegrationTests.java",
       "line": 117,
       "detail": "org.apache.geode.cache.TransactionEvent :: TransactionEvent.class",
       "count": 1,
@@ -10545,38 +10481,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java",
       "line": 15,
       "detail": "org.apache.geode.cache.TransactionListener :: org.apache.geode.cache.TransactionListener",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java",
-      "line": 503,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @Nullable TransactionWriter transactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java",
-      "line": 513,
-      "detail": "org.apache.geode.cache.TransactionWriter :: getTransactionWriter(): TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java",
-      "line": 16,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java",
-      "line": 119,
-      "detail": "org.apache.geode.cache.TransactionWriter :: private TransactionWriter transactionWriter",
       "count": 1,
       "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
     },
@@ -12974,102 +12878,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyConverter.java",
-      "line": 22,
-      "detail": "org.apache.geode.cache.InterestPolicy :: AbstractPropertyEditorConverterSupport<InterestPolicy>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyConverter.java",
-      "line": 37,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.class",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyConverter.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.InterestPolicy :: convert(final String source): InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyConverter.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 19,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.ALL",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 20,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.CACHE_CONTENT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 22,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 32,
-      "detail": "org.apache.geode.cache.InterestPolicy :: final InterestPolicy interestPolicy",
-      "count": 2,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 92,
-      "detail": "org.apache.geode.cache.InterestPolicy :: getInterestPolicy(): InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 44,
-      "detail": "org.apache.geode.cache.InterestPolicy :: getInterestPolicy(final InterestPolicyType interestPolicyType): InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.InterestPolicy :: private final InterestPolicy interestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java",
       "line": 64,
       "detail": "org.apache.geode.cache.CacheListener :: CacheListener.class",
@@ -13270,214 +13078,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutConverter.java",
-      "line": 22,
-      "detail": "org.apache.geode.cache.RegionShortcut :: Converter<String, RegionShortcut>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutConverter.java",
-      "line": 48,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.valueOf",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutConverter.java",
-      "line": 47,
-      "detail": "org.apache.geode.cache.RegionShortcut :: convert(final String source): RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutConverter.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.DataPolicy :: Converter<RegionShortcut, DataPolicy>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.DataPolicy :: convert(RegionShortcut regionShortcut): DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.DataPolicy :: org.apache.geode.cache.DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.RegionShortcut :: Converter<RegionShortcut, DataPolicy>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut regionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy dataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.NORMAL",
-      "count": 3,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.PERSISTENT_REPLICATE",
-      "count": 2,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 51,
-      "detail": "org.apache.geode.cache.DataPolicy :: getDataPolicy(): DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.DataPolicy :: org.apache.geode.cache.DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 31,
-      "detail": "org.apache.geode.cache.DataPolicy :: private final DataPolicy dataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut regionShortcut",
-      "count": 2,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 25,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_HEAP_LRU",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_OVERFLOW",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_PERSISTENT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 28,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_PERSISTENT_OVERFLOW",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 55,
-      "detail": "org.apache.geode.cache.RegionShortcut :: getRegionShortcut(): RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 33,
-      "detail": "org.apache.geode.cache.RegionShortcut :: private final RegionShortcut regionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ResolvableRegionFactoryBean.java",
       "line": 177,
       "detail": "org.apache.geode.cache.Region :: Region.class",
@@ -13571,214 +13171,6 @@
       "detail": "org.apache.geode.cache.client.ClientCache :: requireCache(): ClientCache",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeConverter.java",
-      "line": 28,
-      "detail": "org.apache.geode.cache.Scope :: AbstractPropertyEditorConverterSupport<Scope>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeConverter.java",
-      "line": 47,
-      "detail": "org.apache.geode.cache.Scope :: Scope.class",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeConverter.java",
-      "line": 44,
-      "detail": "org.apache.geode.cache.Scope :: Scope.fromString",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeConverter.java",
-      "line": 41,
-      "detail": "org.apache.geode.cache.Scope :: convert(@Nullable String source): Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeConverter.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 34,
-      "detail": "org.apache.geode.cache.Scope :: Scope gemfireScope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 21,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 22,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 23,
-      "detail": "org.apache.geode.cache.Scope :: Scope.GLOBAL",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.Scope :: Scope.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 60,
-      "detail": "org.apache.geode.cache.Scope :: final Scope scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 112,
-      "detail": "org.apache.geode.cache.Scope :: getScope(): Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 47,
-      "detail": "org.apache.geode.cache.Scope :: getScope(ScopeType scopeType): Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.Scope :: private final Scope gemfireScope",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 62,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy interestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 75,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 74,
-      "detail": "org.apache.geode.cache.InterestPolicy :: getInterestPolicy(): InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.InterestPolicy :: private InterestPolicy interestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 25,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: FactoryBean<SubscriptionAttributes>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 46,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: SubscriptionAttributes.class",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 37,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: getObject(): SubscriptionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 33,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: new SubscriptionAttributes(getInterestPolicy())",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: org.apache.geode.cache.SubscriptionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBean.java",
-      "line": 29,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: private SubscriptionAttributes subscriptionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
     {
       "rule": "native-source",
@@ -16919,38 +16311,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java",
-      "line": 416,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter transactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java",
-      "line": 420,
-      "detail": "org.apache.geode.cache.TransactionWriter :: getTransactionWriter(): TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java",
-      "line": 17,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java",
-      "line": 109,
-      "detail": "org.apache.geode.cache.TransactionWriter :: private TransactionWriter transactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java",
       "line": 18,
       "detail": "org.apache.geode.cache.client.ClientCache :: org.apache.geode.cache.client.ClientCache",
       "count": 1,
@@ -16993,54 +16353,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
       "line": 23,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 238,
-      "detail": "org.apache.geode.cache.RegionShortcut :: Optional<RegionShortcut>",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 224,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut serverRegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 111,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE",
-      "count": 2,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 111,
-      "detail": "org.apache.geode.cache.RegionShortcut :: private RegionShortcut serverRegionShortcut = RegionShortcut.REPLICATE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java",
-      "line": 251,
-      "detail": "org.apache.geode.cache.RegionShortcut :: resolveServerRegionShortcut(): RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -17727,30 +17039,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.java",
-      "line": 86,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.java",
-      "line": 15,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.java",
-      "line": 86,
-      "detail": "org.apache.geode.cache.RegionShortcut :: serverRegionShortcut(): RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegions.java",
       "line": 66,
       "detail": "org.apache.geode.cache.client.ClientRegionShortcut :: ClientRegionShortcut.PROXY",
       "count": 1,
@@ -17849,30 +17137,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.java",
       "line": 13,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.java",
-      "line": 144,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.java",
-      "line": 14,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegions.java",
-      "line": 144,
-      "detail": "org.apache.geode.cache.RegionShortcut :: serverRegionShortcut(): RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -18233,78 +17497,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
       "line": 22,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 557,
-      "detail": "org.apache.geode.cache.RegionShortcut :: @Nullable RegionShortcut serverRegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 526,
-      "detail": "org.apache.geode.cache.RegionShortcut :: Optional<RegionShortcut>",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 530,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut defaultServerRegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 89,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 546,
-      "detail": "org.apache.geode.cache.RegionShortcut :: it.<RegionShortcut>getEnum(\"serverRegionShortcut\")",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 23,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 468,
-      "detail": "org.apache.geode.cache.RegionShortcut :: private RegionShortcut serverRegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 89,
-      "detail": "org.apache.geode.cache.RegionShortcut :: protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.REPLICATE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 530,
-      "detail": "org.apache.geode.cache.RegionShortcut :: resolveServerRegionShortcut(RegionShortcut defaultServerRegionShortcut): RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -18863,46 +18055,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 247,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy dataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 79,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.DEFAULT",
-      "count": 2,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 251,
-      "detail": "org.apache.geode.cache.DataPolicy :: getDataPolicy(): DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 13,
-      "detail": "org.apache.geode.cache.DataPolicy :: org.apache.geode.cache.DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 79,
-      "detail": "org.apache.geode.cache.DataPolicy :: private DataPolicy dataPolicy = DataPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
       "line": 263,
       "detail": "org.apache.geode.cache.EvictionAttributes :: EvictionAttributes evictionAttributes",
       "count": 1,
@@ -19065,70 +18217,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
       "line": 17,
       "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 364,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut shortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 368,
-      "detail": "org.apache.geode.cache.RegionShortcut :: getServerRegionShortcut(): RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 18,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 94,
-      "detail": "org.apache.geode.cache.RegionShortcut :: private RegionShortcut serverRegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 356,
-      "detail": "org.apache.geode.cache.Scope :: Scope scope",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 360,
-      "detail": "org.apache.geode.cache.Scope :: getScope(): Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 19,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/support/CacheTypeAwareRegionFactoryBean.java",
-      "line": 96,
-      "detail": "org.apache.geode.cache.Scope :: private Scope scope",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -19471,22 +18559,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
-      "line": 80,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.class",
-      "count": 2,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
       "line": 81,
       "detail": "org.apache.geode.cache.InterestResultPolicy :: InterestResultPolicy.class",
       "count": 2,
@@ -19497,22 +18569,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
       "line": 13,
       "detail": "org.apache.geode.cache.InterestResultPolicy :: org.apache.geode.cache.InterestResultPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
-      "line": 82,
-      "detail": "org.apache.geode.cache.Scope :: Scope.class",
-      "count": 2,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessor.java",
-      "line": 14,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -19617,86 +18673,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ClientCacheParser.java",
       "line": 9,
       "detail": "org.apache.geode.internal.datasource.ConfigProperty :: org.apache.geode.internal.datasource.ConfigProperty",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 348,
-      "detail": "org.apache.geode.cache.LossAction :: LossAction lossAction = StringUtils.hasText(lossActionValue) ? LossAction.fromName(lossActionValue.toUpperCase().replace(\"-\", \"_\")) : LossAction.NO_ACCESS",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 350,
-      "detail": "org.apache.geode.cache.LossAction :: LossAction.NO_ACCESS",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 349,
-      "detail": "org.apache.geode.cache.LossAction :: LossAction.fromName",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.LossAction :: org.apache.geode.cache.LossAction",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 359,
-      "detail": "org.apache.geode.cache.MembershipAttributes :: new MembershipAttributes(requiredRoles, lossAction, resumptionAction)",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.MembershipAttributes :: org.apache.geode.cache.MembershipAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 354,
-      "detail": "org.apache.geode.cache.ResumptionAction :: ResumptionAction resumptionAction = StringUtils.hasText(resumptionActionValue) ? ResumptionAction.fromName(resumptionActionValue.toUpperCase().replace(\"-\", \"_\")) : ResumptionAction.REINITIALIZE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 356,
-      "detail": "org.apache.geode.cache.ResumptionAction :: ResumptionAction.REINITIALIZE",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 355,
-      "detail": "org.apache.geode.cache.ResumptionAction :: ResumptionAction.fromName",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/ParsingUtils.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.ResumptionAction :: org.apache.geode.cache.ResumptionAction",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -23582,46 +22558,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.server.CacheServer :: org.apache.geode.cache.server.CacheServer",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 24,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: ClientSubscriptionConfig.DEFAULT_EVICTION_POLICY",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 56,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: final ClientSubscriptionConfig config",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: org.apache.geode.cache.server.ClientSubscriptionConfig",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 56,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: setEvictionPolicy(final ClientSubscriptionConfig config): ClientSubscriptionConfig",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/DeclarableSupport.java",
       "line": 31,
       "detail": "org.apache.geode.cache.CacheCallback :: DeclarableSupport extends null implements CacheCallback,Declarable",
@@ -23967,38 +22903,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/config/GemfireCacheTransactionsConfiguration.java",
-      "line": 135,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter compositeTransactionWriter = ComposableTransactionWriter.compose(existingTransactionWriter, transactionWriter)",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/config/GemfireCacheTransactionsConfiguration.java",
-      "line": 133,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter existingTransactionWriter = bean.getTransactionWriter()",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/config/GemfireCacheTransactionsConfiguration.java",
-      "line": 131,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter transactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/config/GemfireCacheTransactionsConfiguration.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/config/GemfireCacheTransactionsConfiguration.java",
       "line": 88,
       "detail": "org.apache.geode.cache.client.ClientCache :: ClientCache gemfireCache",
       "count": 1,
@@ -24014,146 +22918,10 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 114,
-      "detail": "org.apache.geode.cache.Cache :: Cache cache",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.Cache :: org.apache.geode.cache.Cache",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 84,
-      "detail": "org.apache.geode.cache.TransactionEvent :: TransactionEvent event",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.TransactionEvent :: org.apache.geode.cache.TransactionEvent",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 50,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @NonNull TransactionWriter transactionWriterOne",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 51,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @NonNull TransactionWriter transactionWriterTwo",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @Nullable TransactionWriter transactionWriterOne",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @Nullable TransactionWriter transactionWriterTwo",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.TransactionWriter :: ComposableTransactionWriter extends null implements TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.TransactionWriter :: compose(@Nullable TransactionWriter transactionWriterOne,@Nullable TransactionWriter transactionWriterTwo): TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 66,
-      "detail": "org.apache.geode.cache.TransactionWriter :: getTransactionWriterOne(): TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 76,
-      "detail": "org.apache.geode.cache.TransactionWriter :: getTransactionWriterTwo(): TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 47,
-      "detail": "org.apache.geode.cache.TransactionWriter :: private final TransactionWriter transactionWriterOne",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 48,
-      "detail": "org.apache.geode.cache.TransactionWriter :: private final TransactionWriter transactionWriterTwo",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 84,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: beforeCommit(TransactionEvent event): void",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriter.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: org.apache.geode.cache.TransactionWriterException",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/TransactionListenerAdapter.java",
       "line": 64,
       "detail": "org.apache.geode.cache.TransactionEvent :: TransactionEvent event",
-      "count": 4,
+      "count": 3,
       "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     {
@@ -24168,7 +22936,7 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/TransactionListenerAdapter.java",
       "line": 29,
-      "detail": "org.apache.geode.cache.TransactionListener :: TransactionListenerAdapter extends null implements TransactionListener,TransactionWriter",
+      "detail": "org.apache.geode.cache.TransactionListener :: TransactionListenerAdapter extends null implements TransactionListener",
       "count": 1,
       "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
@@ -24177,22 +22945,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/TransactionListenerAdapter.java",
       "line": 8,
       "detail": "org.apache.geode.cache.TransactionListener :: org.apache.geode.cache.TransactionListener",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/TransactionListenerAdapter.java",
-      "line": 29,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionListenerAdapter extends null implements TransactionListener,TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/transaction/event/TransactionListenerAdapter.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
       "count": 1,
       "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
@@ -24950,86 +23702,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyConverterUnitTests.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.ALL",
-      "count": 3,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyConverterUnitTests.java",
-      "line": 36,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.CACHE_CONTENT",
-      "count": 3,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyConverterUnitTests.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 67,
-      "detail": "org.apache.geode.cache.InterestPolicy :: (InterestPolicy)null",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 55,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy interestPolicy = InterestPolicy.fromOrdinal(ordinal)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.ALL",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 28,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.CACHE_CONTENT",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 46,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 55,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.fromOrdinal",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/InterestPolicyTypeUnitTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/LookupRegionFactoryBeanUnitTests.java",
       "line": 135,
       "detail": "org.apache.geode.cache.AttributesMutator :: AttributesMutator mockAttributesMutator = mock(AttributesMutator.class)",
@@ -25358,262 +24030,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut shortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 46,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_HEAP_LRU",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 45,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE_OVERFLOW",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 44,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE_PROXY",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.values",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutConverterUnitTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy actual",
-      "count": 4,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy expected",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 32,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 36,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.EMPTY",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.NORMAL",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.DataPolicy :: convert(RegionShortcut regionShortcut): DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.DataPolicy :: org.apache.geode.cache.DataPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut regionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 54,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 59,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL_HEAP_LRU",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverterUnitTests.java",
-      "line": 13,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutWrapperUnitTests.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.RegionShortcut :: (RegionShortcut)null",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/RegionShortcutWrapperUnitTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeConverterUnitTests.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_ACK",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeConverterUnitTests.java",
-      "line": 36,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeConverterUnitTests.java",
-      "line": 38,
-      "detail": "org.apache.geode.cache.Scope :: Scope.GLOBAL",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeConverterUnitTests.java",
-      "line": 37,
-      "detail": "org.apache.geode.cache.Scope :: Scope.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeConverterUnitTests.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 64,
-      "detail": "org.apache.geode.cache.Scope :: (Scope)null",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 51,
-      "detail": "org.apache.geode.cache.Scope :: Scope expectedScope = Scope.fromOrdinal(ordinal)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.Scope :: Scope.GLOBAL",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 28,
-      "detail": "org.apache.geode.cache.Scope :: Scope.LOCAL",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 51,
-      "detail": "org.apache.geode.cache.Scope :: Scope.fromOrdinal",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/ScopeTypeUnitTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SimpleCacheListener.java",
       "line": 14,
       "detail": "org.apache.geode.cache.util.CacheListenerAdapter :: SimpleCacheListener extends CacheListenerAdapter implements",
@@ -25721,62 +24137,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SimpleObjectSizer.java",
       "line": 15,
       "detail": "org.apache.geode.cache.util.ObjectSizer :: private static final ObjectSizer sizer = ObjectSizer.DEFAULT",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 51,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.ALL",
-      "count": 3,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 37,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.CACHE_CONTENT",
-      "count": 5,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 35,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.DEFAULT",
-      "count": 6,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 56,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: SubscriptionAttributes subscriptionAttributes = factoryBean.getObject()",
-      "count": 4,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 60,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: SubscriptionAttributes.class",
-      "count": 4,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/SubscriptionAttributesFactoryBeanUnitTests.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.SubscriptionAttributes :: org.apache.geode.cache.SubscriptionAttributes",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -28174,30 +26534,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfigurationUnitTests.java",
-      "line": 82,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter mockTransactionWriter = mock(TransactionWriter.class)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfigurationUnitTests.java",
-      "line": 82,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter.class",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfigurationUnitTests.java",
-      "line": 20,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/ClientCacheConfigurationUnitTests.java",
       "line": 65,
       "detail": "org.apache.geode.cache.TransactionListener :: TransactionListener mockTransactionListener = mock(TransactionListener.class)",
@@ -28217,30 +26553,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/ClientCacheConfigurationUnitTests.java",
       "line": 22,
       "detail": "org.apache.geode.cache.TransactionListener :: org.apache.geode.cache.TransactionListener",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/ClientCacheConfigurationUnitTests.java",
-      "line": 67,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter mockTransactionWriter = mock(TransactionWriter.class)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/ClientCacheConfigurationUnitTests.java",
-      "line": 67,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter.class",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/ClientCacheConfigurationUnitTests.java",
-      "line": 23,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -28281,38 +26593,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegionsUnitTests.java",
       "line": 25,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegionsUnitTests.java",
-      "line": 129,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL",
-      "count": 3,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegionsUnitTests.java",
-      "line": 126,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE",
-      "count": 6,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegionsUnitTests.java",
-      "line": 153,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.REPLICATE_PERSISTENT",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableCachingDefinedRegionsUnitTests.java",
-      "line": 26,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -28881,22 +27161,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
       "line": 15,
       "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
-      "line": 185,
-      "detail": "org.apache.geode.cache.RegionShortcut :: RegionShortcut.LOCAL",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
-      "line": 16,
-      "detail": "org.apache.geode.cache.RegionShortcut :: org.apache.geode.cache.RegionShortcut",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -29719,22 +27983,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
-      "line": 71,
-      "detail": "org.apache.geode.cache.InterestPolicy :: InterestPolicy.class",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
-      "line": 19,
-      "detail": "org.apache.geode.cache.InterestPolicy :: org.apache.geode.cache.InterestPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
       "line": 73,
       "detail": "org.apache.geode.cache.InterestResultPolicy :: InterestResultPolicy.class",
       "count": 1,
@@ -29745,22 +27993,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
       "line": 20,
       "detail": "org.apache.geode.cache.InterestResultPolicy :: org.apache.geode.cache.InterestResultPolicy",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
-      "line": 75,
-      "detail": "org.apache.geode.cache.Scope :: Scope.class",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/support/CustomEditorBeanFactoryPostProcessorUnitTests.java",
-      "line": 21,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -32982,46 +31214,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicyUnitTests.java",
-      "line": 63,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: ClientSubscriptionConfig mockConfig = mock(ClientSubscriptionConfig.class, \"testSetEvictionPolicy.ClientSubscriptionConfig\")",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicyUnitTests.java",
-      "line": 66,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: ClientSubscriptionConfig returnedConfig = SubscriptionEvictionPolicy.MEM.setEvictionPolicy(mockConfig)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicyUnitTests.java",
-      "line": 32,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: ClientSubscriptionConfig.DEFAULT_EVICTION_POLICY",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicyUnitTests.java",
-      "line": 64,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: ClientSubscriptionConfig.class",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicyUnitTests.java",
-      "line": 15,
-      "detail": "org.apache.geode.cache.server.ClientSubscriptionConfig :: org.apache.geode.cache.server.ClientSubscriptionConfig",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/support/GemfireFunctionsUnitTests.java",
       "line": 39,
       "detail": "org.apache.geode.cache.Region :: Region.class",
@@ -33137,94 +31329,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/test/support/AbstractRegionFactoryBeanTests.java",
       "line": 24,
       "detail": "org.apache.geode.cache.client.ClientCache :: private ClientCache cache",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.TransactionEvent :: @Mock private TransactionEvent mockTransactionEvent",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 95,
-      "detail": "org.apache.geode.cache.TransactionEvent :: TransactionEvent.class",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 15,
-      "detail": "org.apache.geode.cache.TransactionEvent :: org.apache.geode.cache.TransactionEvent",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 42,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @Mock private TransactionWriter mockTransactionWriterOne",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 45,
-      "detail": "org.apache.geode.cache.TransactionWriter :: @Mock private TransactionWriter mockTransactionWriterTwo",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 65,
-      "detail": "org.apache.geode.cache.TransactionWriter :: TransactionWriter compositeTransactionWriter = ComposableTransactionWriter.compose(this.mockTransactionWriterOne, this.mockTransactionWriterTwo)",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 16,
-      "detail": "org.apache.geode.cache.TransactionWriter :: org.apache.geode.cache.TransactionWriter",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 101,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: TransactionWriterException expected",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 90,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: TransactionWriterException.class",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 94,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: new TransactionWriterException(\"TEST\")",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/transaction/event/ComposableTransactionWriterUnitTests.java",
-      "line": 17,
-      "detail": "org.apache.geode.cache.TransactionWriterException :: org.apache.geode.cache.TransactionWriterException",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -33641,46 +31745,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 137,
       "detail": "GemFireProperties :: @NonNull public static GemFireProperties from(@Nullable String propertyName) { return Arrays.stream(values()).filter((it)->equals(it, propertyName)).findFirst().orElseThrow(()->newIllegalArgumentException(\"[%s] is not a valid Apache Geode property\", propertyName)); }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 57,
-      "detail": "InterestPolicyType :: public static InterestPolicyType valueOf(final InterestPolicy interestPolicy) { for (InterestPolicyType interestPolicyType : values()) { if (interestPolicyType.getInterestPolicy().equals(interestPolicy)) { return interestPolicyType; } } return null; }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 76,
-      "detail": "InterestPolicyType :: public static InterestPolicyType valueOfIgnoreCase(final String value) { for (InterestPolicyType interestPolicyType : values()) { if (interestPolicyType.name().equalsIgnoreCase(value)) { return interestPolicyType; } } return null; }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutWrapper.java",
-      "line": 40,
-      "detail": "RegionShortcutWrapper :: public static RegionShortcutWrapper valueOf(RegionShortcut regionShortcut) { for (RegionShortcutWrapper wrapper : values()) { if (ObjectUtils.nullSafeEquals(wrapper.getRegionShortcut(), regionShortcut)) { return wrapper; } } return RegionShortcutWrapper.UNSPECIFIED; }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 60,
-      "detail": "ScopeType :: public static ScopeType valueOf(final Scope scope) { for (ScopeType scopeType : values()) { if (scopeType.getScope().equals(scope)) { return scopeType; } } return null; }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ScopeType.java",
-      "line": 81,
-      "detail": "ScopeType :: public static ScopeType valueOfIgnoreCase(String name) { name = transform(name); for (ScopeType scopeType : values()) { if (scopeType.name().equalsIgnoreCase(name)) { return scopeType; } } return null; }",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -34185,14 +32249,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/repository/support/GemfireRepositoryFactoryBean.java",
       "line": 292,
       "detail": "QueryPostProcessorMetadata :: static QueryPostProcessorMetadata from(@NonNull QueryPostProcessor<?, ?> queryPostProcessor) { return cache.computeIfAbsent(QueryPostProcessorKey.of(queryPostProcessor), (key)->new QueryPostProcessorMetadata(key.getQueryPostProcessor())); }",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-service",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 38,
-      "detail": "SubscriptionEvictionPolicy :: public static SubscriptionEvictionPolicy valueOfIgnoreCase(final String name) { for (SubscriptionEvictionPolicy subscriptionEvictionPolicy : values()) { if (subscriptionEvictionPolicy.name().equalsIgnoreCase(name)) { return subscriptionEvictionPolicy; } } return null; }",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -35006,22 +33062,6 @@
     },
     {
       "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/InterestPolicyType.java",
-      "line": 22,
-      "detail": "InterestPolicyType :: public static final InterestPolicyType DEFAULT = InterestPolicyType.valueOf(InterestPolicy.DEFAULT)",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionShortcutToDataPolicyConverter.java",
-      "line": 28,
-      "detail": "RegionShortcutToDataPolicyConverter :: public static final RegionShortcutToDataPolicyConverter INSTANCE = new RegionShortcutToDataPolicyConverter()",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientCacheFactoryBean.java",
       "line": 79,
       "detail": "ClientCacheFactoryBean :: protected static final PoolResolver DEFAULT_POOL_RESOLVER = new PoolManagerPoolResolver()",
@@ -35145,14 +33185,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
       "line": 87,
       "detail": "EntityDefinedRegionsConfiguration :: protected static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EntityDefinedRegionsConfiguration.java",
-      "line": 89,
-      "detail": "EntityDefinedRegionsConfiguration :: protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.REPLICATE",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -35489,14 +33521,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/serialization/EnumSerializer.java",
       "line": 32,
       "detail": "EnumSerializer :: private static final ConcurrentMap<Class<?>, Enum[]> supportedEnumTypes = new ConcurrentHashMap<>()",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/server/SubscriptionEvictionPolicy.java",
-      "line": 23,
-      "detail": "SubscriptionEvictionPolicy :: public static final SubscriptionEvictionPolicy DEFAULT = SubscriptionEvictionPolicy.valueOfIgnoreCase(ClientSubscriptionConfig.DEFAULT_EVICTION_POLICY)",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },

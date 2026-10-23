@@ -15,7 +15,7 @@ import com.vmware.gemfire.driver.spi.*;
 class NativePoolConfigurationTests {
 	@Test void allSettingsAndDefaultsMatchNativePoolObservations() throws Exception {
 		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var connection = new GemFireConnection(cache);
 			var endpoints = List.of(new PoolConfiguration.Endpoint("localhost", 40404));
 			List<PoolConfiguration> settings = List.of(
 				PoolConfiguration.builder().servers(endpoints).minimumConnections(0).build(),
@@ -93,7 +93,7 @@ class NativePoolConfigurationTests {
 	}
 	@Test void unspecifiedSettingsRetainTheNativeFactoryDefaults() throws Exception {
 		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var connection = new GemFireConnection(cache);
 			var control = PoolManager.createFactory().addServer("localhost", 40404).setMinConnections(0).create("control");
 			var actual = connection.createPool("default-settings", PoolConfiguration.builder()
 				.servers(List.of(new PoolConfiguration.Endpoint("localhost", 40404))).minimumConnections(0).build());
@@ -135,7 +135,7 @@ class NativePoolConfigurationTests {
 	}
 	@Test void removedThreadLocalRequestNamesExactBoundVersion() {
 		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var connection = new GemFireConnection(cache);
 			assertThatThrownBy(() -> connection.createPool("removed", PoolConfiguration.builder().threadLocalConnections(false).build()))
 				.isInstanceOfSatisfying(UnsupportedFeatureException.class, e -> {
 					assertThat(e.reason()).isEqualTo(UnsupportedFeatureException.Reason.REMOVED);

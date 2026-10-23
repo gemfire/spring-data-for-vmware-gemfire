@@ -13,7 +13,6 @@ import static org.springframework.data.gemfire.util.RegionPaths.toRegionPath;
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
@@ -182,7 +181,7 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
-	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class, serverRegionShortcut = RegionShortcut.LOCAL,
+	@EnableEntityDefinedRegions(basePackageClasses = NonEntity.class,
 		strict = true
 	)
 	static class ClientPersistentEntitiesWithServerRegionMappingAnnotationsConfiguration { }

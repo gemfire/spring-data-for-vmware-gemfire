@@ -16,10 +16,6 @@ final class GemFireRegionAttributesMutator<K, V> implements DriverRegionAttribut
 	@Override public DriverRegion<K, V> getRegion() { return invoke("getRegion", () -> new GemFireRegion<>(mutator.getRegion())); }
 	@Override public boolean getCloningEnabled() { return invoke("getCloningEnabled", mutator::getCloningEnabled); }
 	@Override public void setCloningEnabled(boolean enabled) { invoke("setCloningEnabled", () -> { mutator.setCloningEnabled(enabled); return null; }); }
-	@Override public void addGatewaySenderId(String id) { invoke("addGatewaySenderId", () -> { mutator.addGatewaySenderId(id); return null; }); }
-	@Override public void removeGatewaySenderId(String id) { invoke("removeGatewaySenderId", () -> { mutator.removeGatewaySenderId(id); return null; }); }
-	@Override public void addAsyncEventQueueId(String id) { invoke("addAsyncEventQueueId", () -> { mutator.addAsyncEventQueueId(id); return null; }); }
-	@Override public void removeAsyncEventQueueId(String id) { invoke("removeAsyncEventQueueId", () -> { mutator.removeAsyncEventQueueId(id); return null; }); }
 	@Override public void addCacheListener(DriverCacheListener<K, V> listener) { region.addCacheListener(listener); }
 	@Override public void removeCacheListener(DriverCacheListener<K, V> listener) { region.removeCacheListener(listener); }
 	@Override public void initCacheListeners(List<DriverCacheListener<K, V>> listeners) { region.initCacheListeners(listeners); }

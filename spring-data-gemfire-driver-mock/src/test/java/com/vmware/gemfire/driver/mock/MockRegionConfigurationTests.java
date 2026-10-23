@@ -12,29 +12,24 @@ import com.vmware.gemfire.driver.spi.config.*;
 
 class MockRegionConfigurationTests {
 	@Test void unavailableConfiguredEffectsFailBeforePublishingARegion() {
-		try (var c = new MockConnection(CacheConfiguration.Mode.PEER)) {
+		try (var c = new MockConnection()) {
 			List<RegionConfiguration<Object, Object>> configs = List.of(
 				RegionConfiguration.builder().statisticsEnabled(true).build(), RegionConfiguration.builder().cloningEnabled(true).build(),
-				RegionConfiguration.builder().dataPolicy(DataPolicy.PERSISTENT_REPLICATE).build(), RegionConfiguration.builder().scope(Scope.DISTRIBUTED_ACK).build(),
-				RegionConfiguration.builder().poolName("pool").build(), RegionConfiguration.builder().diskStoreName("disk").build(),
-				RegionConfiguration.builder().gatewaySenderIds(Set.of("sender")).build(), RegionConfiguration.builder().asyncEventQueueIds(Set.of("queue")).build());
+				RegionConfiguration.builder().poolName("pool").build(), RegionConfiguration.builder().diskStoreName("disk").build());
 			for (var config : configs) {
-				assertThatThrownBy(() -> c.createRegion("unsupported", RegionShortcut.LOCAL, config))
+				assertThatThrownBy(() -> c.createClientRegion("unsupported", ClientRegionShortcut.LOCAL, config))
 					.isInstanceOfSatisfying(UnsupportedFeatureException.class, e -> assertThat(e.reason()).isEqualTo(UnsupportedFeatureException.Reason.NOT_INTRODUCED));
 				assertThat(c.rootRegions()).isEmpty();
 			}
-			var r = c.createRegion("local", RegionShortcut.LOCAL); var m = r.getAttributesMutator();
+			var r = c.createClientRegion("local", ClientRegionShortcut.LOCAL); var m = r.getAttributesMutator();
 			assertThatThrownBy(() -> m.setCloningEnabled(true)).isInstanceOf(UnsupportedFeatureException.class);
-			assertThatThrownBy(() -> m.addGatewaySenderId("sender")).isInstanceOf(UnsupportedFeatureException.class);
-			assertThatThrownBy(() -> m.addAsyncEventQueueId("queue")).isInstanceOf(UnsupportedFeatureException.class);
-			assertThat(m.getCloningEnabled()).isFalse(); assertThat(r.getAttributes().getGatewaySenderIds()).isEmpty(); assertThat(r.getAttributes().getAsyncEventQueueIds()).isEmpty();
-		}
+			assertThat(m.getCloningEnabled()).isFalse(); }
 	}
 	@Test void childCleanupFailureStillClosesTheWholeLocalTree() {
-		try (var c = new MockConnection(CacheConfiguration.Mode.PEER)) {
-			var root = c.createRegion("root", RegionShortcut.LOCAL);
-			var child = root.createSubregion("child", RegionShortcut.LOCAL, RegionConfiguration.builder().build());
-			var sibling = root.createSubregion("sibling", RegionShortcut.LOCAL, RegionConfiguration.builder().build());
+		try (var c = new MockConnection()) {
+			var root = c.createClientRegion("root", ClientRegionShortcut.LOCAL);
+			var child = root.createClientSubregion("child", ClientRegionShortcut.LOCAL, RegionConfiguration.builder().build());
+			var sibling = root.createClientSubregion("sibling", ClientRegionShortcut.LOCAL, RegionConfiguration.builder().build());
 			child.setCacheLoader(new DriverCacheLoader<>() {
 				@Override public Object load(DriverLoaderHelper<Object, Object> helper) { return null; }
 				@Override public void close() { throw new IllegalStateException("callback failure"); }

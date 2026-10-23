@@ -145,9 +145,7 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 		}
 
 		ParsingUtils.parseOptionalRegionAttributes(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseSubscription(element, parserContext, regionAttributesBuilder);
 		ParsingUtils.parseStatistics(element, regionAttributesBuilder);
-		ParsingUtils.parseMembershipAttributes(element, parserContext, regionAttributesBuilder);
 		ParsingUtils.parseExpiration(element, parserContext, regionAttributesBuilder);
 		ParsingUtils.parseEviction(element, parserContext, regionAttributesBuilder);
 		ParsingUtils.parseCompressor(element, parserContext, regionAttributesBuilder);

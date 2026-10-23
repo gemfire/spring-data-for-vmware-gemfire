@@ -26,7 +26,6 @@
 		  p:cache-ref="gemfireCache">
 		<property name="attributes">
 			<bean class="org.springframework.data.gemfire.RegionAttributesFactoryBean"
-				  p:dataPolicy="EMPTY"
 				  p:statisticsEnabled="true">
 			</bean>
 		</property>
@@ -35,7 +34,7 @@
 	<bean id="AnotherExample" class="org.springframework.data.gemfire.config.xml.RegionDefinitionUsingBeansNamespaceIntegrationTests$TestRegionFactoryBean"
 		  p:cache-ref="gemfireCache" p:persistent="true">
 		<property name="attributes">
-			<bean class="org.springframework.data.gemfire.RegionAttributesFactoryBean" p:dataPolicy="NORMAL">
+			<bean class="org.springframework.data.gemfire.RegionAttributesFactoryBean">
 			</bean>
 		</property>
 	</bean>

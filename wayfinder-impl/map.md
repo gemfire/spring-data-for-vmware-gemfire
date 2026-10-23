@@ -6,11 +6,11 @@ This map tracks **implementation progress and implementation-time decisions/ques
 
 See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence this map executes.
 
-## Current scope and next task — 2026-10-22
+## Current scope and next task — 2026-10-23
 
-The user's explicit [client-only scope correction](client-only-scope.md) amends the earlier approved interpretation. **Next: [ticket 59 — remove server-only SPI and reconcile client scope](../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md).** All remaining implementation waits for it. Tickets 42 and 43 are resolved as superseded, not implemented; ticket 42's unfinished working-tree additions are cleanup input. Ticket 48 now covers client subscription/interest policies. Historical completed decisions below retain their evidence; server-only portions are superseded and assigned to ticket 59.
+The user's [client-only scope correction](client-only-scope.md) governs the migration. **Next: [ticket 63 — retire Spring server configuration surfaces](../wayfinder-issues/63-retire-spring-server-configuration-surfaces.md)**, following completed tasks 60–62. Cleanup parent 59 stays open through children 63/64 and blocks the original downstream tasks. Tickets 42/43 are superseded; their unfinished server additions have been discarded while client `InterestResultPolicy` was retained. Ticket 48 covers client subscription/interest policies.
 
-The destination remains native-free Spring client code, the complete retained client unit suite on the mock/native-free collaborators, and versioned native drivers with compatibility and integration tests. This documentation revision does not remove code or claim corrected coverage counts.
+Tasks 60–62 preserve the 3,851 frozen API IDs; current scope is 362 required-client, 625 excluded-server and 2,864 unresolved. Peer creation, callbacks and server configuration hooks are removed. Historical server implementation evidence below is subject to removal under task 59. The destination remains native-free Spring client code, the complete retained client unit suite on the mock/native-free collaborators, and versioned native drivers with compatibility and integration tests.
 
 ## Notes
 
@@ -23,6 +23,13 @@ The destination remains native-free Spring client code, the complete retained cl
 - Branch strategy (per `wayfinder/technical-spec.md` §7): work happens on a dedicated long-lived integration branch (e.g. `driver-spi-migration`), separate from the repo's `support/<gemfire>-<spring>-<sdgf>.x` convention, merged into `develop` once at cutover.
 
 ## Decisions so far
+
+- [Spring server configuration retirement — in progress](../wayfinder-issues/63-retire-spring-server-configuration-surfaces.md) — removed peer wrappers/converters, server shortcut properties, transaction writers and peer XML templates/settings; preserved client configuration tests. Property configuration, function hosting and inherited native attributes remain open. See the [migration and test ledger](investigations/client-only-spring-surfaces.md).
+
+- [Client-only cache and region creation](../wayfinder-issues/61-remove-peer-cache-and-region-creation.md) — removed public peer cache mode, `RegionShortcut` and peer region/subregion factories. Shared/mock contracts and native local/PDX tests now use clients; 520 JUnit executions and full affected compilation pass. Private peer fixtures were subsequently resolved by task 62; Spring server surfaces remain task 63.
+- [Client-only callbacks and configuration](../wayfinder-issues/62-remove-peer-callbacks-and-server-configuration.md) — removed peer/role/WAN callbacks, server options, network search, transaction writers and distributed mode. Real client callback/transaction tests and all 510 JUnit executions pass. Listener outcome/event scope remains task 64; see the [fixture and evidence ledger](investigations/client-only-callbacks-and-configuration.md).
+
+- [Client scope coverage classification](../wayfinder-issues/60-client-scope-coverage-classification.md) — exact reviewed IDs, evidence and active owners now distinguish client requirements, server exclusions and unresolved contracts. Ten policy tests, deterministic generation and independent native declaration checks pass; no runtime removal or full migration is claimed.
 
 - [SPI skeleton (Step 1)](../wayfinder-issues/01-spi-skeleton.md) — `driver-spi` and `driver-core` stood up and building; added `GemFireDriver.runtimeGemFireVersion()` so `driver-core` stays native-free (spec §5.1/§5.2 amendment), SPI generation range starts at `[1,1]` (**reworked 2026-10-01** — [wayfinder ticket 20](../wayfinder/issues/20-spi-abi-compatibility-and-driver-version-lockstep.md) replaced generation ranges and `Capability` with `SpiVersion 1.0`, `UnsupportedFeatureException` and the driver stamp; `driver-core` now checks the stamp and requires an exact GemFire version match), config enums are `DataPolicy`, `RegionShortcut`, `ClientRegionShortcut`.
 

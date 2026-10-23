@@ -213,8 +213,7 @@ public class CompoundCachePutCacheEvictIntegrationTests extends IntegrationTests
 			// The native client factory returns the already-created client cache. Repository migration
 			// will remove this temporary test dependency on the existing native application config.
 			Properties properties = existingNativeCache.getDistributedSystem().getProperties();
-			return manager.driver().connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-				properties.stringPropertyNames().stream()
+			return manager.driver().connect(new CacheConfiguration(properties.stringPropertyNames().stream()
 					.collect(Collectors.toMap(name -> name, properties::getProperty))));
 		}
 	}

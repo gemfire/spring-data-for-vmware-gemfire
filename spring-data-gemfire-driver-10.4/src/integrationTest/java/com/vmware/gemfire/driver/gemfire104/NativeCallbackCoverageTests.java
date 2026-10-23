@@ -10,12 +10,17 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 import org.apache.geode.cache.*;
-import org.apache.geode.cache.util.TimestampedEntryEvent;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.Path;
 import org.apache.geode.distributed.DistributedMember;
 import com.vmware.gemfire.driver.spi.*;
 
 class NativeCallbackCoverageTests {
-	private Cache cache() { return new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create(); }
+	@TempDir Path directory;
+	private ClientCache cache() { return new ClientCacheFactory().set("log-level", "error").create(); }
 
 	@Test
 	void everyOperationConstantAndPredicateMatchesTheResolvedNativeRelease() throws Exception {
@@ -50,12 +55,12 @@ class NativeCallbackCoverageTests {
 	}
 
 	@Test
-	void registeredAdapterForwardsEveryNativeCallbackIncludingInheritedAndSpecializedMethods() throws Exception {
+	void registeredClientAdapterForwardsEveryNativeCacheListenerMethod() throws Exception {
 		try (var cache = cache()) {
-			Region<String, String> nativeRegion = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).create("callbacks");
+			Region<String, String> nativeRegion = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.LOCAL).create("callbacks");
 			var calls = new ArrayList<String>();
 			@SuppressWarnings("unchecked") DriverCacheListener<String, String> listener = (DriverCacheListener<String, String>) Proxy.newProxyInstance(
-				getClass().getClassLoader(), new Class<?>[] { DriverRegionMembershipListener.class, DriverRegionRoleListener.class },
+				getClass().getClassLoader(), new Class<?>[] { DriverCacheListener.class },
 				(proxy, method, arguments) -> {
 					if (method.getDeclaringClass() == Object.class) return switch (method.getName()) {
 						case "equals" -> proxy == arguments[0]; case "hashCode" -> System.identityHashCode(proxy); default -> "listener";
@@ -64,9 +69,6 @@ class NativeCallbackCoverageTests {
 					if (method.getName().equals("initialize")) {
 						assertThat(arguments[0]).isInstanceOf(DriverConnection.class);
 						assertThat(((DriverConnection) arguments[0]).getRegion("callbacks").name()).isEqualTo("callbacks");
-					} else if (method.getName().equals("initialMembers")) {
-						assertThat(arguments[0]).isInstanceOf(DriverRegion.class);
-						assertThat((DriverMember[]) arguments[1]).hasSize(1);
 					} else if (arguments != null && arguments.length == 1 && arguments[0] instanceof DriverCacheEvent<?, ?> event) {
 						assertThat(event.getRegion().name()).isEqualTo("callbacks");
 						assertThat(event.getCallbackArgument()).isEqualTo("argument");
@@ -74,7 +76,6 @@ class NativeCallbackCoverageTests {
 						assertThat(event.isOriginRemote()).isTrue();
 						assertThat(event.getDistributedMember().getId()).isEqualTo(cache.getDistributedSystem().getDistributedMember().getId());
 						if (event instanceof DriverRegionEvent<?, ?> regionEvent) assertThat(regionEvent.isReinitializing()).isTrue();
-						if (event instanceof DriverRoleEvent<?, ?> roleEvent) assertThat(roleEvent.getRequiredRoles()).containsExactly("required");
 					}
 					return null;
 				});
@@ -82,10 +83,10 @@ class NativeCallbackCoverageTests {
 			var handle = new GemFireRegion<>(nativeRegion);
 			handle.addCacheListener(listener);
 			assertThat(handle.getCacheListeners()).containsExactly(listener);
-			Object registered = new GemFireCacheListenerFactory().applicationAdapter(nativeRegion.getAttributes().getCacheListeners()[0]);
-			assertThat(registered).isInstanceOf(RegionMembershipListener.class).isInstanceOf(RegionRoleListener.class);
+			Object registered = nativeRegion.getAttributes().getCacheListeners()[0];
+			assertThat(registered).isInstanceOf(CacheListener.class);
 			Set<String> expected = new HashSet<>();
-			for (Class<?> contract : List.of(CacheListener.class, RegionMembershipListener.class, RegionRoleListener.class)) {
+			for (Class<?> contract : List.of(CacheListener.class)) {
 				for (Method method : contract.getMethods()) {
 					if (!expected.add(method.getName())) continue;
 					Object[] arguments = new Object[method.getParameterCount()];
@@ -102,13 +103,13 @@ class NativeCallbackCoverageTests {
 				}
 			}
 			assertThat(calls).containsExactlyInAnyOrderElementsOf(expected);
-			assertThat(expected).hasSize(18); // New native methods must be added to the SPI and probe.
+			assertThat(expected).hasSize(12); // New native methods must be added to the SPI and probe.
 			handle.removeCacheListener(listener);
 			assertThat(handle.getCacheListeners()).isEmpty();
 		}
 	}
 
-	private Object event(Class<?> type, Region<?, ?> region, Cache cache) {
+	private Object event(Class<?> type, Region<?, ?> region, ClientCache cache) {
 		return Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[] { type }, (proxy, method, arguments) -> switch (method.getName()) {
 			case "getRegion" -> region;
 			case "getOperation" -> Operation.UPDATE;
@@ -116,40 +117,35 @@ class NativeCallbackCoverageTests {
 			case "getDistributedMember" -> cache.getDistributedSystem().getDistributedMember();
 			case "isCallbackArgumentAvailable" -> false;
 			case "isOriginRemote", "isReinitializing" -> true;
-			case "getRequiredRoles" -> Set.of("required");
 			default -> throw new AssertionError("Unprobed payload " + method);
 		});
 	}
 
 	@Test
-	void serializedAndTimestampedEntryViewsStayLazyAndPreserveNativeAvailabilityAndFailures() {
+	void serializedEntryViewsStayLazyAndPreserveNativeAvailabilityAndFailures() {
 		try (var cache = cache()) {
-			Region<String, String> region = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).create("entries");
+			Region<String, String> region = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 			var reads = new AtomicInteger();
 			byte[] bytes = { 1, 2, 3 };
 			SerializedCacheValue<String> serialized = new SerializedCacheValue<>() {
 				@Override public byte[] getSerializedValue() { reads.incrementAndGet(); return bytes; }
 				@Override public String getDeserializedValue() { reads.incrementAndGet(); return "serialized"; }
 			};
-			TimestampedEntryEvent event = (TimestampedEntryEvent) Proxy.newProxyInstance(getClass().getClassLoader(),
-				new Class<?>[] { TimestampedEntryEvent.class }, (proxy, method, arguments) -> switch (method.getName()) {
+			EntryEvent<String, String> event = (EntryEvent<String, String>) Proxy.newProxyInstance(getClass().getClassLoader(),
+				new Class<?>[] { EntryEvent.class }, (proxy, method, arguments) -> switch (method.getName()) {
 					case "getRegion" -> region;
 					case "getOperation" -> Operation.UPDATE;
 					case "getKey" -> "key";
 					case "getOldValue" -> { reads.incrementAndGet(); yield "old"; }
 					case "getNewValue" -> { reads.incrementAndGet(); yield "new"; }
 					case "getSerializedOldValue", "getSerializedNewValue" -> serialized;
-					case "getOldTimestamp" -> 12L;
-					case "getNewTimestamp" -> 34L;
-					case "getOldDistributedSystemID" -> 1;
-					case "getNewDistributedSystemID" -> 2;
 					case "hasClientOrigin" -> true;
 					case "isOldValueAvailable" -> false;
 					case "getTransactionId" -> null;
 					case "getCallbackArgument" -> throw new IllegalStateException("secret");
 					default -> throw new AssertionError(method);
 				});
-			@SuppressWarnings("unchecked") var mapped = (DriverTimestampedEntryEvent<String, String>) new GemFireEventMapper().entry(event);
+			@SuppressWarnings("unchecked") var mapped = new GemFireEventMapper().entry(event);
 			assertThat(reads).hasValue(0);
 			assertThat(mapped.isOldValueAvailable()).isFalse();
 			assertThat(mapped.hasClientOrigin()).isTrue();
@@ -159,10 +155,6 @@ class NativeCallbackCoverageTests {
 			assertThat(mapped.getSerializedOldValue().getSerializedValue()).isSameAs(bytes);
 			assertThat(mapped.getSerializedNewValue().getDeserializedValue()).isEqualTo("serialized");
 			assertThat(reads).hasValue(4);
-			assertThat(mapped.getNewTimestamp()).isEqualTo(34L);
-			assertThat(mapped.getOldTimestamp()).isEqualTo(12L);
-			assertThat(mapped.getNewDistributedSystemID()).isEqualTo(2);
-			assertThat(mapped.getOldDistributedSystemID()).isEqualTo(1);
 			assertThat(mapped.getTransactionId()).isNull();
 			assertThatThrownBy(mapped::getCallbackArgument).isInstanceOfSatisfying(DriverOperationException.class,
 				e -> assertThat(e.kind()).isEqualTo(DriverFailureKind.INVALID_STATE)).hasMessage("GemFire operation failed: Event.getCallbackArgument");
@@ -170,9 +162,10 @@ class NativeCallbackCoverageTests {
 	}
 
 	@Test
-	void realTransactionEventsRetainIdentityAndMemberMetadata() {
-		try (var cache = cache()) {
-			Region<String, String> region = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).create("entries");
+	void realTransactionEventsRetainIdentityAndMemberMetadata() throws Exception {
+		try (var server = new NativeServerFixture(directory); var cache = new ClientCacheFactory().set("log-level", "error")
+			.addPoolServer("localhost", server.port).create()) {
+			Region<String, String> region = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY).create("distributed");
 			var identities = new ArrayList<DriverTransactionId>();
 			var members = new ArrayList<DriverMember>();
 			new GemFireRegion<>(region).addCacheListener(new DriverCacheListenerAdapter<>() {
@@ -196,7 +189,6 @@ class NativeCallbackCoverageTests {
 			assertThat(member.getHost()).isEqualTo(nativeMember.getHost());
 			assertThat(member.getProcessId()).isEqualTo(nativeMember.getProcessId());
 			assertThat(member.getGroups()).isEqualTo(nativeMember.getGroups());
-			assertThat(member.getRoles()).isEmpty();
 			assertThat(member.getDurableClientAttributes().timeout()).isEqualTo(nativeMember.getDurableClientAttributes().getTimeout());
 		}
 	}
@@ -205,7 +197,7 @@ class NativeCallbackCoverageTests {
 	void registeredWriterAndLoaderForwardBothDeclarableHooksWithoutAutomaticRegistrationInitialization() {
 		try (var cache = cache()) {
 			var calls = new ArrayList<String>(); var props = new Properties();
-			Region<String, String> region = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).create("entries");
+			Region<String, String> region = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 			var handle = new GemFireRegion<>(region);
 			handle.setCacheWriter(new DriverCacheWriterAdapter<>() {
 				@Override public void init(Properties p) { assertThat(p).isSameAs(props); calls.add("writer.init"); }
@@ -219,7 +211,7 @@ class NativeCallbackCoverageTests {
 			});
 			assertThat(calls).isEmpty();
 			for (Declarable callback : List.of(region.getAttributes().getCacheWriter(), region.getAttributes().getCacheLoader())) {
-				callback.init(props); callback.initialize(cache, props);
+				callback.init(props); callback.initialize((Cache) cache, props);
 			}
 			assertThat(calls).containsExactly("writer.init", "writer.initialize", "loader.init", "loader.initialize");
 		}

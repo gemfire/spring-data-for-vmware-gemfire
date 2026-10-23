@@ -15,15 +15,12 @@ import org.apache.geode.cache.EvictionAlgorithm;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
-import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.LoaderHelper;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.SubscriptionAttributes;
 import org.apache.geode.cache.util.CacheListenerAdapter;
 import org.apache.geode.cache.util.CacheWriterAdapter;
 import org.apache.geode.cache.util.ObjectSizer;
 import org.assertj.core.api.Assertions;
-import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -91,7 +88,7 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 	}
 
 	private void assertDefaultEvictionAttributes(EvictionAttributes evictionAttributes) {
-		Assume.assumeNotNull(evictionAttributes);
+		Assertions.assertThat(evictionAttributes).isNotNull();
 		assertEvictionAttributes(evictionAttributes, EvictionAction.NONE, EvictionAlgorithm.NONE, 0, null);
 	}
 
@@ -107,7 +104,7 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 
 	private void assertDefaultExpirationAttributes(ExpirationAttributes expirationAttributes) {
 
-		Assume.assumeNotNull(expirationAttributes);
+		Assertions.assertThat(expirationAttributes).isNotNull();
 		Assertions.assertThat(expirationAttributes.getAction()).isEqualTo(ExpirationAction.INVALIDATE);
 		Assertions.assertThat(expirationAttributes.getTimeout()).isEqualTo(0);
 	}
@@ -136,19 +133,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		assertNullEmpty(region.getAttributes().getPoolName());
 		assertDefaultExpirationAttributes(region.getAttributes().getRegionTimeToLive());
 		assertDefaultExpirationAttributes(region.getAttributes().getRegionIdleTimeout());
-	}
-
-	private void assertDefaultSubscriptionAttributes(SubscriptionAttributes subscriptionAttributes) {
-
-		Assume.assumeNotNull(subscriptionAttributes);
-		assertSubscriptionAttributes(subscriptionAttributes, InterestPolicy.DEFAULT);
-	}
-
-	private void assertSubscriptionAttributes(SubscriptionAttributes subscriptionAttributes,
-			InterestPolicy expectedInterestPolicy) {
-
-		Assertions.assertThat(subscriptionAttributes).as("The 'SubscriptionAttributes' must not be null").isNotNull();
-		Assertions.assertThat(subscriptionAttributes.getInterestPolicy()).isEqualTo(expectedInterestPolicy);
 	}
 
 	private static void assertEmpty(Object[] array) {
@@ -216,7 +200,6 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getConcurrencyLevel()).isEqualTo(8);
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().isDiskSynchronous()).isFalse();
-		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getEnableSubscriptionConflation()).isFalse();
 		assertEvictionAttributes(templateBasedLocalRegion.getAttributes().getEvictionAttributes(),
 			EvictionAction.LOCAL_DESTROY, EvictionAlgorithm.LRU_ENTRY, 4096, null);
 		assertExpirationAttributes(templateBasedLocalRegion.getAttributes().getEntryIdleTimeout(),
@@ -226,10 +209,7 @@ public class TemplateRegionsNamespaceIntegrationTests extends IntegrationTestsSu
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getInitialCapacity()).isEqualTo(51);
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getKeyConstraint()).isEqualTo(Long.class);
 		Assertions.assertThat(String.valueOf(templateBasedLocalRegion.getAttributes().getLoadFactor())).isEqualTo("0.85");
-		Assertions.assertThat(templateBasedLocalRegion.getAttributes().isLockGrantor()).isFalse();
-		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getPartitionAttributes()).isNull();
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getStatisticsEnabled()).isTrue();
-		assertDefaultSubscriptionAttributes(templateBasedLocalRegion.getAttributes().getSubscriptionAttributes());
 		Assertions.assertThat(templateBasedLocalRegion.getAttributes().getValueConstraint()).isEqualTo(String.class);
 	}
 

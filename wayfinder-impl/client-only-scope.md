@@ -24,13 +24,13 @@ Native servers, locators and server functions may exist as private fixtures insi
 ## Backlog disposition
 
 - Tickets 42 and 43 are resolved **as superseded**, not implemented. Their former server/WAN requirements are retired. Ticket 42's unfinished server additions were discarded during the authorized working-tree cleanup; its client `InterestResultPolicy` was retained.
-- Ticket 59 removes existing server-only work, including committed foundations and unfinished additions, and reconciles the coverage inventory. It is the next task and blocks all remaining implementation work.
+- Ticket 59 removes existing server-only work, including committed foundations and unfinished additions, and reconciles the coverage inventory. Its children 60–64 sequence coverage classification, creation removal, callback/configuration removal, Spring cleanup and final reconciliation. Children 60–62 complete classification infrastructure and SPI creation/callback/configuration removal; child 63 is next. The parent blocks remaining downstream implementation work.
 - Tickets 19, 21, 23–25, 27, 29–32, 34, 44, 47–49 and 54 have narrowed client contracts. Ticket 48 now covers client subscription/interest configuration, not partitions or peer membership.
 - Tickets 20, 22, 26, 33, 35–38, 40–41, 45, 51–52 and 55–58 retain their client goals, with cleanup and client-only acceptance explicit. Resolved foundations remain historical evidence; ticket 59 owns their server-only corrections.
 
 ## Coverage and acceptance
 
-The 3,851-row frozen inventory is historical discovery evidence, not the new client requirement count. Keep stable API IDs and source evidence. Ticket 59 must add an explicit scope disposition, rationale and decision reference for every excluded row; do not label exclusions `implemented` or `removed` (the latter means a feature removed by native GemFire). Required-client rows retain implementation status, owners and native/mock/test evidence. Ambiguous rows remain required/pending until evidence resolves them.
+The 3,851-row frozen inventory is historical discovery evidence, not the new client requirement count. Keep stable API IDs and source evidence. Task 60 adds explicit scope dispositions, rationale and decision references: initially 96 required-client, 549 excluded-server and 3,206 unresolved rows. Task 62 updates these to 362 required-client, 625 excluded-server and 2,864 unresolved rows. Task 64 must finish member-level classification before task 59 closes; do not label exclusions `implemented` or `removed` (the latter means a feature removed by native GemFire). Required-client rows retain implementation status, owners and native/mock/test evidence. Ambiguous rows remain required/pending until evidence resolves them.
 
 Update policy, generator, validator and generated artifacts together. Report required-client and excluded counts separately; reject unclassified rows, unexplained exclusions, missing owners and excluded server APIs still exposed by SPI. Scope exclusions do not relax native-free boundary checks.
 

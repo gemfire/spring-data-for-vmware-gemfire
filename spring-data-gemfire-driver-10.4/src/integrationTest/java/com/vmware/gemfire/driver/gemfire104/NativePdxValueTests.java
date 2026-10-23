@@ -7,17 +7,20 @@ package com.vmware.gemfire.driver.gemfire104;
 import static org.assertj.core.api.Assertions.*;
 import com.vmware.gemfire.driver.spi.*;
 import org.apache.geode.DataSerializer;
-import org.apache.geode.cache.CacheFactory;
+import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.PoolManager;
 import org.apache.geode.pdx.*;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.util.*;
 
 class NativePdxValueTests {
+	@org.junit.jupiter.api.io.TempDir java.nio.file.Path directory;
 	@Test void realNativeWireRoundTripRetainsNestedTypedFieldsIdentityAndWritableChanges() throws Exception {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").setPdxReadSerialized(true).create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.PEER);
+		try (var server = new NativeServerFixture(directory);
+			var cache = clientCache(server.port, true)) {
+			var connection = new GemFireConnection(cache);
 			var nested = connection.createPdxInstanceFactory("NestedWire").neverDeserialize().writeString("value", "nested").create();
 			var value = connection.createPdxInstanceFactory("Wire").neverDeserialize().writeLong("id", 7).markIdentityField("id")
 				.writeObject("nested", nested).writeObjectArray("items", new Object[] {nested, "text"}).create();
@@ -37,9 +40,10 @@ class NativePdxValueTests {
 			assertThat(decoded).isEqualTo(raw); // independent engine-created control
 		}
 	}
-	@Test void applicationDeserializationAndEnumMaterializationDelegateToTheNativeEngine() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.PEER);
+	@Test void applicationDeserializationAndEnumMaterializationDelegateToTheNativeEngine() throws Exception {
+		try (var server = new NativeServerFixture(directory);
+			var cache = clientCache(server.port, false)) {
+			var connection = new GemFireConnection(cache);
 			var value = connection.createPdxInstanceFactory(Person.class.getName()).writeInt("id", 17).writeString("name", "Ada").create();
 			assertThat(value.isDeserializable()).isTrue();
 			Person person = (Person) value.getObject(); assertThat(person.id).isEqualTo(17); assertThat(person.name).isEqualTo("Ada");
@@ -50,14 +54,15 @@ class NativePdxValueTests {
 				.isInstanceOf(DriverOperationException.class);
 		}
 	}
-	@Test void borrowedRegionServiceAndClientConnectionExposePdxFactories() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
+	@Test void borrowedRegionServiceAndClientConnectionExposePdxFactories() throws Exception {
+		try (var server = new NativeServerFixture(directory);
+			var cache = clientCache(server.port, false)) {
 			var service = new GemFireRegionService(cache);
 			assertThat(service.createPdxInstanceFactory("Borrowed").writeInt("id", 2).create().getField("id")).isEqualTo(2);
 			assertThat(service.createPdxEnum("Color", "RED", 0).getField("name")).isEqualTo("RED");
 		}
 		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT);
+			var connection = new GemFireConnection(cache);
 			// Factory allocation is local, but enum/schema registration requires a server pool.
 			assertThat(connection.createPdxInstanceFactory("Client")).isNotNull();
 			assertThatThrownBy(() -> connection.createPdxEnum("Color", "RED", 0)).isInstanceOfSatisfying(DriverOperationException.class,
@@ -77,6 +82,16 @@ class NativePdxValueTests {
 			new Class<?>[] {PdxInstance.class}, (proxy, method, arguments) -> method.invoke(nativeEnum, arguments));
 		assertThat(((List<?>) codec.fromNative(List.of(custom))).get(0)).isInstanceOf(DriverPdxInstance.class);
 		assertThat(codec.toNative(new ArrayList<>(List.of("plain")))).isInstanceOf(ArrayList.class);
+	}
+
+	private ClientCache clientCache(int port, boolean readSerialized) {
+		var cache = new ClientCacheFactory().set("log-level", "error").setPdxReadSerialized(readSerialized).create();
+		try {
+			// A PDX-only client has no region to initialize the lazy default pool.
+			PoolManager.createFactory().addServer("localhost", port).setMinConnections(0).create("pdx-values");
+			return cache;
+		}
+		catch (RuntimeException | Error failure) { cache.close(); throw failure; }
 	}
 
 	public static class Person implements PdxSerializable {

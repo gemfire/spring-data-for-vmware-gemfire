@@ -1,6 +1,6 @@
 Type: task
 Status: open
-Blocked by: 14, 15, 17, 18, 28, 39, 46
+Blocked by: 14, 15, 17, 18, 28, 39, 46, 60, 61, 62, 63, 64
 
 # Remove server-only SPI and reconcile client scope
 
@@ -49,3 +49,19 @@ Validation passed with native **10.4.0-build.3056.df98c835**: 158 JUnit tests (2
   --tests '*NativeInterestResultPolicyTests' \
   --tests '*GemFire104DriverContractTests' verifyDriverCompatibility
 ```
+
+## Partial progress — classification prerequisite
+
+[Task 60](60-client-scope-coverage-classification.md) is resolved: coverage policy/generation/validation now distinguishes 96 required-client, 549 excluded-server and 3,206 unresolved entries without changing the frozen baseline or historical implementation statuses. Fourteen retained/unresolved rows have active owners replacing superseded task 43. Ten scope tests, deterministic regeneration and 372 independent native declaration checks pass. This supplies the classification infrastructure in items 1/7; it does not complete all decisions or remove runtime APIs.
+
+The remaining bounded children are [61 — creation](61-remove-peer-cache-and-region-creation.md), [62 — callbacks/configuration](62-remove-peer-callbacks-and-server-configuration.md), [63 — Spring surfaces](63-retire-spring-server-configuration-surfaces.md) and [64 — final reconciliation](64-complete-client-scope-reconciliation.md). Children 61/62 are now resolved; child 63 is next. This parent remains open until all cleanup, retained-client regressions and zero-unresolved acceptance pass.
+
+## Partial progress — client-only creation
+
+[Task 61](61-remove-peer-cache-and-region-creation.md) completes item 2: public peer cache mode, `RegionShortcut` and peer region/subregion creation are removed from SPI/native/mock. Shared contracts use clients; native client PDX has a real server/pool and all five LOCAL shortcut variants retain native attribute checks. The [test disposition ledger](../wayfinder-impl/investigations/client-only-creation.md) assigns remaining private peer fixtures to task 62. Full affected compilation and 520 JUnit executions pass, with mock isolation, ABI/stamps, boundary and coverage validation.
+
+The 3,851 frozen API IDs remain. Removing 54 stale partial mappings yields 2,975 missing / 596 partial / 280 implemented; independent scope remains 96 required-client / 549 excluded-server / 3,206 unresolved. Callback/configuration removal (62), Spring surfaces (63) and complete reconciliation (64) remain mandatory. This parent stays open.
+
+## Child 62 outcome — 2026-10-23
+
+[Task 62](62-remove-peer-callbacks-and-server-configuration.md) resolves callback/configuration cleanup and every private peer fixture disposition from task 61. The [evidence ledger](../wayfinder-impl/investigations/client-only-callbacks-and-configuration.md) records removed hooks and real client transaction/subscription coverage. 510 JUnit executions, full affected compilation, mock isolation, ABI/stamps, boundary and coverage checks pass. All frozen IDs remain: 362 required-client / 625 excluded-server / 2,864 unresolved; 3,111 missing / 484 partial / 256 implemented. Client transaction outcome/event scope remains explicit task 64 work. Spring surface retirement (63) is next; this parent stays open.

@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
@@ -61,7 +60,6 @@ import org.springframework.util.StringUtils;
  * @see AnnotatedElement
  * @see ClientCache
  * @see Region
- * @see RegionShortcut
  * @see ClientRegionShortcut
  * @see Pool
  * @see org.springframework.beans.factory.annotation.AnnotatedBeanDefinition
@@ -108,7 +106,6 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 	@Autowired(required = false)
 	private final List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
-	private RegionShortcut serverRegionShortcut = RegionShortcut.REPLICATE;
 
 	private String poolName = ClientRegionFactoryBean.DEFAULT_POOL_NAME;
 
@@ -213,45 +210,6 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 		return getPoolName().orElse(ClientRegionFactoryBean.DEFAULT_POOL_NAME);
 	}
 
-	/**
-	 * Configures the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 *
-	 * @param serverRegionShortcut {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 * @see RegionShortcut
-	 */
-	public void setServerRegionShortcut(RegionShortcut serverRegionShortcut) {
-		this.serverRegionShortcut = serverRegionShortcut;
-	}
-
-	/**
-	 * Returns the configured {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 *
-	 * @return an {@link Optional} {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}.
-	 * @see #setServerRegionShortcut(RegionShortcut)
-	 * @see RegionShortcut
-	 * @see Optional
-	 */
-	protected Optional<RegionShortcut> getServerRegionShortcut() {
-		return Optional.ofNullable(this.serverRegionShortcut);
-	}
-
-	/**
-	 * Resolves the {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
-	 *
-	 * @return the resolved {@link RegionShortcut} specifying the data management policy to use
-	 * when creating a server (peer) {@link Region}; defaults to {@link RegionShortcut#REPLICATE}.
-	 * @see RegionShortcut
-	 * @see #getServerRegionShortcut()
-	 */
-	protected RegionShortcut resolveServerRegionShortcut() {
-		return getServerRegionShortcut().orElse(RegionShortcut.REPLICATE);
-	}
-
 	@Override
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 
@@ -263,7 +221,6 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 
 			setPoolName(enableCachingDefinedRegionsAttributes.getString("poolName"));
 
-			setServerRegionShortcut(enableCachingDefinedRegionsAttributes.getEnum("serverRegionShortcut"));
 		}
 	}
 
@@ -300,7 +257,6 @@ public class CachingDefinedRegionsConfiguration extends AbstractAnnotationConfig
 					regionFactoryBean.setClientRegionShortcut(resolveClientRegionShortcut());
 					regionFactoryBean.setRegionConfigurers(resolveRegionConfigurers());
 					regionFactoryBean.setRegionName(cacheName);
-					regionFactoryBean.setServerRegionShortcut(resolveServerRegionShortcut());
 					regionFactoryBean.setStatisticsEnabled(true);
 
 					String poolName = resolvePoolName();

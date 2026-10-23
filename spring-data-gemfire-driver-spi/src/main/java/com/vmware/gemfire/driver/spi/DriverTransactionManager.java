@@ -11,7 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Cache-owned transaction service. Thread association, isolation, callback lifecycle and supported
- * cache modes follow the provider. A handle does not own or close its cache. Timed tryResume waits
+ * client capabilities follow the provider. Registration does not guarantee transaction listener
+ * notifications; GemFire 10.4 client transactions notify entry listeners but not transaction listeners. A handle does not own or close its cache. Timed tryResume waits
  * for suspension; it does not set a transaction lifetime or a Spring transaction timeout.
  * ID externalization uses the bound engine's format, not a version-independent SPI wire format.
  */
@@ -66,18 +67,6 @@ public interface DriverTransactionManager {
 	}
 	default void initListeners(DriverTransactionListener[] listeners) {
 		throw UnsupportedFeatureException.notIntroduced("TransactionManager.initListeners");
-	}
-	default void setWriter(DriverTransactionWriter writer) {
-		throw UnsupportedFeatureException.notIntroduced("TransactionManager.setWriter");
-	}
-	default DriverTransactionWriter getWriter() {
-		throw UnsupportedFeatureException.notIntroduced("TransactionManager.getWriter");
-	}
-	default void setDistributed(boolean distributed) {
-		throw UnsupportedFeatureException.notIntroduced("TransactionManager.setDistributed");
-	}
-	default boolean isDistributed() {
-		throw UnsupportedFeatureException.notIntroduced("TransactionManager.isDistributed");
 	}
 	default void writeTransactionId(DriverTransactionId id, ObjectOutput output) throws IOException {
 		throw UnsupportedFeatureException.notIntroduced("TransactionManager.writeTransactionId");

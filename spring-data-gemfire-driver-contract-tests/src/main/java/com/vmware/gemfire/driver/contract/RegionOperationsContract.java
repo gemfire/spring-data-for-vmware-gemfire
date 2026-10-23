@@ -10,16 +10,16 @@ import java.lang.reflect.Method;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import com.vmware.gemfire.driver.spi.*;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
+import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
 
 /** Region operations exercised against both official providers. */
 public abstract class RegionOperationsContract extends RegionConfigurationContract {
 	protected abstract GemFireDriver driver();
-	protected abstract CacheConfiguration configuration(CacheConfiguration.Mode mode);
+	protected abstract CacheConfiguration configuration();
 	private void region(Consumer<DriverRegion<String, String>> action) {
-		try (var c = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
-			DriverRegion<String, String> r = c.createRegion("operations", RegionShortcut.LOCAL);
+		try (var c = connect()) {
+			DriverRegion<String, String> r = c.createClientRegion("operations", ClientRegionShortcut.LOCAL);
 			r.put("key", "one"); action.accept(r);
 		}
 	}
@@ -90,7 +90,7 @@ public abstract class RegionOperationsContract extends RegionConfigurationContra
 					assertThat(ex.getOldValue()).isEqualTo("one"); ex.setOldValue("updated");
 					assertThat(ex.getOldValue()).isEqualTo("updated"); assertThat(ex.getMessage()).doesNotContain("one", "key");
 				});
-			assertThatThrownBy(() -> r.getCache().createRegion("operations", RegionShortcut.LOCAL))
+			assertThatThrownBy(() -> r.getCache().createClientRegion("operations", ClientRegionShortcut.LOCAL))
 				.isInstanceOfSatisfying(DriverRegionExistsException.class, ex -> assertThat(ex.getRegion()).isEqualTo(r));
 			r.invalidate("key");
 			assertThat(r.replace("key", null, "two")).isTrue();

@@ -8,7 +8,6 @@ import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.EvictionAlgorithm;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,13 +19,12 @@ import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Integration Tests testing the use of {@link RegionShortcut} in SDG XML namespace configuration metadata.
+ * Integration Tests testing client region shortcuts in SDG XML namespace configuration metadata.
  *
  * @author John Blum
  * @see org.junit.Test
  * @see org.apache.geode.cache.DataPolicy
  * @see org.apache.geode.cache.Region
- * @see org.apache.geode.cache.RegionShortcut
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration

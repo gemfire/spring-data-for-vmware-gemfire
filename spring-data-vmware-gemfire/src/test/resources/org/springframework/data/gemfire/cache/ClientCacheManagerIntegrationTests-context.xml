@@ -7,7 +7,6 @@
   <bean id="driverManager" class="com.vmware.gemfire.driver.core.GemFireDriverManager"/>
   <bean id="driver" factory-bean="driverManager" factory-method="driver"/>
   <bean id="driverConfiguration" class="com.vmware.gemfire.driver.spi.CacheConfiguration">
-    <constructor-arg value="CLIENT"/>
     <constructor-arg><map><entry key="log-level" value="error"/></map></constructor-arg>
   </bean>
   <bean id="driverConnection" factory-bean="driver" factory-method="connect" destroy-method="close">

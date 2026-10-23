@@ -14,7 +14,6 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -106,7 +105,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	private String logLevel = DEFAULT_LOG_LEVEL;
 	private String name;
 
-	private TransactionWriter transactionWriter;
 
 	/**
 	 * Returns a {@link Properties} object containing Pivotal GemFire/Apache Geode properties used to configure
@@ -293,7 +291,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 		gemfireCache.setJndiDataSources(getJndiDataSources());
 		gemfireCache.setProperties(gemfireProperties());
 		gemfireCache.setTransactionListeners(getTransactionListeners());
-		gemfireCache.setTransactionWriter(getTransactionWriter());
 		gemfireCache.setUseBeanFactoryLocator(useBeanFactoryLocator());
 
 		return gemfireCache;
@@ -411,14 +408,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	protected List<TransactionListener> getTransactionListeners() {
 		return nullSafeList(this.transactionListeners);
-	}
-
-	void setTransactionWriter(TransactionWriter transactionWriter) {
-		this.transactionWriter = transactionWriter;
-	}
-
-	protected TransactionWriter getTransactionWriter() {
-		return this.transactionWriter;
 	}
 
 	void setUseBeanFactoryLocator(boolean useBeanFactoryLocator) {

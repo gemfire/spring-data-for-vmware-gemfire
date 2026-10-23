@@ -9,7 +9,6 @@ import java.util.concurrent.Callable;
 import com.vmware.gemfire.driver.spi.DriverCacheLoader;
 import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
 import com.vmware.gemfire.driver.spi.DriverRegion;
-import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 
 import org.springframework.util.Assert;
 
@@ -141,9 +140,6 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, DriverCach
 
 		return load(new DriverLoaderHelper<K, V>() {
 
-			public V netSearch(final boolean doNetLoad) {
-				throw UnsupportedFeatureException.notIntroduced("LoaderHelper.netSearch");
-			}
 
 			public K getKey() {
 				return CallableCacheLoaderAdapter.this.getKey();
@@ -173,7 +169,7 @@ public class CallableCacheLoaderAdapter<K, V> implements Callable<V>, DriverCach
 	 * Delegates to the underlying {@link DriverCacheLoader}. Runtime exceptions propagate unchanged.
 	 *
 	 * @param loaderHelper a {@link DriverLoaderHelper} object passed in from cache service providing access to the key,
-	 * {@link DriverRegion}, argument, and <code>netSearch</code>.
+	 * {@link DriverRegion}, and argument.
 	 * @return the value supplied for the specified key, or null if no value can be supplied.
 	 * The driver controls when its loader is invoked.
 	 * @see DriverCacheLoader#load(DriverLoaderHelper)

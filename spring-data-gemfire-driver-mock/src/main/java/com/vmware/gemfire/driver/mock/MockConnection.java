@@ -12,7 +12,6 @@ import com.vmware.gemfire.driver.spi.RegionConfiguration;
 import com.vmware.gemfire.driver.spi.DriverMember;
 import java.util.Set;
 
-import com.vmware.gemfire.driver.spi.CacheConfiguration.Mode;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverOperationException;
 import com.vmware.gemfire.driver.spi.DriverFailureKind;
@@ -22,11 +21,9 @@ import com.vmware.gemfire.driver.spi.DriverPool;
 import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 
 final class MockConnection implements DriverConnection {
 
-	private final Mode mode;
 	private final MockMember member = new MockMember();
 	DriverMember member() { return member; }
 	void removeRegion(String name, MockRegion<?, ?> region) { regions.remove(region.getFullPath().substring(1), region); }
@@ -36,7 +33,6 @@ final class MockConnection implements DriverConnection {
 	private final MockTransactionManager transactions = new MockTransactionManager();
 	private volatile boolean closed;
 
-	MockConnection(Mode mode) { this.mode = mode; }
 
 	@Override public com.vmware.gemfire.driver.spi.DriverTransactionManager getTransactionManager() {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
@@ -58,20 +54,11 @@ final class MockConnection implements DriverConnection {
 		return new MockPdxInstance(className, fields, true, true);
 	}
 
-	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
-		return createConfigured(name, shortcut, configuration, null);
-	}
-	<K, V> DriverRegion<K, V> createConfigured(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration, MockRegion<?, ?> parent) {
-		checkMode(Mode.PEER);
-		if (shortcut == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null shortcut", null);
-		if (shortcut != RegionShortcut.LOCAL) throw UnsupportedFeatureException.notIntroduced("RegionShortcut." + shortcut);
-		return create(name, configuration, parent);
-	}
 	@Override public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		return createConfiguredClient(name, shortcut, configuration, null);
 	}
 	<K, V> DriverRegion<K, V> createConfiguredClient(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration, MockRegion<?, ?> parent) {
-		checkMode(Mode.CLIENT);
+		checkOpen();
 		if (shortcut == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Null shortcut", null);
 		if (shortcut != ClientRegionShortcut.LOCAL) throw UnsupportedFeatureException.notIntroduced("ClientRegionShortcut." + shortcut);
 		return create(name, configuration, parent);
@@ -105,25 +92,7 @@ final class MockConnection implements DriverConnection {
 
 	private void checkPoolAccess(String name) {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
-		if (mode != Mode.CLIENT) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Pool access requires a CLIENT cache", null);
 		if (name == null || name.isBlank()) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Pool name is required", null);
-	}
-
-	@Override
-	public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut) {
-		return createRegion(name, shortcut, new RegionCallbacks<>(java.util.List.of(), null, null));
-	}
-
-	@Override
-	public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
-		checkMode(Mode.PEER);
-		if (shortcut == null) {
-			throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Region shortcut must not be null.", null);
-		}
-		if (shortcut != RegionShortcut.LOCAL) {
-			throw UnsupportedFeatureException.notIntroduced("RegionShortcut." + shortcut);
-		}
-		return create(name, callbacks);
 	}
 
 	@Override
@@ -133,7 +102,7 @@ final class MockConnection implements DriverConnection {
 
 	@Override
 	public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
-		checkMode(Mode.CLIENT);
+		checkOpen();
 		if (callbacks != null && (callbacks.loader() != null || callbacks.writer() != null)) {
 			throw UnsupportedFeatureException.notIntroduced("ClientRegion.creationLoaderWriter");
 		}
@@ -157,8 +126,8 @@ final class MockConnection implements DriverConnection {
 		String path = parent == null ? name : parent.getFullPath().substring(1) + "/" + name;
 		if (regions.containsKey(path)) throw new com.vmware.gemfire.driver.spi.DriverRegionExistsException(regions.get(path), null);
 		var callbacks = config.callbacks().isSet() ? config.callbacks().value() : new RegionCallbacks<K, V>(List.of(), null, null);
-		if (mode == Mode.CLIENT && (callbacks.loader() != null || callbacks.writer() != null)) throw UnsupportedFeatureException.notIntroduced("ClientRegion.creationLoaderWriter");
-		MockRegion<K, V> region = new MockRegion<>(name, this, parent, config, mode == Mode.CLIENT);
+		if ((callbacks.loader() != null || callbacks.writer() != null)) throw UnsupportedFeatureException.notIntroduced("ClientRegion.creationLoaderWriter");
+		MockRegion<K, V> region = new MockRegion<>(name, this, parent, config);
 		regions.put(path, region);
 		try { region.created(callbacks); }
 		catch (RuntimeException failure) { regions.remove(path, region); throw failure; }
@@ -209,10 +178,4 @@ final class MockConnection implements DriverConnection {
 		}
 	}
 
-	private void checkMode(Mode expected) {
-		checkOpen();
-		if (mode != expected) {
-			throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Region creation requires a " + expected + " cache.", null);
-		}
-	}
 }

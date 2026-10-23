@@ -12,10 +12,6 @@ public interface DriverRegion<K, V> {
 	default DriverRegionAttributesMutator<K, V> getAttributesMutator() {
 		throw UnsupportedFeatureException.notIntroduced("Region.getAttributesMutator");
 	}
-	default <SK, SV> DriverRegion<SK, SV> createSubregion(String name,
-		com.vmware.gemfire.driver.spi.config.RegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
-		throw UnsupportedFeatureException.notIntroduced("Region.createSubregion");
-	}
 	default <SK, SV> DriverRegion<SK, SV> createClientSubregion(String name,
 		com.vmware.gemfire.driver.spi.config.ClientRegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
 		throw UnsupportedFeatureException.notIntroduced("Region.createClientSubregion");

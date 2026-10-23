@@ -5,7 +5,6 @@
 package com.vmware.gemfire.driver.mock;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import com.vmware.gemfire.driver.spi.*;
 
@@ -18,7 +17,6 @@ final class MockMember implements DriverMember {
 	@Override public String getHost() { return "localhost"; }
 	@Override public int getProcessId() { return (int) ProcessHandle.current().pid(); }
 	@Override public List<String> getGroups() { return List.of(); }
-	@Override public Set<DriverRole> getRoles() { return Set.of(); }
 	@Override public DriverDurableClientAttributes getDurableClientAttributes() { return new DriverDurableClientAttributes("", 300); }
 	@Override public int compareTo(DriverMember other) { return id.compareTo(other.getId()); }
 }

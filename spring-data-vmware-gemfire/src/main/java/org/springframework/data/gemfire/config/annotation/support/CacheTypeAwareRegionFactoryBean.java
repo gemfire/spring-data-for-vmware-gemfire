@@ -10,13 +10,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.apache.geode.cache.CustomExpiry;
-import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.EvictionAttributes;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.compression.Compressor;
@@ -32,23 +29,18 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link CacheTypeAwareRegionFactoryBean} class is a smart Spring {@link FactoryBean} that knows how to
- * create a client or server {@link Region} depending on whether the {@link ClientCache} is a {@link ClientCache}
- * or a peer {@link Cache}.
+ * create a client {@link Region} using the configured {@link ClientRegionShortcut}.
  *
  * @author John Blum
  * @see CustomExpiry
- * @see DataPolicy
  * @see EvictionAttributes
  * @see ExpirationAttributes
  * @see ClientCache
  * @see Region
  * @see RegionAttributes
- * @see RegionShortcut
- * @see Scope
  * @see ClientCache
  * @see ClientRegionShortcut
  * @see Compressor
- * @see GenericRegionFactoryBean
  * @see ClientRegionFactoryBean
  * @see ResolvableRegionFactoryBean
  * @see ClientRegionFactoryBean
@@ -76,8 +68,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private CustomExpiry<K, V> customEntryIdleTimeout;
 	private CustomExpiry<K, V> customEntryTimeToLive;
 
-	private DataPolicy dataPolicy = DataPolicy.DEFAULT;
-
 	private EvictionAttributes evictionAttributes;
 
 	private ExpirationAttributes entryIdleTimeout;
@@ -90,10 +80,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private List<RegionConfigurer> regionConfigurers = Collections.emptyList();
 
 	private RegionAttributes<K, V> regionAttributes;
-
-	private RegionShortcut serverRegionShortcut;
-
-	private Scope scope;
 
 	private volatile SmartLifecycle smartLifecycleComponent;
 
@@ -244,14 +230,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		return this.customEntryTimeToLive;
 	}
 
-	public void setDataPolicy(DataPolicy dataPolicy) {
-		this.dataPolicy = dataPolicy;
-	}
-
-	protected DataPolicy getDataPolicy() {
-		return Optional.ofNullable(this.dataPolicy).orElse(DataPolicy.DEFAULT);
-	}
-
 	public void setDiskStoreName(String diskStoreName) {
 		this.diskStoreName = diskStoreName;
 	}
@@ -351,22 +329,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 
 	protected ExpirationAttributes getRegionTimeToLive() {
 		return this.regionTimeToLive;
-	}
-
-	public void setScope(Scope scope) {
-		this.scope = scope;
-	}
-
-	protected Scope getScope() {
-		return this.scope;
-	}
-
-	public void setServerRegionShortcut(RegionShortcut shortcut) {
-		this.serverRegionShortcut = shortcut;
-	}
-
-	protected RegionShortcut getServerRegionShortcut() {
-		return this.serverRegionShortcut;
 	}
 
 	protected Optional<SmartLifecycle> getSmartLifecycleComponent() {

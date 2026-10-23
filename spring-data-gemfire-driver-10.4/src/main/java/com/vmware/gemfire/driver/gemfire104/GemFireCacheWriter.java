@@ -27,6 +27,6 @@ final class GemFireCacheWriter<K, V> implements CacheWriter<K, V> {
 	@Override public void close() { invoke(delegate::close); }
 	@Override public void init(Properties properties) { invoke(() -> delegate.init(properties)); }
 	@Override public void initialize(Cache cache, Properties properties) {
-		invoke(() -> delegate.initialize(new GemFireConnection(cache, CacheConfiguration.Mode.PEER), properties));
+		invoke(() -> delegate.initialize(new GemFireConnection(cache), properties));
 	}
 }

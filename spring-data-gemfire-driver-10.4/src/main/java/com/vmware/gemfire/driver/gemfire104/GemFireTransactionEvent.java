@@ -16,7 +16,7 @@ final class GemFireTransactionEvent implements DriverTransactionEvent {
 	GemFireTransactionEvent(TransactionEvent value) { this.value = value; }
 	@Override public DriverTransactionId getTransactionId() { return read(() -> new GemFireTransactionId(value.getTransactionId())); }
 	@Override public DriverConnection getCache() {
-		return read(() -> new GemFireConnection(value.getCache(), ((org.apache.geode.internal.cache.InternalCache) value.getCache()).isClient() ? CacheConfiguration.Mode.CLIENT : CacheConfiguration.Mode.PEER));
+		return read(() -> new GemFireConnection(value.getCache()));
 	}
 	@Override public List<DriverCacheEvent<?, ?>> getEvents() {
 		List<org.apache.geode.cache.CacheEvent<?, ?>> events = read(value::getEvents);

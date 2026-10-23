@@ -11,7 +11,7 @@ import com.vmware.gemfire.driver.spi.*;
 
 class MockPoolConfigurationTests {
 	@Test void localSettingsDoNotInvokeNetworkingCallbacksOrInventRemoteState() {
-		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()))) {
+		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(Map.of()))) {
 			DriverSocketFactory socketFactory = () -> { throw new AssertionError("Mock must not open a socket"); };
 			var pool = connection.createPool("metadata", PoolConfiguration.builder()
 				.servers(List.of(new PoolConfiguration.Endpoint("unresolved.invalid", 40404)))

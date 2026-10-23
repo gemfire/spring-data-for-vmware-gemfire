@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 
 import org.springframework.beans.BeanUtils;
@@ -86,7 +85,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 	protected static final ClientRegionShortcut DEFAULT_CLIENT_REGION_SHORTCUT = ClientRegionShortcut.PROXY;
 
-	protected static final RegionShortcut DEFAULT_SERVER_REGION_SHORTCUT = RegionShortcut.REPLICATE;
 
 	@Autowired(required = false)
 	private GemfireMappingContext mappingContext;
@@ -465,7 +463,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		private final GemfirePersistentEntity<?> persistentEntity;
 
-		private RegionShortcut serverRegionShortcut;
 
 		private String poolName;
 
@@ -523,14 +520,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 				.orElse((Class) Object.class);
 		}
 
-		protected Optional<RegionShortcut> getServerRegionShortcut() {
-			return Optional.ofNullable(this.serverRegionShortcut);
-		}
-
-		protected RegionShortcut resolveServerRegionShortcut(RegionShortcut defaultServerRegionShortcut) {
-			return getServerRegionShortcut().orElse(defaultServerRegionShortcut);
-		}
-
 		protected @NonNull RegionBeanDefinitionMetadata is(boolean strict) {
 			this.strict = strict;
 			return this;
@@ -543,7 +532,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 				.map(it ->
 					this.using(it.<ClientRegionShortcut>getEnum("clientRegionShortcut"))
 						.using(it.getString("poolName"))
-						.using(it.<RegionShortcut>getEnum("serverRegionShortcut"))
 						.is(it.getBoolean("strict"))
 				)
 				.orElse(this);
@@ -551,11 +539,6 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 
 		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable ClientRegionShortcut clientRegionShortcut) {
 			this.clientRegionShortcut = clientRegionShortcut;
-			return this;
-		}
-
-		protected @NonNull RegionBeanDefinitionMetadata using(@Nullable RegionShortcut serverRegionShortcut) {
-			this.serverRegionShortcut = serverRegionShortcut;
 			return this;
 		}
 

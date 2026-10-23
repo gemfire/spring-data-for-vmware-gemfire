@@ -40,6 +40,10 @@ class SourceRules(unittest.TestCase):
             "Singleton": "class Singleton { static Singleton getInstance() { return new Singleton(); } }",
             "StatelessDriver": "final class StatelessDriver implements GemFireDriver { static StatelessDriver driver() { return new StatelessDriver(); } }",
             "EnumService": "enum EnumService { INSTANCE; void execute() {} }",
+            "EnumAlias": "enum EnumAlias { NONE, KEYS; static final EnumAlias DEFAULT = KEYS; }",
+            "MutableEnumAlias": "enum MutableEnumAlias { NONE, KEYS; int count; static final MutableEnumAlias DEFAULT = KEYS; }",
+            "MutableEnumObject": "enum MutableEnumObject { NONE, KEYS; final Object state = new Object(); static final MutableEnumObject DEFAULT = KEYS; }",
+            "NonFinalEnumAlias": "enum NonFinalEnumAlias { NONE, KEYS; static NonFinalEnumAlias DEFAULT = KEYS; }",
             "StaticLogger": "class StaticLogger { static final Logger log = LoggerFactory.getLogger(StaticLogger.class); }",
             "Constants": 'class Constants { static final int COUNT = 2; static final String LABEL = "ok"; }',
             "Immutable": "record Immutable(int value) { static Immutable of(int value) { return new Immutable(value); } }",
@@ -85,9 +89,13 @@ class SourceRules(unittest.TestCase):
                 self.assertIn("native-string", self.rules(name))
 
     def test_mutable_static_shapes(self):
-        for name in ["Mutable", "Array", "Atomic", "Collection", "Implicit", "Holder", "StaticLogger", "MutableRecord"]:
+        for name in ["Mutable", "Array", "Atomic", "Collection", "Implicit", "Holder", "StaticLogger", "MutableRecord",
+                     "MutableEnumAlias", "MutableEnumObject", "NonFinalEnumAlias"]:
             with self.subTest(name=name):
                 self.assertIn("static-state", self.rules(name))
+
+    def test_immutable_enum_constant_alias(self):
+        self.assertFalse(self.rules("EnumAlias"))
 
     def test_singletons(self):
         self.assertIn("static-service", self.rules("Singleton"))

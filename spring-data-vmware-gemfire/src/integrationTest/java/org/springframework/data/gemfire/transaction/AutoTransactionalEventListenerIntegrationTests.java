@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.geode.cache.RegionShortcut;
 import org.apache.geode.cache.TransactionEvent;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
@@ -72,8 +71,7 @@ public class AutoTransactionalEventListenerIntegrationTests extends AbstractTran
 
 	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableEntityDefinedRegions(
-		basePackageClasses = Customer.class,
-		serverRegionShortcut = RegionShortcut.LOCAL
+		basePackageClasses = Customer.class
 	)
 	@EnableGemfireCacheTransactions(enableAutoTransactionEventPublishing = true)
 	@Import(CustomerRepositoryConfiguration.class)

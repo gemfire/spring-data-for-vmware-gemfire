@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.transaction.event;
 
 import org.apache.geode.cache.TransactionEvent;
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -15,18 +14,17 @@ import org.springframework.util.Assert;
 
 /**
  * The {@link TransactionListenerAdapter} class is an Apache Geode {@link TransactionListener}
- * and {@link TransactionWriter} implementation that publishes the {@link TransactionEvent} to application components
+ * implementation that publishes the {@link TransactionEvent} to application components
  * and beans declared in the Spring {@link ApplicationContext} using the {@link ApplicationEventPublisher}.
  *
  * @author John Blum
  * @see TransactionEvent
  * @see TransactionListener
- * @see TransactionWriter
  * @see ApplicationContext
  * @see ApplicationEventPublisher
  * @since 2.3.0
  */
-public class TransactionListenerAdapter implements TransactionListener, TransactionWriter {
+public class TransactionListenerAdapter implements TransactionListener {
 
 	private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -55,20 +53,6 @@ public class TransactionListenerAdapter implements TransactionListener, Transact
 	 */
 	protected @NonNull ApplicationEventPublisher getApplicationEventPublisher() {
 		return this.applicationEventPublisher;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeCommit(TransactionEvent event) {
-
-		// NOTE: this will not work because Apache Geode's cache before commit transaction event is only triggered
-		// after Spring's AbstractPlatformTransaction.triggerBeforeCommit(:TransactionStatus) method, which is where
-		// all application @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT) annotated transaction
-		// event handler methods are invoked.
-
-		//getApplicationEventPublisher().publishEvent(TransactionApplicationEvent.of(event));
 	}
 
 	/**

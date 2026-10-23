@@ -28,15 +28,6 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 
 	@Override public DriverRegionAttributes<K, V> getAttributes() { return invoke("getAttributes", () -> new GemFireRegionAttributes<>(this)); }
 	@Override public DriverRegionAttributesMutator<K, V> getAttributesMutator() { return invoke("getAttributesMutator", () -> new GemFireRegionAttributesMutator<>(this)); }
-	@Override public <SK, SV> DriverRegion<SK, SV> createSubregion(String name,
-		com.vmware.gemfire.driver.spi.config.RegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
-		return invoke("createSubregion", () -> {
-			if (((org.apache.geode.internal.cache.InternalCache) region.getCache()).isClient()) throw new IllegalStateException("Peer subregion requires a peer cache");
-			var factory = ((org.apache.geode.cache.Cache) region.getCache()).<SK, SV>createRegionFactory(org.apache.geode.cache.RegionShortcut.valueOf(shortcut.name()));
-			new GemFireRegionConfiguration().apply(configuration, factory);
-			return new GemFireRegion<>(factory.createSubregion(region, name));
-		});
-	}
 	@Override public <SK, SV> DriverRegion<SK, SV> createClientSubregion(String name,
 		com.vmware.gemfire.driver.spi.config.ClientRegionShortcut shortcut, RegionConfiguration<SK, SV> configuration) {
 		return invoke("createClientSubregion", () -> {
@@ -73,7 +64,7 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 		return invoke("getCacheListeners", () -> {
 			List<DriverCacheListener<K, V>> listeners = new ArrayList<>();
 			for (CacheListener<K, V> listener : region.getAttributes().getCacheListeners()) {
-				Object application = new GemFireCacheListenerFactory().applicationAdapter(listener);
+				Object application = listener;
 				if (application instanceof GemFireCacheListener<?, ?> adapter) {
 					@SuppressWarnings("unchecked") DriverCacheListener<K, V> callback = (DriverCacheListener<K, V>) adapter.delegate;
 					listeners.add(callback);
@@ -221,7 +212,7 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 	@Override public java.util.Set<java.util.Map.Entry<K, V>> entrySet() { return invoke("entrySet", () -> new GemFireRegionViews().mappedSet(region.entrySet(), e -> new GemFireMapEntry<>(e))); }
 	@Override public java.util.Set<DriverRegionEntry<?, ?>> entrySet(boolean recursive) { return invoke("entrySet", () -> new GemFireRegionViews().mappedSet(region.entrySet(recursive), e -> new GemFireRegionEntry<>(e))); }
 	@Override public DriverRegionService getRegionService() { return invoke("getRegionService", () -> new GemFireRegionService(region.getRegionService())); }
-	@Override public DriverConnection getCache() { return invoke("getCache", () -> new GemFireConnection(region.getCache(), ((org.apache.geode.internal.cache.InternalCache) region.getCache()).isClient() ? CacheConfiguration.Mode.CLIENT : CacheConfiguration.Mode.PEER)); }
+	@Override public DriverConnection getCache() { return invoke("getCache", () -> new GemFireConnection(region.getCache())); }
 	@Override public Object getUserAttribute() { return invoke("getUserAttribute", () -> region.getUserAttribute()); }
 	@Override public void setUserAttribute(Object value) { invoke("setUserAttribute", () -> { region.setUserAttribute(value); return null; }); }
 	@Override public DriverCacheStatistics getStatistics() { return invoke("getStatistics", () -> new GemFireCacheStatistics(region.getStatistics())); }

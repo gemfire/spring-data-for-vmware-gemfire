@@ -4,6 +4,9 @@
  */
 package com.vmware.gemfire.driver.gemfire104;
 
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+
 import static org.assertj.core.api.Assertions.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
@@ -12,8 +15,8 @@ import com.vmware.gemfire.driver.spi.*;
 
 class NativeRegionOperationsTests {
 	@Test void hierarchyStatisticsAndEntryViewsDelegateToConfiguredNativeRegions() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
-			var factory = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).setStatisticsEnabled(true);
+		try (var cache = new ClientCacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
+			var factory = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.LOCAL).setStatisticsEnabled(true);
 			var root = factory.create("root"); var child = factory.createSubregion(root, "child");
 			var leaf = factory.createSubregion(child, "leaf");
 			var handle = new GemFireRegion<>(root);

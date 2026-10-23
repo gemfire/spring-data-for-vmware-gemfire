@@ -79,8 +79,7 @@ class InjectedResolverIntegrationTests {
 	}
 
 	private CacheConfiguration configuration() {
-		return new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-			Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
+		return new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
 	}
 
 	private void verifyContextAndOwnership(GenericApplicationContext context, boolean owned) {
@@ -138,8 +137,7 @@ class InjectedResolverIntegrationTests {
 		public GemFireDriverManager driverManager() { return new GemFireDriverManager(); }
 		@Bean
 		public CacheConfiguration cacheConfiguration() {
-			return new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-				Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
+			return new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
 		}
 		@Bean
 		public DriverConnectionFactoryBean connection(GemFireDriverManager manager, CacheConfiguration configuration) {

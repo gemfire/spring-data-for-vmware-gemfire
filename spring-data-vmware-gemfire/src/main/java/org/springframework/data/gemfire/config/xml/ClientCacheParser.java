@@ -71,14 +71,10 @@ class ClientCacheParser extends AbstractSingleBeanDefinitionParser {
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "copy-on-read");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "critical-heap-percentage");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "eviction-heap-percentage");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "lock-lease");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "lock-timeout");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "message-sync-interval");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "pdx-ignore-unread-fields");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "pdx-read-serialized");
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "pdx-persistent");
 		ParsingUtils.setPropertyReference(element, clientCacheBuilder, "pdx-serializer-ref", "pdxSerializer");
-		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "search-timeout");
 
 		parsePdxDiskStore(element, parserContext, clientCacheBuilder);
 		parseJndiBindings(element, parserContext, clientCacheBuilder);
@@ -96,13 +92,6 @@ class ClientCacheParser extends AbstractSingleBeanDefinitionParser {
 			}
 
 			clientCacheBuilder.addPropertyValue("transactionListeners", managedTransactionListeners);
-		}
-
-		Element transactionWriter = DomUtils.getChildElementByTagName(element, "transaction-writer");
-
-		if (transactionWriter != null) {
-			clientCacheBuilder.addPropertyValue("transactionWriter",
-					ParsingUtils.parseRefOrNestedBeanDeclaration(transactionWriter, parserContext, clientCacheBuilder));
 		}
 
 		ParsingUtils.setPropertyValue(element, clientCacheBuilder, "durable-client-id");

@@ -21,7 +21,6 @@ import com.vmware.gemfire.driver.spi.DriverCacheLoader;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
 import com.vmware.gemfire.driver.spi.DriverRegion;
-import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 
 class CallableCacheLoaderAdapterTest {
@@ -32,7 +31,7 @@ class CallableCacheLoaderAdapterTest {
 	@BeforeEach
 	void createRegion() {
 		connection = new GemFireDriverManager().driver()
-			.connect(new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()));
+			.connect(new CacheConfiguration(Map.of()));
 		region = connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 	}
 
@@ -107,15 +106,6 @@ class CallableCacheLoaderAdapterTest {
 		var adapter = new CallableCacheLoaderAdapter<>(new RecordingLoader(helper -> { throw failure; }), "key", region);
 		assertThatThrownBy(adapter::call).isSameAs(failure);
 		assertThatThrownBy(() -> adapter.load(null)).isSameAs(failure);
-	}
-
-	@Test
-	void rejectsSyntheticNetworkSearchExplicitly() {
-		var adapter = new CallableCacheLoaderAdapter<>(new RecordingLoader(helper -> helper.netSearch(true)), "key", region);
-		assertThatThrownBy(adapter::call).isInstanceOfSatisfying(UnsupportedFeatureException.class, ex -> {
-			assertThat(ex.feature()).isEqualTo("LoaderHelper.netSearch");
-			assertThat(ex.reason()).isEqualTo(UnsupportedFeatureException.Reason.NOT_INTRODUCED);
-		});
 	}
 
 	@Test

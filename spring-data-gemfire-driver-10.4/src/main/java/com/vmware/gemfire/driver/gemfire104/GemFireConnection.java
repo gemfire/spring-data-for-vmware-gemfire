@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import org.apache.geode.cache.Cache;
 import org.apache.geode.cache.GemFireCache;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -17,7 +16,6 @@ import org.apache.geode.cache.client.Pool;
 import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.PoolManager;
 
-import com.vmware.gemfire.driver.spi.CacheConfiguration.Mode;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverRegion;
 import com.vmware.gemfire.driver.spi.DriverPool;
@@ -25,18 +23,15 @@ import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.RegionCallbacks;
 import com.vmware.gemfire.driver.spi.RegionConfiguration;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 
 final class GemFireConnection implements DriverConnection {
 
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 
 	private final GemFireCache cache;
-	private final Mode mode;
 
-	GemFireConnection(GemFireCache cache, Mode mode) {
+	GemFireConnection(GemFireCache cache) {
 		this.cache = cache;
-		this.mode = mode;
 	}
 
 	org.apache.geode.cache.GemFireCache cacheForTransactionCallback() { return cache; }
@@ -51,17 +46,9 @@ final class GemFireConnection implements DriverConnection {
 		return invoke("createPdxEnum", () -> new GemFirePdxInstance(cache.createPdxEnum(className, name, ordinal)));
 	}
 
-	@Override public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
-		return invoke("createConfiguredRegion", () -> {
-			if (mode != Mode.PEER || !(cache instanceof Cache peer)) throw new IllegalStateException("Peer region creation requires a peer cache");
-			var factory = peer.<K, V>createRegionFactory(org.apache.geode.cache.RegionShortcut.valueOf(shortcut.name()));
-			new GemFireRegionConfiguration().apply(configuration, factory);
-			return new GemFireRegion<>(factory.create(name));
-		});
-	}
 	@Override public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		return invoke("createConfiguredClientRegion", () -> {
-			if (mode != Mode.CLIENT || !(cache instanceof ClientCache client)) throw new IllegalStateException("Client region creation requires a client cache");
+			if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient() || !(cache instanceof ClientCache client)) throw new IllegalStateException("Client region creation requires a client cache");
 			var factory = client.<K, V>createClientRegionFactory(org.apache.geode.cache.client.ClientRegionShortcut.valueOf(shortcut.name()));
 			new GemFireRegionConfiguration().apply(configuration, factory);
 			return new GemFireRegion<>(factory.create(name));
@@ -90,29 +77,8 @@ final class GemFireConnection implements DriverConnection {
 
 	private void checkPoolAccess(String name) {
 		if (cache.isClosed()) throw new IllegalStateException("Cache is closed");
-		if (mode != Mode.CLIENT) throw new IllegalStateException("Pool access requires a CLIENT cache");
+		if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient()) throw new IllegalStateException("Pool access requires a CLIENT cache");
 		if (name == null || name.isBlank()) throw new IllegalArgumentException("Pool name is required");
-	}
-
-	@Override
-	public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut) {
-		return createRegion(name, shortcut, new RegionCallbacks<>(java.util.List.of(), null, null));
-	}
-
-	@Override
-	public <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
-		return invoke("createRegion", () -> {
-			// Native cache implementations can implement both Cache and ClientCache interfaces.
-			if (mode != Mode.PEER || !(cache instanceof Cache peer)) {
-				throw new IllegalStateException("Peer region creation requires a peer cache.");
-			}
-			Objects.requireNonNull(callbacks);
-			var factory = peer.<K, V>createRegionFactory(org.apache.geode.cache.RegionShortcut.valueOf(shortcut.name()));
-			callbacks.listeners().forEach(listener -> factory.addCacheListener(new GemFireCacheListenerFactory().adapt(listener)));
-			if (callbacks.loader() != null) factory.setCacheLoader(new GemFireCacheLoader<>(callbacks.loader()));
-			if (callbacks.writer() != null) factory.setCacheWriter(new GemFireCacheWriter<>(callbacks.writer()));
-			return new GemFireRegion<>(factory.create(name));
-		});
 	}
 
 	@Override
@@ -123,7 +89,7 @@ final class GemFireConnection implements DriverConnection {
 	@Override
 	public <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
 		return invoke("createClientRegion", () -> {
-			if (mode != Mode.CLIENT || !(cache instanceof ClientCache client)) {
+			if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient() || !(cache instanceof ClientCache client)) {
 				throw new IllegalStateException("Client region creation requires a client cache.");
 			}
 			Objects.requireNonNull(callbacks);

@@ -28,7 +28,7 @@ class GemfireCacheManagerUnitTests {
 	@BeforeEach
 	void createConnection() {
 		connection = new GemFireDriverManager().driver().connect(
-			new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()));
+			new CacheConfiguration(Map.of()));
 		manager = new GemfireCacheManager(connection);
 	}
 

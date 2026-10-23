@@ -7,7 +7,6 @@ package com.vmware.gemfire.driver.spi;
 import java.util.Set;
 
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 
 /**
  * A cache connection owned by the caller, which must close it. Operations delegate to the underlying
@@ -20,19 +19,10 @@ public interface DriverConnection extends DriverRegionService {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getTransactionManager");
 	}
 
-	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
-		throw UnsupportedFeatureException.notIntroduced("Connection.createConfiguredRegion");
-	}
-
 	default <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut, RegionConfiguration<K, V> configuration) {
 		throw UnsupportedFeatureException.notIntroduced("Connection.createConfiguredClientRegion");
 	}
 
-
-	/** Install injected callbacks before creation, so region-create notifications are observable. */
-	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut, RegionCallbacks<K, V> callbacks) {
-		throw UnsupportedFeatureException.notIntroduced("Connection.createRegionWithCallbacks");
-	}
 
 	/** Client creation supports listeners. Native 10.4 cannot install a loader/writer before creation;
 	 * use the region setters afterward, or receive an explicit unsupported failure here.
@@ -59,10 +49,6 @@ public interface DriverConnection extends DriverRegionService {
 	/** Returns the root regions currently defined in this cache. */
 	default Set<DriverRegion<?, ?>> rootRegions() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.rootRegions");
-	}
-
-	default <K, V> DriverRegion<K, V> createRegion(String name, RegionShortcut shortcut) {
-		throw UnsupportedFeatureException.notIntroduced("Connection.createRegion");
 	}
 
 	default <K, V> DriverRegion<K, V> createClientRegion(String name, ClientRegionShortcut shortcut) {

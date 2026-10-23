@@ -34,10 +34,6 @@ final class GemFireTransactionManager implements DriverTransactionManager {
 	@Override public void initListeners(DriverTransactionListener[] listeners) {
 		run(() -> manager.initListeners(listeners == null ? null : Arrays.stream(listeners).map(this::nativeListener).toArray(TransactionListener[]::new)));
 	}
-	@Override public DriverTransactionWriter getWriter() { return call(() -> writer(manager.getWriter())); }
-	@Override public void setWriter(DriverTransactionWriter writer) { run(() -> manager.setWriter(nativeWriter(writer))); }
-	@Override public boolean isDistributed() { return call(manager::isDistributed); }
-	@Override public void setDistributed(boolean value) { run(() -> manager.setDistributed(value)); }
 	@Override public void writeTransactionId(DriverTransactionId id, ObjectOutput output) throws IOException {
 		try { nativeId(id).writeExternal(output); }
 		catch (RuntimeException failure) { throw new GemFireExceptionMapper().translate("TransactionId.writeExternal", failure); }
@@ -62,22 +58,13 @@ final class GemFireTransactionManager implements DriverTransactionManager {
 		if (listener == null) return null;
 		return listener instanceof GemFireTransactionListener adapted ? adapted.delegate : new ForeignListener(listener);
 	}
-	private TransactionWriter nativeWriter(DriverTransactionWriter writer) {
-		if (writer == null) return null;
-		if (writer instanceof ForeignWriter foreign) return foreign.value;
-		return new GemFireTransactionWriter(writer);
-	}
-	private DriverTransactionWriter writer(TransactionWriter writer) {
-		if (writer == null) return null;
-		return writer instanceof GemFireTransactionWriter adapted ? adapted.delegate : new ForeignWriter(writer);
-	}
 	private TransactionEvent nativeEvent(DriverTransactionEvent event) {
 		if (event instanceof GemFireTransactionEvent adapted) return adapted.value;
 		throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Transaction event belongs to another provider", null);
 	}
 	private Cache nativeCache(DriverConnection connection) {
 		if (connection instanceof GemFireConnection nativeConnection && nativeConnection.cacheForTransactionCallback() instanceof Cache cache) return cache;
-		throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Transaction callback requires a native peer cache", null);
+		throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Transaction callback requires a native client cache", null);
 	}
 	private final class ForeignListener implements DriverTransactionListener {
 		private final TransactionListener value;
@@ -89,20 +76,6 @@ final class GemFireTransactionManager implements DriverTransactionManager {
 		@Override public void initialize(DriverConnection connection, Properties properties) { run(() -> value.initialize(nativeCache(connection), properties)); }
 		@Override public void close() { run(value::close); }
 		@Override public boolean equals(Object other) { return other instanceof ForeignListener listener && value.equals(listener.value); }
-		@Override public int hashCode() { return value.hashCode(); }
-	}
-	private final class ForeignWriter implements DriverTransactionWriter {
-		private final TransactionWriter value;
-		ForeignWriter(TransactionWriter value) { this.value = value; }
-		@Override public void beforeCommit(DriverTransactionEvent event) throws DriverTransactionWriterException {
-			try { value.beforeCommit(nativeEvent(event)); }
-			catch (TransactionWriterException failure) { throw new DriverTransactionWriterException(failure); }
-			catch (RuntimeException failure) { throw new GemFireExceptionMapper().translate("TransactionWriter.beforeCommit", failure); }
-		}
-		@Override public void init(Properties properties) { run(() -> value.init(properties)); }
-		@Override public void initialize(DriverConnection connection, Properties properties) { run(() -> value.initialize(nativeCache(connection), properties)); }
-		@Override public void close() { run(value::close); }
-		@Override public boolean equals(Object other) { return other instanceof ForeignWriter writer && value.equals(writer.value); }
 		@Override public int hashCode() { return value.hashCode(); }
 	}
 	private void run(Runnable action) { call(() -> { action.run(); return null; }); }

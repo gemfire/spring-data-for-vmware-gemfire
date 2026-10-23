@@ -4,7 +4,6 @@
  */
 package com.vmware.gemfire.driver.gemfire104;
 
-import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import com.vmware.gemfire.internal.version.GemFireVersion;
 
@@ -34,9 +33,7 @@ public final class GemFire104Driver implements GemFireDriver {
 			throw new DriverBindException("The GemFire driver requires CacheConfiguration.");
 		}
 		try {
-			return new GemFireConnection(cacheConfiguration.mode() == CacheConfiguration.Mode.PEER
-				? new CacheFactory(cacheConfiguration.properties()).create()
-				: new ClientCacheFactory(cacheConfiguration.properties()).create(), cacheConfiguration.mode());
+			return new GemFireConnection(new ClientCacheFactory(cacheConfiguration.properties()).create());
 		}
 		catch (RuntimeException ex) {
 			throw new DriverBindException("Unable to create the GemFire cache.", ex);

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class MockPdxValueTests {
 	@Test void mockRejectsNativeDeserializationAndUnknownObjectEncodingWithoutInvokingApplicationCode() {
-		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(CacheConfiguration.Mode.PEER, Map.of()))) {
+		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(Map.of()))) {
 			var value = connection.createPdxInstanceFactory("ApplicationType").writeInt("id", 1).create();
 			assertThatThrownBy(value::getObject).isInstanceOfSatisfying(UnsupportedFeatureException.class,
 				ex -> assertThat(ex.feature()).isEqualTo("Pdx.applicationObjectDeserialization"));
@@ -24,7 +24,7 @@ class MockPdxValueTests {
 		}
 	}
 	@Test void mockSnapshotsNestedWritableValuesAndDateArraysWithoutGlobalSchemaState() {
-		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(CacheConfiguration.Mode.PEER, Map.of()))) {
+		try (var connection = new MockGemFireDriver().connect(new CacheConfiguration(Map.of()))) {
 			var child = connection.createPdxInstanceFactory("Child").writeInt("id", 1).create().createWriter();
 			Date date = new Date(42); var factory = connection.createPdxInstanceFactory("Parent").writeObject("child", child).writeDate("date", date);
 			date.setTime(100); child.setField("id", 2);

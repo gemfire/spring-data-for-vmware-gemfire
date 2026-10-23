@@ -4,6 +4,9 @@
  */
 package com.vmware.gemfire.driver.gemfire104;
 
+import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.Map;
@@ -98,9 +101,9 @@ class GemFireExceptionMapperTests {
 
 	@Test
 	void nativeWriterVetoCrossesRegionBoundaryAndDoesNotInsertAnEntry() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "")
+		try (var cache = new ClientCacheFactory().set("mcast-port", "0").set("locators", "")
 			.set("log-level", "error").create()) {
-			Region<String, String> region = cache.<String, String>createRegionFactory(RegionShortcut.LOCAL).create("entries");
+			Region<String, String> region = cache.<String, String>createClientRegionFactory(ClientRegionShortcut.LOCAL).create("entries");
 			var veto = new CacheWriterException("credential-secret");
 			region.getAttributesMutator().setCacheWriter(new org.apache.geode.cache.util.CacheWriterAdapter<>() {
 				@Override public void beforeCreate(EntryEvent<String, String> event) { throw veto; }

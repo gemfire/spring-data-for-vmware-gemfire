@@ -22,8 +22,7 @@ class NativeConnectionReuseTests {
 	@Test
 	void compatibleClientConnectionsShareCacheEffectsAndClosure() {
 		var driver = new GemFire104Driver();
-		var configuration = new CacheConfiguration(CacheConfiguration.Mode.CLIENT,
-			Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
+		var configuration = new CacheConfiguration(Map.of("mcast-port", "0", "locators", "", "log-level", "error"));
 		try (DriverConnection first = driver.connect(configuration);
 			DriverConnection second = driver.connect(configuration)) {
 			assertThat(first).isNotSameAs(second);

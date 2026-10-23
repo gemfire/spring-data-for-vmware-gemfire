@@ -8,6 +8,11 @@ import static org.assertj.core.api.Assertions.*;
 import com.vmware.gemfire.driver.spi.*;
 import org.apache.geode.cache.*;
 import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.client.ClientCache;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import java.io.*;
@@ -18,48 +23,38 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Timeout(60)
 class NativeTransactionTests {
-	private Cache cache() { return new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create(); }
-	private DriverConnection connection(Cache cache) { return new GemFireConnection(cache, CacheConfiguration.Mode.PEER); }
-	private DriverRegion<String, String> region(DriverConnection connection) { return connection.createRegion("entries", com.vmware.gemfire.driver.spi.config.RegionShortcut.LOCAL); }
+	@TempDir Path directory;
+	private NativeServerFixture server;
+	@BeforeEach void startServer() throws Exception { server = new NativeServerFixture(directory); }
+	@AfterEach void stopServer() throws Exception { if (server != null) server.close(); }
+	private ClientCache cache() { return new ClientCacheFactory().set("log-level", "error").addPoolServer("localhost", server.port).create(); }
+	private DriverConnection connection(ClientCache cache) { return new GemFireConnection(cache); }
+	private DriverRegion<String, String> region(DriverConnection connection) {
+		return connection.createClientRegion("entries", com.vmware.gemfire.driver.spi.config.ClientRegionShortcut.CACHING_PROXY,
+			RegionConfiguration.<String, String>builder().serverRegionName("distributed").build());
+	}
 
 	private void capture(List<Throwable> errors, Runnable assertions) {
 		try { assertions.run(); } catch (Throwable failure) { errors.add(failure); }
 	}
 
-	@Test void commitAndRollbackDeliverTypedEventsAndConsistentIdsAcrossManagerAndEntryCallbacks() {
+	@Test void clientCommitAndRollbackPreserveEntryIdsWithoutTransactionListenerNotifications() {
 		try (var cache = cache()) {
 			var connection = connection(cache); var region = region(connection); var manager = connection.getTransactionManager();
-			List<Throwable> callbackErrors = new ArrayList<>();
-			List<String> outcomes = new ArrayList<>(); List<DriverTransactionId> ids = new ArrayList<>(); List<DriverTransactionId> entryIds = new ArrayList<>(); List<DriverTransactionId> writerIds = new ArrayList<>();
+			List<String> outcomes = new ArrayList<>(); List<DriverTransactionId> entryIds = new ArrayList<>();
 			region.addCacheListener(new DriverCacheListenerAdapter<>() {
 				@Override public void afterCreate(DriverEntryEvent<String, String> event) { entryIds.add(event.getTransactionId()); }
 			});
-			var listener = new DriverTransactionListenerAdapter() {
-				@Override public void afterCommit(DriverTransactionEvent event) { capture(callbackErrors, () -> inspect("commit", event)); }
-				@Override public void afterRollback(DriverTransactionEvent event) { capture(callbackErrors, () -> inspect("rollback", event)); }
-				private void inspect(String outcome, DriverTransactionEvent event) {
-					outcomes.add(outcome); ids.add(event.getTransactionId());
-					assertThat(event.getCache().getRegion("entries")).isEqualTo(region);
-					assertThat(event.getEvents()).hasSize(1);
-					assertThat(event.getEvents().get(0)).isInstanceOf(DriverEntryEvent.class);
-					DriverEntryEvent<?, ?> entry = (DriverEntryEvent<?, ?>) event.getEvents().get(0);
-					assertThat(entry.getRegion()).isEqualTo(region); assertThat(entry.getTransactionId()).isEqualTo(event.getTransactionId());
-					assertThat(entry.getKey()).isEqualTo(outcome); assertThat(entry.getNewValue()).isEqualTo("value");
-					assertThat(entry.getOperation()).isEqualTo(DriverOperation.CREATE);
-				}
-			};
-			manager.addListener(listener);
-			manager.setWriter(new DriverTransactionWriter() {
-				@Override public void beforeCommit(DriverTransactionEvent event) { outcomes.add("writer"); writerIds.add(event.getTransactionId()); assertThat(manager.getTransactionId()).isNull(); }
-				@Override public void close() { }
+			manager.addListener(new DriverTransactionListenerAdapter() {
+				@Override public void afterCommit(DriverTransactionEvent event) { outcomes.add("commit"); }
+				@Override public void afterRollback(DriverTransactionEvent event) { outcomes.add("rollback"); }
 			});
+
 			manager.begin(); var committed = manager.getTransactionId(); region.put("commit", "value"); manager.commit();
 			assertThat(region.get("commit")).isEqualTo("value"); assertThat(manager.exists()).isFalse();
 			manager.begin(); var rolledBack = manager.getTransactionId(); region.put("rollback", "value"); manager.rollback();
-			assertThat(region.get("rollback")).isNull(); assertThat(outcomes).containsExactly("writer", "commit", "rollback");
-			assertThat(callbackErrors).isEmpty();
-			assertThat(ids).containsExactly(committed, rolledBack); assertThat(entryIds).containsExactly(committed); assertThat(writerIds).containsExactly(committed);
-			assertThat(ids.get(0)).hasSameHashCodeAs(committed);
+			assertThat(region.get("rollback")).isNull(); assertThat(outcomes).isEmpty();
+			assertThat(entryIds).containsExactly(committed); assertThat(rolledBack).isNotEqualTo(committed);
 			assertThat(committed.getMemberId().getId()).isEqualTo(cache.getDistributedSystem().getDistributedMember().getId());
 		}
 	}
@@ -78,35 +73,7 @@ class NativeTransactionTests {
 			manager.resume(id);
 			assertThatThrownBy(manager::commit).isInstanceOfSatisfying(DriverOperationException.class, ex -> assertThat(ex.kind()).isEqualTo(DriverFailureKind.COMMIT_CONFLICT));
 			assertThat(manager.exists()).isFalse(); assertThat(manager.exists(id)).isFalse();
-			assertThat(callbackErrors).isEmpty(); assertThat(failures).hasValue(1); assertThat(region.get("key")).isEqualTo("concurrent");
-		}
-	}
-	@Test void checkedWriterVetoRuntimeFailureAndUnsupportedRemainDistinctFromDataConflicts() {
-		try (var cache = cache()) {
-			var connection = connection(cache); var region = region(connection); var manager = connection.getTransactionManager();
-			AtomicInteger failed = new AtomicInteger(); manager.addListener(new DriverTransactionListenerAdapter() {
-				@Override public void afterFailedCommit(DriverTransactionEvent event) { failed.incrementAndGet(); }
-			});
-			var checked = new DriverTransactionWriterException("business veto");
-			var runtime = new IllegalArgumentException("private business error");
-			var unsupported = UnsupportedFeatureException.notIntroduced("Application.transactionPolicy");
-			for (Throwable rejection : List.of(checked, runtime, unsupported)) {
-				manager.setWriter(new DriverTransactionWriter() {
-					@Override public void beforeCommit(DriverTransactionEvent event) throws DriverTransactionWriterException {
-						if (rejection instanceof DriverTransactionWriterException veto) throw veto;
-						throw (RuntimeException) rejection;
-					}
-					@Override public void close() { }
-				});
-				manager.begin(); region.put("key", "rejected");
-				if (rejection == unsupported) assertThatThrownBy(manager::commit).isSameAs(unsupported);
-				else assertThatThrownBy(manager::commit).isInstanceOfSatisfying(DriverOperationException.class, ex -> {
-					assertThat(ex.kind()).isEqualTo(DriverFailureKind.TRANSACTION_VETO); assertThat(ex.getRootCause()).isSameAs(rejection);
-					assertThat(ex.getMessage()).doesNotContain("business");
-				});
-				assertThat(region.containsKey("key")).isFalse(); assertThat(manager.exists()).isFalse();
-			}
-			assertThat(failed).hasValue(3);
+			assertThat(callbackErrors).isEmpty(); assertThat(failures).hasValue(0); assertThat(region.get("key")).isEqualTo("concurrent");
 		}
 	}
 	@Test void suspensionMovesThreadAssociationAndTimedResumeWaitsForRelease() throws Exception {
@@ -166,7 +133,7 @@ class NativeTransactionTests {
 			assertThatThrownBy(() -> manager.initListeners(new DriverTransactionListener[] {first, null})).isInstanceOf(DriverOperationException.class);
 		}
 	}
-	@Test void initializationHooksAndWriterIdentityAreAdaptedWithoutExtraLifecycleCalls() {
+	@Test void listenerInitializationHooksAreAdaptedWithoutExtraLifecycleCalls() {
 		try (var cache = cache()) {
 			var connection = connection(cache); var manager = connection.getTransactionManager(); List<String> calls = new ArrayList<>(); Properties properties = new Properties();
 			var listener = new DriverTransactionListenerAdapter() {
@@ -174,22 +141,14 @@ class NativeTransactionTests {
 				@Override public void initialize(DriverConnection c, Properties p) { assertThat(c.getTransactionManager()).isNotNull(); calls.add("listener.initialize"); }
 				@Override public void close() { calls.add("listener.close"); }
 			};
-			var writer = new DriverTransactionWriter() {
-				@Override public void beforeCommit(DriverTransactionEvent event) { }
-				@Override public void init(Properties p) { assertThat(p).isSameAs(properties); calls.add("writer.init"); }
-				@Override public void initialize(DriverConnection c, Properties p) { assertThat(c.getTransactionManager()).isNotNull(); calls.add("writer.initialize"); }
-				@Override public void close() { calls.add("writer.close"); }
-			};
-			manager.addListener(listener); manager.setWriter(writer); assertThat(calls).isEmpty(); assertThat(manager.getWriter()).isSameAs(writer);
-			for (Declarable callback : List.of(cache.getCacheTransactionManager().getListener(), cache.getCacheTransactionManager().getWriter())) {
-				callback.init(properties); callback.initialize(cache, properties);
-			}
-			manager.setWriter(null); assertThat(manager.getWriter()).isNull(); assertThat(calls).doesNotContain("writer.close");
-			new GemFireTransactionWriter(writer).close(); manager.removeListener(listener);
-			assertThat(calls).containsExactly("listener.init", "listener.initialize", "writer.init", "writer.initialize", "writer.close", "listener.close");
+			manager.addListener(listener); assertThat(calls).isEmpty();
+			var callback = cache.getCacheTransactionManager().getListener();
+			callback.init(properties); callback.initialize((Cache) cache, properties);
+			manager.removeListener(listener);
+			assertThat(calls).containsExactly("listener.init", "listener.initialize", "listener.close");
 		}
 	}
-	@Test void callbacksAlreadyInstalledInTheEngineRoundTripWithoutLosingIdentityOrCheckedVetoes() throws Exception {
+	@Test void listenersAlreadyInstalledInTheClientRoundTripWithoutLosingIdentity() throws Exception {
 		try (var cache = cache()) {
 			var connection = connection(cache); var manager = connection.getTransactionManager(); List<String> calls = new ArrayList<>();
 			var nativeListener = new org.apache.geode.cache.util.TransactionListenerAdapter() {
@@ -200,59 +159,53 @@ class NativeTransactionTests {
 				@Override public void initialize(Cache actual, Properties properties) { assertThat(actual).isSameAs(cache); calls.add("initialize"); }
 				@Override public void close() { calls.add("close"); }
 			};
-			var veto = new TransactionWriterException("native veto");
-			var nativeWriter = new TransactionWriter() {
-				@Override public void beforeCommit(TransactionEvent event) throws TransactionWriterException { throw veto; }
-				@Override public void close() { calls.add("writer.close"); }
-				@Override public void init(Properties properties) { calls.add("writer.init"); }
-				@Override public void initialize(Cache actual, Properties properties) { assertThat(actual).isSameAs(cache); calls.add("writer.initialize"); }
-			};
-			cache.getCacheTransactionManager().addListener(nativeListener); cache.getCacheTransactionManager().setWriter(nativeWriter);
-			var listener = manager.getListener(); var writer = manager.getWriter();
+			cache.getCacheTransactionManager().addListener(nativeListener);
+			var listener = manager.getListener();
 			assertThat(listener).isEqualTo(manager.getListener()).hasSameHashCodeAs(manager.getListener());
-			assertThat(writer).isEqualTo(manager.getWriter()).hasSameHashCodeAs(manager.getWriter());
-			manager.addListener(listener); manager.setWriter(writer);
+			manager.addListener(listener);
 			assertThat(cache.getCacheTransactionManager().getListeners()).containsExactly(nativeListener);
-			assertThat(cache.getCacheTransactionManager().getWriter()).isSameAs(nativeWriter);
 			manager.begin(); var nativeId = cache.getCacheTransactionManager().getTransactionId();
 			TransactionEvent nativeEvent = new TransactionEvent() {
 				@Override public TransactionId getTransactionId() { return nativeId; }
-				@Override public Cache getCache() { return cache; }
+				@Override public Cache getCache() { return (Cache) cache; }
 				@Override public List<CacheEvent<?, ?>> getEvents() { return List.of(); }
 			};
 			var event = new GemFireTransactionEvent(nativeEvent);
 			listener.afterCommit(event); listener.afterFailedCommit(event); listener.afterRollback(event);
 			listener.init(new Properties()); listener.initialize(connection, new Properties());
-			writer.init(new Properties()); writer.initialize(connection, new Properties());
-			assertThatThrownBy(() -> writer.beforeCommit(event)).isInstanceOfSatisfying(DriverTransactionWriterException.class, ex -> assertThat(ex.getCause()).isSameAs(veto));
-			writer.close(); manager.removeListener(listener); manager.rollback();
-			assertThat(calls).containsExactly("commit", "failed", "rollback", "init", "initialize", "writer.init", "writer.initialize", "writer.close", "close");
+			manager.removeListener(listener); manager.rollback();
+			assertThat(calls).containsExactly("commit", "failed", "rollback", "init", "initialize", "close");
 		}
 	}
 
-	@Test void listenerFailureDoesNotTurnACommittedTransactionIntoARollback() {
-		AtomicInteger closed = new AtomicInteger();
+	@Test void registeredClientTransactionListenerIsSilentAndClosedOnCacheClose() {
+		AtomicInteger closed = new AtomicInteger(), notified = new AtomicInteger();
 		try (var cache = cache()) {
 			var connection = connection(cache); var region = region(connection); var manager = connection.getTransactionManager();
 			manager.addListener(new DriverTransactionListenerAdapter() {
-				@Override public void afterCommit(DriverTransactionEvent event) { throw new IllegalStateException("listener failure"); }
+				@Override public void afterCommit(DriverTransactionEvent event) { notified.incrementAndGet(); }
 				@Override public void close() { closed.incrementAndGet(); }
 			});
 			manager.begin(); region.put("key", "committed"); manager.commit(); assertThat(region.get("key")).isEqualTo("committed");
 		}
-		assertThat(closed).hasValue(1);
+		assertThat(closed).hasValue(1); assertThat(notified).hasValue(0);
 	}
-	@Test void stateAndModeErrorsRemainNativeAndDistributionSettingIsEffective() {
+	@Test void clientStateErrorsAndUnsupportedNativeTransactionModesAreExplicit() {
 		try (var cache = cache()) {
-			var manager = connection(cache).getTransactionManager(); assertThat(manager.getTransactionId()).isNull(); assertThat(manager.suspend()).isNull();
+			var connection = connection(cache); var region = region(connection);
+			var manager = connection.getTransactionManager(); assertThat(manager.getTransactionId()).isNull(); assertThat(manager.suspend()).isNull();
 			assertThatThrownBy(manager::commit).isInstanceOf(DriverOperationException.class); assertThatThrownBy(manager::rollback).isInstanceOf(DriverOperationException.class);
-			manager.setDistributed(true); assertThat(cache.getCacheTransactionManager().isDistributed()).isTrue(); manager.setDistributed(false);
-			manager.begin(); assertThatThrownBy(manager::begin).isInstanceOf(DriverOperationException.class);
-			assertThatThrownBy(() -> manager.setDistributed(true)).isInstanceOf(DriverOperationException.class); manager.rollback();
+			manager.begin(); assertThatThrownBy(manager::begin).isInstanceOf(DriverOperationException.class); manager.rollback();
+			// A successful native flag setter is not evidence of a supported client transaction mode.
+			var nativeManager = cache.getCacheTransactionManager();
+			nativeManager.setDistributed(true); nativeManager.begin(); region.put("distributed-mode", "value");
+			assertThatThrownBy(nativeManager::commit).isInstanceOf(UnsupportedOperationInTransactionException.class);
+			if (nativeManager.exists()) nativeManager.rollback();
+			nativeManager.setDistributed(false);
 		}
 		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
-			var manager = new GemFireConnection(cache, CacheConfiguration.Mode.CLIENT).getTransactionManager();
-			assertThatThrownBy(() -> manager.setWriter(null)).isInstanceOfSatisfying(DriverOperationException.class, ex -> assertThat(ex.kind()).isEqualTo(DriverFailureKind.INVALID_STATE));
+			assertThatThrownBy(() -> cache.getCacheTransactionManager().setWriter(null))
+				.isInstanceOf(IllegalStateException.class).hasMessageContaining("cannot be registered on a client");
 		}
 	}
 	@Test void incompleteSynchronizationAndGeneralFailuresRetainTheirDistinctClassifications() {

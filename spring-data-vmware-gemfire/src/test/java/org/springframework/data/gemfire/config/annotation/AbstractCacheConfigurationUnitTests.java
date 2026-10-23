@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Spy;
@@ -79,7 +78,6 @@ public class AbstractCacheConfigurationUnitTests {
 
 		Resource mockResource = mock(Resource.class);
 
-		TransactionWriter mockTransactionWriter = mock(TransactionWriter.class);
 
 		doReturn(gemfireProperties).when(this.cacheConfiguration).gemfireProperties();
 
@@ -92,7 +90,6 @@ public class AbstractCacheConfigurationUnitTests {
 		this.cacheConfiguration.setEvictionHeapPercentage(0.75f);
 		this.cacheConfiguration.setJndiDataSources(jndiDataSources);
 		this.cacheConfiguration.setTransactionListeners(transactionListeners);
-		this.cacheConfiguration.setTransactionWriter(mockTransactionWriter);
 		this.cacheConfiguration.setUseBeanFactoryLocator(true);
 
 		assertThat(this.cacheConfiguration.configureCacheFactoryBean(cacheFactoryBean)).isEqualTo(cacheFactoryBean);
@@ -105,7 +102,6 @@ public class AbstractCacheConfigurationUnitTests {
 		verify(cacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(0.75f));
 		verify(cacheFactoryBean, times(1)).setJndiDataSources(eq(jndiDataSources));
 		verify(cacheFactoryBean, times(1)).setTransactionListeners(eq(transactionListeners));
-		verify(cacheFactoryBean, times(1)).setTransactionWriter(eq(mockTransactionWriter));
 		verify(cacheFactoryBean, times(1)).setUseBeanFactoryLocator(eq(true));
 	}
 }

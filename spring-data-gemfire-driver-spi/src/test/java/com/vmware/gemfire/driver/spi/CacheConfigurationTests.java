@@ -16,7 +16,7 @@ class CacheConfigurationTests {
 	@Test
 	void copiesInputAndReturnsIndependentPropertiesWithoutDisclosingSecrets() {
 		Map<String, String> input = new HashMap<>(Map.of("security-password", "credential-secret"));
-		CacheConfiguration configuration = new CacheConfiguration(CacheConfiguration.Mode.PEER, input);
+		CacheConfiguration configuration = new CacheConfiguration(input);
 		input.clear();
 		configuration.properties().clear();
 		assertThat(configuration.properties().getProperty("security-password")).isEqualTo("credential-secret");

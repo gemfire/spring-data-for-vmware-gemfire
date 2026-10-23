@@ -28,9 +28,9 @@ public final class MockGemFireDriver implements GemFireDriver {
 
 	@Override
 	public DriverConnection connect(DriverConfiguration configuration) {
-		if (!(configuration instanceof CacheConfiguration cacheConfiguration)) {
+		if (!(configuration instanceof CacheConfiguration)) {
 			throw new DriverBindException("The mock driver requires CacheConfiguration.");
 		}
-		return new MockConnection(cacheConfiguration.mode());
+		return new MockConnection();
 	}
 }

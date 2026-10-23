@@ -100,11 +100,6 @@ public class TransactionListenerAdapterUnitTests {
 	}
 
 	@Test
-	public void beforeCommitDoesNotInvokeApplicationEventPublisher() {
-		nonInvokingApplicationEventPublisherTest(listener -> listener.beforeCommit(this.mockTransactionEvent));
-	}
-
-	@Test
 	public void afterCommitInvokesApplicationEventPublisher() {
 		invokingApplicationEventPublisherTest(listener -> listener.afterCommit(this.mockTransactionEvent));
 	}

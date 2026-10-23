@@ -28,7 +28,7 @@ class GemfireCachingConfigurationTests {
 	@Test
 	void annotationsUseTheInjectedDriverConnectionAndTheContextOwnsItsLifecycle() {
 		DriverConnection connection = new GemFireDriverManager().driver().connect(
-			new CacheConfiguration(CacheConfiguration.Mode.CLIENT, Map.of()));
+			new CacheConfiguration(Map.of()));
 		try (connection; var context = new AnnotationConfigApplicationContext()) {
 			connection.createClientRegion("numbers", ClientRegionShortcut.LOCAL);
 			context.registerBean(DriverConnection.class, () -> connection, bd -> bd.setDestroyMethodName("close"));

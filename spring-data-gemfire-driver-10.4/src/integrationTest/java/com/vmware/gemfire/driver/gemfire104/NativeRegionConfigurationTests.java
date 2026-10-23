@@ -7,22 +7,22 @@ package com.vmware.gemfire.driver.gemfire104;
 import static org.assertj.core.api.Assertions.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
-import org.apache.geode.cache.CacheFactory;
+import org.apache.geode.cache.client.ClientCacheFactory;
 import com.vmware.gemfire.driver.spi.*;
 import com.vmware.gemfire.driver.spi.config.*;
 
 class NativeRegionConfigurationTests {
-	@Test void everyExposedAttributeMatchesNativeSettingsAndMutableViews() throws Exception {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.PEER);
+	@Test void clientAttributesMatchNativeSettingsAndMutableViews() throws Exception {
+		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
+			var connection = new GemFireConnection(cache);
 			var configuration = RegionConfiguration.<String, Integer>builder()
-				.scope(Scope.LOCAL).dataPolicy(DataPolicy.NORMAL).keyConstraint(String.class).valueConstraint(Integer.class)
+				.keyConstraint(String.class).valueConstraint(Integer.class)
 				.initialCapacity(0).loadFactor(0.5f).concurrencyLevel(7).concurrencyChecksEnabled(false)
-				.statisticsEnabled(true).ignoreJTA(true).lockGrantor(false).multicastEnabled(false)
-				.cloningEnabled(true).diskSynchronous(false).indexMaintenanceSynchronous(false)
-				.enableSubscriptionConflation(true).earlyAck(false).publisher(false).poolName(null).diskStoreName(null)
-				.gatewaySenderIds(Set.of("sender")).asyncEventQueueIds(Set.of("queue")).build();
-			var region = connection.createRegion("settings", RegionShortcut.LOCAL, configuration);
+				.statisticsEnabled(true)
+				.cloningEnabled(true).diskSynchronous(false)
+				.poolName(null).diskStoreName(null)
+				.build();
+			var region = connection.createClientRegion("settings", ClientRegionShortcut.LOCAL, configuration);
 			var nativeAttributes = cache.getRegion("settings").getAttributes();
 			var attributes = region.getAttributes();
 			for (var method : DriverRegionAttributes.class.getMethods()) {
@@ -33,29 +33,34 @@ class NativeRegionConfigurationTests {
 				assertThat(actual instanceof Enum<?> ? actual.toString() : actual).as(method.getName()).isEqualTo(expected);
 			}
 			assertThat(attributes.getStatisticsEnabled()).isTrue(); assertThat(attributes.getCloningEnabled()).isTrue();
-			assertThat(attributes.getGatewaySenderIds()).containsExactly("sender"); assertThat(attributes.getAsyncEventQueueIds()).containsExactly("queue");
 			region.put("key", 1); region.get("key"); region.get("missing");
 			assertThat(region.getStatistics().getHitCount()).isEqualTo(1); assertThat(region.getStatistics().getMissCount()).isEqualTo(1);
-			var child = region.createSubregion("child", RegionShortcut.LOCAL, RegionConfiguration.<String, Integer>builder().statisticsEnabled(true).build());
+			var child = region.createClientSubregion("child", ClientRegionShortcut.LOCAL, RegionConfiguration.<String, Integer>builder().statisticsEnabled(true).build());
 			child.put("child", 2); child.get("child"); assertThat(child.getStatistics().getHitCount()).isEqualTo(1);
 			var mutator = region.getAttributesMutator();
 			mutator.setCloningEnabled(false); assertThat(attributes.getCloningEnabled()).isFalse();
-			mutator.addGatewaySenderId("otherSender"); mutator.removeGatewaySenderId("sender");
-			assertThat(attributes.getGatewaySenderIds()).containsExactly("otherSender");
-			mutator.addAsyncEventQueueId("otherQueue"); mutator.removeAsyncEventQueueId("queue");
-			assertThat(attributes.getAsyncEventQueueIds()).containsExactly("otherQueue");
-			assertThatThrownBy(() -> attributes.getGatewaySenderIds().clear()).isInstanceOf(UnsupportedOperationException.class);
+
 		}
 	}
-	@Test void unsetOptionsPreserveReplicateShortcutAndExplicitOverridesReachNativeValidation() {
-		try (var cache = new CacheFactory().set("mcast-port", "0").set("locators", "").set("log-level", "error").create()) {
-			var connection = new GemFireConnection(cache, CacheConfiguration.Mode.PEER);
-			var implicit = connection.createRegion("replicate", RegionShortcut.REPLICATE, RegionConfiguration.builder().build());
-			assertThat(implicit.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.REPLICATE);
-			assertThat(implicit.getAttributes().getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
-			var explicit = connection.createRegion("local", RegionShortcut.REPLICATE, RegionConfiguration.builder().scope(Scope.LOCAL).dataPolicy(DataPolicy.NORMAL).build());
-			assertThat(explicit.getAttributes().getDataPolicy()).isEqualTo(DataPolicy.NORMAL); assertThat(explicit.getAttributes().getScope()).isEqualTo(Scope.LOCAL);
-			assertThatThrownBy(() -> connection.createRegion("bad", RegionShortcut.LOCAL, RegionConfiguration.builder().loadFactor(-1f).build()))
+	@Test void clientLocalVariantsPreserveShortcutDefaultsAndValidateOverrides(@org.junit.jupiter.api.io.TempDir java.nio.file.Path directory) {
+		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
+			var connection = new GemFireConnection(cache);
+			cache.createDiskStoreFactory().setDiskDirs(new java.io.File[] {directory.toFile()}).create("client-local");
+			for (var shortcut : ClientRegionShortcut.values()) {
+				if (!shortcut.name().startsWith("LOCAL")) continue;
+				var configuration = RegionConfiguration.builder();
+				var controlFactory = cache.createClientRegionFactory(org.apache.geode.cache.client.ClientRegionShortcut.valueOf(shortcut.name()));
+				if (shortcut.name().contains("PERSISTENT") || shortcut.name().contains("OVERFLOW")) {
+					configuration.diskStoreName("client-local"); controlFactory.setDiskStoreName("client-local");
+				}
+				var region = connection.createClientRegion(shortcut.name(), shortcut, configuration.build());
+				var control = controlFactory.create("control-" + shortcut.name());
+				assertThat(region.getAttributes().getDataPolicy().name()).isEqualTo(control.getAttributes().getDataPolicy().toString());
+				assertThat(region.getAttributes().getScope()).isEqualTo(Scope.LOCAL);
+				region.put("key", "value"); assertThat(region.get("key")).isEqualTo("value");
+				region.destroyRegion(null); control.destroyRegion();
+			}
+			assertThatThrownBy(() -> connection.createClientRegion("bad", ClientRegionShortcut.LOCAL, RegionConfiguration.builder().loadFactor(-1f).build()))
 				.isInstanceOfSatisfying(DriverOperationException.class, e -> assertThat(e.kind()).isEqualTo(DriverFailureKind.INVALID_ARGUMENT));
 			assertThat(cache.getRegion("bad")).isNull();
 		}

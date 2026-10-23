@@ -28,7 +28,7 @@
 
 	<!-- Template Regions -->
 
-	<gfe:region-template id="BaseRegionTemplate" cloning-enabled="true" concurrency-checks-enabled="false"
+	<gfe:client-region-template id="BaseRegionTemplate" cloning-enabled="true" concurrency-checks-enabled="false"
 						 disk-synchronous="false" initial-capacity="51" key-constraint="java.lang.Long"
 						 load-factor="0.85" persistent="false" statistics="true" value-constraint="java.lang.String">
 		<gfe:cache-listener>
@@ -38,7 +38,7 @@
 		</gfe:cache-listener>
 		<gfe:entry-ttl timeout="300" action="INVALIDATE"/>
 		<gfe:entry-tti timeout="600" action="DESTROY"/>
-	</gfe:region-template>
+	</gfe:client-region-template>
 
 	<gfe:client-region-template id="ClientRegionTemplate" concurrency-level="4" pool-name="ServerPool" template="BaseRegionTemplate">
 		<gfe:cache-loader>

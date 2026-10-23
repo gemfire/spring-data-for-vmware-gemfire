@@ -13,7 +13,7 @@ import com.vmware.gemfire.driver.spi.*;
 /** Shared configuration semantics, not assertions of networking on the mock. */
 public abstract class PoolConfigurationContract extends RegionCallbackContract {
 	@Test void namedPoolSettingsRoundTripAndCanBeMergedWithoutLosingExplicitValues() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.CLIENT))) {
+		try (var connection = connect()) {
 			DriverSocketFactory sockets = Socket::new;
 			var requested = PoolConfiguration.builder().servers(List.of(new PoolConfiguration.Endpoint("localhost", 40404)))
 				.minimumConnections(0).maximumConnections(7).minimumConnectionsPerServer(1).maximumConnectionsPerServer(-1)
@@ -59,7 +59,7 @@ public abstract class PoolConfigurationContract extends RegionCallbackContract {
 		}
 	}
 	@Test void invalidSettingsDoNotPublishAPoolOrReplaceAnExistingOne() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.CLIENT))) {
+		try (var connection = connect()) {
 			var endpoints = List.of(new PoolConfiguration.Endpoint("localhost", 40404));
 			List<PoolConfiguration> invalid = List.of(
 				PoolConfiguration.builder().build(),
@@ -84,7 +84,7 @@ public abstract class PoolConfigurationContract extends RegionCallbackContract {
 		}
 	}
 	@Test void threadLocalConnectionRequestsAreExplicitlyUnsupportedIncludingFalse() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.CLIENT))) {
+		try (var connection = connect()) {
 			for (boolean setting : List.of(false, true)) {
 				var c = PoolConfiguration.builder().servers(List.of(new PoolConfiguration.Endpoint("localhost", 40404)))
 					.minimumConnections(0).threadLocalConnections(setting).build();

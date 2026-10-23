@@ -31,7 +31,7 @@ final class GemFireCacheLoader<K, V> implements CacheLoader<K, V> {
 	}
 
 	@Override public void initialize(org.apache.geode.cache.Cache cache, java.util.Properties properties) {
-		try { delegate.initialize(new GemFireConnection(cache, com.vmware.gemfire.driver.spi.CacheConfiguration.Mode.PEER), properties); }
+		try { delegate.initialize(new GemFireConnection(cache), properties); }
 		catch (RuntimeException failure) { throw exceptions.translate("Loader.initialize", failure); }
 	}
 
@@ -42,14 +42,6 @@ final class GemFireCacheLoader<K, V> implements CacheLoader<K, V> {
 				@Override public K getKey() { return helper.getKey(); }
 				@Override public DriverRegion<K, V> getRegion() { return new GemFireRegion<>(helper.getRegion()); }
 				@Override public Object getArgument() { return helper.getArgument(); }
-				@Override public V netSearch(boolean doNetLoad) {
-					try {
-						return helper.netSearch(doNetLoad);
-					}
-					catch (RuntimeException ex) {
-						throw exceptions.translate("LoaderHelper.netSearch", ex);
-					}
-				}
 			});
 		}
 		catch (GemFireDriverException failure) { throw failure; }

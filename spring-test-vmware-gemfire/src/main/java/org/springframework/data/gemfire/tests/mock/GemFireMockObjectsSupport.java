@@ -70,9 +70,7 @@ import org.apache.logging.log4j.Logger;
 import org.mockito.ArgumentMatchers;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.data.gemfire.RegionShortcutWrapper;
 import org.springframework.data.gemfire.client.ClientRegionShortcutWrapper;
-import org.springframework.data.gemfire.server.SubscriptionEvictionPolicy;
 import org.springframework.data.gemfire.tests.mock.support.MockObjectInvocationException;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.data.gemfire.tests.util.ObjectUtils;
@@ -652,20 +650,18 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		if (regionShortcut != null) {
 
-			RegionShortcutWrapper regionShortcutWrapper = RegionShortcutWrapper.valueOf(regionShortcut);
-
 			mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
 
 			doReturn(convert(regionShortcut)).when(mockRegionAttributes).getDataPolicy();
 
-			if (regionShortcutWrapper.isHeapLru()) {
+			if (regionShortcut.name().endsWith("HEAP_LRU")) {
 				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();
-			} else if (regionShortcutWrapper.isOverflow()) {
+			} else if (regionShortcut.isOverflow()) {
 				doReturn(EvictionAttributes.createLRUHeapAttributes(null, EvictionAction.OVERFLOW_TO_DISK))
 						.when(mockRegionAttributes).getEvictionAttributes();
 			}
 
-			if (regionShortcutWrapper.isLocal()) {
+			if (regionShortcut.isLocal()) {
 				doReturn(Scope.LOCAL).when(mockRegionAttributes).getScope();
 			}
 		}
@@ -1052,27 +1048,26 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 
 		AtomicReference<String> subscriptionDiskStoreName = new AtomicReference<>("");
 
-		AtomicReference<SubscriptionEvictionPolicy> subscriptionEvictionPolicy = new AtomicReference<>(
-				SubscriptionEvictionPolicy.DEFAULT);
+		AtomicReference<String> subscriptionEvictionPolicy = new AtomicReference<>(
+				ClientSubscriptionConfig.DEFAULT_EVICTION_POLICY);
 
-		Function<String, SubscriptionEvictionPolicy> stringToSubscriptionEvictionPolicyConverter = arg -> SubscriptionEvictionPolicy
-				.valueOfIgnoreCase(String.valueOf(arg));
-
-		Function<SubscriptionEvictionPolicy, String> subscriptionEvictionPolicyToStringConverter = arg -> Optional
-				.ofNullable(arg).map(Object::toString).map(String::toLowerCase).orElse(null);
+		Function<String, String> normalizeEvictionPolicy = value -> {
+			String policy = value.trim().toLowerCase(java.util.Locale.ROOT);
+			return java.util.Set.of("none", "entry", "mem").contains(policy) ? policy : null;
+		};
 
 		doAnswer(newSetter(subscriptionCapacity, null)).when(mockClientSubscriptionConfig).setCapacity(anyInt());
 
 		doAnswer(newSetter(subscriptionDiskStoreName, () -> null)).when(mockClientSubscriptionConfig)
 				.setDiskStoreName(anyString());
 
-		doAnswer(newSetter(subscriptionEvictionPolicy, stringToSubscriptionEvictionPolicyConverter, () -> null))
+		doAnswer(newSetter(subscriptionEvictionPolicy, normalizeEvictionPolicy, () -> null))
 				.when(mockClientSubscriptionConfig).setEvictionPolicy(anyString());
 
 		when(mockClientSubscriptionConfig.getCapacity()).thenAnswer(newGetter(subscriptionCapacity));
 		when(mockClientSubscriptionConfig.getDiskStoreName()).thenAnswer(newGetter(subscriptionDiskStoreName));
 		when(mockClientSubscriptionConfig.getEvictionPolicy())
-				.thenAnswer(newGetter(subscriptionEvictionPolicy, subscriptionEvictionPolicyToStringConverter));
+				.thenAnswer(newGetter(subscriptionEvictionPolicy));
 
 		return mockClientSubscriptionConfig;
 	}

@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.SocketFactory;
 
 import org.junit.Test;
@@ -64,7 +63,6 @@ public class ClientCacheConfigurationUnitTests {
 
 		TransactionListener mockTransactionListener = mock(TransactionListener.class);
 
-		TransactionWriter mockTransactionWriter = mock(TransactionWriter.class);
 
 		ClientCacheFactoryBean clientCacheFactoryBean = spy(new ClientCacheFactoryBean());
 
@@ -82,7 +80,6 @@ public class ClientCacheConfigurationUnitTests {
 		configuration.setCriticalHeapPercentage(90.0f);
 		configuration.setEvictionHeapPercentage(75.0f);
 		configuration.setTransactionListeners(Collections.singletonList(mockTransactionListener));
-		configuration.setTransactionWriter(mockTransactionWriter);
 		configuration.setUseBeanFactoryLocator(true);
 		configuration.setDurableClientId("abc123");
 		configuration.setDurableClientTimeout(300000);
@@ -123,7 +120,6 @@ public class ClientCacheConfigurationUnitTests {
 		verify(clientCacheFactoryBean, times(1)).setEvictionHeapPercentage(eq(75.0f));
 		verify(clientCacheFactoryBean, times(1)).setJndiDataSources(eq(Collections.emptyList()));
 		verify(clientCacheFactoryBean, times(1)).setTransactionListeners(eq(Collections.singletonList(mockTransactionListener)));
-		verify(clientCacheFactoryBean, times(1)).setTransactionWriter(eq(mockTransactionWriter));
 		verify(clientCacheFactoryBean, times(1)).setUseBeanFactoryLocator(eq(true));
 		verify(clientCacheFactoryBean, times(1)).setDurableClientId(eq("abc123"));
 		verify(clientCacheFactoryBean, times(1)).setDurableClientTimeout(eq(300000));

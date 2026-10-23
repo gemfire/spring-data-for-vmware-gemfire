@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 
 import com.vmware.gemfire.driver.core.GemFireDriverManager;
 import com.vmware.gemfire.driver.spi.CacheConfiguration;
-import com.vmware.gemfire.driver.spi.CacheConfiguration.Mode;
 import com.vmware.gemfire.driver.spi.DriverBindException;
 import com.vmware.gemfire.driver.spi.DriverCacheLoader;
 import com.vmware.gemfire.driver.spi.DriverLoaderHelper;
@@ -39,7 +38,6 @@ import com.vmware.gemfire.driver.spi.GemFireDriver;
 import com.vmware.gemfire.driver.spi.SpiVersion;
 import com.vmware.gemfire.driver.spi.UnsupportedFeatureException.Reason;
 import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
-import com.vmware.gemfire.driver.spi.config.RegionShortcut;
 import com.vmware.gemfire.driver.contract.DefaultMethodContract.Probe;
 
 /**
@@ -55,8 +53,8 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	protected GemFireDriver driver() { return new GemFireDriverManager().driver(); }
 
-	protected CacheConfiguration configuration(Mode mode) {
-		return new CacheConfiguration(mode, Map.of("mcast-port", "0", "locators", "",
+	protected CacheConfiguration configuration() {
+		return new CacheConfiguration(Map.of("mcast-port", "0", "locators", "",
 			"log-level", "error", "disable-auto-reconnect", "true", "statistic-sampling-enabled", "false"));
 	}
 
@@ -83,14 +81,14 @@ public abstract class GemFireDriverContract extends TransactionContract {
 	protected Map<Method, Probe> probes() throws Exception {
 		Map<Method, Probe> probes = new LinkedHashMap<>();
 		probes.put(DriverConnection.class.getMethod("rootRegions"),
-			new Probe("Connection.rootRegions", () -> inCache(Mode.PEER, c -> {
+			new Probe("Connection.rootRegions", () -> inCache(c -> {
 				assertThat(c.rootRegions()).isEmpty();
-				c.createRegion("created", RegionShortcut.LOCAL);
+				c.createClientRegion("created", ClientRegionShortcut.LOCAL);
 				assertThat(c.rootRegions()).extracting(DriverRegion::name).containsExactly("created");
 			})));
 		probes.put(DriverRegion.class.getMethod("isDestroyed"), new Probe("Region.isDestroyed", () ->
-			inCache(Mode.PEER, c -> {
-				DriverRegion<Object, Object> region = c.createRegion("created", RegionShortcut.LOCAL);
+			inCache(c -> {
+				DriverRegion<Object, Object> region = c.createClientRegion("created", ClientRegionShortcut.LOCAL);
 				assertThat(region.isDestroyed()).isFalse();
 				c.close();
 				assertThat(region.isDestroyed()).isTrue();
@@ -108,22 +106,19 @@ public abstract class GemFireDriverContract extends TransactionContract {
 				assertThat(r.putIfAbsent("key", "second")).isEqualTo("first");
 				assertThat(r.get("key")).isEqualTo("first");
 			})));
-		probes.put(DriverConnection.class.getMethod("createRegion", String.class, RegionShortcut.class),
-			new Probe("Connection.createRegion", () -> inCache(Mode.PEER, c ->
-				assertThat(c.createRegion("created", RegionShortcut.LOCAL).name()).isEqualTo("created"))));
 		probes.put(DriverConnection.class.getMethod("createClientRegion", String.class, ClientRegionShortcut.class),
-			new Probe("Connection.createClientRegion", () -> inCache(Mode.CLIENT, c ->
+			new Probe("Connection.createClientRegion", () -> inCache(c ->
 				assertThat(c.createClientRegion("created", ClientRegionShortcut.LOCAL).name()).isEqualTo("created"))));
 		probes.put(DriverConnection.class.getMethod("getRegion", String.class),
-			new Probe("Connection.getRegion", () -> inCache(Mode.PEER, c -> {
+			new Probe("Connection.getRegion", () -> inCache(c -> {
 				assertThat(c.getRegion("absent")).isNull();
-				c.createRegion("created", RegionShortcut.LOCAL);
+				c.createClientRegion("created", ClientRegionShortcut.LOCAL);
 				assertThat(c.getRegion("/created").name()).isEqualTo("created");
 			})));
 		probes.put(DriverConnection.class.getMethod("isClosed"),
-			new Probe("Connection.isClosed", () -> inCache(Mode.PEER, c -> assertThat(c.isClosed()).isFalse())));
+			new Probe("Connection.isClosed", () -> inCache(c -> assertThat(c.isClosed()).isFalse())));
 		probes.put(DriverConnection.class.getMethod("close"),
-			new Probe("Connection.close", () -> inCache(Mode.PEER, c -> {
+			new Probe("Connection.close", () -> inCache(c -> {
 				c.close();
 				assertThat(c.isClosed()).isTrue();
 			})));
@@ -157,7 +152,7 @@ public abstract class GemFireDriverContract extends TransactionContract {
 		probes.put(DriverConnection.class.getMethod("createPool", String.class, PoolConfiguration.class),
 			new Probe("Connection.createPool", () -> inPool(pool -> assertThat(pool.name()).isNotBlank())));
 		probes.put(DriverConnection.class.getMethod("getPool", String.class),
-			new Probe("Connection.getPool", () -> inCache(Mode.CLIENT, c -> {
+			new Probe("Connection.getPool", () -> inCache(c -> {
 				String name = UUID.randomUUID().toString();
 				assertThat(c.getPool(name)).isNull();
 				DriverPool pool = c.createPool(name, poolConfiguration(false));
@@ -180,10 +175,10 @@ public abstract class GemFireDriverContract extends TransactionContract {
 			inPool(pool -> { assertThat(pool.configuration().minimumConnections()).hasValue(0);
 				assertThat(pool.configuration().servers()).isEqualTo(pool.servers()); })));
 		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("createPdxInstanceFactory", String.class),
-			new Probe("RegionService.createPdxInstanceFactory", () -> inCache(Mode.PEER, c ->
+			new Probe("RegionService.createPdxInstanceFactory", () -> inCache(c ->
 				assertThat(c.createPdxInstanceFactory("Probe").writeInt("id", 1).create().getField("id")).isEqualTo(1))));
 		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("createPdxEnum", String.class, String.class, int.class),
-			new Probe("RegionService.createPdxEnum", () -> inCache(Mode.PEER, c ->
+			new Probe("RegionService.createPdxEnum", () -> inCache(c ->
 				assertThat(c.createPdxEnum("ProbeEnum", "ONE", 0).getField("name")).isEqualTo("ONE"))));
 		probes.putAll(transactionProbes());
 		probes.putAll(callbackProbes());
@@ -194,8 +189,8 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void localRegionCrudUsesSharedDataAcrossHandles() {
-		inCache(Mode.PEER, c -> {
-			DriverRegion<String, String> region = c.createRegion("entries", RegionShortcut.LOCAL);
+		inCache(c -> {
+			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 			assertThat(region.get("missing")).isNull();
 			assertThat(region.containsKey("missing")).isFalse();
 			assertThat(region.put("key", "first")).isNull();
@@ -210,20 +205,18 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void clientLocalRegionSupportsCrud() {
-		inCache(Mode.CLIENT, c -> {
+		inCache(c -> {
 			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 			region.put("key", "value");
 			assertThat(region.get("key")).isEqualTo("value");
 			assertThat(c.getRegion("entries").size()).isEqualTo(1);
-			assertThatThrownBy(() -> c.createRegion("wrongMode", RegionShortcut.LOCAL))
-				.isInstanceOf(DriverOperationException.class);
 		});
 	}
 
 	@Test
 	void closedCacheAndExistingRegionHandleFailAtTheBoundary() {
-		inCache(Mode.PEER, c -> {
-			DriverRegion<String, String> region = c.createRegion("entries", RegionShortcut.LOCAL);
+		inCache(c -> {
+			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 			c.close();
 			assertThat(c.isClosed()).isTrue();
 			assertThatThrownBy(() -> c.getRegion("entries")).isInstanceOf(DriverOperationException.class);
@@ -236,17 +229,15 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void invalidOperationsUseSpiExceptions() {
-		inCache(Mode.PEER, c -> {
-			DriverRegion<String, String> region = c.createRegion("entries", RegionShortcut.LOCAL);
-			assertThatThrownBy(() -> c.createRegion("entries", RegionShortcut.LOCAL))
+		inCache(c -> {
+			DriverRegion<String, String> region = c.createClientRegion("entries", ClientRegionShortcut.LOCAL);
+			assertThatThrownBy(() -> c.createClientRegion("entries", ClientRegionShortcut.LOCAL))
 				.isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> c.getRegion(null)).isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> c.getRegion("")).isInstanceOf(DriverOperationException.class);
-			assertThatThrownBy(() -> c.createRegion("invalid", null)).isInstanceOf(DriverOperationException.class);
+			assertThatThrownBy(() -> c.createClientRegion("invalid", null)).isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> region.get(null)).isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> region.put("key", null)).isInstanceOf(DriverOperationException.class);
-			assertThatThrownBy(() -> c.createClientRegion("wrongMode", ClientRegionShortcut.LOCAL))
-				.isInstanceOf(DriverOperationException.class);
 		});
 	}
 
@@ -261,51 +252,47 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void loadersReceiveContextAndCacheOnlyNonNullResults() {
-		for (Mode mode : Mode.values()) {
-			inCache(mode, c -> {
-				DriverRegion<String, String> region = localRegion(c, mode);
-				RecordingLoader loader = new RecordingLoader(helper -> {
-					assertThat(helper.getRegion().name()).isEqualTo("entries");
-					helper.getRegion().put("side-effect", "visible");
-					return "absent".equals(helper.getKey()) ? null : helper.getKey() + ":" + helper.getArgument();
-				});
-				region.setCacheLoader(loader);
-				assertThat(region.get("key", "argument")).isEqualTo("key:argument");
-				assertThat(region.get("key", "ignored")).isEqualTo("key:argument");
-				assertThat(region.get("side-effect")).isEqualTo("visible");
-				assertThat(loader.loads.get()).isEqualTo(1);
-				assertThat(region.get("absent")).isNull();
-				assertThat(region.get("absent")).isNull();
-				assertThat(region.containsKey("absent")).isFalse();
-				assertThat(loader.loads.get()).isEqualTo(3);
+		inCache(c -> {
+			DriverRegion<String, String> region = localRegion(c);
+			RecordingLoader loader = new RecordingLoader(helper -> {
+				assertThat(helper.getRegion().name()).isEqualTo("entries");
+				helper.getRegion().put("side-effect", "visible");
+				return "absent".equals(helper.getKey()) ? null : helper.getKey() + ":" + helper.getArgument();
 			});
-		}
+			region.setCacheLoader(loader);
+			assertThat(region.get("key", "argument")).isEqualTo("key:argument");
+			assertThat(region.get("key", "ignored")).isEqualTo("key:argument");
+			assertThat(region.get("side-effect")).isEqualTo("visible");
+			assertThat(loader.loads.get()).isEqualTo(1);
+			assertThat(region.get("absent")).isNull();
+			assertThat(region.get("absent")).isNull();
+			assertThat(region.containsKey("absent")).isFalse();
+			assertThat(loader.loads.get()).isEqualTo(3);
+		});
 	}
 
 	@Test
 	void loaderReplacementRemovalAndShutdownFollowLifecycle() {
-		for (Mode mode : Mode.values()) {
-			inCache(mode, c -> {
-				DriverRegion<String, String> region = localRegion(c, mode);
-				RecordingLoader first = new RecordingLoader(h -> "first");
-				RecordingLoader second = new RecordingLoader(h -> "second");
-				region.setCacheLoader(first);
-				c.<String, String>getRegion("entries").setCacheLoader(first);
-				assertThat(first.closes.get()).isZero();
-				region.setCacheLoader(second);
-				assertThat(first.closes.get()).isEqualTo(1);
-				region.setCacheLoader(null);
-				assertThat(second.closes.get()).isEqualTo(1);
-				assertThat(region.get("missing")).isNull();
-				RecordingLoader last = new RecordingLoader(h -> "last");
-				region.setCacheLoader(last);
-				c.close();
-				c.close();
-				assertThat(last.closes.get()).isEqualTo(1);
-				assertThatThrownBy(() -> region.setCacheLoader(last)).isInstanceOf(DriverOperationException.class);
-				assertThatThrownBy(() -> region.get("key", "argument")).isInstanceOf(DriverOperationException.class);
-			});
-		}
+		inCache(c -> {
+			DriverRegion<String, String> region = localRegion(c);
+			RecordingLoader first = new RecordingLoader(h -> "first");
+			RecordingLoader second = new RecordingLoader(h -> "second");
+			region.setCacheLoader(first);
+			c.<String, String>getRegion("entries").setCacheLoader(first);
+			assertThat(first.closes.get()).isZero();
+			region.setCacheLoader(second);
+			assertThat(first.closes.get()).isEqualTo(1);
+			region.setCacheLoader(null);
+			assertThat(second.closes.get()).isEqualTo(1);
+			assertThat(region.get("missing")).isNull();
+			RecordingLoader last = new RecordingLoader(h -> "last");
+			region.setCacheLoader(last);
+			c.close();
+			c.close();
+			assertThat(last.closes.get()).isEqualTo(1);
+			assertThatThrownBy(() -> region.setCacheLoader(last)).isInstanceOf(DriverOperationException.class);
+			assertThatThrownBy(() -> region.get("key", "argument")).isInstanceOf(DriverOperationException.class);
+		});
 	}
 
 	@Test
@@ -340,9 +327,9 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void duplicateRegionAndInvalidArgumentHaveDistinctSemantics() {
-		inCache(Mode.PEER, connection -> {
-			var region = connection.createRegion("entries", RegionShortcut.LOCAL);
-			assertThatThrownBy(() -> connection.createRegion("entries", RegionShortcut.LOCAL))
+		inCache(connection -> {
+			var region = connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
+			assertThatThrownBy(() -> connection.createClientRegion("entries", ClientRegionShortcut.LOCAL))
 				.isInstanceOfSatisfying(DriverOperationException.class,
 					failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.REGION_EXISTS));
 			assertThatThrownBy(() -> region.get(null))
@@ -353,42 +340,38 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	@Test
 	void localLifecycleRegistrationIdentityAndCleanup() {
-		for (Mode mode : Mode.values()) {
-			inCache(mode, c -> {
-				DriverRegion<String, String> region = localRegion(c, mode);
-				RecordingLifecycle first = new RecordingLifecycle();
-				RecordingLifecycle second = new RecordingLifecycle();
-				region.addLifecycleListener(first);
-				c.getRegion("entries").addLifecycleListener(first);
-				region.addLifecycleListener(second);
-				assertThat(first.events).isEmpty();
-				assertThatThrownBy(() -> region.addLifecycleListener(null)).isInstanceOf(DriverOperationException.class);
-				c.close();
-				c.close();
-				assertThat(first.events).containsExactly("destroy:entries", "close");
-				assertThat(second.events).containsExactly("destroy:entries", "close");
-				assertThatThrownBy(() -> region.addLifecycleListener(first)).isInstanceOf(DriverOperationException.class);
-			});
-		}
+		inCache(c -> {
+			DriverRegion<String, String> region = localRegion(c);
+			RecordingLifecycle first = new RecordingLifecycle();
+			RecordingLifecycle second = new RecordingLifecycle();
+			region.addLifecycleListener(first);
+			c.getRegion("entries").addLifecycleListener(first);
+			region.addLifecycleListener(second);
+			assertThat(first.events).isEmpty();
+			assertThatThrownBy(() -> region.addLifecycleListener(null)).isInstanceOf(DriverOperationException.class);
+			c.close();
+			c.close();
+			assertThat(first.events).containsExactly("destroy:entries", "close");
+			assertThat(second.events).containsExactly("destroy:entries", "close");
+			assertThatThrownBy(() -> region.addLifecycleListener(first)).isInstanceOf(DriverOperationException.class);
+		});
 	}
 
 	@Test
 	void callbackRuntimeFailuresDoNotSkipRemainingLifecycleCallbacks() {
-		for (Mode mode : Mode.values()) {
-			inCache(mode, c -> {
-				DriverRegion<String, String> region = localRegion(c, mode);
-				region.addLifecycleListener(new DriverRegionLifecycleListener() {
-					@Override public void afterRegionDestroy(DriverRegion<?, ?> destroyed) {
-						throw new IllegalStateException("expected callback failure");
-					}
-					@Override public void close() { throw new IllegalStateException("expected cleanup failure"); }
-				});
-				RecordingLifecycle listener = new RecordingLifecycle();
-				region.addLifecycleListener(listener);
-				c.close();
-				assertThat(listener.events).containsExactly("destroy:entries", "close");
+		inCache(c -> {
+			DriverRegion<String, String> region = localRegion(c);
+			region.addLifecycleListener(new DriverRegionLifecycleListener() {
+				@Override public void afterRegionDestroy(DriverRegion<?, ?> destroyed) {
+					throw new IllegalStateException("expected callback failure");
+				}
+				@Override public void close() { throw new IllegalStateException("expected cleanup failure"); }
 			});
-		}
+			RecordingLifecycle listener = new RecordingLifecycle();
+			region.addLifecycleListener(listener);
+			c.close();
+			assertThat(listener.events).containsExactly("destroy:entries", "close");
+		});
 	}
 
 	@Test
@@ -410,9 +393,8 @@ public abstract class GemFireDriverContract extends TransactionContract {
 		@Override public int hashCode() { return 1; }
 	}
 
-	private DriverRegion<String, String> localRegion(DriverConnection connection, Mode mode) {
-		return mode == Mode.PEER ? connection.createRegion("entries", RegionShortcut.LOCAL)
-			: connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
+	private DriverRegion<String, String> localRegion(DriverConnection connection) {
+		return connection.createClientRegion("entries", ClientRegionShortcut.LOCAL);
 	}
 
 	private static final class RecordingLoader implements DriverCacheLoader<String, String> {
@@ -430,7 +412,7 @@ public abstract class GemFireDriverContract extends TransactionContract {
 	@Test
 	void namedPoolMetadataDuplicateRejectionAndRecreation() {
 		for (boolean locators : new boolean[] { false, true }) {
-			inCache(Mode.CLIENT, connection -> {
+			inCache(connection -> {
 				String name = UUID.randomUUID().toString();
 				PoolConfiguration config = poolConfiguration(locators);
 				DriverPool first = connection.createPool(name, config);
@@ -459,26 +441,18 @@ public abstract class GemFireDriverContract extends TransactionContract {
 	}
 
 	@Test
-	void poolAccessRejectsWrongModeClosedConnectionAndInvalidArguments() {
-		for (Mode mode : Mode.values()) {
-			inCache(mode, connection -> {
-				PoolConfiguration config = poolConfiguration(false);
-				if (mode == Mode.PEER) {
-					assertThatThrownBy(() -> connection.createPool("wrong", config)).isInstanceOf(DriverOperationException.class);
-					assertThatThrownBy(() -> connection.getPool("wrong")).isInstanceOf(DriverOperationException.class);
+	void poolAccessRejectsClosedConnectionAndInvalidArguments() {
+		inCache(connection -> {
+			PoolConfiguration config = poolConfiguration(false);
+				for (String name : new String[] { null, "", "  " }) {
+					assertThatThrownBy(() -> connection.createPool(name, config)).isInstanceOf(DriverOperationException.class);
+					assertThatThrownBy(() -> connection.getPool(name)).isInstanceOf(DriverOperationException.class);
 				}
-				else {
-					for (String name : new String[] { null, "", "  " }) {
-						assertThatThrownBy(() -> connection.createPool(name, config)).isInstanceOf(DriverOperationException.class);
-						assertThatThrownBy(() -> connection.getPool(name)).isInstanceOf(DriverOperationException.class);
-					}
-					assertThatThrownBy(() -> connection.createPool("null", null)).isInstanceOf(DriverOperationException.class);
-				}
-				connection.close();
-				assertThatThrownBy(() -> connection.createPool("closed", config)).isInstanceOf(DriverOperationException.class);
-				assertThatThrownBy(() -> connection.getPool("closed")).isInstanceOf(DriverOperationException.class);
-			});
-		}
+				assertThatThrownBy(() -> connection.createPool("null", null)).isInstanceOf(DriverOperationException.class);
+			connection.close();
+			assertThatThrownBy(() -> connection.createPool("closed", config)).isInstanceOf(DriverOperationException.class);
+			assertThatThrownBy(() -> connection.getPool("closed")).isInstanceOf(DriverOperationException.class);
+		});
 	}
 
 	private PoolConfiguration poolConfiguration(boolean locators) {
@@ -487,20 +461,20 @@ public abstract class GemFireDriverContract extends TransactionContract {
 	}
 
 	private void inPool(Consumer<DriverPool> action) {
-		inCache(Mode.CLIENT, connection -> {
+		inCache(connection -> {
 			DriverPool pool = connection.createPool(UUID.randomUUID().toString(), poolConfiguration(false));
 			try { action.accept(pool); }
 			finally { pool.destroy(); }
 		});
 	}
 
-	private void inCache(Mode mode, Consumer<DriverConnection> action) {
-		try (DriverConnection connection = driver().connect(configuration(mode))) {
+	private void inCache(Consumer<DriverConnection> action) {
+		try (DriverConnection connection = connect()) {
 			action.accept(connection);
 		}
 	}
 
 	private void inRegion(Consumer<DriverRegion<String, String>> action) {
-		inCache(Mode.PEER, c -> action.accept(c.createRegion("entries", RegionShortcut.LOCAL)));
+		inCache(c -> action.accept(c.createClientRegion("entries", ClientRegionShortcut.LOCAL)));
 	}
 }

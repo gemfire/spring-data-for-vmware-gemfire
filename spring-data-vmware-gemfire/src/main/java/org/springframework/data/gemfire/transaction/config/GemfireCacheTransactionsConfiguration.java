@@ -8,7 +8,6 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.geode.cache.TransactionListener;
-import org.apache.geode.cache.TransactionWriter;
 import org.apache.geode.cache.client.ClientCache;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +21,6 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.ClientCacheConfigurer;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.transaction.GemfireTransactionManager;
-import org.springframework.data.gemfire.transaction.event.ComposableTransactionWriter;
 import org.springframework.data.gemfire.transaction.event.TransactionListenerAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -34,7 +32,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author John Blum
  * @see ClientCache
  * @see TransactionListener
- * @see TransactionWriter
  * @see ApplicationEventPublisher
  * @see Bean
  * @see Configuration
@@ -46,7 +43,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @see ClientCacheConfigurer
  * @see AbstractAnnotationConfigSupport
  * @see GemfireTransactionManager
- * @see ComposableTransactionWriter
  * @see TransactionListenerAdapter
  * @see EnableTransactionManagement
  * @since 2.0.0
@@ -113,7 +109,6 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 
 		if (this.enableAutoTransactionEventPublishing) {
 			registerGemFireCacheTransactionListener(cacheFactoryBean, transactionListener);
-			registerGemFireCacheTransactionWriter(cacheFactoryBean, transactionListener);
 		}
 	}
 
@@ -125,17 +120,6 @@ public class GemfireCacheTransactionsConfiguration extends AbstractAnnotationCon
 		transactionListeners.add(transactionListener);
 
 		bean.setTransactionListeners(transactionListeners);
-	}
-
-	private void registerGemFireCacheTransactionWriter(ClientCacheFactoryBean bean,
-			TransactionWriter transactionWriter) {
-
-		TransactionWriter existingTransactionWriter = bean.getTransactionWriter();
-
-		TransactionWriter compositeTransactionWriter =
-			ComposableTransactionWriter.compose(existingTransactionWriter, transactionWriter);
-
-		bean.setTransactionWriter(compositeTransactionWriter);
 	}
 
 }

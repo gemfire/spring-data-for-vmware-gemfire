@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 /** Shared local value behavior; native codec compatibility is tested by the native driver separately. */
 public abstract class PdxValueContract extends PoolConfigurationContract {
 	@Test void factoryWritesEveryFieldKindWithStableSnapshots() throws Exception {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var factory = connection.createPdxInstanceFactory("example.AllFields").neverDeserialize();
 			Map<String, Object> values = new LinkedHashMap<>();
 			values.put("Char", 'x');
@@ -77,7 +77,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void documentDistinguishesNullAndAbsentFieldsAndPreservesConsumerFailure() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var value = connection.createPdxInstanceFactory("").writeString("nullField", null).writeInt("id", 4).create();
 			assertThat(value.hasField("nullField")).isTrue();
 			assertThat(value.getField("absent")).isNull();
@@ -90,7 +90,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void identityIgnoresUnmarkedFieldsAndSchemaDefaultsButChecksNamesAndTypes() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var one = connection.createPdxInstanceFactory("Identity").writeInt("id", 7).markIdentityField("id").writeString("value", "first").create();
 			var two = connection.createPdxInstanceFactory("Identity").writeString("value", "second").writeInt("id", 7).markIdentityField("id").create();
 			assertThat(one).isEqualTo(two); assertThat(one.hashCode()).isEqualTo(two.hashCode());
@@ -105,7 +105,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void writableCopyChangesExistingFieldsWithoutMutatingSourceOrSibling() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var value = connection.createPdxInstanceFactory("Writable").neverDeserialize().writeInt("id", 1).markIdentityField("id").writeString("name", "before").create();
 			var changed = value.createWriter(); var sibling = changed.createWriter();
 			changed.setField("id", 2); changed.setField("name", "after");
@@ -119,7 +119,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void nestedPdxValuesUseTypedHandlesThroughObjectsArraysContainersAndGenericFields() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var nested = connection.createPdxInstanceFactory("Nested").neverDeserialize().writeString("name", "inside").create();
 			var value = connection.createPdxInstanceFactory("Outer").neverDeserialize()
 				.writeObject("direct", nested).writeObject("portable", nested, true)
@@ -139,7 +139,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void pdxEnumsExposeFieldsAndIdentityWithoutRequiringTheApplicationClass() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			var value = connection.createPdxEnum("missing.ApplicationEnum", "READY", 2);
 			assertThat(value.isEnum()).isTrue(); assertThat(value.getClassName()).isEqualTo("missing.ApplicationEnum");
 			assertThat(value.getFieldNames()).containsExactly("name", "ordinal");
@@ -152,7 +152,7 @@ public abstract class PdxValueContract extends PoolConfigurationContract {
 		}
 	}
 	@Test void invalidSchemaAndFactoryInputFailAtTheTypedBoundary() {
-		try (var connection = driver().connect(configuration(CacheConfiguration.Mode.PEER))) {
+		try (var connection = connect()) {
 			assertThatThrownBy(() -> connection.createPdxInstanceFactory(null)).isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> connection.createPdxEnum(null, "X", 0)).isInstanceOf(DriverOperationException.class);
 			assertThatThrownBy(() -> connection.createPdxInstanceFactory("BadIdentity").markIdentityField("absent")).isInstanceOf(DriverOperationException.class);

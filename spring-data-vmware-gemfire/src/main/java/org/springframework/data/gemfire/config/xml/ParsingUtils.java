@@ -5,9 +5,6 @@
 package org.springframework.data.gemfire.config.xml;
 
 import java.util.List;
-import org.apache.geode.cache.LossAction;
-import org.apache.geode.cache.MembershipAttributes;
-import org.apache.geode.cache.ResumptionAction;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -16,7 +13,6 @@ import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.core.Conventions;
 import org.springframework.data.gemfire.GemfireUtils;
-import org.springframework.data.gemfire.SubscriptionAttributesFactoryBean;
 import org.springframework.data.gemfire.config.support.GemfireFeature;
 import org.springframework.data.gemfire.eviction.EvictionAttributesFactoryBean;
 import org.springframework.data.gemfire.expiration.ExpirationAttributesFactoryBean;
@@ -332,34 +328,6 @@ abstract class ParsingUtils {
 		return false;
 	}
 
-	@SuppressWarnings({ "deprecation", "unused" })
-	static void parseMembershipAttributes(Element element, ParserContext parserContext,
-			BeanDefinitionBuilder regionAttributesBuilder) {
-
-		Element membershipAttributes = DomUtils.getChildElementByTagName(element, "membership-attributes");
-
-		if (membershipAttributes != null) {
-
-			String[] requiredRoles =
-				StringUtils.commaDelimitedListToStringArray(membershipAttributes.getAttribute("required-roles"));
-
-			String lossActionValue = membershipAttributes.getAttribute("loss-action");
-
-			LossAction lossAction = StringUtils.hasText(lossActionValue)
-				? LossAction.fromName(lossActionValue.toUpperCase().replace("-", "_"))
-				: LossAction.NO_ACCESS;
-
-			String resumptionActionValue = membershipAttributes.getAttribute("resumption-action");
-
-			ResumptionAction resumptionAction = StringUtils.hasText(resumptionActionValue)
-				? ResumptionAction.fromName(resumptionActionValue.toUpperCase().replace("-", "_"))
-				: ResumptionAction.REINITIALIZE;
-
-			regionAttributesBuilder.addPropertyValue("membershipAttributes",
-				new MembershipAttributes(requiredRoles, lossAction, resumptionAction));
-		}
-	}
-
 	@SuppressWarnings("unused")
 	static void parseOptionalRegionAttributes(Element element, ParserContext parserContext,
 			BeanDefinitionBuilder regionAttributesBuilder) {
@@ -367,12 +335,9 @@ abstract class ParsingUtils {
 		setPropertyValue(element, regionAttributesBuilder, "cloning-enabled");
 		setPropertyValue(element, regionAttributesBuilder, "concurrency-level");
 		setPropertyValue(element, regionAttributesBuilder, "disk-synchronous");
-		setPropertyValue(element, regionAttributesBuilder, "enable-subscription-conflation");
 		setPropertyValue(element, regionAttributesBuilder, "initial-capacity");
-		setPropertyValue(element, regionAttributesBuilder, "is-lock-grantor", "lockGrantor");
 		setPropertyValue(element, regionAttributesBuilder, "key-constraint");
 		setPropertyValue(element, regionAttributesBuilder, "load-factor");
-		setPropertyValue(element, regionAttributesBuilder, "publisher");
 		setPropertyValue(element, regionAttributesBuilder, "value-constraint");
 
 		if (element.hasAttribute("concurrency-checks-enabled")) {
@@ -385,57 +350,8 @@ abstract class ParsingUtils {
 		}
 	}
 
-	static void parseScope(Element element, BeanDefinitionBuilder builder) {
-
-		String scopeAttributeValue = element.getAttribute("scope");
-
-		if (StringUtils.hasText(scopeAttributeValue)) {
-			builder.addPropertyValue("scope", scopeAttributeValue);
-		}
-	}
-
 	static void parseStatistics(Element element, BeanDefinitionBuilder regionAttributesBuilder) {
 		setPropertyValue(element, regionAttributesBuilder, "statistics", "statisticsEnabled");
-	}
-
-	/**
-	 * Parses the subscription sub-element. Populates the given attribute factory with the proper attributes.
-	 *
-	 * @param element the XML element being parsed.
-	 * @param parserContext the context used while parsing the XML document.
-	 * @param regionAttributesBuilder the Region Attributes builder.
-	 * @return true if parsing actually occurred, false otherwise.
-	 */
-	@SuppressWarnings("unused")
-	static boolean parseSubscription(Element element, ParserContext parserContext,
-			BeanDefinitionBuilder regionAttributesBuilder) {
-
-		Element subscriptionElement = DomUtils.getChildElementByTagName(element, "subscription");
-
-		if (subscriptionElement != null) {
-
-			BeanDefinitionBuilder subscriptionAttributesBuilder =
-				BeanDefinitionBuilder.genericBeanDefinition(SubscriptionAttributesFactoryBean.class);
-
-			setPropertyValue(subscriptionElement, subscriptionAttributesBuilder, "type", "interestPolicy");
-
-			regionAttributesBuilder.addPropertyValue("subscriptionAttributes",
-				subscriptionAttributesBuilder.getBeanDefinition());
-
-			return true;
-		}
-
-		return false;
-	}
-
-	static void parseTransportFilters(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
-
-		Element transportFilterElement = DomUtils.getChildElementByTagName(element, "transport-filter");
-
-		if (transportFilterElement != null) {
-			builder.addPropertyValue("transportFilters",
-				parseRefOrNestedBeanDeclaration(transportFilterElement, parserContext, builder));
-		}
 	}
 
 	@SuppressWarnings("unused")

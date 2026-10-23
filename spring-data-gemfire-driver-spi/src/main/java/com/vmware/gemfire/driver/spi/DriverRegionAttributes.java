@@ -4,7 +4,6 @@
  */
 package com.vmware.gemfire.driver.spi;
 
-import java.util.Set;
 import com.vmware.gemfire.driver.spi.config.DataPolicy;
 import com.vmware.gemfire.driver.spi.config.Scope;
 import java.util.List;
@@ -21,18 +20,11 @@ public interface DriverRegionAttributes<K, V> {
 	boolean getConcurrencyChecksEnabled();
 	boolean getStatisticsEnabled();
 	boolean getIgnoreJTA();
-	boolean isLockGrantor();
-	boolean getMulticastEnabled();
 	String getPoolName();
 	boolean getCloningEnabled();
 	String getDiskStoreName();
 	boolean isDiskSynchronous();
 	boolean getIndexMaintenanceSynchronous();
-	boolean getEnableSubscriptionConflation();
-	boolean getEarlyAck();
-	boolean getPublisher();
-	Set<String> getGatewaySenderIds();
-	Set<String> getAsyncEventQueueIds();
 	List<DriverCacheListener<K, V>> getCacheListeners();
 	DriverCacheLoader<K, V> getCacheLoader();
 	DriverCacheWriter<K, V> getCacheWriter();
