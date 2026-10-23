@@ -17,6 +17,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
+import org.springframework.data.gemfire.config.annotation.EnableGemFireProperties;
 import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
 import org.springframework.data.gemfire.transaction.event.TransactionListenerAdapter;
 
@@ -34,6 +35,15 @@ public class ClientOnlyConfigurationUnitTests {
 			assertThat(Arrays.stream(annotation.getDeclaredMethods()).map(Method::getName))
 				.doesNotContain("serverRegionShortcut");
 		}
+	}
+
+	@Test
+	public void propertiesAnnotationRetainsClientSettingsWithoutServerAdministration() {
+
+		assertThat(Arrays.stream(EnableGemFireProperties.class.getDeclaredMethods()).map(Method::getName))
+			.contains("cacheXmlFile", "conflateEvents", "serializableObjectFilter", "validateSerializableObjects")
+			.doesNotContain("clusterConfigurationDirectory", "loadClusterConfigurationFromDirectory",
+				"remoteLocators", "removeUnresponsiveClient", "userCommandPackages");
 	}
 
 	@Test

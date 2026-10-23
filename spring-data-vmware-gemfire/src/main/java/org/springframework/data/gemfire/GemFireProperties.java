@@ -46,13 +46,10 @@ public enum GemFireProperties {
 	DISTRIBUTED_TRANSACTIONS(ConfigurationProperties.DISTRIBUTED_TRANSACTIONS, Boolean.class, false),
 	DURABLE_CLIENT_ID(ConfigurationProperties.DURABLE_CLIENT_ID, String.class),
 	DURABLE_CLIENT_TIMEOUT(ConfigurationProperties.DURABLE_CLIENT_TIMEOUT, Long.class, 300L),
-	ENABLE_CLUSTER_CONFIGURATION(ConfigurationProperties.ENABLE_CLUSTER_CONFIGURATION, Boolean.class, true),
 	ENABLE_NETWORK_PARTITION_DETECTION(ConfigurationProperties.ENABLE_NETWORK_PARTITION_DETECTION, Boolean.class, true),
 	ENABLE_TIME_STATISTICS(ConfigurationProperties.ENABLE_TIME_STATISTICS, Boolean.class, false),
-	ENFORCE_UNIQUE_HOST(ConfigurationProperties.ENFORCE_UNIQUE_HOST, Boolean.class, false),
 	//GEODE_DISALLOW_INTERNAL_MESSAGES_WITHOUT_CREDENTIALS("geode.disallow-internal-messages-without-credentials", Boolean.class, false),
 	GROUPS(ConfigurationProperties.GROUPS, String.class),
-	LOAD_CLUSTER_CONFIGURATION_FROM_DIR(ConfigurationProperties.LOAD_CLUSTER_CONFIGURATION_FROM_DIR, Boolean.class, false),
 	LOCATOR_WAIT_TIME(ConfigurationProperties.LOCATOR_WAIT_TIME, Long.class, 0),
 	LOCATORS(ConfigurationProperties.LOCATORS, String.class),
 	LOCK_MEMORY(ConfigurationProperties.LOCK_MEMORY, Boolean.class, false),
@@ -66,9 +63,6 @@ public enum GemFireProperties {
 	MEMBERSHIP_PORT_RANGE(ConfigurationProperties.MEMBERSHIP_PORT_RANGE, String.class, "41000-61000"),
 	NAME(ConfigurationProperties.NAME, String.class),
 	REDUNDANCY_ZONE(ConfigurationProperties.REDUNDANCY_ZONE, String.class),
-	REMOTE_LOCATORS(ConfigurationProperties.REMOTE_LOCATORS, String.class),
-	REMOVE_UNRESPONSIVE_CLIENT(ConfigurationProperties.REMOVE_UNRESPONSIVE_CLIENT, Boolean.class, false),
-	REST_JSON_STORAGE_FORMAT(ConfigurationProperties.REST_JSON_STORAGE_FORMAT, String.class, "BSON"),
 	SECURITY_AUTH_TOKEN_ENABLED_COMPONENTS(ConfigurationProperties.SECURITY_AUTH_TOKEN_ENABLED_COMPONENTS, String[].class),
 	SECURITY_CLIENT_AUTH_INIT(ConfigurationProperties.SECURITY_CLIENT_AUTH_INIT, String.class),
 	SECURITY_LOG_FILE(ConfigurationProperties.SECURITY_LOG_FILE, File.class),
@@ -82,7 +76,6 @@ public enum GemFireProperties {
 	SECURITY_SHIRO_INIT("security-shiro-init", String.class),
 	SECURITY_UDP_DHALO(ConfigurationProperties.SECURITY_UDP_DHALGO, String.class),
 	SERIALIZABLE_OBJECT_FILTER(ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER, String.class, "!*"),
-	SERVER_BIND_ADDRESS(ConfigurationProperties.SERVER_BIND_ADDRESS, String.class),
 	SOCKET_BUFFER_SIZE(ConfigurationProperties.SOCKET_BUFFER_SIZE, Integer.class, 32768),
 	SOCKET_LEASE_TIME(ConfigurationProperties.SOCKET_LEASE_TIME, Long.class, 60000L),
 	SSL_CIPHERS(ConfigurationProperties.SSL_CIPHERS, String.class, "any"),
@@ -107,7 +100,6 @@ public enum GemFireProperties {
 	SSL_USE_DEFAULT_CONTEXT(ConfigurationProperties.SSL_USE_DEFAULT_CONTEXT, Boolean.class, false),
 	SSL_WEB_ALIAS(ConfigurationProperties.SSL_WEB_ALIAS, String.class),
 	SSL_WEB_SERVICE_REQUIRE_AUTHENTICATION(ConfigurationProperties.SSL_WEB_SERVICE_REQUIRE_AUTHENTICATION, Boolean.class, false),
-	START_LOCATOR(ConfigurationProperties.START_LOCATOR, Boolean.class),
 	STATISTIC_ARCHIVE_FILE(ConfigurationProperties.STATISTIC_ARCHIVE_FILE, File.class),
 	STATISTIC_SAMPLE_RATE(ConfigurationProperties.STATISTIC_SAMPLE_RATE, Long.class, 1000),
 	@Deprecated
@@ -121,8 +113,6 @@ public enum GemFireProperties {
 	UDP_RECV_BUFFER_SIZE(ConfigurationProperties.UDP_RECV_BUFFER_SIZE, Integer.class, 1048576),
 	UPD_SEND_BUFFER_SIZE(ConfigurationProperties.UDP_SEND_BUFFER_SIZE, Integer.class, 65535),
 
-	USE_CLUSTER_CONFIGURATION(ConfigurationProperties.USE_CLUSTER_CONFIGURATION, Boolean.class, true),
-	USER_COMMAND_PACKAGES(ConfigurationProperties.USER_COMMAND_PACKAGES, String.class),
 	VALIDATE_SERIALIZABLE_OBJECTS(ConfigurationProperties.VALIDATE_SERIALIZABLE_OBJECTS, Boolean.class, false);
 
 	/**

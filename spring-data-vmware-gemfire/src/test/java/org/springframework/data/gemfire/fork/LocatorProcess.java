@@ -70,9 +70,9 @@ public class LocatorProcess {
 
 		Properties distributedSystemProperties = new Properties();
 
-		distributedSystemProperties.setProperty(GemFireProperties.ENABLE_CLUSTER_CONFIGURATION.getName(),
+		distributedSystemProperties.setProperty("enable-cluster-configuration",
 			String.valueOf(Boolean.getBoolean("spring.data.gemfire.enable-cluster-configuration")));
-		distributedSystemProperties.setProperty(GemFireProperties.LOAD_CLUSTER_CONFIGURATION_FROM_DIR.getName(),
+		distributedSystemProperties.setProperty("load-cluster-configuration-from-dir",
 			String.valueOf(loadClusterConfigurationFromDirectory));
 		distributedSystemProperties.setProperty(GemFireProperties.LOG_LEVEL.getName(),
 			System.getProperty("spring.data.gemfire.log-level", GEMFIRE_LOG_LEVEL));
@@ -99,9 +99,9 @@ public class LocatorProcess {
 			.setHostnameForClients(getProperty("spring.data.gemfire.hostname-for-clients", HOSTNAME_FOR_CLIENTS))
 			.setPort(getInteger("spring.data.gemfire.locator.port", DEFAULT_LOCATOR_PORT))
 			.setRedirectOutput(false)
-			.set(GemFireProperties.ENABLE_CLUSTER_CONFIGURATION.getName(),
+			.set("enable-cluster-configuration",
 				String.valueOf(getBoolean("spring.data.gemfire.enable-cluster-configuration")))
-			.set(GemFireProperties.LOAD_CLUSTER_CONFIGURATION_FROM_DIR.getName(),
+			.set("load-cluster-configuration-from-dir",
 				String.valueOf(getBoolean("spring.data.gemfire.load-cluster-configuration")))
 			.set(GemFireProperties.LOG_LEVEL.getName(),
 				getProperty("spring.data.gemfire.log-level", GEMFIRE_LOG_LEVEL))

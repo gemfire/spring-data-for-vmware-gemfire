@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Unit Tests for {@link GemFireProperties}.
@@ -29,7 +30,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GemFirePropertiesUnitTests {
 
     //These are properties set for the server which SDG does not care about being a client-only lib
-    private static final Set<String> unsupportedGemFireProperties = Set.of(
+    private final Set<String> unsupportedGemFireProperties = Set.of(
+        "enable-cluster-configuration",
+        "enforce-unique-host",
+        "load-cluster-configuration-from-dir",
+        "remote-locators",
+        "remove-unresponsive-client",
+        "rest-json-storage-format",
+        "server-bind-address",
+        "start-locator",
+        "use-cluster-configuration",
+        "user-command-packages",
         "memcached-bind-address",
         "memcached-port",
         "memcached-protocol",
@@ -141,7 +152,21 @@ public class GemFirePropertiesUnitTests {
 
         assertThat(GemFireProperties.from("cache-xml-file")).isEqualTo(GemFireProperties.CACHE_XML_FILE);
         assertThat(GemFireProperties.from("gemfire.locators")).isEqualTo(GemFireProperties.LOCATORS);
-        assertThat(GemFireProperties.from("  gemfire.remote-locators ")).isEqualTo(GemFireProperties.REMOTE_LOCATORS);
+        assertThat(GemFireProperties.from("  gemfire.name ")).isEqualTo(GemFireProperties.NAME);
+        assertThat(GemFireProperties.from("bind-address")).isEqualTo(GemFireProperties.BIND_ADDRESS);
+        assertThat(GemFireProperties.from("availability-zone")).isEqualTo(GemFireProperties.AVAILABILITY_ZONE);
+        assertThat(GemFireProperties.from("redundancy-zone")).isEqualTo(GemFireProperties.REDUNDANCY_ZONE);
+    }
+
+    @Test
+    public void serverPropertiesAreNotAdvertisedAsClientConfiguration() {
+
+        for (String propertyName : unsupportedGemFireProperties) {
+            assertThatThrownBy(() -> GemFireProperties.from(propertyName))
+                    .isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> GemFireProperties.from("gemfire." + propertyName))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
     }
 
     private void testFromInvalidGemFireProperty(String propertyName) {

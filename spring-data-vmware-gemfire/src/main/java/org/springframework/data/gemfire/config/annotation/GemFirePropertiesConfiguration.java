@@ -29,10 +29,7 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 	public static final boolean DEFAULT_DELTA_PROPAGATION = true;
 	public static final boolean DEFAULT_DISABLE_TCP = false;
 	public static final boolean DEFAULT_ENABLE_NETWORK_PARTITION_DETECTION = false;
-	public static final boolean DEFAULT_ENFORCE_UNIQUE_HOST = false;
-	public static final boolean DEFAULT_LOAD_CLUSTER_CONFIGURATION_FROM_DIRECTORY = false;
 	public static final boolean DEFAULT_LOCK_MEMORY = false;
-	public static final boolean DEFAULT_REMOVE_UNRESPONSIVE_CLIENT = false;
 	public static final boolean DEFAULT_VALIDATE_SERIALIZABLE_OBJECTS = false;
 
 	public static final int DEFAULT_ACK_SEVERE_ALERT_THRESHOLD = 0;
@@ -52,13 +49,10 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 	public static final String DEFAULT_BIND_ADDRESS = "";
 	public static final String DEFAULT_CACHE_XML_FILE = "";
-	public static final String DEFAULT_CLUSTER_CONFIGURATION_DIRECTORY = "";
 	public static final String DEFAULT_CONFLATE_EVENTS = "server";
 	public static final String DEFAULT_DEPLOY_WORKING_DIRECTORY = ".";
 	public static final String DEFAULT_MEMBERSHIP_PORT_RANGE = "1024-65535";
 	public static final String DEFAULT_NAME = "";
-	public static final String DEFAULT_REMOTE_LOCATORS = "";
-	public static final String DEFAULT_USER_COMMAND_PACKAGES = "";
 
 	@SuppressWarnings("unused")
 	public static final String[] DEFAULT_GROUPS = {};
@@ -89,9 +83,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 		gemfireProperties.setProperty("cache-xml-file", annotationAttributes.get("cacheXmlFile"));
 
-		gemfireProperties.setProperty("cluster-configuration-dir",
-			annotationAttributes.get("clusterConfigurationDirectory"));
-
 		gemfireProperties.setPropertyIfNotDefault("conflate-events",
 			annotationAttributes.get("conflateEvents"), DEFAULT_CONFLATE_EVENTS);
 
@@ -110,14 +101,7 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 		gemfireProperties.setPropertyIfNotDefault("enable-network-partition-detection",
 			annotationAttributes.get("enableNetworkPartitionDetection"), DEFAULT_ENABLE_NETWORK_PARTITION_DETECTION);
 
-		gemfireProperties.setPropertyIfNotDefault("enforce-unique-host",
-			annotationAttributes.get("enforceUniqueHost"), DEFAULT_ENFORCE_UNIQUE_HOST);
-
 		gemfireProperties.setProperty("groups", (String[]) annotationAttributes.get("groups"));
-
-		gemfireProperties.setPropertyIfNotDefault("load-cluster-configuration-from-dir",
-			annotationAttributes.get("loadClusterConfigurationFromDirectory"),
-				DEFAULT_LOAD_CLUSTER_CONFIGURATION_FROM_DIRECTORY);
 
 		gemfireProperties.setPropertyIfNotDefault("locator-wait-time",
 			annotationAttributes.get("locatorWaitTimeout"), DEFAULT_LOCATOR_WAIT_TIME);
@@ -135,13 +119,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 			annotationAttributes.get("membershipPortRange"), DEFAULT_MEMBERSHIP_PORT_RANGE);
 
 		gemfireProperties.setProperty("name", annotationAttributes.get("name"));
-
-		gemfireProperties.setProperty("redundancy-zone", annotationAttributes.get("redundancyZone"));
-
-		gemfireProperties.setProperty("remote-locators", annotationAttributes.get("remoteLocators"));
-
-		gemfireProperties.setPropertyIfNotDefault("remove-unresponsive-client",
-			annotationAttributes.get("removeUnresponsiveClient"), DEFAULT_REMOVE_UNRESPONSIVE_CLIENT);
 
 		gemfireProperties.setProperty("serializable-object-filter",
 			(String[]) annotationAttributes.get("serializableObjectFilter"));
@@ -166,8 +143,6 @@ public class GemFirePropertiesConfiguration extends EmbeddedServiceConfiguration
 
 		gemfireProperties.setPropertyIfNotDefault("udp-send-buffer-size",
 			annotationAttributes.get("udpSendBufferSize"), DEFAULT_UDP_SEND_BUFFER_SIZE);
-
-		gemfireProperties.setProperty("user-command-packages", annotationAttributes.get("userCommandPackages"));
 
 		gemfireProperties.setPropertyIfNotDefault("validate-serializable-objects",
 			annotationAttributes.get("validateSerializableObjects"), DEFAULT_VALIDATE_SERIALIZABLE_OBJECTS);

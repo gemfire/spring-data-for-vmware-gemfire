@@ -22,6 +22,10 @@ The subsequent function-registration slice removes the public factory/parser/con
 
 The peer-function slice removes member annotations/templates/executors/builders and the unused server result helper. The legacy function-hosting fixture is replaced by a client-local XML loader test. All affected sources compile and 35 focused tests pass. Deterministic coverage, independent declaration validation and the adjusted transitional boundary pass; the ledger records the explicit transitional fixture baseline adjustment and native API evidence. Client XML parsers and region/server invocation remain.
 
+The selected-property slice removes five annotation attributes with their defaults/mappings and seven enum constants for locator hosting, cluster configuration, WAN discovery, server queue handling and GFSH commands. Shared settings are retained pending individual review; the ledger records native client uses of availability zones and distributed-system IDs. Full affected sources compile and 27 focused tests pass without failures or skips. Coverage validation and the transitional boundary pass with eight obsolete occurrences pruned and no new allowances. The overall property audit remains open.
+
+The server placement/endpoint property slice removes three more enum constants (`ENFORCE_UNIQUE_HOST`, `REST_JSON_STORAGE_FORMAT`, `SERVER_BIND_ADDRESS`), the unused unique-host default and two orphan annotation mappings. The client bind address and availability/redundancy-zone properties remain, backed by pinned binary/source evidence. All affected sources compile, 27 focused tests pass, coverage checks pass and three more obsolete boundary entries are pruned without new allowances. See the ledger for retained-property evidence and the remaining unmapped/transport/security audit.
+
 Remaining work and completed slices:
 
 - [ ] Review and retire server properties in `EnableGemFireProperties`, `GemFirePropertiesConfiguration` and `GemFireProperties` with client retention evidence.

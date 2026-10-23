@@ -73,16 +73,6 @@ public @interface EnableGemFireProperties {
 	String cacheXmlFile() default GemFirePropertiesConfiguration.DEFAULT_CACHE_XML_FILE;
 
 	/**
-	 * This property specifies the directory in which the cluster configuration related disk-store and artifacts
-	 * are stored. This property is only applicable to dedicated Locators that have {@literal enable-cluster-configuration}
-	 * set to {@literal true}.
-	 *
-	 * Defaults to unset.
-	 */
-	String clusterConfigurationDirectory()
-		default GemFirePropertiesConfiguration.DEFAULT_CLUSTER_CONFIGURATION_DIRECTORY;
-
-	/**
 	 * Used only by clients in a client/server installation. This is a client-side property
 	 * that is passed to the server. Affects subscription queue conflation in this client’s
 	 * servers. Specifies whether to conflate (true setting), not conflate (false), or to
@@ -168,16 +158,6 @@ public @interface EnableGemFireProperties {
 	String[] groups() default {};
 
 	/**
-	 * Setting this property to {@literal true} causes loading of cluster configuration from the
-	 * {@literal cluster_config} directory in the Locator. This property is only applicable to dedicated Locators
-	 * that have {@literal enable-cluster-configuration} set to {@literal true}.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean loadClusterConfigurationFromDirectory()
-		default GemFirePropertiesConfiguration.DEFAULT_LOAD_CLUSTER_CONFIGURATION_FROM_DIRECTORY;
-
-	/**
 	 * The number of seconds that a member should wait for a Locator to start if a Locator is not available
 	 * when attempting to join the distributed system. Use this setting when you are starting Locators
 	 * and peers all at once. This timeout allows peers to wait for the Locators to finish starting up
@@ -249,43 +229,6 @@ public @interface EnableGemFireProperties {
 	 * Defaults to unset.
 	 */
 	String name() default GemFirePropertiesConfiguration.DEFAULT_NAME;
-
-	/**
-	 * Used to configure the Locators that a cluster will use in order to connect to a remote site in a multi-site
-	 * (WAN) configuration.
-	 *
-	 * To use Locators in a WAN configuration, you must specify a unique distributed system ID
-	 * ({@literal distributed-system-id}) for the local cluster and remote Locator(s) for the remote clusters
-	 * to which you will connect.
-	 *
-	 * For each remote Locator, provide a host name and/or address (separated by ‘@’, if you use both),
-	 * followed by a port number in brackets.
-	 *
-	 * Examples:
-	 *
-	 * <pre>
-	 *     <code>
-	 * remote-locators=address1[port1],address2[port2]
-	 *
-	 * remote-locators=hostName1@address1[port1],hostName2@address2[port2]
-	 *
-	 * remote-locators=hostName1[port1],hostName2[port2]
-	 *     </code>
-	 * </pre>
-	 *
-	 * Defaults to unset.
-	 */
-	String remoteLocators() default GemFirePropertiesConfiguration.DEFAULT_REMOTE_LOCATORS;
-
-	/**
-	 * When this property is set to {@literal true}, the primary server drops unresponsive clients
-	 * from all secondaries and itself. Clients are deemed unresponsive when their messaging queues
-	 * become full on the server. While a client’s queue is full, puts that would add to the queue
-	 * block on the server.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean removeUnresponsiveClient() default GemFirePropertiesConfiguration.DEFAULT_REMOVE_UNRESPONSIVE_CLIENT;
 
 	/**
 	 * A List of items that become full class names of objects that the system will serialize when the property
@@ -369,16 +312,6 @@ public @interface EnableGemFireProperties {
 	 * Defaults to {@literal 65535} bytes.
 	 */
 	int udpSendBufferSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_SEND_BUFFER_SIZE;
-
-	/**
-	 * A comma separated list of Java packages that contain classes implementing the Spring Shell
-	 * CommandMarker interface.
-	 *
-	 * Matching classes will be loaded when the VM starts and will be available in the GFSH command-line utility.
-	 *
-	 * Defaults to unset.
-	 */
-	String userCommandPackages() default GemFirePropertiesConfiguration.DEFAULT_USER_COMMAND_PACKAGES;
 
 	/**
 	 * A boolean that defaults to {@literal false}. When {@literal true}, instances of classes that are not internal
