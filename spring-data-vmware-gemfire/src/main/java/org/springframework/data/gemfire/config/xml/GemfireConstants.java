@@ -16,7 +16,6 @@ public interface GemfireConstants {
 
 	String DEFAULT_GEMFIRE_CACHE_NAME = "gemfireCache";
 	String DEFAULT_GEMFIRE_INDEX_DEFINITION_QUERY_SERVICE = "gemfireIndexDefinitionQueryService";
-	String DEFAULT_GEMFIRE_FUNCTION_SERVICE_NAME = "gemfireFunctionService";
 	String DEFAULT_GEMFIRE_POOL_NAME = "gemfirePool";
 	String DEFAULT_GEMFIRE_TRANSACTION_MANAGER_NAME = "gemfireTransactionManager";
 

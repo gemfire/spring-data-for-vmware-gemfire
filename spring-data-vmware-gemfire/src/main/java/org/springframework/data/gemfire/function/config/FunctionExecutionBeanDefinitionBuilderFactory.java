@@ -4,8 +4,6 @@
  */
 package org.springframework.data.gemfire.function.config;
 
-import org.springframework.data.gemfire.function.annotation.OnMember;
-import org.springframework.data.gemfire.function.annotation.OnMembers;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
 import org.springframework.data.gemfire.function.annotation.OnServer;
 import org.springframework.data.gemfire.function.annotation.OnServers;
@@ -15,13 +13,9 @@ import org.springframework.data.gemfire.function.annotation.OnServers;
  *
  * @author David Turanski
  * @author John Blum
- * @see OnMember
- * @see OnMembers
  * @see OnRegion
  * @see OnServer
  * @see OnServers
- * @see OnMemberFunctionExecutionBeanDefinitionBuilder
- * @see OnMembersFunctionExecutionBeanDefinitionBuilder
  * @see OnRegionFunctionExecutionBeanDefinitionBuilder
  * @see OnServerFunctionExecutionBeanDefinitionBuilder
  * @see OnServersFunctionExecutionBeanDefinitionBuilder
@@ -32,13 +26,7 @@ abstract class FunctionExecutionBeanDefinitionBuilderFactory {
 
 		String functionExecutionAnnotation = configuration.getAnnotationType();
 
-		if (OnMember.class.getName().equals(functionExecutionAnnotation)) {
-			return new OnMemberFunctionExecutionBeanDefinitionBuilder(configuration);
-		}
-		else if (OnMembers.class.getName().equals(functionExecutionAnnotation)) {
-			return new OnMembersFunctionExecutionBeanDefinitionBuilder(configuration);
-		}
-		else if (OnRegion.class.getName().equals(functionExecutionAnnotation)) {
+		if (OnRegion.class.getName().equals(functionExecutionAnnotation)) {
 			return new OnRegionFunctionExecutionBeanDefinitionBuilder(configuration);
 		}
 		else if (OnServer.class.getName().equals(functionExecutionAnnotation)) {

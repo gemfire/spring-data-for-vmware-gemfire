@@ -16,7 +16,7 @@ Ticket metadata is authoritative. Claim an eligible task only when all `Blocked 
 
 ## Shared completion requirements
 
-Task 63 has a validated first retirement slice; its [ledger](investigations/client-only-spring-surfaces.md) records breaking changes, retained tests and the remaining property, function-hosting and inherited attributes work. It remains the next task; counts and parent blockers are unchanged.
+Task 63 has configuration, function-registration and peer-function retirement slices; its [ledger](investigations/client-only-spring-surfaces.md) records breaking changes, retained tests and the remaining property, function fixture placement/audit and inherited attributes work. It remains the next task; counts and parent blockers are unchanged.
 
 Every linked implementation ticket, including the existing named-pool foundation, must satisfy these requirements:
 

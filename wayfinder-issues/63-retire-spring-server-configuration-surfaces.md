@@ -18,9 +18,15 @@ Prerequisites 61/62 are resolved. Removed Spring peer shortcut/scope/subscriptio
 
 Full affected source compilation and 105 focused tests pass without failures or skips. Ten coverage policy tests, deterministic generation, independent native declaration validation and the transitional migration boundary pass. Frozen API IDs and scope counts remain unchanged; this task is not resolved.
 
-Still open:
+The subsequent function-registration slice removes the public factory/parser/constant/schema export and obsolete registration-only fixtures. Two new XML rejection tests fail before and pass after removal. All affected sources compile; 18 focused client configuration/proxy tests pass without failures or skips, as do deterministic coverage, independent declaration validation and the transitional boundary. The ledger records the exact commands and the unexecuted real-server test limitation.
+
+The peer-function slice removes member annotations/templates/executors/builders and the unused server result helper. The legacy function-hosting fixture is replaced by a client-local XML loader test. All affected sources compile and 35 focused tests pass. Deterministic coverage, independent declaration validation and the adjusted transitional boundary pass; the ledger records the explicit transitional fixture baseline adjustment and native API evidence. Client XML parsers and region/server invocation remain.
+
+Remaining work and completed slices:
 
 - [ ] Review and retire server properties in `EnableGemFireProperties`, `GemFirePropertiesConfiguration` and `GemFireProperties` with client retention evidence.
-- [ ] Retire function registration/hosting exports and relocate required server fixtures while preserving client invocation.
+- [x] Retire `FunctionServiceFactoryBean`, its parser, bean-name constant and `gfe:function-service` schema export; remove the registration-only suite and unused server XML while preserving client invocation.
+- [x] Retire peer-member execution exports and server result helper; replace the legacy native function-registration fixture with client-local lazy-wiring coverage.
+- [ ] Finish the function surface audit and record required server fixture placement with tasks 25/32/64; preserve supported client function-object submission.
 - [ ] Remove the inherited server API from `RegionAttributesFactoryBean` through SPI-backed client configuration and consumer migration. Resolve overlap with task 30 without a circular dependency through parent 59.
 - [ ] Complete the remaining surface audit, test dispositions and final evidence refresh before resolution.

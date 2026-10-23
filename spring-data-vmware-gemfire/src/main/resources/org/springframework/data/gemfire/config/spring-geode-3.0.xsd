@@ -1444,52 +1444,6 @@ NONE - Does not initialize the local Cache.
 			</xsd:annotation>
 		</xsd:attribute>
 	</xsd:complexType>
-	<!-- Function -->
-	<xsd:element name="function-service">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="function" minOccurs="0" maxOccurs="1">
-					<xsd:annotation>
-						<xsd:documentation source="org.apache.geode.cache.execute.Function"><![CDATA[
-Declares one or more remote functions for this cache and register's with them the FunctionService. each bean
-must implement org.apache.geode.cache.execute.Function
-                            ]]></xsd:documentation>
-						<xsd:appinfo>
-							<tool:annotation>
-								<tool:exports type="org.apache.geode.cache.execute.Function" />
-							</tool:annotation>
-						</xsd:appinfo>
-					</xsd:annotation>
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded">
-								<xsd:annotation>
-									<xsd:documentation><![CDATA[
-Inner bean definition of the remote function.
-                                        ]]></xsd:documentation>
-								</xsd:annotation>
-							</xsd:any>
-						</xsd:sequence>
-						<xsd:attribute name="ref" type="xsd:string" use="optional">
-							<xsd:annotation>
-								<xsd:documentation><![CDATA[
-The name of the remote function bean referred by this declaration. Used as a convenience method. If no reference exists,
-use inner bean declarations.
-                                    ]]></xsd:documentation>
-							</xsd:annotation>
-						</xsd:attribute>
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:sequence>
-			<xsd:attribute name="id" type="xsd:string" use="optional">
-				<xsd:annotation>
-					<xsd:documentation><![CDATA[
-The id of the function service (optional)
-                                    ]]></xsd:documentation>
-				</xsd:annotation>
-			</xsd:attribute>
-		</xsd:complexType>
-	</xsd:element>
 	<!-- Function Annotation Support -->
 	<xsd:element name="annotation-driven">
 		<xsd:annotation>

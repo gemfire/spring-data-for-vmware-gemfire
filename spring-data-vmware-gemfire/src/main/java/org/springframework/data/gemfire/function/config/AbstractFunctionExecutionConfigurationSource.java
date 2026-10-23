@@ -15,8 +15,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.data.gemfire.function.annotation.OnMember;
-import org.springframework.data.gemfire.function.annotation.OnMembers;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
 import org.springframework.data.gemfire.function.annotation.OnServer;
 import org.springframework.data.gemfire.function.annotation.OnServers;
@@ -38,10 +36,8 @@ public abstract class AbstractFunctionExecutionConfigurationSource implements Fu
 
 	static {
 
-		Set<Class<? extends Annotation>> annotationTypes = new HashSet<>(5);
+		Set<Class<? extends Annotation>> annotationTypes = new HashSet<>(3);
 
-		annotationTypes.add(OnMember.class);
-		annotationTypes.add(OnMembers.class);
 		annotationTypes.add(OnRegion.class);
 		annotationTypes.add(OnServer.class);
 		annotationTypes.add(OnServers.class);

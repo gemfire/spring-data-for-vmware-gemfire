@@ -11,7 +11,6 @@ import java.util.stream.StreamSupport;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.data.gemfire.function.annotation.OnMember;
 import org.springframework.data.gemfire.function.annotation.OnServer;
 import org.springframework.data.gemfire.support.AbstractFactoryBeanSupport;
 import org.springframework.lang.NonNull;
@@ -119,14 +118,13 @@ public class GemfireFunctionProxyFactoryBean extends AbstractFactoryBeanSupport<
 			.getMethodMetadata(method)
 			.getFunctionId();
 
-		return isFunctionExecutedOnSingleServerOrSingleMember(method)
+		return isFunctionExecutedOnSingleServer(method)
 			? template.executeAndExtract(functionId, args)
 			: template.execute(functionId, args);
 	}
 
-	protected boolean isFunctionExecutedOnSingleServerOrSingleMember(@NonNull Method method) {
-		return method.getDeclaringClass().isAnnotationPresent(OnServer.class)
-			|| method.getDeclaringClass().isAnnotationPresent(OnMember.class);
+	protected boolean isFunctionExecutedOnSingleServer(@NonNull Method method) {
+		return method.getDeclaringClass().isAnnotationPresent(OnServer.class);
 	}
 
 	protected Object resolveResult(MethodInvocation invocation, Object result) {

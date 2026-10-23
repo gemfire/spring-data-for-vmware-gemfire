@@ -55,6 +55,20 @@ public class ClientOnlyConfigurationUnitTests {
 	}
 
 	@Test
+	public void schemaRejectsFunctionHosting() {
+
+		assertInvalid("<gfe:function-service><gfe:function ref=\"serverFunction\"/></gfe:function-service>");
+	}
+
+	@Test
+	public void namespaceRejectsFunctionHostingWithoutSchemaValidation() {
+
+		assertThatThrownBy(() -> load("<gfe:function-service/>", false))
+			.isInstanceOf(BeanDefinitionStoreException.class)
+			.hasMessageContaining("Cannot locate BeanDefinitionParser for element [function-service]");
+	}
+
+	@Test
 	public void schemaRejectsPeerRegionSettings() {
 
 		for (String attribute : new String[] {
@@ -98,6 +112,10 @@ public class ClientOnlyConfigurationUnitTests {
 	}
 
 	private DefaultListableBeanFactory load(String body) {
+		return load(body, true);
+	}
+
+	private DefaultListableBeanFactory load(String body, boolean validate) {
 
 		String document = """
 			<beans xmlns="http://www.springframework.org/schema/beans"
@@ -107,7 +125,10 @@ public class ClientOnlyConfigurationUnitTests {
 			                           http://www.springframework.org/schema/geode https://www.springframework.org/schema/geode/spring-geode.xsd">
 			""" + body + "</beans>";
 		DefaultListableBeanFactory registry = new DefaultListableBeanFactory();
-		new XmlBeanDefinitionReader(registry).loadBeanDefinitions(
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(registry);
+		reader.setValidating(validate);
+		reader.setNamespaceAware(true);
+		reader.loadBeanDefinitions(
 			new ByteArrayResource(document.getBytes(StandardCharsets.UTF_8)));
 		return registry;
 	}

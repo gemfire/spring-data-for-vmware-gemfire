@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.AccessibleObject;
@@ -21,6 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.data.gemfire.function.annotation.FunctionId;
+import org.springframework.data.gemfire.function.annotation.OnServer;
+import org.springframework.data.gemfire.function.annotation.OnServers;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -43,6 +46,32 @@ public class GemfireFunctionProxyFactoryBeanUnitTests {
 	@Before
 	public void setUp() {
 		this.functionOperations = mock(GemfireFunctionOperations.class);
+	}
+
+	@Test
+	public void singleServerProxyExtractsResultAndPassesArguments() throws Exception {
+
+		when(this.functionOperations.executeAndExtract("greeting", "Ada")).thenReturn("Hello Ada");
+
+		SingleServerFunctions proxy = (SingleServerFunctions)
+			new GemfireFunctionProxyFactoryBean(SingleServerFunctions.class, this.functionOperations).getObject();
+
+		assertThat(proxy.hello("Ada")).isEqualTo("Hello Ada");
+		verify(this.functionOperations).executeAndExtract("greeting", "Ada");
+		verifyNoMoreInteractions(this.functionOperations);
+	}
+
+	@Test
+	public void multipleServerProxyPreservesCollectedResults() throws Exception {
+
+		when(this.functionOperations.execute("greeting", "Ada")).thenReturn(Arrays.asList("Hello Ada", "Hi Ada"));
+
+		MultipleServerFunctions proxy = (MultipleServerFunctions)
+			new GemfireFunctionProxyFactoryBean(MultipleServerFunctions.class, this.functionOperations).getObject();
+
+		assertThat(proxy.hello("Ada")).containsExactly("Hello Ada", "Hi Ada");
+		verify(this.functionOperations).execute("greeting", "Ada");
+		verifyNoMoreInteractions(this.functionOperations);
 	}
 
 	@Test
@@ -147,6 +176,20 @@ public class GemfireFunctionProxyFactoryBeanUnitTests {
 				return null;
 			}
 		}
+	}
+
+	@OnServer
+	public interface SingleServerFunctions {
+
+		@FunctionId("greeting")
+		String hello(String name);
+	}
+
+	@OnServers
+	public interface MultipleServerFunctions {
+
+		@FunctionId("greeting")
+		List<String> hello(String name);
 	}
 
 	@SuppressWarnings("unused")

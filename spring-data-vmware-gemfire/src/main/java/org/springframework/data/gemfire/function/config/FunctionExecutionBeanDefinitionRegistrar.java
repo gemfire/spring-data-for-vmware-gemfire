@@ -17,8 +17,6 @@ import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.data.gemfire.function.annotation.OnMember;
-import org.springframework.data.gemfire.function.annotation.OnMembers;
 import org.springframework.data.gemfire.function.annotation.OnRegion;
 import org.springframework.data.gemfire.function.annotation.OnServer;
 import org.springframework.data.gemfire.function.annotation.OnServers;
@@ -29,7 +27,7 @@ import org.w3c.dom.Element;
 
 /**
  * {@link ImportBeanDefinitionRegistrar} for {@link EnableGemfireFunctionExecutions}, which scans for interfaces
- * annotated with one of {@link OnRegion}, {@link OnServer}, {@link OnServers}, {@link OnMember}, {@link OnMembers}.
+ * annotated with one of {@link OnRegion}, {@link OnServer}, {@link OnServers}.
  *
  * @author David Turanski
  * @author John Blum

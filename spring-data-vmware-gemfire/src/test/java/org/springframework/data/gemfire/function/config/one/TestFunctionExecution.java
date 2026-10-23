@@ -8,9 +8,9 @@ import java.util.Set;
 
 import org.springframework.data.gemfire.function.annotation.Filter;
 import org.springframework.data.gemfire.function.annotation.FunctionId;
-import org.springframework.data.gemfire.function.annotation.OnMember;
+import org.springframework.data.gemfire.function.annotation.OnServers;
 
-@OnMember
+@OnServers
 public interface TestFunctionExecution {
 	   @FunctionId("f1")
 	   public String getString(Object arg1, @Filter Set<Object> keys) ;

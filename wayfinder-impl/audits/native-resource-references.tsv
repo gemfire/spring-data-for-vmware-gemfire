@@ -32,9 +32,6 @@ spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/c
 spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1098	"<tool:exports type=""org.apache.geode.cache.DiskStore"" />"
 spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1229	"<tool:exports type=""org.apache.geode.cache.util.ObjectSizer"" />"
 spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1325	"<tool:expected-type type=""org.apache.geode.cache.RegionService"" />"
-spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1453	"<xsd:documentation source=""org.apache.geode.cache.execute.Function""><![CDATA["
-spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1455	must implement org.apache.geode.cache.execute.Function
-spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd	1459	"<tool:exports type=""org.apache.geode.cache.execute.Function"" />"
 spring-data-vmware-gemfire/src/test/resources/log4j2-test.xml	17	"<Logger name=""org.apache.geode"" level=""${sys:log4j.geode.log.level:-error}""/>"
 spring-data-vmware-gemfire/src/test/resources/logback.xml	27	"<logger name=""org.apache.geode"" level=""${logback.log.level:-ERROR}""/>"
 spring-data-vmware-gemfire/src/test/resources/org/springframework/data/gemfire/config/xml/CacheUsingPdxNamespaceIntegrationTests-context.xml	22	"<bean id=""autoSerializer"" class=""org.apache.geode.pdx.ReflectionBasedAutoSerializer""/>"

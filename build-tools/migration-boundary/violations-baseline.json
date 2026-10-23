@@ -983,14 +983,6 @@
     {
       "rule": "native-resource",
       "path": "spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd",
-      "line": 1691,
-      "detail": "tool:exports@type=org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-resource",
-      "path": "spring-data-vmware-gemfire/src/main/resources/org/springframework/data/gemfire/config/spring-geode-3.0.xsd",
       "line": 1461,
       "detail": "tool:exports@type=org.apache.geode.cache.util.ObjectSizer",
       "count": 1,
@@ -6078,62 +6070,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 46,
-      "detail": "org.apache.geode.cache.execute.Function :: Function<Object>",
-      "count": 2,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 49,
-      "detail": "org.apache.geode.cache.execute.FunctionContext :: FunctionContext functionContext",
-      "count": 2,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.FunctionContext :: org.apache.geode.cache.execute.FunctionContext",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 42,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.getFunction",
-      "count": 2,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 41,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.getRegisteredFunctions",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/FunctionServiceNamespaceIntegrationTests.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/InvalidRegionExpirationAttributesNamespaceIntegrationTests.java",
       "line": 7,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
@@ -9902,49 +9838,65 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 44,
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 56,
+      "detail": "org.apache.geode.cache.CacheLoader :: CacheLoader<String, String>",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 11,
+      "detail": "org.apache.geode.cache.CacheLoader :: org.apache.geode.cache.CacheLoader",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 73,
+      "detail": "org.apache.geode.cache.LoaderHelper :: LoaderHelper<String, String>",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 12,
+      "detail": "org.apache.geode.cache.LoaderHelper :: org.apache.geode.cache.LoaderHelper",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 51,
+      "detail": "org.apache.geode.cache.Region :: Region<String, String>",
+      "count": 2,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 13,
+      "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 35,
       "detail": "org.apache.geode.cache.client.ClientCache :: @Autowired private ClientCache gemfireCache",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 9,
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportClientLoaderIntegrationTests.java",
+      "line": 14,
       "detail": "org.apache.geode.cache.client.ClientCache :: org.apache.geode.cache.client.ClientCache",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 75,
-      "detail": "org.apache.geode.cache.execute.Function :: Function<T>",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 136,
-      "detail": "org.apache.geode.cache.execute.FunctionContext :: FunctionContext context",
-      "count": 2,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/support/LazyWiringDeclarableSupportFunctionBasedIntegrationTests.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.execute.FunctionContext :: org.apache.geode.cache.execute.FunctionContext",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -19502,30 +19454,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/BatchingResultSender.java",
-      "line": 14,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/BatchingResultSender.java",
-      "line": 33,
-      "detail": "org.apache.geode.cache.execute.ResultSender :: ResultSender<Object>",
-      "count": 5,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/BatchingResultSender.java",
-      "line": 15,
-      "detail": "org.apache.geode.cache.execute.ResultSender :: org.apache.geode.cache.execute.ResultSender",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/ExecutionTimeoutFunctionException.java",
       "line": 17,
       "detail": "org.apache.geode.cache.execute.FunctionException :: ExecutionTimeoutFunctionException extends FunctionException implements",
@@ -19537,70 +19465,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/ExecutionTimeoutFunctionException.java",
       "line": 7,
       "detail": "org.apache.geode.cache.execute.FunctionException :: org.apache.geode.cache.execute.FunctionException",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 39,
-      "detail": "org.apache.geode.cache.execute.Function :: Function function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 33,
-      "detail": "org.apache.geode.cache.execute.Function :: List<Function>",
-      "count": 2,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 29,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FactoryBean<FunctionService>",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 59,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.class",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.registerFunction",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 53,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: getObject(): FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
       "count": 1,
       "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
     },
@@ -19664,22 +19528,6 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/config/FunctionExecutionComponentProvider.java",
       "line": 15,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/config/MemberBasedFunctionExecutionBeanDefinitionBuilder.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/config/MemberBasedFunctionExecutionBeanDefinitionBuilder.java",
-      "line": 10,
       "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
       "count": 1,
       "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
@@ -20094,46 +19942,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnMemberFunctionTemplate.java",
-      "line": 27,
-      "detail": "org.apache.geode.distributed.DistributedMember :: DistributedMember distributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnMemberFunctionTemplate.java",
-      "line": 7,
-      "detail": "org.apache.geode.distributed.DistributedMember :: org.apache.geode.distributed.DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnMemberFunctionTemplate.java",
-      "line": 18,
-      "detail": "org.apache.geode.distributed.DistributedMember :: private final DistributedMember distributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnMembersFunctionTemplate.java",
-      "line": 20,
-      "detail": "org.apache.geode.distributed.DistributedMember :: Set<DistributedMember>",
-      "count": 2,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnMembersFunctionTemplate.java",
-      "line": 9,
-      "detail": "org.apache.geode.distributed.DistributedMember :: org.apache.geode.distributed.DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnRegionFunctionTemplate.java",
       "line": 29,
       "detail": "org.apache.geode.cache.Region :: Region<?, ?>",
@@ -20297,302 +20105,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/GemfireOnServersFunctionTemplate.java",
       "line": 10,
       "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnAllMembersFunctionExecution.java",
-      "line": 27,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnAllMembersFunctionExecution.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnAllMembersFunctionExecution.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnAllMembersFunctionExecution.java",
-      "line": 28,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMembers",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnAllMembersFunctionExecution.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 29,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 30,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDefaultMemberFunctionExecution.java",
-      "line": 10,
-      "detail": "org.apache.geode.distributed.DistributedMember :: org.apache.geode.distributed.DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 42,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 29,
-      "detail": "org.apache.geode.distributed.DistributedMember :: DistributedMember distributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 36,
-      "detail": "org.apache.geode.distributed.DistributedMember :: getDistributedMember(): DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 10,
-      "detail": "org.apache.geode.distributed.DistributedMember :: org.apache.geode.distributed.DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMemberFunctionExecution.java",
-      "line": 27,
-      "detail": "org.apache.geode.distributed.DistributedMember :: private final DistributedMember distributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 42,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 11,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 43,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMembers",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 12,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 28,
-      "detail": "org.apache.geode.distributed.DistributedMember :: Set<DistributedMember>",
-      "count": 3,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnDistributedMembersFunctionExecution.java",
-      "line": 13,
-      "detail": "org.apache.geode.distributed.DistributedMember :: org.apache.geode.distributed.DistributedMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMemberInGroupsFunctionExecution.java",
-      "line": 55,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMemberInGroupsFunctionExecution.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMemberInGroupsFunctionExecution.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMemberInGroupsFunctionExecution.java",
-      "line": 56,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMember",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMemberInGroupsFunctionExecution.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMembersInGroupsFunctionExecution.java",
-      "line": 55,
-      "detail": "org.apache.geode.cache.execute.Execution :: getExecution(): Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMembersInGroupsFunctionExecution.java",
-      "line": 7,
-      "detail": "org.apache.geode.cache.execute.Execution :: org.apache.geode.cache.execute.Execution",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMembersInGroupsFunctionExecution.java",
-      "line": 8,
-      "detail": "org.apache.geode.cache.execute.Function :: org.apache.geode.cache.execute.Function",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMembersInGroupsFunctionExecution.java",
-      "line": 56,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: FunctionService.onMembers",
-      "count": 1,
-      "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/execution/OnMembersInGroupsFunctionExecution.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.execute.FunctionService :: org.apache.geode.cache.execute.FunctionService",
       "count": 1,
       "owner": "wayfinder-issues/32-spring-function-consumer-migration.md"
     },
@@ -28830,30 +28342,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/function/BatchingResultSenderTest.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.execute.ResultSender :: ResultSender.class",
-      "count": 3,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/function/BatchingResultSenderTest.java",
-      "line": 40,
-      "detail": "org.apache.geode.cache.execute.ResultSender :: ResultSender<Object>",
-      "count": 2,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/function/BatchingResultSenderTest.java",
-      "line": 19,
-      "detail": "org.apache.geode.cache.execute.ResultSender :: org.apache.geode.cache.execute.ResultSender",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/function/CaptureUnconvertedArgumentTypesFunction.java",
       "line": 14,
       "detail": "org.apache.geode.cache.execute.Function :: Function<Class<?>[]>",
@@ -33345,14 +32833,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/expiration/ExpirationAttributesFactoryBean.java",
       "line": 30,
       "detail": "ExpirationAttributesFactoryBean :: protected static final ExpirationAction DEFAULT_EXPIRATION_ACTION = ExpirationActionType.DEFAULT.getExpirationAction()",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/function/FunctionServiceFactoryBean.java",
-      "line": 31,
-      "detail": "FunctionServiceFactoryBean :: private static Logger logger = LoggerFactory.getLogger(FunctionServiceFactoryBean.class)",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },

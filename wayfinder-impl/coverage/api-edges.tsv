@@ -1384,7 +1384,6 @@ org.apache.geode.cache.execute.ResultCollector#addResult(Lorg/apache/geode/distr
 org.apache.geode.cache.execute.ResultCollector#getResult()Ljava/lang/Object;	org.apache.geode.cache.execute.FunctionException	member-signature
 org.apache.geode.cache.execute.ResultCollector#getResult(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;	org.apache.geode.cache.execute.FunctionException	member-signature
 org.apache.geode.cache.execute.ResultSender	org.apache.geode.cache.execute.ResultSender	frozen-baseline-root
-org.apache.geode.cache.execute.ResultSender	org.apache.geode.cache.execute.ResultSender	spring-root
 org.apache.geode.cache.operations.OperationContext#getOperationCode()Lorg/apache/geode/cache/operations/OperationContext$OperationCode;	org.apache.geode.cache.operations.OperationContext$OperationCode	member-signature
 org.apache.geode.cache.operations.OperationContext#isClientUpdate(Lorg/apache/geode/cache/operations/OperationContext;)Z	org.apache.geode.cache.operations.OperationContext	member-signature
 org.apache.geode.cache.operations.OperationContext$OperationCode#<type>	org.apache.geode.cache.operations.OperationContext$OperationCode	type-hierarchy-or-bound

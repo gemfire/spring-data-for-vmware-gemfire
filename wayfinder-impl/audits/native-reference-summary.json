@@ -1,28 +1,28 @@
 {
   "java_files": {
-    "integrationTest": 150,
-    "main": 346,
-    "test": 245
+    "integrationTest": 149,
+    "main": 330,
+    "test": 242
   },
   "java_files_with_noncomment_native_references": {
-    "integrationTest": 128,
-    "main": 171,
-    "test": 112
+    "integrationTest": 127,
+    "main": 160,
+    "test": 111
   },
   "noncomment_native_reference_lines": {
-    "integrationTest": 442,
-    "main": 537,
-    "test": 330
+    "integrationTest": 440,
+    "main": 508,
+    "test": 329
   },
   "java_files_with_raw_native_text_including_comments": {
-    "integrationTest": 133,
-    "main": 183,
-    "test": 117
+    "integrationTest": 132,
+    "main": 172,
+    "test": 116
   },
   "unique_imported_native_symbols": {
-    "integrationTest": 68,
-    "main": 135,
-    "test": 77
+    "integrationTest": 66,
+    "main": 134,
+    "test": 76
   },
   "main_native_files_by_package": {
     "(root)": 16,
@@ -32,7 +32,7 @@
     "domain": 1,
     "eviction": 5,
     "expiration": 5,
-    "function": 31,
+    "function": 20,
     "listener": 4,
     "mapping": 5,
     "repository": 13,
@@ -45,6 +45,6 @@
     "spiCacheSourceFiles": 26,
     "spiCacheTestFiles": 24
   },
-  "raw_resource_reference_lines": 47,
+  "raw_resource_reference_lines": 44,
   "raw_resource_files": 8
 }
