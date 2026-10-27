@@ -9,9 +9,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
         version="1.0">
-    <pdx>
+    <pdx read-serialized="true">
         <pdx-serializer>
-            <class-name>org.springframework.data.gemfire.function.PersonPdxSerializer</class-name>
+            <class-name>org.apache.geode.pdx.ReflectionBasedAutoSerializer</class-name>
+            <parameter name="classes">
+                <string>org.springframework.data.gemfire.function.*</string>
+            </parameter>
         </pdx-serializer>
 
     </pdx>

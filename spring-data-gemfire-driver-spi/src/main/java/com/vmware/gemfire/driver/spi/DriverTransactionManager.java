@@ -12,7 +12,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Cache-owned transaction service. Thread association, isolation, callback lifecycle and supported
  * client capabilities follow the provider. Registration does not guarantee transaction listener
- * notifications; GemFire 10.4 client transactions notify entry listeners but not transaction listeners. A handle does not own or close its cache. Timed tryResume waits
+ * notifications: delivery depends on where transaction state is hosted. Client-local and empty
+ * transactions use a different native path from transactions against server-backed client regions.
+ * A handle does not own or close its cache. Timed tryResume waits
  * for suspension; it does not set a transaction lifetime or a Spring transaction timeout.
  * ID externalization uses the bound engine's format, not a version-independent SPI wire format.
  */

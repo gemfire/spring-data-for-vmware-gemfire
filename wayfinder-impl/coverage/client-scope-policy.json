@@ -1081,6 +1081,139 @@
         "API-ec12201eb45d5090",
         "API-ed6e443e4ce25781"
       ]
+    },
+    {
+      "id": "client-local-transaction-outcomes",
+      "scope": "required-client",
+      "reason": "Real LOCAL client transactions deliver commit, rollback and conflict outcomes; empty transactions also deliver outcomes. Server-backed client stub notification silence does not exclude locally hosted client callbacks.",
+      "evidence": "wayfinder-impl/investigations/client-local-transaction-outcomes.md#member-level-disposition",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
+      "api_ids": [
+        "API-00b975c07847f048",
+        "API-0bc29ec6357df198",
+        "API-5f7001ab50825eea",
+        "API-e85b516454b19cd1"
+      ]
+    },
+    {
+      "id": "client-transaction-listener-lifecycle",
+      "scope": "required-client",
+      "reason": "Client listener registration and cleanup work on the native manager; both initialization hooks adapt a client cache and properties without extra lifecycle calls. Spring assembly and native-free mock support remain required.",
+      "evidence": "wayfinder-impl/investigations/client-local-transaction-outcomes.md#member-level-disposition",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
+      "api_ids": [
+        "API-049eff05afa2bd79",
+        "API-74ef29157f0e9086",
+        "API-e2460dda14fcde03"
+      ]
+    },
+    {
+      "id": "client-local-transaction-event",
+      "scope": "required-client",
+      "reason": "Real client-local callbacks expose transaction identity, borrowed client cache and original/staged entry payloads; empty client transactions expose empty event lists.",
+      "evidence": "wayfinder-impl/investigations/client-local-transaction-outcomes.md#member-level-disposition",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
+      "api_ids": [
+        "API-5471f618cc8585a8",
+        "API-64c493d6caec9a22",
+        "API-850ce7fa086f1301",
+        "API-eed21ca5e11d6e9b"
+      ]
+    },
+    {
+      "id": "client-function-execution",
+      "scope": "required-client",
+      "reason": "Client ID/object submission, timed execution, arguments, region filters and collectors require typed equivalents; server-target filters retain native rejection.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#client-execution",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-02e2d75cb85d2cd7",
+        "API-0e1489ada6ff8e20",
+        "API-271bf3201411e91a",
+        "API-4cd4f11eaf338e41",
+        "API-5f6fe5a9b2dc6869",
+        "API-619bec5aec13c56e",
+        "API-76c9615b454e3d35",
+        "API-95a37985debdd6f3",
+        "API-fa6a2c5671b92a30"
+      ]
+    },
+    {
+      "id": "client-function-submission-metadata",
+      "scope": "required-client",
+      "reason": "Client submission consumes identity, result, HA and write-routing metadata; type scope does not settle body or permission callbacks.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#client-submission-metadata",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-095022b3f73578a3",
+        "API-452a71383981d97c",
+        "API-6a10b95b6679010a",
+        "API-75d9ae1630ba0aba",
+        "API-9334fc194da25721",
+        "API-a83b1ba8342cbbb0"
+      ]
+    },
+    {
+      "id": "client-function-failures",
+      "scope": "required-client",
+      "reason": "Client execution propagates function failures, aggregate exceptions and cause/message diagnostics through typed equivalents.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#client-failures",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-042090fa213f82dc",
+        "API-10638e1cb18bb167",
+        "API-3404ce5f6163344e",
+        "API-4e587337e5503fe1",
+        "API-85ae22fe72f538ad",
+        "API-a1e598870915a0e0",
+        "API-c0369bbab705882f",
+        "API-e8b188a97a074c95",
+        "API-fe75f6d8b01a42d6",
+        "API-ff3966e8edd010b5"
+      ]
+    },
+    {
+      "id": "client-function-targets",
+      "scope": "required-client",
+      "reason": "Region, pool and client/authenticated-view targets require injected client equivalents, without a public native static service.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#client-targets",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-014fbb8a4a98b5d1",
+        "API-17d28953ee1654d7",
+        "API-1f2689cdf8ce4a41",
+        "API-2383913d686058dc",
+        "API-be5d66886fba7548",
+        "API-d6df4e75148238b0"
+      ]
+    },
+    {
+      "id": "client-function-collectors",
+      "scope": "required-client",
+      "reason": "Client collectors require result and timed retrieval, member-tagged delivery, completion and retry clearing without stronger ordering guarantees.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#client-collectors",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-0f4587d36f06101a",
+        "API-34999528c518d0e5",
+        "API-5c2a123d36e8d337",
+        "API-5f20f0ac436c3e68",
+        "API-832377418c76ec45",
+        "API-f55df3e524b65cd5"
+      ]
+    },
+    {
+      "id": "peer-function-targets",
+      "scope": "excluded-server",
+      "reason": "Distributed-system member/group execution is outside client-only scope; client server-group routing remains a separate requirement.",
+      "evidence": "wayfinder-impl/investigations/client-function-member-scope.md#peer-targets",
+      "owner": "wayfinder-issues/64-complete-client-scope-reconciliation.md",
+      "api_ids": [
+        "API-26af807f9c4bc441",
+        "API-5b913eec21e43909",
+        "API-e2677defba29d5a2",
+        "API-ebeaa12060fee7ba"
+      ]
     }
   ]
 }

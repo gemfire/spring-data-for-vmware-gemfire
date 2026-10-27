@@ -29,3 +29,11 @@ Exercise each retained client target, authentication, arguments/filters, result 
 ## Completion
 
 Every retained client function contract is implemented and mapped; ticket 32 owns Spring consumer cutover. Record exact native version, validation and any blocking children. Server hosting is not a completion requirement.
+
+## Member-level acceptance from task 64
+
+Implement the 37 required-client rows in the [function member ledger](../wayfinder-impl/investigations/client-function-member-scope.md) through typed equivalents. Preserve ID/object and timed submission, identity/result/HA/write metadata, pool/default-pool/authenticated-view target restrictions, region filters and rejection of filters on data-independent server targets. Collector contracts must retain member-tagged results, completion, retry clearing, timed interruption and aggregate failure causes without native member/exception types. Native naming and static factory shapes are not required.
+
+Verify these paths with each native driver and native-free local collector/orchestration tests; retain explicit mock remote-execution rejection. Do not treat local registry lookup as a remote existence check. Task 64 must settle the remaining 31 callback/permission/registry/constructor dispositions before parent 59 closes; this ticket does not bypass that prerequisite.
+
+Missing server registration has target-specific native failure paths: the pinned registry probes observe `FunctionException` for a client region and `ServerOperationException` for pool/cache server targets. Cover both in typed failure mapping and retain function identity/cause diagnostics. The corrected five registry probes and three existing object-submission tests all passed in user-run validation on 2026-10-28, with zero failures/errors/skips. These native compatibility probes establish behavior; the typed SPI implementation and its tests remain outstanding.

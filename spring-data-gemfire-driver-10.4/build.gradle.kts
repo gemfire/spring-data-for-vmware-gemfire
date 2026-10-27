@@ -62,3 +62,28 @@ val integrationTestTask = tasks.register<Test>("integrationTest") {
     "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.nio=ALL-UNNAMED")
 }
 tasks.check { dependsOn(integrationTestTask) }
+
+// Private deployment payload for Spring's client integration tests. Neither these classes nor
+// their native compile dependencies are exported by the driver's main artifact.
+val functionProtocol = sourceSets.create("functionProtocol") {
+  java.srcDir(rootProject.file("test-fixtures/function-protocol/java"))
+}
+val serverFixtures = sourceSets.create("serverFixtures") {
+  compileClasspath += functionProtocol.output
+  runtimeClasspath += functionProtocol.output
+}
+dependencies {
+  add(serverFixtures.implementationConfigurationName, "com.vmware.gemfire:gemfire-core") {
+    version { strictly(resolvedNativeVersion) }
+  }
+}
+val serverFunctionFixtureJar = tasks.register<Jar>("serverFunctionFixtureJar") {
+  from(serverFixtures.output, functionProtocol.output)
+  archiveFileName.set("server-function-fixtures.jar")
+}
+val serverFunctionFixtures = configurations.create("serverFunctionFixtures") {
+  isCanBeConsumed = true
+  isCanBeResolved = false
+  isTransitive = false
+}
+artifacts { add(serverFunctionFixtures.name, serverFunctionFixtureJar) }

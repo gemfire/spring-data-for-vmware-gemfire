@@ -55,12 +55,26 @@ plugins {
 }
 
 sourceSets {
+  test {
+    java.srcDir(rootProject.file("test-fixtures/function-protocol/java"))
+  }
   register("integrationTest") {
     compileClasspath += sourceSets.main.get().output + sourceSets.test.get().output
     runtimeClasspath += sourceSets.main.get().output + sourceSets.test.get().output
     java.srcDir("src/integrationTest/java")
     resources.srcDir("src/test/resources")
+    resources.srcDir(rootProject.file("spring-data-gemfire-driver-10.4/src/serverFixtures/resources"))
   }
+}
+
+// Resolve the server deployment payload separately; never add it to a client classpath.
+val serverFunctionFixtures = configurations.create("serverFunctionFixtures") {
+  isCanBeConsumed = false
+  isTransitive = false
+}
+dependencies {
+  add(serverFunctionFixtures.name, project(mapOf("path" to ":spring-data-gemfire-driver-10.4",
+    "configuration" to "serverFunctionFixtures")))
 }
 
 configurations {
@@ -171,6 +185,12 @@ tasks {
 
     dependsOn("testJar")
 
+    dependsOn(serverFunctionFixtures)
+    inputs.files(serverFunctionFixtures)
+    doFirst {
+      systemProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH", serverFunctionFixtures.singleFile.absolutePath)
+    }
+
     forkEvery = 1
     maxParallelForks = 2
   }
@@ -246,6 +266,45 @@ tasks.register<Jar>("testJar") {
   archiveFileName = "testJar.jar"
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+val verifyFunctionFixturePackaging = tasks.register("verifyFunctionFixturePackaging") {
+  description = "Checks that deployed server functions are absent from client test classpaths and artifacts."
+  group = "verification"
+  val clientClasspath = sourceSets.test.get().runtimeClasspath + sourceSets["integrationTest"].runtimeClasspath
+  val clientTestJar = tasks.named<Jar>("testJar")
+  dependsOn(serverFunctionFixtures, clientClasspath, clientTestJar)
+  inputs.files(serverFunctionFixtures, clientClasspath, clientTestJar)
+  doLast {
+    fun entries(file: File): Set<String> = when {
+      file.isDirectory -> file.walkTopDown().filter { it.isFile }
+        .map { it.relativeTo(file).invariantSeparatorsPath }.toSet()
+      file.isFile && file.extension == "jar" -> ZipFile(file).use { zip ->
+        zip.entries().asSequence().map { it.name }.toSet()
+      }
+      else -> emptySet()
+    }
+    val protocolClasses = setOf(
+      "org/springframework/data/gemfire/function/sample/Metric.class",
+      "org/springframework/data/gemfire/function/execution/FunctionFixtureIds.class")
+    val payload = entries(serverFunctionFixtures.singleFile)
+    check(payload.containsAll(protocolClasses)) { "Server deployment is missing shared protocol classes" }
+    check(payload.contains("client-cache-function-execution-with-pdx-cache.xml")) {
+      "Server deployment is missing its PDX configuration"
+    }
+    val serverClasses = payload.filter { it.endsWith(".class") && it !in protocolClasses }.toSet()
+    // 12 top-level function classes plus a holder and its three nested functions.
+    check(serverClasses.size == 16) { "Unexpected server fixture inventory: $serverClasses" }
+    check(serverClasses.all { it.startsWith("org/springframework/data/gemfire/function/") }) {
+      "Deployment must contain only private function fixtures and shared protocol classes"
+    }
+    (clientClasspath.files + clientTestJar.get().archiveFile.get().asFile).forEach { file ->
+      val leaked = entries(file).intersect(serverClasses)
+      check(leaked.isEmpty()) { "Server functions leaked onto the client classpath/artifact $file: $leaked" }
+    }
+  }
+}
+tasks.named("integrationTest") { dependsOn(verifyFunctionFixturePackaging) }
+tasks.check { dependsOn(verifyFunctionFixturePackaging) }
 
 // Transitional verification of the actual migrated sources. These source sets do not inherit
 // main/test's native dependencies; expand their inventory as the migration advances.

@@ -45,9 +45,9 @@ public class ExceptionThrowingFunctionExecutionIntegrationTests {
 	public static void startGemFireServer() {
 
     GemFireCluster gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-        .withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+        .withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH")), "/server-function-fixtures.jar"))
 				.withConfiguration("server-*", container -> container.withStartupAttempts(3))
-        .withGfsh(false, "deploy --jar=/testJar.jar");
+        .withGfsh(false, "deploy --jar=/server-function-fixtures.jar");
 
 		gemFireCluster.acceptLicense().start();
 

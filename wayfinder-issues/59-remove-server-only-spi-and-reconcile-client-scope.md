@@ -72,3 +72,17 @@ The 3,851 frozen API IDs remain. Removing 54 stale partial mappings yields 2,975
 [Task 63](63-retire-spring-server-configuration-surfaces.md) is resolved. Its [ledger](../wayfinder-impl/investigations/client-only-spring-surfaces.md) records server configuration/function/feature retirement, retained client XML, breaking changes and test dispositions. The inherited-attributes slice passes 82 focused tests; the final feature-catalog follow-up passes 15, without failures/errors/skips. Affected compilation, transitional boundary and refreshed coverage/declaration checks pass. Frozen scope remains 362 required-client / 625 excluded-server / 2,864 unresolved.
 
 Task 64 is next and all its blockers are resolved. This parent remains open for member-level reconciliation, mixed transaction outcomes, private server function fixture relocation and final acceptance. Remaining client native coupling stays assigned to downstream migration owners; this is not native-free compliance.
+
+## Task 64 transaction scope receipt — 2026-10-27
+
+[Client-local outcome evidence](../wayfinder-impl/investigations/client-local-transaction-outcomes.md) resolves 11 listener/event rows as required-client. Five local and eleven existing transaction tests pass with zero failures/errors/skips, plus transitional boundary verification. Required callbacks remain in SPI; implementation/consumer and native-free mock obligations remain tasks 34/37. All 3,851 IDs remain: 373 required-client / 625 excluded-server / 2,853 unresolved. Task 64 and this parent remain open for the remaining member dispositions and private fixture relocation.
+
+## Task 64 function fixtures — validated
+
+The 13 inventoried function files (15 server bodies) and server PDX XML have moved to a private native driver source set. Seven Spring client suites deploy a separate fixture JAR, with shared JDK-only DTO/IDs and a packaging isolation gate. See the [relocation record](../wayfinder-impl/investigations/client-function-fixture-relocation.md) for retained assertions and the two remaining non-function legacy test-JAR consumers. Source/coverage checks pass; validation results are recorded below. Neither task 64 nor this parent is complete.
+
+User-run compilation, packaging verification and 15 real-server tests now pass (zero failures/errors/skips). Reconciled the existing boundary identity for the deployment property/JAR rename without changing its count or owner. User-run boundary pruning/verification now passes: 67 stale entries removed, with zero new or stale identities remaining. The fixture relocation slice is validated; both tasks remain open for the remaining scope and infrastructure reconciliation.
+
+## Task 64 function member scope — 2026-10-28
+
+The [member ledger](../wayfinder-impl/investigations/client-function-member-scope.md) resolves 37 required-client rows and four excluded peer targets using pinned native source. There are 31 function rows still awaiting callback/permission/registry decisions. Current scope is 410 required-client / 629 excluded-server / 2,812 unresolved, with all frozen IDs and implementation statuses preserved. Tasks 25/32 retain typed client implementation and Spring cutover; no public server service is added. Task 64 and this parent remain open.

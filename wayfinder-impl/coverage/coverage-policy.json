@@ -12885,8 +12885,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#addListener(Lorg/apache/geode/cache/TransactionListener;)V": {
@@ -12895,8 +12895,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#addListener",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#begin()V": {
@@ -12905,8 +12905,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#begin",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#commit()V": {
@@ -12915,8 +12915,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#commit",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#exists()Z": {
@@ -12925,8 +12925,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#exists",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#exists(Lorg/apache/geode/cache/TransactionId;)Z": {
@@ -12935,8 +12935,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#exists",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#getListener()Lorg/apache/geode/cache/TransactionListener;": {
@@ -12945,8 +12945,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#getListener",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#getListeners()[Lorg/apache/geode/cache/TransactionListener;": {
@@ -12955,8 +12955,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#getListeners",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#getTransactionId()Lorg/apache/geode/cache/TransactionId;": {
@@ -12965,8 +12965,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#getTransactionId",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#getWriter()Lorg/apache/geode/cache/TransactionWriter;": {
@@ -12985,8 +12985,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#initListeners",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#isDistributed()Z": {
@@ -13005,8 +13005,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#isSuspended",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#removeListener(Lorg/apache/geode/cache/TransactionListener;)V": {
@@ -13015,8 +13015,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#removeListener",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#resume(Lorg/apache/geode/cache/TransactionId;)V": {
@@ -13025,8 +13025,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#resume",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#rollback()V": {
@@ -13035,8 +13035,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#rollback",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#setDistributed(Z)V": {
@@ -13055,8 +13055,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#setListener",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#setWriter(Lorg/apache/geode/cache/TransactionWriter;)V": {
@@ -13075,8 +13075,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#suspend",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#tryResume(Lorg/apache/geode/cache/TransactionId;)Z": {
@@ -13085,8 +13085,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#tryResume",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.CacheTransactionManager#tryResume(Lorg/apache/geode/cache/TransactionId;JLjava/util/concurrent/TimeUnit;)Z": {
@@ -13095,8 +13095,8 @@
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java#tryResume",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.GemFireCache#getCacheTransactionManager()Lorg/apache/geode/cache/CacheTransactionManager;": {
@@ -13110,43 +13110,43 @@
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionEvent#<type>": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionEvent.java",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionEvent.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionEvent#getCache()Lorg/apache/geode/cache/Cache;": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionEvent.java#getCache",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionEvent.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionEvent#getEvents()Ljava/util/List;": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionEvent.java#getEvents",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionEvent.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionEvent#getTransactionId()Lorg/apache/geode/cache/TransactionId;": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionEvent.java#getTransactionId",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionEvent.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionId#readExternal(Ljava/io/ObjectInput;)V": {
@@ -13170,73 +13170,73 @@
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#<type>": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListener.java",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#afterCommit(Lorg/apache/geode/cache/TransactionEvent;)V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListener.java#afterCommit",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#afterFailedCommit(Lorg/apache/geode/cache/TransactionEvent;)V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListener.java#afterFailedCommit",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#afterRollback(Lorg/apache/geode/cache/TransactionEvent;)V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListener.java#afterRollback",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#close()V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverCacheCallback.java#close",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#init(Ljava/util/Properties;)V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverDeclarable.java#init",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionListener#initialize(Lorg/apache/geode/cache/Cache;Ljava/util/Properties;)V": {
-      "owner": "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md",
+      "owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md",
       "status": "partial",
       "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverDeclarable.java#initialize",
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
       "mock": "spring-data-gemfire-driver-mock/src/main/java/com/vmware/gemfire/driver/mock/MockTransactionManager.java; all operations explicitly unsupported; no transaction simulation or callback registration",
-      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
-      "remaining": "Client commit/rollback/conflict/suspension and entry transaction IDs verified. Listener registration/identity/cleanup and synthetic forwarding retained; client outcomes do not dispatch transaction listeners. Spring adoption and mock simulation remain tasks 34/37; event notification scope remains task 64.",
+      "tests": "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/TransactionContract.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java; spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
+      "remaining": "Client-local commit/rollback/conflict and empty transaction outcomes, identity/cache/entry payloads and listener failure cleanup verified. Server-backed client transactions remain silent; registration/identity/lifecycle forwarding is verified. Listener/event scope is resolved as required-client; Spring adoption and native-free mock simulation remain tasks 34/37.",
       "consumer_owner": "wayfinder-issues/34-spring-transaction-consumer-migration.md"
     },
     "org.apache.geode.cache.TransactionWriter#<type>": {
@@ -15118,10 +15118,10 @@
         "org.apache.geode.cache.TransactionListener#afterCommit(Lorg/apache/geode/cache/TransactionEvent;)V"
       ],
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
-      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
       "status": "partial",
-      "remaining": "Synthetic forwarding only; real client transaction outcomes do not invoke these listeners. Task 64 owns final callback scope reconciliation.",
-      "owner": 28
+      "remaining": "Real client-local outcomes are verified; server-backed client stubs remain negative controls. Spring transaction migration and native-free mock/test adoption remain with tasks 34 and 37.",
+      "owner": 34
     },
     {
       "spi": "DriverTransactionListener#afterFailedCommit(Lcom/vmware/gemfire/driver/spi/DriverTransactionEvent;)V",
@@ -15130,10 +15130,10 @@
         "org.apache.geode.cache.TransactionListener#afterFailedCommit(Lorg/apache/geode/cache/TransactionEvent;)V"
       ],
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
-      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
       "status": "partial",
-      "remaining": "Synthetic forwarding only; real client transaction outcomes do not invoke these listeners. Task 64 owns final callback scope reconciliation.",
-      "owner": 28
+      "remaining": "Real client-local outcomes are verified; server-backed client stubs remain negative controls. Spring transaction migration and native-free mock/test adoption remain with tasks 34 and 37.",
+      "owner": 34
     },
     {
       "spi": "DriverTransactionListener#afterRollback(Lcom/vmware/gemfire/driver/spi/DriverTransactionEvent;)V",
@@ -15142,10 +15142,10 @@
         "org.apache.geode.cache.TransactionListener#afterRollback(Lorg/apache/geode/cache/TransactionEvent;)V"
       ],
       "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java",
-      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeTransactionTests.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java",
       "status": "partial",
-      "remaining": "Synthetic forwarding only; real client transaction outcomes do not invoke these listeners. Task 64 owns final callback scope reconciliation.",
-      "owner": 28
+      "remaining": "Real client-local outcomes are verified; server-backed client stubs remain negative controls. Spring transaction migration and native-free mock/test adoption remain with tasks 34 and 37.",
+      "owner": 34
     },
     {
       "spi": "DriverConnection#getTransactionManager()Lcom/vmware/gemfire/driver/spi/DriverTransactionManager;",

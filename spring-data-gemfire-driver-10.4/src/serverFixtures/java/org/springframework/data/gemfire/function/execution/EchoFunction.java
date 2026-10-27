@@ -10,11 +10,10 @@ import org.apache.geode.cache.execute.FunctionContext;
 
 public class EchoFunction implements Function<Object> {
 
-	public static String FUNCTION_ID = "echoFunction";
 
 		@Override
 		public String getId() {
-			return FUNCTION_ID;
+			return FunctionFixtureIds.ECHO;
 		}
 
 		@Override

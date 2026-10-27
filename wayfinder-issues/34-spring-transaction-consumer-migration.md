@@ -27,6 +27,7 @@ Prerequisites: [Transaction lifecycle and callbacks SPI](28-transaction-lifecycl
 
 - Transaction foundation follow-up: use `DriverConnection.getTransactionManager`, the client-supported callback/event contracts retained by ticket 59. Peer-only writer/veto contracts must not be required for client acceptance. Timed `tryResume` waits for suspension; preserve Spring timeout validation separately. Retained native callbacks preserve their verified client lifecycle. See [transaction evidence](../wayfinder-impl/investigations/transaction-lifecycle-and-callbacks.md).
 - The official mock currently rejects every transaction operation explicitly. Preserve Spring orchestration unit coverage with native-free SPI collaborators, and real transactional storage behavior in provider integration suites. If a migrated unit test needs actual mock transactions, implement and test that support before acceptance; do not skip/delete the test or treat unsupported as transactional success.
+- Task 64 resolved all 11 transaction listener/event scope rows as required-client after 16 passing native tests. Preserve local commit/rollback/conflict outcomes, empty-transaction callbacks, transaction identity/cache/entry payloads and listener failure/cleanup behavior. Server-backed client transactions remain notification-silent. This ticket owns the remaining partial implementation and consumer rows, with task 37 owning native-free test/mock support; see the [validated scope evidence](../wayfinder-impl/investigations/client-local-transaction-outcomes.md).
 
 ## Required validation
 

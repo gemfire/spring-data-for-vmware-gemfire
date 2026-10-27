@@ -58,9 +58,9 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Client
 
 		gemFireCluster.acceptLicense().start();
 		gemFireCluster.getContainers().values().forEach(container -> container
-				.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
+				.copyFileToContainer(MountableFile.forHostPath(System.getProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH")), "/server-function-fixtures.jar"));
 
-		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
+		gemFireCluster.gfshBuilder().build().run("deploy --jar=/server-function-fixtures.jar");
 
 		System.setProperty(ClientServerIntegrationTestsSupport.GEMFIRE_POOL_SERVERS_PROPERTY,
 				String.format("%s[%d],%s[%d]", ClientServerIntegrationTestsSupport.DEFAULT_HOSTNAME,
@@ -80,6 +80,7 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Client
 		Assertions.assertThat(metrics.size()).isEqualTo(2);
 		Assertions.assertThat(metrics.get(0).size()).isEqualTo(NUMBER_OF_METRICS);
 		Assertions.assertThat(metrics.get(1).size()).isEqualTo(NUMBER_OF_METRICS);
+		metrics.forEach(FunctionsReturnResultsFromAllServersIntegrationTests::assertMetricPayload);
 	}
 
 	@Test
@@ -88,6 +89,16 @@ public class FunctionsReturnResultsFromAllServersIntegrationTests extends Client
 		List<Metric> metrics = singleServerAdminFunctions.getAllMetrics();
 
 		Assertions.assertThat(metrics.size()).isEqualTo(NUMBER_OF_METRICS);
+		assertMetricPayload(metrics);
+	}
+
+	private static void assertMetricPayload(List<Metric> metrics) {
+		Metric first = metrics.get(0);
+		Assertions.assertThat(first.getName()).isEqualTo("statName0");
+		Assertions.assertThat(first.getValue()).isEqualTo(0);
+		Assertions.assertThat(first.getCategory()).isEqualTo("statCat0");
+		Assertions.assertThat(first.getType()).isEqualTo("statType0");
+		Assertions.assertThat(metrics.get(NUMBER_OF_METRICS - 1).getValue()).isEqualTo(9);
 	}
 
 	@ClientCacheApplication

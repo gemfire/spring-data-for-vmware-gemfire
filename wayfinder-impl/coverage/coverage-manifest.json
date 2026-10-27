@@ -5,7 +5,9 @@
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/GemFire104DriverContractTests.java": "554fc747267a2cc4864a4f158b60040b6c3f9cc7bf930c10500599ca651aad24",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/GemFireExceptionMapperTests.java": "9630895426195ca906cce3cef13d498fe48f4e74fd997f0b6da504dcf4d8b470",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeCallbackCoverageTests.java": "39c3b69330b2beca96c34b868bc88ed523cdb172cca29a9c85921035bd1b6a27",
+    "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientFunctionRegistryTests.java": "14be190b8de8b0adbbf27db533c33bba76e7cd2bb7cf27b25bb5f0ad4b9431dd",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientFunctionSubmissionTests.java": "b7b9f4a857af4ded496737619e892b8358885acc07b7a84096e05d92c4c2ec36",
+    "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientLocalTransactionTests.java": "34e59b8c1f822f525ca125a659f3de63fe1668aad396de53d933588833a7be81",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeClientPropertiesTests.java": "66906f7dd5ae97dc7f281febd899e87b7c3aea270902382256c365ad645c58c9",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeConnectionReuseTests.java": "280ff430ab3dc321549562b79eef084852c3156be3508285b76ad29650dcfcef",
     "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeDistributedCallbackTests.java": "de458afe3e766fbd11d530153f38b11d7f9148ff5d6533e9f2423d8749d296c6",
@@ -48,6 +50,19 @@
     "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionListener.java": "62211ebda728728905ef612138e423338b4c63753ca83b296d683d4a65053832",
     "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireTransactionManager.java": "572e5844afc4b2e5ecfdc2b275da935adaa6e2c330810baf197162468ba86ba8",
     "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireWritablePdxInstance.java": "6f68ac069e64501551236ee7fbc4ca1de46252840cdef76bfac0fcbf674477dd",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/AddressFieldFunction.java": "557b3da07a25c08d09d947f0eb0fb11717aa80620de9a9407e26326b5b568a72",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/CaptureUnconvertedArgumentTypesFunction.java": "cfd35df316cc44f7a299712a9ebe61d68eba3d0e1b953c3a4c5f53719e6867db",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/DataFieldFunction.java": "eab49d1abd1604927835be4a2b393b7244844d24f7a998f5749fdefdd70e33f8",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/ExceptionThrowingFunction.java": "6ff3e29a6ba301e5207b081ae0ebe462cfda6de722b575983399c6e3398c5868",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/ArraysFunction.java": "5872953f15fe6df24fe04aae9a1e1bcfd84f47c92bdc1690edee342f8bb0b0de",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/CollectionsFunction.java": "7ef8a9cc21e106a409a357dfdea9ea2683e1183f89627625d79e77d2afa22c30",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/EchoFunction.java": "58f5d2a3c333e47587cfc96d7d06c2236e386b01935de6c1fae8b4de699f3e0f",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/GetMapWithNoArgsFunction.java": "1932dbc54907c55e68a95483179e8135cacb5ca74376db06ef19a6a141d9aa20",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/NoResultFunction.java": "0403d09f7b5167385dde10ba6214b5b96172478c5cf9c0fc0d6b5a0a360cefae",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/OneArgFunction.java": "0c474108297d5ba33a256dafae95e75d65a76cb19c8f9e1b4ebc3f83b951fd6e",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/TwoArgFunction.java": "32fbed977ff9424deb89480ac17c535fea54dddc066b7b68a562390bfedfda75",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/execution/onservers/MetricsFunctionServerConfiguration.java": "34ab4212811020a269886117004a480b136b19b0fe4aa51cd97e9883870fbb9f",
+    "spring-data-gemfire-driver-10.4/src/serverFixtures/java/org/springframework/data/gemfire/function/result/MixedResultTypeFunctions.java": "c4e319a79066468c2cf28db5d579df006cc0d6b4880bee0f78b85de808574458",
     "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/DefaultMethodContract.java": "5d89f38ae8aec5d0312645c64176870cb47c2f26857b954a1c79dfb26d1fd71d",
     "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java": "9d27119bd24f7b2178192511228c71bacd9db25b0830731807748cdcc4aff482",
     "spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/PdxValueContract.java": "c7f11befce370db20cccf3b15f6e6973ffa09bca6ebbd32f36f18bc0f0798726",
@@ -121,7 +136,7 @@
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionId.java": "437062b6f0259eb0a38d2e9752f603107b5d59a0b72d50a0513bc1bb2ba7bcde",
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListener.java": "ced107a853ba637f197ba741e2e56dd4c684fd12c676e8e14981ea956e90b33e",
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionListenerAdapter.java": "c4affdfde25239ec719e55115bd7c2f3e61314c52fd6ea7eea9a03fcd216e28b",
-    "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java": "b8a2f2ceeca7d2ed2e5ab951c1e2eef842c49afb1ef07d53dafc6d90189c53a9",
+    "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverTransactionManager.java": "1885b558bfa4b92564010a7f4d81d401f48ce8058b1b8205945031f8fc4bf518",
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverWritablePdxInstance.java": "c0e0371a09f960dcdcabf223e5f7d30aecb91f3d54fb2ea57d752215e84c728b",
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/GemFireDriver.java": "394a903d454d014e2b3b1f6686eaf3edb04edae6b591f4737195c8e6e75d77bb",
     "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/GemFireDriverException.java": "99531325adba0cdedcf4c6a0c122315dd5f3d91de76e7c95d935243474f6efa7",
@@ -147,16 +162,18 @@
     "spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/SpiVersionTests.java": "b2456d120fd1f77ad4a4040f948fcb5cc17922fbdd9e2b2438d14623c11013bf",
     "spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/TransactionDefaultsTests.java": "533d6c6b91ab23fdcd534e10003530a7b49f6f933737b08fe2c42ae3bec11502",
     "spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/UnsupportedFeatureExceptionTests.java": "2e9443ac26b6361997e566bb47f04bfab1e1964262d2c5df5ccdee9f294a7328",
-    "wayfinder-impl/audits/native-references.tsv": "61787deb4b995520436ea9dd0891611a7ff45b6dd39f11b7fd6adddb6b2251f9",
+    "wayfinder-impl/audits/native-references.tsv": "d12a86ed20ac70314ac1731511ee04bd2c642d5c9052a0755761ea010d679fb3",
     "wayfinder-impl/audits/native-resource-references.tsv": "ad2d6ac3af6e2c442a2be94d7d95f389a6ae938064d140a3a0539a20729d0b00",
     "wayfinder-impl/client-only-scope.md": "334c5a515a865b1aa8671f82fa563edb96a1dded2cb12b0b05527a865c471a0b",
     "wayfinder-impl/coverage/build_api_coverage.py": "a7942bc38dc339ef5bdfe2ca6f9d3d6f0dcfdd29db761e3fcec42cf78f0d4621",
-    "wayfinder-impl/coverage/client-scope-policy.json": "03d1dd4834bbad2b18e85c8f427025a1e8c224d737879f440911e9dd763e6433",
-    "wayfinder-impl/coverage/coverage-policy.json": "0c7e702f3a5e76d7b5be7fbce71b0ad869be6939dacc5f9a0d1f9f3f70707eab",
+    "wayfinder-impl/coverage/client-scope-policy.json": "1691d385db67a9a55068d776bbbd62e0065ce1f516c37bd43fbf98dd9f203f1c",
+    "wayfinder-impl/coverage/coverage-policy.json": "718494445b5a574126800d3f8f767d1e0a085f8588b28c6c9de28957a72d0818",
     "wayfinder-impl/coverage/native-api-baseline.json": "6ac4778e9bb6b2eef6a30e4c9663d41e22045c9280b78be8af005806ee7c51f5",
     "wayfinder-impl/coverage/scope_policy.py": "d7775a503cef958dbd3b957268646fb27da8c404d30964f53f1f609b2b3e9754",
     "wayfinder-impl/coverage/validate_coverage.py": "6279cee95436c64bbbf25d0471b56a0979ce0c36c3520b2a61e9d4462e7e620f",
-    "wayfinder-impl/investigations/client-only-callbacks-and-configuration.md": "dfb78a7a01f2e2240586f79c17c5b5ab5d22c84126ca52e79198479c25120c18",
+    "wayfinder-impl/investigations/client-function-member-scope.md": "48621d9afd9d08921d3d9756bb9abc6ef4a3b4785c7041593d6e3753cfa4172e",
+    "wayfinder-impl/investigations/client-local-transaction-outcomes.md": "283de11e237c72213fabc570968bf5e31b69f35a1a4cb13684f4d4aed17b10a0",
+    "wayfinder-impl/investigations/client-only-callbacks-and-configuration.md": "9cb51eb3fbd0afa8dd58e87d934e212ad98afa0923a683ef46afac1ab6b7cfa9",
     "wayfinder-impl/investigations/client-scope-classification.md": "2d92502b7443ecb83ad5a24b144d731fd7be75e7f029ee91a392ea83466b8fb4"
   },
   "jars": [
@@ -228,11 +245,11 @@
   "native_types": 292,
   "native_version": "10.4.0-build.3056.df98c835",
   "output_sha256": {
-    "api-coverage.tsv": "6019ca91001d14be51e4d43c7957ec7051a722523112bc3ba0e38127e0f0931b",
+    "api-coverage.tsv": "71f9e10da13cee1a48f907465ca0454079d372189f1ed3a79eb8adb6ffd9ff81",
     "api-edges.tsv": "250de92e1a5de4aaaf41a0bd9905cbf0b9d6de3960213ceb7f272627c973f950",
     "direct-members.tsv": "22b9d12084ae32b23bf189e61b2ee77c2792dbb10342198dc007071c41ba2138",
-    "existing-spi-coverage.tsv": "2cd39ca03f6b3048ce28e356c964140d5a3ad0b3fd6402f16b2f29c7237c40f4",
-    "source-coverage.tsv": "c417a4ea79aba7cead4c7bf3dee7fdc6cd765eaa6f86d3d38fa9341fb998f861",
+    "existing-spi-coverage.tsv": "3ce7eedffbe2bae91cd5714b24aa437bad30c4a014daa91160b3894b017c0def",
+    "source-coverage.tsv": "4cfd8cf9482dec916411765070c86ee45c59189b68c56662889713c96bd40cd8",
     "spring-annotation-defaults.tsv": "897bdad957884c77a2328dae42039d59d682943339f940b778f64f8b5e381cdb",
     "spring-evidence.tsv": "e13e28ae087b529b6247ce5047ce2258a225c2dd9e62c60a458fefef640fc9c9",
     "spring-exposures.tsv": "4b93d44dcd8763e4f74a5b954fd44b37bb38dc447dea92074e814ef1c211d051"
@@ -248,8 +265,9 @@
     "wayfinder-issues/24-security-and-authenticated-views-spi.md": 189,
     "wayfinder-issues/25-function-registration-execution-and-results-spi.md": 72,
     "wayfinder-issues/27-disk-store-and-resource-configuration-spi.md": 111,
-    "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md": 61,
+    "wayfinder-issues/28-transaction-lifecycle-and-callbacks-spi.md": 50,
     "wayfinder-issues/29-complete-cache-configuration-and-creation-assembly.md": 171,
+    "wayfinder-issues/34-spring-transaction-consumer-migration.md": 11,
     "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md": 83,
     "wayfinder-issues/42-cache-server-lifecycle-and-callbacks-spi.md": 127,
     "wayfinder-issues/43-wan-and-async-queue-contracts-spi.md": 238,
@@ -272,30 +290,30 @@
   },
   "scope_statuses": {
     "excluded-server": {
-      "missing": 622,
+      "missing": 626,
       "partial": 3
     },
     "required-client": {
       "implemented": 144,
-      "missing": 91,
-      "partial": 127
+      "missing": 127,
+      "partial": 139
     },
     "unresolved": {
       "implemented": 112,
-      "missing": 2398,
-      "partial": 354
+      "missing": 2358,
+      "partial": 342
     }
   },
   "scopes": {
-    "excluded-server": 625,
-    "required-client": 362,
-    "unresolved": 2864
+    "excluded-server": 629,
+    "required-client": 410,
+    "unresolved": 2812
   },
   "source_references": 549,
   "source_scopes": {
     "excluded-server": 3,
-    "required-client": 71,
-    "unresolved": 475
+    "required-client": 123,
+    "unresolved": 423
   },
   "source_sha256": {
     "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java": "9960e88bd11984490ceededd62a63f728c6b90ef5e0690f76c983e41e4056dbd",

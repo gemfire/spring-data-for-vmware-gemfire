@@ -47,9 +47,9 @@ public class FunctionIntegrationTests {
 
 		gemFireCluster.acceptLicense().start();
 		gemFireCluster.getContainers().values().forEach(container -> container
-				.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
+				.copyFileToContainer(MountableFile.forHostPath(System.getProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH")), "/server-function-fixtures.jar"));
 
-		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
+		gemFireCluster.gfshBuilder().build().run("deploy --jar=/server-function-fixtures.jar");
 		gemFireCluster.gfshBuilder().build().run("create region --name=TestRegion --type=PARTITION");
 
 		System.setProperty("spring.data.gemfire.cache.server.port", String.valueOf(gemFireCluster.getServerPorts().get(0)));

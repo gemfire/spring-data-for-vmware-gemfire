@@ -2,27 +2,27 @@
   "java_files": {
     "integrationTest": 149,
     "main": 328,
-    "test": 243
+    "test": 229
   },
   "java_files_with_noncomment_native_references": {
     "integrationTest": 127,
     "main": 158,
-    "test": 110
+    "test": 97
   },
   "noncomment_native_reference_lines": {
     "integrationTest": 437,
     "main": 505,
-    "test": 328
+    "test": 298
   },
   "java_files_with_raw_native_text_including_comments": {
     "integrationTest": 132,
     "main": 170,
-    "test": 115
+    "test": 102
   },
   "unique_imported_native_symbols": {
     "integrationTest": 66,
     "main": 133,
-    "test": 76
+    "test": 74
   },
   "main_native_files_by_package": {
     "(root)": 15,

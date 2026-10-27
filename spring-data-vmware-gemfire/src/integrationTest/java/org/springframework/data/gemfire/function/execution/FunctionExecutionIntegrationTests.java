@@ -46,9 +46,9 @@ public class FunctionExecutionIntegrationTests {
 	@BeforeClass
 	public static void setupGemFireServer() {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1)
-				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"))
+				.withPreStart(GemFireCluster.ALL_GLOB, container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH")), "/server-function-fixtures.jar"))
 				.withConfiguration("server-*", container -> container.withStartupAttempts(3))
-				.withGfsh(false, "deploy --jar=/testJar.jar",
+				.withGfsh(false, "deploy --jar=/server-function-fixtures.jar",
 						"create region --name=test-function --type=REPLICATE",
 						"put --region=/test-function --key=one --value=1",
 						"put --region=/test-function --key=two --value=2",
@@ -100,7 +100,7 @@ public class FunctionExecutionIntegrationTests {
 
 		Iterable<String> results = functionExecution
 			.setArguments("1", "2", "3")
-			.setFunctionId(EchoFunction.FUNCTION_ID)
+			.setFunctionId(FunctionFixtureIds.ECHO)
 			.execute();
 
 		int count = 1;

@@ -25,7 +25,9 @@ All 50 operation constants, ordinals and predicates remain descriptive event met
 
 `NativeTransactionTests` now uses a client caching proxy against a separate server. Commit, rollback, concurrent-write conflict, thread association, timed resume, ID serialization, entry-event transaction identity and error classification pass. Listener registration, duplicate/replacement semantics, native identity and cleanup also work on the client.
 
-**Client transaction outcomes do not notify transaction listeners in the tested commit, rollback and conflict scenarios.** Tests explicitly assert zero outcome notifications while verifying region results and entry IDs. Synthetic transaction-event forwarding is recorded as partial evidence. Task 64 owns the final scope decision for outcome callbacks and `TransactionEvent`; registration alone does not establish outcome delivery. Mock transactions remain explicitly unsupported, with implementation/simulation owned by downstream client tasks.
+**Server-backed caching-proxy transactions do not notify transaction listeners in the tested commit, rollback and conflict scenarios.** Tests explicitly assert zero outcome notifications while verifying region results and entry IDs. Synthetic transaction-event forwarding is recorded as partial evidence. Task 64 subsequently established required-client scope for outcome callbacks and `TransactionEvent` using local transactions; registration alone did not establish outcome delivery. Mock transactions remain explicitly unsupported, with implementation/simulation owned by downstream client tasks.
+
+Task 64 correction: this result does not establish silence for client-local or empty transactions. Pinned native source uses a different transaction-state implementation for those paths. The [client-local investigation](client-local-transaction-outcomes.md) records five passing local tests alongside eleven passing existing transaction tests. All 11 listener/event rows are now required-client; retain the outcome/event APIs.
 
 ## Resolved private fixture ledger
 
