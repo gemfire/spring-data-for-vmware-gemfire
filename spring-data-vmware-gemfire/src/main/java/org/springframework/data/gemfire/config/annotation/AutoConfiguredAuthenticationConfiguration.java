@@ -5,7 +5,6 @@
 package org.springframework.data.gemfire.config.annotation;
 
 import org.apache.geode.security.AuthInitialize;
-import org.apache.shiro.lang.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -77,7 +77,6 @@ public class AutoConfiguredAuthenticationConfiguration {
 	protected static final String HTTP_PROTOCOL = "HTTP";
 	protected static final String PROPERTY_SOURCE_NAME = AutoConfiguredAuthenticationConfiguration.class.getName();
 	protected static final String SECURITY_CLIENT_AUTH_INIT = GemFireProperties.SECURITY_CLIENT_AUTH_INIT.getName();
-	protected static final String SECURITY_PEER_AUTH_INIT = GemFireProperties.SECURITY_PEER_AUTH_INIT.getName();
 	protected static final String SECURITY_USERNAME = AutoConfiguredAuthenticationInitializer.SECURITY_USERNAME_PROPERTY;
 	protected static final String SECURITY_PASSWORD = AutoConfiguredAuthenticationInitializer.SECURITY_PASSWORD_PROPERTY;
 
@@ -206,18 +205,16 @@ public class AutoConfiguredAuthenticationConfiguration {
 	public ClientCacheConfigurer authenticationInitializingClientCacheConfigurer(
 			@Autowired(required = false) @Lazy Authentication<String, String> authentication) {
 
-		return (beanName, clientCacheFactoryBean) -> initializeMemberAuthentication(clientCacheFactoryBean.getProperties(),
+		return (beanName, clientCacheFactoryBean) -> initializeClientAuthentication(clientCacheFactoryBean.getProperties(),
 				authentication);
 	}
 
-	private void initializeMemberAuthentication(Properties gemfireProperties,
+	private void initializeClientAuthentication(Properties gemfireProperties,
 			@Nullable Authentication<String, String> authentication) {
 
 		Optional.ofNullable(gemfireProperties).filter(properties -> isAuthenticationRequested(authentication))
-				.ifPresent(properties -> {
-					properties.setProperty(SECURITY_CLIENT_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
-					properties.setProperty(SECURITY_PEER_AUTH_INIT, AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD);
-				});
+				.ifPresent(properties -> properties.setProperty(SECURITY_CLIENT_AUTH_INIT,
+					AUTO_CONFIGURED_AUTH_INIT_STATIC_FACTORY_METHOD));
 	}
 
 	private boolean isAuthenticationRequested(@Nullable Authentication<?, ?> authentication) {

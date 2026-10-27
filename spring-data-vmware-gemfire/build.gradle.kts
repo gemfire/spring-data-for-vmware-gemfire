@@ -113,7 +113,6 @@ dependencies {
   api("org.springframework:spring-tx")
   api("org.springframework:spring-web")
   api("org.springframework.data:spring-data-commons")
-  implementation(libs.spring.shiro)
   implementation(libs.aspectJ)
   implementation(libs.bundles.jackson)
   runtimeOnly(libs.antlr)

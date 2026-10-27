@@ -65,3 +65,10 @@ The 3,851 frozen API IDs remain. Removing 54 stale partial mappings yields 2,975
 ## Child 62 outcome — 2026-10-23
 
 [Task 62](62-remove-peer-callbacks-and-server-configuration.md) resolves callback/configuration cleanup and every private peer fixture disposition from task 61. The [evidence ledger](../wayfinder-impl/investigations/client-only-callbacks-and-configuration.md) records removed hooks and real client transaction/subscription coverage. 510 JUnit executions, full affected compilation, mock isolation, ABI/stamps, boundary and coverage checks pass. All frozen IDs remain: 362 required-client / 625 excluded-server / 2,864 unresolved; 3,111 missing / 484 partial / 256 implemented. Client transaction outcome/event scope remains explicit task 64 work. Spring surface retirement (63) is next; this parent stays open.
+
+
+## Child 63 outcome — 2026-10-27
+
+[Task 63](63-retire-spring-server-configuration-surfaces.md) is resolved. Its [ledger](../wayfinder-impl/investigations/client-only-spring-surfaces.md) records server configuration/function/feature retirement, retained client XML, breaking changes and test dispositions. The inherited-attributes slice passes 82 focused tests; the final feature-catalog follow-up passes 15, without failures/errors/skips. Affected compilation, transitional boundary and refreshed coverage/declaration checks pass. Frozen scope remains 362 required-client / 625 excluded-server / 2,864 unresolved.
+
+Task 64 is next and all its blockers are resolved. This parent remains open for member-level reconciliation, mixed transaction outcomes, private server function fixture relocation and final acceptance. Remaining client native coupling stays assigned to downstream migration owners; this is not native-free compliance.

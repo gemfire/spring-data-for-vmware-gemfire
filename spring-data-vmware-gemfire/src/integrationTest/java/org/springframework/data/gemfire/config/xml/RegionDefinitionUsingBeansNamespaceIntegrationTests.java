@@ -6,7 +6,6 @@ package org.springframework.data.gemfire.config.xml;
 
 import org.apache.geode.cache.DataPolicy;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.RegionAttributes;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @see org.apache.geode.cache.DataPolicy
  * @see org.apache.geode.cache.Region
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
- * @see org.springframework.data.gemfire.RegionAttributesFactoryBean
  * @see org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport
  * @see org.springframework.data.gemfire.tests.unit.annotation.GemFireUnitTest
  * @see org.springframework.test.context.ContextConfiguration
@@ -73,11 +71,8 @@ public class RegionDefinitionUsingBeansNamespaceIntegrationTests extends Integra
 		Assertions.assertThat(anotherExampleRegionFactoryBean).isNotNull();
 		Assertions.assertThat(Boolean.TRUE.equals(TestUtils.readField("persistent", anotherExampleRegionFactoryBean))).isTrue();
 
-		RegionAttributes<?, ?> anotherExampleRegionAttributes =
-			TestUtils.readField("attributes", anotherExampleRegionFactoryBean);
-
-		Assertions.assertThat(anotherExampleRegionAttributes).isNotNull();
-		Assertions.assertThat(anotherExampleRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.NORMAL);
+		// No generic AttributesFactory defaults should override the client shortcut.
+		Assertions.assertThat(TestUtils.<Object>readField("attributes", anotherExampleRegionFactoryBean)).isNull();
 	}
 
 	@Test

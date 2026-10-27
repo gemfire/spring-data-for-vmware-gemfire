@@ -56,6 +56,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private ClientCache gemfireCache;
 
 	private Boolean close = false;
+	private Boolean diskSynchronous;
 	private Boolean statisticsEnabled = false;
 
 	private Class<K> keyConstraint;
@@ -119,6 +120,7 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		clientRegionFactory.setClose(isClose());
 		clientRegionFactory.setCompressor(getCompressor());
 		clientRegionFactory.setDiskStoreName(getDiskStoreName());
+		clientRegionFactory.setDiskSynchronous(this.diskSynchronous);
 		clientRegionFactory.setInterests(getInterests());
 		clientRegionFactory.setKeyConstraint(getKeyConstraint());
 		clientRegionFactory.setLookupEnabled(getLookupEnabled());
@@ -164,6 +166,10 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 		regionFactoryBean.setEntryTimeToLive(getEntryTimeToLive());
 		regionFactoryBean.setRegionIdleTimeout(getRegionIdleTimeout());
 		regionFactoryBean.setRegionTimeToLive(getRegionTimeToLive());
+	}
+
+	public void setDiskSynchronous(Boolean diskSynchronous) {
+		this.diskSynchronous = diskSynchronous;
 	}
 
 	public void setAttributes(RegionAttributes<K, V> regionAttributes) {

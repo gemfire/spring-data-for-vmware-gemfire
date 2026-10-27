@@ -103,10 +103,5 @@ public class FunctionResultTypeIntegrationTests extends IntegrationTestsSupport 
 
 			return numbersRegion;
 		}
-
-		@Bean
-		MixedResultTypeFunctions functions() {
-			return new MixedResultTypeFunctions();
-		}
 	}
 }

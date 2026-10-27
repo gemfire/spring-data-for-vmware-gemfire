@@ -107,11 +107,6 @@ org.apache.geode.admin.RegionNotFoundException	spring-data-vmware-gemfire/src/ma
 org.apache.geode.admin.RegionNotFoundException	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java:161
 org.apache.geode.admin.RuntimeAdminException	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java
 org.apache.geode.admin.RuntimeAdminException	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java:211
-org.apache.geode.cache.AttributesFactory	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java
-org.apache.geode.cache.AttributesFactory	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#<init>()V
-org.apache.geode.cache.AttributesFactory	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#<type>
-org.apache.geode.cache.AttributesFactory	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#create()Lorg/apache/geode/cache/RegionAttributes;
-org.apache.geode.cache.AttributesFactory	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java:9
 org.apache.geode.cache.AttributesMutator	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java
 org.apache.geode.cache.AttributesMutator	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java#addCacheListener(Lorg/apache/geode/cache/CacheListener;)V
 org.apache.geode.cache.AttributesMutator	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java#bytecode-descriptor
@@ -687,7 +682,7 @@ org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/sprin
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/PdxDiskStoreAwareBeanFactoryPostProcessor.java
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/support/PdxDiskStoreAwareBeanFactoryPostProcessor.java:13
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/AbstractRegionParser.java
-org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/AbstractRegionParser.java:11
+org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/xml/AbstractRegionParser.java:10
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/dao/GemfireDaoSupport.java#bytecode-descriptor
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/dao/GemfireDaoSupport.java#createGemfireTemplate(Lorg/apache/geode/cache/Region;)Lorg/springframework/data/gemfire/GemfireTemplate;
 org.apache.geode.cache.Region	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/dao/GemfireDaoSupport.java#setRegion(Lorg/apache/geode/cache/Region;)V
@@ -812,11 +807,6 @@ org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java#bytecode-descriptor
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/LookupRegionFactoryBean.java#getStatisticsEnabled()Z
-org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java
-org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#<type>
-org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#bytecode-descriptor
-org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java#getObject()Lorg/apache/geode/cache/RegionAttributes;
-org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java:10
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientRegionFactoryBean.java
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientRegionFactoryBean.java#bytecode-descriptor
 org.apache.geode.cache.RegionAttributes	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientRegionFactoryBean.java#getAttributes()Lorg/apache/geode/cache/RegionAttributes;
@@ -1047,7 +1037,6 @@ org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/ja
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/admin/remote/RestHttpGemfireAdminTemplate.java#with(Lorg/apache/geode/cache/client/ClientCache;)Lorg/springframework/data/gemfire/config/admin/remote/RestHttpGemfireAdminTemplate$Builder;
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/admin/remote/RestHttpGemfireAdminTemplate.java:17
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AbstractCacheConfiguration.java:17
-org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/ApacheShiroSecurityConfiguration.java:14
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java#bytecode-descriptor
 org.apache.geode.cache.client.ClientCache	spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/CachingDefinedRegionsConfiguration.java:24

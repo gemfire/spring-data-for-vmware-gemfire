@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link GeodeIntegratedSecurityConfiguration} class is a {@link EmbeddedServiceConfigurationSupport} implementation
- * that enables Apache Geode's Integrated Security framework and services.
+ * that configures client authentication for VMware GemFire.
  *
  * @author John Blum
  * @see EmbeddedServiceConfigurationSupport
@@ -25,10 +25,6 @@ import org.springframework.util.StringUtils;
 public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigurationSupport {
 
 	protected static final String SECURITY_CLIENT_AUTH_INIT = GemFireProperties.SECURITY_CLIENT_AUTH_INIT.getName();
-	protected static final String SECURITY_MANAGER = GemFireProperties.SECURITY_MANAGER.getName();
-	protected static final String SECURITY_PEER_AUTH_INIT = GemFireProperties.SECURITY_PEER_AUTH_INIT.getName();
-	protected static final String SECURITY_POST_PROCESSOR = GemFireProperties.SECURITY_POST_PROCESSOR.getName();
-	protected static final String SECURITY_SHIRO_INIT = GemFireProperties.SECURITY_SHIRO_INIT.getName();
 
 	/**
 	 * Returns the {@link EnableSecurity} {@link Annotation} {@link Class} type.
@@ -41,72 +37,34 @@ public class GeodeIntegratedSecurityConfiguration extends EmbeddedServiceConfigu
 		return EnableSecurity.class;
 	}
 
-	/**
-	 * Determines whether Apache Geode's Apache Shiro Security Framework support is enabled or available.
-	 *
-	 * @return a boolean value indicating whether Apache Geode's Apache Shiro Security Framework support
-	 * is enabled or available.
-	 * @see #isShiroSecurityNotConfigured()
-	 */
-	protected boolean isShiroSecurityConfigured() {
-
-		try {
-			//return resolveBean(ApacheShiroSecurityConfiguration.class).isRealmsPresent();
-			return false;
-		}
-		catch (Exception ignore) {
-			return false;
-		}
-	}
-
-	/**
-	 * Determines whether Apache Geode's Apache Shiro Security Framework support is enabled or available.
-	 *
-	 * @return a boolean value indicating whether Apache Geode's Apache Shiro Security Framework support
-	 * is enabled or available.
-	 * @see #isShiroSecurityConfigured()
-	 */
-	protected boolean isShiroSecurityNotConfigured() {
-		return !isShiroSecurityConfigured();
-	}
-
 	@Override
 	protected Properties toGemFireProperties(Map<String, Object> annotationAttributes) {
 
 		PropertiesBuilder gemfireProperties = PropertiesBuilder.create();
 
-		String shiroIniResourcePath = resolveProperty(securityProperty("shiro.ini-resource-path"),
-			(String) annotationAttributes.get("shiroIniResourcePath"));
+		String shiroIniResourcePath = resolveProperty(securityProperty("shiro.ini-resource-path"), (String) null);
 
 		if (StringUtils.hasText(shiroIniResourcePath)) {
 			throw new UnsupportedOperationException("security-shiro-init is unavailable in GemFire 10.4; "
-				+ "configure security-manager instead");
+				+ "configure client authentication instead");
+		}
+
+		if (resolveProperty(securityProperty("shiro.enabled"), Boolean.class, false)) {
+			throw new UnsupportedOperationException("spring.data.gemfire.security.shiro.enabled is no longer supported; "
+				+ "configure client authentication instead");
+		}
+
+		for (String suffix : new String[] { "manager.class-name", "postprocessor.class-name" }) {
+			String property = securityProperty(suffix);
+			if (StringUtils.hasText(resolveProperty(property, (String) null))) {
+				throw new UnsupportedOperationException(property + " configures a server security callback; "
+					+ "configure it on the server and use client authentication here");
+			}
 		}
 
 		gemfireProperties.setProperty(SECURITY_CLIENT_AUTH_INIT,
 			resolveProperty(securityProperty("client.authentication-initializer"),
 				(String) annotationAttributes.get("clientAuthenticationInitializer")));
-
-		if (isShiroSecurityNotConfigured()) {
-
-			gemfireProperties.setPropertyIfNotDefault(SECURITY_MANAGER,
-				annotationAttributes.get("securityManagerClass"), Void.class);
-
-			gemfireProperties.setProperty(SECURITY_MANAGER,
-				resolveProperty(securityProperty("manager.class-name"),
-					(String) annotationAttributes.get("securityManagerClassName")));
-		}
-
-		gemfireProperties.setProperty(SECURITY_PEER_AUTH_INIT,
-			resolveProperty(securityProperty("peer.authentication-initializer"),
-				(String) annotationAttributes.get("peerAuthenticationInitializer")));
-
-		gemfireProperties.setPropertyIfNotDefault(SECURITY_POST_PROCESSOR,
-			annotationAttributes.get("securityPostProcessorClass"), Void.class);
-
-		gemfireProperties.setProperty(SECURITY_POST_PROCESSOR,
-			resolveProperty(securityProperty("postprocessor.class-name"),
-				(String) annotationAttributes.get("securityPostProcessorClassName")));
 
 		return gemfireProperties.build();
 	}

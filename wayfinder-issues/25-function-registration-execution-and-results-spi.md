@@ -22,6 +22,8 @@ Support client function invocation and typed results for Spring templates and pr
 
 ## Required validation
 
+Task 63's [function audit](../wayfinder-impl/investigations/client-only-spring-surfaces.md#client-function-submission-and-fixture-audit--2026-10-27) identifies pinned native support for unregistered function-object submission on client region and pool/region-service server targets. All three native object-submission tests pass in user-run validation. Define a typed submission contract preserving object state without exposing server registration or arbitrary native unwraps. Preserve the client region-discovery operation currently implemented using `GetRegionsFunction`; native execution bodies and transport belong behind the driver boundary. Task 64 owns prerequisite server fixture relocation before task 59 closes.
+
 Exercise each retained client target, authentication, arguments/filters, result conversion, timeout and error behavior against native servers. Test local collector/orchestration behavior with native-free collaborators and update coverage evidence.
 
 ## Completion

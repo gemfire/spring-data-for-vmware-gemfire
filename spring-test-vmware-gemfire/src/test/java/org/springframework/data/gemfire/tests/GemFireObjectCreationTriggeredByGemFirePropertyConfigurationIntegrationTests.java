@@ -7,18 +7,21 @@ package org.springframework.data.gemfire.tests;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.distributed.DistributedMember;
+import org.apache.geode.security.AuthInitialize;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.config.annotation.ClientCacheApplication;
 import org.springframework.data.gemfire.config.annotation.EnableSecurity;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
-import org.springframework.data.gemfire.tests.objects.geode.security.TestSecurityManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -45,15 +48,37 @@ public class GemFireObjectCreationTriggeredByGemFirePropertyConfigurationIntegra
 	private ClientCache gemfireCache;
 
 	@Test
-	public void securityManagerIsPresent() {
+	public void clientAuthenticationInitializerIsPresent() {
 
 		assertThat(this.gemfireCache).isNotNull();
-		assertThat(TestSecurityManager.getInstance()).isInstanceOf(TestSecurityManager.class);
+		assertThat(TestAuthenticationInitializer.instance.get()).isInstanceOf(TestAuthenticationInitializer.class);
+		assertThat(this.gemfireCache.getDistributedSystem().getProperties())
+			.containsEntry("security-client-auth-init", TestAuthenticationInitializer.class.getName())
+			.doesNotContainKeys("security-manager", "security-post-processor");
+	}
+
+	@AfterClass
+	public static void clearInitializer() {
+		TestAuthenticationInitializer.instance.set(null);
 	}
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects
-	@EnableSecurity(securityManagerClassName = "org.springframework.data.gemfire.tests.objects.geode.security.TestSecurityManager")
+	@EnableSecurity(clientAuthenticationInitializer = "org.springframework.data.gemfire.tests."
+		+ "GemFireObjectCreationTriggeredByGemFirePropertyConfigurationIntegrationTests$TestAuthenticationInitializer")
 	static class TestConfiguration { }
 
+	public static class TestAuthenticationInitializer implements AuthInitialize {
+
+		private static final AtomicReference<TestAuthenticationInitializer> instance = new AtomicReference<>();
+
+		public TestAuthenticationInitializer() {
+			instance.set(this);
+		}
+
+		@Override
+		public Properties getCredentials(Properties securityProperties, DistributedMember server, boolean isPeer) {
+			return new Properties();
+		}
+	}
 }

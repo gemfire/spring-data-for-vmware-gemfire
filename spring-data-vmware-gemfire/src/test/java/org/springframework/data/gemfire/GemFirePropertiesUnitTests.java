@@ -31,6 +31,34 @@ public class GemFirePropertiesUnitTests {
 
     //These are properties set for the server which SDG does not care about being a client-only lib
     private final Set<String> unsupportedGemFireProperties = Set.of(
+        "bind-address",
+        "locators",
+        "deploy-working-dir",
+        "distributed-transactions",
+        "security-manager",
+        "security-post-processor",
+        "security-auth-token-enabled-components",
+        "security-shiro-init",
+        "security-peer-auth-init",
+        "security-peer-verifymember-timeout",
+        "security-udp-dhalgo",
+        "ack-severe-alert-threshold",
+        "ack-wait-threshold",
+        "disable-tcp",
+        "tcp-port",
+        "udp-fragment-size",
+        "udp-recv-buffer-size",
+        "udp-send-buffer-size",
+        "conserve-sockets",
+        "socket-lease-time",
+        "socket-buffer-size",
+        "tombstone-gc-threshold",
+        "enable-network-partition-detection",
+        "locator-wait-time",
+        "membership-port-range",
+        "disable-auto-reconnect",
+        "max-num-reconnect-tries",
+        "max-wait-time-reconnect",
         "enable-cluster-configuration",
         "enforce-unique-host",
         "load-cluster-configuration-from-dir",
@@ -61,6 +89,11 @@ public class GemFirePropertiesUnitTests {
         "jmx-manager-start",
         "jmx-manager-update-rate",
         "disable-jmx",
+        "ssl-cluster-alias",
+        "ssl-gateway-alias",
+        "ssl-web-alias",
+        "ssl-server-protocols",
+        "ssl-web-require-authentication",
         "ssl-jmx-alias",
         "ssl-grpc-alias"
     );
@@ -151,9 +184,8 @@ public class GemFirePropertiesUnitTests {
     public void fromValidGemFireProperty() {
 
         assertThat(GemFireProperties.from("cache-xml-file")).isEqualTo(GemFireProperties.CACHE_XML_FILE);
-        assertThat(GemFireProperties.from("gemfire.locators")).isEqualTo(GemFireProperties.LOCATORS);
+        assertThat(GemFireProperties.from("gemfire.durable-client-id")).isEqualTo(GemFireProperties.DURABLE_CLIENT_ID);
         assertThat(GemFireProperties.from("  gemfire.name ")).isEqualTo(GemFireProperties.NAME);
-        assertThat(GemFireProperties.from("bind-address")).isEqualTo(GemFireProperties.BIND_ADDRESS);
         assertThat(GemFireProperties.from("availability-zone")).isEqualTo(GemFireProperties.AVAILABILITY_ZONE);
         assertThat(GemFireProperties.from("redundancy-zone")).isEqualTo(GemFireProperties.REDUNDANCY_ZONE);
     }

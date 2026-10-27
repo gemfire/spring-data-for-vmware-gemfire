@@ -618,6 +618,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 			mockRegionAttributes = mock(RegionAttributes.class, withSettings().lenient());
 
 			doReturn(convert(clientRegionShortcut)).when(mockRegionAttributes).getDataPolicy();
+			doReturn(true).when(mockRegionAttributes).isDiskSynchronous();
 
 			if (clientRegionShortcutWrapper.isHeapLru()) {
 				doReturn(EvictionAttributes.createLRUHeapAttributes()).when(mockRegionAttributes).getEvictionAttributes();

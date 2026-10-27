@@ -33,3 +33,7 @@ Validate each supported native driver against its exact native artifact and the 
 ## Completion
 
 Every required matrix row has implementation and executable supported/unsupported evidence; unresolved failures remain open blockers. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Task 63 inherited-attributes test handoff
+
+Task 63 redirects client-region and disk-store integration assertions from the removed intermediate attributes object to created regions, changing nine native-source occurrences. Migrate these tests with task 30 and the task 47 configuration contracts, preserving all retained constraint/expiry/custom-expiry/eviction/default assertions. The reviewed transitional baseline adjustment does not establish native-free integration sources or real-server behavior. See the [reviewed boundary adjustment](../wayfinder-impl/investigations/client-only-spring-surfaces.md#reviewed-transitional-test-boundary-adjustment).

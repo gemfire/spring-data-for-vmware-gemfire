@@ -7,12 +7,10 @@ package org.springframework.data.gemfire.config.xml;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import org.apache.geode.cache.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.MutablePropertyValues;
-import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
@@ -21,7 +19,6 @@ import org.springframework.beans.factory.support.ManagedArray;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.lang.NonNull;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
@@ -118,101 +115,19 @@ abstract class AbstractRegionParser extends AbstractSingleBeanDefinitionParser {
 	protected abstract void doParseRegion(Element element, ParserContext parserContext,
 			BeanDefinitionBuilder builder, boolean subRegion);
 
-	protected void doParseRegionConfiguration(Element element, ParserContext parserContext,
-			BeanDefinitionBuilder regionBuilder, BeanDefinitionBuilder regionAttributesBuilder, boolean subRegion) {
-
-		mergeRegionTemplateAttributes(element, parserContext, regionBuilder, regionAttributesBuilder);
-
-		String resolvedCacheReference = ParsingUtils.resolveCacheReference(element.getAttribute("cache-ref"));
-
-		if (!subRegion) {
-
-			regionBuilder.addPropertyReference("cache", resolvedCacheReference);
-
-			ParsingUtils.setPropertyValue(element, regionBuilder, "close");
-			ParsingUtils.setPropertyValue(element, regionBuilder, "destroy");
-		}
-
-		ParsingUtils.setPropertyValue(element, regionBuilder, "name");
-		ParsingUtils.setPropertyValue(element, regionBuilder, "data-policy");
-		ParsingUtils.setPropertyValue(element, regionBuilder, "ignore-if-exists", "lookupEnabled");
-		ParsingUtils.setPropertyValue(element, regionBuilder, "persistent");
-		ParsingUtils.setPropertyValue(element, regionBuilder, "shortcut");
-
-		if (StringUtils.hasText(element.getAttribute("disk-store-ref"))) {
-			ParsingUtils.setPropertyValue(element, regionBuilder, "disk-store-ref", "diskStoreName");
-			regionBuilder.addDependsOn(element.getAttribute("disk-store-ref"));
-		}
-
-		ParsingUtils.parseOptionalRegionAttributes(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseStatistics(element, regionAttributesBuilder);
-		ParsingUtils.parseExpiration(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseEviction(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseCompressor(element, parserContext, regionAttributesBuilder);
-
-		List<Element> subElements = DomUtils.getChildElements(element);
-
-		for (Element subElement : subElements) {
-			if (subElement.getLocalName().equals("cache-listener")) {
-				regionBuilder.addPropertyValue("cacheListeners", ParsingUtils.parseRefOrNestedBeanDeclaration(
-					subElement, parserContext, regionBuilder));
-			}
-			else if (subElement.getLocalName().equals("cache-loader")) {
-				regionBuilder.addPropertyValue("cacheLoader", ParsingUtils.parseRefOrSingleNestedBeanDeclaration(
-					subElement, parserContext, regionBuilder));
-			}
-			else if (subElement.getLocalName().equals("cache-writer")) {
-				regionBuilder.addPropertyValue("cacheWriter", ParsingUtils.parseRefOrSingleNestedBeanDeclaration(
-					subElement, parserContext, regionBuilder));
-			}
-		}
-
-		if (!subRegion) {
-			parseSubRegions(element, parserContext, resolvedCacheReference);
-		}
-	}
-
-	void mergeRegionTemplateAttributes(Element element, ParserContext parserContext,
-			BeanDefinitionBuilder regionBuilder, BeanDefinitionBuilder regionAttributesBuilder) {
+	void validateRegionTemplate(Element element, ParserContext parserContext,
+			BeanDefinitionBuilder regionBuilder) {
 
 		String regionTemplateName = getParentName(element);
 
-		if (StringUtils.hasText(regionTemplateName)) {
-			if (parserContext.getRegistry().containsBeanDefinition(regionTemplateName)) {
-
-				BeanDefinition templateRegion = parserContext.getRegistry().getBeanDefinition(regionTemplateName);
-
-				BeanDefinition templateRegionAttributes = getRegionAttributesBeanDefinition(templateRegion);
-
-				if (templateRegionAttributes != null) {
-					// NOTE we only need to merge the parent's RegionAttributes with this since the parent
-					// will have already merged its parent's RegionAttributes and so on...
-					regionAttributesBuilder.getRawBeanDefinition().overrideFrom(templateRegionAttributes);
-				}
-			}
-			else {
-				parserContext.getReaderContext().error(String.format(
-					"The Region template [%1$s] must be defined before the Region [%2$s] referring to the template",
-						regionTemplateName, resolveId(element, regionBuilder.getRawBeanDefinition(), parserContext)),
-							element);
-			}
+		// Client settings inherit through the parent bean definition, including chained templates.
+		if (StringUtils.hasText(regionTemplateName)
+				&& !parserContext.getRegistry().containsBeanDefinition(regionTemplateName)) {
+			parserContext.getReaderContext().error(String.format(
+				"The Region template [%1$s] must be defined before the Region [%2$s] referring to the template",
+					regionTemplateName, resolveId(element, regionBuilder.getRawBeanDefinition(), parserContext)),
+						element);
 		}
-	}
-
-	BeanDefinition getRegionAttributesBeanDefinition(BeanDefinition region) {
-
-		Assert.notNull(region, "BeanDefinition must not be null");
-
-		Object regionAttributes = null;
-
-		if (region.getPropertyValues().contains("attributes")) {
-			regionAttributes =
-				Optional.ofNullable(region.getPropertyValues().getPropertyValue("attributes"))
-					.map(PropertyValue::getValue)
-					.orElse(null);
-		}
-
-		return regionAttributes instanceof BeanDefinition ? (BeanDefinition) regionAttributes : null;
 	}
 
 	protected void parseCollectionOfCustomSubElements(Element element, ParserContext parserContext,

@@ -138,7 +138,7 @@ public class ClientRegionNamespaceIntegrationTests extends IntegrationTestsSuppo
 		Assertions.assertThat(cacheListeners[1]).isNotSameAs(cacheListeners[0]);
 
 		RegionAttributes complexRegionAttributes =
-			TestUtils.<RegionAttributes<?, ?>>readField("attributes", complexClientRegionFactoryBean);
+			requireApplicationContext().getBean("complex", Region.class).getAttributes();
 
 		Assertions.assertThat(complexRegionAttributes).isNotNull();
 		Assertions.assertThat(complexRegionAttributes.getLoadFactor()).isCloseTo(0.5f, Offset.offset(0.001f));
@@ -183,7 +183,7 @@ public class ClientRegionNamespaceIntegrationTests extends IntegrationTestsSuppo
 		Assertions.assertThat(TestUtils.<Object>readField("poolName", overflowClientRegionFactoryBean)).isEqualTo("gemfire-pool");
 
 		RegionAttributes overflowRegionAttributes =
-			TestUtils.<RegionAttributes<?, ?>>readField("attributes", overflowClientRegionFactoryBean);
+			requireApplicationContext().getBean("overflow", Region.class).getAttributes();
 
 		Assertions.assertThat(overflowRegionAttributes).isNotNull();
 		Assertions.assertThat(overflowRegionAttributes.getDataPolicy()).isEqualTo(DataPolicy.NORMAL);

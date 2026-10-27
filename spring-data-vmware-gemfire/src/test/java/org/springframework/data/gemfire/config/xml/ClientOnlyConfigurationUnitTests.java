@@ -18,7 +18,9 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnableGemFireProperties;
+import org.springframework.data.gemfire.config.annotation.EnableSecurity;
 import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
+import org.springframework.data.gemfire.config.support.GemfireFeature;
 import org.springframework.data.gemfire.transaction.event.TransactionListenerAdapter;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,6 +28,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /** Regression checks for the retired server configuration entry points. */
 public class ClientOnlyConfigurationUnitTests {
+
+	@Test
+	public void featureCatalogRetainsClientCapabilitiesWithoutServerOperations() {
+
+		assertThat(Arrays.stream(GemfireFeature.values()).map(Enum::name))
+			.contains("CLIENT_SERVER", "CACHING", "CONTINUOUS_QUERY", "FUNCTIONS",
+				"PERSISTENCE", "REGISTER_INTEREST", "TRANSACTIONS")
+			.doesNotContain("BACKUP", "NETWORK_PARTITIONING", "PEER_TO_PEER", "REPLICATION");
+	}
 
 	@Test
 	public void annotationsExposeClientShortcutsOnly() {
@@ -41,9 +52,24 @@ public class ClientOnlyConfigurationUnitTests {
 	public void propertiesAnnotationRetainsClientSettingsWithoutServerAdministration() {
 
 		assertThat(Arrays.stream(EnableGemFireProperties.class.getDeclaredMethods()).map(Method::getName))
-			.contains("cacheXmlFile", "conflateEvents", "serializableObjectFilter", "validateSerializableObjects")
-			.doesNotContain("clusterConfigurationDirectory", "loadClusterConfigurationFromDirectory",
-				"remoteLocators", "removeUnresponsiveClient", "userCommandPackages");
+			.contains("cacheXmlFile", "conflateEvents", "serializableObjectFilter", "validateSerializableObjects",
+				"memberTimeout", "deltaPropagation", "lockMemory", "distributedSystemId", "groups", "name")
+			.doesNotContain("bindAddress", "deployWorkingDirectory", "clusterConfigurationDirectory", "loadClusterConfigurationFromDirectory",
+				"remoteLocators", "removeUnresponsiveClient", "userCommandPackages",
+				"conserveSockets", "socketLeaseTime", "socketBufferSize", "tombstoneGcThreshold",
+				"ackSevereAlertThreshold", "ackWaitThreshold", "disableTcp", "tcpPort",
+				"udpFragmentSize", "udpReceiveBufferSize", "udpSendBufferSize",
+				"enableNetworkPartitionDetection", "locatorWaitTimeout", "maxWaitTimeReconnect", "membershipPortRange");
+	}
+
+	@Test
+	public void securityAnnotationRetainsOnlyClientAuthentication() {
+
+		assertThat(Arrays.stream(EnableSecurity.class.getDeclaredMethods()).map(Method::getName))
+			.contains("clientAuthenticationInitializer", "securityUsername", "securityPassword")
+			.doesNotContain("peerAuthenticationInitializer", "shiroIniResourcePath",
+				"securityManagerClass", "securityManagerClassName",
+				"securityPostProcessorClass", "securityPostProcessorClassName");
 	}
 
 	@Test
@@ -98,7 +124,10 @@ public class ClientOnlyConfigurationUnitTests {
 			<gfe:client-cache pdx-persistent="true">
 				<gfe:transaction-listener ref="transactionListener"/>
 			</gfe:client-cache>
-			<gfe:pool id="clientPool" subscription-enabled="true" subscription-redundancy="1">
+			<gfe:pool id="clientPool" subscription-enabled="true" subscription-redundancy="1"
+			          idle-timeout="120000" min-connections="2" max-connections="8"
+			          read-timeout="30000" socket-connect-timeout="5000" subscription-ack-interval="500"
+			          retry-attempts="3" ping-interval="15000">
 				<gfe:server host="localhost" port="40404"/>
 			</gfe:pool>
 			<gfe:client-region-template id="localTemplate" shortcut="LOCAL_PERSISTENT" statistics="true">
@@ -114,6 +143,65 @@ public class ClientOnlyConfigurationUnitTests {
 		assertThat(registry.getBeanDefinition("local").getParentName()).isEqualTo("localTemplate");
 		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("subscriptionEnabled"))
 			.isEqualTo("true");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("idleTimeout"))
+			.isEqualTo("120000");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("minConnections"))
+			.isEqualTo("2");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("maxConnections"))
+			.isEqualTo("8");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("readTimeout"))
+			.isEqualTo("30000");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("socketConnectTimeout"))
+			.isEqualTo("5000");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("subscriptionAckInterval"))
+			.isEqualTo("500");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("retryAttempts"))
+			.isEqualTo("3");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("pingInterval"))
+			.isEqualTo("15000");
+		assertThat(registry.getBeanDefinition("clientPool").getPropertyValues().get("subscriptionRedundancy"))
+			.isEqualTo("1");
+	}
+
+	@Test
+	public void clientTemplateSettingsInheritAndOverrideWithoutGenericAttributes() {
+
+		DefaultListableBeanFactory registry = load("""
+			<gfe:client-region-template id="base" initial-capacity="51" disk-synchronous="false"
+			                          cloning-enabled="true" statistics="true">
+				<gfe:entry-ttl timeout="60" action="INVALIDATE"/>
+			</gfe:client-region-template>
+			<gfe:client-region-template id="middle" template="base" load-factor="0.85"/>
+			<gfe:client-region id="child" template="middle" cloning-enabled="false" initial-capacity="17"/>
+			<gfe:client-region id="defaults" shortcut="LOCAL_HEAP_LRU"/>
+			""");
+
+		var settings = registry.getMergedBeanDefinition("child").getPropertyValues();
+		assertThat(settings.get("initialCapacity")).isEqualTo("17");
+		assertThat(settings.get("diskSynchronous")).isEqualTo("false");
+		assertThat(settings.get("cloningEnabled")).isEqualTo("false");
+		assertThat(settings.get("loadFactor")).isEqualTo("0.85");
+		assertThat(settings.get("statisticsEnabled")).isEqualTo(Boolean.TRUE);
+		assertThat(settings.get("entryTimeToLive"))
+			.isSameAs(registry.getBeanDefinition("base").getPropertyValues().get("entryTimeToLive"));
+		assertThat(settings.contains("attributes")).isFalse();
+
+		var defaults = registry.getMergedBeanDefinition("defaults").getPropertyValues();
+		for (String property : new String[] { "attributes", "evictionAttributes", "entryTimeToLive",
+				"initialCapacity", "diskSynchronous", "cloningEnabled", "concurrencyChecksEnabled" }) {
+			assertThat(defaults.contains(property)).as(property).isFalse();
+		}
+	}
+
+	@Test
+	public void clientTemplatesMustStillBeDefinedBeforeUse() {
+
+		assertThatThrownBy(() -> load("""
+			<gfe:client-region id="child" template="later"/>
+			<gfe:client-region-template id="later"/>
+			"""))
+			.isInstanceOf(BeanDefinitionStoreException.class)
+			.hasMessageContaining("The Region template [later] must be defined before the Region [child]");
 	}
 
 	private void assertInvalid(String body) {

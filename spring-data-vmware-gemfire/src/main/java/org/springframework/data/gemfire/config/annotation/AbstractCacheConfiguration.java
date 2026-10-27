@@ -82,7 +82,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	protected static final boolean DEFAULT_COPY_ON_READ = false;
 	protected static final boolean DEFAULT_USE_BEAN_FACTORY_LOCATOR = false;
 
-	protected static final String DEFAULT_LOCATORS = "";
 	protected static final String DEFAULT_LOG_LEVEL = "config";
 	protected static final String DEFAULT_NAME = "SpringDataGemFireApplication";
 
@@ -101,7 +100,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	private Resource cacheXml;
 
-	private String locators = DEFAULT_LOCATORS;
 	private String logLevel = DEFAULT_LOG_LEVEL;
 	private String name;
 
@@ -119,7 +117,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 	 * the Pivotal GemFire/Apache Geode cache instance.
 	 * @see <a href="https://geode.apache.org/docs/guide/113/reference/topics/gemfire_properties.html">Geode Properties</a>
 	 * @see Properties
-	 * @see #locators()
 	 * @see #logLevel()
 	 * @see #name()
 	 */
@@ -130,7 +127,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 		gemfireProperties.setProperty("name", name());
 		gemfireProperties.setProperty("log-level", logLevel());
-		gemfireProperties.setProperty("locators", locators());
 		gemfireProperties.add(this.customGemFireProperties);
 
 		return gemfireProperties.build();
@@ -376,14 +372,6 @@ public abstract class AbstractCacheConfiguration extends AbstractAnnotationConfi
 
 	protected List<JndiDataSource> getJndiDataSources() {
 		return nullSafeList(this.jndiDataSources);
-	}
-
-	void setLocators(String locators) {
-		this.locators = locators;
-	}
-
-	protected String locators() {
-		return this.locators;
 	}
 
 	void setLogLevel(String logLevel) {

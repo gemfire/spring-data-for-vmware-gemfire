@@ -8,15 +8,15 @@ The audit baseline is 186 production, 122 unit-test and 128 integration-test Jav
 
 ## Next work
 
-**Next: [63 — Retire Spring server configuration surfaces](../wayfinder-issues/63-retire-spring-server-configuration-surfaces.md)**, the next child of [59 — Remove server-only SPI and reconcile client scope](../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md). Tasks 60–62 are resolved; tasks 63/64 keep the parent open. Original downstream tasks continue to wait for 59. Tickets 42 and 43 are superseded, not implemented; ticket 48 covers client subscription/interest configuration.
+**Next: [64 — Complete client scope reconciliation](../wayfinder-issues/64-complete-client-scope-reconciliation.md)**, the final child of [59 — Remove server-only SPI and reconcile client scope](../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md). Tasks 60–63 are resolved; task 64 keeps the parent open. Original downstream tasks continue to wait for 59. Tickets 42 and 43 are superseded, not implemented; ticket 48 covers client subscription/interest configuration.
 
-The user authorized the [client-only scope correction](client-only-scope.md) on 2026-10-22. Current classification preserves all frozen IDs: **362 required-client**, **625 excluded-server**, **2,864 unresolved**. Public peer creation/callbacks and server configuration are removed; Spring cleanup and final reconciliation remain. There are **36 open tasks**, **26 resolved tasks** and **2 superseded tasks** (64 total). The five cleanup children split existing obligations; they do not add product scope.
+The user authorized the [client-only scope correction](client-only-scope.md) on 2026-10-22. Current classification preserves all frozen IDs: **362 required-client**, **625 excluded-server**, **2,864 unresolved**. Public peer creation/callbacks and server configuration are removed; Spring surface retirement is complete; final reconciliation remains. There are **35 open tasks**, **27 resolved tasks** and **2 superseded tasks** (64 total). The five cleanup children split existing obligations; they do not add product scope.
 
 Ticket metadata is authoritative. Claim an eligible task only when all `Blocked by:` tasks are resolved. After ticket 59, use ascending order among eligible tasks unless the user directs otherwise. Do not automatically invoke skills or parallel agents. Scoped boundary passes do not establish final native-free compliance.
 
 ## Shared completion requirements
 
-Task 63 has configuration, function-registration, peer-function and selected property retirement slices (including server placement/endpoint settings and orphan mappings); its [ledger](investigations/client-only-spring-surfaces.md) records breaking changes, retained tests and the remaining property, function fixture placement/audit and inherited attributes work. It remains the next task; counts and parent blockers are unchanged.
+Task 63 is resolved: Spring server configuration, peer function targets/registration, inherited server attributes and server capability constants are retired while client XML and retained client behavior remain covered. The [migration and test ledger](investigations/client-only-spring-surfaces.md) records breaking changes, dispositions, the 82-test inherited-attributes validation and the final 15-test feature-catalog validation, all without failures or skips. Affected compilation, transitional boundary verification and refreshed coverage/declaration checks pass: 509 Spring exposures, 133 production native imports, 549 source/resource references and 5,169 native-source boundary occurrences. Frozen IDs and scope counts are unchanged. Task 64 owns unresolved scope decisions, transaction outcome scope and private server fixture relocation; tasks 30/47 retain full SPI configuration and native signatures, and task 36 retains residual utility/documentation cleanup. Parent 59 remains open; this is not native-free acceptance.
 
 Every linked implementation ticket, including the existing named-pool foundation, must satisfy these requirements:
 
@@ -84,7 +84,7 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [60 — Add explicit client scope to the coverage inventory](../wayfinder-issues/60-client-scope-coverage-classification.md) | resolved | 14, 15 |
 | [61 — Remove peer cache and region creation](../wayfinder-issues/61-remove-peer-cache-and-region-creation.md) | resolved | 60 |
 | [62 — Remove peer callbacks and server configuration](../wayfinder-issues/62-remove-peer-callbacks-and-server-configuration.md) | resolved | 61 |
-| [63 — Retire Spring server configuration surfaces](../wayfinder-issues/63-retire-spring-server-configuration-surfaces.md) | open | 61, 62 |
+| [63 — Retire Spring server configuration surfaces](../wayfinder-issues/63-retire-spring-server-configuration-surfaces.md) | resolved | 61, 62 |
 | [64 — Complete client scope reconciliation](../wayfinder-issues/64-complete-client-scope-reconciliation.md) | open | 60, 61, 62, 63 |
 
 ## Audit finding ownership

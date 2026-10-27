@@ -135,7 +135,6 @@ org.apache.geode.admin.RuntimeAdminException	org.apache.geode.admin.RuntimeAdmin
 org.apache.geode.admin.RuntimeAdminException	org.apache.geode.admin.RuntimeAdminException	spring-root
 org.apache.geode.admin.RuntimeAdminException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.cache.AttributesFactory	org.apache.geode.cache.AttributesFactory	frozen-baseline-root
-org.apache.geode.cache.AttributesFactory	org.apache.geode.cache.AttributesFactory	spring-root
 org.apache.geode.cache.AttributesFactory#<init>(Lorg/apache/geode/cache/RegionAttributes;)V	org.apache.geode.cache.RegionAttributes	member-signature
 org.apache.geode.cache.AttributesFactory#<type>	org.apache.geode.internal.cache.InternalAttributesFactory	type-hierarchy-or-bound
 org.apache.geode.cache.AttributesFactory#addCacheListener(Lorg/apache/geode/cache/CacheListener;)V	org.apache.geode.cache.CacheListener	member-signature

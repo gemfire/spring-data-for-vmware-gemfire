@@ -11,7 +11,6 @@ import org.w3c.dom.Element;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.data.gemfire.RegionAttributesFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.KeyInterest;
 import org.springframework.data.gemfire.client.RegexInterest;
@@ -67,19 +66,13 @@ class ClientRegionParser extends AbstractRegionParser {
 
 		parseDiskStoreAttribute(element, regionBuilder);
 
-		// Client RegionAttributes for Compression, Eviction, Expiration and Statistics
-		BeanDefinitionBuilder regionAttributesBuilder =
-			BeanDefinitionBuilder.genericBeanDefinition(RegionAttributesFactoryBean.class);
+		validateRegionTemplate(element, parserContext, regionBuilder);
 
-		mergeRegionTemplateAttributes(element, parserContext, regionBuilder, regionAttributesBuilder);
-
-		ParsingUtils.parseOptionalRegionAttributes(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseStatistics(element, regionAttributesBuilder);
-		ParsingUtils.parseExpiration(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseEviction(element, parserContext, regionAttributesBuilder);
-		ParsingUtils.parseCompressor(element, parserContext, regionAttributesBuilder);
-
-		regionBuilder.addPropertyValue("attributes", regionAttributesBuilder.getBeanDefinition());
+		ParsingUtils.parseOptionalRegionAttributes(element, parserContext, regionBuilder);
+		ParsingUtils.parseStatistics(element, regionBuilder);
+		ParsingUtils.parseExpiration(element, parserContext, regionBuilder);
+		ParsingUtils.parseEviction(element, parserContext, regionBuilder);
+		ParsingUtils.parseCompressor(element, parserContext, regionBuilder);
 
 		List<Element> subElements = DomUtils.getChildElements(element);
 

@@ -1,33 +1,33 @@
 {
   "java_files": {
     "integrationTest": 149,
-    "main": 330,
-    "test": 242
+    "main": 328,
+    "test": 243
   },
   "java_files_with_noncomment_native_references": {
     "integrationTest": 127,
-    "main": 160,
-    "test": 111
+    "main": 158,
+    "test": 110
   },
   "noncomment_native_reference_lines": {
-    "integrationTest": 440,
-    "main": 508,
-    "test": 329
+    "integrationTest": 437,
+    "main": 505,
+    "test": 328
   },
   "java_files_with_raw_native_text_including_comments": {
     "integrationTest": 132,
-    "main": 172,
-    "test": 116
+    "main": 170,
+    "test": 115
   },
   "unique_imported_native_symbols": {
     "integrationTest": 66,
-    "main": 134,
+    "main": 133,
     "test": 76
   },
   "main_native_files_by_package": {
-    "(root)": 16,
+    "(root)": 15,
     "client": 22,
-    "config": 51,
+    "config": 50,
     "dao": 1,
     "domain": 1,
     "eviction": 5,

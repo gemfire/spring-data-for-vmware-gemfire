@@ -283,9 +283,9 @@ public abstract class AbstractConfigurableCacheFactoryBean extends AbstractBasic
 		Properties properties = getProperties();
 
 		if (properties != null && StringUtils.hasText(
-				properties.getProperty(GemFireProperties.SECURITY_SHIRO_INIT.getName()))) {
+				properties.getProperty("security-shiro-init"))) {
 			throw new UnsupportedOperationException("security-shiro-init is unavailable in GemFire 10.4; "
-				+ "configure security-manager instead");
+				+ "configure client authentication instead");
 		}
 
 		return properties != null ? properties : setAndGetProperties(new Properties());

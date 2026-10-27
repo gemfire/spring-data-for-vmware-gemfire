@@ -63,7 +63,7 @@ The following table maps required families to concrete native consumers. “Abse
 | Family | Current Spring Data evidence | SPI gap |
 | --- | --- | --- |
 | Cache configuration and public factory entry points | [AbstractBasicCacheFactoryBean][basic], [ClientCacheFactoryBean][client-cache], `ClientCacheConfiguration`, `ClientCacheParser` | Partial connection owner exists; legacy products remain native ClientCache. Missing typed PDX/resource/transaction/XML/default-pool configuration and readiness/keep-alive lifecycle. |
-| Region creation, attributes and mutation | [RegionAttributesFactoryBean][attributes], [ConfigurableRegionFactoryBean][region-config], [ClientRegionFactoryBean][client-region] | Shortcut-only creation cannot express existing attributes, pool association, disk store, constraints, statistics, callbacks, interest, eviction, expiration or compression. |
+| Region creation, attributes and mutation | Historical `RegionAttributesFactoryBean` ([retirement and handoff][attributes]), [ConfigurableRegionFactoryBean][region-config], [ClientRegionFactoryBean][client-region] | Shortcut-only creation cannot express existing attributes, pool association, disk store, constraints, statistics, callbacks, interest, eviction, expiration or compression. Tasks 30/47 retain these client requirements after task 63 removes the generic factory. |
 | Region operations and native callback execution | [GemfireOperations][operations], [GemfireTemplate][template], [GemfireCallback][callback] | Missing contains-key-on-server, contains-value/value-for-key, create and replace variants, plus native operations exposed through callback access to Region. Bulk/native semantics need mapping; replacing everything with loops is not automatically equivalent. |
 | Cache listeners and events | [LookupRegionFactoryBean][lookup], [ClientRegionFactoryBean][client-region] | Only region destruction and cleanup notifications exist. Missing eight other CacheListener callbacks, typed event metadata, and general listener configuration/removal. See G4. |
 | Cache writers | [LookupRegionFactoryBean][lookup] | No typed CacheWriter, before-event callbacks, event payloads or writer-veto/error translation. |
@@ -185,7 +185,7 @@ No architectural sign-off is needed merely to implement these already specified 
 
 [basic]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/AbstractBasicCacheFactoryBean.java
 [client-cache]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientCacheFactoryBean.java
-[attributes]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java
+[attributes]: ../investigations/client-only-spring-surfaces.md#inherited-region-attributes-retirement--2026-10-27
 [region-config]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/ConfigurableRegionFactoryBean.java
 [client-region]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/client/ClientRegionFactoryBean.java
 [operations]: ../../spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireOperations.java

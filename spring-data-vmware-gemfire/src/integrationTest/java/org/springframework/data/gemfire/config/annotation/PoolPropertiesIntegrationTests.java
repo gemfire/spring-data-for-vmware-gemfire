@@ -20,6 +20,7 @@ import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockO
 import org.springframework.mock.env.MockPropertySource;
 
 import java.net.InetSocketAddress;
+import java.util.Properties;
 import java.util.function.Function;
 
 /**
@@ -245,9 +246,12 @@ public class PoolPropertiesIntegrationTests extends SpringApplicationContextInte
 		Assertions.assertThat(mockSocketFactoryOne).isNotSameAs(mockSocketFactoryTwo);
 
 		Pool defaultPool = gemfireCache.getDefaultPool();
+		Assertions.assertThat(defaultPool.getLocators()).containsExactly(new InetSocketAddress("skullbox", 11235));
+		Assertions.assertThat(getBean("gemfireProperties", Properties.class)).doesNotContainKey("locators");
 		assertPool(defaultPool, 15000, 20000L, 180000, 275,27, -1, 1, true,"DEFAULT", 15000L, false, 2000,123456, 1, 60000, "testDefaultGroup", 16384, 10000, SocketFactory.DEFAULT,500, 250, true, 300000, 3);
 
 		Pool testPoolOne = getBean("TestPoolOne", Pool.class);
+		Assertions.assertThat(testPoolOne.getLocators()).containsExactly(new InetSocketAddress("localhost", 10334));
 
 		assertPool(testPoolOne, 30000, 300000L, 120000,
 			500, 50, -1, 1, true, "TestPoolOne", 5000L,

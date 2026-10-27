@@ -21,6 +21,8 @@ Retarget client function templates, proxies and configuration to ticket 25's cli
 
 ## Required validation
 
+Task 63's [function audit](../wayfinder-impl/investigations/client-only-spring-surfaces.md#client-function-submission-and-fixture-audit--2026-10-27) found that all three `GemfireOnRegionOperations` function-object/filter defaults discard the object and delegate by ID. Repair this during cutover and verify an unregistered stateful object plus filter through iterable, extracted and no-result forms. Preserve `FunctionGemfireAdminTemplate` client region discovery with driver-owned execution and typed results. Replace native execution callbacks and collector/error adaptation without losing their client behavior. Server fixture relocation is task 64's prerequisite responsibility, not deferred to this blocked ticket.
+
 Run Spring client proxy/template/configuration tests with native-free collaborators and real client function integration with each native driver. Verify filters, collectors, timeout/interruption, missing targets and typed no-result/error behavior.
 
 ## Completion

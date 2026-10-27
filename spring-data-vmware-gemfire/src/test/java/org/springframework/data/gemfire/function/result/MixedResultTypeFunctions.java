@@ -11,18 +11,14 @@ import java.util.List;
 import org.apache.geode.cache.execute.Function;
 
 import org.apache.geode.cache.execute.FunctionContext;
-import org.springframework.stereotype.Component;
 
 /**
- * The {@link MixedResultTypeFunctions} class defines (implements) various Apache Geode {@link Function Functions}
- * using SDG's {@link Function} implementation annotation support.
+ * Server function fixtures deployed in the integration test JAR for client result conversion tests.
  *
  * @author John Blum
  * @since 2.6.0
  * @see org.apache.geode.cache.execute.Function
- * @see org.springframework.stereotype.Component
  */
-@Component
 @SuppressWarnings("unused")
 public class MixedResultTypeFunctions {
 

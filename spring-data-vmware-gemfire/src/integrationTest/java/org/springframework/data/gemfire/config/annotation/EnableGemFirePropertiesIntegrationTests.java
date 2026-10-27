@@ -4,6 +4,7 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import java.io.ObjectInputFilter;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Function;
@@ -118,6 +119,40 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	}
 
 	@Test
+	public void defaultMemberTimeoutUsesTheNativeDefault() {
+
+		newApplicationContext(TestDefaultMemberTimeoutConfiguration.class);
+
+		Properties gemfireProperties = getBean("gemfireProperties", Properties.class);
+
+		Assertions.assertThat(gemfireProperties).doesNotContainKeys("bind-address", "member-timeout", "socket-buffer-size",
+			"delta-propagation", "lock-memory", "deploy-working-dir", "distributed-transactions");
+	}
+
+	@Test
+	public void explicitClientDeltaAndMemorySettingsAreMapped() {
+
+		newApplicationContext(TestClientDeltaAndMemoryConfiguration.class);
+
+		Properties gemfireProperties = getBean("gemfireProperties", Properties.class);
+
+		Assertions.assertThat(gemfireProperties)
+			.containsEntry("delta-propagation", "false").containsEntry("lock-memory", "true")
+			.doesNotContainKeys("deploy-working-dir", "distributed-transactions");
+	}
+
+	@Test
+	public void explicitMemberTimeoutConfiguresClientThreadMonitoring() {
+
+		newApplicationContext(TestExplicitMemberTimeoutConfiguration.class);
+
+		Properties gemfireProperties = getBean("gemfireProperties", Properties.class);
+
+		Assertions.assertThat(gemfireProperties).containsEntry("member-timeout", "8000");
+		Assertions.assertThat(gemfireProperties).doesNotContainKey("socket-buffer-size");
+	}
+
+	@Test
 	public void pdxGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
@@ -150,12 +185,13 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	public void securityGemFirePropertiesConfiguration() {
 
 		PropertySource testPropertySource = new MockPropertySource("TestPropertySource")
-			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.security.client.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.peer.authentication-initializer", "example.security.peer.AuthenticationInitializer")
-			.withProperty("spring.data.gemfire.security.manager.class-name", "example.security.SecurityManager")
-			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "example.security.PostProcessor");
+			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.security.client.AuthenticationInitializer");
 
 		newApplicationContext(testPropertySource, TestSecurityGemFirePropertiesConfiguration.class);
+
+		Assertions.assertThat(containsBean("shiroSecurityManager")).isFalse();
+		Assertions.assertThat(containsBean("shiroLifecycleBeanPostProcessor")).isFalse();
+		Assertions.assertThat(containsBean("shiroGemFireBeanFactoryPostProcessor")).isFalse();
 
 		Assertions.assertThat(containsBean("gemfireCache")).isTrue();
 
@@ -168,9 +204,9 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.getProperty("security-client-auth-init")).isEqualTo("example.security.client.AuthenticationInitializer");
-		Assertions.assertThat(gemfireProperties.getProperty("security-peer-auth-init")).isEqualTo("example.security.peer.AuthenticationInitializer");
-		Assertions.assertThat(gemfireProperties.getProperty("security-manager")).isEqualTo("example.security.SecurityManager");
-		Assertions.assertThat(gemfireProperties.getProperty("security-post-processor")).isEqualTo("example.security.PostProcessor");
+		Assertions.assertThat(gemfireProperties).doesNotContainKey("security-peer-auth-init");
+		Assertions.assertThat(gemfireProperties).doesNotContainKey("security-manager");
+		Assertions.assertThat(gemfireProperties).doesNotContainKey("security-post-processor");
 		Assertions.assertThat(gemfireProperties).doesNotContainKey("security-shiro-init");
 	}
 
@@ -186,9 +222,20 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.containsKey("serializable-object-filter")).isTrue();
 		Assertions.assertThat(gemfireProperties.getProperty("serializable-object-filter"))
-			.isEqualTo("example.app.model.TypeOne,example.app.model.TypeTwo");
+			.isEqualTo("java.util.UUID;java.util.Date;!*");
 		Assertions.assertThat(gemfireProperties.containsKey("validate-serializable-objects")).isTrue();
 		Assertions.assertThat(gemfireProperties.getProperty("validate-serializable-objects")).isEqualTo("true");
+
+		ObjectInputFilter filter = ObjectInputFilter.Config.createFilter(
+			gemfireProperties.getProperty("serializable-object-filter"));
+		for (Class<?> allowedClass : new Class<?>[] { java.util.UUID.class, java.util.Date.class }) {
+			ObjectInputFilter.FilterInfo info = Mockito.mock(ObjectInputFilter.FilterInfo.class);
+			Mockito.doReturn(allowedClass).when(info).serialClass();
+			Assertions.assertThat(filter.checkInput(info)).isEqualTo(ObjectInputFilter.Status.ALLOWED);
+		}
+		ObjectInputFilter.FilterInfo rejected = Mockito.mock(ObjectInputFilter.FilterInfo.class);
+		Mockito.doReturn(java.util.ArrayList.class).when(rejected).serialClass();
+		Assertions.assertThat(filter.checkInput(rejected)).isEqualTo(ObjectInputFilter.Status.REJECTED);
 	}
 
 	@Test
@@ -204,8 +251,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 			.withProperty("spring.data.gemfire.security.ssl.require-authentication", "false")
 			.withProperty("spring.data.gemfire.security.ssl.truststore", "/path/to/truststore")
 			.withProperty("spring.data.gemfire.security.ssl.truststore.password", "p@55w0rd")
-			.withProperty("spring.data.gemfire.security.ssl.truststore.type", "PKCS11")
-			.withProperty("spring.data.gemfire.security.ssl.web-require-authentication", "true");
+			.withProperty("spring.data.gemfire.security.ssl.truststore.type", "PKCS11");
 
 		newApplicationContext(testPropertySource, TestSslGemFirePropertiesConfiguration.class);
 
@@ -227,7 +273,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("DSA, RSA");
-		Assertions.assertThat(sslEnabledComponents).isEqualTo("cluster,gateway,locator,server,web");
+		Assertions.assertThat(sslEnabledComponents).isEqualTo("locator,server");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("TestCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("/path/to/keystore");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore-password")).isEqualTo("p@55w0rd");
@@ -305,7 +351,7 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 
 	@EnableGemFireMockObjects
 	@ClientCacheApplication
-	@EnableGemFireProperties(serializableObjectFilter = { "example.app.model.TypeOne", "example.app.model.TypeTwo" },
+	@EnableGemFireProperties(serializableObjectFilter = { "java.util.UUID", "java.util.Date", "!*" },
 		validateSerializableObjects = true)
 	static class TestSerializableObjectFilterAndValidateSerializableObjectsGemFirePropertiesConfiguration { }
 
@@ -313,11 +359,10 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@ClientCacheApplication
 	@EnableGemFireProperties
 	@EnableSsl(ciphers = "FISH", components = {
-		EnableSsl.Component.CLUSTER, EnableSsl.Component.GATEWAY,
-		EnableSsl.Component.LOCATOR, EnableSsl.Component.SERVER, EnableSsl.Component.WEB
+		EnableSsl.Component.LOCATOR, EnableSsl.Component.SERVER
 	}, componentCertificateAliases = {
-		@EnableSsl.ComponentAlias(component = EnableSsl.Component.GATEWAY, alias = "WanCert"),
-		@EnableSsl.ComponentAlias(component = EnableSsl.Component.WEB, alias = "HttpCert")
+		@EnableSsl.ComponentAlias(component = EnableSsl.Component.LOCATOR, alias = "LocatorCert"),
+		@EnableSsl.ComponentAlias(component = EnableSsl.Component.SERVER, alias = "ServerCert")
 	}, defaultCertificateAlias = "MockCert", protocols = "HTTP")
 	static class TestSslGemFirePropertiesConfiguration { }
 
@@ -326,5 +371,20 @@ public class EnableGemFirePropertiesIntegrationTests extends SpringApplicationCo
 	@EnableGemFireProperties
 	@EnableStatistics
 	static class TestStatisticsGemFirePropertiesConfiguration { }
+
+	@EnableGemFireMockObjects
+	@ClientCacheApplication
+	@EnableGemFireProperties
+	static class TestDefaultMemberTimeoutConfiguration { }
+
+	@EnableGemFireMockObjects
+	@ClientCacheApplication
+	@EnableGemFireProperties(memberTimeout = 8000)
+	static class TestExplicitMemberTimeoutConfiguration { }
+
+	@EnableGemFireMockObjects
+	@ClientCacheApplication
+	@EnableGemFireProperties(deltaPropagation = false, lockMemory = true)
+	static class TestClientDeltaAndMemoryConfiguration { }
 
 }

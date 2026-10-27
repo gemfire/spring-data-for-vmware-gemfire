@@ -5569,7 +5569,7 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/ClientRegionNamespaceIntegrationTests.java",
       "line": 95,
       "detail": "org.apache.geode.cache.Region :: Region.class",
-      "count": 5,
+      "count": 7,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -5608,7 +5608,7 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/ClientRegionNamespaceIntegrationTests.java",
       "line": 140,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes complexRegionAttributes = TestUtils.<RegionAttributes<?, ?>>readField(\"attributes\", complexClientRegionFactoryBean)",
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes complexRegionAttributes = requireApplicationContext().getBean(\"complex\", Region.class).getAttributes()",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -5616,7 +5616,7 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/ClientRegionNamespaceIntegrationTests.java",
       "line": 185,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes overflowRegionAttributes = TestUtils.<RegionAttributes<?, ?>>readField(\"attributes\", overflowClientRegionFactoryBean)",
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes overflowRegionAttributes = requireApplicationContext().getBean(\"overflow\", Region.class).getAttributes()",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -5626,14 +5626,6 @@
       "line": 165,
       "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes persistentRegionAttributes = persistent.getAttributes()",
       "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/ClientRegionNamespaceIntegrationTests.java",
-      "line": 141,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes<?, ?>",
-      "count": 2,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -6001,7 +5993,7 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
       "line": 149,
       "detail": "org.apache.geode.cache.Region :: Region.class",
-      "count": 1,
+      "count": 3,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -6015,17 +6007,25 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
-      "line": 151,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes localDataRegionAttributes = TestUtils.readField(\"attributes\", localDataRegionFactoryBean)",
+      "line": 150,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes localDataRegionAttributes = localDataRegion.getAttributes()",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
-      "line": 174,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes regionAttributes = TestUtils.readField(\"attributes\", regionFactoryBean)",
-      "count": 2,
+      "line": 169,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes regionAttributes = requireApplicationContext().getBean(\"local-data\", Region.class).getAttributes()",
+      "count": 1,
+      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
+      "line": 199,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes regionAttributes = requireApplicationContext().getBean(\"local-data-with-custom-expiry\", Region.class).getAttributes()",
+      "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -6033,22 +6033,6 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
       "line": 19,
       "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
-      "line": 154,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/DiskStoreNamespaceIntegrationTests.java",
-      "line": 20,
-      "detail": "org.apache.geode.cache.Scope :: org.apache.geode.cache.Scope",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -6225,7 +6209,7 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/RegionDefinitionUsingBeansNamespaceIntegrationTests.java",
       "line": 62,
       "detail": "org.apache.geode.cache.DataPolicy :: DataPolicy.NORMAL",
-      "count": 2,
+      "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -6257,22 +6241,6 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/RegionDefinitionUsingBeansNamespaceIntegrationTests.java",
       "line": 8,
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/RegionDefinitionUsingBeansNamespaceIntegrationTests.java",
-      "line": 76,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes<?, ?>",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/config/xml/RegionDefinitionUsingBeansNamespaceIntegrationTests.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
@@ -9040,22 +9008,6 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/repository/sample/PersonRepositoryIntegrationTests.java",
       "line": 224,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes<Long, Person>",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/repository/sample/PersonRepositoryIntegrationTests.java",
-      "line": 15,
-      "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/repository/sample/PersonRepositoryIntegrationTests.java",
-      "line": 224,
       "detail": "org.apache.geode.cache.client.ClientCache :: ClientCache gemfireCache",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
@@ -10919,22 +10871,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 30,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.ACK_SEVERE_ALERT_THRESHOLD",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 31,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.ACK_WAIT_THRESHOLD",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 32,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.ARCHIVE_DISK_SPACE_LIMIT",
       "count": 1,
@@ -10959,14 +10895,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 35,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.BIND_ADDRESS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 36,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.CACHE_XML_FILE",
       "count": 1,
@@ -10983,14 +10911,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 39,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.CONSERVE_SOCKETS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 40,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DELTA_PROPAGATION",
       "count": 1,
@@ -10999,40 +10919,8 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 41,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DEPLOY_WORKING_DIR",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 42,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DISABLE_AUTO_RECONNECT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 43,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DISABLE_TCP",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 44,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DISTRIBUTED_SYSTEM_ID",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 46,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.DISTRIBUTED_TRANSACTIONS",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11055,14 +10943,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 50,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.ENABLE_NETWORK_PARTITION_DETECTION",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 51,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.ENABLE_TIME_STATISTICS",
       "count": 1,
@@ -11073,22 +10953,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 54,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.GROUPS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 57,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.LOCATORS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 56,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.LOCATOR_WAIT_TIME",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11135,30 +10999,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 63,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.MAX_NUM_RECONNECT_TRIES",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 64,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.MAX_WAIT_TIME_RECONNECT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 66,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.MEMBERSHIP_PORT_RANGE",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 65,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.MEMBER_TIMEOUT",
       "count": 1,
@@ -11177,14 +11017,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 68,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.REDUNDANCY_ZONE",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 72,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_AUTH_TOKEN_ENABLED_COMPONENTS",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11215,64 +11047,8 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 76,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_MANAGER",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 77,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_PEER_AUTH_INIT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 78,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_PEER_VERIFY_MEMBER_TIMEOUT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 79,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_POST_PROCESSOR",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 83,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SECURITY_UDP_DHALGO",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 84,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SERIALIZABLE_OBJECT_FILTER",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 86,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SOCKET_BUFFER_SIZE",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 87,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SOCKET_LEASE_TIME",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11289,14 +11065,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 89,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_CLIENT_PROTOCOLS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 90,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_CLUSTER_ALIAS",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11321,14 +11089,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 93,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_ENDPOINT_IDENTIFICATION_ENABLED",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 94,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_GATEWAY_ALIAS",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11399,14 +11159,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 103,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_SERVER_PROTOCOLS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 104,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_TRUSTSTORE",
       "count": 1,
@@ -11439,22 +11191,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 108,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_WEB_ALIAS",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 109,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.SSL_WEB_SERVICE_REQUIRE_AUTHENTICATION",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 111,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.STATISTIC_ARCHIVE_FILE",
       "count": 1,
@@ -11479,14 +11215,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 115,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.TCP_PORT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 116,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.THREAD_MONITOR_ENABLED",
       "count": 1,
@@ -11505,30 +11233,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
       "line": 118,
       "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.THREAD_MONITOR_TIME_LIMIT",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 120,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.UDP_FRAGMENT_SIZE",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 121,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.UDP_RECV_BUFFER_SIZE",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemFireProperties.java",
-      "line": 122,
-      "detail": "org.apache.geode.distributed.ConfigurationProperties :: ConfigurationProperties.UDP_SEND_BUFFER_SIZE",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -12907,46 +12611,6 @@
       "detail": "org.apache.geode.cache.Region :: org.apache.geode.cache.Region",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java",
-      "line": 32,
-      "detail": "org.apache.geode.cache.AttributesFactory :: AttributesFactory<K, V>",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java",
-      "line": 9,
-      "detail": "org.apache.geode.cache.AttributesFactory :: org.apache.geode.cache.AttributesFactory",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java",
-      "line": 52,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes.class",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java",
-      "line": 33,
-      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes<K, V>",
-      "count": 3,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/RegionAttributesFactoryBean.java",
-      "line": 10,
-      "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
     {
       "rule": "native-source",
@@ -16198,14 +15862,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/ApacheShiroSecurityConfiguration.java",
-      "line": 14,
-      "detail": "org.apache.geode.cache.client.ClientCache :: org.apache.geode.cache.client.ClientCache",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/AutoConfiguredAuthenticationConfiguration.java",
       "line": 7,
       "detail": "org.apache.geode.security.AuthInitialize :: org.apache.geode.security.AuthInitialize",
@@ -17311,30 +16967,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
-      "line": 241,
-      "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.ALL",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
-      "line": 242,
-      "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.CLUSTER",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
-      "line": 243,
-      "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.GATEWAY",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
       "line": 244,
       "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.LOCATOR",
       "count": 1,
@@ -17345,14 +16977,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
       "line": 245,
       "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.SERVER",
-      "count": 1,
-      "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/config/annotation/EnableSsl.java",
-      "line": 246,
-      "detail": "org.apache.geode.security.SecurableCommunicationChannels :: SecurableCommunicationChannels.WEB",
       "count": 1,
       "owner": "wayfinder-issues/30-region-factory-and-configuration-migration.md"
     },
@@ -26271,6 +25895,30 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
+      "line": 269,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes examplesRegionAttributes = mock(RegionAttributes.class)",
+      "count": 1,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
+      "line": 249,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes peopleRegionAttributes = mock(RegionAttributes.class)",
+      "count": 1,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
+      "line": 269,
+      "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes.class",
+      "count": 2,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
       "line": 260,
       "detail": "org.apache.geode.cache.RegionAttributes :: RegionAttributes<Long, Example>",
       "count": 1,
@@ -26287,8 +25935,24 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
+      "line": 267,
+      "detail": "org.apache.geode.cache.RegionAttributes :: examplesRegionAttributes(): RegionAttributes",
+      "count": 1,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
       "line": 19,
       "detail": "org.apache.geode.cache.RegionAttributes :: org.apache.geode.cache.RegionAttributes",
+      "count": 1,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableContinuousQueriesConfigurationUnitTests.java",
+      "line": 247,
+      "detail": "org.apache.geode.cache.RegionAttributes :: peopleRegionAttributes(): RegionAttributes",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
@@ -26537,7 +26201,15 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
       "line": 105,
       "detail": "org.apache.geode.cache.Region :: Region.class",
-      "count": 7,
+      "count": 8,
+      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
+    },
+    {
+      "rule": "native-source",
+      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
+      "line": 184,
+      "detail": "org.apache.geode.cache.Region :: Region<?, ?>",
+      "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
     {
@@ -26617,7 +26289,7 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnableEntityDefinedRegionsUnitTests.java",
       "line": 173,
       "detail": "org.apache.geode.cache.client.ClientRegionShortcut :: ClientRegionShortcut.LOCAL",
-      "count": 1,
+      "count": 2,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },
     {
@@ -27081,14 +26753,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/EnablePdxConfigurationUnitTests.java",
       "line": 24,
       "detail": "org.apache.geode.pdx.PdxSerializer :: org.apache.geode.pdx.PdxSerializer",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/GeodeIntegratedSecurityConfigurationUnitTests.java",
-      "line": 80,
-      "detail": "org.apache.geode.security.PostProcessor :: TestSecurityPostProcessor extends null implements org.apache.geode.security.PostProcessor",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },

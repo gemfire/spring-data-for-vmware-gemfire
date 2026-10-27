@@ -22,7 +22,7 @@ import org.springframework.util.Assert;
 
 /**
  * The {@link EnableSsl} annotation marks a Spring {@link Configuration @Configuration} annotated {@link Class}
- * to configure and enable Pivotal GemFire/Apache Geode's TCP/IP Socket SSL.
+ * to configure TLS for client connections to VMware GemFire locators and servers.
  *
  * @author John Blum
  * @author Srikanth Manvi
@@ -66,16 +66,17 @@ public @interface EnableSsl {
 	String[] clientProtocols() default {};
 
 	/**
-	 * Configures the Pivotal GemFire/Apache Geode components for which SSL will be enabled.
+	 * Configures the remote endpoint types for which client SSL connections will be enabled.
 	 *
-	 * Defaults to {@link Component#ALL}.
+	 * Defaults to both {@link Component#LOCATOR} and {@link Component#SERVER}.
+	 * These channels secure outgoing client connections; they do not start server endpoints.
 	 *
 	 * Use the {@literal spring.data.gemfire.security.ssl.components} property
 	 * in {@literal application.properties}.
 	 *
-	 * E.g. {@literal spring.data.gemfire.security.ssl.components=cluster,gateway,locator,server}.
+	 * E.g. {@literal spring.data.gemfire.security.ssl.components=locator,server}.
 	 */
-	Component[] components() default { Component.ALL };
+	Component[] components() default { Component.LOCATOR, Component.SERVER };
 
 	/**
 	 * Configures the {@link String names} of all the individual {@literal Keystore} certificates to use
@@ -87,7 +88,7 @@ public @interface EnableSsl {
 	 * Use {@literal spring.data.gemfire.security.ssl.certificate.alias.<component>}
 	 * in {@literal application.properties}.
 	 *
-	 * E.g. {@literal spring.data.gemfire.security.ssl.certificate.alias.gateway=WanCert}.
+	 * E.g. {@literal spring.data.gemfire.security.ssl.certificate.alias.locator=LocatorCert}.
 	 */
 	ComponentAlias[] componentCertificateAliases() default {};
 
@@ -104,9 +105,8 @@ public @interface EnableSsl {
 	String defaultCertificateAlias() default "";
 
 	/**
-	 * If {@literal true} then causes clients (or Apache Geode servers in cause of P2P) to validate the server's
-	 * hostname using the server`s certificate. Set to {@literal true} if {@literal useSSLDefaultDefaultContext}
-	 * is {@literal true}.
+	 * If {@literal true} then causes clients to validate the remote endpoint's
+	 * hostname using its certificate. Hostname validation is independent of whether the default SSL context is used.
 	 *
 	 * Defaults to {@literal false}.
 	 *
@@ -161,8 +161,8 @@ public @interface EnableSsl {
 	String[] protocols() default { "any" };
 
 	/**
-	 * Boolean value indicating whether to require authentication for SSL communication between clients, servers,
-	 * gateways, etc.
+	 * Controls whether the native client propagates SSL peer verification failures.
+	 * Configure mutual TLS requirements on the remote server or locator.
 	 *
 	 * Defaults to {@literal true}.
 	 *
@@ -170,18 +170,6 @@ public @interface EnableSsl {
 	 * in {@literal application.properties}.
 	 */
 	boolean requireAuthentication() default true;
-
-	/**
-	 * Configures a list of the SSL protocols to enable on the server-side of the SSL connection.
-	 *
-	 * The protocols listed must be supported by the available providers.
-	 *
-	 * Defaults to {@literal empty}.
-	 *
-	 * Use the {@literal spring.data.gemfire.security.ssl.server.protocols} property
-	 * in {@literal application.properties}.
-	 */
-	String[] serverProtocols() default {};
 
 	/**
 	 * Pathname to the truststore used for SSL communications.
@@ -216,8 +204,8 @@ public @interface EnableSsl {
 	String truststoreType() default "JKS";
 
 	/**
-	 * If {@literal true} then this will enable the use of default SSL context
-	 * and sets {@literal ssl-endpoint-identification-enabled} to {@literal true}.
+	 * If {@literal true} then enables the default SSL context.
+	 * Also set {@link #enableEndpointIdentification()} to {@literal true} to verify endpoint hostnames.
 	 *
 	 * Defaults to {@literal false}.
 	 *
@@ -226,31 +214,17 @@ public @interface EnableSsl {
 	 */
 	boolean useDefaultContext() default false;
 
-	/**
-	 * If {@literal true} then requires two-way authentication for web component.
-	 *
-	 * Defaults to {@literal false}.
-	 *
-	 * Use the {@literal spring.data.gemfire.security.ssl.web-require-authentication}
-	 * in {@literal application.properties}.
-	 */
-	boolean webRequireAuthentication() default false;
-
 	enum Component {
 
-		ALL(SecurableCommunicationChannels.ALL),
-		CLUSTER(SecurableCommunicationChannels.CLUSTER),
-		GATEWAY(SecurableCommunicationChannels.GATEWAY),
 		LOCATOR(SecurableCommunicationChannels.LOCATOR),
-		SERVER(SecurableCommunicationChannels.SERVER),
-		WEB(SecurableCommunicationChannels.WEB);
+		SERVER(SecurableCommunicationChannels.SERVER);
 
 		public static Component valueOfName(String name) {
 
 			return Arrays.stream(values())
 				.filter(component -> component.name().equalsIgnoreCase(String.valueOf(name).trim()))
 				.findFirst()
-				.orElseThrow(() -> newIllegalArgumentException("Name [%s] is not a valid component", name));
+				.orElseThrow(() -> newIllegalArgumentException("Name [%s] is not a supported client SSL component; use locator or server", name));
 		}
 
 		private final String prefix;

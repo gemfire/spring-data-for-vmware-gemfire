@@ -31,11 +31,6 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 
 		Map<String, Object> annotationAttributes = MapBuilder.<String, Object>newMapBuilder()
 			.put("clientAuthenticationInitializer", "example.TestSecurityClientAuthenticationInitialization")
-			.put("securityManagerClass", TestSecurityManager.class)
-			.put("securityManagerClassName", "  ")
-			.put("peerAuthenticationInitializer", "example.TestSecurityPeerAuthenticationInitializer")
-			.put("securityPostProcessorClass", TestSecurityPostProcessor.class)
-			.put("securityPostProcessorClassName", "")
 			.build();
 
 		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
@@ -46,24 +41,37 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 		assertThat(gemfireProperties).isNotEmpty();
 		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_CLIENT_AUTH_INIT))
 			.isEqualTo("example.TestSecurityClientAuthenticationInitialization");
-		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_MANAGER))
-			.isEqualTo(TestSecurityManager.class.getName());
-		assertThat(gemfireProperties).doesNotContainKey(GeodeIntegratedSecurityConfiguration.SECURITY_SHIRO_INIT);
-		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_PEER_AUTH_INIT))
-			.isEqualTo("example.TestSecurityPeerAuthenticationInitializer");
-		assertThat(gemfireProperties.getProperty(GeodeIntegratedSecurityConfiguration.SECURITY_POST_PROCESSOR))
-			.isEqualTo(TestSecurityPostProcessor.class.getName());
+		assertThat(gemfireProperties).doesNotContainKey("security-manager");
+		assertThat(gemfireProperties).doesNotContainKey("security-shiro-init");
+		assertThat(gemfireProperties).doesNotContainKey("security-peer-auth-init");
+		assertThat(gemfireProperties).doesNotContainKey("security-post-processor");
 
 	}
 
 	@Test
-	public void rejectsRemovedShiroAnnotationAttribute() {
+	public void rejectsExplicitShiroEnablement() {
 		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+		configuration.setEnvironment(new MockEnvironment()
+			.withProperty("spring.data.gemfire.security.shiro.enabled", "true"));
 
-		assertThatThrownBy(() -> configuration.toGemFireProperties(Map.of("shiroIniResourcePath", "shiro.ini")))
+		assertThatThrownBy(() -> configuration.toGemFireProperties(Map.of()))
 			.isInstanceOf(UnsupportedOperationException.class)
-			.hasMessageContaining("security-shiro-init")
-			.hasMessageContaining("security-manager");
+			.hasMessageContaining("spring.data.gemfire.security.shiro.enabled")
+			.hasMessageContaining("client authentication");
+	}
+
+	@Test
+	public void explicitShiroDisablementPreservesClientAuthentication() {
+		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+		configuration.setEnvironment(new MockEnvironment()
+			.withProperty("spring.data.gemfire.security.shiro.enabled", "false"));
+
+		Properties properties = configuration.toGemFireProperties(Map.of(
+			"clientAuthenticationInitializer", "example.ClientAuthenticationInitializer"));
+
+		assertThat(properties).hasSize(1);
+		assertThat(properties.getProperty("security-client-auth-init"))
+			.isEqualTo("example.ClientAuthenticationInitializer");
 	}
 
 	@Test
@@ -77,11 +85,33 @@ public class GeodeIntegratedSecurityConfigurationUnitTests {
 			.hasMessageContaining("security-shiro-init");
 	}
 
-	private static class TestSecurityPostProcessor implements org.apache.geode.security.PostProcessor {
+	@Test
+	public void rejectsServerSecurityCallbackEnvironmentProperties() {
+		for (String suffix : new String[] { "manager.class-name", "postprocessor.class-name" }) {
+			String property = "spring.data.gemfire.security." + suffix;
+			GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+			configuration.setEnvironment(new MockEnvironment().withProperty(property, "private.ServerCallback"));
 
-		@Override
-		public Object processRegionValue(Object principal, String regionName, Object key, Object value) {
-			return value;
+			assertThatThrownBy(() -> configuration.toGemFireProperties(Map.of()))
+				.isInstanceOf(UnsupportedOperationException.class)
+				.hasMessageContaining(property)
+				.hasMessageContaining("configure it on the server")
+				.hasMessageNotContaining("private.ServerCallback");
 		}
+	}
+
+	@Test
+	public void blankServerCallbackPropertiesPreserveClientAuthenticationOverride() {
+		GeodeIntegratedSecurityConfiguration configuration = new GeodeIntegratedSecurityConfiguration();
+		configuration.setEnvironment(new MockEnvironment()
+			.withProperty("spring.data.gemfire.security.manager.class-name", " ")
+			.withProperty("spring.data.gemfire.security.postprocessor.class-name", "")
+			.withProperty("spring.data.gemfire.security.client.authentication-initializer", "example.EnvironmentInitializer"));
+
+		Properties properties = configuration.toGemFireProperties(Map.of(
+			"clientAuthenticationInitializer", "example.AnnotationInitializer"));
+
+		assertThat(properties).hasSize(1);
+		assertThat(properties.getProperty("security-client-auth-init")).isEqualTo("example.EnvironmentInitializer");
 	}
 }

@@ -70,7 +70,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		assertThatThrownBy(() -> factory.resolveProperties(() -> null))
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessageContaining("security-shiro-init")
-			.hasMessageContaining("security-manager")
+			.hasMessageContaining("client authentication")
 			.hasMessageNotContaining("/private/shiro.ini");
 	}
 

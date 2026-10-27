@@ -37,7 +37,6 @@ import org.springframework.core.type.filter.AspectJTypeFilter;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.core.type.filter.RegexPatternTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
-import org.springframework.data.gemfire.RegionAttributesFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.support.AbstractAnnotationConfigSupport;
 import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
@@ -68,7 +67,6 @@ import org.springframework.util.StringUtils;
  * @see BeanDefinitionRegistry
  * @see ImportBeanDefinitionRegistrar
  * @see org.springframework.data.gemfire.client.ClientRegionFactoryBean
- * @see RegionAttributesFactoryBean
  * @see ClientRegionFactoryBean
  * @see AbstractAnnotationConfigSupport
  * @see CacheTypeAwareRegionFactoryBean
@@ -363,20 +361,9 @@ public class EntityDefinedRegionsConfiguration extends AbstractAnnotationConfigS
 					regionMetadata.getRegionValueConstraint());
 			}
 
-			BeanDefinitionBuilder regionAttributesFactoryBeanBuilder =
-				BeanDefinitionBuilder.genericBeanDefinition(RegionAttributesFactoryBean.class);
-
-			regionFactoryBeanBuilder.addPropertyValue("attributes",
-				regionAttributesFactoryBeanBuilder.getBeanDefinition());
-
 			if (regionAnnotationAttributes.containsKey("diskSynchronous")) {
-				setPropertyValueIfNotDefault(regionAttributesFactoryBeanBuilder, "diskSynchronous",
+				setPropertyValueIfNotDefault(regionFactoryBeanBuilder, "diskSynchronous",
 					regionAnnotationAttributes.getBoolean("diskSynchronous"), true);
-			}
-
-			if (regionAnnotationAttributes.containsKey("ignoreJta")) {
-				setPropertyValueIfNotDefault(regionAttributesFactoryBeanBuilder, "ignoreJTA",
-					regionAnnotationAttributes.getBoolean("ignoreJta"), false);
 			}
 
 			setClientRegionAttributes(regionMetadata, regionAnnotationAttributes, regionFactoryBeanBuilder);

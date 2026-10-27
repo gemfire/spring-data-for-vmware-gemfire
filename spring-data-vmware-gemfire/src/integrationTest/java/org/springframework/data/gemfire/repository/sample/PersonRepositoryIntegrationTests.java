@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.client.ClientCache;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -24,7 +23,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.gemfire.RegionAttributesFactoryBean;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.repository.config.EnableGemfireRepositories;
@@ -221,26 +219,17 @@ public class PersonRepositoryIntegrationTests extends IntegrationTestsSupport {
 		}
 
 		@Bean(name = "simple")
-		ClientRegionFactoryBean<Long, Person> simpleRegion(ClientCache gemfireCache, RegionAttributes<Long, Person> simpleRegionAttributes) {
+		ClientRegionFactoryBean<Long, Person> simpleRegion(ClientCache gemfireCache) {
 
 			ClientRegionFactoryBean<Long, Person> simpleRegion = new ClientRegionFactoryBean<>();
 
-			simpleRegion.setAttributes(simpleRegionAttributes);
+			simpleRegion.setKeyConstraint(Long.class);
+			simpleRegion.setValueConstraint(Person.class);
 			simpleRegion.setCache(gemfireCache);
 			simpleRegion.setPersistent(false);
 
 			return simpleRegion;
 		}
 
-		@Bean
-		RegionAttributesFactoryBean<Long, Person> simpleRegionAttributes() {
-
-			RegionAttributesFactoryBean<Long, Person> simpleRegionAttributes = new RegionAttributesFactoryBean<>();
-
-			simpleRegionAttributes.setKeyConstraint(Long.class);
-			simpleRegionAttributes.setValueConstraint(Person.class);
-
-			return simpleRegionAttributes;
-		}
 	}
 }

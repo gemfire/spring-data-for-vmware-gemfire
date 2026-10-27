@@ -35,3 +35,7 @@ Preserve the entire retained client unit suite against the official mock and nat
 ## Completion
 
 All Spring Data test source/fixture rows migrated; native-specific cases live in driver suites with preserved coverage. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Task 63 inherited-attributes test handoff
+
+Task 63 removes the inherited production attributes factory and temporarily exposes six native metadata occurrences in the two CQ mock bean definitions, plus three occurrences in the new explicit-false entity disk-synchrony regression. Replace these with SPI/official-mock fixtures at consumer cutover; preserve both domain constraints and the end-to-end disk-synchrony assertion. These reviewed transitional baseline additions do not satisfy native-free unit coverage. See the [reviewed boundary adjustment](../wayfinder-impl/investigations/client-only-spring-surfaces.md#reviewed-transitional-test-boundary-adjustment).

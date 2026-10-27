@@ -37,7 +37,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.gemfire.RegionAttributesFactoryBean;
 import org.springframework.data.gemfire.listener.ContinuousQueryListenerContainer;
 import org.springframework.data.gemfire.listener.annotation.ContinuousQuery;
 import org.springframework.data.gemfire.mapping.GemfireMappingContext;
@@ -245,12 +244,12 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 
 		@Bean
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		RegionAttributesFactoryBean peopleRegionAttributes() {
+		RegionAttributes peopleRegionAttributes() {
 
-			RegionAttributesFactoryBean peopleRegionAttributes = new RegionAttributesFactoryBean();
+			RegionAttributes peopleRegionAttributes = mock(RegionAttributes.class);
 
-			peopleRegionAttributes.setKeyConstraint(Long.class);
-			peopleRegionAttributes.setValueConstraint(Person.class);
+			when(peopleRegionAttributes.getKeyConstraint()).thenReturn(Long.class);
+			when(peopleRegionAttributes.getValueConstraint()).thenReturn(Person.class);
 
 			return peopleRegionAttributes;
 		}
@@ -265,12 +264,12 @@ public class EnableContinuousQueriesConfigurationUnitTests extends SpringApplica
 
 		@Bean
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		RegionAttributesFactoryBean examplesRegionAttributes() {
+		RegionAttributes examplesRegionAttributes() {
 
-			RegionAttributesFactoryBean examplesRegionAttributes = new RegionAttributesFactoryBean();
+			RegionAttributes examplesRegionAttributes = mock(RegionAttributes.class);
 
-			examplesRegionAttributes.setKeyConstraint(Long.class);
-			examplesRegionAttributes.setValueConstraint(Example.class);
+			when(examplesRegionAttributes.getKeyConstraint()).thenReturn(Long.class);
+			when(examplesRegionAttributes.getValueConstraint()).thenReturn(Example.class);
 
 			return examplesRegionAttributes;
 		}

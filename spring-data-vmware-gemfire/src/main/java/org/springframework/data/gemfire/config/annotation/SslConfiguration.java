@@ -6,7 +6,7 @@ package org.springframework.data.gemfire.config.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -22,7 +22,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * The {@link SslConfiguration} class is a Spring {@link ImportBeanDefinitionRegistrar} that applies
- * additional configuration using Pivotal GemFire/Apache Geode {@link Properties} to configure SSL.
+ * additional {@link Properties} to configure SSL for client connections to locators and servers.
  *
  * @author John Blum
  * @author Srikanth Manvi
@@ -48,6 +48,8 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 	@Override
 	protected Properties toGemFireProperties(Map<String, Object> annotationAttributesMap) {
 
+		rejectServerSslProperties();
+
 		AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(annotationAttributesMap);
 
 		PropertiesBuilder gemfireProperties = PropertiesBuilder.create();
@@ -57,7 +59,8 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 		gemfireProperties.setProperty("ssl-enabled-components",
 			StringUtils.collectionToCommaDelimitedString(components.stream()
 				.map(EnableSsl.Component::toString)
-				.collect(Collectors.toSet())))
+				.sorted()
+				.collect(Collectors.toList())))
 
 			.setProperty("ssl-ciphers",
 				resolveProperty(sslProperty("ciphers"),
@@ -96,11 +99,6 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 				resolveProperty(sslProperty("require-authentication"),
 					annotationAttributes.getBoolean("requireAuthentication")))
 
-			.setProperty("ssl-server-protocols",
-				resolveProperty(sslProperty("server.protocols"),
-					StringUtils.arrayToDelimitedString(annotationAttributes.getStringArray("serverProtocols"),
-						SPACE_DELIMITER)))
-
 			.setProperty("ssl-truststore",
 				resolveProperty(sslProperty("truststore"),
 					annotationAttributes.getString("truststore")))
@@ -115,15 +113,24 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 
 			.setProperty("ssl-use-default-context",
 				resolveProperty(sslProperty("use-default-context"),
-					annotationAttributes.getBoolean("useDefaultContext")))
-
-			.setProperty("ssl-web-require-authentication",
-				resolveProperty(sslProperty("web-require-authentication"),
-					annotationAttributes.getBoolean("webRequireAuthentication")));
+					annotationAttributes.getBoolean("useDefaultContext")));
 
 		configureComponentCertificateAliases(annotationAttributes, gemfireProperties);
 
 		return gemfireProperties.build();
+	}
+
+	private void rejectServerSslProperties() {
+
+		for (String suffix : new String[] { "server.protocols", "web-require-authentication",
+			"certificate.alias.cluster", "certificate.alias.gateway", "certificate.alias.web",
+			"certificate.alias.jmx", "certificate.alias.grpc", "certificate.alias.all" }) {
+			String property = sslProperty(suffix);
+			if (StringUtils.hasText(resolveProperty(property, (String) null))) {
+				throw new UnsupportedOperationException(property + " is not a client SSL setting; "
+					+ "configure server SSL on the server and use locator/server client channels here");
+			}
+		}
 	}
 
 	private Set<EnableSsl.Component> resolveComponents(AnnotationAttributes annotationAttributes) {
@@ -140,7 +147,7 @@ public class SslConfiguration extends EmbeddedServiceConfigurationSupport {
 			? CollectionUtils.asSet((EnableSsl.Component[]) annotationAttributes.get("components"))
 			: components;
 
-		components = components.isEmpty() ? Collections.singleton(EnableSsl.Component.ALL) : components;
+		components = components.isEmpty() ? EnumSet.allOf(EnableSsl.Component.class) : components;
 
 		return components;
 	}

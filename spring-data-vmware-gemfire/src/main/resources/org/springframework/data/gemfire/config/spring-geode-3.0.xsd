@@ -947,7 +947,7 @@ Regular expression based interest. If the pattern is '.*' then all keys of any t
 					<xsd:element name="eviction" minOccurs="0" maxOccurs="1">
 						<xsd:annotation>
 							<xsd:documentation><![CDATA[
-Eviction policy for the partitioned region.
+Eviction policy for the client region's local entries.
 								]]></xsd:documentation>
 						</xsd:annotation>
 						<xsd:complexType>

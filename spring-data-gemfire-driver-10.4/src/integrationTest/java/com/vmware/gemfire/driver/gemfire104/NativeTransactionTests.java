@@ -208,6 +208,18 @@ class NativeTransactionTests {
 				.isInstanceOf(IllegalStateException.class).hasMessageContaining("cannot be registered on a client");
 		}
 	}
+	@Test void distributedTransactionPropertyDoesNotEnableSupportedClientCommits() {
+		try (var cache = new ClientCacheFactory().set("log-level", "error")
+				.set("distributed-transactions", "true").addPoolServer("localhost", server.port).create()) {
+			var region = region(connection(cache));
+			var nativeManager = cache.getCacheTransactionManager();
+			assertThat(nativeManager.isDistributed()).isTrue();
+			nativeManager.begin();
+			region.put("distributed-property", "value");
+			assertThatThrownBy(nativeManager::commit).isInstanceOf(UnsupportedOperationInTransactionException.class);
+			if (nativeManager.exists()) nativeManager.rollback();
+		}
+	}
 	@Test void incompleteSynchronizationAndGeneralFailuresRetainTheirDistinctClassifications() {
 		List<RuntimeException> failures = List.of(new CommitIncompleteException("private"), new FailedSynchronizationException("private"),
 			new SynchronizationCommitConflictException("private"), new TransactionException("private"));

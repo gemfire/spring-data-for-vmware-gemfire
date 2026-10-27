@@ -32,41 +32,7 @@ import org.springframework.context.annotation.Import;
 public @interface EnableGemFireProperties {
 
 	/**
-	 * Number of seconds the distributed system will wait after the {@literal ack-wait-threshold} for a message
-	 * to be acknowledged before it issues an alert at severe level. A value of zero disables this feature.
-	 *
-	 * Defaults to {@literal 0} seconds.
-	 */
-	int ackSevereAlertThreshold() default GemFirePropertiesConfiguration.DEFAULT_ACK_SEVERE_ALERT_THRESHOLD;
-
-	/**
-	 * Number of seconds a distributed message can wait for acknowledgment before it sends an alert to signal
-	 * that something might be wrong with the system member that is unresponsive.
-	 *
-	 * The waiter continues to wait. The alerts are logged in the system member’s log as warnings.
-	 * Valid values are in the range 0…2147483647
-	 *
-	 * Defaults to {@literal 15} seconds.
-	 */
-	int ackWaitThreshold() default GemFirePropertiesConfiguration.DEFAULT_ACK_WAIT_THRESHOLD;
-
-	/**
-	 * Relevant only for multi-homed hosts - machines with multiple network interface cards (NICs).
-	 * Specifies the adapter card the cache binds to for peer-to-peer (P2P) communication. Also specifies
-	 * the default location for GemFire Servers to listen on, which is used unless overridden by
-	 * the {@literal server-bind-address}. An empty string causes the member to listen on the default card
-	 * for the machine. This is a machine-wide attribute used for system member and client/server communication.
-	 * It has no effect on Locator location, unless the Locator is embedded in a member process.
-	 *
-	 * Specify the IP address, not the hostname, because each network card may not have a unique hostname.
-	 * An empty string (the default) causes the member to listen on the default card for the machine.
-	 *
-	 * Defaults to unset.
-	 */
-	String bindAddress() default GemFirePropertiesConfiguration.DEFAULT_BIND_ADDRESS;
-
-	/**
-	 * Declarative initialization file for the member’s cache.
+	 * Declarative initialization file for the client cache.
 	 *
 	 * Defaults to unset.
 	 */
@@ -83,51 +49,16 @@ public @interface EnableGemFireProperties {
 	String conflateEvents() default GemFirePropertiesConfiguration.DEFAULT_CONFLATE_EVENTS;
 
 	/**
-	 * Specifies whether sockets are shared by the system member’s threads. If true, threads share,
-	 * and a minimum number of sockets are used to connect to the distributed system. If false,
-	 * every application thread has its own sockets for distribution purposes. You can override
-	 * this setting for individual threads inside your application. Where possible, it is better to
-	 * set {@literal conserve-sockets} to {@literal true} and enable the use of specific extra sockets
-	 * in the application code if needed. WAN deployments increase the messaging demands on a GemFire system.
-	 * To avoid hangs related to WAN messaging, always set {@literal conserve-sockets} to {@literal false}
-	 * for GemFire members that participate in a WAN deployment.
-	 *
-	 * Defaults to {@literal true}.
-	 * @deprecated The {@literal conserve-sockets} property has been deprecated in GemFire.
-	 */
-	@Deprecated
-	boolean conserveSockets() default GemFirePropertiesConfiguration.DEFAULT_CONSERVE_SOCKETS;
-
-	/**
-	 * Specifies whether to distribute the deltas for entry updates, instead of the full values,
-	 * between clients and servers, and between peers.
+	 * Enables delta extraction for client entry updates. Sending a delta instead of the full value
+	 * also depends on the server connection's delta capability.
 	 *
 	 * Default to {@literal true}.
 	 */
 	boolean deltaPropagation() default GemFirePropertiesConfiguration.DEFAULT_DELTA_PROPAGATION;
 
 	/**
-	 * Working directory used when deploying JAR application files to distributed system members.
-	 * This directory can be local and unique to the member or a shared resource.
-	 *
-	 * Defaults to current working directory of this GemFire JVM process.
-	 */
-	String deployWorkingDirectory() default GemFirePropertiesConfiguration.DEFAULT_DEPLOY_WORKING_DIRECTORY;
-
-	/**
-	 * Boolean indicating whether to disable the use of TCP/IP sockets for inter-cache point-to-point messaging.
-	 * If disabled, the cache uses datagram (UDP) sockets.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean disableTcp() default GemFirePropertiesConfiguration.DEFAULT_DISABLE_TCP;
-
-	/**
-	 * Identifier used to distinguish messages from different distributed systems.
-	 *
-	 * Set this to different values for different systems in a multi-site (WAN) configuration. This is required
-	 * for Portable Data eXchange (PDX) data serialization. This setting must be the same for every member
-	 * in the same distributed system and unique to the distributed system within the WAN installation.
+	 * Identifier supplied to a configured SSL parameter extension's initialization context on the client.
+	 * Client PDX serialization does not require this setting.
 	 *
 	 * -1 means no setting. Valid values are integers in the range -1…255.
 	 *
@@ -136,191 +67,54 @@ public @interface EnableGemFireProperties {
 	int distributedSystemId() default GemFirePropertiesConfiguration.DEFAULT_DISTRIBUTED_SYSTEM_ID;
 
 	/**
-	 * Boolean instructing the system to detect and handle splits in the distributed system, typically caused by
-	 * a partitioning of the network (split brain) where the distributed system is running. We recommend setting
-	 * this property to {@literal true}. You must set this property to the same value across all your
-	 * distributed system members. In addition, you must set this property to {@literal true} if you are using
-	 * persistent Regions and configure your Regions to use {@literal DISTRIBUTED_ACK} or {@literal GLOBAL} scope
-	 * to avoid potential data conflicts.
-	 *
-	 * Defaults to {@literal false}.
-	 */
-	boolean enableNetworkPartitionDetection()
-		default GemFirePropertiesConfiguration.DEFAULT_ENABLE_NETWORK_PARTITION_DETECTION;
-
-	/**
-	 * Defines the list of groups that this member belongs to. Use commas to separate group names.
-	 * Note that anything defined by the {@literal roles} gemfire property will also be considered
-	 * a group.
+	 * Defines group names included in the client's distributed-member identity.
+	 * Configure the pool's server group separately to select servers for client operations.
 	 *
 	 * Default to unset.
 	 */
 	String[] groups() default {};
 
 	/**
-	 * The number of seconds that a member should wait for a Locator to start if a Locator is not available
-	 * when attempting to join the distributed system. Use this setting when you are starting Locators
-	 * and peers all at once. This timeout allows peers to wait for the Locators to finish starting up
-	 * before attempting to join the distributed system.
-	 *
-	 * Defaults to {@literal 0} seconds.
-	 */
-	long locatorWaitTimeout() default GemFirePropertiesConfiguration.DEFAULT_LOCATOR_WAIT_TIME;
-
-	/**
-	 * When true, locks heap memory into RAM to prevent the operating system from paging the memory
-	 * out to disk.
+	 * Requests memory locking for the client JVM to prevent paging to disk. The native implementation
+	 * requires Linux memory-locking support and sufficient available memory and operating-system privileges.
 	 *
 	 * Defaults to {@literal false}.
 	 */
 	boolean lockMemory() default GemFirePropertiesConfiguration.DEFAULT_LOCK_MEMORY;
 
 	/**
-	 * Maximum number of milliseconds to wait for the distributed system to reconnect on each reconnect attempt.
+	 * Configures {@literal member-timeout} in milliseconds. On a client, the native thread monitor uses
+	 * half this value as its default execution-time threshold for backing off monitoring cycles.
+	 * This applies when thread monitoring is enabled and its execution threshold has not been overridden.
+	 * Client connection, read and server failure detection settings are configured separately on the pool.
 	 *
-	 * Defaults to {@literal 60000} milliseconds.
-	 */
-	long maxWaitTimeReconnect() default GemFirePropertiesConfiguration.DEFAULT_MAX_WAIT_TIME_RECONNECT;
-
-	/**
-	 * GemFire uses the {@literal member-timeout} server configuration, specified in milliseconds, to detect
-	 * the abnormal termination of members. The configuration setting is used in two ways:
+	 * Valid values are in the range 10..600000 for the supported GemFire 10.4 driver.
 	 *
-	 * 1) First, it is used during the UDP heartbeat detection process. When a member detects that
-	 * a heartbeat datagram is missing from the member that it is monitoring after the time interval
-	 * of 2 * the value of member-timeout, the detecting member attempts to form a TCP/IP stream-socket connection
-	 * with the monitored member as described in the next case.
-	 *
-	 * 2) The property is then used again during the TCP/IP stream-socket connection. If the suspected process
-	 * does not respond to the are you alive datagram within the time period specified in member-timeout,
-	 * the membership coordinator sends out a new membership view that notes the member’s failure.
-	 *
-	 * Valid values are in the range 1000..600000.
-	 *
-	 * Defaults to {@literal 5000} milliseconds.
+	 * Defaults to {@literal 5000} milliseconds. The default is omitted from the generated properties,
+	 * allowing the native driver to supply its matching default.
 	 */
 	long memberTimeout() default GemFirePropertiesConfiguration.DEFAULT_MEMBER_TIMEOUT;
 
 	/**
-	 * The range of ports available for unicast UDP messaging and for TCP failure detection. This is specified
-	 * as two integers separated by a hyphen. Different members can use different ranges.
-	 *
-	 * GemFire randomly chooses at least two unique integers from this range for the member, one for
-	 * UDP unicast messaging and the other for TCP failure detection messaging. If {@literal tcp-port}
-	 * is configured to {@literal 0}, it will also randomly select a port from this range for TCP sockets
-	 * used for peer-to-peer communication only.
-	 *
-	 * Therefore, the specified range must include at least three available port numbers (UDP, FD_SOCK,
-	 * and TCP DirectChannel).
-	 *
-	 * The system uniquely identifies the member using the combined host IP address and UDP port number.
-	 *
-	 * You may want to restrict the range of ports that GemFire uses so the product can run in an environment
-	 * where routers only allow traffic on certain ports.
-	 *
-	 * Defaults to {@literal 1024-65535}.
-	 */
-	String membershipPortRange() default GemFirePropertiesConfiguration.DEFAULT_MEMBERSHIP_PORT_RANGE;
-
-	/**
-	 * Configures the {@link String name} of this member in the Apache Geode/Pivotal GemFire distributed system
-	 * whether the member is a client in the client/server topology or a peer in the cluster.
+	 * Configures the name included in the client's distributed-member identity.
 	 *
 	 * Defaults to unset.
 	 */
 	String name() default GemFirePropertiesConfiguration.DEFAULT_NAME;
 
 	/**
-	 * A List of items that become full class names of objects that the system will serialize when the property
+	 * Class-name patterns allowed during client deserialization when
 	 * {@link #validateSerializableObjects()} is set to {@literal true}.
 	 *
-	 * The list is expanded using the patterns specified in the createFilter method at
-	 * <a href="https://docs.oracle.com/javase/9/docs/api/java/io/ObjectInputFilter.Config.html">Class ObjectInputFilter.Config</a>.
+	 * Patterns follow {@link java.io.ObjectInputFilter.Config#createFilter(String)} syntax.
 	 *
 	 * Defaults to unset.
 	 */
 	String[] serializableObjectFilter() default {};
 
 	/**
-	 * Receive buffer sizes in bytes of the TCP/IP connections used for data transmission. To minimize the buffer size
-	 * allocation needed for distributing large, serializable messages, the messages are sent in chunks. This setting
-	 * determines the size of the chunks. Larger buffers can handle large messages more quickly, but take up
-	 * more memory.
-	 *
-	 * Defaults to {@literal 32768} bytes.
-	 */
-	int socketBufferSize() default GemFirePropertiesConfiguration.DEFAULT_SOCKET_BUFFER_SIZE;
-
-	/**
-	 * Time, in milliseconds, a thread can have exclusive access to a socket it is not actively using.
-	 * A value of zero causes socket leases to never expire. This property is ignored
-	 * if {@literal conserve-sockets} is {@literal true}.
-	 *
-	 * Valid values are in the range 0..600000.
-	 *
-	 * Defaults to {@literal 60000} milliseconds.
-	 */
-	long socketLeaseTime() default GemFirePropertiesConfiguration.DEFAULT_SOCKET_LEASE_TIME;
-
-	/**
-	 * The TCP port to listen on for cache communications. If set to zero, the operating system selects
-	 * an available port. Each process on a machine must have its own TCP port. Note that some operating systems
-	 * restrict the range of ports usable by non-privileged users, and using restricted port numbers can cause
-	 * runtime errors in GemFire startup.
-	 *
-	 * Valid values are in the range 0..65535.
-	 *
-	 * Defaults to {@literal 0}.
-	 */
-	int tcpPort() default GemFirePropertiesConfiguration.DEFAULT_TCP_PORT;
-
-	/**
-	 * The number of tombstones that can accumulate before the GemFire member triggers garbage collection
-	 * for tombstones.
-	 *
-	 * Defaults to {@literal 100000} tombstones.
-	 *
-	 * @see <a href="https://geode.apache.org/docs/guide/113/developing/distributed_regions/how_region_versioning_works.html#topic_321B05044B6641FCAEFABBF5066BD399">How Destroy and Clear Operations Are Resolved</a>
-	 */
-	int tombstoneGcThreshold() default GemFirePropertiesConfiguration.DEFAULT_TOMBSTONE_THRESHOLD;
-
-	/**
-	 * Maximum fragment size, in bytes, for transmission over UDP unicast. Smaller messages are combined, if possible, for
-	 * transmission up to the fragment size setting. Valid values are in the range 1000..60000. Defaults to
-	 * {@literal 60000} bytes.
-	 */
-	int udpFragmentSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_FRAGMENT_SIZE;
-
-	/**
-	 * The size of the socket buffer used for incoming UDP point-to-point transmissions. If {@literal disable-tcp}
-	 * is {@literal false}, a reduced buffer size of 65535 is used by default.
-	 *
-	 * The default setting of 1048576 is higher than the default OS maximum buffer size on Unix, which should be
-	 * increased to at least 1 megabyte to provide high-volume messaging on Unix systems.
-	 *
-	 * Valid values are in the range 2048.. OS_maximum.
-	 *
-	 * Defaults to {@literal 1048576} bytes.
-	 */
-	int udpReceiveBufferSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_RECEIVE_BUFFER_SIZE;
-
-	/**
-	 * The size of the socket buffer used for outgoing UDP point-to-point transmissions.
-	 *
-	 * Valid values are in the range 2048..OS_maximum.
-	 *
-	 * Defaults to {@literal 65535} bytes.
-	 */
-	int udpSendBufferSize() default GemFirePropertiesConfiguration.DEFAULT_UDP_SEND_BUFFER_SIZE;
-
-	/**
-	 * A boolean that defaults to {@literal false}. When {@literal true}, instances of classes that are not internal
-	 * to Apache Geode/Pivotal GemFire and whose class name is not allowed by the list defined in
-	 * the {@link #serializableObjectFilter()} property will not be permitted to be deserialized.
-	 *
-	 * An {@literal IncompatibleClassException} is thrown for objects not listed. JDK 8 build 121 or a later build
-	 * must be installed to use this property. Servers and clients that do not meet this requirement
-	 * will throw an exception upon startup.
+	 * Enables class validation during client deserialization. The native implementation permits its
+	 * sanctioned classes and application classes allowed by {@link #serializableObjectFilter()}.
 	 *
 	 * Defaults to {@literal false}.
 	 */

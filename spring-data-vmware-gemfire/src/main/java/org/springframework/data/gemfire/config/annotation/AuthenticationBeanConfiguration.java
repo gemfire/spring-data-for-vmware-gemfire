@@ -8,7 +8,6 @@ import java.lang.annotation.Annotation;
 import java.util.function.Supplier;
 
 
-import org.apache.shiro.lang.util.Assert;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -22,6 +21,7 @@ import org.springframework.data.gemfire.config.annotation.support.AbstractAnnota
 import org.springframework.data.gemfire.config.annotation.support.Authentication;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**

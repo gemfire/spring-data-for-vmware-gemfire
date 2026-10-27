@@ -18,6 +18,9 @@ import org.apache.geode.cache.AttributesMutator;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionService;
+import org.apache.geode.cache.client.ClientCache;
+import org.apache.geode.cache.client.ClientRegionFactory;
+import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.server.ClientSubscriptionConfig;
 
 /**
@@ -42,6 +45,30 @@ public class GemFireMockObjectsSupportUnitTests {
 	@After
 	public void tearDown() {
 		GemFireMockObjectsSupport.destroy();
+	}
+
+	@Test
+	public void clientShortcutsDefaultToSynchronousDiskWrites() {
+
+		ClientCache cache = GemFireMockObjectsSupport.mockClientCache();
+
+		for (ClientRegionShortcut shortcut : ClientRegionShortcut.values()) {
+			Region<Object, Object> region = cache.createClientRegionFactory(shortcut).create(shortcut.name());
+			assertThat(region.getAttributes().isDiskSynchronous()).as(shortcut.name()).isTrue();
+		}
+	}
+
+	@Test
+	public void clientShortcutDiskSynchronyCanBeDisabled() {
+
+		ClientCache cache = GemFireMockObjectsSupport.mockClientCache();
+
+		for (ClientRegionShortcut shortcut : ClientRegionShortcut.values()) {
+			ClientRegionFactory<Object, Object> factory = cache.createClientRegionFactory(shortcut);
+			factory.setDiskSynchronous(false);
+			Region<Object, Object> region = factory.create(shortcut.name());
+			assertThat(region.getAttributes().isDiskSynchronous()).as(shortcut.name()).isFalse();
+		}
 	}
 
 	@Test

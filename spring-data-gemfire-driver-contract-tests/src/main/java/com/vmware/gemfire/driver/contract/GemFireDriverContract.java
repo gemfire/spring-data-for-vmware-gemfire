@@ -55,7 +55,7 @@ public abstract class GemFireDriverContract extends TransactionContract {
 
 	protected CacheConfiguration configuration() {
 		return new CacheConfiguration(Map.of("mcast-port", "0", "locators", "",
-			"log-level", "error", "disable-auto-reconnect", "true", "statistic-sampling-enabled", "false"));
+			"log-level", "error", "statistic-sampling-enabled", "false"));
 	}
 
 	@Test

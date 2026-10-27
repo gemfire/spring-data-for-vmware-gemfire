@@ -94,8 +94,10 @@ public class UsingAnnotationConfigWithBeanDefinitionOverridingDisabledIntegratio
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties).isNotEmpty();
 
-		Assertions.assertThat(gemfireProperties.getProperty(GemFireProperties.SECURITY_MANAGER.getName()))
-			.isEqualTo(String.valueOf(TestSecurityManager.class.getName()));
+		Assertions.assertThat(gemfireProperties.getProperty(GemFireProperties.SECURITY_CLIENT_AUTH_INIT.getName()))
+			.isEqualTo("example.security.client.AuthenticationInitializer");
+
+		Assertions.assertThat(gemfireProperties).doesNotContainKeys("security-manager", "security-post-processor");
 
 		Assertions.assertThat(gemfireProperties.getProperty(GemFireProperties.SSL_KEYSTORE.getName()))
 			.isEqualTo("/path/to/test/keystore.jks");
@@ -106,7 +108,7 @@ public class UsingAnnotationConfigWithBeanDefinitionOverridingDisabledIntegratio
 
 	@EnableGemFireMockObjects
 	@ClientCacheApplication(name = "UsingAnnotationConfigWithBeanDefinitionOverridingDisabledIntegrationTests")
-	@EnableSecurity(securityManagerClass = TestSecurityManager.class)
+	@EnableSecurity(clientAuthenticationInitializer = "example.security.client.AuthenticationInitializer")
 	@EnableSsl(keystore = "/path/to/test/keystore.jks", keystorePassword = "p@55w0rd")
 	static class TestConfiguration { }
 

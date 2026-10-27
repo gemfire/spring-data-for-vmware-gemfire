@@ -16,4 +16,6 @@ Required implementation child of [Region configuration, enums, expiration and ev
 
 ## Completion
 
+Task 63 removes the generic RegionAttributesFactoryBean and routes XML settings directly to the existing client factory. Those settings and the expiration/eviction wrapper beans still use native types. This task must provide their typed SPI creation/readback/mutation contracts; task 30 must migrate the client factories and parser/annotation consumers. Removing the generic attributes factory does not implement these contracts or change this task's acceptance criteria. This split permits cleanup parent 59 to finish before its dependent SPI implementation tasks.
+
 Record changed contracts and member mappings, executable native/mock evidence and limitations. Parent configuration acceptance remains open until all children and its full-surface validation pass.

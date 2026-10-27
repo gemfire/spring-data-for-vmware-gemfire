@@ -17,7 +17,6 @@ import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
-import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientCache;
 import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
@@ -148,10 +147,9 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Region localDataRegion = requireApplicationContext().getBean("local-data", Region.class);
 
-		RegionAttributes localDataRegionAttributes = TestUtils.readField("attributes", localDataRegionFactoryBean);
+		RegionAttributes localDataRegionAttributes = localDataRegion.getAttributes();
 
 		Assertions.assertThat(localDataRegionAttributes).isNotNull();
-		Assertions.assertThat(localDataRegionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
 
 		EvictionAttributes localDataEvictionAttributes = localDataRegionAttributes.getEvictionAttributes();
 
@@ -168,10 +166,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Assertions.assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		ClientRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data", ClientRegionFactoryBean.class);
-
-		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
+		RegionAttributes regionAttributes =
+			requireApplicationContext().getBean("local-data", Region.class).getAttributes();
 
 		ExpirationAttributes entryTTL = regionAttributes.getEntryTimeToLive();
 
@@ -200,10 +196,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Assertions.assertThat(requireApplicationContext().containsBean("local-data-with-custom-expiry")).isTrue();
 
-		ClientRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data-with-custom-expiry", ClientRegionFactoryBean.class);
-
-		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
+		RegionAttributes regionAttributes =
+			requireApplicationContext().getBean("local-data-with-custom-expiry", Region.class).getAttributes();
 
 		Assertions.assertThat(regionAttributes.getCustomEntryIdleTimeout()).isInstanceOf(TestCustomExpiry.class);
 		Assertions.assertThat(regionAttributes.getCustomEntryTimeToLive()).isInstanceOf(TestCustomExpiry.class);

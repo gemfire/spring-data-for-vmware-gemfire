@@ -18,11 +18,16 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.Pool;
 import org.junit.After;
 import org.junit.Test;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.gemfire.config.annotation.support.CacheTypeAwareRegionFactoryBean;
 import org.springframework.data.gemfire.config.annotation.test.entities.ClientRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.GenericRegionEntity;
 import org.springframework.data.gemfire.config.annotation.test.entities.NonEntity;
+import org.springframework.data.gemfire.mapping.GemfireMappingContext;
 import org.springframework.data.gemfire.tests.integration.SpringApplicationContextIntegrationTestsSupport;
+import org.springframework.data.gemfire.tests.mock.GemFireMockObjectsSupport;
 import org.springframework.data.gemfire.tests.mock.annotation.EnableGemFireMockObjects;
 
 /**
@@ -161,6 +166,32 @@ public class EnableEntityDefinedRegionsUnitTests extends SpringApplicationContex
 
 		assertUndefinedRegions("ClientRegionEntity", "NonEntity");
 	}
+
+	@Test
+	public void entityDiskSynchronousFalseReachesClientRegion() {
+
+		var mappingContext = new GemfireMappingContext();
+		var metadata = EntityDefinedRegionsConfiguration.RegionBeanDefinitionMetadata
+			.with(mappingContext.getRequiredPersistentEntity(AsynchronousEntity.class));
+		var builder = BeanDefinitionBuilder.genericBeanDefinition(CacheTypeAwareRegionFactoryBean.class)
+			.addPropertyValue("cache", GemFireMockObjectsSupport.mockClientCache());
+		new EntityDefinedRegionsConfiguration().setRegionAttributes(builder, metadata);
+
+		assertThat(builder.getBeanDefinition().getPropertyValues().contains("attributes")).isFalse();
+		DefaultListableBeanFactory registry = new DefaultListableBeanFactory();
+		registry.registerBeanDefinition("asynchronous", builder.getBeanDefinition());
+		try {
+			Region<?, ?> region = registry.getBean("asynchronous", Region.class);
+			assertThat(region.getAttributes().isDiskSynchronous()).isFalse();
+		}
+		finally {
+			registry.destroySingletons();
+		}
+	}
+
+	@org.springframework.data.gemfire.mapping.annotation.ClientRegion(
+		shortcut = ClientRegionShortcut.LOCAL, diskSynchronous = false)
+	static class AsynchronousEntity { }
 
 	@ClientCacheApplication
 	@EnableGemFireMockObjects

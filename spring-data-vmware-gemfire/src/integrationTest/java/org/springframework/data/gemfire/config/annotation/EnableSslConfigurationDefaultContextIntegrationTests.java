@@ -48,9 +48,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("FISH Scream SEAL SNOW");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-enabled-components")).isEqualTo("server,gateway");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-enabled-components")).isEqualTo("locator,server");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("TestCert");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-gateway-alias")).isEqualTo("WanCert");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-locator-alias")).isEqualTo("LocatorCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("/path/to/keystore.jks");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore-password")).isEqualTo("s3cr3t!");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore-type")).isEqualTo("JKS");
@@ -59,7 +59,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore")).isEqualTo("/path/to/truststore.jks");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-password")).isEqualTo("p@55w0rd!");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-type")).isEqualTo("PKCS11");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("true");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("false");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-use-default-context")).isEqualTo("true");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-endpoint-identification-enabled")).isEqualTo("true");
 	}
@@ -83,9 +83,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 
 		return new MockPropertySource("TestPropertySource")
 			.withProperty("spring.data.gemfire.security.ssl.ciphers", "Scream,SEAL,SNOW")
-			.withProperty("spring.data.gemfire.security.ssl.components", "locator, server, gateway")
+			.withProperty("spring.data.gemfire.security.ssl.components", "locator, server")
 			.withProperty("spring.data.gemfire.security.ssl.certificate.alias.default", "MockCert")
-			.withProperty("spring.data.gemfire.security.ssl.certificate.alias.gateway", "WanCert")
+			.withProperty("spring.data.gemfire.security.ssl.certificate.alias.locator", "LocatorCert")
 			.withProperty("spring.data.gemfire.security.ssl.certificate.alias.server", "ServerCert")
 			.withProperty("spring.data.gemfire.security.ssl.enable-endpoint-identification", "true")
 			.withProperty("spring.data.gemfire.security.ssl.keystore", "~/test/app/keystore.jks")
@@ -96,7 +96,6 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 			.withProperty("spring.data.gemfire.security.ssl.truststore", "relative/path/to/trusted.keystore")
 			.withProperty("spring.data.gemfire.security.ssl.truststore.password", "kn0ckKn0ck")
 			.withProperty("spring.data.gemfire.security.ssl.truststore.type", "C3PO")
-			.withProperty("spring.data.gemfire.security.ssl.web-require-authentication", "true")
 			.withProperty("spring.data.gemfire.security.ssl.use-default-context", "true");
 	}
 
@@ -143,9 +142,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("Scream SEAL SNOW");
-		Assertions.assertThat(sslEnabledComponents).isEqualTo("gateway,locator,server");
+		Assertions.assertThat(sslEnabledComponents).isEqualTo("locator,server");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("MockCert");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-gateway-alias")).isEqualTo("WanCert");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-locator-alias")).isEqualTo("LocatorCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-server-alias")).isEqualTo("ServerCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-endpoint-identification-enabled")).isEqualTo("true");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("~/test/app/keystore.jks");
@@ -156,15 +155,15 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore")).isEqualTo("relative/path/to/trusted.keystore");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-password")).isEqualTo("kn0ckKn0ck");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-type")).isEqualTo("C3PO");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("true");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("false");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-use-default-context")).isEqualTo("true");
 	}
 
 	@Test
-	public void sslAnnotationBasedPeerConfigurationIsCorrect(){
+	public void sslAnnotationBasedAlternateClientConfigurationIsCorrect(){
 
 		newApplicationContext(new MockPropertySource("TestPropertySource"),
-			SslAnnotationBasedPeerConfiguration.class);
+			SslAnnotationBasedAlternateClientConfiguration.class);
 
 		Assertions.assertThat(containsBean("gemfireCache"));
 		Assertions.assertThat(containsBean("gemfireProperties"));
@@ -179,11 +178,11 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	}
 
 	@Test
-	public void sslPropertyBasedPeerConfigurationIsCorrect() {
+	public void sslPropertyBasedAlternateClientConfigurationIsCorrect() {
 
 		PropertySource testPropertySource = setSpringDataGemFireProperties();
 
-		newApplicationContext(testPropertySource, SslPropertyBasedPeerConfiguration.class);
+		newApplicationContext(testPropertySource, SslPropertyBasedAlternateClientConfiguration.class);
 
 		Assertions.assertThat(containsBean("gemfireCache"));
 		Assertions.assertThat(containsBean("gemfireProperties"));
@@ -202,9 +201,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 
 		Assertions.assertThat(gemfireProperties).isNotNull();
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-ciphers")).isEqualTo("Scream SEAL SNOW");
-		Assertions.assertThat(sslEnabledComponents).isEqualTo("gateway,locator,server");
+		Assertions.assertThat(sslEnabledComponents).isEqualTo("locator,server");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-default-alias")).isEqualTo("MockCert");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-gateway-alias")).isEqualTo("WanCert");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-locator-alias")).isEqualTo("LocatorCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-server-alias")).isEqualTo("ServerCert");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore")).isEqualTo("~/test/app/keystore.jks");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-keystore-password")).isEqualTo("0p3nS@y5M3");
@@ -214,7 +213,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore")).isEqualTo("relative/path/to/trusted.keystore");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-password")).isEqualTo("kn0ckKn0ck");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-truststore-type")).isEqualTo("C3PO");
-		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("true");
+		Assertions.assertThat(gemfireProperties.getProperty("ssl-web-require-authentication")).isEqualTo("false");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-use-default-context")).isEqualTo("true");
 		Assertions.assertThat(gemfireProperties.getProperty("ssl-endpoint-identification-enabled")).isEqualTo("true");
 	}
@@ -222,9 +221,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl(
 		ciphers = { "FISH", "Scream", "SEAL", "SNOW" },
-		components = { EnableSsl.Component.SERVER, EnableSsl.Component.GATEWAY },
+		components = { EnableSsl.Component.SERVER, EnableSsl.Component.LOCATOR },
 		componentCertificateAliases = {
-			@EnableSsl.ComponentAlias(component = EnableSsl.Component.GATEWAY, alias = "WanCert")
+			@EnableSsl.ComponentAlias(component = EnableSsl.Component.LOCATOR, alias = "LocatorCert")
 		},
 		defaultCertificateAlias = "TestCert",
 		enableEndpointIdentification = true,
@@ -234,8 +233,7 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		truststore = "/path/to/truststore.jks",
 		truststorePassword = "p@55w0rd!",
 		truststoreType = "PKCS11",
-		useDefaultContext = true,
-		webRequireAuthentication = true
+		useDefaultContext = true
 	)
 	static class SslAnnotationBasedClientConfiguration { }
 
@@ -246,9 +244,9 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl(
 		ciphers = { "FISH", "Scream", "SEAL", "SNOW" },
-		components = { EnableSsl.Component.SERVER, EnableSsl.Component.GATEWAY },
+		components = { EnableSsl.Component.SERVER, EnableSsl.Component.LOCATOR },
 		componentCertificateAliases = {
-			@EnableSsl.ComponentAlias(component = EnableSsl.Component.GATEWAY, alias = "WanCert")
+			@EnableSsl.ComponentAlias(component = EnableSsl.Component.LOCATOR, alias = "LocatorCert")
 		},
 		defaultCertificateAlias = "TestCert",
 		enableEndpointIdentification = true,
@@ -258,13 +256,12 @@ public class EnableSslConfigurationDefaultContextIntegrationTests
 		truststore = "/path/to/truststore.jks",
 		truststorePassword = "p@55w0rd!",
 		truststoreType = "PKCS11",
-		useDefaultContext = true,
-		webRequireAuthentication = true
+		useDefaultContext = true
 	)
-	static class SslAnnotationBasedPeerConfiguration { }
+	static class SslAnnotationBasedAlternateClientConfiguration { }
 
 	@ClientCacheApplication(logLevel = GEMFIRE_LOG_LEVEL)
 	@EnableSsl
-	static class SslPropertyBasedPeerConfiguration { }
+	static class SslPropertyBasedAlternateClientConfiguration { }
 
 }
