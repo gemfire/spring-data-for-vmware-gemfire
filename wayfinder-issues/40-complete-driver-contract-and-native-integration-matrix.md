@@ -37,3 +37,16 @@ Every required matrix row has implementation and executable supported/unsupporte
 ## Task 63 inherited-attributes test handoff
 
 Task 63 redirects client-region and disk-store integration assertions from the removed intermediate attributes object to created regions, changing nine native-source occurrences. Migrate these tests with task 30 and the task 47 configuration contracts, preserving all retained constraint/expiry/custom-expiry/eviction/default assertions. The reviewed transitional baseline adjustment does not establish native-free integration sources or real-server behavior. See the [reviewed boundary adjustment](../wayfinder-impl/investigations/client-only-spring-surfaces.md#reviewed-transitional-test-boundary-adjustment).
+
+
+## Function transport deployment acceptance from task 64
+
+Carry the [representation decision](../wayfinder-impl/investigations/client-function-submission-representation.md#representation-decision--2026-10-28) and task 25's implementation into every supported driver/version entry. Record the exact native artifact, SPI ABI and transport payload tuple; the existing 16 unsecured feasibility/deployment tests do not establish this matrix.
+
+- Run the actual packaged transport artifact and declared runtime dependencies with explicit application bodies/payloads in an isolated server process. Exclude Spring and integration-test class output, inspect publication/classpath contents, and use the installed native runtime.
+- Cover region and one/all-server targets, object state resubmission, shared permission/body instance state, authenticated views and principals, secured allow/deny, HA/retry, multiple servers and callback/result lifetimes.
+- Cover absent envelope, absent application-only classes, serialization-policy rejection, nonserializable capture and incompatible deployed classes with typed failures and retained causes. Check independent same-ID execution before/after applicable failures; never fall back from object to ID execution. Prove ID calls work without the unused envelope.
+- Preserve supported/rejected client-local shortcuts and registry lifetime contracts. Keep remote server cache access outside the SPI; retain separately deployed native server-data/PDX fixtures and both Spring discovery consumers' regression coverage.
+- Keep native-free mock orchestration evidence distinct from native execution: the mock must explicitly reject unsupported remote execution, deployment and authorization behavior.
+
+Failures remain blockers for the affected supported driver. Tasks 38/39/59 remain prerequisites; this acceptance update implements no SPI surface.

@@ -24,7 +24,7 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
-import org.springframework.data.gemfire.repository.sample.User;
+import org.springframework.data.gemfire.fixtures.template.User;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.tests.integration.IntegrationTestsSupport;
 import org.springframework.test.context.ContextConfiguration;
@@ -70,9 +70,9 @@ public class GemfireTemplateIntegrationTests extends IntegrationTestsSupport {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1).withConfiguration("server-*", container -> container.withStartupAttempts(3));;
 
 		gemFireCluster.acceptLicense().start();
-		gemFireCluster.getContainers().values().forEach(container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEST_JAR_PATH")), "/testJar.jar"));
+		gemFireCluster.getContainers().values().forEach(container -> container.copyFileToContainer(MountableFile.forHostPath(System.getProperty("TEMPLATE_DOMAIN_FIXTURE_JAR_PATH")), "/template-domain-fixtures.jar"));
 		gemFireCluster.gfshBuilder().build().run("create region --name=Users --type=REPLICATE");
-		gemFireCluster.gfshBuilder().build().run("deploy --jar=/testJar.jar");
+		gemFireCluster.gfshBuilder().build().run("deploy --jar=/template-domain-fixtures.jar");
 	}
 
 	@AfterClass

@@ -17,3 +17,7 @@ Implement ReflectionBasedAutoSerializer configuration, lifecycle, customization 
 ## Completion
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
+
+## Serialization audit handoff — 2026-10-28
+
+Task 71 retains 54 reflection/FieldType rows. Preserve pattern/identity/exclusion configuration, normalized getConfig, reconfiguration cache invalidation, selection/construction, portability and customization hooks. Integrate typed reader/writer callbacks through task 54. Keep getManager native internals private. FieldType mapping includes boxed scalars as OBJECT, exact Java default literal types and versioned widths/default bytes; the native read-only buffer still has shared mutable position. Use stable typed metadata and explicitly record any replacement of alias behavior. Task 31 owns Spring adoption; native compatibility and meaningful mock behavior remain required. See [the exact source-backed ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md).

@@ -49,7 +49,6 @@ class GemFireExceptionMapperTests {
 			Map.entry(new CacheLoaderException("secret"), DriverFailureKind.LOADER_FAILURE),
 			Map.entry(new CacheWriterException("secret"), DriverFailureKind.WRITER_VETO),
 			Map.entry(new TimeoutException("secret"), DriverFailureKind.TIMEOUT),
-			Map.entry(new org.apache.geode.InvalidValueException("secret"), DriverFailureKind.TYPE_MISMATCH),
 			Map.entry(new IllegalArgumentException("secret"), DriverFailureKind.INVALID_ARGUMENT));
 		cases.forEach((nativeFailure, expected) -> {
 			var translated = mapper.translate("test", nativeFailure);
@@ -96,6 +95,19 @@ class GemFireExceptionMapperTests {
 			assertThat(mapper.translate("test", failure)).isSameAs(failure);
 			assertThat(mapper.translate("test", new CacheLoaderException(failure))).isSameAs(failure);
 			assertThat(mapper.translate("test", new CacheWriterException(failure))).isSameAs(failure);
+		}
+	}
+
+	@Test
+	void clientCacheCreationReusesCompatibleCacheAndClassifiesInvalidConfiguration() {
+		try (var cache = new ClientCacheFactory().set("log-level", "error").create()) {
+			assertThat(new ClientCacheFactory().set("log-level", "error").create()).isSameAs(cache);
+			assertThatThrownBy(() -> new ClientCacheFactory().set("locators", "localhost[1]").create())
+				.isInstanceOfSatisfying(IllegalStateException.class, failure ->
+					assertThat(mapper.translate("create", failure))
+						.isInstanceOfSatisfying(DriverOperationException.class, translated ->
+							assertThat(translated.kind()).isEqualTo(DriverFailureKind.INVALID_STATE))
+						.hasCause(failure).hasMessage("GemFire operation failed: create"));
 		}
 	}
 

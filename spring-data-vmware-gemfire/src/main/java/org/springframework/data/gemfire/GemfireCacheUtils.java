@@ -12,15 +12,8 @@ import org.apache.geode.GemFireCheckedException;
 import org.apache.geode.GemFireConfigException;
 import org.apache.geode.GemFireException;
 import org.apache.geode.GemFireIOException;
-import org.apache.geode.IncompatibleSystemException;
 import org.apache.geode.InternalGemFireException;
-import org.apache.geode.InvalidValueException;
-import org.apache.geode.NoSystemException;
-import org.apache.geode.SystemConnectException;
-import org.apache.geode.SystemIsRunningException;
-import org.apache.geode.UnmodifiableException;
 import org.apache.geode.cache.CacheException;
-import org.apache.geode.cache.CacheExistsException;
 import org.apache.geode.cache.CacheLoaderException;
 import org.apache.geode.cache.CacheRuntimeException;
 import org.apache.geode.cache.CacheWriterException;
@@ -39,7 +32,6 @@ import org.apache.geode.cache.ResourceException;
 import org.apache.geode.cache.RoleException;
 import org.apache.geode.cache.StatisticsDisabledException;
 import org.apache.geode.cache.SynchronizationCommitConflictException;
-import org.apache.geode.cache.VersionException;
 import org.apache.geode.cache.client.ServerConnectivityException;
 import org.apache.geode.cache.execute.FunctionException;
 import org.apache.geode.cache.query.CqClosedException;
@@ -60,7 +52,6 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.dao.PessimisticLockingFailureException;
-import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.util.ClassUtils;
 
 /**
@@ -98,9 +89,6 @@ public abstract class GemfireCacheUtils {
 	public static DataAccessException convertGemfireAccessException(GemFireException cause) {
 
 		if (cause instanceof CacheException) {
-			if (cause instanceof CacheExistsException) {
-				return new DataIntegrityViolationException(cause.getMessage(), cause);
-			}
 			if (cause instanceof CommitConflictException) {
 				return new DataIntegrityViolationException(cause.getMessage(), cause);
 			}
@@ -193,35 +181,14 @@ public abstract class GemfireCacheUtils {
 		if (cause instanceof GemFireSecurityException) {
 			return new PermissionDeniedDataAccessException(cause.getMessage(), cause);
 		}
-		if (cause instanceof IncompatibleSystemException) {
-			return new GemfireSystemException(cause);
-		}
 		if (cause instanceof InternalGemFireException) {
 			return new GemfireSystemException(cause);
-		}
-		if (cause instanceof InvalidValueException) {
-			return new TypeMismatchDataAccessException(cause.getMessage(), cause);
 		}
 		if (cause instanceof LeaseExpiredException) {
 			return new PessimisticLockingFailureException(cause.getMessage(), cause);
 		}
-		if (cause instanceof NoSystemException) {
-			return new GemfireSystemException(cause);
-		}
-		if (cause instanceof org.apache.geode.admin.RuntimeAdminException) {
-			return new GemfireSystemException(cause);
-		}
 		if (cause instanceof ServerConnectivityException) {
 			return new DataAccessResourceFailureException(cause.getMessage(), cause);
-		}
-		if (cause instanceof SystemConnectException) {
-			return new DataAccessResourceFailureException(cause.getMessage(), cause);
-		}
-		if (cause instanceof SystemIsRunningException) {
-			return new GemfireSystemException(cause);
-		}
-		if (cause instanceof UnmodifiableException) {
-			return new GemfireSystemException(cause);
 		}
 
 		// for exceptions that had their parent changed in 6.5
@@ -246,10 +213,6 @@ public abstract class GemfireCacheUtils {
 
 		if (cause instanceof QueryException) {
 			return new GemfireQueryException((QueryException) cause);
-		}
-
-		if (cause instanceof VersionException) {
-			return new DataAccessResourceFailureException(cause.getMessage(), cause);
 		}
 
 		return new GemfireSystemException(cause);

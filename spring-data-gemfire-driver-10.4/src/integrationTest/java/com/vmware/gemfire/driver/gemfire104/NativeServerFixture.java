@@ -18,9 +18,12 @@ final class NativeServerFixture implements AutoCloseable {
 	private final BufferedWriter input;
 	final int port;
 	NativeServerFixture(Path directory) throws Exception {
+		this(directory, System.getProperty("nativeFixtureClasspath"));
+	}
+	NativeServerFixture(Path directory, String classpath) throws Exception {
 		process = new ProcessBuilder(Path.of(System.getProperty("java.home"), "bin", "java").toString(),
 			"--add-exports=java.base/sun.nio.ch=ALL-UNNAMED", "--add-opens=java.base/java.lang=ALL-UNNAMED",
-			"--add-opens=java.base/java.nio=ALL-UNNAMED", "-cp", System.getProperty("nativeFixtureClasspath"),
+			"--add-opens=java.base/java.nio=ALL-UNNAMED", "-cp", classpath,
 			NativeServerProcess.class.getName()).directory(java.nio.file.Files.createTempDirectory(directory, "server-").toFile()).redirectErrorStream(true).start();
 		input = process.outputWriter();
 		reader.submit(() -> {

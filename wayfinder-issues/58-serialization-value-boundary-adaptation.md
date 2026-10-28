@@ -17,3 +17,15 @@ Integrate native/SPI value conversion at region keys/values, conditional and bul
 ## Completion
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
+
+## Serialization audit handoff — 2026-10-28
+
+Task 71 transfers implementation ownership of 77 partial PDX value/factory/document rows from resolved task 53 to this active task; all mappings/statuses and existing consumer ownership stay unchanged. Complete transport across keys/values, conditional/bulk operations, entries/live views, callbacks/error old values and nested query/function results, including supported alias/cycle behavior and Serializable replacement. Keep typed schema/identity/writable/enum behavior from the foundation; no native unwrap or hidden pool creation. Coordinate task 31 for Spring mapping adoption. The implemented missing-field sentinel remains with task 53. See [the exact source-backed ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md).
+
+## Shared exception handoff — task 76
+
+Coordinate native-free exception values across region old-value/region payloads (31), aggregate query failures (21/31), security principal/naming causes (24/35), disk context (27/30) and copy/JSON failures (55/56). Keep the fixed API ownership in the task-76 ledger; this is shared adaptation, not another classification audit. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.
+
+## Final reconciliation handoff — task 64
+
+Own two partial current-SPI PDX factory/enum mappings transferred from foundation 53. Complete transport and mapping adoption with 31, including provider-infrastructure exclusion at the serialization boundary. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

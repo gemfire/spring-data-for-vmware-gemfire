@@ -1,5 +1,7 @@
 # Driver exception semantics and translation
 
+**Client-scope correction (task 76):** this is a historical foundation receipt. The [shared exception decision](client-shared-exception-scope.md) supersedes its broad scope and mapping claims for the 49 excluded IDs. CACHE_EXISTS and TYPE_MISMATCH and explicit excluded native/Spring branches are removed; affected Java validation remains pending. The historical tables and test counts below are not current client-scope acceptance.
+
 Recorded 2026-10-21 for [Driver exception semantics and translation](../../wayfinder-issues/16-driver-exception-semantics-and-translation.md), against `com.vmware.gemfire:gemfire-core:10.4.0-build.3056.df98c835`. This is the common failure foundation; subsystem execution, callback payloads and consumer migration remain open.
 
 ## Boundary contract

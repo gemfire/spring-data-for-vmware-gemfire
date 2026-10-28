@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.data.gemfire.client.ClientRegionFactoryBean;
+import org.springframework.data.gemfire.fixtures.security.SecurityFixtureCredentials;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
 import org.springframework.data.gemfire.util.RegionPaths;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,15 +48,15 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 	@BeforeClass
 	public static void setupGemFireServer() {
 		gemFireCluster = new GemFireCluster(System.getProperty("spring.test.gemfire.docker.image"), 1, 1);
-		gemFireCluster.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-manager", TestSecurityManager.class.getName())
-				.withClasspath(GemFireCluster.ALL_GLOB, System.getProperty("TEST_JAR_PATH"))
-				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-username", TestSecurityManager.SECURITY_USERNAME)
-				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-password", TestSecurityManager.SECURITY_PASSWORD);
+		gemFireCluster.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-manager", SecurityFixtureCredentials.MANAGER_CLASS_NAME)
+				.withClasspath(GemFireCluster.ALL_GLOB, System.getProperty("SERVER_SECURITY_FIXTURE_JAR_PATH"))
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-username", SecurityFixtureCredentials.USERNAME)
+				.withGemFireProperty(GemFireCluster.ALL_GLOB, "security-password", SecurityFixtureCredentials.PASSWORD);
 
 		gemFireCluster.acceptLicense().start();
 
 		gemFireCluster.gfshBuilder()
-				.withConnect(List.of(String.format("--username=%s --password=%s", TestSecurityManager.SECURITY_USERNAME, TestSecurityManager.SECURITY_PASSWORD)))
+				.withConnect(List.of(String.format("--username=%s --password=%s", SecurityFixtureCredentials.USERNAME, SecurityFixtureCredentials.PASSWORD)))
 				.run("create region --name=Echo --type=LOCAL",
 						"put --region=/Echo --key=Hello --value=Hello",
 						"put --region=/Echo --key=TEST --value=TEST",
@@ -73,7 +74,7 @@ public class AutoConfiguredAuthenticationConfigurationIntegrationTests {
 	}
 
 	@ClientCacheApplication
-	@EnableSecurity(securityUsername = TestSecurityManager.SECURITY_USERNAME, securityPassword = TestSecurityManager.SECURITY_PASSWORD)
+	@EnableSecurity(securityUsername = SecurityFixtureCredentials.USERNAME, securityPassword = SecurityFixtureCredentials.PASSWORD)
 	static class TestGemFireClientConfiguration {
 
 		@Bean("Echo")

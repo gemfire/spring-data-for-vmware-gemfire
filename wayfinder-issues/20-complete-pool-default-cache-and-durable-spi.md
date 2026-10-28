@@ -41,3 +41,13 @@ Complete pool configuration/lifecycle contracts; native resolvers and namespace 
 - [Durable client readiness and pool runtime lifecycle](52-durable-client-readiness-and-pool-runtime-lifecycle.md) owns durable identity/timeout, readiness, keep-alive, queue retention, runtime topology and pool registry lifecycle.
 
 The parent remains open, and all existing consumers continue to depend on it. Child completion does not establish full pool or client-cache migration.
+
+## Task 69 implementation handoff — 2026-10-28
+
+The [pool/durable scope audit](../wayfinder-impl/investigations/client-pool-and-durable-scope.md) retains all 101 assigned IDs. **84 partial settings/default/factory rows move here from resolved foundation 50**; their validated SPI/native/mock/test mappings and implementation statuses remain unchanged. Complete effective readback/default constants, omitted versus explicit values, sentinel/validation behavior, reset/reuse and endpoint/duplicate-name semantics, with task 35 consumer adoption. Preserve task 50 socket identity/transport results; reconcile native setter null acceptance with typed builder rejection as an explicit consumer policy, without reopening transport scope experiments.
+
+Tasks 51/52 retain the other 17 assigned requirements. Parent completion needs their selection, durable/runtime and ownership acceptance as well as the 84 rows here; do not close based solely on prior foundation tests. Exact IDs and concrete behavior are in the ledger. No native defaults/factories or static registry may leak through Spring/SPI.
+
+## Final reconciliation handoff — task 64
+
+Own five partial current-SPI pool mappings transferred from foundation 50. Complete default/runtime semantics with 51/52 and Spring adoption with 35; named-pool foundation validation remains valid. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

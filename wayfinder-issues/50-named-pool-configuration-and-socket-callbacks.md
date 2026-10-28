@@ -28,3 +28,7 @@ Resolved 2026-10-22. [Implementation and validation evidence](../wayfinder-impl/
 - Validation: **476 tests, zero failures/errors/skips** across SPI (21), core (24), contract kit (6), mock (48), native (71), Spring mock (153), Spring native (153); 18 boundary fixture tests also passed. Full Spring Data main/unit/integration and Spring Test main/unit compilation passed. Normal migration boundary, coverage regeneration/check, independent javap comparison and diff whitespace checks passed. Full command and artifact are recorded in the linked evidence.
 
 The full pool parent remains open, blocked by [Default client-cache pool assembly and selection](51-default-client-cache-pool-assembly-and-selection.md) and [Durable client readiness and pool runtime lifecycle](52-durable-client-readiness-and-pool-runtime-lifecycle.md). Every original downstream dependency remains. No Spring consumer was migrated or native-free compliance claimed; no commit was created.
+
+## Task 69 downstream ownership reconciliation — 2026-10-28
+
+The [pool/durable audit](../wayfinder-impl/investigations/client-pool-and-durable-scope.md) transfers 84 unfinished partial configuration/default/factory rows to open parent task 20, with task 35 adoption. This foundation remains resolved: its validated socket/configuration mappings and statuses are preserved, including separately classified SocketFactory rows outside task 69. Remaining API/consumer completion now has an active owner rather than relying on this closed task.

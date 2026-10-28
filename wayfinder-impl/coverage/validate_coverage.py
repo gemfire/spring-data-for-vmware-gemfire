@@ -11,7 +11,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from scope_policy import SCOPE_COLUMNS, classify, counts, status_counts, retired
+from scope_policy import SCOPE_COLUMNS, active_owner, classify, classify_sources, counts, status_counts, retired
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -33,7 +33,10 @@ def check_rows(rows):
         assert row["status"] in {"missing", "partial", "implemented", "removed"}, key
         for owner in [row["owner"], row["consumer_owner"]]:
             assert owner.startswith("wayfinder-issues/") and (ROOT / owner).is_file(), owner
-        assert all(row[x] for x in ["native_impl", "mock", "tests", "required_behavior", "spring_evidence"]), key
+        assert all(row[x] for x in ["required_behavior", "spring_evidence"]), key
+        retired_mapping = (row["scope"] == "excluded-server" and row["status"] == "missing"
+                           and not any(row[x] for x in ["spi", "native_impl", "mock", "tests"]))
+        assert retired_mapping or all(row[x] for x in ["native_impl", "mock", "tests"]), key
     # Independent sentinels for the original blind spots, including inherited
     # Java-only signatures that cannot be found by searching for native imports.
     required = [
@@ -87,6 +90,8 @@ def main():
         key = row["native_type"] + "#" + row["member"] + row["descriptor"]
         assert row["api_row"] == by_key[key]["id"], key
     source_rows = read("source-coverage.tsv")
+    source_fields = classify_sources(source_rows, {r["id"]: {k: r[k] for k in SCOPE_COLUMNS}
+                                                 for r in rows}, scope_policy, ROOT)
     assert manifest["source_scopes"] == counts(source_rows), "Source scope counts differ"
     assert len({r["id"] for r in source_rows}) == len(source_rows)
     for row in source_rows:
@@ -94,12 +99,7 @@ def main():
         assert (ROOT / path).read_text().splitlines()[int(line) - 1].strip() == row["text"], row["source"]
         assert (ROOT / row["owner"]).is_file(), row["owner"]
         assert row["api_row"] in ids or row["disposition"], row
-        if row["api_row"]:
-            api = by_id[row["api_row"]]
-            assert row["scope"] == api["scope"] and row["scope_owner"] == api["scope_owner"], row
-        else:
-            assert row["scope"] == "unresolved", "Unmapped source cannot be excluded"
-            assert row["scope_owner"] == scope_policy["unresolved"]["owner"], row
+        assert {k: row[k] for k in SCOPE_COLUMNS} == source_fields[row["id"]], row
         assert (ROOT / row["scope_owner"]).is_file() and not retired(row["scope_owner"]), row
         if row["scope"] != "excluded-server":
             assert not retired(row["owner"]), "Retained source needs an active owner"
@@ -125,6 +125,12 @@ def main():
         assert set(row["native_rows"].split(";")) <= ids
         assert row["scopes"] == ";".join(sorted({by_id[i]["scope"] for i in row["native_rows"].split(";")})), row
         assert (ROOT / row["native_impl"]).is_file() and (ROOT / row["tests"]).is_file()
+        if row["status"] in {"partial", "missing"}:
+            assert active_owner(row["owner"], ROOT), "Unfinished SPI mapping needs an open owner"
+    for row in rows:
+        if row["scope"] == "excluded-server":
+            assert row["status"] == "missing" and not row["spi"], (
+                    f"Excluded API retains a public implementation mapping: {row['id']}")
     # Negative controls: the validator must fail on the original missing method
     # even when all current SPI source/default contracts remain untouched.
     for mutated in [rows + [rows[0]],

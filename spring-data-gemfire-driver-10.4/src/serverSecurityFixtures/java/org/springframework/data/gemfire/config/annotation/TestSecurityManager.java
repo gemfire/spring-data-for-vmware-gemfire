@@ -4,8 +4,6 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
-import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newIllegalArgumentException;
-
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
@@ -17,7 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.geode.security.AuthenticationFailedException;
 import org.apache.geode.security.SecurityManager;
 
-import org.springframework.util.StringUtils;
+import org.springframework.data.gemfire.fixtures.security.SecurityFixtureCredentials;
 
 /**
  * The {@link TestSecurityManager} class is an Apache Geode {@link org.apache.geode.security.SecurityManager}
@@ -32,8 +30,8 @@ import org.springframework.util.StringUtils;
  */
 public final class TestSecurityManager implements org.apache.geode.security.SecurityManager {
 
-	public static final String SECURITY_USERNAME = "testUser";
-	public static final String SECURITY_PASSWORD = "t35t9@55w0rd!";
+	public static final String SECURITY_USERNAME = SecurityFixtureCredentials.USERNAME;
+	public static final String SECURITY_PASSWORD = SecurityFixtureCredentials.PASSWORD;
 
 	public static final String SECURITY_USERNAME_PROPERTY = SecurityManager.USER_NAME;
 	public static final String SECURITY_PASSWORD_PROPERTY = SecurityManager.PASSWORD;
@@ -66,7 +64,7 @@ public final class TestSecurityManager implements org.apache.geode.security.Secu
 	private boolean isIdentified(String username, String password) {
 
 		return Optional.ofNullable(username)
-			.filter(StringUtils::hasText)
+			.filter(value -> !value.isBlank())
 			.map(user -> getAuthorizedUsers().get(user))
 			.map(userPassword -> userPassword.equals(password))
 			.orElse(false);
@@ -74,6 +72,8 @@ public final class TestSecurityManager implements org.apache.geode.security.Secu
 
 	@SuppressWarnings("unused")
 	public static final class TestPrincipal implements java.security.Principal, java.io.Serializable {
+
+		private static final long serialVersionUID = 1L;
 
 		private final String name;
 
@@ -83,8 +83,8 @@ public final class TestSecurityManager implements org.apache.geode.security.Secu
 
 		public TestPrincipal(String name) {
 			this.name = Optional.ofNullable(name)
-				.filter(StringUtils::hasText)
-				.orElseThrow(() -> newIllegalArgumentException("Name is required"));
+				.filter(value -> !value.isBlank())
+				.orElseThrow(() -> new IllegalArgumentException("Name is required"));
 		}
 
 		@Override

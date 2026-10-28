@@ -32,6 +32,8 @@ The reviewed server receivers are `CacheServer`, `ClientSubscriptionConfig`, `Se
 
 The 248 reviewed rows comprise WAN gateway sender/receiver/filter/failure/queue contracts, async event queues/listeners, gateway conflict helper/resolver and ten exact `Cache` gateway/queue methods. These require server hosting under the approved boundary. The policy deliberately does **not** exclude `EventSequenceID` or `GatewayException`: a package/name is insufficient evidence that clients cannot receive a payload or failure. Their remaining 14 retired-owner rows move to active review task 64, preserving existing implementation evidence. Timestamped events and mixed configuration/attributes also remain unresolved for individual review in task 62/64.
 
+Follow-up, 2026-10-28: [task 66](client-region-and-callback-scope.md#server-async-event-sequence) resolves all eight EventSequenceID rows as excluded after tracing their only public payload path through server AsyncEvent/WAN infrastructure; no existing SPI or Spring use needs retirement. This is a source-backed follow-up to the original conservative decision. GatewayException remains assigned to task 76.
+
 ## Peer listener receivers
 
 The 70 rows under `RegionMembershipListener`, `RegionRoleListener` and their two adapters are peer-listener receiver contracts. The approved scope excludes peer membership/role callbacks. General inherited callbacks under these receivers are excluded only with that receiver; their independent `CacheListener`/`CacheListenerAdapter` rows survive. `GemFireCacheListenerFactory`, native membership/role adapters and `NativeDistributedCallbackTests.realRemoteMembershipRoleChangesAndSerializedEntryEventsAreForwarded` are existing peer implementation/test evidence requiring disposition in task 62. Retained client event/serialization tests must be migrated, not discarded with the peer scenario. `DistributedMember`, `Role`, general events and callback initialization remain unresolved pending client-callability review.
@@ -45,3 +47,7 @@ The final gate must have **zero unresolved rows**. Until then, report required-c
 ## Validation boundary
 
 Class-file extraction and independent `javap` checks verify the recorded native declarations. Scope decisions combine those declarations, existing local implementation/test evidence and the approved product boundary; they do not establish runtime client support for unresolved members. No runtime code/tests are deleted by task 60. Tasks 61–64 must provide the removal ledger, client regressions, Spring compilation and final reconciled inventory before task 59 closes.
+
+## Cache/region assembly follow-up — 2026-10-28
+
+[Task 67's member-level review](client-cache-and-region-assembly-scope.md) classifies 275 client requirements and 57 server exclusions without shrinking the frozen inventory. Inherited cache/service access remains client-applicable; peer builders, WAN senders, peer lock/search/rejoin and partition hosting do not. Legacy MirrorType/persist-backup conversions retain client-local storage/persistence semantics. Shared eviction/declarable values are retained through the public EvictionAttributes conversion path, not merely shared schema reachability. Ordinary client XML remains required. No excluded row has an existing SPI mapping; unfinished implementation and adoption stay with active tasks 19/29/30/35/49.

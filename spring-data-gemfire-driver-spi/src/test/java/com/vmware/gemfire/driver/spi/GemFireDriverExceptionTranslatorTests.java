@@ -38,7 +38,7 @@ class GemFireDriverExceptionTranslatorTests {
 			Map.entry(DriverFailureKind.RESOURCE_FAILURE, DataAccessResourceFailureException.class),
 			Map.entry(DriverFailureKind.QUERY_INVALID, InvalidDataAccessResourceUsageException.class),
 			Map.entry(DriverFailureKind.FUNCTION_FAILURE, InvalidDataAccessApiUsageException.class),
-			Map.entry(DriverFailureKind.TYPE_MISMATCH, TypeMismatchDataAccessException.class));
+			Map.entry(DriverFailureKind.INVALID_ARGUMENT, InvalidDataAccessApiUsageException.class));
 		RuntimeException original = new IllegalStateException("credential-secret");
 		cases.forEach((kind, expected) -> {
 			var failure = new DriverOperationException(kind, "Safe operation failure", original);

@@ -35,6 +35,10 @@ extra["driverProvider"] = "com.vmware.gemfire.driver.gemfire104.GemFire104Driver
 apply(from = rootProject.file("gradle/driver-stamp.gradle.kts"))
 
 val integrationTest = sourceSets.create("integrationTest")
+// Private submission-design probe: compile the application callback with JDK types only.
+val submissionProtocol = sourceSets.create("submissionProtocol")
+integrationTest.compileClasspath += submissionProtocol.output
+integrationTest.runtimeClasspath += submissionProtocol.output
 configurations[integrationTest.implementationConfigurationName].extendsFrom(configurations.implementation.get())
 configurations[integrationTest.runtimeOnlyConfigurationName].extendsFrom(configurations.runtimeOnly.get())
 
@@ -87,3 +91,39 @@ val serverFunctionFixtures = configurations.create("serverFunctionFixtures") {
   isTransitive = false
 }
 artifacts { add(serverFunctionFixtures.name, serverFunctionFixtureJar) }
+
+// JDK-only data/configuration shared with Spring clients; no Spring or native dependencies.
+val clientServerProtocol = sourceSets.create("clientServerProtocol") {
+  java.srcDir(rootProject.file("test-fixtures/client-server-protocol/java"))
+}
+val serverSecurityFixtures = sourceSets.create("serverSecurityFixtures") {
+  compileClasspath += clientServerProtocol.output
+  runtimeClasspath += clientServerProtocol.output
+}
+dependencies {
+  add(serverSecurityFixtures.implementationConfigurationName, "com.vmware.gemfire:gemfire-core") {
+    version { strictly(resolvedNativeVersion) }
+  }
+}
+val serverSecurityFixtureJar = tasks.register<Jar>("serverSecurityFixtureJar") {
+  from(serverSecurityFixtures.output)
+  from(clientServerProtocol.output) {
+    include("org/springframework/data/gemfire/fixtures/security/**")
+  }
+  archiveFileName.set("server-security-fixtures.jar")
+}
+val templateDomainFixtureJar = tasks.register<Jar>("templateDomainFixtureJar") {
+  from(clientServerProtocol.output) {
+    include("org/springframework/data/gemfire/fixtures/template/**")
+  }
+  archiveFileName.set("template-domain-fixtures.jar")
+}
+listOf("serverSecurityFixtures" to serverSecurityFixtureJar,
+  "templateDomainFixtures" to templateDomainFixtureJar).forEach { (name, jar) ->
+  val payload = configurations.create(name) {
+    isCanBeConsumed = true
+    isCanBeResolved = false
+    isTransitive = false
+  }
+  artifacts { add(payload.name, jar) }
+}

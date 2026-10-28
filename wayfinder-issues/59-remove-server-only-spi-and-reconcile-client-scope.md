@@ -1,8 +1,45 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 14, 15, 17, 18, 28, 39, 46, 60, 61, 62, 63, 64
 
 # Remove server-only SPI and reconcile client scope
+
+## Answer — 2026-10-29
+
+All bounded children 65–77 are resolved. Task 77's user-run command passed:
+22 retained client tests, zero failures/errors/skips, isolated fixture packaging,
+affected compilation and baseline pruning/verification. Fresh findings match
+the baseline with zero new or stale identities. No combined server test-JAR
+consumer remains. See the [fixture ledger](../wayfinder-impl/investigations/client-function-fixture-relocation.md#task-77-isolated-domain-and-security-payloads--2026-10-29).
+
+Final classification and ownership reconciliation passes: all 3,851 API IDs are
+classified (2,694 required-client / 1,157 excluded-server / zero unresolved), and
+all 538 source/resource references have client migration dispositions. The five
+unlinked references and three client uses of the excluded CacheServer type have
+explicit evidence. Transferred 100 partial API and 72 partial current-SPI mappings
+to open completion owners; cleared three stale excluded TransactionWriter mappings.
+All frozen IDs and 2,723 child assignments are preserved. See the
+[final reconciliation ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md).
+
+Generation/check, all 16 policy tests, ownership/source checks and independent
+javap comparison (372 declarations / 21 types) pass. The user confirmed the final
+aggregate command passed on 2026-10-29. Local XML records 547 test executions with
+zero failures/errors/skips; boundary findings have zero new or stale identities.
+Affected full compilations, fixture packaging, mock native-free classpath and
+ABI/stamp checks pass under the pre-first-release policy. The linked final ledger
+records the exact command, native version and suite counts.
+
+Tasks 61/62 retired public server-only creation/configuration/callback SPI;
+63 retired Spring server surfaces while retaining client XML; 77 isolated private
+server fixtures and preserved client assertions. No excluded API row retains a
+public SPI implementation mapping. Tasks 64 and 59 are now resolved, with all
+prerequisites complete. There are 33 open, 42 completed and two superseded tasks.
+Next eligible task: 23, client runtime identity and connectivity SPI.
+
+Downstream client SPI, mock migration and versioned compatibility work remain
+separate acceptance. The transitional boundary still records 5,074 native-source
+occurrences; this closure does not establish native-free Spring compliance.
+
 
 ## Question
 
@@ -86,3 +123,45 @@ User-run compilation, packaging verification and 15 real-server tests now pass (
 ## Task 64 function member scope — 2026-10-28
 
 The [member ledger](../wayfinder-impl/investigations/client-function-member-scope.md) resolves 37 required-client rows and four excluded peer targets using pinned native source. There are 31 function rows still awaiting callback/permission/registry decisions. Current scope is 410 required-client / 629 excluded-server / 2,812 unresolved, with all frozen IDs and implementation statuses preserved. Tasks 25/32 retain typed client implementation and Spring cutover; no public server service is added. Task 64 and this parent remain open.
+
+## Bounded remaining audit — 2026-10-28
+
+Task 64 now waits for [children 65–77](../wayfinder-impl/investigations/client-scope-audit-plan.md): 12 fixed API-family inventories and the two remaining test-JAR consumers. Task 64 retains the final zero-unresolved/source/removal/validation gate; existing downstream blockers are unchanged. Task 65 is now resolved with all 261 query/index/CQ IDs classified (259 required-client / two excluded-server). Its [final batch](../wayfinder-impl/investigations/client-query-and-cq-scope.md) settled query/index/CQ scope. Task 66 is also resolved with 137 region/callback IDs (129 required-client / eight excluded-server); the [evidence and handoff](../wayfinder-impl/investigations/client-region-and-callback-scope.md) record that completed audit. Task 67 now also resolves all 332 cache/region assembly IDs (275 required-client / 57 excluded-server); see the [member ledger](../wayfinder-impl/investigations/client-cache-and-region-assembly-scope.md). Current scope is **2,353 required-client / 1,108 excluded-server / 390 unresolved**. Task 68 is also resolved: **154 assigned / 154 required-client / zero remaining**; see the [expiry/eviction/compression ledger](../wayfinder-impl/investigations/client-expiry-eviction-and-compression-scope.md). Tasks 47/30 retain implementation/adoption. Task 69 is also resolved: **101 assigned / 101 required-client / zero remaining**; see the [pool/durable ledger](../wayfinder-impl/investigations/client-pool-and-durable-scope.md). Active tasks 20/51/52 own implementation and task 35 adoption; 84 unfinished rows move off resolved foundation 50. Task 70 is also resolved: **104 assigned / 28 required-client / 76 excluded-server / zero remaining**; see the [security/authentication ledger](../wayfinder-impl/investigations/client-security-and-authentication-scope.md). Tasks 24/35 retain client implementation/adoption; task 77 retains the existing server security fixture relocation. Task 71 is also resolved: **401 assigned / 396 required-client / five excluded-server / zero remaining**; see the [serialization/PDX/JSON ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md). Tasks 54–58 retain implementation, with 77 partial value rows moved from resolved foundation 53 to active task 58. Tasks 72–75 are resolved; task 76 is next. All frozen IDs and implementation statuses remain unchanged. This split adds no product scope and does not establish native-free compliance.
+
+## Task 72 completion — 2026-10-28
+
+All 291 runtime configuration/lifecycle IDs are classified: **145 required-client / 146 excluded-server / zero unresolved**. Whole inventory: **1,986 required-client / 923 excluded-server / 942 unresolved**, with all 3,851 frozen IDs and implementation statuses unchanged. Required work stays with implementation task 23 and consumer task 36. Task 72 is resolved: the user-run Java/boundary checks passed, and the post-removal source/bytecode inventory and declaration checks pass. The public locator-hosting accessor is removed. Current inventory: 131 production native imports, 547 source/resource references and 508 Spring signature exposures. Earlier inventory counts describe their recorded checkpoints. Tasks 73–76 own the remaining 942 API IDs; task 77 retains legacy test-packaging work.
+
+## Task 73 completion — 2026-10-28
+
+All 265 statistics/logging/utility IDs are classified: **227 required-client / 38 excluded-server / zero unresolved**. Whole inventory: **2,213 required-client / 961 excluded-server / 677 unresolved**. All 3,851 frozen IDs and implementation statuses are preserved. Tasks 23/36 retain 212 statistics/logging/message IDs and six internal utility replacements; nine function identity/discovery IDs move to 25/32. The 38 exclusions have no public SPI implementation or linked current production reference requiring removal. Task 72's locator cleanup remains validated.
+
+Deterministic generation/check, all 10 policy tests, independent declaration validation (372 declarations / 21 types) and exact assignment accounting pass. All 2,723 frozen assignments are preserved: 2,046 classified / 677 unresolved. Current source scopes are 457 required-client / three excluded-server / 87 unresolved; all 149 existing SPI references are required-client. This batch changes no Java/build behavior and needs no Gradle run. Three classification tasks remain: 74 (129 IDs), 75 (158) and 76 (390); task 77 retains fixture cleanup and 59/64 final reconciliation. Next: task 74.
+
+## Task 74 completion — 2026-10-28
+
+All **129 disk/resource/snapshot IDs** are classified: **94 required-client / 35 excluded-server / zero unresolved**. Implementation/adoption remain with 27/30/31 (66 retained disk/resource IDs) and 44/31 (28 snapshot IDs), coordinating cache assembly with 29/35. The exclusions cover partition rebalance/redundancy and parallel snapshot options; none has a public implementation mapping or linked current production/SPI reference to retire. Source establishes legacy local stream snapshots, including destructive region reinitialization, and the boundary between local snapshot export and native remote export.
+
+Deterministic generation/check, all 10 policy tests, independent declaration validation (372 declarations / 21 types) and exact assignment accounting pass. All 3,851 frozen IDs, implementation statuses and mappings remain unchanged. The 2,723 assignments remain unchanged: **2,175 classified / 548 unresolved**. Whole scope is **2,307 required-client / 996 excluded-server / 548 unresolved**; source scopes are 473 required-client / three excluded-server / 71 unresolved, and all 149 existing SPI references remain required-client. No Java/build behavior changed or Gradle command was run.
+
+Two classification tasks remain: **75 (158 IDs)** and **76 (390 IDs)**. Task 77 retains fixture cleanup, and 59/64 final reconciliation. Next: task 75.
+
+## Task 75 completion — 2026-10-28
+
+All **158 partition/membership/subscription IDs** are classified: **46 required-client / 112 excluded-server / zero unresolved**. Active implementation/adoption owners remain 48/30. Client request routing requires PartitionResolver, EntryOperation and StringPrefixPartitionResolver; the blanket exclusions in tasks 19/48 are corrected. Partition hosting attributes/listeners, rebalance metadata and peer role-reliability values remain excluded, with no current public implementation or linked production/SPI mapping to retire. Client subscription value defaults and client factory defaults are distinguished. See the exact member ledger and pinned source evidence in `wayfinder-impl/investigations/client-partition-membership-and-subscription-scope.md`.
+
+Deterministic generation/check, all 10 policy tests, independent javap validation (372 declarations / 21 types) and exact assignment accounting pass. All 3,851 frozen API IDs, implementation statuses, ownership and mappings are unchanged; the 2,723-entry assignment ledger is byte-for-byte unchanged. Exactly 158 rows change scope/remaining-work fields. Assigned scope is **2,333 classified / 390 unresolved** (1,854 required-client / 479 excluded-server). Whole inventory is **2,353 required-client / 1,108 excluded-server / 390 unresolved**. Source scopes remain 473 required-client / three excluded-server / 71 unresolved; all 149 existing SPI references remain required-client. The 77-task dependency graph remains acyclic: 37 open / 38 resolved / two superseded. No Java/build behavior changed, no new runtime probe was needed and no Gradle command was run.
+
+**One classification task remains: 76 (390 shared-exception IDs).** Task 77 retains fixture cleanup and tasks 59/64 final reconciliation. Required SPI/native/mock implementation remains downstream work.
+
+## Task 76 completion — 2026-10-29
+
+All **390 assigned exception IDs are classified: 341 required-client / 49 excluded-server / zero unresolved**. All 3,851 frozen API IDs and 2,723 assignment rows are preserved; the fixed assignments total 2,195 required-client / 528 excluded-server. Required implementation statuses and mappings are unchanged. Excluded mappings are retired, including CACHE_EXISTS and TYPE_MISMATCH and explicit native/Spring branches. Required callback/region/transaction work has active owners 30/31/34; other subsystem handoffs are recorded in the exact exception ledger.
+
+The user reported the requested Gradle command passed, including affected compilation, baseline pruning and transitional boundary verification. Local JUnit XML confirms 24 focused tests with zero failures/errors/skips: four SPI translator, six native mapper, two Spring translator and 12 client-only configuration tests. The locator rejection expectation is corrected to IllegalStateException / INVALID_STATE. No Gradle command was run by the agent.
+
+Deterministic coverage generation/check, all 12 Python coverage tests and independent javap validation pass (372 declarations across 21 types). The validator now permits fully retired mappings only for excluded/missing rows; negative tests reject retained, unresolved, partial, implemented or stale SPI claims. Exact-ID/declaration/ownership checks pass. Generated scope is **2,694 required-client / 1,157 excluded-server / zero unresolved**, with **3,125 missing / 471 partial / 255 implemented** across all scopes. The inventory contains 508 Spring exposures, 123 production native imports and 538 source/resource references.
+
+No current source/resource or existing-SPI row links to task 76's 49 exclusions. All 149 existing-SPI references are required-client. Source scopes are 530 required-client / three excluded-server / five unresolved: the remaining CacheServer exclusion references and five unlinked legacy-name/package/logger dispositions stay with parent 64 for final reconciliation. Classification does not establish native-free implementation compliance.
+
+**All 12 API-family classification tasks are resolved. Next: task 77's two legacy test-JAR consumers, then final reconciliation in 64/59.** There are 36 open, 39 resolved and two superseded tasks (77 total).

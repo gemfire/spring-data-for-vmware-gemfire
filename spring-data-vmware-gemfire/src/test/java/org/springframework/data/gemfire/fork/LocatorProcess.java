@@ -15,7 +15,6 @@ import org.apache.geode.distributed.LocatorLauncher;
 import org.apache.geode.distributed.internal.InternalLocator;
 
 import org.springframework.data.gemfire.GemFireProperties;
-import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.tests.process.ProcessUtils;
 import org.springframework.data.gemfire.tests.util.FileSystemUtils;
 import org.springframework.data.gemfire.tests.util.ThreadUtils;
@@ -41,9 +40,7 @@ public class LocatorProcess {
 	public static void main(String... args) throws IOException {
 
 		//runLocator();
-		runInternalLocator();
-
-		registerShutdownHook();
+		registerShutdownHook(runInternalLocator()::stop);
 
 		waitForLocatorStart(TimeUnit.SECONDS.toMillis(30));
 
@@ -120,15 +117,11 @@ public class LocatorProcess {
 		return System.getProperty(name, defaultValue);
 	}
 
-	private static void registerShutdownHook() {
+	private static void registerShutdownHook(Runnable stopLocator) {
 
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 
-			Locator locator = GemfireUtils.getLocator();
-
-			if (locator != null) {
-				locator.stop();
-			}
+			stopLocator.run();
 
 			Arrays.stream(ArrayUtils.nullSafeArray(FileSystemUtils.WORKING_DIRECTORY.listFiles((dir, name) -> name.startsWith("vf.gf") && name.endsWith(".pid")), File.class))
 				.forEach(File::delete);

@@ -49,7 +49,7 @@ the payload inventory (16 class files containing 15 function bodies), protocol a
 XML, and rejects server fixture classes in either Spring client test classpath or
 the Spring test JAR. It runs before integration tests and during `check`.
 
-The combined Spring `testJar` still exists for two other consumers:
+At that checkpoint the combined Spring `testJar` still existed for two other consumers:
 `GemfireTemplateIntegrationTests` deploys test domain data, and
 `AutoConfiguredAuthenticationConfigurationIntegrationTests` uses its security
 fixture. Neither uses the relocated function bodies. Their infrastructure still
@@ -85,3 +85,70 @@ User-run `pruneMigrationBoundary verifyMigrationBoundary` now passes with native
 matches the baseline with zero new or stale identities. No Gradle
 command was run by the agent. Keep task 64 and parent 59 open; this remains a
 transitional boundary, not native-free acceptance.
+
+## Task 77: isolated domain and security payloads — 2026-10-29
+
+Implementation and user-run Gradle validation pass against
+`10.4.0-build.3056.df98c835`. The two remaining combined-test-JAR consumers now
+resolve separate deployment-only configurations from the 10.4 driver:
+
+| Consumer | Payload | Exact contents |
+| --- | --- | --- |
+| GemfireTemplateIntegrationTests | template-domain-fixtures.jar | fixtures.template.User (one class) |
+| AutoConfiguredAuthenticationConfigurationIntegrationTests | server-security-fixtures.jar | config.annotation.TestSecurityManager, its nested TestPrincipal, fixtures.security.SecurityFixtureCredentials (three classes) |
+
+All names above are relative to `org.springframework.data.gemfire`. The security
+manager retains its original fully qualified name and moves into the driver's
+private `src/serverSecurityFixtures/java` source set, outside its main artifact.
+Spring utility calls are replaced with JDK equivalents. Credentials and the
+manager class-name string are shared without a client dependency on the manager.
+
+The JDK-only domain and credentials sources live in
+`test-fixtures/client-server-protocol/java`. Spring tests and the driver's isolated
+`clientServerProtocol` source set compile them independently. The template suite
+uses the new `fixtures.template.User` class on both sides, with the original fields,
+accessors and equality behavior and an explicit serialVersionUID. The original
+annotated repository.sample.User remains available to repository tests. Neither
+new payload includes Spring libraries, native libraries or unrelated test classes.
+
+The template suite retains all 21 tests and its existing LOCAL client region.
+It deploys its DTO to the server but does not establish remote serialization
+coverage; no remote round-trip claim is made here. The authentication suite retains
+its one test with three authenticated reads and the same server/locator credentials.
+The principal remains private to server security infrastructure.
+
+The combined testJar task, TEST_JAR_PATH property and unit-test dependency are
+removed; no remaining Java/build/XML consumers were found.
+`verifyClientServerFixturePackaging` checks exact security/domain contents, the
+existing function inventory (16 private classes, two protocol classes and PDX XML),
+shared client class availability, and private-class absence from main/test/integration
+client classpaths and both Spring/driver production JARs. It also rejects test
+protocol classes in production JARs. The old verifyFunctionFixturePackaging command
+is retained as an alias. The new check runs before integration tests and during check.
+
+A source-only boundary comparison found zero new identities and seven stale native
+source identities from the relocated security manager. The subsequent user-run command below validates the new
+Gradle configuration/classpaths and completes baseline pruning and verification. No scanner allowances were broadened.
+
+```sh
+./gradlew --offline -DgemfireVersion=10.4.0-build.3056.df98c835 \
+  :spring-data-vmware-gemfire:verifyClientServerFixturePackaging \
+  :spring-data-vmware-gemfire:integrationTest \
+  --tests 'org.springframework.data.gemfire.GemfireTemplateIntegrationTests' \
+  --tests '*AutoConfiguredAuthenticationConfigurationIntegrationTests' \
+  :spring-test-vmware-gemfire:compileTestJava \
+  pruneMigrationBoundaryBaseline verifyMigrationBoundary
+```
+
+The refreshed lexical audit records 96 native-coupled Spring unit-test source files
+(previously 97), with main/integration counts unchanged at 158/127. Deterministic
+coverage generation/check, ownership/source/ID/scope validation and all 12 coverage
+policy tests pass. All 3,851 API IDs remain: 2,694 required-client and 1,157 excluded-server.
+No Gradle command was run by the agent.
+
+The user reported this command passed. Local JUnit XML confirms 22 tests (21
+template, one authentication), zero failures/errors/skips, timestamped
+2026-10-28T20:50:52Z. Fresh boundary findings match the pruned baseline with zero
+new or stale identities; native-source occurrences are 5,074. Task 77 is resolved.
+Tasks 64/59 retain final client-scope reconciliation. Task 37 retains full mock/native-free
+Spring test migration; tasks 25/40 retain production function transport packaging.

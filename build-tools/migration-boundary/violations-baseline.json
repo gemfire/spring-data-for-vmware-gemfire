@@ -11447,22 +11447,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 196,
-      "detail": "org.apache.geode.IncompatibleSystemException :: cause instanceof IncompatibleSystemException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 15,
-      "detail": "org.apache.geode.IncompatibleSystemException :: org.apache.geode.IncompatibleSystemException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
       "line": 199,
       "detail": "org.apache.geode.InternalGemFireException :: cause instanceof InternalGemFireException",
       "count": 1,
@@ -11479,96 +11463,8 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 202,
-      "detail": "org.apache.geode.InvalidValueException :: cause instanceof InvalidValueException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 17,
-      "detail": "org.apache.geode.InvalidValueException :: org.apache.geode.InvalidValueException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 208,
-      "detail": "org.apache.geode.NoSystemException :: cause instanceof NoSystemException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 18,
-      "detail": "org.apache.geode.NoSystemException :: org.apache.geode.NoSystemException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 217,
-      "detail": "org.apache.geode.SystemConnectException :: cause instanceof SystemConnectException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 19,
-      "detail": "org.apache.geode.SystemConnectException :: org.apache.geode.SystemConnectException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 220,
-      "detail": "org.apache.geode.SystemIsRunningException :: cause instanceof SystemIsRunningException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 20,
-      "detail": "org.apache.geode.SystemIsRunningException :: org.apache.geode.SystemIsRunningException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 223,
-      "detail": "org.apache.geode.UnmodifiableException :: cause instanceof UnmodifiableException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 21,
-      "detail": "org.apache.geode.UnmodifiableException :: org.apache.geode.UnmodifiableException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
       "line": 161,
       "detail": "org.apache.geode.admin.RegionNotFoundException :: cause instanceof org.apache.geode.admin.RegionNotFoundException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 211,
-      "detail": "org.apache.geode.admin.RuntimeAdminException :: cause instanceof org.apache.geode.admin.RuntimeAdminException",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11585,22 +11481,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
       "line": 22,
       "detail": "org.apache.geode.cache.CacheException :: org.apache.geode.cache.CacheException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 101,
-      "detail": "org.apache.geode.cache.CacheExistsException :: cause instanceof CacheExistsException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 23,
-      "detail": "org.apache.geode.cache.CacheExistsException :: org.apache.geode.cache.CacheExistsException",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -11889,22 +11769,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
       "line": 41,
       "detail": "org.apache.geode.cache.SynchronizationCommitConflictException :: org.apache.geode.cache.SynchronizationCommitConflictException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 251,
-      "detail": "org.apache.geode.cache.VersionException :: cause instanceof VersionException",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/GemfireCacheUtils.java",
-      "line": 42,
-      "detail": "org.apache.geode.cache.VersionException :: org.apache.geode.cache.VersionException",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -22223,22 +22087,6 @@
     {
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
-      "line": 84,
-      "detail": "org.apache.geode.distributed.Locator :: T extends Locator",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
-      "line": 12,
-      "detail": "org.apache.geode.distributed.Locator :: org.apache.geode.distributed.Locator",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
       "line": 72,
       "detail": "org.apache.geode.distributed.internal.InternalDistributedSystem :: InternalDistributedSystem.getAnyInstance",
       "count": 1,
@@ -22249,22 +22097,6 @@
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
       "line": 13,
       "detail": "org.apache.geode.distributed.internal.InternalDistributedSystem :: org.apache.geode.distributed.internal.InternalDistributedSystem",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
-      "line": 85,
-      "detail": "org.apache.geode.distributed.internal.InternalLocator :: InternalLocator.getLocator",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/util/DistributedSystemUtils.java",
-      "line": 14,
-      "detail": "org.apache.geode.distributed.internal.InternalLocator :: org.apache.geode.distributed.internal.InternalLocator",
       "count": 1,
       "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
     },
@@ -26806,62 +26638,6 @@
     },
     {
       "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 53,
-      "detail": "org.apache.geode.security.AuthenticationFailedException :: authenticate(Properties credentials): Object",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 59,
-      "detail": "org.apache.geode.security.AuthenticationFailedException :: new AuthenticationFailedException(String.format(\"User [%s] is not authorized\", username))",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 17,
-      "detail": "org.apache.geode.security.AuthenticationFailedException :: org.apache.geode.security.AuthenticationFailedException",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 39,
-      "detail": "org.apache.geode.security.SecurityManager :: SecurityManager.PASSWORD",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 38,
-      "detail": "org.apache.geode.security.SecurityManager :: SecurityManager.USER_NAME",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 33,
-      "detail": "org.apache.geode.security.SecurityManager :: TestSecurityManager extends null implements org.apache.geode.security.SecurityManager",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/TestSecurityManager.java",
-      "line": 18,
-      "detail": "org.apache.geode.security.SecurityManager :: org.apache.geode.security.SecurityManager",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/config/annotation/support/AbstractAnnotationConfigSupportUnitTests.java",
       "line": 76,
       "detail": "org.apache.geode.cache.client.ClientCache :: ClientCache.class",
@@ -27713,14 +27489,6 @@
       "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/fork/LocatorProcess.java",
       "line": 151,
       "detail": "org.apache.geode.distributed.Locator :: Locator locator",
-      "count": 1,
-      "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/test/java/org/springframework/data/gemfire/fork/LocatorProcess.java",
-      "line": 127,
-      "detail": "org.apache.geode.distributed.Locator :: Locator locator = GemfireUtils.getLocator()",
       "count": 1,
       "owner": "wayfinder-issues/37-native-free-spring-test-fixtures-and-helper-decoupling.md"
     },

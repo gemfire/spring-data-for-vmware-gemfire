@@ -57,6 +57,7 @@ plugins {
 sourceSets {
   test {
     java.srcDir(rootProject.file("test-fixtures/function-protocol/java"))
+    java.srcDir(rootProject.file("test-fixtures/client-server-protocol/java"))
   }
   register("integrationTest") {
     compileClasspath += sourceSets.main.get().output + sourceSets.test.get().output
@@ -67,15 +68,20 @@ sourceSets {
   }
 }
 
-// Resolve the server deployment payload separately; never add it to a client classpath.
-val serverFunctionFixtures = configurations.create("serverFunctionFixtures") {
-  isCanBeConsumed = false
-  isTransitive = false
+// Resolve deployment payloads separately; never add private server code to a client classpath.
+fun deploymentPayload(name: String): Configuration {
+  val payload = configurations.create(name) {
+    isCanBeConsumed = false
+    isTransitive = false
+  }
+  dependencies.add(payload.name, dependencies.project(mapOf("path" to ":spring-data-gemfire-driver-10.4",
+    "configuration" to name)))
+  return payload
 }
-dependencies {
-  add(serverFunctionFixtures.name, project(mapOf("path" to ":spring-data-gemfire-driver-10.4",
-    "configuration" to "serverFunctionFixtures")))
-}
+val serverFunctionFixtures = deploymentPayload("serverFunctionFixtures")
+val serverSecurityFixtures = deploymentPayload("serverSecurityFixtures")
+val templateDomainFixtures = deploymentPayload("templateDomainFixtures")
+val deploymentPayloads = listOf(serverFunctionFixtures, serverSecurityFixtures, templateDomainFixtures)
 
 configurations {
   getByName("integrationTestImplementation") {
@@ -173,9 +179,6 @@ dependencies {
 }
 
 tasks {
-  test {
-    dependsOn("testJar")
-  }
   this.register<Test>("integrationTest") {
     description = "Runs the integration tests."
     group = "verification"
@@ -183,12 +186,12 @@ tasks {
     testClassesDirs = sourceSets["integrationTest"].output.classesDirs
     classpath = sourceSets["integrationTest"].runtimeClasspath
 
-    dependsOn("testJar")
-
-    dependsOn(serverFunctionFixtures)
-    inputs.files(serverFunctionFixtures)
+    dependsOn(deploymentPayloads)
+    inputs.files(deploymentPayloads)
     doFirst {
       systemProperty("SERVER_FUNCTION_FIXTURE_JAR_PATH", serverFunctionFixtures.singleFile.absolutePath)
+      systemProperty("SERVER_SECURITY_FIXTURE_JAR_PATH", serverSecurityFixtures.singleFile.absolutePath)
+      systemProperty("TEMPLATE_DOMAIN_FIXTURE_JAR_PATH", templateDomainFixtures.singleFile.absolutePath)
     }
 
     forkEvery = 1
@@ -235,8 +238,6 @@ gradle.taskGraph.whenReady {
       systemProperty("spring.profiles.active", "apache-geode")
       systemProperty("spring.test.gemfire.docker.image", springTestGemfireDockerImage)
 
-      systemProperty("TEST_JAR_PATH", tasks.getByName<Jar>("testJar").outputs.files.singleFile.absolutePath)
-
       testLogging { events(TestLogEvent.FAILED); exceptionFormat = TestExceptionFormat.FULL }
       useJUnitPlatform()
     }
@@ -260,20 +261,18 @@ tasks.register("copyJavadocsToBucket") {
   }
 }
 
-tasks.register<Jar>("testJar") {
-  from(sourceSets.test.get().output)
-  from(sourceSets.main.get().output)
-  archiveFileName = "testJar.jar"
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-val verifyFunctionFixturePackaging = tasks.register("verifyFunctionFixturePackaging") {
-  description = "Checks that deployed server functions are absent from client test classpaths and artifacts."
+val verifyClientServerFixturePackaging = tasks.register("verifyClientServerFixturePackaging") {
+  description = "Checks isolated deployment payloads and rejects private server code in client artifacts."
   group = "verification"
-  val clientClasspath = sourceSets.test.get().runtimeClasspath + sourceSets["integrationTest"].runtimeClasspath
-  val clientTestJar = tasks.named<Jar>("testJar")
-  dependsOn(serverFunctionFixtures, clientClasspath, clientTestJar)
-  inputs.files(serverFunctionFixtures, clientClasspath, clientTestJar)
+  val clientClasspaths = sourceSets.main.get().compileClasspath + sourceSets.main.get().runtimeClasspath +
+    sourceSets.test.get().compileClasspath + sourceSets.test.get().runtimeClasspath +
+    sourceSets["integrationTest"].compileClasspath + sourceSets["integrationTest"].runtimeClasspath
+  val clientJar = tasks.named<Jar>("jar")
+  val driverJar = provider {
+    project(":spring-data-gemfire-driver-10.4").tasks.named<Jar>("jar").get().archiveFile.get().asFile
+  }
+  dependsOn(deploymentPayloads, clientClasspaths, clientJar, ":spring-data-gemfire-driver-10.4:jar")
+  inputs.files(deploymentPayloads, clientClasspaths, clientJar, driverJar)
   doLast {
     fun entries(file: File): Set<String> = when {
       file.isDirectory -> file.walkTopDown().filter { it.isFile }
@@ -283,28 +282,52 @@ val verifyFunctionFixturePackaging = tasks.register("verifyFunctionFixturePackag
       }
       else -> emptySet()
     }
+    fun payloadEntries(file: File) = entries(file).filter {
+      !it.endsWith("/") && !it.startsWith("META-INF/")
+    }.toSet()
     val protocolClasses = setOf(
       "org/springframework/data/gemfire/function/sample/Metric.class",
       "org/springframework/data/gemfire/function/execution/FunctionFixtureIds.class")
-    val payload = entries(serverFunctionFixtures.singleFile)
-    check(payload.containsAll(protocolClasses)) { "Server deployment is missing shared protocol classes" }
-    check(payload.contains("client-cache-function-execution-with-pdx-cache.xml")) {
-      "Server deployment is missing its PDX configuration"
-    }
-    val serverClasses = payload.filter { it.endsWith(".class") && it !in protocolClasses }.toSet()
+    val payload = payloadEntries(serverFunctionFixtures.singleFile)
+    val pdxXml = "client-cache-function-execution-with-pdx-cache.xml"
+    check(payload.containsAll(protocolClasses + pdxXml)) { "Function deployment is missing protocol/PDX configuration" }
+    val functionClasses = payload - protocolClasses - pdxXml
     // 12 top-level function classes plus a holder and its three nested functions.
-    check(serverClasses.size == 16) { "Unexpected server fixture inventory: $serverClasses" }
-    check(serverClasses.all { it.startsWith("org/springframework/data/gemfire/function/") }) {
-      "Deployment must contain only private function fixtures and shared protocol classes"
+    check(functionClasses.size == 16 && functionClasses.all {
+      it.endsWith(".class") && it.startsWith("org/springframework/data/gemfire/function/")
+    }) { "Unexpected private function inventory: $functionClasses" }
+    val securityClasses = setOf(
+      "org/springframework/data/gemfire/config/annotation/TestSecurityManager.class",
+      "org/springframework/data/gemfire/config/annotation/TestSecurityManager\$TestPrincipal.class")
+    val credentialsClass = "org/springframework/data/gemfire/fixtures/security/SecurityFixtureCredentials.class"
+    check(payloadEntries(serverSecurityFixtures.singleFile) == securityClasses + credentialsClass) {
+      "Security deployment must contain only the manager, principal and shared credentials"
     }
-    (clientClasspath.files + clientTestJar.get().archiveFile.get().asFile).forEach { file ->
-      val leaked = entries(file).intersect(serverClasses)
-      check(leaked.isEmpty()) { "Server functions leaked onto the client classpath/artifact $file: $leaked" }
+    val domainClass = "org/springframework/data/gemfire/fixtures/template/User.class"
+    check(payloadEntries(templateDomainFixtures.singleFile) == setOf(domainClass)) {
+      "Template deployment must contain only its shared domain class"
+    }
+    val clientEntries = clientClasspaths.files.map { entries(it) }
+    check(clientEntries.any { domainClass in it } && clientEntries.any { credentialsClass in it }) {
+      "Client is missing shared domain/credential classes"
+    }
+    val privateClasses = functionClasses + securityClasses
+    (clientClasspaths.files + clientJar.get().archiveFile.get().asFile +
+      driverJar.get()).forEach { file ->
+      val leaked = entries(file).intersect(privateClasses)
+      check(leaked.isEmpty()) { "Private server fixtures leaked onto a client classpath/artifact $file: $leaked" }
+    }
+    listOf(clientJar.get().archiveFile.get().asFile, driverJar.get()).forEach { file ->
+      check(entries(file).intersect(protocolClasses + credentialsClass + domainClass).isEmpty()) {
+        "Test protocol classes leaked into production artifact $file"
+      }
     }
   }
 }
-tasks.named("integrationTest") { dependsOn(verifyFunctionFixturePackaging) }
-tasks.check { dependsOn(verifyFunctionFixturePackaging) }
+// Preserve the existing verification command while checking all deployment fixtures.
+tasks.register("verifyFunctionFixturePackaging") { dependsOn(verifyClientServerFixturePackaging) }
+tasks.named("integrationTest") { dependsOn(verifyClientServerFixturePackaging) }
+tasks.check { dependsOn(verifyClientServerFixturePackaging) }
 
 // Transitional verification of the actual migrated sources. These source sets do not inherit
 // main/test's native dependencies; expand their inventory as the migration advances.

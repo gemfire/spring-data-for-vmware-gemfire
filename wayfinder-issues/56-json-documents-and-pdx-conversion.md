@@ -17,3 +17,11 @@ Implement JSONFormatter, JsonDocument/Factory, SerializableAsJson, StorageFormat
 ## Completion
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
+
+## Serialization audit handoff — 2026-10-28
+
+Task 71 retains all 33 JSON/document/storage/conversion rows. Implement native-free document/factory APIs, PDX/BSON selection, nested numeric/null values, parser errors, identity options and injected client conversion context. Test authenticated-context cleanup, external PDX type-registration requirements and the pinned default-charset string conversion versus UTF-8 byte output; record any deliberate normalization. Define local mock JSON support separately from unsupported wire behavior. Task 31 migrates JSONRegionAdvice and retains CRUD/bulk/values/query assertions. See [the exact source-backed ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md).
+
+## Shared exception handoff — task 76
+
+Complete client JSON parse failure construction, cause preservation and safe diagnostics with consumer 31; avoid leaking private document contents and coordinate value adaptation 58. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.

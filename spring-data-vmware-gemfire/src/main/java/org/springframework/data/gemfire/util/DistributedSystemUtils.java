@@ -9,9 +9,7 @@ import java.util.Properties;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.server.CacheServer;
 import org.apache.geode.distributed.DistributedSystem;
-import org.apache.geode.distributed.Locator;
 import org.apache.geode.distributed.internal.InternalDistributedSystem;
-import org.apache.geode.distributed.internal.InternalLocator;
 import org.springframework.data.gemfire.GemFireProperties;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -25,7 +23,6 @@ import org.springframework.util.StringUtils;
  * @see ClientCache
  * @see DistributedSystem
  * @see InternalDistributedSystem
- * @see org.apache.geode.internal.DistributionLocator
  * @since 1.7.0
  */
 @SuppressWarnings("unused")
@@ -80,8 +77,4 @@ public abstract class DistributedSystemUtils extends SpringExtensions {
 			.orElse(null);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static @Nullable <T extends Locator> T getLocator() {
-		return (T) InternalLocator.getLocator();
-	}
 }

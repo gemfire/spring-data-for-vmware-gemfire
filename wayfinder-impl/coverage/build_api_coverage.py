@@ -15,7 +15,7 @@ import zipfile
 from collections import Counter, defaultdict, deque
 from pathlib import Path
 
-from scope_policy import classify, counts, status_counts
+from scope_policy import SCOPE_COLUMNS, classify, classify_sources, counts, status_counts
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -199,21 +199,16 @@ def main():
             for entry in z.namelist():
                 if entry.endswith(".class") and not entry.startswith("META-INF/"):
                     name = entry[:-6].replace("/", ".")
-                    if native(name):
+                    # GemFire supplies its own Shiro compatibility classes. Load
+                    # them for inherited signatures without making them SPI roots.
+                    if native(name) or name.startswith("org.apache.shiro."):
                         data = z.read(entry)
                         assert name not in archive or archive[name] == data, f"Conflicting class {name}"
                         archive[name], origins[name] = data, path.name
-    # ResourcePermission inherits a Shiro contract. This is the exact version in
-    # the audit's resolved compileClasspath, not an arbitrary cached candidate.
-    auxiliary = sorted(args.native_cache.parent.glob("org.apache.shiro/shiro-core/2.2.1/*/shiro-core-2.2.1.jar"))
-    assert len(auxiliary) == 1, "Expected resolved shiro-core 2.2.1 artifact"
-    for path in auxiliary:
-        jar_manifest.append(dict(artifact=path.name, sha256=digest(path.read_bytes())))
-        with zipfile.ZipFile(path) as z:
-            for entry in z.namelist():
-                if entry.endswith(".class"):
-                    name = entry[:-6].replace("/", ".")
-                    archive[name], origins[name] = z.read(entry), path.name
+    # Upstream shiro-core has different behavior despite matching class names.
+    # Never substitute it for the implementation in the pinned native artifact.
+    assert origins.get("org.apache.shiro.authz.permission.WildcardPermission") == f"gemfire-shiro-{VERSION}.jar", \
+        "Expected WildcardPermission from the pinned gemfire-shiro artifact"
     # Follow JDK supertypes (Map/ConcurrentMap/Collection/etc.) but never fan out
     # through every unrelated JDK return type.
     jdk = {}
@@ -488,6 +483,14 @@ def main():
                            "unresolved": "unresolved-client-scope-reference"}[scope["scope"]]
         source_rows.append(dict(id=row_id("REF", key), **item, api_row=api, disposition=disposition,
                                 owner=source_owner, scope=scope["scope"], scope_owner=scope["scope_owner"]))
+    source_fields = classify_sources(source_rows, scope_fields, scope_policy, ROOT)
+    reviewed_sources = {ref for decision in scope_policy.get("source_decisions", [])
+                        for ref in decision["references"]}
+    for row in source_rows:
+        row.update(source_fields[row["id"]])
+        if row["id"] in reviewed_sources:
+            row["owner"] = row["scope_owner"]
+            row["disposition"] = row["scope_reason"]
     # Scope and evidence fingerprints make source/native drift reviewable.
     products = {
         "api-coverage.tsv": encoded_tsv(list(next(iter(rows.values()))), [rows[k] for k in sorted(rows)]),
@@ -498,7 +501,7 @@ def main():
         "spring-annotation-defaults.tsv": encoded_tsv(["spring_type", "member", "descriptor", "value", "source"],
             sorted(annotation_defaults, key=lambda r: tuple(r.values()))),
         "source-coverage.tsv": encoded_tsv(
-            ["id", "source", "symbol", "native_type", "kind", "text", "api_row", "disposition", "owner", "scope", "scope_owner"], source_rows),
+            ["id", "source", "symbol", "native_type", "kind", "text", "api_row", "disposition", "owner", *SCOPE_COLUMNS], source_rows),
         "spring-evidence.tsv": encoded_tsv(["native_type", "source_or_signature"],
             [dict(native_type=n, source_or_signature=e) for n in sorted(evidence) for e in sorted(evidence[n])]),
         "direct-members.tsv": encoded_tsv(["native_type", "member", "descriptor", "api_row"],
@@ -520,7 +523,7 @@ def main():
                             scope_path, HERE / "scope_policy.py", HERE / "validate_coverage.py",
                             HERE.parent / "client-only-scope.md",
                             AUDIT / "native-references.tsv", AUDIT / "native-resource-references.tsv"]})
-    for decision in [scope_policy["unresolved"]] + scope_policy["decisions"]:
+    for decision in [scope_policy["unresolved"]] + scope_policy["decisions"] + scope_policy.get("source_decisions", []):
         path = ROOT / decision["evidence"].split("#", 1)[0]
         evidence_hashes[str(path.relative_to(ROOT))] = digest(path.read_bytes())
     evidence_hashes[str((HERE / "native-api-baseline.json").relative_to(ROOT))] = digest((HERE / "native-api-baseline.json").read_bytes())

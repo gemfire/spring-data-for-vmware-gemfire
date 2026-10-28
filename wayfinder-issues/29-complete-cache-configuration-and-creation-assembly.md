@@ -41,3 +41,17 @@ Connection/configuration foundation can express every retained client cache fact
 Region-operation follow-up prerequisites: [Region and cache snapshot services SPI](44-region-and-cache-snapshot-services-spi.md); [Region interest registration and subscription SPI](45-region-interest-registration-and-subscription-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.
 
 Region-operation handoff: DriverConnection now extends DriverRegionService while preserving existing defaults. Region service access is typed and native services are adapted without assuming a full cache. DriverRegion.closeRegion maps native Region.close; a close-named method would trigger Spring destroy-method inference and break borrowing. Preserve the existing owner/borrower tests and the new snapshot/subscription blockers. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).
+
+## Task 67 scope handoff — 2026-10-28
+
+The [cache/region assembly ledger](../wayfinder-impl/investigations/client-cache-and-region-assembly-scope.md) settles this task's assigned cache service/lookup requirements. Complete client XML stream and callback lifecycle, named attributes, copy-on-read, cancellation, initializer/JNDI, connection ownership and authenticated service restrictions. Assemble query/JSON, disk/resource/snapshot, runtime/logging and durable-ready access through typed subsystem collaborators. Preserve default versus named pool errors and authenticated-view close semantics.
+
+CacheFactory's existing-client lookup/version observations need injected owner/borrower equivalents, not static services or peer creation. Peer builder setters, lock/search/HA-queue configuration, member discovery, peer reconnect and WAN factories are excluded. Source classification does not complete any partial row: native/mock parity and Spring task 35 adoption remain required.
+
+## Task 74 handoff — 2026-10-28
+
+Coordinate the cache snapshot accessor retained by task 67 with task 44's [client-local service implementation](../wayfinder-impl/investigations/client-disk-resource-and-snapshot-scope.md#client-local-snapshot-services), and entrypoint adoption in 35. Native ClientCache does not declare this accessor even though the shared implementation has it. Use a typed injected facade with explicit local-region selection; do not expose native internals or blindly invoke cache-wide export on pool-backed regions. This note does not reassign the accessor's frozen ID or introduce a dependency cycle.
+
+## Shared exception handoff — task 76
+
+Retain CacheClosedException and client CacheXmlException construction/emission and safe translation with consumer 35. Client XML remains supported. Compatible client creation reuses the cache; setting nonempty distributed-system locators on ClientCacheFactory throws IllegalStateException and maps to INVALID_STATE, without CACHE_EXISTS. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.

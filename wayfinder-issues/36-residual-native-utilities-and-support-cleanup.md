@@ -36,3 +36,21 @@ Audit residual server-package utilities by actual client use. Remove server-only
 ## Completion
 
 Production native-reference inventory is zero under the final boundary policy; every required API row has an implementation owner and evidence. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Task 72 handoff — 2026-10-28
+
+Task 72 retains 145 exact runtime/configuration IDs with implementation owner 23 and this consumer owner. Replace DistributedSystemUtils/GemfireUtils native runtime identity, connectedness, safe property/durable helpers with injected typed client collaborators. Coordinate configuration entrypoints with 35, durable/pools with 20, authentication/TLS with 24 and local statistics/logging with 73. The public locator-hosting accessor is removed in task 72; private LocatorProcess shutdown owns its own started locator. Preserve client XML, pool locator discovery, client TLS including legacy fallbacks, and local cancellation/identity. No public global native registry or opaque Object escape hatch is an acceptable replacement. See [the exact scope ledger](../wayfinder-impl/investigations/client-runtime-configuration-and-lifecycle-scope.md).
+
+## Task 73 client-scope handoff — 2026-10-28
+
+The [task-73 ledger](../wayfinder-impl/investigations/client-statistics-logging-and-utility-scope.md) retains six internal utility IDs under this task and 212 statistics/logging/message consumer obligations with implementation 23. Replace DistributedSystemUtils global lookup with an injected client runtime (23/35), including absence/closed behavior. Remove the documentation-only GemFireCacheImpl reference in CacheUtils; it adds no new operation. Preserve client attribute copying/validation through typed configuration with 29/30 instead of InternalAttributesFactory/InternalRegionAttributes inheritance.
+
+Replace RegionUtils.isLocal's native LocalRegion class test with an explicit interpretation of client local/caching/proxy configuration, preserve null behavior and test those cases with task 30. Do not expose native internal classes. Adopt typed statistics/logging/message behavior documented in the ledger, coordinating authentication diagnostics with 24/35. Nine function identity/discovery consumer IDs move to 32; locator hosting, the peer-cache carrier, WAN property helper and redundancy-management results are excluded. Task 72 already removed the public locator accessor. All six utility IDs remain missing.
+
+## Shared exception handoff — task 76
+
+Complete shared client exception construction, safe diagnostics, designated wrapper handling and translation. Preserve Error propagation and typed callback identity; do not classify arbitrary nested causes. Retain received role/lease failures with 23. CACHE_EXISTS and TYPE_MISMATCH plus explicit excluded native/Spring branches are retired under 76; common-ancestor fallback is not support for excluded APIs. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.
+
+## Final reconciliation handoff — task 64
+
+Own the optional legacy CqInvalidException reflective source row transferred from resolved foundation 16: remove obsolete reflection after typed adoption, preserving current query translation and unknown-failure fallback. Also remove the stale AbstractCacheConfiguration CacheServer import/Javadoc and replace DistributedSystemUtils native server-port constant linkage while preserving client endpoint callers. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

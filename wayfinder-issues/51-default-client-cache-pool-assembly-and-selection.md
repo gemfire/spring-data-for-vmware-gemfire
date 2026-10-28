@@ -19,3 +19,7 @@ Native tests must cover defaults, preexisting compatible/incompatible pools, gen
 ## Completion
 
 Record source/API mappings, native artifact, commands and behavior evidence in an Answer. Resolve only this child, keeping the complete parent and downstream cutover owners open.
+
+## Task 69 default-selection handoff — 2026-10-28
+
+The [default-pool source trace](../wayfinder-impl/investigations/client-pool-and-durable-scope.md#client-default-pool-selection) retains the assigned ClientCache.getDefaultPool ID here, with task 35 adoption. Preserve lazy native selection: empty registry/default localhost endpoint, singleton reuse, multiple-pool compatibility search and null when none matches, explicit factory endpoint fallback/compatibility, and unique creation names. Do not assume literal DEFAULT/gemfirePool lookup or deterministic lexical choice among compatible pools. Task 67's separate assembly IDs remain assigned there; no cross-family reassignment or implementation status upgrade occurs.

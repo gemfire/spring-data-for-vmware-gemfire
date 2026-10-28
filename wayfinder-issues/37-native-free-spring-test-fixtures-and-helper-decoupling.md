@@ -39,3 +39,7 @@ All Spring Data test source/fixture rows migrated; native-specific cases live in
 ## Task 63 inherited-attributes test handoff
 
 Task 63 removes the inherited production attributes factory and temporarily exposes six native metadata occurrences in the two CQ mock bean definitions, plus three occurrences in the new explicit-false entity disk-synchrony regression. Replace these with SPI/official-mock fixtures at consumer cutover; preserve both domain constraints and the end-to-end disk-synchrony assertion. These reviewed transitional baseline additions do not satisfy native-free unit coverage. See the [reviewed boundary adjustment](../wayfinder-impl/investigations/client-only-spring-surfaces.md#reviewed-transitional-test-boundary-adjustment).
+
+## Final reconciliation handoff — task 64
+
+Own the two native logger category resource rows. They configure client test diagnostics without class loading; remove unused native categories or relocate native-specific settings with driver fixtures as test migration proceeds. Preserve useful logging and native-free checks; no classpath exception or public SPI follows. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

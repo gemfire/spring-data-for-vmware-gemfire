@@ -23,7 +23,7 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 - Implement expiration policies/attributes, CustomExpiry context, eviction policies/actions, ObjectSizer and compressor callbacks with native adaptation and explicit lifecycle.
 - Replace native-backed expiration/eviction value/converter implementations where independently possible; leave public region factory and annotation wiring to its named cutover ticket with explicit matrix ownership.
 
-- Preserve client-applicable expiry reset policies and typed values. Partition resolver/listener/attribute and peer membership configuration are excluded under ticket 59; subscription/interest policies remain required in ticket 48.
+- Preserve client-applicable expiry reset policies and typed values. Partition hosting listeners/attributes and peer membership configuration are excluded under ticket 59; client routing resolvers/entry-operation contexts and subscription/interest policies remain required in ticket 48 (task 75 evidence).
 
 ## Required validation
 
@@ -46,3 +46,7 @@ The historical 798 assigned rows require client-scope classification by ticket 5
 - [Legacy region configuration values and enums](49-legacy-region-configuration-values-and-enums.md).
 
 Foundation progress: [Typed region creation and attribute access](46-typed-region-creation-and-attribute-access.md) is resolved with 463 passing tests and typed native/mock hierarchy creation. [Evidence](../wayfinder-impl/investigations/typed-region-configuration.md) lists supported settings and precise mock limitations. This parent remains open: complete attribute/enum/value contracts, effects and independently separable Spring converter migration still require its other children. Audit attribute-copy/default precedence and mock statistics needs at parent acceptance.
+
+## Final reconciliation handoff — task 64
+
+Own the remaining 21 partial region-attribute/client-factory API rows and four current-SPI mappings transferred from foundation 46. Preserve callback/configuration reachable contracts and coordinate adoption with 30. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

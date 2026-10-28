@@ -33,3 +33,16 @@ Prerequisites: [Continuous query SPI](22-continuous-query-spi.md).
 ## Completion
 
 CQ Spring consumers and their configuration/tests are native-free. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Query result scope handoff — 2026-10-28
+
+Migrate CQ initial-result consumers and listener-container wiring to the typed result model with key/value structs and no native result/metadata values escaping through Object or collections. Use the [84-row source-backed ledger](../wayfinder-impl/investigations/client-query-result-scope.md); these rows are required-client, not implemented. Adapter/native/mock behavior tests remain implementation acceptance. Task 65 has now settled the six inherited metadata serialization rows and the remaining query/index/CQ scope; use the final handoff below. Do not export DataSerializable.
+
+
+## Completed query/CQ audit handoff — 2026-10-28
+
+Migrate ContinuousQueryListenerContainer query-service selection, attributes, named/unnamed durable registration, initial-results and listener dispatch/cleanup to tasks 21/22 equivalents. Preserve mutation/close identity, excluded events, callback status/errors and delta full-value recovery. Preserve programmatic versus declarative initialization distinctions and authenticated-view restrictions. No server CQ hosting or invented mock remote delivery. See the [final 177-ID disposition](../wayfinder-impl/investigations/client-query-and-cq-scope.md), which completes all 261 task-65 IDs.
+
+## Shared exception handoff — task 76
+
+Adopt typed client CQ exceptions from 22, retaining lifecycle distinctions, causes and safe messages; remove native translation only after behavior is preserved. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.

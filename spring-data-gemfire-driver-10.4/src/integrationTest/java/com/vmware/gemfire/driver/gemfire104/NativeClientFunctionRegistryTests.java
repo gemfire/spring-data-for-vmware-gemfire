@@ -84,6 +84,34 @@ class NativeClientFunctionRegistryTests {
 		}
 	}
 
+	@Test
+	void clientDisconnectClearsLocalRegistrationButPreservesServerRegistration() throws InterruptedException {
+		var local = new RegisteredFunction("client:", ProcessHandle.current().pid());
+		String id = local.getId();
+		assertThat(FunctionService.getFunction(id)).isNull();
+		try {
+			try (var cache = client()) {
+				FunctionService.registerFunction(local);
+				assertThat(FunctionService.getFunction(id)).isSameAs(local);
+				assertThat(FunctionService.onServer(cache)
+					.execute(new InstallServerFunction(local.clientProcessId), 10, TimeUnit.SECONDS)
+					.getResult(10, TimeUnit.SECONDS)).isEqualTo(List.of("installed"));
+			}
+
+			assertThat(FunctionService.getFunction(id)).isNull();
+			assertThat(FunctionService.isRegistered(id)).isFalse();
+			assertThat(FunctionService.getRegisteredFunctions()).doesNotContainKey(id);
+			try (var cache = client()) {
+				assertThat(FunctionService.onServer(cache).setArguments("after-reconnect")
+					.execute(id, 10, TimeUnit.SECONDS).getResult(10, TimeUnit.SECONDS))
+					.isEqualTo(List.of("server:after-reconnect"));
+				assertThat(FunctionService.getFunction(id)).isNull();
+			}
+		} finally {
+			FunctionService.unregisterFunction(id);
+		}
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void assertRegistryBehavior(Execution target, Class<? extends RuntimeException> missingFunctionFailure)
 			throws InterruptedException {
@@ -114,6 +142,33 @@ class NativeClientFunctionRegistryTests {
 			assertThat(local.writeMetadataReads).isPositive();
 			assertThat(execution.execute(local, 10, TimeUnit.SECONDS).getResult(10, TimeUnit.SECONDS))
 				.isEqualTo(List.of("client:argument"));
+
+			var snapshot = FunctionService.getRegisteredFunctions();
+			var replacement = new RegisteredFunction("replacement:", local.clientProcessId);
+			FunctionService.registerFunction(replacement);
+			assertThat(FunctionService.getFunction(id)).isSameAs(replacement);
+			assertThat(FunctionService.getRegisteredFunctions()).containsEntry(id, replacement);
+			assertThat(snapshot).containsEntry(id, local);
+			snapshot.remove(id);
+			assertThat(FunctionService.getFunction(id)).isSameAs(replacement);
+
+			local.resultMetadataReads = 0;
+			local.haMetadataReads = 0;
+			local.writeMetadataReads = 0;
+			replacement.resultMetadataReads = 0;
+			replacement.haMetadataReads = 0;
+			replacement.writeMetadataReads = 0;
+			// Reusing the executor must consult the replacement, but still execute the server's body.
+			assertThat(execution.execute(id, 10, TimeUnit.SECONDS).getResult(10, TimeUnit.SECONDS))
+				.isEqualTo(List.of("server:argument"));
+			assertThat(replacement.resultMetadataReads).isPositive();
+			assertThat(replacement.haMetadataReads).isPositive();
+			assertThat(replacement.writeMetadataReads).isPositive();
+			assertThat(local.resultMetadataReads).isZero();
+			assertThat(local.haMetadataReads).isZero();
+			assertThat(local.writeMetadataReads).isZero();
+			assertThat(execution.execute(replacement, 10, TimeUnit.SECONDS).getResult(10, TimeUnit.SECONDS))
+				.isEqualTo(List.of("replacement:argument"));
 
 			FunctionService.unregisterFunction(id);
 			assertThat(FunctionService.getFunction(id)).isNull();

@@ -37,3 +37,15 @@ Prerequisites: [Transaction lifecycle and callbacks SPI](28-transaction-lifecycl
 ## Completion
 
 Spring transaction consumer group and configuration operate through the driver contracts. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
+
+## Task 66 scope handoff — 2026-10-28
+
+The [region/callback audit](../wayfinder-impl/investigations/client-region-and-callback-scope.md#client-transaction-access) retains all three getCacheTransactionManager receiver rows (Cache, GemFireCache and ClientCache). Their partial implementation ownership moves here from resolved foundation 28. Preserve connection-owned manager identity/lifecycle and existing verified client transaction behavior while migrating Spring configuration and consumers; task 37 retains native-free fixture obligations. No new transaction outcome probe is needed for this scope decision.
+
+## Shared exception handoff — task 76
+
+Own unfinished transaction exception construction/emission/native/mock compatibility and Spring adoption from resolved foundation 28. Retain commit/synchronization failures and documented writer-veto wrapping; arbitrary root causes must not replace the outer failure category. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.
+
+## Final reconciliation handoff — task 64
+
+Own 22 partial transaction API rows and 20 current-SPI mappings transferred from foundation 28. Complete orchestration, identity/value serialization and native-free fixture behavior with 37; preserve client-local outcomes and server-backed silence. Explicit mock rejection does not satisfy successful transaction assertions. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.

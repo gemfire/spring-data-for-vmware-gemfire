@@ -17,3 +17,7 @@ Implement all PdxReader/PdxWriter/PdxUnreadFields/PdxSerializer and application 
 ## Completion
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
+
+## Serialization audit handoff — 2026-10-28
+
+Task 71 retains 60 reader/writer/serializer/unread-field rows plus 18 shared cache settings/metadata-registration rows. Test missing defaults versus type failures, manual unread-field ordering/preservation, automatic preservation, serializer decline and nested callback failure translation. Client persistence and disk-store options are accepted/read back but ignored by the pinned client implementation; do not promise client PDX metadata disk persistence. Preserve real metadata serialization/validation. Five peer CacheFactory setters are excluded; use typed client configuration. Task 35 owns entry-point adoption, task 31 callback/mapping adoption. Existing PdxSerializable discovery stays here without enlarging task 71. See [the exact source-backed ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md).

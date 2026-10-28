@@ -37,3 +37,16 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 Complete assigned query/result/index contracts with native evidence and explicit mock disposition. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
 
 Region-operation handoff: use DriverRegionService and RegionMetadata (dataPolicy, poolName) for query routing without native cache/region casts in Spring. Region.query/existsValue/selectValue rows are assigned here. The real proxy fixture demonstrates local size zero alongside nonzero server state; do not infer query routing from local contents. See [region-operation evidence](../wayfinder-impl/investigations/region-operations-and-metadata.md).
+
+## Query result scope handoff — 2026-10-28
+
+Implement the retained result collection, struct and logical type metadata contracts, including inherited Collection behavior, native mutability/failures, view/copy behavior, duplicate/order information and nested native-free values. Preserve application class information while mapping native type classes to typed equivalents. Use the [84-row source-backed ledger](../wayfinder-impl/investigations/client-query-result-scope.md); these rows are required-client, not implemented. Adapter/native/mock behavior tests remain implementation acceptance. Task 65 has now settled the six inherited metadata serialization rows and the remaining query/index/CQ scope; use the final handoff below. Do not export DataSerializable.
+
+
+## Completed query/CQ audit handoff — 2026-10-28
+
+Implement the retained query/pool/region paths, local index definition/creation/inspection/statistics and QueryService CQ entry points (with task 22). Preserve typed UNDEFINED, unsupported compile semantics, local versus pool/authenticated-view restrictions, aliases, actual per-method failure behavior and index failure details. Exclude only the two Query.execute RegionFunctionContext overloads. All six metadata encode/decode rows remain required through native-free collaborators and private versioned codecs; coordinate round-trip/class-resolution/failure acceptance with task 55. No native DataSerializable or Class leakage. Scope classification does not upgrade implementation status. See the [final 177-ID disposition](../wayfinder-impl/investigations/client-query-and-cq-scope.md), which completes all 261 task-65 IDs.
+
+## Shared exception handoff — task 76
+
+Complete client/local and received query/index failures, including MultiIndexCreationException typed nested failures, mutable map/live-key-set behavior, combined diagnostics and inherited constructor contracts. Coordinate consumer 31 and value adaptation 58. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.

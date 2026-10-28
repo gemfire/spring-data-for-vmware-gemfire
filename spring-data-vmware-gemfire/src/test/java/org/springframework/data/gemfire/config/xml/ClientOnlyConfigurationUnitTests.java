@@ -14,6 +14,7 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.gemfire.GemfireUtils;
 import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.config.annotation.EnableCachingDefinedRegions;
 import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
@@ -81,6 +82,9 @@ public class ClientOnlyConfigurationUnitTests {
 		}
 		assertThat(Arrays.stream(TransactionListenerAdapter.class.getMethods()).map(Method::getName))
 			.doesNotContain("beforeCommit");
+		assertThat(Arrays.stream(GemfireUtils.class.getMethods()).map(Method::getName))
+			.contains("getDistributedSystem", "isConnected", "configureDurableClient")
+			.doesNotContain("getLocator");
 	}
 
 	@Test

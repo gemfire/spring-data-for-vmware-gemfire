@@ -42,7 +42,6 @@ final class GemFireExceptionMapper {
 				&& wrapped.getCacheException() != null) return classify(wrapped.getCacheException());
 		if (failure instanceof org.apache.geode.cache.EntryExistsException) return DriverFailureKind.DUPLICATE_ENTRY;
 		if (failure instanceof org.apache.geode.cache.EntryNotFoundException) return DriverFailureKind.ENTRY_NOT_FOUND;
-		if (failure instanceof org.apache.geode.cache.CacheExistsException) return DriverFailureKind.CACHE_EXISTS;
 		if (failure instanceof org.apache.geode.cache.RegionExistsException) return DriverFailureKind.REGION_EXISTS;
 		if (failure instanceof org.apache.geode.cache.SynchronizationCommitConflictException
 				|| failure instanceof org.apache.geode.cache.FailedSynchronizationException
@@ -77,18 +76,14 @@ final class GemFireExceptionMapper {
 		if (failure instanceof org.apache.geode.cache.CacheLoaderException) return DriverFailureKind.LOADER_FAILURE;
 		if (failure instanceof org.apache.geode.cache.CacheWriterException) return DriverFailureKind.WRITER_VETO;
 		if (failure instanceof org.apache.geode.cache.execute.FunctionException) return DriverFailureKind.FUNCTION_FAILURE;
-		if (failure instanceof org.apache.geode.InvalidValueException) return DriverFailureKind.TYPE_MISMATCH;
 		if (failure instanceof org.apache.geode.cache.TimeoutException) return DriverFailureKind.TIMEOUT;
 		if (failure instanceof org.apache.geode.cache.DiskAccessException
 				|| failure instanceof org.apache.geode.cache.OperationAbortedException
 				|| failure instanceof org.apache.geode.cache.ResourceException
 				|| failure instanceof org.apache.geode.GemFireIOException
-				|| failure instanceof org.apache.geode.cache.client.ServerConnectivityException
-				|| failure instanceof org.apache.geode.SystemConnectException
-				|| failure instanceof org.apache.geode.cache.VersionException) return DriverFailureKind.RESOURCE_FAILURE;
+				|| failure instanceof org.apache.geode.cache.client.ServerConnectivityException) return DriverFailureKind.RESOURCE_FAILURE;
 		if (failure instanceof org.apache.geode.GemFireException
 				|| failure instanceof org.apache.geode.GemFireCheckedException
-				|| failure instanceof org.apache.geode.internal.datasource.DataSourceCreateException
 				|| failure instanceof org.apache.geode.json.JsonParseException) return DriverFailureKind.SYSTEM_FAILURE;
 		if (failure instanceof java.lang.IllegalArgumentException
 				|| failure instanceof java.lang.NullPointerException) return DriverFailureKind.INVALID_ARGUMENT;

@@ -30,7 +30,6 @@ org.apache.geode.GemFireIOException	org.apache.geode.GemFireIOException	frozen-b
 org.apache.geode.GemFireIOException	org.apache.geode.GemFireIOException	spring-root
 org.apache.geode.GemFireIOException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.IncompatibleSystemException	org.apache.geode.IncompatibleSystemException	frozen-baseline-root
-org.apache.geode.IncompatibleSystemException	org.apache.geode.IncompatibleSystemException	spring-root
 org.apache.geode.IncompatibleSystemException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.Instantiator	org.apache.geode.Instantiator	frozen-baseline-root
 org.apache.geode.Instantiator	org.apache.geode.Instantiator	spring-root
@@ -43,13 +42,11 @@ org.apache.geode.InternalGemFireException	org.apache.geode.InternalGemFireExcept
 org.apache.geode.InternalGemFireException	org.apache.geode.InternalGemFireException	spring-root
 org.apache.geode.InternalGemFireException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.InvalidValueException	org.apache.geode.InvalidValueException	frozen-baseline-root
-org.apache.geode.InvalidValueException	org.apache.geode.InvalidValueException	spring-root
 org.apache.geode.InvalidValueException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.LogWriter	org.apache.geode.LogWriter	frozen-baseline-root
 org.apache.geode.LogWriter	org.apache.geode.LogWriter	spring-root
 org.apache.geode.LogWriter#convertToLogWriterI18n()Lorg/apache/geode/i18n/LogWriterI18n;	org.apache.geode.i18n.LogWriterI18n	member-signature
 org.apache.geode.NoSystemException	org.apache.geode.NoSystemException	frozen-baseline-root
-org.apache.geode.NoSystemException	org.apache.geode.NoSystemException	spring-root
 org.apache.geode.NoSystemException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.StatisticDescriptor#<type>	org.apache.geode.StatisticDescriptor	type-hierarchy-or-bound
 org.apache.geode.Statistics#get(Lorg/apache/geode/StatisticDescriptor;)Ljava/lang/Number;	org.apache.geode.StatisticDescriptor	member-signature
@@ -120,19 +117,15 @@ org.apache.geode.StatisticsTypeFactory#createType(Ljava/lang/String;Ljava/lang/S
 org.apache.geode.StatisticsTypeFactory#createTypesFromXml(Ljava/io/Reader;)[Lorg/apache/geode/StatisticsType;	org.apache.geode.StatisticsType	member-signature
 org.apache.geode.StatisticsTypeFactory#findType(Ljava/lang/String;)Lorg/apache/geode/StatisticsType;	org.apache.geode.StatisticsType	member-signature
 org.apache.geode.SystemConnectException	org.apache.geode.SystemConnectException	frozen-baseline-root
-org.apache.geode.SystemConnectException	org.apache.geode.SystemConnectException	spring-root
 org.apache.geode.SystemConnectException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.SystemIsRunningException	org.apache.geode.SystemIsRunningException	frozen-baseline-root
-org.apache.geode.SystemIsRunningException	org.apache.geode.SystemIsRunningException	spring-root
 org.apache.geode.SystemIsRunningException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.UnmodifiableException	org.apache.geode.UnmodifiableException	frozen-baseline-root
-org.apache.geode.UnmodifiableException	org.apache.geode.UnmodifiableException	spring-root
 org.apache.geode.UnmodifiableException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.admin.RegionNotFoundException	org.apache.geode.admin.RegionNotFoundException	frozen-baseline-root
 org.apache.geode.admin.RegionNotFoundException	org.apache.geode.admin.RegionNotFoundException	spring-root
 org.apache.geode.admin.RegionNotFoundException#<type>	org.apache.geode.cache.RegionDestroyedException	type-hierarchy-or-bound
 org.apache.geode.admin.RuntimeAdminException	org.apache.geode.admin.RuntimeAdminException	frozen-baseline-root
-org.apache.geode.admin.RuntimeAdminException	org.apache.geode.admin.RuntimeAdminException	spring-root
 org.apache.geode.admin.RuntimeAdminException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.cache.AttributesFactory	org.apache.geode.cache.AttributesFactory	frozen-baseline-root
 org.apache.geode.cache.AttributesFactory#<init>(Lorg/apache/geode/cache/RegionAttributes;)V	org.apache.geode.cache.RegionAttributes	member-signature
@@ -277,7 +270,6 @@ org.apache.geode.cache.CacheException	org.apache.geode.cache.CacheException	froz
 org.apache.geode.cache.CacheException	org.apache.geode.cache.CacheException	spring-root
 org.apache.geode.cache.CacheException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.cache.CacheExistsException	org.apache.geode.cache.CacheExistsException	frozen-baseline-root
-org.apache.geode.cache.CacheExistsException	org.apache.geode.cache.CacheExistsException	spring-root
 org.apache.geode.cache.CacheExistsException#<init>(Lorg/apache/geode/cache/Cache;Ljava/lang/String;)V	org.apache.geode.cache.Cache	member-signature
 org.apache.geode.cache.CacheExistsException#<init>(Lorg/apache/geode/cache/Cache;Ljava/lang/String;Ljava/lang/Throwable;)V	org.apache.geode.cache.Cache	member-signature
 org.apache.geode.cache.CacheExistsException#<type>	org.apache.geode.cache.CacheException	type-hierarchy-or-bound
@@ -1036,7 +1028,6 @@ org.apache.geode.cache.TransactionWriter#beforeCommit(Lorg/apache/geode/cache/Tr
 org.apache.geode.cache.TransactionWriter#initialize(Lorg/apache/geode/cache/Cache;Ljava/util/Properties;)V	org.apache.geode.cache.Cache	member-signature
 org.apache.geode.cache.TransactionWriterException	org.apache.geode.cache.TransactionWriterException	frozen-baseline-root
 org.apache.geode.cache.VersionException	org.apache.geode.cache.VersionException	frozen-baseline-root
-org.apache.geode.cache.VersionException	org.apache.geode.cache.VersionException	spring-root
 org.apache.geode.cache.VersionException#<type>	org.apache.geode.GemFireCheckedException	type-hierarchy-or-bound
 org.apache.geode.cache.asyncqueue.AsyncEvent#<type>	org.apache.geode.cache.wan.GatewayQueueEvent	type-hierarchy-or-bound
 org.apache.geode.cache.asyncqueue.AsyncEvent#getEventSequenceID()Lorg/apache/geode/cache/wan/EventSequenceID;	org.apache.geode.cache.wan.EventSequenceID	member-signature
@@ -1934,7 +1925,6 @@ org.apache.geode.distributed.LeaseExpiredException	org.apache.geode.distributed.
 org.apache.geode.distributed.LeaseExpiredException	org.apache.geode.distributed.LeaseExpiredException	spring-root
 org.apache.geode.distributed.LeaseExpiredException#<type>	org.apache.geode.GemFireException	type-hierarchy-or-bound
 org.apache.geode.distributed.Locator	org.apache.geode.distributed.Locator	frozen-baseline-root
-org.apache.geode.distributed.Locator	org.apache.geode.distributed.Locator	spring-root
 org.apache.geode.distributed.Locator#getDistributedSystem()Lorg/apache/geode/distributed/DistributedSystem;	org.apache.geode.distributed.DistributedSystem	member-signature
 org.apache.geode.distributed.Locator#getLocator()Lorg/apache/geode/distributed/Locator;	org.apache.geode.distributed.Locator	member-signature
 org.apache.geode.distributed.Locator#getLocators()Ljava/util/List;	org.apache.geode.distributed.Locator	member-signature
@@ -1949,7 +1939,6 @@ org.apache.geode.distributed.internal.InternalDistributedSystem	org.apache.geode
 org.apache.geode.distributed.internal.InternalDistributedSystem	org.apache.geode.distributed.internal.InternalDistributedSystem	spring-root
 org.apache.geode.distributed.internal.InternalDistributedSystem#getAnyInstance()Lorg/apache/geode/distributed/internal/InternalDistributedSystem;	org.apache.geode.distributed.internal.InternalDistributedSystem	member-signature
 org.apache.geode.distributed.internal.InternalLocator	org.apache.geode.distributed.internal.InternalLocator	frozen-baseline-root
-org.apache.geode.distributed.internal.InternalLocator	org.apache.geode.distributed.internal.InternalLocator	spring-root
 org.apache.geode.distributed.internal.InternalLocator#getLocator()Lorg/apache/geode/distributed/internal/InternalLocator;	org.apache.geode.distributed.internal.InternalLocator	member-signature
 org.apache.geode.i18n.LogWriterI18n#config(Lorg/apache/geode/i18n/StringId;)V	org.apache.geode.i18n.StringId	member-signature
 org.apache.geode.i18n.LogWriterI18n#config(Lorg/apache/geode/i18n/StringId;Ljava/lang/Object;)V	org.apache.geode.i18n.StringId	member-signature

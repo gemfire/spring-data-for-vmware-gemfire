@@ -26,3 +26,7 @@ Resolved 2026-10-22. [Implementation and validation evidence](../wayfinder-impl/
 - Inventory remains 3,851 rows / 292 types: 2,988 missing, 583 partial, 280 implemented. This child owns 78 rows (77 partial pending operation-boundary integration/adoption; one implemented sentinel replacement). Every one of the 107 current SPI defaults has a mapping and behavioral probe.
 
 The serialization parent remains open, blocked by [PDX callbacks and cache configuration](54-pdx-callbacks-and-cache-configuration.md), [Binary serialization and registration](55-binary-serialization-and-registration.md), [JSON documents and PDX conversion](56-json-documents-and-pdx-conversion.md), [Reflection-based PDX serialization](57-reflection-based-pdx-serialization.md) and [Serialization value boundary adaptation](58-serialization-value-boundary-adaptation.md). All 378 original parent rows and every downstream blocker are retained. Full SPI region transport, native-free Spring mapping and native serialization compatibility are not declared complete. No commit was created.
+
+## Serialization audit handoff — 2026-10-28
+
+Task 71 retains all 78 assigned value/factory/document rows. The implemented missing-field sentinel stays here. Ownership of 77 partial rows moves to active task 58 for transport and Serializable replacement; implementation mappings/statuses remain unchanged. This resolved foundation is not reopened, and task 31 retains Spring mapping adoption. See [the exact source-backed ledger](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md).

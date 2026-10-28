@@ -37,3 +37,16 @@ Prerequisites: [Required native API coverage matrix](14-required-native-api-cove
 Complete required CQ contracts ready for Spring listener-container migration. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
 
 Region-operation follow-up prerequisites: [Region interest registration and subscription SPI](45-region-interest-registration-and-subscription-spi.md). These preserve the split snapshot/subscription requirements before consumer or cache cutover.
+
+## Query result scope handoff — 2026-10-28
+
+Reuse the typed query result model for CQ initial results, including key/value structs, collection metadata and inherited collection behavior. This handoff does not settle the remaining CQ lifecycle/event scope. Use the [84-row source-backed ledger](../wayfinder-impl/investigations/client-query-result-scope.md); these rows are required-client, not implemented. Adapter/native/mock behavior tests remain implementation acceptance. Task 65 has now settled the six inherited metadata serialization rows and the remaining query/index/CQ scope; use the final handoff below. Do not export DataSerializable.
+
+
+## Completed query/CQ audit handoff — 2026-10-28
+
+Implement retained CQ creation, pool routing, durable and state inspection, initial results, bulk/per-region lifecycle, query/service statistics and event filtering. Preserve listener defaults, identity/order/alias and close semantics, distinct event operations, delta-to-full-value recovery, onError and status callbacks. Inherited init/initialize use typed client ownership and are not automatically called by programmatic registration. Coordinate QueryService entry points with task 21 and authenticated-view restrictions with task 35. Native delivery and explicit mock unsupported behavior remain acceptance. See the [final 177-ID disposition](../wayfinder-impl/investigations/client-query-and-cq-scope.md), which completes all 261 task-65 IDs.
+
+## Shared exception handoff — task 76
+
+Complete CQ closed/existing/operation failure construction, conversion and lifecycle emission, coordinating consumer 33. A generic CQ kind does not establish every inherited contract. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.

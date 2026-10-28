@@ -26,3 +26,11 @@ Real separate-server/client fixtures for policy NONE/KEYS/KEYS_VALUES, invalidat
 ## Completion
 
 Complete assigned subscription rows and preserve all consumer migration obligations. This ticket blocks cache assembly and continuous-query SPI. Record version, commands, behavior evidence and limitations before resolving.
+
+## Task 66 scope handoff — 2026-10-28
+
+All 24 assigned region interest APIs are required-client; see the [source-backed ledger](../wayfinder-impl/investigations/client-region-and-callback-scope.md#client-region-interest). Preserve native defaults, policy/durable/receive-values flags, subscription validation, key/regex list inspection and unregister behavior. Region.registerInterestForKeys iterates registration per key: preserve order and partial progress on failure, rather than substituting one atomic list request. All-keys delegates to regex `.*`; legacy List/ALL_KEYS overload paths remain separately observable. Tasks 30/31 own consumers, 20/48 own pool and policy collaborators. Existing real-server delivery acceptance remains required; this audit adds no runtime probe.
+
+## Task 75 handoff — 2026-10-28
+
+Task 75 retains subscription-policy values in 48/30; see the [client subscription evidence](../wayfinder-impl/investigations/client-partition-membership-and-subscription-scope.md#client-subscription-policy-values). Distinguish default SubscriptionAttributes (CACHE_CONTENT), client-factory policy (ALL), InterestResultPolicy initial results and explicit interest registration/pool subscription enablement. Test real delivery only through supported registration and connection paths; policy readback alone establishes no delivery guarantee. No additional dependency or assigned ID is introduced.
