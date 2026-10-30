@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 14, 16, 59
 
 # Binary serialization and registration
@@ -20,6 +20,15 @@ Require serialization helpers needed by client values and client submission call
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
 
+
+## Answer
+
+Resolved 2026-10-31. [Implementation and validation evidence](../wayfinder-impl/investigations/client-serialization-binary-codecs-and-registration.md) records exact ownership, native behavior and limits.
+
+- Added an injected typed `DriverDataCodec` (`DriverConnection#getDataCodec`) over the native `DataSerializer` wire format, a `DriverSerializationRegistry` (`getSerializationRegistry`) for serializers and serializer-backed instantiators, and `DriverConnection#registerPdxMetaData`. Native keeps all registry state; the driver has no static registry. The mock has a connection-local registry, validates `registerPdxMetaData`, and refuses to promise a wire format.
+- Limits: instantiators share the serializer id space and are not wire-compatible with native-instantiator servers; `distribute` is not honored and registration is never distributed; the Java-serialization ThreadLocal is mapped to a `writeObject` argument and does not restore nested state; region references bind to the issuing connection.
+- This task owns 159 implemented rows. The 3 `ExpirationAttributes` binary rows moved here from task 47. The 6 `CopyException` rows map to `SYSTEM_FAILURE` (partial) and moved to [task 31](31-template-repository-and-mapping-migration.md).
+- Inventory: 3,851 rows / 292 types; 2,276 missing, 870 partial, 705 implemented. Resolved native artifact: `gemfire-core` 10.4.0-build.3068.c3a2bbfe. The user ran the SPI, mock and 10.4 native tests, `testMigrationBoundary` and the coverage unit tests; all passed. No commit was created.
 
 ## Query/CQ audit coordination — 2026-10-28
 

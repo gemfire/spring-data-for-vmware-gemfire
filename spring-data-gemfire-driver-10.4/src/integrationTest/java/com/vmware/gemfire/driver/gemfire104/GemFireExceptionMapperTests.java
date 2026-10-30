@@ -4,6 +4,7 @@
  */
 package com.vmware.gemfire.driver.gemfire104;
 
+import org.apache.geode.CopyException;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.client.ServerOperationException;
@@ -192,5 +193,21 @@ class GemFireExceptionMapperTests {
 				.hasCause(veto).hasMessage("GemFire operation failed: put");
 			assertThat(region.containsKey("key-secret")).isFalse();
 		}
+	}
+
+	/** The native copy failure has no dedicated kind; it stays a system failure and keeps its trusted cause. */
+	@Test
+	void copyFailuresAreSystemFailuresWithTrustedCauses() {
+		var root = new IllegalStateException("root-secret");
+		for (Exception nativeFailure : new Exception[] {
+			new CopyException(), new CopyException("copy-secret"), new CopyException("copy-secret", root), new CopyException(root) }) {
+			var translated = mapper.translate("copy", nativeFailure);
+			assertThat(translated).isInstanceOfSatisfying(DriverOperationException.class,
+				e -> assertThat(e.kind()).isEqualTo(DriverFailureKind.SYSTEM_FAILURE));
+			assertThat(translated.getMessage()).doesNotContain("secret");
+			assertThat(translated.getCause()).isSameAs(nativeFailure);
+		}
+		assertThat(new CopyException("m", null).getRootCause()).isNull();
+		assertThat(new CopyException(root).getRootCause()).isSameAs(root);
 	}
 }

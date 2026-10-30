@@ -64,6 +64,8 @@ final class MockConnection implements DriverConnection {
 	}
 
 	@Override public com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() { return pdx; }
+	private final MockSerializationRegistry serialization = new MockSerializationRegistry();
+	@Override public com.vmware.gemfire.driver.spi.DriverSerializationRegistry getSerializationRegistry() { return serialization; }
 	MockPdxCodec pdxCodec() { return new MockPdxCodec(pdx); }
 
 	@Override public com.vmware.gemfire.driver.spi.DriverClientRuntime getRuntime() { return runtime; }
@@ -74,6 +76,13 @@ final class MockConnection implements DriverConnection {
 	@Override public com.vmware.gemfire.driver.spi.DriverTransactionManager getTransactionManager() {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
 		return transactions;
+	}
+
+	/** Accepts only values the PDX contract can describe. The mock defines no wire metadata, so a valid value has no further effect. */
+	@Override public void registerPdxMetaData(Object value) {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		if (!(value instanceof com.vmware.gemfire.driver.spi.DriverPdxSerializable) && !(value instanceof com.vmware.gemfire.driver.spi.DriverPdxInstance))
+			throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Value is not PDX serializable", null);
 	}
 
 	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstanceFactory createPdxInstanceFactory(String className) {

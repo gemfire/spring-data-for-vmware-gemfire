@@ -77,6 +77,21 @@ public interface DriverConnection extends DriverRegionService {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getDefaultPool");
 	}
 
+	/** Returns the typed binary read and write helpers. Providers without a defined wire format reject it. Requires an open CLIENT connection. */
+	default DriverDataCodec getDataCodec() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getDataCodec");
+	}
+
+	/** Returns the registry for application binary serializers and instantiators. Requires an open CLIENT connection. */
+	default DriverSerializationRegistry getSerializationRegistry() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getSerializationRegistry");
+	}
+
+	/** Registers the PDX type metadata of an application value with the cluster. The value must be PDX serializable; anything else is rejected, never ignored. Requires an open CLIENT connection. */
+	default void registerPdxMetaData(Object value) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.registerPdxMetaData");
+	}
+
 	/** Returns the effective cache PDX settings read back from the provider. Requires an open CLIENT connection. */
 	default com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getPdxConfiguration");

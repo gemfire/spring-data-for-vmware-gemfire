@@ -51,6 +51,18 @@ final class GemFireConnection implements DriverConnection {
 		return invoke("getTransactionManager", () -> new GemFireTransactionManager(cache.getCacheTransactionManager()));
 	}
 
+	@Override public com.vmware.gemfire.driver.spi.DriverDataCodec getDataCodec() {
+		return new GemFireDataCodec(cache, exceptions);
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverSerializationRegistry getSerializationRegistry() {
+		return new GemFireSerializationRegistry(exceptions);
+	}
+
+	@Override public void registerPdxMetaData(Object value) {
+		invoke("registerPdxMetaData", () -> { cache.registerPdxMetaData(value); return null; });
+	}
+
 	@Override public com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() {
 		return invoke("getPdxConfiguration", () -> {
 			var serializer = cache.getPdxSerializer();
