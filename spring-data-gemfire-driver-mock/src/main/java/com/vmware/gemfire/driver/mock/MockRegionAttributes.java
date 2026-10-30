@@ -43,6 +43,15 @@ final class MockRegionAttributes<K, V> implements DriverRegionAttributes<K, V> {
 		diskSynchronous = config.diskSynchronous().isSet() ? config.diskSynchronous().value() : true;
 		indexMaintenanceSynchronous = true;
 		if (config.serverRegionName().isSet()) unsupported("serverRegionName");
+		config.entryTimeToLive().ifSet(this::requireNoExpiration);
+		config.entryIdleTimeout().ifSet(this::requireNoExpiration);
+		config.regionTimeToLive().ifSet(this::requireNoExpiration);
+		config.regionIdleTimeout().ifSet(this::requireNoExpiration);
+		config.entryTimeToLiveResetPolicy().ifSet(policy -> { if (policy != TimeToLiveResetPolicy.LAST_MODIFIED) unsupported("entryTimeToLiveResetPolicy"); });
+		config.customEntryTimeToLive().ifSet(custom -> { if (custom != null) unsupported("customEntryTimeToLive"); });
+		config.customEntryIdleTimeout().ifSet(custom -> { if (custom != null) unsupported("customEntryIdleTimeout"); });
+		config.evictionAttributes().ifSet(eviction -> { if (!eviction.isNoEviction()) unsupported("evictionAttributes"); });
+		config.compressor().ifSet(compressor -> { if (compressor != null) unsupported("compressor"); });
 
 		if (initialCapacity < 0 || concurrencyLevel <= 0 || !(loadFactor > 0)) throw invalid("Invalid region sizing configuration");
 		if (keyConstraint != null && keyConstraint.isPrimitive() || valueConstraint != null && valueConstraint.isPrimitive()) throw invalid("Primitive constraints are invalid");
@@ -51,6 +60,7 @@ final class MockRegionAttributes<K, V> implements DriverRegionAttributes<K, V> {
 		if (poolName != null && !poolName.isEmpty()) unsupported("poolName");
 		if (diskStoreName != null) unsupported("diskStoreName");
 	}
+	private void requireNoExpiration(ExpirationAttributes attributes) { if (!attributes.isDefault() && attributes.getTimeout() != 0) unsupported("expiration"); }
 	private void unsupported(String setting) { throw UnsupportedFeatureException.notIntroduced("RegionConfiguration." + setting); }
 	private DriverOperationException invalid(String message) { return new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, message, null); }
 	@Override public DataPolicy getDataPolicy() { return dataPolicy; }
@@ -70,6 +80,15 @@ final class MockRegionAttributes<K, V> implements DriverRegionAttributes<K, V> {
 	@Override public boolean getIndexMaintenanceSynchronous() { return indexMaintenanceSynchronous; }
 	/** Models the client-region default value only; no subscription or event delivery is implied. */
 	@Override public SubscriptionAttributes getSubscriptionAttributes() { return new SubscriptionAttributes(InterestPolicy.ALL); }
+	/** Expiration, eviction and compression are never simulated, so only the disabled values are representable. */
+	@Override public ExpirationAttributes getEntryTimeToLive() { return ExpirationAttributes.DEFAULT; }
+	@Override public ExpirationAttributes getEntryIdleTimeout() { return ExpirationAttributes.DEFAULT; }
+	@Override public ExpirationAttributes getRegionTimeToLive() { return ExpirationAttributes.DEFAULT; }
+	@Override public ExpirationAttributes getRegionIdleTimeout() { return ExpirationAttributes.DEFAULT; }
+	@Override public DriverCustomExpiry<K, V> getCustomEntryTimeToLive() { return null; }
+	@Override public DriverCustomExpiry<K, V> getCustomEntryIdleTimeout() { return null; }
+	@Override public EvictionAttributes getEvictionAttributes() { return EvictionAttributes.of(EvictionAlgorithm.NONE, EvictionAction.NONE, 0, null); }
+	@Override public Compressor getCompressor() { return null; }
 	@Override public List<DriverCacheListener<K, V>> getCacheListeners() { return region.getCacheListeners(); }
 	@Override public DriverCacheLoader<K, V> getCacheLoader() { return region.getCacheLoader(); }
 	@Override public DriverCacheWriter<K, V> getCacheWriter() { return region.getCacheWriter(); }

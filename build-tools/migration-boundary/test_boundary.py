@@ -48,6 +48,14 @@ class SourceRules(unittest.TestCase):
             "Constants": 'class Constants { static final int COUNT = 2; static final String LABEL = "ok"; }',
             "Immutable": "record Immutable(int value) { static Immutable of(int value) { return new Immutable(value); } }",
             "MutableRecord": "record MutableRecord(java.util.List<String> values) { static final MutableRecord SHARED = new MutableRecord(new ArrayList<>()); }",
+            "ValueClass": "final class ValueClass { static final ValueClass DEFAULT = new ValueClass(1); final int n; ValueClass(int n) { this.n = n; } static ValueClass of(int n) { return new ValueClass(n); } }",
+            "Sizer": "interface Sizer { Sizer ONE = new Strategy(); Sizer DEFAULT = ONE; final class Strategy implements Sizer { final String name = \"one\"; } }",
+            "SizerHolder": "final class SizerHolder { final int max; final Sizer sizer; SizerHolder(int max, Sizer sizer) { this.max = max; this.sizer = sizer; } static SizerHolder of(Sizer sizer) { return new SizerHolder(1, sizer); } }",
+            "MutableValueClass": "final class MutableValueClass { static final MutableValueClass DEFAULT = new MutableValueClass(); int n; static MutableValueClass of() { return new MutableValueClass(); } }",
+            "OpenValueClass": "class OpenValueClass { final int n = 1; static OpenValueClass of() { return new OpenValueClass(); } }",
+            "ListValueClass": "final class ListValueClass { final java.util.List<String> values = null; static ListValueClass of() { return new ListValueClass(); } }",
+            "MutableCallbacks": "interface MutableCallbacks { MutableCallbacks SHARED = new Impl(); final class Impl implements MutableCallbacks { int calls; } }",
+            "AnonymousCallbacks": "interface AnonymousCallbacks { AnonymousCallbacks SHARED = new AnonymousCallbacks() { int calls; }; }",
             "Injection": "class Injection { @Autowired GemFireDriverManager driver; }",
             "MigratedInjection": "import com.vmware.gemfire.driver.core.GemFireDriverManager; class MigratedInjection { @Autowired GemFireDriverManager driver; }",
             "PlainSetter": "class PlainSetter { void setDriver(GemFireDriver driver) {} }",
@@ -119,6 +127,18 @@ class SourceRules(unittest.TestCase):
     def test_immutable_constants_and_value_factory(self):
         self.assertFalse(self.rules("Constants"))
         self.assertFalse(self.rules("Immutable"))
+
+    def test_final_value_classes_and_callback_interface_constants(self):
+        for name in ["ValueClass", "Sizer", "SizerHolder"]:
+            with self.subTest(name=name):
+                self.assertFalse(self.rules(name))
+
+    def test_mutable_or_open_value_shapes_still_rejected(self):
+        self.assertEqual({"static-state", "static-service"}, self.rules("MutableValueClass"))
+        self.assertEqual({"static-service"}, self.rules("OpenValueClass"))
+        self.assertEqual({"static-service"}, self.rules("ListValueClass"))
+        self.assertEqual({"static-state"}, self.rules("MutableCallbacks"))
+        self.assertEqual({"static-state"}, self.rules("AnonymousCallbacks"))
 
     def test_native_driver_internals_allowed_spi_core_edge_rejected(self):
         self.assertFalse([r for r in self.rows if r["path"].startswith(gate.PREFIX + "10.4")])

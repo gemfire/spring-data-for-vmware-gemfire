@@ -7,7 +7,10 @@ package com.vmware.gemfire.driver.gemfire104;
 import java.util.List;
 import java.util.function.Supplier;
 import com.vmware.gemfire.driver.spi.*;
+import com.vmware.gemfire.driver.spi.config.Compressor;
 import com.vmware.gemfire.driver.spi.config.DataPolicy;
+import com.vmware.gemfire.driver.spi.config.EvictionAttributes;
+import com.vmware.gemfire.driver.spi.config.ExpirationAttributes;
 import com.vmware.gemfire.driver.spi.config.InterestPolicy;
 import com.vmware.gemfire.driver.spi.config.Scope;
 import com.vmware.gemfire.driver.spi.config.SubscriptionAttributes;
@@ -16,6 +19,7 @@ final class GemFireRegionAttributes<K, V> implements DriverRegionAttributes<K, V
 	private final GemFireRegion<K, V> region;
 	private final org.apache.geode.cache.RegionAttributes<K, V> attributes;
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
+	private final GemFireExpirationConversions conversions = new GemFireExpirationConversions();
 	GemFireRegionAttributes(GemFireRegion<K, V> region) { this.region = region; this.attributes = region.region.getAttributes(); }
 	@Override public DataPolicy getDataPolicy() { return invoke("getDataPolicy", () -> DataPolicy.valueOf(attributes.getDataPolicy().toString())); }
 	@Override public Scope getScope() { return invoke("getScope", () -> Scope.valueOf(attributes.getScope().toString())); }
@@ -41,6 +45,14 @@ final class GemFireRegionAttributes<K, V> implements DriverRegionAttributes<K, V
 	@Override public List<DriverCacheListener<K, V>> getCacheListeners() { return region.getCacheListeners(); }
 	@Override public DriverCacheLoader<K, V> getCacheLoader() { return region.getCacheLoader(); }
 	@Override public DriverCacheWriter<K, V> getCacheWriter() { return region.getCacheWriter(); }
+	@Override public ExpirationAttributes getEntryTimeToLive() { return invoke("getEntryTimeToLive", () -> conversions.fromNative(attributes.getEntryTimeToLive())); }
+	@Override public ExpirationAttributes getEntryIdleTimeout() { return invoke("getEntryIdleTimeout", () -> conversions.fromNative(attributes.getEntryIdleTimeout())); }
+	@Override public ExpirationAttributes getRegionTimeToLive() { return invoke("getRegionTimeToLive", () -> conversions.fromNative(attributes.getRegionTimeToLive())); }
+	@Override public ExpirationAttributes getRegionIdleTimeout() { return invoke("getRegionIdleTimeout", () -> conversions.fromNative(attributes.getRegionIdleTimeout())); }
+	@Override public DriverCustomExpiry<K, V> getCustomEntryTimeToLive() { return invoke("getCustomEntryTimeToLive", () -> conversions.fromNative(attributes.getCustomEntryTimeToLive())); }
+	@Override public DriverCustomExpiry<K, V> getCustomEntryIdleTimeout() { return invoke("getCustomEntryIdleTimeout", () -> conversions.fromNative(attributes.getCustomEntryIdleTimeout())); }
+	@Override public EvictionAttributes getEvictionAttributes() { return invoke("getEvictionAttributes", () -> conversions.fromNative(attributes.getEvictionAttributes())); }
+	@Override public Compressor getCompressor() { return invoke("getCompressor", () -> conversions.fromNative(attributes.getCompressor())); }
 	private <T> T invoke(String operation, Supplier<T> action) {
 		try { return action.get(); }
 		catch (RuntimeException failure) { throw exceptions.translate("RegionAttributes." + operation, failure); }

@@ -7,11 +7,14 @@ package com.vmware.gemfire.driver.gemfire104;
 import java.util.List;
 import java.util.function.Supplier;
 import com.vmware.gemfire.driver.spi.*;
+import com.vmware.gemfire.driver.spi.config.ExpirationAttributes;
+import com.vmware.gemfire.driver.spi.config.TimeToLiveResetPolicy;
 
 final class GemFireRegionAttributesMutator<K, V> implements DriverRegionAttributesMutator<K, V> {
 	private final GemFireRegion<K, V> region;
 	private final org.apache.geode.cache.AttributesMutator<K, V> mutator;
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
+	private final GemFireExpirationConversions conversions = new GemFireExpirationConversions();
 	GemFireRegionAttributesMutator(GemFireRegion<K, V> region) { this.region = region; this.mutator = region.region.getAttributesMutator(); }
 	@Override public DriverRegion<K, V> getRegion() { return invoke("getRegion", () -> new GemFireRegion<>(mutator.getRegion())); }
 	@Override public boolean getCloningEnabled() { return invoke("getCloningEnabled", mutator::getCloningEnabled); }
@@ -42,6 +45,31 @@ final class GemFireRegionAttributesMutator<K, V> implements DriverRegionAttribut
 			if (previous instanceof GemFireCacheWriter<K, V> adapter) return adapter.delegate;
 			throw UnsupportedFeatureException.notIntroduced("Region.nativeCacheWriter");
 		});
+	}
+	@Override public ExpirationAttributes setEntryTimeToLive(ExpirationAttributes attributes, TimeToLiveResetPolicy resetPolicy) {
+		return invoke("setEntryTimeToLive", () -> conversions.fromNative(mutator.setEntryTimeToLive(conversions.toNative(required(attributes)), conversions.toNative(required(resetPolicy)))));
+	}
+	@Override public ExpirationAttributes setEntryIdleTimeout(ExpirationAttributes attributes) {
+		return invoke("setEntryIdleTimeout", () -> conversions.fromNative(mutator.setEntryIdleTimeout(conversions.toNative(required(attributes)))));
+	}
+	@Override public ExpirationAttributes setRegionTimeToLive(ExpirationAttributes attributes) {
+		return invoke("setRegionTimeToLive", () -> conversions.fromNative(mutator.setRegionTimeToLive(conversions.toNative(required(attributes)))));
+	}
+	@Override public ExpirationAttributes setRegionIdleTimeout(ExpirationAttributes attributes) {
+		return invoke("setRegionIdleTimeout", () -> conversions.fromNative(mutator.setRegionIdleTimeout(conversions.toNative(required(attributes)))));
+	}
+	@Override public DriverCustomExpiry<K, V> setCustomEntryTimeToLive(DriverCustomExpiry<K, V> custom) {
+		return invoke("setCustomEntryTimeToLive", () -> conversions.fromNative(mutator.setCustomEntryTimeToLive(conversions.toNative(custom))));
+	}
+	@Override public DriverCustomExpiry<K, V> setCustomEntryIdleTimeout(DriverCustomExpiry<K, V> custom) {
+		return invoke("setCustomEntryIdleTimeout", () -> conversions.fromNative(mutator.setCustomEntryIdleTimeout(conversions.toNative(custom))));
+	}
+	@Override public void setEvictionMaximum(int maximum) {
+		invoke("setEvictionMaximum", () -> { mutator.getEvictionAttributesMutator().setMaximum(maximum); return null; });
+	}
+	private static <T> T required(T value) {
+		if (value == null) throw new IllegalArgumentException("value must not be null");
+		return value;
 	}
 	private <T> T invoke(String operation, Supplier<T> action) {
 		try { return action.get(); }

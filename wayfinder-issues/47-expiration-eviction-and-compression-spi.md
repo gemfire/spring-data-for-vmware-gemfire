@@ -27,3 +27,13 @@ The [fixed scope audit](../wayfinder-impl/investigations/client-expiry-eviction-
 Implement typed creation/readback/mutation with proxy/local-storage restrictions, explicit statistics/cloning choices, old-value/callback identity, TTL reset/rescheduling and null/default behavior. Preserve the source-backed constructor-versus-binary hydration distinction, inherited value members, LIFO controller acceptance, action-based no-eviction observation, live maximum update ordering, sizer strategies and Snappy construction/failure behavior. Coordinate task 49 conversion and task 55 codecs. The evidence ledger contains the exact native paths and value quirks; do not replace them with generic configuration properties or native types.
 
 For custom expiry, distinguish the inherited close contract from observed lifecycle: replacement returns the old callback without closing it, and inspected shutdown paths omit it. Make ownership explicit and test actual adapter behavior; do not assume automatic closure from the base callback documentation. Shared/native/mock tests must cover retained client effects and explicit unsupported mock operations. Scope closure does not provide implementation or compatibility acceptance.
+
+## Answer
+
+Implemented in the SPI, 10.4 provider and mock; details and per-row dispositions are in the [scope ledger](../wayfinder-impl/investigations/client-expiry-eviction-and-compression-scope.md#implementation-status--task-47).
+
+- Coverage (162 required-client rows): 143 implemented, 16 partial (intentional non-equivalents), 3 deferred to [task 55](55-binary-serialization-and-registration.md) (`ExpirationAttributes` binary methods).
+- Mock rejects every non-disabled setting with `UnsupportedFeatureException`.
+- The migration-boundary checker was extended to accept final value classes and callback-interface constants, with fixtures; nothing was baselined.
+- Task 30 still owns migrating the Spring factories, parsers and annotations; task 49 owns eviction configuration conversion.
+- Evidence tests are written but not yet run: see the commands handed over with this change.

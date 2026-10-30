@@ -51,6 +51,7 @@ dependencies {
   // GemFire's provider applies native log levels and system/security file destinations.
   // Keep it in the driver runtime so consumers and integration tests use the same backend.
   runtimeOnly("com.vmware.gemfire:gemfire-log4j") { version { strictly(resolvedNativeVersion) } }
+  runtimeOnly(libs.snappy) // Native SnappyCompressor needs org.iq80.snappy, which gemfire-core declares optional.
   add(integrationTest.implementationConfigurationName, project(":spring-data-gemfire-driver-contract-tests"))
   add(integrationTest.implementationConfigurationName, libs.mockito)
   add(integrationTest.runtimeOnlyConfigurationName, libs.junit.jupiter.engine)

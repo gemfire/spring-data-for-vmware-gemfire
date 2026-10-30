@@ -31846,14 +31846,6 @@
     },
     {
       "rule": "static-state",
-      "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/NoOpBeanFactoryPostProcessor.java",
-      "line": 23,
-      "detail": "NoOpBeanFactoryPostProcessor :: public static final NoOpBeanFactoryPostProcessor INSTANCE = new NoOpBeanFactoryPostProcessor()",
-      "count": 1,
-      "owner": "wayfinder-issues/36-residual-native-utilities-and-support-cleanup.md"
-    },
-    {
-      "rule": "static-state",
       "path": "spring-data-vmware-gemfire/src/main/java/org/springframework/data/gemfire/support/SpringContextBootstrappingInitializer.java",
       "line": 66,
       "detail": "SpringContextBootstrappingInitializer :: private static final ApplicationEventMulticaster applicationEventNotifier = new SimpleApplicationEventMulticaster()",

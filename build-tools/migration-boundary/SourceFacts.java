@@ -33,21 +33,40 @@ public class SourceFacts {
             if (diagnostics.getDiagnostics().stream().anyMatch(d -> d.getKind() == Diagnostic.Kind.ERROR)) {
                 throw new IllegalStateException("Cannot parse source: " + diagnostics.getDiagnostics());
             }
-            // Discover immutable records across units rather than trusting a class's name.
+            // Discover immutable records, enums and final value classes across units rather than trusting a class's name.
             Set<String> immutableValues = new HashSet<>();
+            Set<String> interfaces = new HashSet<>();
+            for (var unit : units) {
+                new TreeScanner<Void, Void>() {
+                    public Void visitClass(ClassTree node, Void unused) {
+                        if (node.getKind() == Tree.Kind.INTERFACE) interfaces.add(unit.getPackageName() + "." + node.getSimpleName());
+                        return super.visitClass(node, unused);
+                    }
+                }.scan(unit, null);
+            }
             boolean changed;
             do {
                 int previous = immutableValues.size();
                 for (var unit : units) {
-                    var probe = new Visitor(root, unit, trees, immutableValues);
-                    for (var declaration : unit.getTypeDecls()) {
-                        if (declaration instanceof ClassTree type && type.getKind() == Tree.Kind.RECORD && probe.immutableFields(type))
-                            immutableValues.add(unit.getPackageName() + "." + type.getSimpleName());
-                    }
+                    var probe = new Visitor(root, unit, trees, immutableValues, interfaces);
+                    new TreeScanner<Void, Void>() {
+                        public Void visitClass(ClassTree type, Void unused) {
+                            String name = unit.getPackageName() + "." + type.getSimpleName();
+                            boolean value = switch (type.getKind()) {
+                                case RECORD -> probe.immutableFields(type, false);
+                                case ENUM -> probe.immutableEnum(type);
+                                // A final class with final immutable fields is a value; a held callback interface is allowed.
+                                case CLASS -> type.getModifiers().getFlags().contains(Modifier.FINAL) && probe.immutableFields(type, true);
+                                default -> false;
+                            };
+                            if (value) immutableValues.add(name);
+                            return super.visitClass(type, unused);
+                        }
+                    }.scan(unit, null);
                 }
                 changed = immutableValues.size() != previous;
             } while (changed);
-            for (var unit : units) new Visitor(root, unit, trees, immutableValues).scan(unit, null);
+            for (var unit : units) new Visitor(root, unit, trees, immutableValues, interfaces).scan(unit, null);
         }
     }
 
@@ -64,16 +83,18 @@ public class SourceFacts {
         private final Set<String> enums = new HashSet<>();
         private final Set<String> immutableRecords = new HashSet<>();
         private final Set<String> immutableValues;
+        private final Set<String> interfaces;
         private final String module;
         private final boolean production;
         private final boolean driverModule;
         private final boolean nativeAllowed;
         private boolean wildcardNative;
 
-        Visitor(Path root, CompilationUnitTree unit, Trees trees, Set<String> immutableValues) {
+        Visitor(Path root, CompilationUnitTree unit, Trees trees, Set<String> immutableValues, Set<String> interfaces) {
             this.unit = unit;
             this.trees = trees;
             this.immutableValues = immutableValues;
+            this.interfaces = interfaces;
             this.path = root.relativize(Path.of(unit.getSourceFile().toUri())).toString();
             this.module = path.split("/")[0];
             this.production = path.contains("/src/main/");
@@ -87,7 +108,7 @@ public class SourceFacts {
             new TreeScanner<Void, Void>() {
                 public Void visitClass(ClassTree node, Void unused) {
                     if (node.getKind() == Tree.Kind.ENUM && immutableEnum(node)) enums.add(node.getSimpleName().toString());
-                    if (node.getKind() == Tree.Kind.RECORD && immutableFields(node)) immutableRecords.add(node.getSimpleName().toString());
+                    if (node.getKind() == Tree.Kind.RECORD && immutableFields(node, false)) immutableRecords.add(node.getSimpleName().toString());
                     return super.visitClass(node, unused);
                 }
             }.scan(unit, null);
@@ -116,13 +137,20 @@ public class SourceFacts {
                 || immutableValues.contains(fq) || immutableValues.contains(unit.getPackageName() + "." + fq);
         }
 
-        private boolean immutableFields(ClassTree node) {
-            return node.getMembers().stream().filter(m -> m instanceof VariableTree)
-                .map(m -> (VariableTree) m).filter(v -> !v.getModifiers().getFlags().contains(Modifier.STATIC))
-                .allMatch(v -> v.getModifiers().getFlags().contains(Modifier.FINAL) && immutableType(v.getType().toString()));
+        private boolean callbackInterface(String type) {
+            if (type.contains("[") || type.contains("<")) return false;
+            String fq = resolved(type);
+            return interfaces.contains(fq) || interfaces.contains(unit.getPackageName() + "." + fq);
         }
 
-        private boolean immutableEnum(ClassTree node) {
+        boolean immutableFields(ClassTree node, boolean allowCallbacks) {
+            return node.getMembers().stream().filter(m -> m instanceof VariableTree)
+                .map(m -> (VariableTree) m).filter(v -> !v.getModifiers().getFlags().contains(Modifier.STATIC))
+                .allMatch(v -> v.getModifiers().getFlags().contains(Modifier.FINAL)
+                    && (immutableType(v.getType().toString()) || allowCallbacks && callbackInterface(v.getType().toString())));
+        }
+
+        boolean immutableEnum(ClassTree node) {
             Set<String> constants = new HashSet<>();
             for (var member : node.getMembers()) {
                 if (member instanceof VariableTree v && v.getInitializer() instanceof NewClassTree
@@ -137,6 +165,18 @@ public class SourceFacts {
                         && v.getType().toString().equals(node.getSimpleName().toString())
                         && v.getInitializer() instanceof IdentifierTree alias
                         && constants.contains(alias.getName().toString())));
+        }
+
+        // A constant typed as a callback interface is a value only when built from an immutable value class, or aliasing such a sibling.
+        private boolean immutableCallbackConstant(ClassTree owner, VariableTree node) {
+            if (!callbackInterface(node.getType().toString())) return false;
+            if (node.getInitializer() instanceof NewClassTree created)
+                return created.getClassBody() == null && immutableType(created.getIdentifier().toString());
+            if (node.getInitializer() instanceof IdentifierTree alias)
+                return owner.getMembers().stream().anyMatch(m -> m instanceof VariableTree v && v != node
+                    && v.getName().contentEquals(alias.getName()) && v.getInitializer() instanceof NewClassTree
+                    && immutableCallbackConstant(owner, v));
+            return false;
         }
 
         private String context(Tree node) {
@@ -227,7 +267,7 @@ public class SourceFacts {
                 && node.getType().toString().equals(owner.getSimpleName().toString());
             boolean implicitStatic = owner.getKind() == Tree.Kind.INTERFACE || owner.getKind() == Tree.Kind.ANNOTATION_TYPE;
             if (!enumConstant && (flags.contains(Modifier.STATIC) || implicitStatic)) {
-                if (!(flags.contains(Modifier.FINAL) || implicitStatic) || !immutableType(node.getType().toString())) {
+                if (!(flags.contains(Modifier.FINAL) || implicitStatic) || !immutableType(node.getType().toString()) && !immutableCallbackConstant(owner, node)) {
                     emit("static-state", node, owner.getSimpleName() + " :: " + node);
                 }
             }
@@ -262,7 +302,7 @@ public class SourceFacts {
                 // Factory allowance concerns immutable owned state; static fields remain subject to the stricter type rule.
                 boolean valueFactory = (owner.getKind() == Tree.Kind.RECORD || owner.getKind() == Tree.Kind.ENUM && immutableEnum(owner)
                     || owner.getModifiers().getFlags().contains(Modifier.FINAL))
-                    && immutableFields(owner) && !owner.getMembers().stream().anyMatch(m -> m instanceof VariableTree v
+                    && immutableFields(owner, owner.getKind() == Tree.Kind.CLASS) && !owner.getMembers().stream().anyMatch(m -> m instanceof VariableTree v
                         && v.getModifiers().getFlags().contains(Modifier.STATIC) && !immutableType(v.getType().toString()));
                 boolean driverService = owner.getSimpleName().toString().endsWith("DriverManager") ||
                     owner.getImplementsClause().stream().anyMatch(t -> simple(t.toString()).matches("GemFireDriver|DriverConnection|DriverRegion|DriverPool"));

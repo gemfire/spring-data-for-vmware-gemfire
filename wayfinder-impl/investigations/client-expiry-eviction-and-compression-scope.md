@@ -56,6 +56,18 @@ Deprecated LIFO_ENTRY/LIFO_MEMORY and their factories are retained: `internal/ca
 
 Task 47 implements these 154 missing obligations; task 30 migrates their factories, values, converters, XML and annotations. Task 55 coordinates binary values, task 49 eviction configuration conversion and task 27 client disk/resource effects. These are collaborations, not additional IDs or owner transfers. The assignment ledger and native declarations stay fixed; no implementation, SPI/native/mock/test mapping or status is upgraded. No exclusions or retirement are needed in this family. Generated source/resource and existing-SPI scope dispositions follow linked requirements. Tasks 59/64 stay open; task 69 is next with 101 fixed pool/durable IDs.
 
+## Implementation status — task 47
+
+The SPI (`ExpirationAttributes`, `EvictionAttributes`, `ObjectSizer`, `Compressor`/`SnappyCompressor`, `DriverCustomExpiry`, region configuration/readback/mutator members), the 10.4 adapter and the mock are implemented. Evidence tests (written; run by the owner): `ExpirationEvictionValueTests` (SPI), `NativeExpirationEvictionCompressionTests` and `NativeRegionConfigurationTests` (10.4 integration), `MockExpirationEvictionCompressionTests` (mock).
+
+Count reconciliation: the coverage table holds **162** required-client rows for this family against the 154 exact IDs above; the extra 8 are inherited or overloaded members (for example `EvictionAction`/`EvictionAlgorithm` enum-syntax members and `SnappyCompressor` object methods) that coverage lists separately. Dispositions: **143 implemented, 16 partial, 3 deferred**.
+
+- Partial (intentional non-equivalents): `EvictionAction`/`EvictionAlgorithm` `clone`, `getEnumValueTable`, `getOffset`, `getStringTable`, `readResolve`, `hashCode` (native `EnumSyntax` internals are not replicated); `EvictionAttributes.convertToConfigEvictionAttributes` and `<init>` (task 49 owns configuration conversion; construction goes through the factories); `SnappyCompressor.compress`/`decompress` (marker type; the provider compresses and the methods throw `UnsupportedOperationException`).
+- Deferred to task 55 ([binary serialization](../../wayfinder-issues/55-binary-serialization-and-registration.md)): `ExpirationAttributes.createFromData`, `fromData`, `toData`.
+- Mock: accepts only disabled values; non-zero timeouts, custom expiry, real eviction and compressors throw `UnsupportedFeatureException`.
+- Preserved behavior: mutators return the previous value; a null custom expiry clears the callback; no automatic close of custom expiry; a non-`LAST_MODIFIED` reset policy on the factory path throws `UnsupportedFeatureException.notIntroduced("ClientRegion.entryTimeToLiveResetPolicy")`.
+- Boundary checker: to keep the native-shaped API (`EvictionAttributes.createLRU*`, `ExpirationAttributes.DEFAULT`, `ObjectSizer.DEFAULT`) without baselining, `SourceFacts` now accepts final value classes and callback-interface constants (see the boundary README). Fixtures added; the one baseline entry this resolved (`NoOpBeanFactoryPostProcessor.INSTANCE`) was pruned.
+
 ## Exact ID ledger
 
 All rows inherit the behavior/evidence in the named batch. Implementation / consumer owner is **47 / 30** throughout.

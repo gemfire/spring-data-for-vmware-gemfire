@@ -4,7 +4,10 @@
  */
 package com.vmware.gemfire.driver.spi;
 
+import com.vmware.gemfire.driver.spi.config.Compressor;
 import com.vmware.gemfire.driver.spi.config.DataPolicy;
+import com.vmware.gemfire.driver.spi.config.EvictionAttributes;
+import com.vmware.gemfire.driver.spi.config.ExpirationAttributes;
 import com.vmware.gemfire.driver.spi.config.Scope;
 import com.vmware.gemfire.driver.spi.config.SubscriptionAttributes;
 import java.util.List;
@@ -31,4 +34,14 @@ public interface DriverRegionAttributes<K, V> {
 	List<DriverCacheListener<K, V>> getCacheListeners();
 	DriverCacheLoader<K, V> getCacheLoader();
 	DriverCacheWriter<K, V> getCacheWriter();
+	ExpirationAttributes getEntryTimeToLive();
+	ExpirationAttributes getEntryIdleTimeout();
+	ExpirationAttributes getRegionTimeToLive();
+	ExpirationAttributes getRegionIdleTimeout();
+	/** Null when none is set. */
+	DriverCustomExpiry<K, V> getCustomEntryTimeToLive();
+	DriverCustomExpiry<K, V> getCustomEntryIdleTimeout();
+	EvictionAttributes getEvictionAttributes();
+	/** Null when the region is not compressed. */
+	Compressor getCompressor();
 }

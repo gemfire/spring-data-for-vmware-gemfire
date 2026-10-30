@@ -28,6 +28,7 @@ class NativeRegionConfigurationTests {
 			for (var method : DriverRegionAttributes.class.getMethods()) {
 				if (method.getName().startsWith("getCache")) continue; // Shared suite verifies callback identity/lifecycle.
 					if (method.getName().equals("getSubscriptionAttributes")) continue; // Typed value; asserted below.
+				if (NativeExpirationEvictionCompressionTests.typedGetters().contains(method.getName())) continue; // Typed values; asserted there.
 				Object expected = org.apache.geode.cache.RegionAttributes.class.getMethod(method.getName()).invoke(nativeAttributes);
 				Object actual = method.invoke(attributes);
 				if (actual instanceof Enum<?>) expected = expected.toString();

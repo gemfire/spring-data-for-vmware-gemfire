@@ -4,6 +4,10 @@
  */
 package com.vmware.gemfire.driver.spi;
 
+import com.vmware.gemfire.driver.spi.config.Compressor;
+import com.vmware.gemfire.driver.spi.config.EvictionAttributes;
+import com.vmware.gemfire.driver.spi.config.ExpirationAttributes;
+import com.vmware.gemfire.driver.spi.config.TimeToLiveResetPolicy;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -29,6 +33,15 @@ public final class RegionConfiguration<K, V> {
 	private final Option<String> diskStoreName;
 	private final Option<Boolean> diskSynchronous;
 	private final Option<RegionCallbacks<K, V>> callbacks;
+	private final Option<ExpirationAttributes> entryTimeToLive;
+	private final Option<TimeToLiveResetPolicy> entryTimeToLiveResetPolicy;
+	private final Option<ExpirationAttributes> entryIdleTimeout;
+	private final Option<ExpirationAttributes> regionTimeToLive;
+	private final Option<ExpirationAttributes> regionIdleTimeout;
+	private final Option<DriverCustomExpiry<K, V>> customEntryTimeToLive;
+	private final Option<DriverCustomExpiry<K, V>> customEntryIdleTimeout;
+	private final Option<EvictionAttributes> evictionAttributes;
+	private final Option<Compressor> compressor;
 
 	private RegionConfiguration(Builder<K, V> builder) {
 		this.serverRegionName = builder.serverRegionName;
@@ -44,6 +57,15 @@ public final class RegionConfiguration<K, V> {
 		this.diskStoreName = builder.diskStoreName;
 		this.diskSynchronous = builder.diskSynchronous;
 		this.callbacks = builder.callbacks;
+		this.entryTimeToLive = builder.entryTimeToLive;
+		this.entryTimeToLiveResetPolicy = builder.entryTimeToLiveResetPolicy;
+		this.entryIdleTimeout = builder.entryIdleTimeout;
+		this.regionTimeToLive = builder.regionTimeToLive;
+		this.regionIdleTimeout = builder.regionIdleTimeout;
+		this.customEntryTimeToLive = builder.customEntryTimeToLive;
+		this.customEntryIdleTimeout = builder.customEntryIdleTimeout;
+		this.evictionAttributes = builder.evictionAttributes;
+		this.compressor = builder.compressor;
 	}
 
 	public static <K, V> Builder<K, V> builder() { return new Builder<>(); }
@@ -60,6 +82,15 @@ public final class RegionConfiguration<K, V> {
 	public Option<String> diskStoreName() { return diskStoreName; }
 	public Option<Boolean> diskSynchronous() { return diskSynchronous; }
 	public Option<RegionCallbacks<K, V>> callbacks() { return callbacks; }
+	public Option<ExpirationAttributes> entryTimeToLive() { return entryTimeToLive; }
+	public Option<TimeToLiveResetPolicy> entryTimeToLiveResetPolicy() { return entryTimeToLiveResetPolicy; }
+	public Option<ExpirationAttributes> entryIdleTimeout() { return entryIdleTimeout; }
+	public Option<ExpirationAttributes> regionTimeToLive() { return regionTimeToLive; }
+	public Option<ExpirationAttributes> regionIdleTimeout() { return regionIdleTimeout; }
+	public Option<DriverCustomExpiry<K, V>> customEntryTimeToLive() { return customEntryTimeToLive; }
+	public Option<DriverCustomExpiry<K, V>> customEntryIdleTimeout() { return customEntryIdleTimeout; }
+	public Option<EvictionAttributes> evictionAttributes() { return evictionAttributes; }
+	public Option<Compressor> compressor() { return compressor; }
 
 	public static final class Builder<K, V> {
 		private Option<String> serverRegionName = new Option<>(false, null);
@@ -75,6 +106,15 @@ public final class RegionConfiguration<K, V> {
 		private Option<String> diskStoreName = new Option<>(false, null);
 		private Option<Boolean> diskSynchronous = new Option<>(false, null);
 		private Option<RegionCallbacks<K, V>> callbacks = new Option<>(false, null);
+		private Option<ExpirationAttributes> entryTimeToLive = new Option<>(false, null);
+		private Option<TimeToLiveResetPolicy> entryTimeToLiveResetPolicy = new Option<>(false, null);
+		private Option<ExpirationAttributes> entryIdleTimeout = new Option<>(false, null);
+		private Option<ExpirationAttributes> regionTimeToLive = new Option<>(false, null);
+		private Option<ExpirationAttributes> regionIdleTimeout = new Option<>(false, null);
+		private Option<DriverCustomExpiry<K, V>> customEntryTimeToLive = new Option<>(false, null);
+		private Option<DriverCustomExpiry<K, V>> customEntryIdleTimeout = new Option<>(false, null);
+		private Option<EvictionAttributes> evictionAttributes = new Option<>(false, null);
+		private Option<Compressor> compressor = new Option<>(false, null);
 		private Builder() { }
 		public Builder<K, V> serverRegionName(String value) { this.serverRegionName = new Option<>(true, value); return this; }
 		public Builder<K, V> keyConstraint(Class<K> value) { this.keyConstraint = new Option<>(true, value); return this; }
@@ -89,6 +129,15 @@ public final class RegionConfiguration<K, V> {
 		public Builder<K, V> diskStoreName(String value) { this.diskStoreName = new Option<>(true, value); return this; }
 		public Builder<K, V> diskSynchronous(Boolean value) { this.diskSynchronous = new Option<>(true, Objects.requireNonNull(value, "diskSynchronous")); return this; }
 		public Builder<K, V> callbacks(RegionCallbacks<K, V> value) { this.callbacks = new Option<>(true, Objects.requireNonNull(value, "callbacks")); return this; }
+		public Builder<K, V> entryTimeToLive(ExpirationAttributes value) { this.entryTimeToLive = new Option<>(true, Objects.requireNonNull(value, "entryTimeToLive")); return this; }
+		public Builder<K, V> entryTimeToLiveResetPolicy(TimeToLiveResetPolicy value) { this.entryTimeToLiveResetPolicy = new Option<>(true, Objects.requireNonNull(value, "entryTimeToLiveResetPolicy")); return this; }
+		public Builder<K, V> entryIdleTimeout(ExpirationAttributes value) { this.entryIdleTimeout = new Option<>(true, Objects.requireNonNull(value, "entryIdleTimeout")); return this; }
+		public Builder<K, V> regionTimeToLive(ExpirationAttributes value) { this.regionTimeToLive = new Option<>(true, Objects.requireNonNull(value, "regionTimeToLive")); return this; }
+		public Builder<K, V> regionIdleTimeout(ExpirationAttributes value) { this.regionIdleTimeout = new Option<>(true, Objects.requireNonNull(value, "regionIdleTimeout")); return this; }
+		public Builder<K, V> customEntryTimeToLive(DriverCustomExpiry<K, V> value) { this.customEntryTimeToLive = new Option<>(true, value); return this; }
+		public Builder<K, V> customEntryIdleTimeout(DriverCustomExpiry<K, V> value) { this.customEntryIdleTimeout = new Option<>(true, value); return this; }
+		public Builder<K, V> evictionAttributes(EvictionAttributes value) { this.evictionAttributes = new Option<>(true, Objects.requireNonNull(value, "evictionAttributes")); return this; }
+		public Builder<K, V> compressor(Compressor value) { this.compressor = new Option<>(true, value); return this; }
 		public RegionConfiguration<K, V> build() { return new RegionConfiguration<>(this); }
 	}
 }
