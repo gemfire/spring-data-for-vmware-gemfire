@@ -76,7 +76,8 @@ final class GemFireEventMapper {
 		@Override public DriverDurableClientAttributes getDurableClientAttributes() {
 			return read("Member.getDurableClientAttributes", () -> {
 				var attributes = member.getDurableClientAttributes();
-				return attributes == null ? null : new DriverDurableClientAttributes(attributes.getId(), attributes.getTimeout());
+				return attributes == null ? null : new DriverDurableClientAttributes(attributes.getId(), attributes.getTimeout())
+					.withPoolName(attributes.getPoolName());
 			});
 		}
 		@Override public int compareTo(DriverMember other) {

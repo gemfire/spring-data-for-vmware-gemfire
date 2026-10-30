@@ -29,9 +29,21 @@ final class GemFireConnection implements DriverConnection {
 	private final GemFireExceptionMapper exceptions = new GemFireExceptionMapper();
 
 	private final GemFireCache cache;
+	private final GemFireClientRuntime runtime;
+	private final GemFireCancellation cancellation;
 
 	GemFireConnection(GemFireCache cache) {
 		this.cache = cache;
+		this.runtime = new GemFireClientRuntime(cache.getDistributedSystem());
+		this.cancellation = new GemFireCancellation(cache.getCancelCriterion());
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverClientRuntime getRuntime() { return runtime; }
+	@Override public com.vmware.gemfire.driver.spi.DriverCancellation getCancellation() { return cancellation; }
+	@Override public Set<PoolConfiguration.Endpoint> getCurrentServers() {
+		return invoke("getCurrentServers", () -> ((ClientCache) cache).getCurrentServers().stream()
+			.map(address -> new PoolConfiguration.Endpoint(address.getHostString(), address.getPort()))
+			.collect(java.util.stream.Collectors.toUnmodifiableSet()));
 	}
 
 	org.apache.geode.cache.GemFireCache cacheForTransactionCallback() { return cache; }

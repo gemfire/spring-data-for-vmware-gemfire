@@ -17,6 +17,27 @@ public interface GemFireDriver {
 	String runtimeGemFireVersion();
 
 	/**
+	 * Discovers the regular property file without connecting or reading its contents. Native
+	 * drivers consult their current process configuration and native file/classpath search rules
+	 * on each call. This is discovery, not provenance of an existing connection's configuration;
+	 * concurrent process-property changes are not an atomic snapshot. Diagnostics are redacted,
+	 * but explicitly accessed filenames/URLs may contain sensitive information.
+	 * The mock returns {@code gemfire.properties} with no location and performs no ambient lookup.
+	 */
+	default DriverPropertyFile resolvePropertiesFile() {
+		throw UnsupportedFeatureException.notIntroduced("Driver.resolvePropertiesFile");
+	}
+
+	/**
+	 * Discovers the security property file under the same rules as {@link #resolvePropertiesFile()}.
+	 * The mock returns {@code gfsecurity.properties} with no location. Discovery itself does not
+	 * load or apply settings; native connection creation retains its own property-loading rules.
+	 */
+	default DriverPropertyFile resolveSecurityPropertiesFile() {
+		throw UnsupportedFeatureException.notIntroduced("Driver.resolveSecurityPropertiesFile");
+	}
+
+	/**
 	 * Establishes the runtime connection this driver mediates. Thread-safety is whatever the
 	 * underlying GemFire client/cache naturally provides — the SPI adds no additional
 	 * guarantee (§5.6).

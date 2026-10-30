@@ -15,6 +15,18 @@ class GemFireDriverExceptionTranslatorTests {
 	private final GemFireDriverExceptionTranslator translator = new GemFireDriverExceptionTranslator();
 
 	@Test
+	void systemFailuresRetainTheirClassificationWithoutNativeTypes() {
+		var root = new IllegalArgumentException("trusted-secret");
+		var failure = new DriverOperationException(DriverFailureKind.SYSTEM_FAILURE, "Runtime failed", root);
+		assertThat(failure.kind()).isEqualTo(DriverFailureKind.SYSTEM_FAILURE);
+		assertThat(failure.getRootCause()).isSameAs(root);
+		assertThat(failure.toString()).doesNotContain("trusted-secret");
+		assertThat(translator.translateExceptionIfPossible(failure))
+			.isInstanceOf(UncategorizedDataAccessException.class)
+			.hasMessage("Runtime failed").hasCause(failure).hasRootCause(root);
+	}
+
+	@Test
 	void callbackFailuresExposeTheirRootCauseWithoutLoopingOnCyclicDiagnostics() {
 		var root = new IllegalArgumentException("trusted detail");
 		var cause = new IllegalStateException("trusted detail", root);

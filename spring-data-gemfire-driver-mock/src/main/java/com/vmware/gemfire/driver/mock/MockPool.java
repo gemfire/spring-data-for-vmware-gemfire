@@ -28,6 +28,7 @@ final class MockPool implements DriverPool {
 	@Override public String name() { return name; }
 	@Override public List<Endpoint> servers() { return configuration.servers(); }
 	@Override public List<Endpoint> locators() { return configuration.locators(); }
+	@Override public List<Endpoint> onlineLocators() { return List.of(); }
 	/** The mock's default is 1; the configured value remains metadata, not a connection count. */
 	@Override public int minimumConnections() { return configuration.minimumConnections().orElse(1); }
 	@Override public boolean isDestroyed() { return destroyed; }

@@ -14,6 +14,7 @@ import org.apache.geode.GemFireCacheException;
 import org.apache.geode.cache.*;
 import org.apache.geode.cache.query.*;
 import org.apache.geode.cache.execute.FunctionException;
+import org.apache.geode.distributed.LeaseExpiredException;
 import org.apache.geode.security.*;
 import org.junit.jupiter.api.Test;
 import com.vmware.gemfire.driver.spi.*;
@@ -21,6 +22,52 @@ import com.vmware.gemfire.driver.spi.*;
 class GemFireExceptionMapperTests {
 
 	private final GemFireExceptionMapper mapper = new GemFireExceptionMapper();
+
+	@Test
+	void retainedRuntimeFailureConstructorsPreserveClassificationAndTrustedCauses() {
+		var root = new IllegalArgumentException("root-secret");
+		var nested = new IllegalStateException("nested-secret", root);
+		var leaseWithCause = new LeaseExpiredException("lease-secret");
+		leaseWithCause.initCause(nested);
+		for (Exception nativeFailure : new Exception[] {
+			new RoleException() {}, new RoleException("role-secret") {},
+			new RoleException("role-secret", nested) {}, new RoleException(nested) {},
+			new StatisticsDisabledException(), new StatisticsDisabledException("statistics-secret"),
+			new StatisticsDisabledException("statistics-secret", nested), new StatisticsDisabledException(nested),
+			new LeaseExpiredException("lease-secret"), leaseWithCause }) {
+			var expected = nativeFailure instanceof LeaseExpiredException
+				? DriverFailureKind.LOCK_FAILURE : DriverFailureKind.SYSTEM_FAILURE;
+			assertThat(mapper.translate("runtime", nativeFailure))
+				.isInstanceOfSatisfying(DriverOperationException.class, failure -> {
+					assertThat(failure.kind()).isEqualTo(expected);
+					assertThat(failure.getRootCause()).isSameAs(nativeFailure.getCause() == null ? nativeFailure : root);
+					assertThat(failure.toString()).doesNotContain("secret");
+					assertThat(new GemFireDriverExceptionTranslator().translateExceptionIfPossible(failure))
+						.isInstanceOf(expected == DriverFailureKind.LOCK_FAILURE
+							? org.springframework.dao.PessimisticLockingFailureException.class
+							: org.springframework.dao.UncategorizedDataAccessException.class)
+						.hasCause(failure).hasMessage("GemFire operation failed: runtime");
+				}).hasCause(nativeFailure).hasMessage("GemFire operation failed: runtime");
+		}
+	}
+
+	@Test
+	void retainedRuntimeFailuresRespectOuterOperation() {
+		for (CacheRuntimeException nativeFailure : new CacheRuntimeException[] {
+			new RoleException("role-secret") {}, new StatisticsDisabledException("statistics-secret") }) {
+			var unknown = new RuntimeException("outer-secret", nativeFailure);
+			assertThat(mapper.translate("runtime", unknown))
+				.isInstanceOfSatisfying(DriverOperationException.class,
+					failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.UNKNOWN))
+				.hasCause(unknown);
+		}
+		var lease = new LeaseExpiredException("lease-secret");
+		var execution = new FunctionException("function-secret", lease);
+		assertThat(mapper.translate("execute", execution))
+			.isInstanceOfSatisfying(DriverOperationException.class,
+				failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.FUNCTION_FAILURE))
+			.hasCause(execution).hasRootCause(lease).hasMessage("GemFire operation failed: execute");
+	}
 
 	@Test
 	void classifiesNativeSubtypesIncludingCheckedFailuresWithoutExposingTheirMessages() {

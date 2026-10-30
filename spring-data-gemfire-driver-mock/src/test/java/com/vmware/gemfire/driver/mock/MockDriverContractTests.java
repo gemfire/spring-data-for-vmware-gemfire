@@ -12,6 +12,11 @@ import com.vmware.gemfire.driver.spi.UnsupportedFeatureException.Reason;
 
 class MockDriverContractTests extends GemFireDriverContract {
 
+	@Override protected int sampleStatistics(com.vmware.gemfire.driver.spi.DriverConnection connection,
+			com.vmware.gemfire.driver.spi.DriverStatistics statistics) {
+		return ((MockStatisticsFactory) connection.getRuntime().getStatisticsFactory()).sampleSuppliers();
+	}
+
 	@Override
 	protected String expectedNativeVersion() { return "mock"; }
 

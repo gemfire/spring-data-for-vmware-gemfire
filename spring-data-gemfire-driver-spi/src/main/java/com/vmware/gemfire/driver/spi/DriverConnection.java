@@ -15,6 +15,27 @@ import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
  */
 public interface DriverConnection extends DriverRegionService {
 
+	/**
+	 * Detached, immutable snapshot of server endpoints currently observed as connected by the
+	 * provider. This is not configured topology or an active health/authentication probe; endpoints
+	 * can disappear immediately afterward. Native 10.4 observes all pools in its JVM registry,
+	 * including through a retained closed-cache handle. No connection isolation is promised.
+	 * The mock always returns empty because it has no network connections.
+	 */
+	default Set<PoolConfiguration.Endpoint> getCurrentServers() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getCurrentServers");
+	}
+
+	/** Local runtime metadata; does not test whether a server can be reached. */
+	default DriverClientRuntime getRuntime() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getRuntime");
+	}
+
+	/** Cache cancellation criterion, deliberately separate from distributed-system cancellation. */
+	default DriverCancellation getCancellation() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getCancellation");
+	}
+
 	default DriverTransactionManager getTransactionManager() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getTransactionManager");
 	}

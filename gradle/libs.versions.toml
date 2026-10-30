@@ -62,6 +62,7 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "jUnitPlatformVersion" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "jUnitJupiterVersion" }
 log4J = { module = "org.apache.logging.log4j:log4j-to-slf4j", version.ref = "log4JVersion" }
+log4JApi = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4JVersion" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombokVersion" }
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }

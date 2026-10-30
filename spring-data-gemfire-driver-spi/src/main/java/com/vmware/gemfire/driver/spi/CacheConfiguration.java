@@ -12,6 +12,7 @@ import java.util.Properties;
  * Native-free client cache configuration. Property names and values are passed to the native
  * cache factory unchanged; validation belongs to the driver. Values can contain credentials, so
  * diagnostic output and equality/hash-code implementations never incorporate them.
+ * See {@link ClientConfigurationProperties} for the retained client property names.
  */
 public final class CacheConfiguration implements DriverConfiguration {
 

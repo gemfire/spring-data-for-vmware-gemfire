@@ -13,7 +13,7 @@ import java.util.*;
  * Network settings on the mock describe configuration only, never connectivity or queue behavior.
  */
 public final class PoolConfiguration {
-	/** Configured endpoint, not discovered topology. Construction does not resolve DNS. */
+	/** Host/port value for configuration or observations; construction does not resolve DNS. */
 	public record Endpoint(String host, int port) {
 		public Endpoint {
 			if (host == null || host.isBlank()) throw new IllegalArgumentException("Endpoint host is required");

@@ -58,6 +58,7 @@ final class GemFirePool implements DriverPool {
 	@Override public String name() { return invoke("name", pool::getName); }
 	@Override public List<Endpoint> servers() { return invoke("servers", () -> endpoints(pool.getServers())); }
 	@Override public List<Endpoint> locators() { return invoke("locators", () -> endpoints(pool.getLocators())); }
+	@Override public List<Endpoint> onlineLocators() { return invoke("onlineLocators", () -> endpoints(pool.getOnlineLocators())); }
 	@Override public int minimumConnections() { return invoke("minimumConnections", pool::getMinConnections); }
 	@Override public boolean isDestroyed() { return invoke("isDestroyed", pool::isDestroyed); }
 	@Override public void destroy() { invoke("destroy", () -> { pool.destroy(); return null; }); }

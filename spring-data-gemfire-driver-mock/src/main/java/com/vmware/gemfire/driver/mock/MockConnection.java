@@ -24,7 +24,7 @@ import com.vmware.gemfire.driver.spi.config.ClientRegionShortcut;
 
 final class MockConnection implements DriverConnection {
 
-	private final MockMember member = new MockMember();
+	private final MockMember member;
 	DriverMember member() { return member; }
 	void removeRegion(String name, MockRegion<?, ?> region) { regions.remove(region.getFullPath().substring(1), region); }
 	private final Map<String, MockRegion<?, ?>> regions = new HashMap<>();
@@ -32,6 +32,23 @@ final class MockConnection implements DriverConnection {
 	private final Map<java.util.List<String>, Integer> pdxEnumOrdinals = new HashMap<>();
 	private final MockTransactionManager transactions = new MockTransactionManager();
 	private volatile boolean closed;
+	private final MockClientRuntime runtime;
+	private final MockCancellation cancellation = new MockCancellation(() -> closed);
+
+	MockConnection() { this(new java.util.Properties()); }
+
+	MockConnection(java.util.Properties properties) {
+		this(properties, true);
+	}
+
+	MockConnection(java.util.Properties properties, boolean statisticsEnabled) {
+		this.member = new MockMember(properties);
+		this.runtime = new MockClientRuntime(member, () -> closed, properties, statisticsEnabled);
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverClientRuntime getRuntime() { return runtime; }
+	@Override public com.vmware.gemfire.driver.spi.DriverCancellation getCancellation() { return cancellation; }
+	@Override public Set<PoolConfiguration.Endpoint> getCurrentServers() { return Set.of(); }
 
 
 	@Override public com.vmware.gemfire.driver.spi.DriverTransactionManager getTransactionManager() {

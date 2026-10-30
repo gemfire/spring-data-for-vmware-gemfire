@@ -46,7 +46,13 @@ dependencies {
   api(project(":spring-data-gemfire-driver-spi"))
   implementation("com.vmware.gemfire:gemfire-core") { version { strictly(resolvedNativeVersion) } }
   implementation("com.vmware.gemfire:gemfire-version") { version { strictly(resolvedNativeVersion) } }
+  // The logging adapter uses Log4j API types; GemFire exposes them only at runtime.
+  implementation(libs.log4JApi)
+  // GemFire's provider applies native log levels and system/security file destinations.
+  // Keep it in the driver runtime so consumers and integration tests use the same backend.
+  runtimeOnly("com.vmware.gemfire:gemfire-log4j") { version { strictly(resolvedNativeVersion) } }
   add(integrationTest.implementationConfigurationName, project(":spring-data-gemfire-driver-contract-tests"))
+  add(integrationTest.implementationConfigurationName, libs.mockito)
   add(integrationTest.runtimeOnlyConfigurationName, libs.junit.jupiter.engine)
   add(integrationTest.runtimeOnlyConfigurationName, libs.junit.platform.launcher)
 }

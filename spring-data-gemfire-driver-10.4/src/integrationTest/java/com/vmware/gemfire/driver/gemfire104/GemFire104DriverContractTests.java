@@ -31,6 +31,14 @@ class GemFire104DriverContractTests extends GemFireDriverContract {
 		} catch (RuntimeException failure) { connection.close(); throw failure; }
 	}
 
+	@Override protected int sampleStatistics(com.vmware.gemfire.driver.spi.DriverConnection connection,
+			com.vmware.gemfire.driver.spi.DriverStatistics statistics) {
+		var system = ((GemFireConnection) connection).cacheForTransactionCallback().getDistributedSystem();
+		return java.util.Arrays.stream(system.findStatisticsByType(system.findType(statistics.getType().getName())))
+			.filter(s -> s.getUniqueId() == statistics.getUniqueId())
+			.mapToInt(s -> ((org.apache.geode.internal.statistics.StatisticsImpl) s).updateSuppliedValues()).sum();
+	}
+
 	@Override
 	protected String expectedNativeVersion() { return System.getProperty("expectedGemFireVersion"); }
 

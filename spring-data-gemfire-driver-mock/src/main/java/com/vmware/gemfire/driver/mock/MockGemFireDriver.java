@@ -9,6 +9,7 @@ import com.vmware.gemfire.driver.spi.DriverBindException;
 import com.vmware.gemfire.driver.spi.DriverConfiguration;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverMetadata;
+import com.vmware.gemfire.driver.spi.DriverPropertyFile;
 import com.vmware.gemfire.driver.spi.GemFireDriver;
 
 /**
@@ -20,6 +21,22 @@ import com.vmware.gemfire.driver.spi.GemFireDriver;
  */
 public final class MockGemFireDriver implements GemFireDriver {
 
+	private final boolean statisticsEnabled;
+
+	public MockGemFireDriver() { this(true); }
+
+	/**
+	 * Explicit test control for local statistics. False creates inert, unregistered
+	 * handles; it does not change sampling configuration or read JVM properties.
+	 */
+	public MockGemFireDriver(boolean statisticsEnabled) { this.statisticsEnabled = statisticsEnabled; }
+
+	@Override
+	public DriverPropertyFile resolvePropertiesFile() { return new DriverPropertyFile("gemfire.properties", null); }
+
+	@Override
+	public DriverPropertyFile resolveSecurityPropertiesFile() { return new DriverPropertyFile("gfsecurity.properties", null); }
+
 	@Override
 	public DriverMetadata metadata() { return () -> "In-memory GemFire mock driver"; }
 
@@ -28,9 +45,9 @@ public final class MockGemFireDriver implements GemFireDriver {
 
 	@Override
 	public DriverConnection connect(DriverConfiguration configuration) {
-		if (!(configuration instanceof CacheConfiguration)) {
+		if (!(configuration instanceof CacheConfiguration cacheConfiguration)) {
 			throw new DriverBindException("The mock driver requires CacheConfiguration.");
 		}
-		return new MockConnection();
+		return new MockConnection(cacheConfiguration.properties(), statisticsEnabled);
 	}
 }

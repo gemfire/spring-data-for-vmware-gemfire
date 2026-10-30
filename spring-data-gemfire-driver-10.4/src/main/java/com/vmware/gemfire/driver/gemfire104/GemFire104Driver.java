@@ -5,6 +5,7 @@
 package com.vmware.gemfire.driver.gemfire104;
 
 import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.distributed.DistributedSystem;
 import com.vmware.gemfire.internal.version.GemFireVersion;
 
 import com.vmware.gemfire.driver.spi.CacheConfiguration;
@@ -12,10 +13,31 @@ import com.vmware.gemfire.driver.spi.DriverBindException;
 import com.vmware.gemfire.driver.spi.DriverConfiguration;
 import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverMetadata;
+import com.vmware.gemfire.driver.spi.DriverPropertyFile;
 import com.vmware.gemfire.driver.spi.GemFireDriver;
 
 /** ServiceLoader provider for the exact GemFire 10.4 version stamped at build time. */
 public final class GemFire104Driver implements GemFireDriver {
+
+	@Override
+	public DriverPropertyFile resolvePropertiesFile() {
+		try {
+			return new DriverPropertyFile(DistributedSystem.getPropertiesFile(), DistributedSystem.getPropertiesFileURL());
+		}
+		catch (RuntimeException failure) {
+			throw new GemFireExceptionMapper().translate("Driver.resolvePropertiesFile", failure);
+		}
+	}
+
+	@Override
+	public DriverPropertyFile resolveSecurityPropertiesFile() {
+		try {
+			return new DriverPropertyFile(DistributedSystem.getSecurityPropertiesFile(), DistributedSystem.getSecurityPropertiesFileURL());
+		}
+		catch (RuntimeException failure) {
+			throw new GemFireExceptionMapper().translate("Driver.resolveSecurityPropertiesFile", failure);
+		}
+	}
 
 	@Override
 	public DriverMetadata metadata() {
