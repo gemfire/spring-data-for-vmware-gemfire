@@ -27,7 +27,7 @@
 						   concurrency-level="20"
 						   initial-capacity="23"
 						   load-factor="0.75"
-						   scope="distributed-no-ack">
+						   scope="distributed-ack">
 			<key-constraint>java.lang.Integer</key-constraint>
 			<value-constraint>java.lang.String</value-constraint>
 		</region-attributes>

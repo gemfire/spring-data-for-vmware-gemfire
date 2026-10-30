@@ -72,8 +72,7 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 	private static final String LOG_LEVEL = "error";
 	private static final String LOG_FILE = "Locator.log";
 
-	@Rule
-	public TestRule watchman = new TestWatcher() {
+	@Rule public TestRule watchman = new TestWatcher() {
 
 		@Override
 		protected void failed(Throwable throwable, Description description) {
@@ -89,12 +88,13 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 
 			if (Arrays.asList("config", "debug", "info").contains(LOG_LEVEL.toLowerCase())) {
 				try {
-					FileUtils.write(new File(locatorWorkingDirectory.getParent(),
-						String.format("%s-clusterconfiglocator.log", description.getMethodName())),
+					FileUtils.write(
+							new File(locatorWorkingDirectory.getParent(),
+									String.format("%s-clusterconfiglocator.log", description.getMethodName())),
 							getLocatorProcessOutput(description));
-				}
-				catch (IllegalArgumentException | IOException cause) {
-					throw RuntimeExceptionFactory.newRuntimeException(cause, "Failed to write the contents of the Locator process log to a file");
+				} catch (IllegalArgumentException | IOException cause) {
+					throw RuntimeExceptionFactory.newRuntimeException(cause,
+							"Failed to write the contents of the Locator process log to a file");
 				}
 			}
 		}
@@ -104,17 +104,16 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 			try {
 
 				String locatorProcessOutputString = StringUtils.collectionToDelimitedString(locatorProcessOutput,
-					FileUtils.LINE_SEPARATOR, String.format("[%s] - ", description.getMethodName()), "");
+						FileUtils.LINE_SEPARATOR, String.format("[%s] - ", description.getMethodName()), "");
 
-				locatorProcessOutputString = StringUtils.hasText(locatorProcessOutputString)
-					? locatorProcessOutputString
-					: locatorProcess.readLogFile();
+				locatorProcessOutputString = StringUtils.hasText(locatorProcessOutputString) ? locatorProcessOutputString
+						: locatorProcess.readLogFile();
 
 				return locatorProcessOutputString;
 
-			}
-			catch (IOException cause) {
-				throw RuntimeExceptionFactory.newRuntimeException(cause, "Failed to read the contents of the Locator process log file");
+			} catch (IOException cause) {
+				throw RuntimeExceptionFactory.newRuntimeException(cause,
+						"Failed to read the contents of the Locator process log file");
 			}
 		}
 	};
@@ -131,7 +130,8 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 
 		String locatorName = String.format("ClusterConfigLocator-%d", System.currentTimeMillis());
 
-		locatorWorkingDirectory = IntegrationTestsSupport.createDirectory(new File(FileSystemUtils.WORKING_DIRECTORY, locatorName.toLowerCase()));
+		locatorWorkingDirectory = IntegrationTestsSupport
+				.createDirectory(new File(FileSystemUtils.WORKING_DIRECTORY, locatorName.toLowerCase()));
 
 		ZipUtils.unzip(new ClassPathResource("cluster_config.zip"), locatorWorkingDirectory);
 
@@ -146,7 +146,8 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 		arguments.add(String.format("-Dgemfire.log-level=%s", LOG_LEVEL));
 		arguments.add(String.format("-Dspring.data.gemfire.locator.port=%d", locatorPort));
 
-		locatorProcess = ClientServerIntegrationTestsSupport.run(locatorWorkingDirectory, LocatorProcess.class, arguments.toArray(new String[0]));
+		locatorProcess = ClientServerIntegrationTestsSupport.run(locatorWorkingDirectory, LocatorProcess.class,
+				arguments.toArray(new String[0]));
 		locatorProcess.register(input -> locatorProcessOutput.add(input));
 		locatorProcess.registerShutdownHook();
 
@@ -174,15 +175,14 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 	}
 
 	private Region<?, ?> assertRegion(Region<?, ?> actualRegion, String expectedRegionName) {
-		return assertRegion(actualRegion, expectedRegionName, Region.SEPARATOR+expectedRegionName);
+		return assertRegion(actualRegion, expectedRegionName, Region.SEPARATOR + expectedRegionName);
 	}
 
 	private Region<?, ?> assertRegion(Region<?, ?> actualRegion, String expectedRegionName,
 			String expectedRegionFullPath) {
 
 		Assertions.assertThat(actualRegion)
-			.describedAs("The [%s] was not properly configured and initialized", expectedRegionName)
-			.isNotNull();
+				.describedAs("The [%s] was not properly configured and initialized", expectedRegionName).isNotNull();
 
 		Assertions.assertThat(actualRegion.getName()).isEqualTo(expectedRegionName);
 		Assertions.assertThat(actualRegion.getFullPath()).isEqualTo(expectedRegionFullPath);
@@ -225,20 +225,21 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 	@Ignore
 	public void clusterConfigurationTest() {
 
-		ConfigurableApplicationContext applicationContext =
-			newApplicationContext(getLocation("cacheUsingClusterConfigurationIntegrationTest.xml"));
+		ConfigurableApplicationContext applicationContext = newApplicationContext(
+				getLocation("cacheUsingClusterConfigurationIntegrationTest.xml"));
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "ClusterConfigRegion"), "ClusterConfigRegion"),
-			DataPolicy.REPLICATE, Scope.DISTRIBUTED_NO_ACK);
+				DataPolicy.REPLICATE, Scope.DISTRIBUTED_ACK);
 
 		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeLocalRegion"), "NativeLocalRegion"),
-			DataPolicy.NORMAL, Scope.LOCAL);
+				DataPolicy.NORMAL, Scope.LOCAL);
 
-		assertRegionAttributes(assertRegion(getRegion(applicationContext, "NativeReplicateRegion"), "NativeReplicateRegion"),
-			DataPolicy.REPLICATE, Scope.DISTRIBUTED_ACK);
+		assertRegionAttributes(
+				assertRegion(getRegion(applicationContext, "NativeReplicateRegion"), "NativeReplicateRegion"),
+				DataPolicy.REPLICATE, Scope.DISTRIBUTED_ACK);
 
-		assertRegionAttributes(assertRegion(getRegion(applicationContext, "LocalRegion"), "LocalRegion"),
-			DataPolicy.NORMAL, Scope.LOCAL);
+		assertRegionAttributes(assertRegion(getRegion(applicationContext, "LocalRegion"), "LocalRegion"), DataPolicy.NORMAL,
+				Scope.LOCAL);
 	}
 
 	@Test(expected = BeanCreationException.class)
@@ -251,20 +252,19 @@ public class CacheClusterConfigurationIntegrationTests extends ClientServerInteg
 			applicationContext = newApplicationContext(getLocation("cacheUsingLocalConfigurationIntegrationTest.xml"));
 
 			Assertions.fail("Loading the 'cacheUsingLocalOnlyConfigurationIntegrationTest.xml' Spring ApplicationContext"
-				+ " configuration file should have resulted in an Exception due to the Region lookup on"
-				+ " 'ClusterConfigRegion' when GemFire Cluster Configuration is disabled");
-		}
-		catch (BeanCreationException expected) {
+					+ " configuration file should have resulted in an Exception due to the Region lookup on"
+					+ " 'ClusterConfigRegion' when GemFire Cluster Configuration is disabled");
+		} catch (BeanCreationException expected) {
 
 			Assertions.assertThat(expected).hasCauseInstanceOf(BeanInitializationException.class);
 
-			Assertions.assertThat(expected.getCause().getMessage()
-				.matches("Region \\[ClusterConfigRegion\\] in Cache \\[.*\\] not found"))
-				.as(String.format("Message was [%s]", expected.getMessage())).isTrue();
+			Assertions
+					.assertThat(
+							expected.getCause().getMessage().matches("Region \\[ClusterConfigRegion\\] in Cache \\[.*\\] not found"))
+					.as(String.format("Message was [%s]", expected.getMessage())).isTrue();
 
 			throw expected;
-		}
-		finally {
+		} finally {
 			IntegrationTestsSupport.closeApplicationContext(applicationContext);
 		}
 	}
