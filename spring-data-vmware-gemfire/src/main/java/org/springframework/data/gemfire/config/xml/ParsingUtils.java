@@ -385,15 +385,6 @@ abstract class ParsingUtils {
 		}
 	}
 
-	static void parseScope(Element element, BeanDefinitionBuilder builder) {
-
-		String scopeAttributeValue = element.getAttribute("scope");
-
-		if (StringUtils.hasText(scopeAttributeValue)) {
-			builder.addPropertyValue("scope", scopeAttributeValue);
-		}
-	}
-
 	static void parseStatistics(Element element, BeanDefinitionBuilder regionAttributesBuilder) {
 		setPropertyValue(element, regionAttributesBuilder, "statistics", "statisticsEnabled");
 	}

@@ -55,24 +55,19 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 	private static File diskStoreDirectory;
 
-	@Autowired
-	private ClientCache cache;
+	@Autowired private ClientCache cache;
 
 	@Autowired
-	@Qualifier("diskStore1")
-	private DiskStore diskStoreOne;
+	@Qualifier("diskStore1") private DiskStore diskStoreOne;
 
 	@Autowired
-	@Qualifier("ds2")
-	private DiskStore diskStoreTwo;
+	@Qualifier("ds2") private DiskStore diskStoreTwo;
 
 	@Autowired
-	@Qualifier("fullyConfiguredDiskStore")
-	private DiskStore fullyConfiguredDiskStore;
+	@Qualifier("fullyConfiguredDiskStore") private DiskStore fullyConfiguredDiskStore;
 
 	@Autowired
-	@Qualifier("diskStoreProperties")
-	private Properties diskStoreProperties;
+	@Qualifier("diskStoreProperties") private Properties diskStoreProperties;
 
 	@BeforeClass
 	public static void createDiskStoreDirectory() {
@@ -85,8 +80,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		FileSystemUtils.deleteRecursive(diskStoreDirectory);
 
-		for (String name : ArrayUtils.nullSafeArray(FileSystemUtils.WORKING_DIRECTORY
-			.list((dir, name) -> name.startsWith("BACKUP")), String.class)) {
+		for (String name : ArrayUtils.nullSafeArray(
+				FileSystemUtils.WORKING_DIRECTORY.list((dir, name) -> name.startsWith("BACKUP")), String.class)) {
 			new File(name).delete();
 		}
 	}
@@ -103,7 +98,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 		Assertions.assertThat(diskStoreTwo.getName()).isEqualTo("ds2");
 		Assertions.assertThat(diskStoreTwo.getQueueSize()).isEqualTo(50);
 		Assertions.assertThat(diskStoreTwo.getAutoCompact()).isTrue();
-		Assertions.assertThat(diskStoreTwo.getCompactionThreshold()).isEqualTo(DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD);
+		Assertions.assertThat(diskStoreTwo.getCompactionThreshold())
+				.isEqualTo(DiskStoreFactory.DEFAULT_COMPACTION_THRESHOLD);
 		Assertions.assertThat(diskStoreTwo.getTimeInterval()).isEqualTo(9999);
 		Assertions.assertThat(diskStoreTwo.getMaxOplogSize()).isEqualTo(1);
 		Assertions.assertThat(diskStoreTwo.getDiskDirs()[0]).isEqualTo(diskStoreDirectory.getParentFile());
@@ -113,24 +109,35 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 	public void fullyConfiguredDiskStoreConfigurationIsCorrect() {
 
 		Assertions.assertThat(fullyConfiguredDiskStore)
-			.describedAs("The 'fullyConfiguredDiskStore' was not properly configured and initialized")
-			.isNotNull();
+				.describedAs("The 'fullyConfiguredDiskStore' was not properly configured and initialized").isNotNull();
 
 		Assertions.assertThat(fullyConfiguredDiskStore.getName()).isEqualTo("fullyConfiguredDiskStore");
-		Assertions.assertThat(fullyConfiguredDiskStore.getAllowForceCompaction()).isEqualTo(Boolean.valueOf(diskStoreProperties.getProperty("allowForceCompaction")));
-		Assertions.assertThat(fullyConfiguredDiskStore.getAutoCompact()).isEqualTo(Boolean.valueOf(diskStoreProperties.getProperty("autoCompact")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getCompactionThreshold())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("compactionThreshold")));
-		Assertions.assertThat(Double.valueOf(fullyConfiguredDiskStore.getDiskUsageCriticalPercentage())).isEqualTo(Double.valueOf(diskStoreProperties.getProperty("diskUsageCriticalPercentage")));
-		Assertions.assertThat(Double.valueOf(fullyConfiguredDiskStore.getDiskUsageWarningPercentage())).isEqualTo(Double.valueOf(diskStoreProperties.getProperty("diskUsageWarningPercentage")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getMaxOplogSize())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("maxOplogSize")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getQueueSize())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("queueSize")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getTimeInterval())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("timeInterval")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getWriteBufferSize())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("writeBufferSize")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getSegments())).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("segments")));
+		Assertions.assertThat(fullyConfiguredDiskStore.getAllowForceCompaction())
+				.isEqualTo(Boolean.valueOf(diskStoreProperties.getProperty("allowForceCompaction")));
+		Assertions.assertThat(fullyConfiguredDiskStore.getAutoCompact())
+				.isEqualTo(Boolean.valueOf(diskStoreProperties.getProperty("autoCompact")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getCompactionThreshold()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("compactionThreshold")));
+		Assertions.assertThat(Double.valueOf(fullyConfiguredDiskStore.getDiskUsageCriticalPercentage()))
+				.isEqualTo(Double.valueOf(diskStoreProperties.getProperty("diskUsageCriticalPercentage")));
+		Assertions.assertThat(Double.valueOf(fullyConfiguredDiskStore.getDiskUsageWarningPercentage()))
+				.isEqualTo(Double.valueOf(diskStoreProperties.getProperty("diskUsageWarningPercentage")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getMaxOplogSize()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("maxOplogSize")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getQueueSize()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("queueSize")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getTimeInterval()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("timeInterval")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getWriteBufferSize()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("writeBufferSize")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getSegments()))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("segments")));
 		Assertions.assertThat(fullyConfiguredDiskStore.getDiskDirs()).isNotNull();
 		Assertions.assertThat(fullyConfiguredDiskStore.getDiskDirs().length).isEqualTo(1);
-		Assertions.assertThat(fullyConfiguredDiskStore.getDiskDirs()[0]).isEqualTo(new File(diskStoreProperties.getProperty("location")));
-		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getDiskDirSizes()[0])).isEqualTo(Long.valueOf(diskStoreProperties.getProperty("maxSize")));
+		Assertions.assertThat(fullyConfiguredDiskStore.getDiskDirs()[0])
+				.isEqualTo(new File(diskStoreProperties.getProperty("location")));
+		Assertions.assertThat(Long.valueOf(fullyConfiguredDiskStore.getDiskDirSizes()[0]))
+				.isEqualTo(Long.valueOf(diskStoreProperties.getProperty("maxSize")));
 	}
 
 	@Test
@@ -139,19 +146,20 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Assertions.assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		ClientRegionFactoryBean localDataRegionFactoryBean =
-			requireApplicationContext().getBean("&local-data", ClientRegionFactoryBean.class);
+		ClientRegionFactoryBean localDataRegionFactoryBean = requireApplicationContext().getBean("&local-data",
+				ClientRegionFactoryBean.class);
 
 		Assertions.assertThat(localDataRegionFactoryBean instanceof ClientRegionFactoryBean).isTrue();
 
-		Assertions.assertThat(TestUtils.<String>readField("diskStoreName", localDataRegionFactoryBean)).isEqualTo("diskStore1");
+		Assertions.assertThat(TestUtils.<String> readField("diskStoreName", localDataRegionFactoryBean))
+				.isEqualTo("diskStore1");
 
 		Region localDataRegion = requireApplicationContext().getBean("local-data", Region.class);
 
 		RegionAttributes localDataRegionAttributes = TestUtils.readField("attributes", localDataRegionFactoryBean);
 
 		Assertions.assertThat(localDataRegionAttributes).isNotNull();
-		Assertions.assertThat(localDataRegionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_NO_ACK);
+		Assertions.assertThat(localDataRegionAttributes.getScope()).isEqualTo(Scope.DISTRIBUTED_ACK);
 
 		EvictionAttributes localDataEvictionAttributes = localDataRegionAttributes.getEvictionAttributes();
 
@@ -168,8 +176,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Assertions.assertThat(requireApplicationContext().containsBean("local-data")).isTrue();
 
-		ClientRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data", ClientRegionFactoryBean.class);
+		ClientRegionFactoryBean regionFactoryBean = requireApplicationContext().getBean("&local-data",
+				ClientRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 
@@ -200,8 +208,8 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 
 		Assertions.assertThat(requireApplicationContext().containsBean("local-data-with-custom-expiry")).isTrue();
 
-		ClientRegionFactoryBean regionFactoryBean =
-			requireApplicationContext().getBean("&local-data-with-custom-expiry", ClientRegionFactoryBean.class);
+		ClientRegionFactoryBean regionFactoryBean = requireApplicationContext().getBean("&local-data-with-custom-expiry",
+				ClientRegionFactoryBean.class);
 
 		RegionAttributes regionAttributes = TestUtils.readField("attributes", regionFactoryBean);
 
@@ -209,7 +217,7 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 		Assertions.assertThat(regionAttributes.getCustomEntryTimeToLive()).isInstanceOf(TestCustomExpiry.class);
 	}
 
-	public static class TestCustomExpiry<K,V> implements CustomExpiry<K,V> {
+	public static class TestCustomExpiry<K, V> implements CustomExpiry<K, V> {
 
 		@Override
 		public ExpirationAttributes getExpiry(Region.Entry<K, V> entry) {
@@ -217,7 +225,7 @@ public class DiskStoreNamespaceIntegrationTests extends IntegrationTestsSupport 
 		}
 
 		@Override
-		public void close() { }
+		public void close() {}
 
 	}
 }

@@ -16,7 +16,6 @@ import org.apache.geode.cache.ExpirationAttributes;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.RegionAttributes;
 import org.apache.geode.cache.RegionShortcut;
-import org.apache.geode.cache.Scope;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.compression.Compressor;
@@ -44,7 +43,6 @@ import org.springframework.util.StringUtils;
  * @see Region
  * @see RegionAttributes
  * @see RegionShortcut
- * @see Scope
  * @see ClientCache
  * @see ClientRegionShortcut
  * @see Compressor
@@ -92,8 +90,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 	private RegionAttributes<K, V> regionAttributes;
 
 	private RegionShortcut serverRegionShortcut;
-
-	private Scope scope;
 
 	private volatile SmartLifecycle smartLifecycleComponent;
 
@@ -351,14 +347,6 @@ public class CacheTypeAwareRegionFactoryBean<K, V> extends ResolvableRegionFacto
 
 	protected ExpirationAttributes getRegionTimeToLive() {
 		return this.regionTimeToLive;
-	}
-
-	public void setScope(Scope scope) {
-		this.scope = scope;
-	}
-
-	protected Scope getScope() {
-		return this.scope;
 	}
 
 	public void setServerRegionShortcut(RegionShortcut shortcut) {

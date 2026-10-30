@@ -2243,7 +2243,7 @@ public abstract class GemFireMockObjectsSupport extends MockObjectsSupport {
 				optionalRegionAttributes.map(RegionAttributes::getRegionTimeToLive).orElse(DEFAULT_EXPIRATION_ATTRIBUTES));
 
 		AtomicReference<Scope> scope = new AtomicReference<>(
-				optionalRegionAttributes.map(RegionAttributes::getScope).orElse(Scope.DISTRIBUTED_NO_ACK));
+				optionalRegionAttributes.map(RegionAttributes::getScope).orElse(Scope.DISTRIBUTED_ACK));
 
 		AtomicReference<SubscriptionAttributes> subscriptionAttributes = new AtomicReference<>(optionalRegionAttributes
 				.map(RegionAttributes::getSubscriptionAttributes).orElseGet(SubscriptionAttributes::new));

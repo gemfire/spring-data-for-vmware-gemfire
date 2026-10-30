@@ -20,7 +20,7 @@
 	</region-attributes>
 
 	<region name="root">
-		<region-attributes refid="attTemplate" scope="distributed-no-ack">
+		<region-attributes refid="attTemplate" scope="distributed-ack">
 			<region-time-to-live>
 				<expiration-attributes timeout="0" action="invalidate"/>
 			</region-time-to-live>
@@ -47,7 +47,7 @@
 			</region-attributes>
 		</region>
 		<region name="rdistnoack">
-			<region-attributes refid="attTemplate" scope="distributed-no-ack">
+			<region-attributes refid="attTemplate" scope="distributed-ack">
 			</region-attributes>
 		</region>
 		<region name="rglobalreplication">

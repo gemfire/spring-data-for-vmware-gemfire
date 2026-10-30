@@ -18,11 +18,9 @@ import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.InterestResultPolicy;
-import org.apache.geode.cache.Scope;
 
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.data.gemfire.InterestPolicyConverter;
-import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
 import org.springframework.data.gemfire.eviction.EvictionActionConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyConverter;
@@ -72,8 +70,6 @@ public class CustomEditorBeanFactoryPostProcessorUnitTests {
 			isA(InterestPolicyConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(InterestResultPolicy.class),
 			isA(InterestResultPolicyConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
-		verify(mockRegistry, times(1)).registerCustomEditor(eq(Scope.class), isA(ScopeConverter.class));
 		verify(mockRegistry, times(1)).registerCustomEditor(eq(SubscriptionEvictionPolicy.class),
 			isA(SubscriptionEvictionPolicyConverter.class));
 

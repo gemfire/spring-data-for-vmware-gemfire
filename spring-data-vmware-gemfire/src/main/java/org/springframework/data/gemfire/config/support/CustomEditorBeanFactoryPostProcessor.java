@@ -11,7 +11,6 @@ import org.apache.geode.cache.EvictionAction;
 import org.apache.geode.cache.ExpirationAction;
 import org.apache.geode.cache.InterestPolicy;
 import org.apache.geode.cache.InterestResultPolicy;
-import org.apache.geode.cache.Scope;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyEditorRegistrar;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.gemfire.InterestPolicyConverter;
-import org.springframework.data.gemfire.ScopeConverter;
 import org.springframework.data.gemfire.client.InterestResultPolicyConverter;
 import org.springframework.data.gemfire.eviction.EvictionActionConverter;
 import org.springframework.data.gemfire.eviction.EvictionPolicyConverter;
@@ -79,7 +77,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 			beanFactory.registerCustomEditor(ExpirationAction.class, ExpirationActionConverter.class);
 			beanFactory.registerCustomEditor(InterestPolicy.class, InterestPolicyConverter.class);
 			beanFactory.registerCustomEditor(InterestResultPolicy.class, InterestResultPolicyConverter.class);
-			beanFactory.registerCustomEditor(Scope.class, ScopeConverter.class);
 			beanFactory.registerCustomEditor(SubscriptionEvictionPolicy.class, SubscriptionEvictionPolicyConverter.class);
 		}
 	}
@@ -98,7 +95,6 @@ public class CustomEditorBeanFactoryPostProcessor implements BeanFactoryPostProc
 				registry.registerCustomEditor(ExpirationAction.class, new ExpirationActionConverter());
 				registry.registerCustomEditor(InterestPolicy.class, new InterestPolicyConverter());
 				registry.registerCustomEditor(InterestResultPolicy.class, new InterestResultPolicyConverter());
-				registry.registerCustomEditor(Scope.class, new ScopeConverter());
 				registry.registerCustomEditor(SubscriptionEvictionPolicy.class, new SubscriptionEvictionPolicyConverter());
 			}
 		}
