@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 53, 59
 
 # PDX callbacks and cache configuration
@@ -17,6 +17,18 @@ Implement all PdxReader/PdxWriter/PdxUnreadFields/PdxSerializer and application 
 ## Completion
 
 Record exact API ownership, source/test evidence, resolved native artifact and validation commands/results. Keep the parent open until all children and required behavior are complete; Spring consumer migration remains downstream.
+
+## Answer
+
+Resolved 2026-10-31. [Implementation and validation evidence](../wayfinder-impl/investigations/client-pdx-callbacks-and-cache-configuration.md) records exact ownership, native behavior and limits.
+
+- Added typed `DriverPdxReader/Writer/UnreadFields/Serializer/Serializable` contracts, an immutable `PdxConfiguration` (readSerialized, ignoreUnreadFields, persistence, disk store, serializer) carried by `CacheConfiguration`, and the `DriverConnection#getPdxConfiguration` default. The 10.4 adapter bridges native callbacks and applies the settings in `GemFire104Driver#connect`. Client persistence and disk store are read back but ignored by the pinned client; no client PDX disk persistence is promised.
+- Mock provides local reader/writer/unread-field behavior over a connection-local codec and returns the configured settings.
+- Tests: `PdxConfigurationTests` (3), `MockPdxCallbackTests` (7) and `NativePdxCallbackTests` (5) cover effective client-cache settings, real native byte round trips, unread-field preservation across rewrite, declining serializers and driver exceptions in the cause chain. Native tests need a live pool, so they use the private server fixture.
+- Validation: the user ran the three test classes and `testMigrationBoundary`; all passed. Coverage generation `--check` and `validate_coverage.py --javap` pass. Resolved native artifact: `gemfire-core` 10.4.0-build.3068.c3a2bbfe.
+- Inventory remains 3,851 rows / 292 types: 2,440 missing, 865 partial, 546 implemented. This child owns 85 rows: 80 implemented (60 callback, 15 getter, 5 `ClientCacheFactory` setter) and 5 peer `CacheFactory#setPdx*` rows excluded. The 3 `registerPdxMetaData` rows are unimplemented and now owned by [task 55](55-binary-serialization-and-registration.md).
+
+The serialization parent remains open for the other children; entry-point and callback adoption stay with tasks 35 and 31. No commit was created.
 
 ## Serialization audit handoff — 2026-10-28
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
+import com.vmware.gemfire.driver.spi.config.PdxConfiguration;
 
 /**
  * Native-free client cache configuration. Property names and values are passed to the native
@@ -27,6 +28,7 @@ public final class CacheConfiguration implements DriverConfiguration {
 
 	private final Map<String, String> properties;
 	private final PoolConfiguration defaultPool;
+	private final PdxConfiguration pdx;
 
 	public CacheConfiguration(Map<String, String> properties) {
 		this(properties, null);
@@ -34,8 +36,19 @@ public final class CacheConfiguration implements DriverConfiguration {
 
 	/** {@code defaultPool} is nullable; null means no explicit default pool is requested. */
 	public CacheConfiguration(Map<String, String> properties, PoolConfiguration defaultPool) {
+		this(properties, defaultPool, null);
+	}
+
+	/** {@code defaultPool} and {@code pdx} are nullable; null means the setting is left to the provider default. */
+	public CacheConfiguration(Map<String, String> properties, PoolConfiguration defaultPool, PdxConfiguration pdx) {
 		this.properties = Map.copyOf(Objects.requireNonNull(properties, "properties"));
 		this.defaultPool = defaultPool;
+		this.pdx = pdx;
+	}
+
+	/** The typed PDX settings, or empty when none were requested. */
+	public Optional<PdxConfiguration> pdx() {
+		return Optional.ofNullable(pdx);
 	}
 
 	/** The explicit default-pool settings, or empty when none were requested. */

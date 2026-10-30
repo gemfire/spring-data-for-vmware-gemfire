@@ -53,6 +53,6 @@ public final class MockGemFireDriver implements GemFireDriver {
 		if (!(configuration instanceof CacheConfiguration cacheConfiguration)) {
 			throw new DriverBindException("The mock driver requires CacheConfiguration.");
 		}
-		return new MockConnection(cacheConfiguration.properties(), statisticsEnabled, cacheConfiguration.defaultPool().orElse(null));
+		return new MockConnection(cacheConfiguration.properties(), statisticsEnabled, cacheConfiguration.defaultPool().orElse(null), cacheConfiguration.pdx().orElse(null));
 	}
 }

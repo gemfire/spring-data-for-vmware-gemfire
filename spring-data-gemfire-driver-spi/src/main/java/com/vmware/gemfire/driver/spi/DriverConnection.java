@@ -77,6 +77,11 @@ public interface DriverConnection extends DriverRegionService {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getDefaultPool");
 	}
 
+	/** Returns the effective cache PDX settings read back from the provider. Requires an open CLIENT connection. */
+	default com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getPdxConfiguration");
+	}
+
 	/** Returns the root regions currently defined in this cache. */
 	default Set<DriverRegion<?, ?>> rootRegions() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.rootRegions");

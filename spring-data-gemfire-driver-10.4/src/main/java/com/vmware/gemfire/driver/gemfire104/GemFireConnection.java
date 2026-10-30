@@ -51,6 +51,15 @@ final class GemFireConnection implements DriverConnection {
 		return invoke("getTransactionManager", () -> new GemFireTransactionManager(cache.getCacheTransactionManager()));
 	}
 
+	@Override public com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() {
+		return invoke("getPdxConfiguration", () -> {
+			var serializer = cache.getPdxSerializer();
+			return com.vmware.gemfire.driver.spi.config.PdxConfiguration.defaults()
+				.withReadSerialized(cache.getPdxReadSerialized()).withIgnoreUnreadFields(cache.getPdxIgnoreUnreadFields())
+				.withPersistent(cache.getPdxPersistent()).withDiskStoreName(cache.getPdxDiskStore())
+				.withSerializer(serializer instanceof GemFirePdxSerializerBridge bridge ? bridge.delegate() : null);
+		});
+	}
 	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstanceFactory createPdxInstanceFactory(String className) {
 		return invoke("createPdxInstanceFactory", () -> new GemFirePdxInstanceFactory(cache.createPdxInstanceFactory(className)));
 	}

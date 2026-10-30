@@ -37,6 +37,7 @@ final class MockConnection implements DriverConnection {
 	private PoolConfiguration explicitDefaultPool;
 	private MockPool defaultPool;
 	private final MockClientRuntime runtime;
+	private final com.vmware.gemfire.driver.spi.config.PdxConfiguration pdx;
 	private final MockCancellation cancellation = new MockCancellation(() -> closed);
 
 	MockConnection() { this(new java.util.Properties()); }
@@ -50,12 +51,20 @@ final class MockConnection implements DriverConnection {
 	}
 
 	MockConnection(java.util.Properties properties, boolean statisticsEnabled, PoolConfiguration defaultPool) {
+		this(properties, statisticsEnabled, defaultPool, null);
+	}
+
+	MockConnection(java.util.Properties properties, boolean statisticsEnabled, PoolConfiguration defaultPool, com.vmware.gemfire.driver.spi.config.PdxConfiguration pdx) {
+		this.pdx = pdx == null ? com.vmware.gemfire.driver.spi.config.PdxConfiguration.defaults() : pdx;
 		if (defaultPool != null) {
 			this.explicitDefaultPool = new MockPoolConfiguration().resolve(defaultPool.withFallback(LOCALHOST));
 		}
 		this.member = new MockMember(properties);
 		this.runtime = new MockClientRuntime(member, () -> closed, properties, statisticsEnabled);
 	}
+
+	@Override public com.vmware.gemfire.driver.spi.config.PdxConfiguration getPdxConfiguration() { return pdx; }
+	MockPdxCodec pdxCodec() { return new MockPdxCodec(pdx); }
 
 	@Override public com.vmware.gemfire.driver.spi.DriverClientRuntime getRuntime() { return runtime; }
 	@Override public com.vmware.gemfire.driver.spi.DriverCancellation getCancellation() { return cancellation; }

@@ -64,5 +64,9 @@ final class MockPdxInstanceFactory implements DriverPdxInstanceFactory {
 		if (!fields.containsKey(name)) throw new DriverOperationException(DriverFailureKind.SYSTEM_FAILURE, "Unknown PDX identity field", null);
 		fields.put(name, fields.get(name).withIdentity()); return this;
 	}
+	void putRaw(String name, MockPdxField field) {
+		if (name == null || fields.containsKey(name)) throw new DriverOperationException(DriverFailureKind.SYSTEM_FAILURE, "Invalid or duplicate PDX field", null);
+		fields.put(name, field);
+	}
 	@Override public DriverPdxInstanceFactory neverDeserialize() { deserializable = false; return this; }
 }

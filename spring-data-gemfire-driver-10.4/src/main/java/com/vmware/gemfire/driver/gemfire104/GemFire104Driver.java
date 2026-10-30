@@ -58,6 +58,12 @@ public final class GemFire104Driver implements GemFireDriver {
 		try {
 			ClientCacheFactory factory = new ClientCacheFactory(cacheConfiguration.properties());
 			cacheConfiguration.defaultPool().ifPresent(pool -> new GemFireDefaultPoolConfiguration().apply(pool, factory));
+			cacheConfiguration.pdx().ifPresent(pdx -> {
+				factory.setPdxReadSerialized(pdx.readSerialized()).setPdxIgnoreUnreadFields(pdx.ignoreUnreadFields());
+				pdx.diskStoreName().ifPresent(factory::setPdxDiskStore);
+				if (pdx.persistent()) factory.setPdxPersistent(true);
+				factory.setPdxSerializer(new GemFirePdxSerializerBridge(pdx.serializer().orElse(null)));
+			});
 			return new GemFireConnection(factory.create());
 		}
 		catch (UnsupportedFeatureException ex) {
