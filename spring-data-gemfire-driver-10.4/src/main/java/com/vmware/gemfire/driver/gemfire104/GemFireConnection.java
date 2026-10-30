@@ -87,6 +87,20 @@ final class GemFireConnection implements DriverConnection {
 		});
 	}
 
+	@Override
+	public DriverPool getDefaultPool() {
+		return invoke("getDefaultPool", () -> {
+			checkPoolAccess();
+			Pool pool = ((ClientCache) cache).getDefaultPool();
+			return pool == null ? null : new GemFirePool(pool);
+		});
+	}
+
+	private void checkPoolAccess() {
+		if (cache.isClosed()) throw new IllegalStateException("Cache is closed");
+		if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient()) throw new IllegalStateException("Pool access requires a CLIENT cache");
+	}
+
 	private void checkPoolAccess(String name) {
 		if (cache.isClosed()) throw new IllegalStateException("Cache is closed");
 		if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient()) throw new IllegalStateException("Pool access requires a CLIENT cache");

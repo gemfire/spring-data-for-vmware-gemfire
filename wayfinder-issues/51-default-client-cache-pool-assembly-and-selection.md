@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 50, 59
 
 # Default client-cache pool assembly and selection
@@ -23,3 +23,15 @@ Record source/API mappings, native artifact, commands and behavior evidence in a
 ## Task 69 default-selection handoff — 2026-10-28
 
 The [default-pool source trace](../wayfinder-impl/investigations/client-pool-and-durable-scope.md#client-default-pool-selection) retains the assigned ClientCache.getDefaultPool ID here, with task 35 adoption. Preserve lazy native selection: empty registry/default localhost endpoint, singleton reuse, multiple-pool compatibility search and null when none matches, explicit factory endpoint fallback/compatibility, and unique creation names. Do not assume literal DEFAULT/gemfirePool lookup or deterministic lexical choice among compatible pools. Task 67's separate assembly IDs remain assigned there; no cross-family reassignment or implementation status upgrade occurs.
+
+## Answer
+
+Resolved 2026-10-30. Only task 51 is resolved; parent 20, task 35 (Spring cutover) and task 52 (`PoolManager` registry) stay open.
+
+- **SPI**: `CacheConfiguration.defaultPool()` (optional typed `PoolConfiguration`, nullable 2-arg constructor) and `DriverConnection.getDefaultPool()` (default throws `notIntroduced`; returns null when nothing is selected).
+- **Native adapter** (build `10.4.0-build.3068.c3a2bbfe`): `GemFireDefaultPoolConfiguration` applies the settings to `ClientCacheFactory.setPool*`, `addPoolServer` and `addPoolLocator` before `create()`; `GemFire104Driver.connect` lets `UnsupportedFeatureException` through unwrapped; `GemFireConnection.getDefaultPool()` wraps `ClientCache.getDefaultPool()`. `threadLocalConnections` is rejected as `removed`. Native cache reuse/conflict (`Existing cache's default pool was not compatible`) is left to the native cache.
+- **Mock**: `MockGemFireDriver`/`MockConnection` document a local selection policy (empty registry creates a pool, one pool is selected, several give null) with a `localhost:40404` server fallback; no native compatibility/reuse is simulated.
+- **Coverage**: 29 rows (`ClientCache#getDefaultPool`, `ClientCacheFactory` `addPoolLocator`, `addPoolServer`, 26 `setPool*`) are `implemented`; `existing_spi` gains `DriverConnection#getDefaultPool`. Because task 23 closed, its 312 unfinished retained rows and 47 SPI mappings were reassigned to open task 36 (no content change).
+- **Behaviour evidence** (javap of `GemFireCacheImpl` on the 3068 jar): a missing endpoint becomes `LocalHostUtil.getLocalHostName()` as a **server** on port **40404** (not a locator), added only when both lists are empty; `determineDefaultPool` is lazy; generated names `DEFAULT`, `DEFAULT1`, … are never used as the selection key.
+- **Validation (user-run, passed)**: `./gradlew :spring-data-gemfire-driver-mock:test --tests '*MockDefaultPoolTests' :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativeDefaultPoolTests'` (5 mock + 11 native tests). Coverage tooling (run directly, passed): `build_api_coverage.py`, `build_api_coverage.py --check`, `validate_coverage.py`, `validate_coverage.py --javap`, and the coverage unittest discovery (16 tests).
+- Known limits: Spring consumers still use native pool creation until task 35; this is not native-free compliance, and no commit was created.

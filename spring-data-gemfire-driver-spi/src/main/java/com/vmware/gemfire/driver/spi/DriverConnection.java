@@ -67,6 +67,16 @@ public interface DriverConnection extends DriverRegionService {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getPool");
 	}
 
+	/**
+	 * Returns the pool the cache selected as its default, or null when native selection finds none
+	 * (several pools exist and none is compatible with an implicit default). Selection is lazy and
+	 * is not name based: the result need not be called {@code DEFAULT} or {@code gemfirePool}.
+	 * Requires an open CLIENT connection.
+	 */
+	default DriverPool getDefaultPool() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getDefaultPool");
+	}
+
 	/** Returns the root regions currently defined in this cache. */
 	default Set<DriverRegion<?, ?>> rootRegions() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.rootRegions");

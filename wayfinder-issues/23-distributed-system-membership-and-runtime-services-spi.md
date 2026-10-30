@@ -1,8 +1,25 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 14, 16, 18, 59
 
 # Client runtime identity and connectivity SPI
+
+## Current closure checklist — 2026-10-30
+
+This section and the [current closure ledger](../wayfinder-impl/investigations/client-runtime-closure.md) supersede remaining-work statements in the historical checkpoints below. Runtime identity/cancellation, property discovery/readback, statistics and logging have validated driver implementations. Their old checkpoint TODOs are not new implementation tasks.
+
+Transferred 71 partial configuration rows without changing scope or completion status: 41 TLS/authentication rows to task 24, and 30 runtime/monitoring rows to task 29. Task 35 owns their entrypoint adoption; task 36 retains utility adoption. Task 23 now owns **312 required-client rows: 312 partial, zero missing**.
+
+- [x] Assign configuration acceptance to tasks 24/29 with exact IDs and preserved evidence.
+- [x] Regenerate and validate coverage inventories after user-reported Spring main recompilation with GemFire `10.4.0-build.3068.c3a2bbfe`. Generated inventories confirm the 312-row ownership count; freshness checking, coverage validation with `--javap` and all 16 policy tests pass. The frozen API baseline remains build `3056.df98c835`.
+- [x] Reconcile all 312 remaining-work statements against validated family evidence and explicit typed replacements. Preserve scope, status and implementation/test mappings; retain mock limitations and task-36 adoption.
+- [x] Record the received-failure source disposition: pinned AbstractOp response handlers preserve these payloads inside ServerOperationException. Retain outer RESOURCE_FAILURE classification; no peer-role or lock API is required. See the closure ledger for source paths and limits.
+- [x] Validate the focused received-wrapper regression in GemFireExceptionMapperTests on build 3068. This tests wrapper translation and cause preservation, not live wire fault injection.
+- [x] Record the exact 312-row task-36 consumer handoff and family-specific acceptance requirements.
+- [x] Record the final task-23 Answer and reconcile coverage ownership after the focused test passes. Keep downstream adoption/configuration statuses incomplete until their owners validate them.
+
+Task 23 remains open. The downstream tasks already depend on this foundation; this handoff adds no reverse dependency and does not block task 23 on completion of tasks 24/29/36.
+
 
 ## Client-only scope — 2026-10-22
 
@@ -291,3 +308,13 @@ Typed assembly remains in task 29; TLS/authentication in task 24; Spring adoptio
 in tasks 35/36.
 
 See [evidence, limits and user-run command](../wayfinder-impl/investigations/client-configuration-properties.md#monitoring-configuration-checkpoint--2026-10-30).
+
+## Answer
+
+Resolved 2026-10-30. [Closure ledger, limits and handoffs](../wayfinder-impl/investigations/client-runtime-closure.md).
+
+- Pinned `AbstractOp` wraps received RoleException, StatisticsDisabledException and LeaseExpiredException payloads in `ServerOperationException`. The driver maps that outer wrapper to `RESOURCE_FAILURE` (Spring: `DataAccessResourceFailureException`), preserving nested causes with a safe outer message.
+- User-run validation passed on build `10.4.0-build.3068.c3a2bbfe`: `./gradlew --offline -DgemfireVersion=10.4.0-build.3068.c3a2bbfe :spring-data-gemfire-driver-10.4:integrationTest --tests '*GemFireExceptionMapperTests' verifyDriverCompatibility verifyMigrationBoundary`. This is a wrapper-translation test, not live wire fault injection.
+- Task 23 retains **312 partial required-client rows and zero missing**, all with consumer owner task 36. Typed runtime/identity/cancellation/statistics/logging/configuration SPI replaces public native system construction and lookup. Seventy-one configuration rows moved to tasks 24 (41 TLS/authentication) and 29 (30 runtime/monitoring).
+- Known limits: native compatible-cache reuse and mock connection isolation are deliberate differences; the mock makes no remote claims.
+- Partial rows remain partial until tasks 24, 29, 35 and 36 adopt and validate them. This is not native-free compliance, and no commit was created.

@@ -8,7 +8,17 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 ## Current scope and next task — 2026-10-30
 
-Latest slice: **monitoring configuration tests validated**. The user reported success for the focused mock/native runtime and configuration tests and transitional migration boundary; this is not native-free compliance. Added native effective-readback coverage for 14 settings, sampling-rate normalization and nine invalid-value cases, plus a mock snapshot test for sampling/archive/thread-monitor settings. No production API change or coverage-count change: task 23 remains open with 383 partial and zero missing rows. Typed assembly, security/TLS and Spring adoption retain their existing owners. See [scope, limits and user-run command](investigations/client-configuration-properties.md#monitoring-configuration-checkpoint--2026-10-30).
+Ownership validation complete: following user-reported Spring main recompilation, coverage regeneration, freshness checking and validation with `--javap` passed. All 16 policy tests pass. The active test version and Docker image use `10.4.0-build.3068.c3a2bbfe`; the frozen API inventory and historical runtime evidence remain labelled with build `3056.df98c835`.
+
+Latest slice: **task 48 resolved**. Native-free `InterestPolicy`/`SubscriptionAttributes` values and client request-routing contracts (`DriverPartitionResolver`, `DriverEntryOperation`, `StringPrefixPartitionResolver`) are implemented in the SPI, native adapter and mock; 46 coverage rows are upgraded (39 implemented, 7 partial) and user-run SPI, native and compatibility gates passed. Adoption stays with 30, delivery with 45, durability with 52.
+
+Previous slice: **task 51 resolved**. Typed default-pool configuration at cache creation and a true `DriverConnection.getDefaultPool()` lookup are implemented in the SPI, native adapter and mock; user-run mock (5) and native (11) tests passed on build 3068, and 312 unfinished task-23 rows were reassigned to task 36. No native-free compliance is claimed.
+
+Earlier slice: **task 23 resolved**. The focused received-wrapper regression passed user-run on build 3068 and the final Answer is recorded. 312 partial required-client rows remain owned by consumer task 36 (plus 24/29/35 handoffs); no native-free compliance is claimed.
+
+Previous slice: **task-23 closure checklist and configuration ownership reconciled**. Transferred 71 partial configuration rows to their implementation owners: 41 TLS/authentication rows to task 24 and 30 runtime/monitoring rows to task 29, with entrypoint adoption in 35. Task 23 retains 312 partial required-client rows and zero missing. All scope decisions and completion statuses are unchanged. The [current closure ledger](investigations/client-runtime-closure.md) supersedes historical TODOs below: reconcile existing family evidence, settle received-failure transport evidence, then record explicit task-36 handoffs and the final Answer. Task 23 remains open; no native-free compliance or new Java validation is claimed.
+
+Previous slice: **monitoring configuration tests validated**. The user reported success for the focused mock/native runtime and configuration tests and transitional migration boundary; this is not native-free compliance. Added native effective-readback coverage for 14 settings, sampling-rate normalization and nine invalid-value cases, plus a mock snapshot test for sampling/archive/thread-monitor settings. No production API change or coverage-count change: task 23 remains open with 383 partial and zero missing rows. Typed assembly, security/TLS and Spring adoption retain their existing owners. See [scope, limits and user-run command](investigations/client-configuration-properties.md#monitoring-configuration-checkpoint--2026-10-30).
 
 Previous slice: **remaining runtime/failure mappings validated**. The final 24 missing task-23 rows now map to existing owned client connections and typed failure values: 383 required-client rows are partial, zero are missing. User-reported validation passed for the focused constructor/cause/translation tests, native member-ID alias assertion, driver compatibility and transitional migration boundary. Native global connection state stays private; the mock retains isolated connections. This is a mapping milestone, not task completion. Task 23 remains open for behavior verification and handoffs; task 36 owns Spring adoption. See [evidence, limits and user-run command](investigations/client-runtime-lifecycle-and-failures.md).
 
@@ -52,11 +62,10 @@ All **3,851 frozen API IDs** and **2,723 audit assignments** are preserved:
 source/resource references have dispositions, and unfinished required mappings
 have open completion owners. Three stale TransactionWriter mappings are cleared.
 Generation/check, all 16 policy tests and independent declaration checks pass.
-There are **33 open tasks**, **42 completed tasks** and **2 superseded tasks**
+There are **30 open tasks**, **45 completed tasks** and **2 superseded tasks**
 (77 total). Classification and cleanup do not complete retained client implementation.
 
-**Next: [23 — Client runtime identity and connectivity SPI](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md)**,
-the lowest eligible open task after parent 59 closes. All bounded audits and
+Tasks 51 and 48 are resolved (2026-10-30). **Next: the lowest eligible open task — 47 (tasks 54, 55, 56 are also unblocked; 51 now unblocks 20/21/22/24/25 pending their other blockers).** All bounded audits and
 fixture cleanup tasks 60–77 are complete. Tickets 42/43 remain superseded.
 
 Task 23 now has a [runtime/cancellation implementation checkpoint](investigations/client-runtime-handles.md): local identity and connectedness, separate cache cancellation, native/mock implementations and lifecycle tests. Nine new SPI defaults map to eleven partial native rows. User-run Java validation passed (164 tests, zero failures/errors/skips), including compatibility, mock native-free classpath and transitional boundary checks. Task 23 remains open with its remaining services listed in that checkpoint.
@@ -90,6 +99,8 @@ Tasks 60–77 preserve the 3,851 frozen API IDs; validated generated scope is 2,
 - Branch strategy (per `wayfinder/technical-spec.md` §7): work happens on a dedicated long-lived integration branch (e.g. `driver-spi-migration`), separate from the repo's `support/<gemfire>-<spring>-<sdgf>.x` convention, merged into `develop` once at cutover.
 
 ## Decisions so far
+
+- [Client runtime identity and connectivity SPI — task 23 resolved](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md) — typed runtime, identity, cancellation, statistics, logging and configuration services; received failures keep the `ServerOperationException` `RESOURCE_FAILURE` classification. 312 partial rows await adoption by tasks 24/29/35/36.
 
 - [Shared exception scope — task 76 resolved](investigations/client-shared-exception-scope.md) — 390 fixed IDs classified: 341 client requirements and 49 exclusions. Category retirement, user-run Java checks and generated inventory reconciliation pass.
 

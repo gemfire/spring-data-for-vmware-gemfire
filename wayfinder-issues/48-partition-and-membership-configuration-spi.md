@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 46, 59
 
 # Client routing and subscription policy configuration SPI
@@ -36,3 +36,14 @@ Define a typed client routing callback/context and private native bridge. Native
 SubscriptionAttributes() defaults to CACHE_CONTENT; ClientRegionFactoryImpl explicitly installs ALL. Preserve supported creation/readback paths and this distinction. ALL does not register interest or guarantee event delivery. Keep ordinal serialization/canonical values and nullable invalid-state behavior inside explicit conversion/compatibility handling, coordinating 55/58. Native ClientRegionFactory has no public subscription setter; do not fabricate a supported override path.
 
 Add shared typed-value/routing tests and versioned native compatibility tests for selection precedence, metadata construction, context/payload conversion, hook invocation, string keys (empty/missing prefix, non-String/null), defaults and failures. Mock routing/value support must be explicit and must not imply network subscription delivery. Task 45 owns actual interest delivery and 52 durability. The 112 excluded hosting/peer IDs have no current public mapping to retire; this audit is complete, implementation remains open.
+
+## Answer
+
+Resolved 2026-10-30. Only task 48 is resolved; adoption stays with task 30, interest delivery with 45, durability with 52 and function routing with 25.
+
+- **SPI**: `config.InterestPolicy` (`ALL`, `CACHE_CONTENT`, default `CACHE_CONTENT`), `config.SubscriptionAttributes` (value class, bare constructor is `CACHE_CONTENT`), `DriverEntryOperation`, `DriverPartitionResolver` (default `close()`) and `StringPrefixPartitionResolver` (first-delimiter routing, native errors preserved), plus `DriverRegionAttributes#getSubscriptionAttributes`.
+- **Native adapter**: `GemFirePartitionResolver` bridges the SPI resolver to the native callback and keeps `EntryOperation` private. `GemFireRegionAttributes` converts the subscription policy by name, not native ordinal. Client regions report `ALL`, matching `ClientRegionFactoryImpl`.
+- **Mock**: `MockRegionAttributes` reports `ALL` and does not simulate interest registration or delivery.
+- **Coverage**: 46 retained rows are upgraded (39 `implemented`, 7 `partial`). The partial rows are `InterestPolicy#ordinal`/`#fromOrdinal` and the four `SubscriptionAttributes` serialization methods (native ABI, private to the adapter) and `AttributesFactory#setSubscriptionAttributes` (native client factories have no public setter). `existing_spi` gains `DriverPartitionResolver#close()V`. The 112 hosting/peer exclusions are unchanged.
+- **Validation (user-run, passed)**: `./gradlew :spring-data-gemfire-driver-spi:test --tests '*StringPrefixPartitionResolverTests' :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativePartitionResolverTests' verifyDriverCompatibility`, plus the earlier `verifyMigrationBoundary` run. Coverage tooling (run directly, passed): `build_api_coverage.py` (3851 rows, unresolved 0), `validate_coverage.py` and the 16 coverage unit tests.
+- Known limits: `getName()` reports the implementing class, so SPI and native resolvers differ by design. No commit was created.

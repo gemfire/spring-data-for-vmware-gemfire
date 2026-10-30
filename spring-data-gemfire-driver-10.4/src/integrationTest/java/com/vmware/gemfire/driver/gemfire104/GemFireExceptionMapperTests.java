@@ -6,6 +6,7 @@ package com.vmware.gemfire.driver.gemfire104;
 
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.client.ServerOperationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -67,6 +68,23 @@ class GemFireExceptionMapperTests {
 			.isInstanceOfSatisfying(DriverOperationException.class,
 				failure -> assertThat(failure.kind()).isEqualTo(DriverFailureKind.FUNCTION_FAILURE))
 			.hasCause(execution).hasRootCause(lease).hasMessage("GemFire operation failed: execute");
+	}
+
+	@Test
+	void receivedRuntimeFailuresPreserveServerOperationClassification() {
+		for (Exception nativeFailure : new Exception[] {
+			new RoleException("role-secret") {}, new StatisticsDisabledException("statistics-secret"),
+			new LeaseExpiredException("lease-secret") }) {
+			var received = new ServerOperationException("server-secret", nativeFailure);
+			assertThat(mapper.translate("put", received))
+				.isInstanceOfSatisfying(DriverOperationException.class, failure -> {
+					assertThat(failure.kind()).isEqualTo(DriverFailureKind.RESOURCE_FAILURE);
+					assertThat(failure.toString()).doesNotContain("secret");
+					assertThat(new GemFireDriverExceptionTranslator().translateExceptionIfPossible(failure))
+						.isInstanceOf(org.springframework.dao.DataAccessResourceFailureException.class)
+						.hasCause(failure).hasMessage("GemFire operation failed: put");
+				}).hasCause(received).hasRootCause(nativeFailure).hasMessage("GemFire operation failed: put");
+		}
 	}
 
 	@Test

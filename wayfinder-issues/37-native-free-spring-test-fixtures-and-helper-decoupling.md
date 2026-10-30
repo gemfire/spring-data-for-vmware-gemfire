@@ -43,3 +43,7 @@ Task 63 removes the inherited production attributes factory and temporarily expo
 ## Final reconciliation handoff — task 64
 
 Own the two native logger category resource rows. They configure client test diagnostics without class loading; remove unused native categories or relocate native-specific settings with driver fixtures as test migration proceeds. Preserve useful logging and native-free checks; no classpath exception or public SPI follows. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.
+
+## GemFire build 3068 scope baseline reconciliation
+
+The GEM-20486 cherry-pick (`4d2cebb2`, from `5b75664e`) changes one existing native scope reference in each of `CacheClusterConfigurationIntegrationTests` and `RegionLookupIntegrationTests` from `Scope.DISTRIBUTED_NO_ACK` to `Scope.DISTRIBUTED_ACK`, matching the updated XML fixtures and GemFire `10.4.0-build.3068.c3a2bbfe`. The transitional baseline replaces those two old occurrences with the corresponding ACK occurrences, merging the count where an ACK entry already exists. The total permitted native-reference count and cleanup ownership are unchanged; the checker rules are unchanged. This compatibility adjustment does not complete test migration. Gradle boundary verification remains pending user execution.

@@ -37,6 +37,18 @@ Audit residual server-package utilities by actual client use. Remove server-only
 
 Production native-reference inventory is zero under the final boundary policy; every required API row has an implementation owner and evidence. Record the Answer with changed source/API rows, commands/results, native version and limitations; update the implementation map. Do not mark dependent work complete from this ticket's result.
 
+## Current runtime adoption handoff — 2026-10-30
+
+The [runtime closure ledger](../wayfinder-impl/investigations/client-runtime-closure.md) supersedes historical runtime/configuration counts below. Adopt all 312 required-client rows currently owned by task 23 in `api-coverage.tsv`, each already assigned consumer owner 36: cancellation 9, runtime context 28, member metadata 9, durable identity 11, statistics 133, logging/message values 105, and runtime/received failures 17. These remain partial; this handoff does not prove consumer migration.
+
+- Replace global runtime discovery with injected owned collaborators. Test absence, closed-state behavior, system/cache cancellation distinctions, safe property snapshots and deliberate per-call native property discovery. Do not equate a locally connected runtime with a reachable server.
+- Adopt typed member and detached durable identity payloads, preserving null/empty values and pool qualification. Native mutable aliases and native serialization APIs are not part of the client contract; remote durable lifecycle remains with 20/52.
+- Migrate statistics callers through typed descriptors, instances, accessors, suppliers and XML loading. Preserve the documented disabled/closed behavior and deprecated int semantics; activation of native archives/thread monitoring belongs to 29.
+- Migrate logging/message callers through the unified typed handle, preserving levels, traces, destinations, JUL integration and localization. Respect documented mock fallback and coordinate security/configuration routing with 24/29/35.
+- Preserve outer-operation failure classification, safe outer diagnostics and trusted causes. Received ServerOperationException wrappers remain resource failures even with nested role/statistics/lease failures; arbitrary root causes must not be reclassified. The focused foundation regression awaits user-run validation as recorded in the ledger.
+
+For each adopted family, record changed source rows, native-free consumer regression evidence and deliberate behavior differences before upgrading coverage. The separate 71 configuration rows now belong to 24/29 with entrypoint adoption in 35; they are not additional task-23 runtime implementation work. Task 36 retains its existing prerequisites and remains open.
+
 ## Task 72 handoff — 2026-10-28
 
 Task 72 retains 145 exact runtime/configuration IDs with implementation owner 23 and this consumer owner. Replace DistributedSystemUtils/GemfireUtils native runtime identity, connectedness, safe property/durable helpers with injected typed client collaborators. Coordinate configuration entrypoints with 35, durable/pools with 20, authentication/TLS with 24 and local statistics/logging with 73. The public locator-hosting accessor is removed in task 72; private LocatorProcess shutdown owns its own started locator. Preserve client XML, pool locator discovery, client TLS including legacy fallbacks, and local cancellation/identity. No public global native registry or opaque Object escape hatch is an acceptable replacement. See [the exact scope ledger](../wayfinder-impl/investigations/client-runtime-configuration-and-lifecycle-scope.md).

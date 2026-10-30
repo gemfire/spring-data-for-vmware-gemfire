@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.function.Supplier;
 import com.vmware.gemfire.driver.spi.*;
 import com.vmware.gemfire.driver.spi.config.DataPolicy;
+import com.vmware.gemfire.driver.spi.config.InterestPolicy;
 import com.vmware.gemfire.driver.spi.config.Scope;
+import com.vmware.gemfire.driver.spi.config.SubscriptionAttributes;
 
 final class GemFireRegionAttributes<K, V> implements DriverRegionAttributes<K, V> {
 	private final GemFireRegion<K, V> region;
@@ -30,6 +32,12 @@ final class GemFireRegionAttributes<K, V> implements DriverRegionAttributes<K, V
 	@Override public String getDiskStoreName() { return invoke("getDiskStoreName", () -> attributes.getDiskStoreName()); }
 	@Override public boolean isDiskSynchronous() { return invoke("isDiskSynchronous", () -> attributes.isDiskSynchronous()); }
 	@Override public boolean getIndexMaintenanceSynchronous() { return invoke("getIndexMaintenanceSynchronous", () -> attributes.getIndexMaintenanceSynchronous()); }
+	@Override public SubscriptionAttributes getSubscriptionAttributes() {
+		return invoke("getSubscriptionAttributes", () -> {
+			var nativePolicy = attributes.getSubscriptionAttributes().getInterestPolicy();
+			return new SubscriptionAttributes(nativePolicy == null ? null : InterestPolicy.valueOf(nativePolicy.toString()));
+		});
+	}
 	@Override public List<DriverCacheListener<K, V>> getCacheListeners() { return region.getCacheListeners(); }
 	@Override public DriverCacheLoader<K, V> getCacheLoader() { return region.getCacheLoader(); }
 	@Override public DriverCacheWriter<K, V> getCacheWriter() { return region.getCacheWriter(); }

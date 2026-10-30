@@ -32,6 +32,10 @@ final class MockConnection implements DriverConnection {
 	private final Map<java.util.List<String>, Integer> pdxEnumOrdinals = new HashMap<>();
 	private final MockTransactionManager transactions = new MockTransactionManager();
 	private volatile boolean closed;
+	private final PoolConfiguration LOCALHOST = PoolConfiguration.builder()
+		.servers(java.util.List.of(new PoolConfiguration.Endpoint("localhost", 40404))).build();
+	private PoolConfiguration explicitDefaultPool;
+	private MockPool defaultPool;
 	private final MockClientRuntime runtime;
 	private final MockCancellation cancellation = new MockCancellation(() -> closed);
 
@@ -42,6 +46,13 @@ final class MockConnection implements DriverConnection {
 	}
 
 	MockConnection(java.util.Properties properties, boolean statisticsEnabled) {
+		this(properties, statisticsEnabled, null);
+	}
+
+	MockConnection(java.util.Properties properties, boolean statisticsEnabled, PoolConfiguration defaultPool) {
+		if (defaultPool != null) {
+			this.explicitDefaultPool = new MockPoolConfiguration().resolve(defaultPool.withFallback(LOCALHOST));
+		}
 		this.member = new MockMember(properties);
 		this.runtime = new MockClientRuntime(member, () -> closed, properties, statisticsEnabled);
 	}
@@ -103,6 +114,23 @@ final class MockConnection implements DriverConnection {
 	public DriverPool getPool(String name) {
 		checkPoolAccess(name);
 		return pools.get(name);
+	}
+
+	@Override
+	public DriverPool getDefaultPool() {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		if (defaultPool != null && !defaultPool.isDestroyed()) return defaultPool;
+		defaultPool = null;
+		if (explicitDefaultPool != null || pools.isEmpty()) {
+			String name = "DEFAULT";
+			for (int i = 1; pools.containsKey(name); i++) name = "DEFAULT" + i;
+			defaultPool = new MockPool(name, explicitDefaultPool != null ? explicitDefaultPool : LOCALHOST, this);
+			pools.put(name, defaultPool);
+		}
+		else if (pools.size() == 1) {
+			defaultPool = pools.values().iterator().next();
+		}
+		return defaultPool;
 	}
 
 	void removePool(String name, MockPool pool) { pools.remove(name, pool); }

@@ -25,6 +25,13 @@ class MockRegionConfigurationTests {
 			assertThatThrownBy(() -> m.setCloningEnabled(true)).isInstanceOf(UnsupportedFeatureException.class);
 			assertThat(m.getCloningEnabled()).isFalse(); }
 	}
+	@Test void clientRegionsReportAllSubscriptionPolicyWithoutSimulatingDelivery() {
+		try (var c = new MockConnection()) {
+			var region = c.createClientRegion("local", ClientRegionShortcut.LOCAL);
+			assertThat(region.getAttributes().getSubscriptionAttributes()).isEqualTo(new SubscriptionAttributes(InterestPolicy.ALL));
+			assertThat(region.getAttributes().getSubscriptionAttributes()).isNotEqualTo(new SubscriptionAttributes());
+		}
+	}
 	@Test void childCleanupFailureStillClosesTheWholeLocalTree() {
 		try (var c = new MockConnection()) {
 			var root = c.createClientRegion("root", ClientRegionShortcut.LOCAL);

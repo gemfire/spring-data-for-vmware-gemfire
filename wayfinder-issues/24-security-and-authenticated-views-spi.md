@@ -4,6 +4,13 @@ Blocked by: 14, 16, 20, 21, 23, 59
 
 # Security and authenticated views SPI
 
+## Configuration acceptance transferred from task 23 — 2026-10-30
+
+Own the 41 partial ConfigurationProperties rows listed in the [exact handoff ledger](../wayfinder-impl/investigations/client-runtime-closure.md#configuration-row-handoff): 36 client TLS properties and five authentication properties. Existing SPI names, native forwarding, snapshot/redaction tests and version evidence remain intact; this is not completed security behavior.
+
+Validate locator/server TLS selection, legacy CLUSTER_SSL/SERVER_SSL versus SSL_ENABLED_COMPONENTS precedence, supported aliases and channel constraints. Cover accepted and rejected configuration, credential callback lifecycle/security properties, security log routing and safe failure diagnostics. Coordinate typed assembly with task 29 and Spring entrypoints with task 35. The mock must expose its local orchestration limits explicitly rather than claim remote authentication/TLS parity. Excluded server/admin channels remain excluded.
+
+
 ## Client-only scope — 2026-10-22
 
 Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.

@@ -15,6 +15,7 @@ import com.vmware.gemfire.driver.spi.DriverConnection;
 import com.vmware.gemfire.driver.spi.DriverMetadata;
 import com.vmware.gemfire.driver.spi.DriverPropertyFile;
 import com.vmware.gemfire.driver.spi.GemFireDriver;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 
 /** ServiceLoader provider for the exact GemFire 10.4 version stamped at build time. */
 public final class GemFire104Driver implements GemFireDriver {
@@ -55,7 +56,12 @@ public final class GemFire104Driver implements GemFireDriver {
 			throw new DriverBindException("The GemFire driver requires CacheConfiguration.");
 		}
 		try {
-			return new GemFireConnection(new ClientCacheFactory(cacheConfiguration.properties()).create());
+			ClientCacheFactory factory = new ClientCacheFactory(cacheConfiguration.properties());
+			cacheConfiguration.defaultPool().ifPresent(pool -> new GemFireDefaultPoolConfiguration().apply(pool, factory));
+			return new GemFireConnection(factory.create());
+		}
+		catch (UnsupportedFeatureException ex) {
+			throw ex;
 		}
 		catch (RuntimeException ex) {
 			throw new DriverBindException("Unable to create the GemFire cache.", ex);

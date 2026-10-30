@@ -27,12 +27,16 @@ class NativeRegionConfigurationTests {
 			var attributes = region.getAttributes();
 			for (var method : DriverRegionAttributes.class.getMethods()) {
 				if (method.getName().startsWith("getCache")) continue; // Shared suite verifies callback identity/lifecycle.
+					if (method.getName().equals("getSubscriptionAttributes")) continue; // Typed value; asserted below.
 				Object expected = org.apache.geode.cache.RegionAttributes.class.getMethod(method.getName()).invoke(nativeAttributes);
 				Object actual = method.invoke(attributes);
 				if (actual instanceof Enum<?>) expected = expected.toString();
 				assertThat(actual instanceof Enum<?> ? actual.toString() : actual).as(method.getName()).isEqualTo(expected);
 			}
 			assertThat(attributes.getStatisticsEnabled()).isTrue(); assertThat(attributes.getCloningEnabled()).isTrue();
+			// Client regions install ALL, unlike the CACHE_CONTENT default of a bare SubscriptionAttributes.
+			assertThat(nativeAttributes.getSubscriptionAttributes().getInterestPolicy().toString()).isEqualTo("ALL");
+			assertThat(attributes.getSubscriptionAttributes()).isEqualTo(new SubscriptionAttributes(InterestPolicy.ALL));
 			region.put("key", 1); region.get("key"); region.get("missing");
 			assertThat(region.getStatistics().getHitCount()).isEqualTo(1); assertThat(region.getStatistics().getMissCount()).isEqualTo(1);
 			var child = region.createClientSubregion("child", ClientRegionShortcut.LOCAL, RegionConfiguration.<String, Integer>builder().statisticsEnabled(true).build());
@@ -65,11 +69,13 @@ class NativeRegionConfigurationTests {
 			assertThat(cache.getRegion("bad")).isNull();
 		}
 	}
-	@Test void scopePredicatesAndConfigurationNamesMatchNative() {
-		for (var scope : Scope.values()) {
-			var nativeScope = org.apache.geode.cache.Scope.fromString(scope.name());
+	@Test void supportedScopePredicatesAndConfigurationNamesMatchNative() {
+		// This native version no longer supports DISTRIBUTED_NO_ACK.
+		for (var nativeScope : List.of(org.apache.geode.cache.Scope.LOCAL,
+				org.apache.geode.cache.Scope.DISTRIBUTED_ACK, org.apache.geode.cache.Scope.GLOBAL)) {
+			var scope = Scope.valueOf(nativeScope.toString());
 			assertThat(scope.isLocal()).isEqualTo(nativeScope.isLocal()); assertThat(scope.isDistributed()).isEqualTo(nativeScope.isDistributed());
-			assertThat(scope.isDistributedAck()).isEqualTo(nativeScope.isDistributedAck()); assertThat(scope.isDistributedNoAck()).isEqualTo(nativeScope.isDistributedNoAck());
+			assertThat(scope.isDistributedAck()).isEqualTo(nativeScope.isDistributedAck()); assertThat(scope.isDistributedNoAck()).isFalse();
 			assertThat(scope.isGlobal()).isEqualTo(nativeScope.isGlobal()); assertThat(scope.isAck()).isEqualTo(nativeScope.isAck());
 			assertThat(scope.toConfigTypeString()).isEqualTo(nativeScope.toConfigTypeString());
 		}

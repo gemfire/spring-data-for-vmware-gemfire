@@ -1,5 +1,9 @@
 # SPI gap closure implementation plan
 
+The ownership changes below are reflected in regenerated inventories. Freshness checking, coverage validation with `--javap` and all 16 policy tests pass. See the closure ledger for validation details and version provenance.
+
+Current task-23 completion is bounded by the [runtime closure ledger](investigations/client-runtime-closure.md). Its 71 configuration rows are now owned by tasks 24/29; 312 runtime rows remain partial under 23. This ownership reconciliation changes neither global completion counts nor client scope.
+
 Created 2026-10-21 from the [native/SPI gap audit](audits/native-spi-gap-audit.md), under the existing [implementation map](map.md) and [signed-off spec](../wayfinder/technical-spec.md). This is an executable issue/dependency index, not a claim that the gaps are closed. Ticket files in `wayfinder-issues/` are the source of truth for status, assignment, blockers and resolution.
 
 The [member-level coverage baseline](coverage/README.md) now records required inherited APIs, callbacks and transitive payloads, with stable IDs and implementation owners. Its frozen discovery evidence survives removal of native imports. The [client-only amendment](client-only-scope.md) governs required scope; tasks 60/64 complete explicit scope classifications and reconciliation under resolved cleanup task 59.
@@ -20,11 +24,10 @@ All **3,851 frozen API IDs** and **2,723 audit assignments** are preserved:
 source/resource references have dispositions, and unfinished required mappings
 have open completion owners. Three stale TransactionWriter mappings are cleared.
 Generation/check, all 16 policy tests and independent declaration checks pass.
-There are **33 open tasks**, **42 completed tasks** and **2 superseded tasks**
+There are **30 open tasks**, **45 completed tasks** and **2 superseded tasks**
 (77 total). Classification and cleanup do not complete retained client implementation.
 
-**Next: [23 — Client runtime identity and connectivity SPI](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md)**,
-the lowest eligible open task after parent 59 closes. All bounded audits and
+Tasks 51 and 48 are resolved (2026-10-30). **Next: the lowest eligible open task — 47 (tasks 54, 55, 56 are also unblocked; 51 now unblocks 20/21/22/24/25 pending their other blockers).** All bounded audits and
 fixture cleanup tasks 60–77 are complete. Tickets 42/43 remain superseded.
 
 Ticket metadata is authoritative. Claim an eligible task only when all `Blocked by:` tasks are resolved. After ticket 59, use ascending order among eligible tasks unless the user directs otherwise. Do not automatically invoke skills or parallel agents. Scoped boundary passes do not establish final native-free compliance.
@@ -59,7 +62,7 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [20 — Complete pool, default-cache and durable SPI](../wayfinder-issues/20-complete-pool-default-cache-and-durable-spi.md) | open | 13, 14, 16, 50, 51, 52, 59 |
 | [21 — Query, results and index SPI](../wayfinder-issues/21-query-results-and-index-spi.md) | open | 14, 16, 18, 20, 59 |
 | [22 — Continuous query SPI](../wayfinder-issues/22-continuous-query-spi.md) | open | 14, 17, 20, 21, 45, 59 |
-| [23 — Client runtime identity and connectivity SPI](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md) | open | 14, 16, 18, 59 |
+| [23 — Client runtime identity and connectivity SPI](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md) | resolved | 14, 16, 18, 59 |
 | [24 — Security and authenticated views SPI](../wayfinder-issues/24-security-and-authenticated-views-spi.md) | open | 14, 16, 20, 21, 23, 59 |
 | [25 — Client function execution and results SPI](../wayfinder-issues/25-function-registration-execution-and-results-spi.md) | open | 14, 16, 18, 20, 23, 24, 59 |
 | [26 — PDX, serialization and JSON SPI](../wayfinder-issues/26-pdx-serialization-and-json-spi.md) | open | 14, 16, 53, 54, 55, 56, 57, 58, 59 |
@@ -84,7 +87,7 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [45 — Region interest registration and subscription SPI](../wayfinder-issues/45-region-interest-registration-and-subscription-spi.md) | open | 18, 19, 20, 59 |
 | [46 — Typed region creation and attribute access](../wayfinder-issues/46-typed-region-creation-and-attribute-access.md) | resolved | 14, 17, 18 |
 | [47 — Expiration, eviction and compression SPI](../wayfinder-issues/47-expiration-eviction-and-compression-spi.md) | open | 46, 59 |
-| [48 — Client routing and subscription policy configuration SPI](../wayfinder-issues/48-partition-and-membership-configuration-spi.md) | open | 46, 59 |
+| [48 — Client routing and subscription policy configuration SPI](../wayfinder-issues/48-partition-and-membership-configuration-spi.md) | resolved | 46, 59 |
 | [49 — Client configuration values and enum migration](../wayfinder-issues/49-legacy-region-configuration-values-and-enums.md) | open | 46, 47, 48, 59 |
 | [50 — Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) | resolved | 13, 14, 16 |
 | [51 — Default client-cache pool assembly and selection](../wayfinder-issues/51-default-client-cache-pool-assembly-and-selection.md) | open | 50, 59 |

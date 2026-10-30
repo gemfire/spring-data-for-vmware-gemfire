@@ -1217,15 +1217,7 @@
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/CacheClusterConfigurationIntegrationTests.java",
       "line": 238,
       "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_ACK",
-      "count": 1,
-      "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
-    },
-    {
-      "rule": "native-source",
-      "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/CacheClusterConfigurationIntegrationTests.java",
-      "line": 232,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
-      "count": 1,
+      "count": 2,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },
     {
@@ -2008,7 +2000,7 @@
       "rule": "native-source",
       "path": "spring-data-vmware-gemfire/src/integrationTest/java/org/springframework/data/gemfire/RegionLookupIntegrationTests.java",
       "line": 206,
-      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_NO_ACK",
+      "detail": "org.apache.geode.cache.Scope :: Scope.DISTRIBUTED_ACK",
       "count": 1,
       "owner": "wayfinder-issues/40-complete-driver-contract-and-native-integration-matrix.md"
     },

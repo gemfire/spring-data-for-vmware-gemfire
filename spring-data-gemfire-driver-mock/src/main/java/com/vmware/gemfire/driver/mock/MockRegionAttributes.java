@@ -68,6 +68,8 @@ final class MockRegionAttributes<K, V> implements DriverRegionAttributes<K, V> {
 	@Override public String getDiskStoreName() { return diskStoreName; }
 	@Override public boolean isDiskSynchronous() { return diskSynchronous; }
 	@Override public boolean getIndexMaintenanceSynchronous() { return indexMaintenanceSynchronous; }
+	/** Models the client-region default value only; no subscription or event delivery is implied. */
+	@Override public SubscriptionAttributes getSubscriptionAttributes() { return new SubscriptionAttributes(InterestPolicy.ALL); }
 	@Override public List<DriverCacheListener<K, V>> getCacheListeners() { return region.getCacheListeners(); }
 	@Override public DriverCacheLoader<K, V> getCacheLoader() { return region.getCacheLoader(); }
 	@Override public DriverCacheWriter<K, V> getCacheWriter() { return region.getCacheWriter(); }

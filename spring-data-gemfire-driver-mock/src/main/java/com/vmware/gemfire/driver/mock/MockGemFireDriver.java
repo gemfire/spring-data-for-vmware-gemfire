@@ -17,6 +17,11 @@ import com.vmware.gemfire.driver.spi.GemFireDriver;
  * native version "mock" identifies this stand-in; it does not claim compatibility with a native engine.
  * Named pools are per-connection configuration records with default minimum connections 1;
  * they open no sockets and do not simulate native registry sharing or region attachment.
+ * Default pool policy: an explicit default-pool configuration is validated at connect time and
+ * lazily becomes one generated-name pool (DEFAULT, DEFAULT1, ...) with a localhost:40404
+ * server (as native does, minus the DNS lookup) when no endpoint is given. Without one, an empty registry lazily creates the same localhost
+ * server pool, exactly one registered pool is selected, and several pools yield null: the mock does not
+ * simulate the native compatibility search or reuse/conflict with preexisting pools.
  * Only LOCAL regions are implemented. Distribution, persistence and eviction are not simulated.
  */
 public final class MockGemFireDriver implements GemFireDriver {
@@ -48,6 +53,6 @@ public final class MockGemFireDriver implements GemFireDriver {
 		if (!(configuration instanceof CacheConfiguration cacheConfiguration)) {
 			throw new DriverBindException("The mock driver requires CacheConfiguration.");
 		}
-		return new MockConnection(cacheConfiguration.properties(), statisticsEnabled);
+		return new MockConnection(cacheConfiguration.properties(), statisticsEnabled, cacheConfiguration.defaultPool().orElse(null));
 	}
 }

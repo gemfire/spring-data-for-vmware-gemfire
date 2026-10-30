@@ -4,6 +4,13 @@ Blocked by: 17, 19, 20, 23, 24, 26, 27, 28, 44, 45, 59
 
 # Complete cache configuration and creation assembly
 
+## Runtime configuration acceptance transferred from task 23 — 2026-10-30
+
+Own the 30 partial ConfigurationProperties rows listed in the [exact handoff ledger](../wayfinder-impl/investigations/client-runtime-closure.md#configuration-row-handoff): 16 runtime/type rows and 14 monitoring properties. Preserve the existing names, native forwarding and detached/redacted readback evidence. Complete typed assembly, defaults, precedence, aliases, invalid-value handling and client-only option rejection; coordinate durable lifecycle with task 20, security with task 24, entrypoints with task 35 and utility adoption with task 36.
+
+Monitoring acceptance is bounded: the existing tests establish 14 effective readbacks, sampling-rate normalization and nine invalid values. Still verify archive creation and rotation/limits, and activation of configured thread monitoring, using native fixtures and observable effects. Do not count accepted configuration/readback as proof of activation. Document explicit unsupported mock behavior; a supplied-property snapshot does not simulate native sampling, archives or watchdogs. Preserve client XML configuration and stream/callback ownership requirements below.
+
+
 ## Client-only scope — 2026-10-22
 
 Apply the [approved client-only boundary](../wayfinder-impl/client-only-scope.md). [Cleanup ticket 59](59-remove-server-only-spi-and-reconcile-client-scope.md) must complete first. Full/complete coverage in this ticket means every retained client requirement; historical native reachability alone does not require peer/server APIs. Preserve all retained client tests and native-free boundaries.
