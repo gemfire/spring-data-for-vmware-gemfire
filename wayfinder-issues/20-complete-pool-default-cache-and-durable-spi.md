@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 13, 14, 16, 50, 51, 52, 59
 
 # Complete pool, default-cache and durable SPI
@@ -51,3 +51,17 @@ Tasks 51/52 retain the other 17 assigned requirements. Parent completion needs t
 ## Final reconciliation handoff — task 64
 
 Own five partial current-SPI pool mappings transferred from foundation 50. Complete default/runtime semantics with 51/52 and Spring adoption with 35; named-pool foundation validation remains valid. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.
+
+## Answer — resolved 2026-10-31
+
+Parent 20 is resolved; Spring pool adapter adoption and resolver cutover (task 35) and cache assembly (task 29) stay open.
+
+**SPI and mappings.** Children 50, 51 and 52 are resolved. They deliver `PoolConfiguration` with typed endpoints, the `Pool` getters and `PoolFactory` defaults, named-pool and default-pool creation and selection, `DriverSocketFactory`, `getPools`, `getPoolForRegion`, `closePools`, `readyForEvents`, `close(boolean)`, `destroy(boolean)` and `getPendingEventCount`. They map to `PoolManager`, `PoolFactory`, `Pool` and `ClientCache`.
+
+**Native artifact.** GemFire build `10.4.0-build.3068.c3a2bbfe` (the frozen inventory keeps the `3056.df98c835` label).
+
+**Behavior evidence.** `NativePoolLifecycleTests` and the pool and default-pool native tests cover registry, readiness, keep-alive and destroy semantics. New in this ticket, `PoolConfigurationTests.nullSocketFactoryIsRejectedAndOmissionInheritsTheFallback` records the consumer policy: native `setSocketFactory` accepts null, the typed builder rejects it, and omission means unset.
+
+**Coverage.** The 84 partial pool rows moved to task 35 (Spring pool adapter) with consumption by tasks 35 and 29, as did the 14 required-client rows formerly owned by task 52 and the existing-SPI pool mappings. No status was changed and no row was upgraded without row-level evidence.
+
+**Validation (user-run):** `./gradlew :spring-data-gemfire-driver-spi:test --tests '*PoolConfigurationTests' :spring-data-gemfire-driver-mock:test :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativePoolLifecycleTests' --tests '*GemFire104DriverContractTests' --tests '*NativePoolTests' --tests '*NativeDefaultPoolTests' --tests '*NativePoolConfigurationTests' verifyMigrationBoundary verifyDriverCompatibility`

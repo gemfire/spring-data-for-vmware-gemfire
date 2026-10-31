@@ -15,6 +15,16 @@ public interface DriverRegionService extends AutoCloseable {
 	default DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
 		throw UnsupportedFeatureException.notIntroduced("RegionService.createPdxEnum");
 	}
+	/** The formatter bound to this service; an authenticated service converts in its own context. */
+	default DriverJsonFormatter getJsonFormatter() {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.getJsonFormatter");
+	}
+	default DriverJsonDocumentFactory getJsonDocumentFactory() {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.getJsonDocumentFactory");
+	}
+	default DriverJsonDocumentFactory getJsonDocumentFactory(DriverStorageFormat format) {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.getJsonDocumentFactory");
+	}
 	<K, V> DriverRegion<K, V> getRegion(String path);
 	java.util.Set<DriverRegion<?, ?>> rootRegions();
 	boolean isClosed();

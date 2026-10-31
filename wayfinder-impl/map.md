@@ -10,7 +10,9 @@ See [Migration plan](../wayfinder/technical-spec.md) §7 for the step sequence t
 
 Ownership validation complete: following user-reported Spring main recompilation, coverage regeneration, freshness checking and validation with `--javap` passed. All 16 policy tests pass. The active test version and Docker image use `10.4.0-build.3068.c3a2bbfe`; the frozen API inventory and historical runtime evidence remain labelled with build `3056.df98c835`.
 
-Latest slice: **task 48 resolved**. Native-free `InterestPolicy`/`SubscriptionAttributes` values and client request-routing contracts (`DriverPartitionResolver`, `DriverEntryOperation`, `StringPrefixPartitionResolver`) are implemented in the SPI, native adapter and mock; 46 coverage rows are upgraded (39 implemented, 7 partial) and user-run SPI, native and compatibility gates passed. Adoption stays with 30, delivery with 45, durability with 52.
+Latest slice: **task 52 resolved**. Pool registry, `closePools`, `readyForEvents`, `close(keepAlive)`, `Pool.destroy(keepAlive)` and `getPendingEventCount` are implemented in the SPI, native adapter and mock (the mock rejects keepAlive/readiness with `notIntroduced`); five native lifecycle tests and the contract probes passed on build 3068. Adoption stays with 35.
+
+Previous slice: **task 48 resolved**. Native-free `InterestPolicy`/`SubscriptionAttributes` values and client request-routing contracts (`DriverPartitionResolver`, `DriverEntryOperation`, `StringPrefixPartitionResolver`) are implemented in the SPI, native adapter and mock; 46 coverage rows are upgraded (39 implemented, 7 partial) and user-run SPI, native and compatibility gates passed. Adoption stays with 30, delivery with 45, durability with 52.
 
 Previous slice: **task 51 resolved**. Typed default-pool configuration at cache creation and a true `DriverConnection.getDefaultPool()` lookup are implemented in the SPI, native adapter and mock; user-run mock (5) and native (11) tests passed on build 3068, and 312 unfinished task-23 rows were reassigned to task 36. No native-free compliance is claimed.
 
@@ -62,10 +64,10 @@ All **3,851 frozen API IDs** and **2,723 audit assignments** are preserved:
 source/resource references have dispositions, and unfinished required mappings
 have open completion owners. Three stale TransactionWriter mappings are cleared.
 Generation/check, all 16 policy tests and independent declaration checks pass.
-There are **30 open tasks**, **45 completed tasks** and **2 superseded tasks**
+There are **29 open tasks**, **46 completed tasks** and **2 superseded tasks**
 (77 total). Classification and cleanup do not complete retained client implementation.
 
-Tasks 51 and 48 are resolved (2026-10-30). **Next: the lowest eligible open task — 47 (tasks 54, 55, 56 are also unblocked; 51 now unblocks 20/21/22/24/25 pending their other blockers).** All bounded audits and
+Tasks 52, 51, 48, 47, 54, 55, 56, 49, 19 and 20 are resolved (2026-10-30/31). **Next: the lowest eligible open task (tasks 57 and 58 stay blocked; 51 now unblocks 21/22/24/25 pending their other blockers).** All bounded audits and
 fixture cleanup tasks 60–77 are complete. Tickets 42/43 remain superseded.
 
 Task 23 now has a [runtime/cancellation implementation checkpoint](investigations/client-runtime-handles.md): local identity and connectedness, separate cache cancellation, native/mock implementations and lifecycle tests. Nine new SPI defaults map to eleven partial native rows. User-run Java validation passed (164 tests, zero failures/errors/skips), including compatibility, mock native-free classpath and transitional boundary checks. Task 23 remains open with its remaining services listed in that checkpoint.

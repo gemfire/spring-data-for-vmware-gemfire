@@ -562,6 +562,27 @@ Each row inherits its batch rationale/source evidence. Owners below show the res
 | `API-b73214b2a96fb1f3` | `org.apache.geode.pdx.FieldType` | `valueOf` | `(Ljava/lang/String;)Lorg/apache/geode/pdx/FieldType;` | 57 | 31 |
 | `API-d9827de9a8b95a7c` | `org.apache.geode.pdx.FieldType` | `values` | `()[Lorg/apache/geode/pdx/FieldType;` | 57 | 31 |
 
+## json-resolution
+
+Task 56 resolved 2026-10-31. Implementation and test evidence for the JSON/document/storage/conversion rows (resolved native artifact `gemfire-core` 10.4.0-build.3068.c3a2bbfe; the frozen inventory and historical runtime evidence stay labelled 3056.df98c835).
+
+**API ownership.** The typed SPI is `DriverJsonFormatter`, `DriverJsonDocument`, `DriverJsonDocumentFactory`, `DriverSerializableAsJson`, `DriverStorageFormat` (`PDX`, `BSON`) and the checked-equivalent `DriverJsonParseException` (kind `INVALID_ARGUMENT`, cause preserved). They are reached through three defaults on `DriverRegionService` (`getJsonFormatter()`, `getJsonDocumentFactory()`, `getJsonDocumentFactory(DriverStorageFormat)`) that mirror native `RegionService`; the defaults throw `UnsupportedFeatureException.notIntroduced`. The formatter is bound to the injected service, so there is no `CacheFactory.getAnyInstance` and no static state. Native types stay in `GemFireJsonFormatter`, `GemFireJsonDocument`, `GemFireJsonDocumentFactory` and `GemFireStorageFormats`; `GemFireConnection` overrides the accessors. All 37 members owned by task 56 are `implemented` in `coverage-policy.json`; the four `JsonParseException` rows stay `partial` because Spring translation is adopted by task 31, as are the three `existing_spi` accessor rows.
+
+**Behavior.**
+- Real conversion, storage selection, encoding and failures are delegated to the native provider. The authentication context (ProxyCache `UserAttributes` set then cleared) is native-owned inside `JSONFormatter` and stays private; the driver only delegates, so there is no dedicated driver test for it.
+- Missing, null, nested (`DriverJsonDocument`/`DriverPdxInstance`), array (`List`) and numeric fields are preserved; `getAndCheckField` returns `DriverDocument.MissingField.INSTANCE`.
+- `JSON_CLASSNAME` is `__GEMFIRE_JSON`, with `createPdxInstanceFactory(JSON_CLASSNAME, false)` semantics. Identity fields are marked after the field writes.
+- Charset: native `fromPdxInstance` is `new String(bytes)` (platform default charset) while `toJsonByteArrayFromPdxInstance` emits UTF-8. The 10.4 driver delegates unchanged. Observed against build 3068: the native writer escapes non-ASCII characters (`é` becomes `é`), so the bytes are ASCII and the two decodings agree for such input; `NativeJsonTests#fromPdxInstanceDecodesWithTheDefaultCharset` pins the escaped output and the `new String(bytes)` equivalence. The mock keeps raw characters, so its output differs from native for non-ASCII text. The mock deliberately normalizes to UTF-8 in both directions (`MockJsonTests#textIsNormalizedToUtf8InBothDirections`).
+- Mock: local in-memory JSON with narrowing integral numbers (byte, short, int, long, `BigInteger`), UTF-8 text, closed-connection rejection, and BSON storage unsupported (`notIntroduced("JsonDocument.bsonStorage")`); PDX storage is supported.
+- Parse failures keep the cause and their messages do not copy document contents (task 76 handoff).
+- External PDX type-registration requirement: registering metadata needs a PDX value; evidence is `NativeCodecReferencesTests#pdxMetaDataRegistrationRequiresAPdxValue`.
+
+**Source/test evidence.** `JsonDefaultTests` (SPI defaults), `MockJsonTests` (11 tests), `NativeJsonTests` (6 integration tests: accessors, formatter against a client cache, default-charset decode, parse failures, PDX document fields, BSON creation and failure mapping).
+
+**Validation.** Compile of the SPI, mock and 10.4 integrationTest source sets, `verifyMigrationBoundary`, `verifyDriverCompatibility`, and `build_api_coverage.py` + `validate_coverage.py` (3,851 rows) pass. The tests are run by the user; results are recorded in the ticket answer.
+
+**Handoffs.** Task 31 migrates `JSONRegionAdvice` and the Spring exception translation and keeps CRUD/bulk/values/query assertions. Tasks 57/58 stay blocked.
+
 ## Validation
 
 Deterministic generation/check and all 10 scope-policy tests passed. Independent javap matched 372 declarations across 21 types; ownership/source/ID/scope checks and both inventory negative controls passed (3,851 API rows, 133 production imports, 549 source/resource references and 509 Spring exposures). Independent before/after accounting confirms exactly 401 scope/remaining-description changes and 77 owner transfers, with all other fields and implementation mappings/statuses unchanged. All 2,723 frozen assignments remain unique, byte-for-byte unchanged and declaration-stable: 1,490 classified / 1,233 unresolved. The evidence ledger lists each of the 401 assigned IDs exactly once. Five excluded rows have no linked production/SPI reference or implementation mapping; all unfinished required rows have active implementation/consumer owners. Source dispositions are 443 required-client / three excluded-server / 103 unresolved; all 149 existing-SPI references are required-client. The 77-task dependency graph remains acyclic (41 open / 34 resolved / two superseded). No Gradle command was run; this classification changes no Java/build behavior.

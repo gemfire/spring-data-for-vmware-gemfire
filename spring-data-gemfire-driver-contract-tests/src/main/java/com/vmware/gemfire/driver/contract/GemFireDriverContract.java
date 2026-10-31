@@ -555,6 +555,40 @@ public abstract class GemFireDriverContract extends StatisticsContract {
 			})));
 		probes.put(DriverConnection.class.getMethod("getCurrentServers"), new Probe("Connection.getCurrentServers", () ->
 			inCache(connection -> assertThat(connection.getCurrentServers()).isEmpty())));
+		probes.put(DriverConnection.class.getMethod("getPools"), new Probe("Connection.getPools", () ->
+			inCache(c -> {
+				String name = UUID.randomUUID().toString();
+				DriverPool pool = c.createPool(name, poolConfiguration(false));
+				try {
+					assertThat(c.getPools()).containsKey(name);
+					c.getPools().clear();
+					assertThat(c.getPools()).containsKey(name);
+				}
+				finally { pool.destroy(); }
+			})));
+		probes.put(DriverConnection.class.getMethod("getPoolForRegion", String.class), new Probe("Connection.getPoolForRegion", () ->
+			inCache(c -> expectOperationFailure(() -> c.getPoolForRegion("absent")))));
+		probes.put(DriverConnection.class.getMethod("closePools", boolean.class), new Probe("Connection.closePools", () ->
+			inCache(c -> {
+				DriverPool pool = c.createPool(UUID.randomUUID().toString(), poolConfiguration(false));
+				c.closePools(false);
+				assertThat(pool.isDestroyed()).isTrue();
+				assertThat(c.getPools()).doesNotContainKey(pool.name());
+			})));
+		probes.put(DriverConnection.class.getMethod("readyForEvents"), new Probe("Connection.readyForEvents", () ->
+			inCache(c -> {
+				c.createPool(UUID.randomUUID().toString(), poolConfiguration(false));
+				expectOperationFailure(c::readyForEvents);
+			})));
+		probes.put(DriverConnection.class.getMethod("close", boolean.class), new Probe("Connection.close(keepAlive)", () ->
+			inCache(c -> {
+				c.close(false);
+				assertThat(c.isClosed()).isTrue();
+			})));
+		probes.put(DriverPool.class.getMethod("destroy", boolean.class), new Probe("Pool.destroy(keepAlive)", () ->
+			inPool(pool -> { pool.destroy(false); assertThat(pool.isDestroyed()).isTrue(); })));
+		probes.put(DriverPool.class.getMethod("getPendingEventCount"), new Probe("Pool.getPendingEventCount", () ->
+			inPool(pool -> expectOperationFailure(pool::getPendingEventCount))));
 		probes.put(DriverPool.class.getMethod("onlineLocators"), new Probe("Pool.onlineLocators", () ->
 			inPool(pool -> assertThat(pool.onlineLocators()).isEmpty())));
 		probes.put(DriverPool.class.getMethod("name"), new Probe("Pool.name", () ->
@@ -578,6 +612,38 @@ public abstract class GemFireDriverContract extends StatisticsContract {
 		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("createPdxEnum", String.class, String.class, int.class),
 			new Probe("RegionService.createPdxEnum", () -> inCache(c ->
 				assertThat(c.createPdxEnum("ProbeEnum", "ONE", 0).getField("name")).isEqualTo("ONE"))));
+		probes.put(DriverConnection.class.getMethod("getDefaultPool"), new Probe("Connection.getDefaultPool", () ->
+			inCache(c -> c.getDefaultPool())));
+		probes.put(DriverConnection.class.getMethod("getPdxConfiguration"), new Probe("Connection.getPdxConfiguration", () ->
+			inCache(c -> assertThat(c.getPdxConfiguration()).isNotNull())));
+		probes.put(DriverConnection.class.getMethod("getSerializationRegistry"), new Probe("Connection.getSerializationRegistry", () ->
+			inCache(c -> assertThat(c.getSerializationRegistry()).isNotNull())));
+		probes.put(DriverConnection.class.getMethod("getDataCodec"), new Probe("Connection.getDataCodec", () ->
+			inCache(c -> {
+				try {
+					var bytes = new java.io.ByteArrayOutputStream();
+					c.getDataCodec().writeString("probe", new java.io.DataOutputStream(bytes));
+					assertThat(c.getDataCodec().readString(new java.io.DataInputStream(new java.io.ByteArrayInputStream(bytes.toByteArray())))).isEqualTo("probe");
+				}
+				catch (java.io.IOException ex) { throw new AssertionError(ex); }
+			})));
+		probes.put(DriverConnection.class.getMethod("registerPdxMetaData", Object.class), new Probe("Connection.registerPdxMetaData", () ->
+			inCache(c -> assertThatThrownBy(() -> c.registerPdxMetaData("plain"))
+				.isInstanceOf(com.vmware.gemfire.driver.spi.GemFireDriverException.class))));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getJsonFormatter"), new Probe("RegionService.getJsonFormatter", () ->
+			inCache(c -> assertThat(c.getJsonFormatter()).isNotNull())));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getJsonDocumentFactory"), new Probe("RegionService.getJsonDocumentFactory", () ->
+			inCache(c -> assertThat(c.getJsonDocumentFactory()).isNotNull())));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getJsonDocumentFactory", com.vmware.gemfire.driver.spi.DriverStorageFormat.class),
+			new Probe("RegionService.getJsonDocumentFactoryWithFormat", () -> inCache(c ->
+				assertThat(c.getJsonDocumentFactory(com.vmware.gemfire.driver.spi.DriverStorageFormat.PDX)).isNotNull())));
+		probes.put(com.vmware.gemfire.driver.spi.DriverPartitionResolver.class.getMethod("close"), new Probe("PartitionResolver.close", () -> {
+			var resolver = new com.vmware.gemfire.driver.spi.DriverPartitionResolver<String, String>() {
+				@Override public Object getRoutingObject(com.vmware.gemfire.driver.spi.DriverEntryOperation<String, String> operation) { return null; }
+				@Override public String getName() { return "probe"; }
+			};
+			resolver.close();
+		}));
 		probes.putAll(transactionProbes());
 		probes.putAll(callbackProbes());
 		probes.putAll(regionOperationProbes());
@@ -856,6 +922,13 @@ public abstract class GemFireDriverContract extends StatisticsContract {
 	private PoolConfiguration poolConfiguration(boolean locators) {
 		return new PoolConfiguration(locators ? List.of() : List.of(new Endpoint("127.0.0.1", 40404)),
 			locators ? List.of(new Endpoint("127.0.0.1", 10334)) : List.of(), 0);
+	}
+
+	/** Unlike assertThatThrownBy, lets an UnsupportedFeatureException reach the default-method contract. */
+	private static void expectOperationFailure(Runnable action) {
+		try { action.run(); }
+		catch (DriverOperationException expected) { return; }
+		throw new AssertionError("Expected a DriverOperationException");
 	}
 
 	private void inPool(Consumer<DriverPool> action) {

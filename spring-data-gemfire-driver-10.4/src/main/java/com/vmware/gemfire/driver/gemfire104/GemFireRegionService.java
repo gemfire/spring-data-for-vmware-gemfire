@@ -19,6 +19,12 @@ final class GemFireRegionService implements DriverRegionService {
 		return invoke(() -> new GemFirePdxInstance(service.createPdxEnum(className, name, ordinal)));
 	}
 
+	@Override public DriverJsonFormatter getJsonFormatter() { return invoke(() -> new GemFireJsonFormatter(service.getJsonFormatter(), this)); }
+	@Override public DriverJsonDocumentFactory getJsonDocumentFactory() { return invoke(() -> new GemFireJsonDocumentFactory(service.getJsonDocumentFactory())); }
+	@Override public DriverJsonDocumentFactory getJsonDocumentFactory(DriverStorageFormat format) {
+		return invoke(() -> new GemFireJsonDocumentFactory(service.getJsonDocumentFactory(GemFireStorageFormats.toNative(format))));
+	}
+
 	@Override public <K, V> DriverRegion<K, V> getRegion(String path) {
 		return invoke(() -> { var value = service.<K, V>getRegion(path); return value == null ? null : new GemFireRegion<>(value); });
 	}

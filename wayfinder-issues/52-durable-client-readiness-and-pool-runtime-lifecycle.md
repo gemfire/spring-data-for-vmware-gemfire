@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 50, 51, 59
 
 # Durable client readiness and pool runtime lifecycle
@@ -33,3 +33,21 @@ Complete pool exhaustion, connectivity/refusal and received server-operation fai
 ## Endpoint observation foundation — validation passed
 
 The task-23 continuation implements this ticket's two endpoint rows through `DriverConnection.getCurrentServers()` and `DriverPool.onlineLocators()`. Both use immutable detached host/port snapshots; native lookup preserves JVM-global pool aggregation and last-successful locator-list semantics, while the mock reports empty observations. Native tests cover real server loss, locator discovery and retained observations after destruction, plus snapshot isolation and failure translation. See [evidence and the user-run validation command](../wayfinder-impl/investigations/client-runtime-handles.md#endpoint-observations--validation-passed). User-run validation passed: 61 native tests with zero failures/errors/skips, plus driver compatibility and transitional migration-boundary verification. Task-35 adoption remains pending. This bounded foundation does not complete the prerequisites or the durable readiness, keepAlive, queue replay and registry lifecycle obligations above; task 52 remains open.
+
+## Answer — resolved 2026-10-31
+
+Child 52 is resolved; parent 20 and the downstream owners (task 35 adoption, task 36, task 69 handoff, task 76 exception handoff) stay open.
+
+**SPI and mappings.** `DriverConnection` gains `getPools()`, `getPoolForRegion(String)`, `closePools(boolean)`, `readyForEvents()` and `close(boolean)`; `DriverPool` gains `destroy(boolean)` and `getPendingEventCount()`. They map to `PoolManager.getAll/find(Region)/close()/close(boolean)`, `ClientCache.readyForEvents/close(boolean)` and `Pool.destroy(boolean)/getPendingEventCount`. `Pool.destroy()/isDestroyed()` and `PoolManager.createFactory()/find(String)` are upgraded from partial to implemented. The two endpoint rows (`getCurrentServers`, `onlineLocators`) stay partial for task 35 adoption.
+
+**Native artifact.** GemFire build `10.4.0-build.3068.c3a2bbfe` (the frozen inventory keeps the `3056.df98c835` label).
+
+**Behavior evidence** (`NativePoolLifecycleTests`, five tests):
+- `getPools()` is a detached copy; `getPoolForRegion` returns the region's pool, null for a local-only region and `INVALID_ARGUMENT` for an absent region.
+- `readyForEvents` with pools but no durable pool, and `getPendingEventCount` on a nondurable pool, map to `INVALID_STATE`; an empty registry is accepted. The pending count must be read before `readyForEvents`.
+- `destroy()` rejects a pool with attached regions; `closePools` removes every pool.
+- A `close(true)` keeps the durable queue and reconnect replays queued events; `close(false)` discards it.
+
+The `GemFireDriverContract` probes cover every new default. The mock rejects `keepAlive`, `readyForEvents`, `getPoolForRegion` and `getPendingEventCount` with `UnsupportedFeatureException.notIntroduced`.
+
+**Validation (user-run):** `./gradlew :spring-data-gemfire-driver-mock:test :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativePoolLifecycleTests' --tests '*GemFire104DriverContractTests' --tests '*NativePoolTests' --tests '*NativeDefaultPoolTests' --tests '*NativeConnectionReuseTests' verifyMigrationBoundary verifyDriverCompatibility` finished with BUILD SUCCESSFUL in 48s. Coverage regeneration, `--check`, `validate_coverage.py` and the coverage unit tests pass.

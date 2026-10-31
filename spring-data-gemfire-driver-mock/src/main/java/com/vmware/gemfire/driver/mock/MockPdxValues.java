@@ -18,7 +18,7 @@ final class MockPdxValues {
 	private Object copy(Object value, IdentityHashMap<Object, Object> seen) {
 		if (value == null || value instanceof String || value instanceof Boolean || value instanceof Character
 			|| value instanceof Byte || value instanceof Short || value instanceof Integer || value instanceof Long
-			|| value instanceof Float || value instanceof Double) return value;
+			|| value instanceof Float || value instanceof Double || value instanceof java.math.BigInteger) return value;
 		if (seen.containsKey(value)) throw UnsupportedFeatureException.notIntroduced("Pdx.cyclicMockValue");
 		seen.put(value, value);
 		try {

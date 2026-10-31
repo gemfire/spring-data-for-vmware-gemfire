@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 53, 59
 
 # JSON documents and PDX conversion
@@ -25,3 +25,12 @@ Task 71 retains all 33 JSON/document/storage/conversion rows. Implement native-f
 ## Shared exception handoff — task 76
 
 Complete client JSON parse failure construction, cause preservation and safe diagnostics with consumer 31; avoid leaking private document contents and coordinate value adaptation 58. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.
+
+## Answer
+
+Resolved 2026-10-31. [Implementation and validation evidence](../wayfinder-impl/investigations/client-serialization-pdx-and-json-scope.md#json-resolution) records exact ownership, native behavior and limits.
+
+- Added native-free `DriverJsonFormatter`, `DriverJsonDocument`, `DriverJsonDocumentFactory`, `DriverSerializableAsJson`, `DriverStorageFormat` and `DriverJsonParseException`, exposed as defaults on `DriverRegionService` (`getJsonFormatter`, `getJsonDocumentFactory`, `getJsonDocumentFactory(DriverStorageFormat)`). The 10.4 driver delegates conversion, storage selection, encoding and failures to the native provider; the formatter is bound to the injected service.
+- Limits: the mock keeps local JSON with UTF-8 normalization and rejects BSON (`JsonDocument.bsonStorage`, not introduced). The 10.4 driver keeps the native default-charset decode in `fromPdxInstance`, pinned by a test. The ProxyCache set/clear is native-owned and only delegated. Spring translation of parse failures and `JSONRegionAdvice` remain with [task 31](31-template-repository-and-mapping-migration.md).
+- This task owns 37 implemented rows. The four `JsonParseException` rows and three `DriverRegionService` JSON accessor mappings stay partial under task 31. Resolved native artifact: `gemfire-core` 10.4.0-build.3068.c3a2bbfe.
+- Tests: `JsonDefaultTests` (SPI), `MockJsonTests` (mock), `NativeJsonTests` (10.4 integration). Compile, `verifyMigrationBoundary`, `verifyDriverCompatibility` and the coverage generate/validate passed; the test run is by the user. No commit was created.

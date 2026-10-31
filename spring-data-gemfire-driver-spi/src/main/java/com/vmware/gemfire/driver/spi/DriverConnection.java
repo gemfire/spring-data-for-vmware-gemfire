@@ -77,6 +77,44 @@ public interface DriverConnection extends DriverRegionService {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getDefaultPool");
 	}
 
+	/**
+	 * Snapshot of the pools currently registered with the provider, keyed by name. The map is new and
+	 * mutable, the pool handles are live. Requires an open CLIENT connection.
+	 */
+	default java.util.Map<String, DriverPool> getPools() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getPools");
+	}
+
+	/**
+	 * Returns the pool the named region is configured to use, or null when no pool is registered under
+	 * the region's pool name. The region must exist on this connection. Requires an open CLIENT connection.
+	 */
+	default DriverPool getPoolForRegion(String regionName) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getPoolForRegion");
+	}
+
+	/**
+	 * Destroys every registered pool, keeping the durable client's server queues alive when
+	 * {@code keepAlive} is true. Unlike destroying pools one by one this does not check attached regions.
+	 * Requires an open CLIENT connection.
+	 */
+	default void closePools(boolean keepAlive) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.closePools");
+	}
+
+	/**
+	 * Tells the servers a durable client is ready to receive queued events. Fails on a client with pools
+	 * but none durable; succeeds on one without pools. Requires an open CLIENT connection.
+	 */
+	default void readyForEvents() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.readyForEvents");
+	}
+
+	/** Closes the connection, keeping the durable client's server queues alive when {@code keepAlive} is true. {@code close()} is {@code close(false)}. */
+	default void close(boolean keepAlive) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.close(keepAlive)");
+	}
+
 	/** Returns the typed binary read and write helpers. Providers without a defined wire format reject it. Requires an open CLIENT connection. */
 	default DriverDataCodec getDataCodec() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.getDataCodec");

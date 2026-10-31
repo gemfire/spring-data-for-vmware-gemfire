@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 46, 59
 
 # Expiration, eviction and compression SPI
@@ -36,4 +36,4 @@ Implemented in the SPI, 10.4 provider and mock; details and per-row dispositions
 - Mock rejects every non-disabled setting with `UnsupportedFeatureException`.
 - The migration-boundary checker was extended to accept final value classes and callback-interface constants, with fixtures; nothing was baselined.
 - Task 30 still owns migrating the Spring factories, parsers and annotations; task 49 owns eviction configuration conversion.
-- Evidence tests are written but not yet run: see the commands handed over with this change.
+- Evidence tests, compatibility and migration-boundary checks were user-run and passed.

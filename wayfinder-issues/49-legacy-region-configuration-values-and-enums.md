@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 46, 47, 48, 59
 
 # Client configuration values and enum migration
@@ -37,3 +37,18 @@ PartitionAttributes hosting DTOs, bucket markers, server conflation aliases and 
 ## Task 68 eviction conversion coordination — 2026-10-28
 
 [EvictionAttributes conversion](../wayfinder-impl/investigations/client-expiry-eviction-and-compression-scope.md#client-eviction-values) remains task 47's required-client member, paired with this task's DTOs/inverse conversion retained by task 67. Preserve heap/memory/otherwise-entry branch selection, NONE-action failure and sizer class-string behavior; do not normalize LIFO into a new DTO branch or silently fix lossy native conversion. Task 30 owns adoption. Fixed IDs and ownership remain unchanged.
+
+## Answer — 2026-10-31
+
+Resolved in five slices, each pinned to the native 10.4 build `3068.c3a2bbfe` by `NativeLegacy*Tests` in the 10.4 `integrationTest` source set plus native-free SPI tests:
+
+1. `DataPolicy`, `Scope` and `MirrorType` values with legacy names, ordinals and predicates, and `LegacyPolicyConversions` for the mirror-type and persist-backup conversions.
+2. Legacy disk directories, sizes and write attributes: `LegacyDiskConfiguration` (`new LegacyDiskConfiguration()` holds the defaults) and `DiskWriteSettings`.
+3. `ClientRegionShortcut`, constant-for-constant in native order.
+4. Eviction: `LegacyEvictionSettings` with `LegacyEvictionSettingsFactory.generate(...)` replacing the native generator, including the heap, memory and entry branch choice, the `none` action failure and the invalid-class-name failure.
+
+All 191 required-client rows owned by this task are dispositioned in `coverage-policy.json`. Disk and eviction values are not wired into `RegionConfiguration` or `DriverRegionAttributes`, because native `ClientRegionFactory` has no `setDiskDirs` or `setDiskWriteAttributes`; ticket 30 is the consumer. Conflation setters and getters are excluded as server-only. The assembly rows are dispositioned as replaced by the `RegionConfiguration` builder, `DriverRegionAttributes` and these value carriers.
+
+16 rows that remain unfinished were re-owned to [ticket 19](19-region-configuration-enums-expiration-and-eviction.md), which stays open for its other children.
+
+Validation: the SPI and 10.4 native-pinning tests pass, `verifyMigrationBoundary` passes with no new violations (static-state 162, static-service 96, static-reset 1, all below the baseline), `verifyDriverCompatibility` passes, and coverage regenerates and validates (3,851 rows: 2,694 required-client, 1,157 excluded-server, 0 unresolved).

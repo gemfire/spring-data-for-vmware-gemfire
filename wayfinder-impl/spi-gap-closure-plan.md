@@ -27,7 +27,7 @@ Generation/check, all 16 policy tests and independent declaration checks pass.
 There are **30 open tasks**, **45 completed tasks** and **2 superseded tasks**
 (77 total). Classification and cleanup do not complete retained client implementation.
 
-Tasks 51 and 48 are resolved (2026-10-30). **Next: the lowest eligible open task — 47 (tasks 54, 55, 56 are also unblocked; 51 now unblocks 20/21/22/24/25 pending their other blockers).** All bounded audits and
+Tasks 52, 51, 48, 47, 54, 55, 56, 49, 19 and 20 are resolved (2026-10-30/31); 56 added the native-free JSON document/formatter SPI. **Next: the lowest eligible open task (tasks 57 and 58 stay blocked; 51 now unblocks 21/22/24/25 pending their other blockers).** All bounded audits and
 fixture cleanup tasks 60–77 are complete. Tickets 42/43 remain superseded.
 
 Ticket metadata is authoritative. Claim an eligible task only when all `Blocked by:` tasks are resolved. After ticket 59, use ascending order among eligible tasks unless the user directs otherwise. Do not automatically invoke skills or parallel agents. Scoped boundary passes do not establish final native-free compliance.
@@ -58,8 +58,8 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [16 — Driver exception semantics and translation](../wayfinder-issues/16-driver-exception-semantics-and-translation.md) | resolved | 14 |
 | [17 — Complete region events, listeners and writers](../wayfinder-issues/17-complete-region-events-listeners-and-writers.md) | resolved | 14, 16 |
 | [18 — Complete region operations and metadata SPI](../wayfinder-issues/18-complete-region-operations-and-metadata-spi.md) | resolved | 14, 16, 17 |
-| [19 — Region configuration, enums, expiration and eviction](../wayfinder-issues/19-region-configuration-enums-expiration-and-eviction.md) | open | 14, 17, 18, 46, 47, 48, 49, 59 |
-| [20 — Complete pool, default-cache and durable SPI](../wayfinder-issues/20-complete-pool-default-cache-and-durable-spi.md) | open | 13, 14, 16, 50, 51, 52, 59 |
+| [19 — Region configuration, enums, expiration and eviction](../wayfinder-issues/19-region-configuration-enums-expiration-and-eviction.md) | resolved | 14, 17, 18, 46, 47, 48, 49, 59 |
+| [20 — Complete pool, default-cache and durable SPI](../wayfinder-issues/20-complete-pool-default-cache-and-durable-spi.md) | resolved | 13, 14, 16, 50, 51, 52, 59 |
 | [21 — Query, results and index SPI](../wayfinder-issues/21-query-results-and-index-spi.md) | open | 14, 16, 18, 20, 59 |
 | [22 — Continuous query SPI](../wayfinder-issues/22-continuous-query-spi.md) | open | 14, 17, 20, 21, 45, 59 |
 | [23 — Client runtime identity and connectivity SPI](../wayfinder-issues/23-distributed-system-membership-and-runtime-services-spi.md) | resolved | 14, 16, 18, 59 |
@@ -86,16 +86,16 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [44 — Client-local snapshot services SPI](../wayfinder-issues/44-region-and-cache-snapshot-services-spi.md) | open | 18, 26, 59 |
 | [45 — Region interest registration and subscription SPI](../wayfinder-issues/45-region-interest-registration-and-subscription-spi.md) | open | 18, 19, 20, 59 |
 | [46 — Typed region creation and attribute access](../wayfinder-issues/46-typed-region-creation-and-attribute-access.md) | resolved | 14, 17, 18 |
-| [47 — Expiration, eviction and compression SPI](../wayfinder-issues/47-expiration-eviction-and-compression-spi.md) | open | 46, 59 |
+| [47 — Expiration, eviction and compression SPI](../wayfinder-issues/47-expiration-eviction-and-compression-spi.md) | resolved | 46, 59 |
 | [48 — Client routing and subscription policy configuration SPI](../wayfinder-issues/48-partition-and-membership-configuration-spi.md) | resolved | 46, 59 |
-| [49 — Client configuration values and enum migration](../wayfinder-issues/49-legacy-region-configuration-values-and-enums.md) | open | 46, 47, 48, 59 |
+| [49 — Client configuration values and enum migration](../wayfinder-issues/49-legacy-region-configuration-values-and-enums.md) | resolved | 46, 47, 48, 59 |
 | [50 — Named pool configuration and socket callbacks](../wayfinder-issues/50-named-pool-configuration-and-socket-callbacks.md) | resolved | 13, 14, 16 |
-| [51 — Default client-cache pool assembly and selection](../wayfinder-issues/51-default-client-cache-pool-assembly-and-selection.md) | open | 50, 59 |
-| [52 — Durable client readiness and pool runtime lifecycle](../wayfinder-issues/52-durable-client-readiness-and-pool-runtime-lifecycle.md) | open | 50, 51, 59 |
+| [51 — Default client-cache pool assembly and selection](../wayfinder-issues/51-default-client-cache-pool-assembly-and-selection.md) | resolved | 50, 59 |
+| [52 — Durable client readiness and pool runtime lifecycle](../wayfinder-issues/52-durable-client-readiness-and-pool-runtime-lifecycle.md) | resolved | 50, 51, 59 |
 | [53 — PDX values and instance factories](../wayfinder-issues/53-pdx-values-and-instance-factories.md) | resolved | 14, 16 |
-| [54 — PDX callbacks and cache configuration](../wayfinder-issues/54-pdx-callbacks-and-cache-configuration.md) | open | 53, 59 |
-| [55 — Binary serialization and registration](../wayfinder-issues/55-binary-serialization-and-registration.md) | open | 14, 16, 59 |
-| [56 — JSON documents and PDX conversion](../wayfinder-issues/56-json-documents-and-pdx-conversion.md) | open | 53, 59 |
+| [54 — PDX callbacks and cache configuration](../wayfinder-issues/54-pdx-callbacks-and-cache-configuration.md) | resolved | 53, 59 |
+| [55 — Binary serialization and registration](../wayfinder-issues/55-binary-serialization-and-registration.md) | resolved | 14, 16, 59 |
+| [56 — JSON documents and PDX conversion](../wayfinder-issues/56-json-documents-and-pdx-conversion.md) | resolved | 53, 59 |
 | [57 — Reflection-based PDX serialization](../wayfinder-issues/57-reflection-based-pdx-serialization.md) | open | 54, 59 |
 | [58 — Serialization value boundary adaptation](../wayfinder-issues/58-serialization-value-boundary-adaptation.md) | open | 53, 54, 55, 56, 57, 59 |
 | [59 — Remove server-only SPI and reconcile client scope](../wayfinder-issues/59-remove-server-only-spi-and-reconcile-client-scope.md) | resolved | 14, 15, 17, 18, 28, 39, 46, 60, 61, 62, 63, 64 |

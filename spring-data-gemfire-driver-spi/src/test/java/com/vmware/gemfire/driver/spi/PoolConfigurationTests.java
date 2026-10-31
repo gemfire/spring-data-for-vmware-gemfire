@@ -74,4 +74,13 @@ class PoolConfigurationTests {
 			.isInstanceOf(IllegalArgumentException.class);
 		assertThat(PoolConfiguration.builder().build().socketFactory()).isEmpty();
 	}
+	/** Consumer policy: native setSocketFactory accepts null, but the typed builder rejects it; omission means "unset". */
+	@Test void nullSocketFactoryIsRejectedAndOmissionInheritsTheFallback() {
+		assertThatThrownBy(() -> PoolConfiguration.builder().socketFactory(null))
+			.isInstanceOf(NullPointerException.class).hasMessageContaining("socketFactory");
+		DriverSocketFactory factory = () -> { throw new UnsupportedOperationException(); };
+		var base = PoolConfiguration.builder().servers(List.of(new Endpoint("localhost", 40404))).socketFactory(factory).build();
+		assertThat(PoolConfiguration.builder().build().withFallback(base).socketFactory()).containsSame(factory);
+		assertThat(base.withFallback(PoolConfiguration.builder().build()).socketFactory()).containsSame(factory);
+	}
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import com.vmware.gemfire.driver.spi.DriverPool;
 import com.vmware.gemfire.driver.spi.PoolConfiguration;
 import com.vmware.gemfire.driver.spi.PoolConfiguration.Endpoint;
+import com.vmware.gemfire.driver.spi.UnsupportedFeatureException;
 
 /** Local configuration record only. No networking, discovery, subscriptions or region attachment. */
 final class MockPool implements DriverPool {
@@ -35,5 +36,10 @@ final class MockPool implements DriverPool {
 	@Override public void destroy() {
 		destroyed = true;
 		connection.removePool(name, this);
+	}
+	/** The mock has no server-side queue, so only {@code keepAlive=false} is meaningful. */
+	@Override public void destroy(boolean keepAlive) {
+		if (keepAlive) throw UnsupportedFeatureException.notIntroduced("Pool.keepAlive");
+		destroy();
 	}
 }

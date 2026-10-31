@@ -89,6 +89,19 @@ final class MockConnection implements DriverConnection {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
 		return new MockPdxInstanceFactory(className);
 	}
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonFormatter getJsonFormatter() {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		return new MockJsonFormatter(this, () -> closed);
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonDocumentFactory getJsonDocumentFactory() {
+		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
+		return new MockJsonDocumentFactory(() -> closed);
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonDocumentFactory getJsonDocumentFactory(com.vmware.gemfire.driver.spi.DriverStorageFormat format) {
+		if (format == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "Storage format is required", null);
+		if (format == com.vmware.gemfire.driver.spi.DriverStorageFormat.BSON) throw UnsupportedFeatureException.notIntroduced("JsonDocument.bsonStorage");
+		return getJsonDocumentFactory();
+	}
 	@Override public com.vmware.gemfire.driver.spi.DriverPdxInstance createPdxEnum(String className, String name, int ordinal) {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);
 		if (className == null || name == null) throw new DriverOperationException(DriverFailureKind.INVALID_ARGUMENT, "PDX enum class and name are required", null);
@@ -152,6 +165,37 @@ final class MockConnection implements DriverConnection {
 	}
 
 	void removePool(String name, MockPool pool) { pools.remove(name, pool); }
+
+	@Override
+	public Map<String, DriverPool> getPools() {
+		checkPoolAccess("pools");
+		return new HashMap<>(pools);
+	}
+
+	/** Mock regions are never attached to a pool, so there is no region-to-pool resolution to offer. */
+	@Override
+	public DriverPool getPoolForRegion(String regionName) {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getPoolForRegion");
+	}
+
+	@Override
+	public void closePools(boolean keepAlive) {
+		checkPoolAccess("pools");
+		if (keepAlive) throw UnsupportedFeatureException.notIntroduced("Pool.keepAlive");
+		for (MockPool pool : List.copyOf(pools.values())) pool.destroy();
+	}
+
+	/** The mock has no server queue to signal. */
+	@Override
+	public void readyForEvents() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.readyForEvents");
+	}
+
+	@Override
+	public void close(boolean keepAlive) {
+		if (keepAlive) throw UnsupportedFeatureException.notIntroduced("Connection.keepAlive");
+		close();
+	}
 
 	private void checkPoolAccess(String name) {
 		if (closed) throw new DriverOperationException(DriverFailureKind.INVALID_STATE, "Cache is closed", null);

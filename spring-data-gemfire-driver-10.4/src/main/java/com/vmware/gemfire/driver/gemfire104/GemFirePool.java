@@ -62,6 +62,8 @@ final class GemFirePool implements DriverPool {
 	@Override public int minimumConnections() { return invoke("minimumConnections", pool::getMinConnections); }
 	@Override public boolean isDestroyed() { return invoke("isDestroyed", pool::isDestroyed); }
 	@Override public void destroy() { invoke("destroy", () -> { pool.destroy(); return null; }); }
+	@Override public void destroy(boolean keepAlive) { invoke("destroy", () -> { pool.destroy(keepAlive); return null; }); }
+	@Override public int getPendingEventCount() { return invoke("getPendingEventCount", pool::getPendingEventCount); }
 
 	private List<Endpoint> endpoints(List<InetSocketAddress> addresses) {
 		return addresses.stream().map(address -> new Endpoint(address.getHostString(), address.getPort())).toList();

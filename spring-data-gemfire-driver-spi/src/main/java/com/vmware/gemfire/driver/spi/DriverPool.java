@@ -36,4 +36,19 @@ public interface DriverPool {
 	}
 	default boolean isDestroyed() { throw UnsupportedFeatureException.notIntroduced("Pool.isDestroyed"); }
 	default void destroy() { throw UnsupportedFeatureException.notIntroduced("Pool.destroy"); }
+
+	/**
+	 * Destroys the pool, asking the provider to keep this durable client's server-side queue alive
+	 * for its timeout when {@code keepAlive} is true. {@code destroy()} is {@code destroy(false)}.
+	 * Attached regions still reject destruction. Providers without a network queue reject {@code true}.
+	 */
+	default void destroy(boolean keepAlive) { throw UnsupportedFeatureException.notIntroduced("Pool.destroy(keepAlive)"); }
+
+	/**
+	 * Events the server queued for this durable client, captured when the primary queue connected.
+	 * Requires a durable subscription pool and is valid only after readiness was signalled. The
+	 * provider's sentinels are preserved: 0 none, -1 the durable timeout expired, -2 first connection
+	 * with no prior queue. Failures surface with the provider's own timing.
+	 */
+	default int getPendingEventCount() { throw UnsupportedFeatureException.notIntroduced("Pool.getPendingEventCount"); }
 }

@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 Blocked by: 14, 17, 18, 46, 47, 48, 49, 59
 
 # Region configuration, enums, expiration and eviction
@@ -50,3 +50,17 @@ Foundation progress: [Typed region creation and attribute access](46-typed-regio
 ## Final reconciliation handoff — task 64
 
 Own the remaining 21 partial region-attribute/client-factory API rows and four current-SPI mappings transferred from foundation 46. Preserve callback/configuration reachable contracts and coordinate adoption with 30. See the [final scope ledger](../wayfinder-impl/investigations/client-scope-final-reconciliation.md) for exact counts and source dispositions. These transfers do not upgrade implementation status.
+
+## Answer — resolved 2026-10-31
+
+Parent 19 is resolved; Spring region-factory and annotation adoption (task 30), cache assembly (task 29) and residual native utilities (task 36) stay open.
+
+**SPI and mappings.** Children 46, 47, 48 and 49 are resolved. They deliver typed `RegionConfiguration`, `DriverRegionAttributes` and `DriverRegionAttributesMutator`, the SPI `DataPolicy`, `Scope` and `ClientRegionShortcut` values, expiration and eviction value types, `CustomExpiry`, `ObjectSizer` and compressor callbacks, and client subscription and interest policy. They map to the native `ClientRegionFactory`, `RegionAttributes` and `AttributesMutator`. Partition hosting and peer membership configuration stay excluded under task 59.
+
+**Native artifact.** GemFire build `10.4.0-build.3068.c3a2bbfe` (the frozen inventory keeps the `3056.df98c835` label).
+
+**Behavior evidence.** Native-mapping tests live in `spring-data-gemfire-driver-10.4/src/integrationTest`; `GemFireDriverContract` probes cover every region-configuration default; the mock rejects behavior it cannot provide with `UnsupportedFeatureException`. Unset versus explicit false/zero precedence is covered in the SPI configuration tests.
+
+**Coverage.** Region rows still `partial` were reassigned to open owners with no status change: 23 consumer-adoption rows to task 30, and 16 intentionally non-equivalent EvictionAction/EvictionAlgorithm/EvictionAttributes/SnappyCompressor internals to task 36. Current-SPI mappings that were still partial under 19 moved to tasks 30 and 36 (11 existing-SPI rows moved across 19, 20 and 52). No row was upgraded to `implemented` without row-level evidence.
+
+**Validation (user-run):** `./gradlew :spring-data-gemfire-driver-spi:test --tests '*PoolConfigurationTests' :spring-data-gemfire-driver-mock:test :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativePoolLifecycleTests' --tests '*GemFire104DriverContractTests' --tests '*NativePoolTests' --tests '*NativeDefaultPoolTests' --tests '*NativePoolConfigurationTests' verifyMigrationBoundary verifyDriverCompatibility`

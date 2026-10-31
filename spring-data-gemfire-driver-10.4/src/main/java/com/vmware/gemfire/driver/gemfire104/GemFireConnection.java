@@ -117,6 +117,47 @@ final class GemFireConnection implements DriverConnection {
 		});
 	}
 
+	@Override
+	public java.util.Map<String, DriverPool> getPools() {
+		return invoke("getPools", () -> {
+			checkPoolAccess();
+			java.util.Map<String, DriverPool> pools = new java.util.HashMap<>();
+			PoolManager.getAll().forEach((name, pool) -> pools.put(name, new GemFirePool(pool)));
+			return pools;
+		});
+	}
+
+	@Override
+	public DriverPool getPoolForRegion(String regionName) {
+		return invoke("getPoolForRegion", () -> {
+			checkPoolAccess();
+			Region<?, ?> region = cache.getRegion(regionName);
+			if (region == null) throw new IllegalArgumentException("Region does not exist: " + regionName);
+			String poolName = region.getAttributes().getPoolName();
+			Pool pool = poolName == null ? null : PoolManager.find(poolName);
+			return pool == null ? null : new GemFirePool(pool);
+		});
+	}
+
+	@Override
+	public void closePools(boolean keepAlive) {
+		invoke("closePools", () -> { checkPoolAccess(); PoolManager.close(keepAlive); return null; });
+	}
+
+	@Override
+	public void readyForEvents() {
+		invoke("readyForEvents", () -> { checkPoolAccess(); ((ClientCache) cache).readyForEvents(); return null; });
+	}
+
+	@Override
+	public void close(boolean keepAlive) {
+		invoke("close", () -> {
+			if (!(cache instanceof ClientCache client)) throw new IllegalStateException("Close with keepAlive requires a client cache");
+			client.close(keepAlive);
+			return null;
+		});
+	}
+
 	private void checkPoolAccess() {
 		if (cache.isClosed()) throw new IllegalStateException("Cache is closed");
 		if (!((org.apache.geode.internal.cache.InternalCache) cache).isClient()) throw new IllegalStateException("Pool access requires a CLIENT cache");
@@ -174,6 +215,16 @@ final class GemFireConnection implements DriverConnection {
 	@Override
 	public void close() {
 		invoke("close", () -> { cache.close(); return null; });
+	}
+
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonFormatter getJsonFormatter() {
+		return invoke("getJsonFormatter", () -> new GemFireJsonFormatter(cache.getJsonFormatter(), this));
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonDocumentFactory getJsonDocumentFactory() {
+		return invoke("getJsonDocumentFactory", () -> new GemFireJsonDocumentFactory(cache.getJsonDocumentFactory()));
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverJsonDocumentFactory getJsonDocumentFactory(com.vmware.gemfire.driver.spi.DriverStorageFormat format) {
+		return invoke("getJsonDocumentFactory", () -> new GemFireJsonDocumentFactory(cache.getJsonDocumentFactory(GemFireStorageFormats.toNative(format))));
 	}
 
 	private <T> T invoke(String operation, Supplier<T> action) {
