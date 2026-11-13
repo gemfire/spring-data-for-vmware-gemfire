@@ -51,4 +51,7 @@ public interface DriverPool {
 	 * with no prior queue. Failures surface with the provider's own timing.
 	 */
 	default int getPendingEventCount() { throw UnsupportedFeatureException.notIntroduced("Pool.getPendingEventCount"); }
+
+	/** A query service that sends queries to this pool's servers; index operations are rejected on it. */
+	default DriverQueryService getQueryService() { throw UnsupportedFeatureException.notIntroduced("Pool.getQueryService"); }
 }

@@ -6658,7 +6658,12 @@
     },
     "org.apache.geode.cache.Region#existsValue(Ljava/lang/String;)Z": {
       "owner": "wayfinder-issues/21-query-results-and-index-spi.md",
-      "remaining": "Region-reachable subsystem obligation retained under wayfinder-issues/21-query-results-and-index-spi.md; region operation foundation does not implement this method."
+      "remaining": "",
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#existsValue(Ljava/lang/String;)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java"
     },
     "org.apache.geode.cache.Region#forceRolling()V": {
       "owner": "wayfinder-issues/27-disk-store-and-resource-configuration-spi.md",
@@ -6710,7 +6715,12 @@
     },
     "org.apache.geode.cache.Region#query(Ljava/lang/String;)Lorg/apache/geode/cache/query/SelectResults;": {
       "owner": "wayfinder-issues/21-query-results-and-index-spi.md",
-      "remaining": "Region-reachable subsystem obligation retained under wayfinder-issues/21-query-results-and-index-spi.md; region operation foundation does not implement this method."
+      "remaining": "",
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#query(Ljava/lang/String;)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java"
     },
     "org.apache.geode.cache.Region#registerInterest(Ljava/lang/Object;)V": {
       "owner": "wayfinder-issues/45-region-interest-registration-and-subscription-spi.md",
@@ -6798,7 +6808,12 @@
     },
     "org.apache.geode.cache.Region#selectValue(Ljava/lang/String;)Ljava/lang/Object;": {
       "owner": "wayfinder-issues/21-query-results-and-index-spi.md",
-      "remaining": "Region-reachable subsystem obligation retained under wayfinder-issues/21-query-results-and-index-spi.md; region operation foundation does not implement this method."
+      "remaining": "",
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverRegion.java#selectValue(Ljava/lang/String;)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java"
     },
     "org.apache.geode.cache.Region#unregisterInterest(Ljava/lang/Object;)V": {
       "owner": "wayfinder-issues/45-region-interest-registration-and-subscription-spi.md",
@@ -13555,7 +13570,13 @@
       "consumer_owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md"
     },
     "org.apache.geode.cache.client.Pool#getQueryService()Lorg/apache/geode/cache/query/QueryService;": {
-      "owner": "wayfinder-issues/21-query-results-and-index-spi.md"
+      "owner": "wayfinder-issues/21-query-results-and-index-spi.md",
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverPool.java#getQueryService()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
     },
     "org.apache.geode.cache.client.Pool#getReadTimeout()I": {
       "owner": "wayfinder-issues/35-cache-pool-entrypoints-and-resolver-cutover.md",
@@ -23074,7 +23095,667 @@
     },
     "org.apache.geode.cache.control.RestoreRedundancyOperation#start()Ljava/util/concurrent/CompletableFuture;": {
       "remaining": "Exclude partition bucket rebalance and redundancy-restoration factories, operations, results and resource-manager entry points. Evidence: wayfinder-impl/investigations/client-disk-resource-and-snapshot-scope.md#excluded-partition-resource-operations"
-    }
+    },
+    "org.apache.geode.cache.query.Index#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Member rows above still carry unproven getters."
+    },
+    "org.apache.geode.cache.query.Index#getCanonicalizedFromClause()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#canonicalizedFromClause()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Index#getCanonicalizedIndexedExpression()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#canonicalizedIndexedExpression()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Index#getCanonicalizedProjectionAttributes()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#canonicalizedProjectionAttributes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Index#getFromClause()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#fromClause()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Index#getIndexedExpression()Ljava/lang/String;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#indexedExpression()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Index#getName()Ljava/lang/String;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#name()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Index#getProjectionAttributes()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#projectionAttributes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Index#getRegion()Lorg/apache/geode/cache/Region;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#regionPath()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Index#getStatistics()Lorg/apache/geode/cache/query/IndexStatistics;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#statistics()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Index#getType()Lorg/apache/geode/cache/query/IndexType;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#type()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Index#isValid()Z": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndex.java#isValid()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.IndexStatistics#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only numberOfKeys is asserted natively."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumUpdates()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numUpdates()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfBucketIndexes()I": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfBucketIndexes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfBucketIndexesLong()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfBucketIndexes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfKeys()J": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfKeys()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfMapIndexKeys()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfMapIndexKeys()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfValues()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfValues()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getNumberOfValues(Ljava/lang/Object;)J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#numberOfValues(Object)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getReadLockCount()I": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#readLockCount()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getReadLockCountLong()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#readLockCount()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getTotalUpdateTime()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#totalUpdateTime()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexStatistics#getTotalUses()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexStatistics.java#totalUses()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndexStatistics.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test (only numberOfKeys is)."
+    },
+    "org.apache.geode.cache.query.IndexType#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "HASH/PRIMARY_KEY native mapping and case-insensitive synonym lookup remain."
+    },
+    "org.apache.geode.cache.query.IndexType#FUNCTIONALLorg/apache/geode/cache/query/IndexType;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#FUNCTIONAL",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.IndexType#HASHLorg/apache/geode/cache/query/IndexType;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#HASH",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Native/SPI HASH switch mapping is not exercised by a native test."
+    },
+    "org.apache.geode.cache.query.IndexType#PRIMARY_KEYLorg/apache/geode/cache/query/IndexType;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#PRIMARY_KEY",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only rejection with imports is exercised; creation of a key index is not."
+    },
+    "org.apache.geode.cache.query.IndexType#getName()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#synonym()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "SPI synonym values equal native getName values (RANGE, HASH, KEY) per source; not asserted against the native enum."
+    },
+    "org.apache.geode.cache.query.IndexType#valueOf(Ljava/lang/String;)Lorg/apache/geode/cache/query/IndexType;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#valueOf(String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.IndexType#valueOfSynonym(Ljava/lang/String;)Lorg/apache/geode/cache/query/IndexType;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#valueOfSynonym(String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Native upper-cases its input; the SPI lookup is case-sensitive, so lower-case synonyms differ."
+    },
+    "org.apache.geode.cache.query.IndexType#values()[Lorg/apache/geode/cache/query/IndexType;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverIndexType.java#values()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireIndex.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Query#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQuery.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "compile()/isCompiled() have no SPI equivalent; statistics and queryString are unasserted."
+    },
+    "org.apache.geode.cache.query.Query#compile()V": {},
+    "org.apache.geode.cache.query.Query#execute()Ljava/lang/Object;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQuery.java#execute",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Query#execute([Ljava/lang/Object;)Ljava/lang/Object;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQuery.java#execute",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Query#getQueryString()Ljava/lang/String;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQuery.java#queryString()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Query#getStatistics()Lorg/apache/geode/cache/query/QueryStatistics;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQuery.java#statistics()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.Query#isCompiled()Z": {},
+    "org.apache.geode.cache.query.QueryService#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "CQ members of the native type are owned by 22; type row stays partial until CQ and index remainders close."
+    },
+    "org.apache.geode.cache.query.QueryService#UNDEFINEDLjava/lang/Object;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverUndefined.java#INSTANCE",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryValues.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#clearDefinedIndexes()Z": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#clearDefinedIndexes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#closeCqs()V": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#createDefinedIndexes()Ljava/util/List;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createDefinedIndexes()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#createHashIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "HASH index creation is mapped to native createHashIndex but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#createHashIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "HASH index creation is mapped to native createHashIndex but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#createIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only FUNCTIONAL with null imports is exercised natively; HASH/PRIMARY_KEY creation, the String-typed and imports overloads are mapped but not proven against the engine."
+    },
+    "org.apache.geode.cache.query.QueryService#createIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only FUNCTIONAL with null imports is exercised natively; HASH/PRIMARY_KEY creation, the String-typed and imports overloads are mapped but not proven against the engine."
+    },
+    "org.apache.geode.cache.query.QueryService#createIndex(Ljava/lang/String;Lorg/apache/geode/cache/query/IndexType;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only FUNCTIONAL with null imports is exercised natively; HASH/PRIMARY_KEY creation, the String-typed and imports overloads are mapped but not proven against the engine."
+    },
+    "org.apache.geode.cache.query.QueryService#createIndex(Ljava/lang/String;Lorg/apache/geode/cache/query/IndexType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only FUNCTIONAL with null imports is exercised natively; HASH/PRIMARY_KEY creation, the String-typed and imports overloads are mapped but not proven against the engine."
+    },
+    "org.apache.geode.cache.query.QueryService#createKeyIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#createIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "PRIMARY_KEY index creation is mapped to native createKeyIndex but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#defineHashIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#defineIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "HASH definition is mapped but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#defineHashIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#defineIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "HASH definition is mapped but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#defineIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#defineIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only the FUNCTIONAL 3-argument form is proven; the imports overload is not."
+    },
+    "org.apache.geode.cache.query.QueryService#defineIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#defineIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only the FUNCTIONAL 3-argument form is proven; the imports overload is not."
+    },
+    "org.apache.geode.cache.query.QueryService#defineKeyIndex(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#defineIndex(String,DriverIndexType,String,String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "PRIMARY_KEY definition is mapped but has no native test."
+    },
+    "org.apache.geode.cache.query.QueryService#executeCqs()V": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#executeCqs(Ljava/lang/String;)V": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getAllDurableCqsFromServer()Ljava/util/List;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getCq(Ljava/lang/String;)Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getCqStatistics()Lorg/apache/geode/cache/query/CqServiceStatistics;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getCqs()[Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getCqs(Ljava/lang/String;)[Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#getIndex(Lorg/apache/geode/cache/Region;Ljava/lang/String;)Lorg/apache/geode/cache/query/Index;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#getIndex(String,String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#getIndexes()Ljava/util/Collection;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#getIndexes",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#getIndexes(Lorg/apache/geode/cache/Region;)Ljava/util/Collection;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#getIndexes",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#getIndexes(Lorg/apache/geode/cache/Region;Lorg/apache/geode/cache/query/IndexType;)Ljava/util/Collection;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#getIndexes",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#newCq(Ljava/lang/String;Ljava/lang/String;Lorg/apache/geode/cache/query/CqAttributes;)Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#newCq(Ljava/lang/String;Ljava/lang/String;Lorg/apache/geode/cache/query/CqAttributes;Z)Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#newCq(Ljava/lang/String;Lorg/apache/geode/cache/query/CqAttributes;)Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#newCq(Ljava/lang/String;Lorg/apache/geode/cache/query/CqAttributes;Z)Lorg/apache/geode/cache/query/CqQuery;": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#newQuery(Ljava/lang/String;)Lorg/apache/geode/cache/query/Query;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#newQuery(String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#removeIndex(Lorg/apache/geode/cache/query/Index;)V": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#removeIndex(DriverIndex)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#removeIndexes()V": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#removeIndexes",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#removeIndexes(Lorg/apache/geode/cache/Region;)V": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryService.java#removeIndexes",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQueryService.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.QueryService#stopCqs()V": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryService#stopCqs(Ljava/lang/String;)V": {
+      "owner": "wayfinder-issues/22-continuous-query-spi.md",
+      "consumer_owner": "wayfinder-issues/33-spring-continuous-query-consumer-migration.md"
+    },
+    "org.apache.geode.cache.query.QueryStatistics#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryStatistics.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped record; getters unasserted natively."
+    },
+    "org.apache.geode.cache.query.QueryStatistics#getNumExecutions()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryStatistics.java#numExecutions()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.QueryStatistics#getTotalExecutionTime()J": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverQueryStatistics.java#totalExecutionTime()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireQuery.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Mapped but not asserted by any native test."
+    },
+    "org.apache.geode.cache.query.SelectResults#<type>": {},
+    "org.apache.geode.cache.query.SelectResults#add(Ljava/lang/Object;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#addAll(Ljava/util/Collection;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#asList()Ljava/util/List;": {},
+    "org.apache.geode.cache.query.SelectResults#asSet()Ljava/util/Set;": {},
+    "org.apache.geode.cache.query.SelectResults#clear()V": {},
+    "org.apache.geode.cache.query.SelectResults#contains(Ljava/lang/Object;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#containsAll(Ljava/util/Collection;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#equals(Ljava/lang/Object;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#forEach(Ljava/util/function/Consumer;)V": {},
+    "org.apache.geode.cache.query.SelectResults#getCollectionType()Lorg/apache/geode/cache/query/types/CollectionType;": {},
+    "org.apache.geode.cache.query.SelectResults#hashCode()I": {},
+    "org.apache.geode.cache.query.SelectResults#isEmpty()Z": {},
+    "org.apache.geode.cache.query.SelectResults#isModifiable()Z": {},
+    "org.apache.geode.cache.query.SelectResults#iterator()Ljava/util/Iterator;": {},
+    "org.apache.geode.cache.query.SelectResults#occurrences(Ljava/lang/Object;)I": {},
+    "org.apache.geode.cache.query.SelectResults#parallelStream()Ljava/util/stream/Stream;": {},
+    "org.apache.geode.cache.query.SelectResults#remove(Ljava/lang/Object;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#removeAll(Ljava/util/Collection;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#removeIf(Ljava/util/function/Predicate;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#retainAll(Ljava/util/Collection;)Z": {},
+    "org.apache.geode.cache.query.SelectResults#setElementType(Lorg/apache/geode/cache/query/types/ObjectType;)V": {},
+    "org.apache.geode.cache.query.SelectResults#size()I": {},
+    "org.apache.geode.cache.query.SelectResults#spliterator()Ljava/util/Spliterator;": {},
+    "org.apache.geode.cache.query.SelectResults#stream()Ljava/util/stream/Stream;": {},
+    "org.apache.geode.cache.query.SelectResults#toArray()[Ljava/lang/Object;": {},
+    "org.apache.geode.cache.query.SelectResults#toArray(Ljava/util/function/IntFunction;)[Ljava/lang/Object;": {},
+    "org.apache.geode.cache.query.SelectResults#toArray([Ljava/lang/Object;)[Ljava/lang/Object;": {},
+    "org.apache.geode.cache.query.Struct#<type>": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverStruct.java",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireStruct.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "getStructType content remains unproven."
+    },
+    "org.apache.geode.cache.query.Struct#get(Ljava/lang/String;)Ljava/lang/Object;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverStruct.java#get(String)",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireStruct.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Struct#getFieldValues()[Ljava/lang/Object;": {
+      "status": "implemented",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverStruct.java#fieldValues()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireStruct.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": ""
+    },
+    "org.apache.geode.cache.query.Struct#getStructType()Lorg/apache/geode/cache/query/types/StructType;": {
+      "status": "partial",
+      "spi": "spring-data-gemfire-driver-spi/src/main/java/com/vmware/gemfire/driver/spi/DriverStruct.java#structType()",
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireStruct.java",
+      "mock": "spring-data-gemfire-driver-mock/src/test/java/com/vmware/gemfire/driver/mock/MockDriverContractTests.java; the mock has no query engine and explicitly rejects every query entry point with UnsupportedFeatureException NOT_INTRODUCED",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java; spring-data-gemfire-driver-spi/src/test/java/com/vmware/gemfire/driver/spi/QueryServiceContractTests.java; spring-data-gemfire-driver-contract-tests/src/main/java/com/vmware/gemfire/driver/contract/GemFireDriverContract.java",
+      "remaining": "Only non-null is asserted; field names/types of the mapped StructType are not."
+    },
+    "org.apache.geode.cache.query.types.CollectionType#<type>": {},
+    "org.apache.geode.cache.query.types.CollectionType#allowsDuplicates()Z": {},
+    "org.apache.geode.cache.query.types.CollectionType#fromData(Ljava/io/DataInput;)V": {},
+    "org.apache.geode.cache.query.types.CollectionType#getElementType()Lorg/apache/geode/cache/query/types/ObjectType;": {},
+    "org.apache.geode.cache.query.types.CollectionType#getSimpleClassName()Ljava/lang/String;": {},
+    "org.apache.geode.cache.query.types.CollectionType#isCollectionType()Z": {},
+    "org.apache.geode.cache.query.types.CollectionType#isMapType()Z": {},
+    "org.apache.geode.cache.query.types.CollectionType#isOrdered()Z": {},
+    "org.apache.geode.cache.query.types.CollectionType#isStructType()Z": {},
+    "org.apache.geode.cache.query.types.CollectionType#resolveClass()Ljava/lang/Class;": {},
+    "org.apache.geode.cache.query.types.CollectionType#toData(Ljava/io/DataOutput;)V": {},
+    "org.apache.geode.cache.query.types.ObjectType#<type>": {},
+    "org.apache.geode.cache.query.types.ObjectType#fromData(Ljava/io/DataInput;)V": {},
+    "org.apache.geode.cache.query.types.ObjectType#getSimpleClassName()Ljava/lang/String;": {},
+    "org.apache.geode.cache.query.types.ObjectType#isCollectionType()Z": {},
+    "org.apache.geode.cache.query.types.ObjectType#isMapType()Z": {},
+    "org.apache.geode.cache.query.types.ObjectType#isStructType()Z": {},
+    "org.apache.geode.cache.query.types.ObjectType#resolveClass()Ljava/lang/Class;": {},
+    "org.apache.geode.cache.query.types.ObjectType#toData(Ljava/io/DataOutput;)V": {},
+    "org.apache.geode.cache.query.types.StructType#<type>": {},
+    "org.apache.geode.cache.query.types.StructType#fromData(Ljava/io/DataInput;)V": {},
+    "org.apache.geode.cache.query.types.StructType#getFieldIndex(Ljava/lang/String;)I": {},
+    "org.apache.geode.cache.query.types.StructType#getFieldNames()[Ljava/lang/String;": {},
+    "org.apache.geode.cache.query.types.StructType#getFieldTypes()[Lorg/apache/geode/cache/query/types/ObjectType;": {},
+    "org.apache.geode.cache.query.types.StructType#getSimpleClassName()Ljava/lang/String;": {},
+    "org.apache.geode.cache.query.types.StructType#isCollectionType()Z": {},
+    "org.apache.geode.cache.query.types.StructType#isMapType()Z": {},
+    "org.apache.geode.cache.query.types.StructType#isStructType()Z": {},
+    "org.apache.geode.cache.query.types.StructType#resolveClass()Ljava/lang/Class;": {},
+    "org.apache.geode.cache.query.types.StructType#toData(Ljava/io/DataOutput;)V": {}
   },
   "reference_explanations": [
     {
@@ -26015,6 +26696,78 @@
       "status": "implemented",
       "remaining": "",
       "owner": 52
+    },
+    {
+      "spi": "DriverConnection#getLocalQueryService()Lcom/vmware/gemfire/driver/spi/DriverQueryService;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.ClientCache#getLocalQueryService()Lorg/apache/geode/cache/query/QueryService;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireConnection.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
+    },
+    {
+      "spi": "DriverPool#getQueryService()Lcom/vmware/gemfire/driver/spi/DriverQueryService;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.client.Pool#getQueryService()Lorg/apache/geode/cache/query/QueryService;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFirePool.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
+    },
+    {
+      "spi": "DriverRegionService#getQueryService()Lcom/vmware/gemfire/driver/spi/DriverQueryService;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.RegionService#getQueryService()Lorg/apache/geode/cache/query/QueryService;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegionService.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
+    },
+    {
+      "spi": "DriverRegion#query(Ljava/lang/String;)Lcom/vmware/gemfire/driver/spi/DriverSelectResults;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#query(Ljava/lang/String;)Lorg/apache/geode/cache/query/SelectResults;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
+    },
+    {
+      "spi": "DriverRegion#existsValue(Ljava/lang/String;)Z",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#existsValue(Ljava/lang/String;)Z"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
+    },
+    {
+      "spi": "DriverRegion#selectValue(Ljava/lang/String;)Ljava/lang/Object;",
+      "kind": "default",
+      "native_keys": [
+        "org.apache.geode.cache.Region#selectValue(Ljava/lang/String;)Ljava/lang/Object;"
+      ],
+      "native_impl": "spring-data-gemfire-driver-10.4/src/main/java/com/vmware/gemfire/driver/gemfire104/GemFireRegion.java",
+      "tests": "spring-data-gemfire-driver-10.4/src/integrationTest/java/com/vmware/gemfire/driver/gemfire104/NativeQueryTests.java",
+      "status": "implemented",
+      "remaining": "",
+      "owner": 21
     }
   ],
   "public_internal_payloads": [

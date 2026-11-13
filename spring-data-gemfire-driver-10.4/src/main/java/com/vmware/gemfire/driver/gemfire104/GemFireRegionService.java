@@ -31,6 +31,9 @@ final class GemFireRegionService implements DriverRegionService {
 	@Override public java.util.Set<DriverRegion<?, ?>> rootRegions() { return invoke(() -> new GemFireRegionViews().regions(service.rootRegions())); }
 	@Override public boolean isClosed() { return invoke(service::isClosed); }
 	@Override public void close() { invoke(() -> { service.close(); return null; }); }
+	@Override public DriverQueryService getQueryService() {
+		return invoke(() -> new GemFireQueryService(service.getQueryService(), service::getRegion, exceptions));
+	}
 	private <T> T invoke(Supplier<T> action) {
 		try { return action.get(); } catch (RuntimeException ex) { throw exceptions.translate("regionService", ex); }
 	}

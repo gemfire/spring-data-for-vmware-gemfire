@@ -16,7 +16,7 @@ Audit coverage: **G3, G4, G7** in the [native/SPI gap audit](../wayfinder-impl/a
 
 ## Required implementation
 
-Prerequisites: [Whole-module native dependency removal](38-whole-module-native-dependency-removal.md); [SPI ABI compatibility and stamp enforcement](39-spi-abi-compatibility-and-stamp-enforcement.md).
+Prerequisites: [Whole-module native dependency removal](38-whole-module-native-dependency-removal.md); [Real-server Testcontainers tests per driver](78-real-server-testcontainers-integration-per-driver.md) supplies the server-backed evidence; [SPI ABI compatibility and stamp enforcement](39-spi-abi-compatibility-and-stamp-enforcement.md).
 
 - Connect the required API coverage matrix to behavioral probes/tests for every supported method, application callback, payload/configuration mapping and expected unsupported feature.
 - Run the complete native-free Spring integration suite with each selected native driver runtime; isolate version classpaths and match each driver's exact artifact/stamp.

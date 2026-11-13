@@ -117,6 +117,7 @@ This index reflects ticket metadata after the scope correction. Prerequisites ar
 | [75 — Audit partition membership and subscription client scope](../wayfinder-issues/75-audit-partition-membership-and-subscription-client-scope.md) | resolved | 60, 61, 62, 63 |
 | [76 — Audit shared exception client scope](../wayfinder-issues/76-audit-shared-exception-client-scope.md) | resolved | 60, 61, 62, 63 |
 | [77 — Retire legacy server test-JAR consumers](../wayfinder-issues/77-retire-legacy-server-test-jar-consumers.md) | resolved | 60, 61, 62, 63 |
+| [78 — Real-server Testcontainers integration tests per driver](../wayfinder-issues/78-real-server-testcontainers-integration-per-driver.md) | open | 38, 59 |
 
 ## Audit finding ownership
 

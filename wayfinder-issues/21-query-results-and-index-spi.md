@@ -50,3 +50,17 @@ Implement the retained query/pool/region paths, local index definition/creation/
 ## Shared exception handoff — task 76
 
 Complete client/local and received query/index failures, including MultiIndexCreationException typed nested failures, mutable map/live-key-set behavior, combined diagnostics and inherited constructor contracts. Coordinate consumer 31 and value adaptation 58. See the [exact exception scope ledger](../wayfinder-impl/investigations/client-shared-exception-scope.md). Task 76 Java validation and generated inventory reconciliation passed on 2026-10-29. Existing implementation statuses are not upgraded.
+
+## Progress — 2026-10-31 (ticket stays open)
+
+The query, result and index SPI and its 10.4 adapter are implemented and tested, but the ticket is not resolved. 221 required-client API rows owned by this ticket still have status `missing` (207) or `partial` (14) in the coverage inventory; each needs row-level evidence before it can be upgraded or reassigned. Continuous query (task 22, blocked by 45) and Spring consumer adoption (tasks 31 and 33) also stay open.
+
+**SPI and mappings.** `DriverQueryService`, `DriverQuery`, `DriverSelectResults`, `DriverStruct`, `DriverUndefined`, `DriverIndexType` and `DriverMultiIndexCreationException` are mapped in the 10.4 driver (`GemFireQueryService`, `GemFireQuery`, `GemFireSelectResults`, `GemFireStruct`, `GemFireIndex`, `GemFireIndexStatistics`, `GemFireQueryValues`). Native `UNDEFINED` maps to the typed sentinel and native collections, structs and results are copied to native-free values. The six entry points `RegionService.getQueryService`, `Pool.getQueryService`, `ClientCache.getLocalQueryService`, `Region.query`, `Region.existsValue` and `Region.selectValue` now have `existing_spi` mappings owned by this ticket.
+
+**Routing.** `getQueryService()` is pool-backed, needs a server and rejects index operations. `getLocalQueryService()` needs a `ClientCache` and supports indexes.
+
+**Behavior evidence.** `NativeQueryTests` covers select results, structs, parameter binding and null rejection, the region helpers, the index lifecycle, PRIMARY_KEY import rejection, unknown regions (`QUERY_FAILURE`), per-index-name failures in `createDefinedIndexes` and pool-versus-local routing. All of these run against LOCAL client regions, not a server. Server-backed query behavior belongs to [ticket 78](78-real-server-testcontainers-integration-per-driver.md) and is not counted as covered here.
+
+**Coverage.** The coverage inventory was regenerated and the six mappings added. No row status was changed by hand and no row was upgraded without row-level evidence.
+
+**Validation (user-run):** `./gradlew :spring-data-gemfire-driver-10.4:integrationTest --tests '*NativeQueryTests' --tests '*GemFire104DriverContractTests' --console=plain` passed (BUILD SUCCESSFUL). Generation and `--check`, `validate_coverage.py` and the 16 policy tests pass.

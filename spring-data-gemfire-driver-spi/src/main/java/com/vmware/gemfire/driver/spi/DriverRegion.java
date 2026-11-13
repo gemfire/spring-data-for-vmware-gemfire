@@ -359,4 +359,17 @@ public interface DriverRegion<K, V> {
 		throw UnsupportedFeatureException.notIntroduced("Region.isEmptyOnServer");
 	}
 
+	/** Runs a query whose from-clause is this region; the provider routes it by the region's metadata. */
+	default DriverSelectResults<Object> query(String predicate) {
+		throw UnsupportedFeatureException.notIntroduced("Region.query");
+	}
+
+	default boolean existsValue(String predicate) {
+		throw UnsupportedFeatureException.notIntroduced("Region.existsValue");
+	}
+
+	/** The single matching value or null; more than one match is rejected. */
+	default Object selectValue(String predicate) {
+		throw UnsupportedFeatureException.notIntroduced("Region.selectValue");
+	}
 }

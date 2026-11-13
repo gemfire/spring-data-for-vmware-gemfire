@@ -33,6 +33,12 @@ class MockDriverContractTests extends GemFireDriverContract {
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverConnection.class.getMethod("readyForEvents"), Reason.NOT_INTRODUCED);
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverPool.class.getMethod("getPendingEventCount"), Reason.NOT_INTRODUCED);
 			unsupported.put(com.vmware.gemfire.driver.spi.DriverConnection.class.getMethod("getDataCodec"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getQueryService"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverConnection.class.getMethod("getLocalQueryService"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverPool.class.getMethod("getQueryService"), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("query", String.class), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("existsValue", String.class), Reason.NOT_INTRODUCED);
+			unsupported.put(com.vmware.gemfire.driver.spi.DriverRegion.class.getMethod("selectValue", String.class), Reason.NOT_INTRODUCED);
 			for (Method method : com.vmware.gemfire.driver.spi.DriverTransactionManager.class.getDeclaredMethods()) {
 				if (method.isDefault()) unsupported.put(method, Reason.NOT_INTRODUCED);
 			}

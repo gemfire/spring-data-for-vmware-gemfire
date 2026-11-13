@@ -32,6 +32,12 @@ final class GemFireExceptionMapper {
 			return new DriverRegionUnavailableException("GemFire operation failed: " + operation, e.getRegionFullPath(), failure);
 		if (payload instanceof org.apache.geode.admin.RegionNotFoundException e)
 			return new DriverRegionUnavailableException("GemFire operation failed: " + operation, e.getRegionFullPath(), failure);
+		if (payload instanceof org.apache.geode.cache.query.MultiIndexCreationException e) {
+			java.util.Map<String, DriverOperationException> failures = new java.util.LinkedHashMap<>();
+			e.getExceptionsMap().forEach((name, cause) ->
+				failures.put(name, new DriverOperationException(classify(cause), "GemFire operation failed: " + operation, cause)));
+			return new DriverMultiIndexCreationException("GemFire operation failed: " + operation, failures, failure);
+		}
 		return new DriverOperationException(classify(failure), "GemFire operation failed: " + operation, failure);
 	}
 

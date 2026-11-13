@@ -25,6 +25,10 @@ public interface DriverRegionService extends AutoCloseable {
 	default DriverJsonDocumentFactory getJsonDocumentFactory(DriverStorageFormat format) {
 		throw UnsupportedFeatureException.notIntroduced("RegionService.getJsonDocumentFactory");
 	}
+	/** The query service routed through this service's pool; index operations are rejected on it. */
+	default DriverQueryService getQueryService() {
+		throw UnsupportedFeatureException.notIntroduced("RegionService.getQueryService");
+	}
 	<K, V> DriverRegion<K, V> getRegion(String path);
 	java.util.Set<DriverRegion<?, ?>> rootRegions();
 	boolean isClosed();

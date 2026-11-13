@@ -69,6 +69,12 @@ final class GemFirePool implements DriverPool {
 		return addresses.stream().map(address -> new Endpoint(address.getHostString(), address.getPort())).toList();
 	}
 
+	@Override public com.vmware.gemfire.driver.spi.DriverQueryService getQueryService() {
+		return invoke("getQueryService", () -> new GemFireQueryService(pool.getQueryService(), path -> {
+			throw new IllegalStateException("Pool query services do not support index operations");
+		}, exceptions));
+	}
+
 	private <T> T invoke(String operation, Supplier<T> action) {
 		try { return action.get(); }
 		catch (RuntimeException failure) {

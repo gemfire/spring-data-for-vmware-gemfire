@@ -166,6 +166,24 @@ final class GemFireRegion<K, V> implements DriverRegion<K, V> {
 			throw exceptions.translate(operation, ex);
 		}
 	}
+	@Override public DriverSelectResults<Object> query(String predicate) {
+		return queried("query", () -> new GemFireSelectResults(region.query(java.util.Objects.requireNonNull(predicate, "predicate"))));
+	}
+	@Override public boolean existsValue(String predicate) {
+		return queried("existsValue", () -> region.existsValue(java.util.Objects.requireNonNull(predicate, "predicate")));
+	}
+	@Override public Object selectValue(String predicate) {
+		return queried("selectValue", () -> GemFireQueryValues.convert(region.selectValue(java.util.Objects.requireNonNull(predicate, "predicate"))));
+	}
+	/** Native region queries declare checked query exceptions, so this variant catches every exception. */
+	private <T> T queried(String operation, java.util.concurrent.Callable<T> action) {
+		try {
+			return action.call();
+		}
+		catch (Exception ex) {
+			throw exceptions.translate(operation, ex);
+		}
+	}
 	@Override public void create(K key, V value) { invoke("create", () -> { region.create(key, value); return null; }); }
 	@Override public void create(K key, V value, Object argument) { invoke("create", () -> { region.create(key, value, argument); return null; }); }
 	@Override public V destroy(K key) { return invoke("destroy", () -> region.destroy(key)); }

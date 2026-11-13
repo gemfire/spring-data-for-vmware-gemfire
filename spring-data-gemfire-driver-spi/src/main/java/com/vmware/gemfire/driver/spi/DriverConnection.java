@@ -157,4 +157,9 @@ public interface DriverConnection extends DriverRegionService {
 	default void close() {
 		throw UnsupportedFeatureException.notIntroduced("Connection.close");
 	}
+
+	/** A query service over local data; it supports index operations. */
+	default DriverQueryService getLocalQueryService() {
+		throw UnsupportedFeatureException.notIntroduced("Connection.getLocalQueryService");
+	}
 }

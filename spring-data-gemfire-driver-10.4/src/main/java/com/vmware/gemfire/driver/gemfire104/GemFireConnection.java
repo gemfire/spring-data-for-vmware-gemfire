@@ -227,6 +227,16 @@ final class GemFireConnection implements DriverConnection {
 		return invoke("getJsonDocumentFactory", () -> new GemFireJsonDocumentFactory(cache.getJsonDocumentFactory(GemFireStorageFormats.toNative(format))));
 	}
 
+	@Override public com.vmware.gemfire.driver.spi.DriverQueryService getQueryService() {
+		return invoke("getQueryService", () -> new GemFireQueryService(cache.getQueryService(), cache::getRegion, exceptions));
+	}
+	@Override public com.vmware.gemfire.driver.spi.DriverQueryService getLocalQueryService() {
+		return invoke("getLocalQueryService", () -> {
+			if (!(cache instanceof ClientCache client)) throw new IllegalStateException("Local query service requires a client cache");
+			return new GemFireQueryService(client.getLocalQueryService(), cache::getRegion, exceptions);
+		});
+	}
+
 	private <T> T invoke(String operation, Supplier<T> action) {
 		try {
 			return action.get();

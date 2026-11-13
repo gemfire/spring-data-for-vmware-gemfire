@@ -64,8 +64,8 @@ All **3,851 frozen API IDs** and **2,723 audit assignments** are preserved:
 source/resource references have dispositions, and unfinished required mappings
 have open completion owners. Three stale TransactionWriter mappings are cleared.
 Generation/check, all 16 policy tests and independent declaration checks pass.
-There are **29 open tasks**, **46 completed tasks** and **2 superseded tasks**
-(77 total). Classification and cleanup do not complete retained client implementation.
+There are **23 open tasks**, **53 completed tasks** and **2 superseded tasks**
+(78 total; counted from ticket `Status:` lines on 2026-10-31). Classification and cleanup do not complete retained client implementation.
 
 Tasks 52, 51, 48, 47, 54, 55, 56, 49, 19 and 20 are resolved (2026-10-30/31). **Next: the lowest eligible open task (tasks 57 and 58 stay blocked; 51 now unblocks 21/22/24/25 pending their other blockers).** All bounded audits and
 fixture cleanup tasks 60–77 are complete. Tickets 42/43 remain superseded.

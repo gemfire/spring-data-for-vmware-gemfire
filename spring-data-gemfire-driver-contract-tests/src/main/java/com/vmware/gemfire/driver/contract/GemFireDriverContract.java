@@ -637,6 +637,18 @@ public abstract class GemFireDriverContract extends StatisticsContract {
 		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getJsonDocumentFactory", com.vmware.gemfire.driver.spi.DriverStorageFormat.class),
 			new Probe("RegionService.getJsonDocumentFactoryWithFormat", () -> inCache(c ->
 				assertThat(c.getJsonDocumentFactory(com.vmware.gemfire.driver.spi.DriverStorageFormat.PDX)).isNotNull())));
+		probes.put(com.vmware.gemfire.driver.spi.DriverRegionService.class.getMethod("getQueryService"), new Probe("RegionService.getQueryService", () ->
+			inCache(c -> assertThat(c.getQueryService()).isNotNull())));
+		probes.put(DriverConnection.class.getMethod("getLocalQueryService"), new Probe("Connection.getLocalQueryService", () ->
+			inCache(c -> assertThat(c.getLocalQueryService()).isNotNull())));
+		probes.put(DriverPool.class.getMethod("getQueryService"), new Probe("Pool.getQueryService", () ->
+			inPool(pool -> assertThat(pool.getQueryService()).isNotNull())));
+		probes.put(DriverRegion.class.getMethod("query", String.class), new Probe("Region.query", () ->
+			inRegion(r -> assertThat(r.query("true")).isEmpty())));
+		probes.put(DriverRegion.class.getMethod("existsValue", String.class), new Probe("Region.existsValue", () ->
+			inRegion(r -> assertThat(r.existsValue("true")).isFalse())));
+		probes.put(DriverRegion.class.getMethod("selectValue", String.class), new Probe("Region.selectValue", () ->
+			inRegion(r -> assertThat(r.selectValue("true")).isNull())));
 		probes.put(com.vmware.gemfire.driver.spi.DriverPartitionResolver.class.getMethod("close"), new Probe("PartitionResolver.close", () -> {
 			var resolver = new com.vmware.gemfire.driver.spi.DriverPartitionResolver<String, String>() {
 				@Override public Object getRoutingObject(com.vmware.gemfire.driver.spi.DriverEntryOperation<String, String> operation) { return null; }
