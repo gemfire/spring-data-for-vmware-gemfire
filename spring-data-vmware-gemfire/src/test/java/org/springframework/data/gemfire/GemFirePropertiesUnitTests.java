@@ -34,13 +34,12 @@ public class GemFirePropertiesUnitTests {
 			"enable-management-rest-service", "http-service-bind-address", "http-service-port", "http-services",
 			"start-dev-rest-api", "jmx-manager", "jmx-manager-access-file", "jmx-manager-bind-address",
 			"jmx-manager-hostname-for-clients", "jmx-manager-password-file", "jmx-manager-port", "jmx-manager-start",
-			"jmx-manager-update-rate", "disable-jmx", "ssl-jmx-alias", "ssl-grpc-alias", "security-encryption-key-file");
+			"jmx-manager-update-rate", "disable-jmx", "ssl-jmx-alias", "ssl-grpc-alias", "security-encryption-key-file",
+			"abortable-operations-timeout-ms");
 
 	private static final Set<String> deprecatedGemFireProperties = Set.of("disable-tcp", "security-udp-dhalgo",
 			"udp-fragment-size", "udp-recv-buffer-size", "udp-send-buffer-size", "cluster-ssl-ciphers", // all 'cluster-ssl-*'
-																																																	// properties replaced
-																																																	// by 'ssl-*'
-																																																	// properties
+			// properties replaced by 'ssl-*' properties
 			"cluster-ssl-enabled", "cluster-ssl-keystore", "cluster-ssl-keystore-password", "cluster-ssl-keystore-type",
 			"cluster-ssl-protocols", "cluster-ssl-require-authentication", "cluster-ssl-truststore",
 			"cluster-ssl-truststore-password", "jmx-manager-http-port", // replaced by 'http-service-port' property
