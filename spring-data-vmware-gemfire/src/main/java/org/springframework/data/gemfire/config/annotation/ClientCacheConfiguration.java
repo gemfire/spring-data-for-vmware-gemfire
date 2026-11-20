@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.Pool;
+import org.apache.geode.cache.client.PoolFactory;
 import org.apache.geode.cache.client.SocketFactory;
 import org.apache.geode.cache.server.CacheServer;
 import org.springframework.beans.factory.BeanFactory;
@@ -58,6 +59,13 @@ import org.springframework.util.StringUtils;
 @Configuration
 @SuppressWarnings("unused")
 public class ClientCacheConfiguration extends AbstractCacheConfiguration {
+
+	private static final int DEFAULT_MAX_CONNECTIONS = PoolFactory.DEFAULT_MAX_CONNECTIONS;
+
+	private static final int DEFAULT_MIN_CONNECTIONS = PoolFactory.DEFAULT_MIN_CONNECTIONS;
+
+	private static final boolean DEFAULT_PR_SINGLE_HOP_ENABLED = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
+
 
 	private static final AtomicBoolean INFRASTRUCTURE_COMPONENTS_REGISTERED =
 		new AtomicBoolean(false);
@@ -272,15 +280,23 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 				resolveProperty(poolProperty("load-conditioning-interval"),
 				(Integer) clientCacheApplicationAttributes.get("loadConditioningInterval"))));
 
-			setMaxConnections(
-				resolveProperty(namedPoolProperty("default", "max-connections"),
+			// Only set when explicitly configured to avoid GemFire APIs deprecated for removal on the default path.
+			Integer maxConnections = resolveProperty(namedPoolProperty("default", "max-connections"),
 				resolveProperty(poolProperty("max-connections"),
-				(Integer) clientCacheApplicationAttributes.get("maxConnections"))));
+				(Integer) clientCacheApplicationAttributes.get("maxConnections")));
 
-			setMinConnections(
-				resolveProperty(namedPoolProperty("default", "min-connections"),
+			if (maxConnections != null && maxConnections != DEFAULT_MAX_CONNECTIONS) {
+				setMaxConnections(maxConnections);
+			}
+
+			// Only set when explicitly configured to avoid GemFire APIs deprecated for removal on the default path.
+			Integer minConnections = resolveProperty(namedPoolProperty("default", "min-connections"),
 				resolveProperty(poolProperty("min-connections"),
-				(Integer) clientCacheApplicationAttributes.get("minConnections"))));
+				(Integer) clientCacheApplicationAttributes.get("minConnections")));
+
+			if (minConnections != null && minConnections != DEFAULT_MIN_CONNECTIONS) {
+				setMinConnections(minConnections);
+			}
 
 			setMaxConnectionsPerServer(resolveProperty(namedPoolProperty("default", "max-connections-per-server"),
 					resolveProperty(poolProperty("max-connections-per-server"),
@@ -305,10 +321,13 @@ public class ClientCacheConfiguration extends AbstractCacheConfiguration {
 			resolveProperty(poolProperty("ping-timeout"),
 			(Integer) clientCacheApplicationAttributes.get("pingTimeout"))));
 
-		setPrSingleHopEnabled(
-				resolveProperty(namedPoolProperty("default", "pr-single-hop-enabled"),
-				resolveProperty(poolProperty("pr-single-hop-enabled"),
-				Boolean.TRUE.equals(clientCacheApplicationAttributes.get("prSingleHopEnabled")))));
+		Boolean prSingleHopEnabled = resolveProperty(namedPoolProperty("default", "pr-single-hop-enabled"),
+			resolveProperty(poolProperty("pr-single-hop-enabled"),
+			Boolean.TRUE.equals(clientCacheApplicationAttributes.get("prSingleHopEnabled"))));
+
+		if (prSingleHopEnabled != null && prSingleHopEnabled != DEFAULT_PR_SINGLE_HOP_ENABLED) {
+			setPrSingleHopEnabled(prSingleHopEnabled);
+		}
 
 			setReadTimeout(
 				resolveProperty(namedPoolProperty("default", "read-timeout"),

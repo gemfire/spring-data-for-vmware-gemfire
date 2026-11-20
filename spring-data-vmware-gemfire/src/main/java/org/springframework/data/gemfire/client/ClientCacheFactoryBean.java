@@ -286,14 +286,15 @@ public class ClientCacheFactoryBean extends AbstractResolvableCacheFactoryBean i
 		clientCacheFactory.setPoolFreeConnectionTimeout(pool.getFreeConnectionTimeout(getFreeConnectionTimeout()));
 		clientCacheFactory.setPoolIdleTimeout(pool.getIdleTimeout(getIdleTimeout()));
 		clientCacheFactory.setPoolLoadConditioningInterval(pool.getLoadConditioningInterval(getLoadConditioningInterval()));
-		clientCacheFactory.setPoolMinConnections(pool.getMinConnections(getMinConnections()));
-		clientCacheFactory.setPoolMaxConnections(pool.getMaxConnections(getMaxConnections()));
+		// Only invoke the deprecated (for removal) GemFire APIs when explicitly configured by the user.
+		Optional.ofNullable(getMinConnections()).ifPresent(clientCacheFactory::setPoolMinConnections);
+		Optional.ofNullable(getMaxConnections()).ifPresent(clientCacheFactory::setPoolMaxConnections);
 		clientCacheFactory.setPoolMinConnectionsPerServer(pool.getMinConnectionsPerServer(getMinConnectionsPerServer()));
 		clientCacheFactory.setPoolMaxConnectionsPerServer(pool.getMaxConnectionsPerServer(getMaxConnectionsPerServer()));
 		clientCacheFactory.setPoolMultiuserAuthentication(pool.getMultiuserAuthentication(getMultiUserAuthentication()));
 		clientCacheFactory.setPoolPingInterval(pool.getPingInterval(getPingInterval()));
 		clientCacheFactory.setPoolPingTimeout(pool.getPingTimeout(getPingTimeout()));
-		clientCacheFactory.setPoolPRSingleHopEnabled(pool.getPRSingleHopEnabled(getPrSingleHopEnabled()));
+		Optional.ofNullable(getPrSingleHopEnabled()).ifPresent(clientCacheFactory::setPoolPRSingleHopEnabled);
 		clientCacheFactory.setPoolReadTimeout(pool.getReadTimeout(getReadTimeout()));
 		clientCacheFactory.setPoolRetryAttempts(pool.getRetryAttempts(getRetryAttempts()));
 		clientCacheFactory.setPoolServerConnectionTimeout(pool.getServerConnectionTimeout(getServerConnectionTimeout()));

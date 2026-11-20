@@ -451,10 +451,7 @@ public class ClientCacheFactoryBeanUnitTests {
 		when(mockPool.getIdleTimeout()).thenReturn(120000L);
 		when(mockPool.getLoadConditioningInterval()).thenReturn(30000);
 		when(mockPool.getLocators()).thenReturn(Collections.emptyList());
-		when(mockPool.getMaxConnections()).thenReturn(100);
-		when(mockPool.getMinConnections()).thenReturn(10);
 		when(mockPool.getMultiuserAuthentication()).thenReturn(true);
-		when(mockPool.getPRSingleHopEnabled()).thenReturn(true);
 		when(mockPool.getPingInterval()).thenReturn(15000L);
 		when(mockPool.getReadTimeout()).thenReturn(20000);
 		when(mockPool.getRetryAttempts()).thenReturn(1);
@@ -508,10 +505,10 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockPool, times(1)).getIdleTimeout();
 		verify(mockPool, times(1)).getLoadConditioningInterval();
 		verify(mockPool, never()).getLocators();
-		verify(mockPool, times(1)).getMaxConnections();
-		verify(mockPool, times(1)).getMinConnections();
+		verify(mockPool, never()).getMaxConnections();
+		verify(mockPool, never()).getMinConnections();
 		verify(mockPool, times(1)).getMultiuserAuthentication();
-		verify(mockPool, times(1)).getPRSingleHopEnabled();
+		verify(mockPool, never()).getPRSingleHopEnabled();
 		verify(mockPool, times(1)).getPingInterval();
 		verify(mockPool, times(1)).getReadTimeout();
 		verify(mockPool, times(1)).getRetryAttempts();
@@ -529,10 +526,10 @@ public class ClientCacheFactoryBeanUnitTests {
 		verify(mockClientCacheFactory, times(1)).setPoolFreeConnectionTimeout(eq(10000));
 		verify(mockClientCacheFactory, times(1)).setPoolIdleTimeout(eq(120000L));
 		verify(mockClientCacheFactory, times(1)).setPoolLoadConditioningInterval(eq(30000));
-		verify(mockClientCacheFactory, times(1)).setPoolMaxConnections(eq(100));
-		verify(mockClientCacheFactory, times(1)).setPoolMinConnections(eq(10));
+		verify(mockClientCacheFactory, never()).setPoolMaxConnections(anyInt());
+		verify(mockClientCacheFactory, never()).setPoolMinConnections(anyInt());
 		verify(mockClientCacheFactory, times(1)).setPoolMultiuserAuthentication(eq(true));
-		verify(mockClientCacheFactory, times(1)).setPoolPRSingleHopEnabled(eq(true));
+		verify(mockClientCacheFactory, never()).setPoolPRSingleHopEnabled(anyBoolean());
 		verify(mockClientCacheFactory, times(1)).setPoolPingInterval(eq(15000L));
 		verify(mockClientCacheFactory, times(1)).setPoolReadTimeout(eq(20000));
 		verify(mockClientCacheFactory, times(1)).setPoolRetryAttempts(eq(1));

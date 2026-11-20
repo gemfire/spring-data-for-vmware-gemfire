@@ -78,13 +78,13 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 	// GemFire Pool Configuration Settings
 	private boolean keepAlive = false;
 	private boolean multiUserAuthentication = PoolFactory.DEFAULT_MULTIUSER_AUTHENTICATION;
-	private boolean prSingleHopEnabled = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
+	private Boolean prSingleHopEnabled;
 	private boolean subscriptionEnabled = PoolFactory.DEFAULT_SUBSCRIPTION_ENABLED;
 
 	private int freeConnectionTimeout = PoolFactory.DEFAULT_FREE_CONNECTION_TIMEOUT;
 	private int loadConditioningInterval = PoolFactory.DEFAULT_LOAD_CONDITIONING_INTERVAL;
-	private int maxConnections = PoolFactory.DEFAULT_MAX_CONNECTIONS;
-	private int minConnections = PoolFactory.DEFAULT_MIN_CONNECTIONS;
+	private Integer maxConnections;
+	private Integer minConnections;
 	private int maxConnectionsPerServer = PoolFactory.DEFAULT_MAX_CONNECTIONS_PER_SERVER;
 	private int minConnectionsPerServer = PoolFactory.DEFAULT_MIN_CONNECTIONS_PER_SERVER;
 	private int readTimeout = PoolFactory.DEFAULT_READ_TIMEOUT;
@@ -330,14 +330,15 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 			it.setFreeConnectionTimeout(this.freeConnectionTimeout);
 			it.setIdleTimeout(this.idleTimeout);
 			it.setLoadConditioningInterval(this.loadConditioningInterval);
-			it.setMaxConnections(this.maxConnections);
-			it.setMinConnections(this.minConnections);
+			// Only invoke the deprecated (for removal) GemFire APIs when explicitly configured by the user.
+			Optional.ofNullable(this.maxConnections).ifPresent(it::setMaxConnections);
+			Optional.ofNullable(this.minConnections).ifPresent(it::setMinConnections);
 			it.setMaxConnectionsPerServer(this.maxConnectionsPerServer);
 			it.setMinConnectionsPerServer(this.minConnectionsPerServer);
 			it.setMultiuserAuthentication(this.multiUserAuthentication);
 			it.setPingInterval(this.pingInterval);
 			it.setPingTimeout(this.pingTimeout);
-			it.setPRSingleHopEnabled(this.prSingleHopEnabled);
+			Optional.ofNullable(this.prSingleHopEnabled).ifPresent(it::setPRSingleHopEnabled);
 			it.setReadTimeout(this.readTimeout);
 			it.setRetryAttempts(this.retryAttempts);
 			it.setServerConnectionTimeout(this.serverConnectionTimeout);
@@ -543,12 +544,16 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 			@Override
 			public int getMaxConnections() {
-				return PoolFactoryBean.this.maxConnections;
+				return PoolFactoryBean.this.maxConnections != null
+					? PoolFactoryBean.this.maxConnections
+					: PoolFactory.DEFAULT_MAX_CONNECTIONS;
 			}
 
 			@Override
 			public int getMinConnections() {
-				return PoolFactoryBean.this.minConnections;
+				return PoolFactoryBean.this.minConnections != null
+					? PoolFactoryBean.this.minConnections
+					: PoolFactory.DEFAULT_MIN_CONNECTIONS;
 			}
 
 			@Override
@@ -594,7 +599,9 @@ public class PoolFactoryBean extends AbstractFactoryBeanSupport<Pool> implements
 
 			@Override
 			public boolean getPRSingleHopEnabled() {
-				return PoolFactoryBean.this.prSingleHopEnabled;
+				return PoolFactoryBean.this.prSingleHopEnabled != null
+					? PoolFactoryBean.this.prSingleHopEnabled
+					: PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
 			}
 
 			@Override

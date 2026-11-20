@@ -4,6 +4,8 @@
  */
 package org.springframework.data.gemfire.config.annotation;
 
+import org.apache.geode.cache.client.PoolFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -49,6 +51,12 @@ import static org.springframework.data.gemfire.util.RuntimeExceptionFactory.newI
  */
 public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 		implements ImportBeanDefinitionRegistrar {
+
+	private static final int DEFAULT_MAX_CONNECTIONS = PoolFactory.DEFAULT_MAX_CONNECTIONS;
+
+	private static final int DEFAULT_MIN_CONNECTIONS = PoolFactory.DEFAULT_MIN_CONNECTIONS;
+
+	private static final boolean DEFAULT_PR_SINGLE_HOP_ENABLED = PoolFactory.DEFAULT_PR_SINGLE_HOP_ENABLED;
 
 	@Autowired(required = false)
 	private List<PoolConfigurer> poolConfigurers = Collections.emptyList();
@@ -102,15 +110,25 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 				resolveProperty(poolProperty("load-conditioning-interval"),
 					enablePoolAttributes.<Integer>getNumber("loadConditioningInterval"))));
 
-		poolFactoryBean.addPropertyValue("maxConnections",
-			resolveProperty(namedPoolProperty(poolName, "max-connections"),
-				resolveProperty(poolProperty("max-connections"),
-					enablePoolAttributes.<Integer>getNumber("maxConnections"))));
+		// Only set when explicitly configured (differs from the factory default) to avoid invoking
+		// GemFire APIs deprecated for removal on the default path.
+		Integer maxConnections = resolveProperty(namedPoolProperty(poolName, "max-connections"),
+			resolveProperty(poolProperty("max-connections"),
+				enablePoolAttributes.<Integer>getNumber("maxConnections")));
 
-		poolFactoryBean.addPropertyValue("minConnections",
-			resolveProperty(namedPoolProperty(poolName, "min-connections"),
-				resolveProperty(poolProperty("min-connections"),
-					enablePoolAttributes.<Integer>getNumber("minConnections"))));
+		if (maxConnections != null && maxConnections != DEFAULT_MAX_CONNECTIONS) {
+			poolFactoryBean.addPropertyValue("maxConnections", maxConnections);
+		}
+
+		// Only set when explicitly configured (differs from the factory default) to avoid invoking
+		// GemFire APIs deprecated for removal on the default path.
+		Integer minConnections = resolveProperty(namedPoolProperty(poolName, "min-connections"),
+			resolveProperty(poolProperty("min-connections"),
+				enablePoolAttributes.<Integer>getNumber("minConnections")));
+
+		if (minConnections != null && minConnections != DEFAULT_MIN_CONNECTIONS) {
+			poolFactoryBean.addPropertyValue("minConnections", minConnections);
+		}
 
 		poolFactoryBean.addPropertyValue("maxConnectionsPerServer",
 				resolveProperty(namedPoolProperty(poolName, "max-connections-per-server"),
@@ -139,10 +157,13 @@ public class AddPoolConfiguration extends AbstractAnnotationConfigSupport
 
 		poolFactoryBean.addPropertyValue("poolConfigurers", resolvePoolConfigurers());
 
-		poolFactoryBean.addPropertyValue("prSingleHopEnabled",
-			resolveProperty(namedPoolProperty(poolName, "pr-single-hop-enabled"),
-				resolveProperty(poolProperty("pr-single-hop-enabled"),
-					enablePoolAttributes.getBoolean("prSingleHopEnabled"))));
+		Boolean prSingleHopEnabled = resolveProperty(namedPoolProperty(poolName, "pr-single-hop-enabled"),
+			resolveProperty(poolProperty("pr-single-hop-enabled"),
+				enablePoolAttributes.getBoolean("prSingleHopEnabled")));
+
+		if (prSingleHopEnabled != null && prSingleHopEnabled != DEFAULT_PR_SINGLE_HOP_ENABLED) {
+			poolFactoryBean.addPropertyValue("prSingleHopEnabled", prSingleHopEnabled);
+		}
 
 		poolFactoryBean.addPropertyValue("readTimeout",
 			resolveProperty(namedPoolProperty(poolName, "read-timeout"),
